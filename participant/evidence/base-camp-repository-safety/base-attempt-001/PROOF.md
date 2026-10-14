@@ -76,6 +76,14 @@ The optional item "Demonstrate stopping and safely resuming an agent workflow wi
 4. Run it a third time. It finds `GTQ-DEMO-1` by its key and creates nothing.
 5. `cat local-data/fake-tracker.json` shows exactly one ticket, and the bottom of `participant/context/audit-log.md` shows one row per run.
 
+## Credentials (criterion 2)
+
+Added after submission, so the reviewer does not have to infer it.
+
+- The only credential this quest used is my GitHub sign-in, used by `gtq hand-in` to push and open the pull request. It comes from the GitHub command-line tool: `gh auth status` shows I am signed in, with the token stored in the macOS keychain. Git gets it through `gh auth git-credential`, which is set up as Git's credential helper for github.com.
+- No token, password or `.env` file is in this repository. The only `.env` file is `.env.example`, which holds no real values. `.gitignore` blocks `.env`, `.env.*`, key, token and credential files, and the repository-foundation check confirmed those rules.
+- The fake-ticket workflow needs no credentials, because it never talks to a real service.
+
 ## Sensitive values
 
 There are no secrets, tokens, cookies, customer names or private ticket content in this evidence. The only "ticket" is a fake one I made up for this test. Nothing here connected to a real service, and the fake system's data stays in `local-data/`, which Git ignores.
