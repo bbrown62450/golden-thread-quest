@@ -33,4 +33,13 @@ attempts:
   updated_at: '2026-10-30T19:04:16Z'
   evidence_path: participant/evidence/ba-ingest-transcript/ba-attempt-001
   submission_id: submission-20261030190416-114346
-updated_at: '2026-10-30T19:04:16Z'
+- attempt_id: playwright-attempt-001
+  quest_id: playwright-first-independent-test
+  quest_version: 2
+  content_hash: sha256:85ad4380fda005f46a4ec4101717fca1f14f3dff2754a4d90fcc2accf9695b60
+  state: submitted
+  started_at: '2026-10-30T19:58:32Z'
+  updated_at: '2026-11-01T13:23:22Z'
+  evidence_path: participant/evidence/playwright-first-independent-test/playwright-attempt-001
+  submission_id: submission-20261101132322-3ebd8d
+updated_at: '2026-11-01T13:23:22Z'
