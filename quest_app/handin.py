@@ -26,7 +26,7 @@ from pathlib import Path
 
 import yaml
 
-from quest_app.validator_runner import in_dependency_dir
+from quest_app.validator_runner import DEPENDENCY_DIRS, in_dependency_dir
 
 TIMEOUT_SECONDS = 120
 PARTICIPANT_DIR = "participant"
@@ -65,6 +65,7 @@ _GITHUB_REMOTE = re.compile(r"github\.com[:/](?P<owner>[^/]+)/(?P<name>[^/]+?)(?
 PERMITTED_COMMANDS: frozenset[tuple[str, str]] = frozenset(
     {
         ("git", "add"),
+        ("git", "check-ignore"),
         ("git", "commit"),
         ("git", "config"),
         ("git", "diff"),
@@ -80,6 +81,23 @@ PERMITTED_COMMANDS: frozenset[tuple[str, str]] = frozenset(
 )
 
 Runner = Callable[[Sequence[str], Path], "subprocess.CompletedProcess[str]"]
+
+
+# Paths per `git check-ignore` call, well inside the operating system's argument limit.
+_CHECK_IGNORE_BATCH = 200
+
+
+@dataclass(frozen=True, slots=True)
+class LeftOut:
+    """Ignored files under `participant/` that a hand-in does not send.
+
+    `secret_named` lists each file an ignore rule matches by its name or folder, wherever
+    it is. `dependency_folders` counts the other files inside installed-dependency folders
+    (`node_modules/`, `.venv/`, `venv/`), which are left out only because of the folder.
+    """
+
+    secret_named: list[str]
+    dependency_folders: dict[str, int]
 
 
 class HandInError(Exception):
@@ -171,7 +189,7 @@ class _Repo:
             raise HandInError(f"Git could not read your folder: {_last_line(result)}")
         return [line[3:] for line in result.stdout.splitlines() if line.strip()]
 
-    def ignored_files(self) -> list[str]:
+    def ignored_files(self) -> LeftOut:
         """Files under `participant/` that `.gitignore` keeps out of every hand-in.
 
         Phase 2A.2: `git add participant/` skips them without a word, so a participant who
@@ -186,12 +204,46 @@ class _Repo:
             "--", PARTICIPANT_DIR,
         )  # fmt: skip
         if result.returncode != 0:
-            return []
-        return sorted(
+            return LeftOut([], {})
+        ignored = [
             entry[3:]
             for entry in result.stdout.split("\0")
             if entry.startswith("!! ") and not _is_housekeeping(entry[3:])
-        )
+        ]
+        ordinary = [path for path in ignored if not in_dependency_dir(path.split("/"))]
+        dependencies = [path for path in ignored if in_dependency_dir(path.split("/"))]
+        secret_named = self._named_like_secrets(dependencies)
+        folders: dict[str, int] = {}
+        for path in dependencies:
+            if path not in secret_named:
+                folder = _dependency_folder(path)
+                folders[folder] = folders.get(folder, 0) + 1
+        return LeftOut(sorted([*ordinary, *secret_named]), dict(sorted(folders.items())))
+
+    def _named_like_secrets(self, paths: list[str]) -> set[str]:
+        """Which files inside a dependency folder would be ignored anyway.
+
+        A file under `node_modules/` is ignored because of the folder, which says nothing
+        about its name. Asking Git about the same path with the dependency folders taken out
+        tells the two apart by the participant's own ignore rules: `node_modules/x/api.token`
+        becomes `x/api.token`, which `*.token` still ignores. When Git cannot answer, every
+        file is treated as named like a secret, so a real one is never hidden.
+        """
+        found: set[str] = set()
+        for start in range(0, len(paths), _CHECK_IGNORE_BATCH):
+            batch = paths[start : start + _CHECK_IGNORE_BATCH]
+            stripped = [_without_dependency_dirs(path) for path in batch]
+            # `-v -n` prints one line per path, in order, so a line is matched to its path
+            # by position and Git's quoting of unusual names does not matter.
+            result = self.git("check-ignore", "--no-index", "-v", "-n", "--", *stripped)
+            lines = result.stdout.splitlines()
+            if result.returncode not in (0, 1) or len(lines) != len(batch):
+                found.update(batch)
+                continue
+            found.update(
+                path for path, line in zip(batch, lines, strict=True) if not line.startswith("::")
+            )
+        return found
 
     def unpushed(self, branch: str) -> bool:
         if self.git("rev-parse", "--verify", "--quiet", f"origin/{branch}").returncode != 0:
@@ -357,21 +409,42 @@ def _is_housekeeping(path: str) -> bool:
         parts[-1] in _HOUSEKEEPING_NAMES
         or parts[-1].endswith(_HOUSEKEEPING_SUFFIXES)
         or "__pycache__" in parts
-        or in_dependency_dir(parts)
     )
 
 
-def _left_out_note(paths: list[str]) -> list[str]:
+def _dependency_folder(path: str) -> str:
+    """The outermost dependency folder a path lies in, with a trailing slash."""
+    parts = path.split("/")
+    index = next(i for i, part in enumerate(parts) if part in DEPENDENCY_DIRS)
+    return "/".join(parts[: index + 1]) + "/"
+
+
+def _without_dependency_dirs(path: str) -> str:
+    """The path with every dependency-folder component removed."""
+    parts = path.split("/")
+    for index in range(len(parts) - 1, -1, -1):
+        if parts[index] in DEPENDENCY_DIRS:
+            del parts[index : index + 1]
+    return "/".join(parts)
+
+
+def _left_out_note(left_out: LeftOut) -> list[str]:
     """What hand-in tells the participant about files it would not send."""
-    if not paths:
-        return []
-    return [
-        "Not sent: these files are named like passwords or keys, so they are never handed in, "
-        "and your reviewer will not see them:",
-        *(f"  {path}" for path in paths),
-        "If one of them is proof the quest asks for, take any secret out of it, save it under "
-        "the name the quest's evidence page shows, and run `gtq hand-in` again.",
+    lines = []
+    if left_out.secret_named:
+        lines += [
+            "Not sent: these files are named like passwords or keys, so they are never handed "
+            "in, and your reviewer will not see them:",
+            *(f"  {path}" for path in left_out.secret_named),
+            "If one of them is proof the quest asks for, take any secret out of it, save it "
+            "under the name the quest's evidence page shows, and run `gtq hand-in` again.",
+        ]
+    lines += [
+        f"Also not sent: {count} file{'s' if count != 1 else ''} in {folder}, which holds "
+        "installed packages, not your work."
+        for folder, count in left_out.dependency_folders.items()
     ]
+    return lines
 
 
 def _decisions(repo: _Repo, before: str) -> list[str]:

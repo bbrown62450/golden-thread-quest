@@ -367,7 +367,7 @@ def test_a_branch_carrying_changes_outside_participant_is_not_brought_in(
     assert git(world["participant"], "rev-parse", "HEAD") == head
 
 
-def test_installed_dependencies_are_not_named_as_left_out(world: dict[str, Path]) -> None:
+def test_installed_dependencies_are_counted_not_listed(world: dict[str, Path]) -> None:
     """2026-10-31: `npm install` under `participant/` put 190 Playwright files in the
     "named like passwords or keys" list, burying the `api.token` that belonged there."""
     participant = world["participant"]
@@ -375,9 +375,70 @@ def test_installed_dependencies_are_not_named_as_left_out(world: dict[str, Path]
     for folder in ("participant/node_modules/x", "participant/tests/.venv/lib"):
         (participant / folder).mkdir(parents=True)
     (participant / "participant" / "node_modules" / "x" / "package.json").write_text("{}\n")
+    (participant / "participant" / "node_modules" / "x" / "index.js").write_text("\n")
     (participant / "participant" / "tests" / ".venv" / "lib" / "site.py").write_text("\n")
     (participant / EVIDENCE / "api.token").write_text("redacted\n")
+    details = hand_in(participant, runner=FakeGh()).details
+    secret_list = details[details.index(f"  {EVIDENCE}/api.token") - 1 :]
+    assert not any("package.json" in line or "site.py" in line for line in details)
+    assert "Also not sent: 2 files in participant/node_modules/" in "\n".join(details)
+    assert "Also not sent: 1 file in participant/tests/.venv/" in "\n".join(details)
+    assert secret_list[0].startswith("Not sent: these files are named like passwords")
+
+
+def test_a_secret_named_file_inside_a_dependency_folder_is_still_listed(
+    world: dict[str, Path],
+) -> None:
+    """Review of PR #50: dropping the whole folder hid `node_modules/x/api.token`."""
+    participant = world["participant"]
+    (participant / ".gitignore").write_text("node_modules/\n.venv/\n*.token\n.env\n")
+    (participant / "participant" / "node_modules" / "x").mkdir(parents=True)
+    (participant / "participant" / ".venv").mkdir(parents=True)
+    (participant / "participant" / "node_modules" / "x" / "api.token").write_text("redacted\n")
+    (participant / "participant" / "node_modules" / "x" / "index.js").write_text("\n")
+    (participant / "participant" / ".venv" / ".env").write_text("redacted\n")
     text = hand_in(participant, runner=FakeGh()).to_text()
-    assert f"{EVIDENCE}/api.token" in text
+    assert "participant/node_modules/x/api.token" in text
+    assert "participant/.venv/.env" in text
+    assert "named like passwords or keys" in text
+    assert "index.js" not in text
+    assert "Also not sent: 1 file in participant/node_modules/" in text
+    pushed = git(world["fork"], "ls-tree", "-r", "--name-only", "pilot/alice")
+    assert "node_modules" not in pushed and ".venv" not in pushed
+
+
+def test_dependency_folders_with_no_ignore_rule_are_handed_in_without_a_word(
+    world: dict[str, Path],
+) -> None:
+    """What hand-in does when nothing ignores `node_modules/`: `git add participant/` sends it
+    like any other file, and the note says nothing. This is pinned, not endorsed. The
+    program's own `.gitignore` ignores these folders at any depth (the next test), so it
+    happens only if a participant removes that rule."""
+    participant = world["participant"]
+    (participant / ".gitignore").write_text("*.token\n")
+    (participant / "participant" / "node_modules" / "x").mkdir(parents=True)
+    (participant / "participant" / "node_modules" / "x" / "package.json").write_text("{}\n")
+    text = hand_in(participant, runner=FakeGh()).to_text()
+    pushed = git(world["fork"], "ls-tree", "-r", "--name-only", "pilot/alice")
+    assert "participant/node_modules/x/package.json" in pushed
     assert "node_modules" not in text
-    assert ".venv" not in text
+
+
+def test_the_program_ignores_dependency_folders_wherever_a_participant_installs() -> None:
+    """The guard against the case above is the repository's own `.gitignore`."""
+    paths = [
+        "participant/node_modules/x/package.json",
+        "participant/tests/playwright/node_modules/x/package.json",
+        "participant/.venv/lib/site.py",
+        "participant/tests/venv/lib/site.py",
+    ]
+    result = subprocess.run(
+        ["git", "check-ignore", "--no-index", "-v", "-n", "--", *paths],
+        cwd=Path(__file__).resolve().parents[2],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    lines = result.stdout.splitlines()
+    assert len(lines) == len(paths), result.stderr
+    assert not [line for line in lines if line.startswith("::")], lines
