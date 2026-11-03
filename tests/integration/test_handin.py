@@ -585,3 +585,31 @@ def test_the_matching_rule_is_read_even_when_its_file_path_has_a_colon(
 ) -> None:
     """Review of PR #50: a `core.excludesFile` on a Windows drive (`C:/...`) gave `3:*.token`."""
     assert handin._rule(line) == rule
+
+
+def test_a_secret_inside_any_build_or_cache_folder_is_still_listed(world: dict[str, Path]) -> None:
+    """Review of PR #50: `*.egg-info/` was a not-a-secret rule whose folders were never taken
+    out of the path, so Git named the folder's rule and `pkg.egg-info/api.token` was counted.
+    Every folder rule on that list gets a secret inside a folder it matches."""
+    participant = world["participant"]
+    (participant / ".gitignore").write_text(PROGRAM_GITIGNORE.read_text())
+    site = participant / "participant" / "tests" / ".venv" / "lib" / "site-packages"
+    folders = sorted(
+        rule.removesuffix("/").replace("*", "pkg")
+        for rule in handin._NOT_SECRET_RULES
+        # Hand-in drops everything under `__pycache__/` as housekeeping before this check
+        # (older than PR #50, in the parking lot), so that folder cannot be tested here.
+        if rule.endswith("/") and rule != "__pycache__/"
+    )
+    assert "pkg.egg-info" in folders
+    for folder in folders:
+        (site / folder).mkdir(parents=True, exist_ok=True)
+        (site / folder / "api.token").write_text("\n")
+    text = hand_in(participant, runner=FakeGh()).to_text()
+    note = text[text.index("named like passwords or keys") :]
+    missing = [
+        folder
+        for folder in folders
+        if f"participant/tests/.venv/lib/site-packages/{folder}/api.token" not in note
+    ]
+    assert not missing, missing

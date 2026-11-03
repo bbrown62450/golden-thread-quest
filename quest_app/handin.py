@@ -18,6 +18,7 @@ not `main`.
 
 from __future__ import annotations
 
+import fnmatch
 import re
 import subprocess
 from collections.abc import Callable, Sequence
@@ -456,17 +457,25 @@ def _dependency_folder(path: str) -> str:
     return "/".join(parts[: index + 1]) + "/"
 
 
-# The folder names among those rules, taken out of a package file's path before Git is asked,
-# so a secret's own name decides: `node_modules/x/dist/api.token` is checked as `x/api.token`.
-_NOT_SECRET_FOLDERS = frozenset(
-    rule.removesuffix("/") for rule in _NOT_SECRET_RULES if rule.endswith("/") and "*" not in rule
+# The folder patterns among those rules, taken out of a package file's path before Git is
+# asked, so a secret's own name decides: `node_modules/x/dist/api.token` is checked as
+# `x/api.token`. Every folder rule on the list must be here, wildcards (`*.egg-info`) too:
+# Git names an ignored folder's rule for the files inside it, which would hide a secret.
+_NOT_SECRET_FOLDERS = tuple(
+    sorted(rule.removesuffix("/") for rule in _NOT_SECRET_RULES if rule.endswith("/"))
 )
+
+
+def _is_package_folder(part: str) -> bool:
+    return part in DEPENDENCY_DIRS or any(
+        fnmatch.fnmatchcase(part, pattern) for pattern in _NOT_SECRET_FOLDERS
+    )
 
 
 def _without_package_folders(path: str) -> str:
     """The path with every dependency, build and cache folder component removed."""
     parts = path.split("/")
-    keep = [part for part in parts[:-1] if part not in DEPENDENCY_DIRS | _NOT_SECRET_FOLDERS]
+    keep = [part for part in parts[:-1] if not _is_package_folder(part)]
     return "/".join([*keep, parts[-1]])
 
 
