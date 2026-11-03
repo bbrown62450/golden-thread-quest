@@ -226,22 +226,27 @@ class _Repo:
         A file under `node_modules/` is ignored because of the folder, which says nothing
         about its name. Asking Git about the same path with the dependency folders taken out
         tells the two apart by the participant's own ignore rules: `node_modules/x/api.token`
-        becomes `x/api.token`, which `*.token` still ignores. When Git cannot answer, every
-        file is treated as named like a secret, so a real one is never hidden.
+        becomes `x/api.token`, which `*.token` still ignores. Build and cache folders such as
+        `dist/` are taken out the same way, so `node_modules/x/dist/api.token` is still found
+        and `node_modules/x/dist/index.js` is not. A match counts only when its rule ignores
+        (it does not start with `!`) and is not a build, cache or editor rule such as `*.pyc`,
+        which every package is full of. When Git cannot answer,
+        every file is treated as named like a secret, so a real one is never hidden.
         """
         found: set[str] = set()
         for start in range(0, len(paths), _CHECK_IGNORE_BATCH):
             batch = paths[start : start + _CHECK_IGNORE_BATCH]
-            stripped = [_without_dependency_dirs(path) for path in batch]
-            # `-v -n` prints one line per path, in order, so a line is matched to its path
-            # by position and Git's quoting of unusual names does not matter.
+            stripped = [_without_package_folders(path) for path in batch]
+            # `-v -n` prints one line per path, in order: `source:line:rule<TAB>path`, or
+            # `::<TAB>path` when no rule matches. A line is matched to its path by position, so
+            # Git's quoting of unusual names does not matter.
             result = self.git("check-ignore", "--no-index", "-v", "-n", "--", *stripped)
             lines = result.stdout.splitlines()
             if result.returncode not in (0, 1) or len(lines) != len(batch):
                 found.update(batch)
                 continue
             found.update(
-                path for path, line in zip(batch, lines, strict=True) if not line.startswith("::")
+                path for path, line in zip(batch, lines, strict=True) if _secret_rule(_rule(line))
             )
         return found
 
@@ -412,6 +417,34 @@ def _is_housekeeping(path: str) -> bool:
     )
 
 
+# Ignore rules for build output, caches, installed packages and editor files. A package file
+# one of these matches is not named like a secret; any other rule, including one the
+# participant wrote, still counts, so an unfamiliar rule shows the file rather than hides it.
+_NOT_SECRET_RULES = frozenset(
+    {
+        "__pycache__/", "*.py[cod]", "*.pyc", "*.pyo", "*.egg-info/", ".pytest_cache/",
+        ".mypy_cache/", ".ruff_cache/", ".tox/", ".nox/", ".coverage", "coverage.xml",
+        "htmlcov/", "dist/", "build/", "lib/", "out/", ".cache/", "node_modules/", ".venv/",
+        "venv/", ".DS_Store", ".idea/", ".vscode/", "*.swp", "uv.lock", ".progress.lock",
+    }
+)  # fmt: skip
+
+
+def _rule(line: str) -> str:
+    """The rule in one line of `git check-ignore -v -n` output; empty when none matched."""
+    where = line.split("\t", 1)[0]
+    parts = where.split(":", 2)
+    return parts[2] if len(parts) == 3 else ""
+
+
+def _secret_rule(rule: str) -> bool:
+    """Whether an ignore rule Git matched makes a file count as named like a secret."""
+    if not rule or rule.startswith("!"):
+        return False
+    normal = rule.removeprefix("/").removeprefix("**/")
+    return normal not in _NOT_SECRET_RULES
+
+
 def _dependency_folder(path: str) -> str:
     """The outermost dependency folder a path lies in, with a trailing slash."""
     parts = path.split("/")
@@ -419,13 +452,18 @@ def _dependency_folder(path: str) -> str:
     return "/".join(parts[: index + 1]) + "/"
 
 
-def _without_dependency_dirs(path: str) -> str:
-    """The path with every dependency-folder component removed."""
+# The folder names among those rules, taken out of a package file's path before Git is asked,
+# so a secret's own name decides: `node_modules/x/dist/api.token` is checked as `x/api.token`.
+_NOT_SECRET_FOLDERS = frozenset(
+    rule.removesuffix("/") for rule in _NOT_SECRET_RULES if rule.endswith("/") and "*" not in rule
+)
+
+
+def _without_package_folders(path: str) -> str:
+    """The path with every dependency, build and cache folder component removed."""
     parts = path.split("/")
-    for index in range(len(parts) - 1, -1, -1):
-        if parts[index] in DEPENDENCY_DIRS:
-            del parts[index : index + 1]
-    return "/".join(parts)
+    keep = [part for part in parts[:-1] if part not in DEPENDENCY_DIRS | _NOT_SECRET_FOLDERS]
+    return "/".join([*keep, parts[-1]])
 
 
 def _left_out_note(left_out: LeftOut) -> list[str]:

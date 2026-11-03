@@ -424,8 +424,16 @@ def test_dependency_folders_with_no_ignore_rule_are_handed_in_without_a_word(
     assert "node_modules" not in text
 
 
-def test_the_program_ignores_dependency_folders_wherever_a_participant_installs() -> None:
-    """The guard against the case above is the repository's own `.gitignore`."""
+PROGRAM_GITIGNORE = Path(__file__).resolve().parents[2] / ".gitignore"
+
+
+def test_the_program_ignores_dependency_folders_wherever_a_participant_installs(
+    tmp_path: Path,
+) -> None:
+    """The guard against the case above is the repository's own `.gitignore`. The rules are
+    copied into a new repository, so the test does not need to run inside a checkout."""
+    git(tmp_path, "init", "--quiet")
+    (tmp_path / ".gitignore").write_text(PROGRAM_GITIGNORE.read_text())
     paths = [
         "participant/node_modules/x/package.json",
         "participant/tests/playwright/node_modules/x/package.json",
@@ -434,11 +442,60 @@ def test_the_program_ignores_dependency_folders_wherever_a_participant_installs(
     ]
     result = subprocess.run(
         ["git", "check-ignore", "--no-index", "-v", "-n", "--", *paths],
-        cwd=Path(__file__).resolve().parents[2],
+        cwd=tmp_path,
         capture_output=True,
         text=True,
         check=False,
     )
     lines = result.stdout.splitlines()
     assert len(lines) == len(paths), result.stderr
-    assert not [line for line in lines if line.startswith("::")], lines
+    # A matching rule that starts with `!` means "do not ignore", so it must not count.
+    patterns = [line.split("\t")[0].split(":", 2)[2] for line in lines if not line.startswith("::")]
+    assert len(patterns) == len(paths), lines
+    assert not [pattern for pattern in patterns if pattern.startswith("!")], lines
+
+
+def test_package_files_under_build_folders_are_not_called_secrets(world: dict[str, Path]) -> None:
+    """Review of PR #50, with the program's real ignore rules: `dist/` and `__pycache__/` are
+    build and cache rules, so a package file they match is not named like a secret."""
+    participant = world["participant"]
+    (participant / ".gitignore").write_text(PROGRAM_GITIGNORE.read_text())
+    base = participant / "participant" / "tests"
+    files = {
+        "node_modules/somepkg/dist/index.js": "\n",
+        "node_modules/playwright/lib/cli/testActions.js": "\n",
+        "node_modules/playwright-core/lib/server/build/out.js": "\n",
+        ".venv/lib/python3.12/site-packages/pkg/__init__.py": "\n",
+        ".venv/lib/python3.12/site-packages/pkg/__pycache__/__init__.cpython-312.pyc": "\n",
+        ".venv/lib/python3.12/site-packages/pkg/dist/data.txt": "\n",
+        "node_modules/somepkg/.npmrc": "redacted\n",
+        ".venv/.env": "redacted\n",
+        "node_modules/somepkg/dist/api.token": "\n",
+        "node_modules/somepkg/build/secrets/key.txt": "redacted\n",
+    }
+    for name, text in files.items():
+        (base / name).parent.mkdir(parents=True, exist_ok=True)
+        (base / name).write_text(text)
+    (participant / EVIDENCE / "api.token").write_text("redacted\n")
+    text = hand_in(participant, runner=FakeGh()).to_text()
+    assert f"{EVIDENCE}/api.token" in text
+    assert "participant/tests/node_modules/somepkg/.npmrc" in text
+    assert "participant/tests/.venv/.env" in text
+    # A secret's name still counts when it sits inside a build or cache folder.
+    assert "participant/tests/node_modules/somepkg/dist/api.token" in text
+    assert "participant/tests/node_modules/somepkg/build/secrets/key.txt" in text
+    for name in ("index.js", "testActions.js", "out.js", "__init__", "data.txt"):
+        assert name not in text, name
+    assert "Also not sent: 3 files in participant/tests/node_modules/" in text
+    assert "Also not sent: 2 files in participant/tests/.venv/" in text
+
+
+def test_a_rule_that_un_ignores_a_name_does_not_make_it_a_secret(world: dict[str, Path]) -> None:
+    """With `-v`, Git also reports a matching `!` rule, which says the name is not ignored."""
+    participant = world["participant"]
+    (participant / ".gitignore").write_text("node_modules/\n*.token\n!sample.token\n")
+    (participant / "participant" / "node_modules" / "x").mkdir(parents=True)
+    (participant / "participant" / "node_modules" / "x" / "sample.token").write_text("demo\n")
+    text = hand_in(participant, runner=FakeGh()).to_text()
+    assert "sample.token" not in text
+    assert "Also not sent: 1 file in participant/node_modules/" in text
