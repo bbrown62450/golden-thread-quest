@@ -17,6 +17,7 @@ from collections.abc import Sequence
 from pathlib import Path
 
 import pytest
+from quest_app import handin
 from quest_app.handin import HandInError, check_for_review, get_review, hand_in, run_command
 
 FORK_URL = "https://github.com/alice/golden-thread-quest.git"
@@ -499,3 +500,88 @@ def test_a_rule_that_un_ignores_a_name_does_not_make_it_a_secret(world: dict[str
     text = hand_in(participant, runner=FakeGh()).to_text()
     assert "sample.token" not in text
     assert "Also not sent: 1 file in participant/node_modules/" in text
+
+
+class GitCannotAnswer(FakeGh):
+    """`git check-ignore` fails, or answers for fewer paths than it was asked about."""
+
+    def __init__(self, how: str) -> None:
+        super().__init__()
+        self.how = how
+
+    def __call__(self, command: Sequence[str], cwd: Path) -> subprocess.CompletedProcess[str]:
+        if list(command[:2]) == ["git", "check-ignore"]:
+            if self.how == "fails":
+                return subprocess.CompletedProcess(list(command), 128, "", "fatal: broken\n")
+            answer = run_command(command, cwd)
+            short = "".join(answer.stdout.splitlines(keepends=True)[:-1])
+            return subprocess.CompletedProcess(list(command), answer.returncode, short, "")
+        return super().__call__(command, cwd)
+
+
+@pytest.mark.parametrize("how", ["fails", "short"])
+def test_when_git_cannot_say_which_rule_matched_every_package_file_is_listed(
+    world: dict[str, Path], how: str
+) -> None:
+    """Review of PR #50: the fallback is what keeps a real secret from being hidden, so when
+    Git cannot answer, every file in the dependency folder is listed and none is counted."""
+    participant = world["participant"]
+    (participant / ".gitignore").write_text(PROGRAM_GITIGNORE.read_text())
+    package = participant / "participant" / "node_modules" / "x"
+    (package / "dist").mkdir(parents=True)
+    for name in ("index.js", "dist/main.js", "api.token"):
+        (package / name).write_text("\n")
+    text = hand_in(participant, runner=GitCannotAnswer(how)).to_text()
+    note = text[text.index("named like passwords or keys") :]
+    for name in ("index.js", "dist/main.js", "api.token"):
+        assert f"participant/node_modules/x/{name}" in note, name
+    assert "Also not sent" not in text
+
+
+def test_package_files_are_matched_to_their_rule_across_batches(
+    world: dict[str, Path], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """With a batch of two, five files take three `check-ignore` calls; each answer must be
+    read against its own path, so the two secrets in the second and third batch are found."""
+    monkeypatch.setattr(handin, "_CHECK_IGNORE_BATCH", 2)
+    participant = world["participant"]
+    (participant / ".gitignore").write_text(PROGRAM_GITIGNORE.read_text())
+    package = participant / "participant" / "node_modules" / "x"
+    package.mkdir(parents=True)
+    for name in ("a.js", "b.js", "c.token", "d.js", "e.token"):
+        (package / name).write_text("\n")
+    runner = CountingRunner()
+    text = hand_in(participant, runner=runner).to_text()
+    assert "participant/node_modules/x/c.token" in text
+    assert "participant/node_modules/x/e.token" in text
+    for name in ("a.js", "b.js", "d.js"):
+        assert name not in text, name
+    assert "Also not sent: 3 files in participant/node_modules/" in text
+    assert runner.check_ignore_calls == 3
+
+
+class CountingRunner(FakeGh):
+    def __init__(self) -> None:
+        super().__init__()
+        self.check_ignore_calls = 0
+
+    def __call__(self, command: Sequence[str], cwd: Path) -> subprocess.CompletedProcess[str]:
+        if list(command[:2]) == ["git", "check-ignore"]:
+            self.check_ignore_calls += 1
+        return super().__call__(command, cwd)
+
+
+@pytest.mark.parametrize(
+    ("line", "rule"),
+    [
+        (".gitignore:44:*.token\tparticipant/x/a.token", "*.token"),
+        ("C:/Users/x/ignore:3:*.token\tparticipant/x/a.token", "*.token"),
+        (".gitignore:3:!sample.token\tparticipant/x/sample.token", "!sample.token"),
+        ("::\tparticipant/x/index.js", ""),
+    ],
+)
+def test_the_matching_rule_is_read_even_when_its_file_path_has_a_colon(
+    line: str, rule: str
+) -> None:
+    """Review of PR #50: a `core.excludesFile` on a Windows drive (`C:/...`) gave `3:*.token`."""
+    assert handin._rule(line) == rule

@@ -430,11 +430,15 @@ _NOT_SECRET_RULES = frozenset(
 )  # fmt: skip
 
 
+# `source:line:rule`. The source is a file path and may hold a colon itself (`C:/x/ignore`), so
+# the line number, the first `:digits:` run, is what divides the source from the rule.
+_CHECK_IGNORE_WHERE = re.compile(r"^.*?:(?P<line>\d+):(?P<rule>.*)$")
+
+
 def _rule(line: str) -> str:
     """The rule in one line of `git check-ignore -v -n` output; empty when none matched."""
-    where = line.split("\t", 1)[0]
-    parts = where.split(":", 2)
-    return parts[2] if len(parts) == 3 else ""
+    found = _CHECK_IGNORE_WHERE.match(line.split("\t", 1)[0])
+    return found["rule"] if found else ""
 
 
 def _secret_rule(rule: str) -> bool:
