@@ -19,6 +19,14 @@ REPO = Path(__file__).resolve().parents[3]
 OUT_DIR = REPO / "participant" / "context" / "jira" / "assigned"
 # Participant notes, one file per story. The sync only checks whether a file exists; it never writes here.
 NOTES_DIR = OUT_DIR / "notes"
+# Delta mode keeps its cursor here. It is written last, and only after a whole delta run has succeeded.
+STATE_PATH = REPO / "participant" / "context" / "jira" / "sync-state.md"
+# Each delta run asks again for this much time before the cursor. It covers clock differences,
+# Jira comparing dates to the minute, and Jira's search showing an edit a little late.
+MARGIN_MINUTES = 5
+JIRA_TIME = "%Y-%m-%dT%H:%M:%S.%f%z"
+# Stories fetched by key are asked for in groups of this size, to keep each query short.
+GAP_BATCH = 50
 FIXTURE_DIR = REPO / "validators" / "fixtures" / "jira"
 # Only these fields are requested. People, worklogs, attachments, links and custom fields
 # are never asked for, so they cannot end up on disk.
@@ -78,7 +86,9 @@ def search_all(settings: dict, jql: str, fields: str) -> list:
         if token:
             params["nextPageToken"] = token
         page = get_json(settings, f"{SEARCH_PATH}?{urllib.parse.urlencode(params)}")
-        for issue in page.get("issues", []):
+        if not isinstance(page, dict) or not isinstance(page.get("issues"), list):
+            sys.exit("Jira's answer to a search held no list of issues. Stopping, so it is not read as an empty result.")
+        for issue in page["issues"]:
             if issue["key"] not in seen_keys:
                 seen_keys.add(issue["key"])
                 issues.append(issue)
@@ -411,12 +421,202 @@ def write_outputs(stories: list, removed: list, others: list, source: str, synce
     write_atomic(OUT_DIR / "index.md", index_markdown(stories, removed, others, source, synced_at))
 
 
+def jira_time_ms(value: str) -> int:
+    """Turn a Jira timestamp such as 2026-11-02T09:00:00.000+0000 into milliseconds since 1970, whatever its offset."""
+    return int(datetime.strptime(value, JIRA_TIME).timestamp() * 1000)
+
+
+def read_cursor():
+    """Return the saved cursor, or None if no delta run has succeeded yet. Stop rather than guess if the file is unreadable."""
+    if not STATE_PATH.exists():
+        return None
+    for line in STATE_PATH.read_text(encoding="utf-8").splitlines():
+        if line.startswith("- cursor: "):
+            value = line[len("- cursor: "):].strip()
+            if value == "none":
+                return None
+            try:
+                jira_time_ms(value)
+            except ValueError:
+                break
+            return value
+    sys.exit(f"{STATE_PATH.name} exists but holds no readable cursor. Fix or move it, then run again.")
+
+
+def state_markdown(cursor, synced_at: str, counts: dict) -> str:
+    lines = [
+        "# Jira sync state",
+        "",
+        "Written by `participant/skills/jira-read-assigned/sync.py --delta`. Do not edit by hand.",
+        "",
+        f"- cursor: {cursor or 'none'}",
+        f"- last_successful_sync: {synced_at}",
+        f"- safety_margin_minutes: {MARGIN_MINUTES}",
+        "- source: live",
+        "- last_run: " + ", ".join(f"{name} {counts[name]}" for name in ("fetched", "new", "changed", "unchanged", "removed")),
+        "",
+        "## What the cursor is",
+        "",
+        "The cursor is the newest `updated` timestamp Jira has sent for a story that was held in `assigned/stories.json`",
+        "when a delta run finished. It stays where it is if that story later leaves the list.",
+        "It is Jira's own timestamp, copied as Jira sent it. This machine's clock is never used to build a query.",
+        "`last_successful_sync` is this machine's clock and is here for people to read; no query uses it.",
+        "",
+        "## How it is updated",
+        "",
+        "1. A delta run reads the cursor and asks Jira for stories updated at or after the cursor minus the safety margin.",
+        "2. It lists every story assigned now with its key and updated time only. A story that left the list is",
+        "   reported as removed. A listed story whose local copy is missing or has a different updated time is fetched by key.",
+        "3. It merges what came back into `stories.json`, matching on the Jira key, and rewrites `index.md`.",
+        "4. Last of all, it writes this file with the new cursor.",
+        "",
+        "If any request or write in steps 1 to 3 fails, the run stops before step 4 and this file is left as it was.",
+        "The next run asks the same question again. Stories fetched twice are matched on their key, so nothing is duplicated.",
+        "The cursor never moves backward.",
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def _same_story(a: dict, b: dict) -> bool:
+    """Two records hold the same story content. When each was fetched does not count."""
+    strip = lambda record: {k: v for k, v in record.items() if k != "retrieved_at"}  # noqa: E731
+    return strip(a) == strip(b)
+
+
+def _same_time(a, b) -> bool:
+    """Two Jira timestamps name the same instant, whatever their offsets. Unreadable values are compared as text."""
+    try:
+        return jira_time_ms(a) == jira_time_ms(b)
+    except (TypeError, ValueError):
+        return a == b
+
+
+def run_delta(settings: dict, synced_at: str, warnings: list) -> None:
+    """Fetch only the stories updated since the last successful delta run, and save the cursor last."""
+    cursor = read_cursor()
+    previous = load_existing()
+    if previous.get("source", "live") != "live":
+        if previous.get("stories") or previous.get("removed"):
+            warnings.append(f"the previous stories.json came from the {previous['source']!r} fixture, so it was replaced, not merged.")
+        previous = {"stories": [], "removed": []}
+    prior = {story["key"]: story for story in previous.get("stories", [])}
+    since = cursor
+    if cursor and not prior:
+        warnings.append("a cursor is saved but no stories are stored locally, so everything was fetched.")
+        since = None
+
+    account_id = find_account_id(settings)
+    assigned = f'assignee = "{account_id}" AND issuetype = Story'
+    if since:
+        threshold = jira_time_ms(since) - MARGIN_MINUTES * 60 * 1000
+        # An unquoted number in JQL is milliseconds since 1970, so no time zone is involved.
+        raw = search_all(settings, f"{assigned} AND updated >= {threshold}", STORY_FIELDS)
+        # A cheap list of everything assigned now: the key and the updated time, nothing else.
+        listed = {issue["key"]: issue["fields"].get("updated") for issue in search_all(settings, assigned, "key,updated")}
+    else:
+        raw = search_all(settings, assigned, STORY_FIELDS)
+        listed = {}
+    assigned_now = set(listed)
+    # Every story Jira lists as assigned must end up held and current. A listed story that the filtered
+    # search did not return is fetched by its key when it is not stored, or when the stored copy's
+    # updated time differs from the listed one. That covers a story that came back without a newer
+    # timestamp, a cursor that is too far ahead, an older stories.json, and an edit Jira showed very late.
+    returned = {issue["key"] for issue in raw}
+    gap = sorted(key for key, updated in listed.items()
+                 if key not in returned and (key not in prior or not _same_time(prior[key].get("updated"), updated)))
+    for start in range(0, len(gap), GAP_BATCH):
+        keys = ", ".join(f'"{key}"' for key in gap[start:start + GAP_BATCH])
+        raw += search_all(settings, f"{assigned} AND key in ({keys})", STORY_FIELDS)
+    by_key = [key for key in gap if key in {issue["key"] for issue in raw}]
+    not_returned = [key for key in gap if key not in by_key]
+    if by_key:
+        warnings.append(f"{len(by_key)} assigned stories were missing or out of date locally and were fetched by key: {', '.join(by_key)}.")
+    if not_returned:
+        warnings.append(f"{len(not_returned)} stories were listed as assigned but not returned when asked for by key, "
+                        f"so the local copy was left as it was: {', '.join(not_returned)}.")
+    listed = {key: updated for key, updated in listed.items() if key not in not_returned or key in prior}
+    assigned_now = set(listed)
+    others = search_all(settings, f'assignee = "{account_id}" AND issuetype != Story', "key,issuetype")
+
+    fetched = []
+    for issue in raw:
+        if issue["key"] not in {record["key"] for record in fetched}:
+            fetched.append(record_from_issue(issue, settings["JIRA_BASE_URL"], synced_at, warnings))
+    assigned_now |= {record["key"] for record in fetched}
+    # Reuse the full sync's comment rules for the stories that came back.
+    merged, _ = merge(fetched, {r["key"]: prior[r["key"]] for r in fetched if r["key"] in prior}, [])
+    counts = {"fetched": len(fetched), "new": 0, "changed": 0, "unchanged": 0, "removed": 0}
+    latest = {}
+    for record in merged:
+        old = prior.get(record["key"])
+        if old is None:
+            counts["new"] += 1
+            latest[record["key"]] = record
+        elif _same_story(record, old):
+            latest[record["key"]] = old  # fetched again inside the margin, and identical: keep the stored copy
+        else:
+            counts["changed"] += 1
+            latest[record["key"]] = record
+
+    # A story that was not returned did not change. It is kept exactly as stored, unless it left the list.
+    stories = [latest.pop(key, old) for key, old in prior.items() if key in assigned_now]
+    stories += list(latest.values())
+    counts["unchanged"] = len(stories) - counts["new"] - counts["changed"]
+    held = {story["key"] for story in stories}
+    # A removed entry is dropped only when the story is really held again, not because its key was listed.
+    removed = [entry for entry in previous.get("removed", []) if entry["key"] not in held]
+    for key, old in prior.items():
+        if key not in assigned_now:
+            removed.append({"key": key, "last_known_status": old.get("status")})
+            counts["removed"] += 1
+
+    new_cursor = cursor
+    newest_ms = jira_time_ms(cursor) if cursor else None
+    for story in stories:
+        value = story.get("updated")
+        if not value:
+            continue
+        try:
+            value_ms = jira_time_ms(value)
+        except (TypeError, ValueError):
+            # A value the cursor reader would reject is never saved as the cursor.
+            warnings.append(f"{story['key']}: its updated time could not be read, so it was not used for the cursor.")
+            continue
+        if newest_ms is None or value_ms > newest_ms:
+            new_cursor, newest_ms = value, value_ms
+
+    write_outputs(stories, removed, others, "live", synced_at)
+    # The cursor is written last. Anything that stops the run before this line leaves the old cursor in place.
+    write_atomic(STATE_PATH, state_markdown(new_cursor, synced_at, counts))
+
+    if since:
+        print(f"mode: delta, asking for stories updated since {since} minus {MARGIN_MINUTES} minutes")
+    else:
+        print("mode: delta, no usable cursor yet, so everything was fetched")
+    for name in ("fetched", "new", "changed", "unchanged", "removed"):
+        print(f"{name}: {counts[name]}")
+    print(f"stories held: {len(stories)}")
+    print(f"removed held: {len(removed)}")
+    print(f"cursor before: {cursor or 'none'}")
+    print(f"cursor after: {new_cursor or 'none'}")
+    for warning in warnings:
+        print(f"warning: {warning}")
+    print(f"wrote {OUT_DIR / 'stories.json'}, {OUT_DIR / 'index.md'} and {STATE_PATH}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Sync my assigned Jira stories to local files.")
     parser.add_argument("--source", default="live", help='"live" (the default), or a fixture name such as happy-path')
+    parser.add_argument("--delta", action="store_true", help="fetch only stories updated since the last successful delta run (live only)")
     args = parser.parse_args()
     synced_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     warnings: list = []
+    if args.delta:
+        if args.source != "live":
+            sys.exit("--delta works on live Jira only, not on a fixture.")
+        run_delta(read_settings(), synced_at, warnings)
+        return
     if args.source == "live":
         current, prior, earlier_removed, others, source = gather_live(read_settings(), synced_at, warnings)
     else:

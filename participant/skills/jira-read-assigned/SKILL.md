@@ -67,3 +67,32 @@ The skill writes `participant/context/jira/assigned/stories.json`. It holds each
 The skill writes `participant/context/jira/assigned/index.md`, a list of your stories with each key, summary, status, and type, and a link to the story's notes file when one exists. It leaves out comment bodies, account IDs, and email addresses, so the file can be shared as evidence after any organization-specific titles are redacted.
 
 The other-types count from section 4 is written into `index.md` as a "Not synced" section, with the count for each type and the keys.
+
+## 12. Delta mode
+
+`sync.py --delta` fetches the stories that changed since the last successful delta run, instead of fetching them all. It works on live Jira only, never on a fixture, and it is read-only like the rest of the skill.
+
+**The cursor.** Delta mode saves a cursor in `participant/context/jira/sync-state.md`. The cursor is the newest `updated` timestamp Jira has sent for a story that was held in `stories.json` when a delta run finished, copied as Jira sent it. A timestamp the skill cannot read is never saved as the cursor. This machine's clock is never used to build a query. The file also records the time of the last successful run on this machine's clock, for people to read.
+
+**What a run does, in order.**
+
+1. Read the cursor. With no cursor, fetch every assigned story once.
+2. Ask Jira for assigned stories with `updated >=` the cursor minus 5 minutes, written as milliseconds since 1970 so that no time zone is involved.
+3. List every assigned story with two fields only, `key` and `updated`.
+4. Fetch by key any listed story that step 2 did not return and whose local copy is missing, or has a different `updated` time.
+5. Merge into `stories.json` on the Jira key, using the comment rules in section 7, and rewrite `index.md`.
+6. Write `sync-state.md` with the new cursor. This is the last write.
+
+**Why the 5 minute margin.** Jira's search can show an edit a little late, quoted JQL dates are compared to the minute, and clocks differ. Asking again for the last 5 minutes covers those cases. A story fetched twice is matched on its key, so nothing is duplicated, and a story that comes back identical is counted as unchanged. Step 4 catches an edit that arrives later than the margin.
+
+**Stories that did not come back.** A stored story that step 2 did not return is kept exactly as stored. It is reported as removed only when step 3's list no longer includes it. An entry leaves the `removed` list only when the story is held again.
+
+**Failure.** A search answer that holds no list of issues is treated as a failure, not as an empty result. If a request or a write fails before step 6, the run stops and `sync-state.md` is left as it was. The next run asks the same question again. The cursor never moves backward.
+
+**What a run prints.** `fetched`, `new`, `changed`, `unchanged` and `removed` for that run, the number of stories held, and the cursor before and after. `new`, `changed` and `unchanged` add up to the stories held. `changed` means the stored content differs, not merely that the story was fetched. A warning names any story fetched by key in step 4, and any story that was listed but not returned when asked for by key.
+
+**Notes.** Delta mode never writes to `participant/context/jira/assigned/notes/`.
+
+**If the state looks wrong.** A `sync-state.md` with no readable cursor stops the run. A cursor with no stored stories, or stored stories that came from a fixture, makes the run fetch everything. A full sync (`sync.py` with no flag) repairs the stored stories from scratch and leaves the cursor alone.
+
+**Checks.** `tests/test_delta.py` runs delta mode against `fake_jira.py` and the synthetic tickets in `delta_fixture/timeline.json`. `delta_check.py` prints the evidence runs from the same fixture. `live_check.py` drives delta mode against a real sandbox Jira from a throwaway folder outside the repository, and `live_probe.py` asks a live Jira whether it accepts the milliseconds filter. All four only read from Jira.
