@@ -54,4 +54,13 @@ attempts:
   evidence_path: participant/evidence/jira-delta-sync/jira-attempt-002
   submission_id: submission-20261110211445-d6958a
   review_id: review-20261110212727-4ffded
-updated_at: '2026-11-10T21:27:27Z'
+- attempt_id: base-attempt-002
+  quest_id: base-camp-audit-log
+  quest_version: 1
+  content_hash: sha256:cf8119038bb8765cf210eb30185d64cded0708b04f74534eda9c50a5e8e29b25
+  state: submitted
+  started_at: '2026-11-10T23:17:06Z'
+  updated_at: '2026-11-11T17:36:48Z'
+  evidence_path: participant/evidence/base-camp-audit-log/base-attempt-002
+  submission_id: submission-20261111173648-ad8ba4
+updated_at: '2026-11-11T17:36:48Z'

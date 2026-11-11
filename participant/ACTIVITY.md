@@ -32,3 +32,8 @@ Every change this application made to your files, newest last.
 - `2026-11-10T21:14:45Z` jira-delta-sync: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-10T21:14:45Z` Submitted jira-delta-sync for review as submission-20261110211445-d6958a.
 - `2026-11-10T21:27:27Z` Review of jira-delta-sync: approved by Claude (automated reviewer).
+- `2026-11-10T23:17:06Z` Started base-camp-audit-log as attempt base-attempt-002.
+- `2026-11-11T17:36:08Z` base-camp-audit-log: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-11T17:36:29Z` base-camp-audit-log: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-11T17:36:48Z` base-camp-audit-log: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-11T17:36:48Z` Submitted base-camp-audit-log for review as submission-20261111173648-ad8ba4.
