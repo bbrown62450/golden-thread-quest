@@ -38,3 +38,8 @@ Every change this application made to your files, newest last.
 - `2026-11-11T17:36:48Z` base-camp-audit-log: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-11T17:36:48Z` Submitted base-camp-audit-log for review as submission-20261111173648-ad8ba4.
 - `2026-11-11T17:47:39Z` Review of base-camp-audit-log: approved by Claude (automated reviewer).
+- `2026-11-17T00:19:38Z` Started base-camp-prompt-injection as attempt base-attempt-003.
+- `2026-11-17T01:21:53Z` base-camp-prompt-injection: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-17T01:22:18Z` base-camp-prompt-injection: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-17T01:22:39Z` base-camp-prompt-injection: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-17T01:22:39Z` Submitted base-camp-prompt-injection for review as submission-20261117012239-f62c3f.
