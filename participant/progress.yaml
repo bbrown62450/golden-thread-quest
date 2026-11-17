@@ -74,4 +74,13 @@ attempts:
   evidence_path: participant/evidence/base-camp-prompt-injection/base-attempt-003
   submission_id: submission-20261117012239-f62c3f
   review_id: review-20261117012548-dfeeab
-updated_at: '2026-11-17T01:25:48Z'
+- attempt_id: base-attempt-004
+  quest_id: base-camp-safe-rerun
+  quest_version: 1
+  content_hash: sha256:f3734c3c69b8ee79e4cea72824ec3c7982a788c35b35132885192e89de8956fa
+  state: submitted
+  started_at: '2026-11-17T14:39:51Z'
+  updated_at: '2026-11-17T17:26:29Z'
+  evidence_path: participant/evidence/base-camp-safe-rerun/base-attempt-004
+  submission_id: submission-20261117172629-0a937c
+updated_at: '2026-11-17T17:26:29Z'

@@ -44,3 +44,8 @@ Every change this application made to your files, newest last.
 - `2026-11-17T01:22:39Z` base-camp-prompt-injection: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-17T01:22:39Z` Submitted base-camp-prompt-injection for review as submission-20261117012239-f62c3f.
 - `2026-11-17T01:25:48Z` Review of base-camp-prompt-injection: approved by Claude (automated reviewer).
+- `2026-11-17T14:39:51Z` Started base-camp-safe-rerun as attempt base-attempt-004.
+- `2026-11-17T17:25:43Z` base-camp-safe-rerun: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-17T17:26:08Z` base-camp-safe-rerun: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-17T17:26:29Z` base-camp-safe-rerun: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-17T17:26:29Z` Submitted base-camp-safe-rerun for review as submission-20261117172629-0a937c.
