@@ -98,9 +98,10 @@ attempts:
   quest_id: base-camp-write-preview
   quest_version: 1
   content_hash: sha256:51f72dadd6f81f8b3d9e413252f242ec0288afa0bbdd4d6c2dbe52def501e952
-  state: submitted
+  state: verified
   started_at: '2026-11-17T20:01:59Z'
-  updated_at: '2026-11-17T21:06:26Z'
+  updated_at: '2026-11-17T21:18:30Z'
   evidence_path: participant/evidence/base-camp-write-preview/base-attempt-006
   submission_id: submission-20261117210626-513783
-updated_at: '2026-11-17T21:06:26Z'
+  review_id: review-20261117211830-74a3cd
+updated_at: '2026-11-17T21:18:30Z'
