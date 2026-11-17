@@ -50,3 +50,8 @@ Every change this application made to your files, newest last.
 - `2026-11-17T17:26:29Z` base-camp-safe-rerun: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-17T17:26:29Z` Submitted base-camp-safe-rerun for review as submission-20261117172629-0a937c.
 - `2026-11-17T17:37:45Z` Review of base-camp-safe-rerun: approved by Claude (automated reviewer).
+- `2026-11-17T18:29:06Z` Started base-camp-failure-lab as attempt base-attempt-005.
+- `2026-11-17T19:39:52Z` base-camp-failure-lab: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-17T19:40:09Z` base-camp-failure-lab: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-17T19:40:28Z` base-camp-failure-lab: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-17T19:40:28Z` Submitted base-camp-failure-lab for review as submission-20261117194028-db7815.
