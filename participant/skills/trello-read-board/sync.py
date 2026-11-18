@@ -634,7 +634,7 @@ def render_reconciliation(state, changes):
 # ---------------------------------------------------------------- the run
 
 
-def run(client, board_ref, out_dir, source, now=None):
+def run(client, board_ref, out_dir, source, now=None, page_size=PAGE_SIZE):
     now = now or utc_now()
     # Everything is read first. Nothing is written until every request has succeeded.
     steps = ["the signed-in member", "the board", "lists", "cards", "checklists", "comments"]
@@ -648,11 +648,11 @@ def run(client, board_ref, out_dir, source, now=None):
         say("board resolved from configuration: '%s' (id %s)" % (board.get("name"), board["id"]))
         lists = read_lists(client, board["id"])
         got.append(steps[2])
-        cards = read_cards(client, board["id"], lists)
+        cards = read_cards(client, board["id"], lists, page_size)
         got.append(steps[3])
         checklists = read_checklists(client, board["id"])
         got.append(steps[4])
-        comments = read_comments(client, board["id"])
+        comments = read_comments(client, board["id"], page_size)
         got.append(steps[5])
     except RateLimited:
         # A run that could not read everything is not a sync. Merging a part would mark the

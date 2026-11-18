@@ -128,10 +128,10 @@ attempts:
   quest_id: trello-read-board
   quest_version: 1
   content_hash: sha256:34de41afdd2b7fdbea30fe9a93ad54f7dbcf2e0d45bb4641cccaf056fdc44ddd
-  state: needs_changes
+  state: submitted
   started_at: '2026-11-18T18:39:39Z'
-  updated_at: '2026-11-18T20:40:05Z'
+  updated_at: '2026-11-18T21:00:26Z'
   evidence_path: participant/evidence/trello-read-board/trello-attempt-001
-  submission_id: submission-20261118203315-9df3d3
+  submission_id: submission-20261118210026-782b46
   review_id: review-20261118204005-d68567
-updated_at: '2026-11-18T20:40:05Z'
+updated_at: '2026-11-18T21:00:26Z'
