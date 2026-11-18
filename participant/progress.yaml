@@ -118,9 +118,10 @@ attempts:
   quest_id: jira-detect-conflicts
   quest_version: 1
   content_hash: sha256:d09b804143856619ba87e5ffb465687fb73aaea81aa82264bfb9c77f81bcc343
-  state: submitted
+  state: verified
   started_at: '2026-11-18T17:17:42Z'
-  updated_at: '2026-11-18T18:14:51Z'
+  updated_at: '2026-11-18T18:23:30Z'
   evidence_path: participant/evidence/jira-detect-conflicts/jira-attempt-004
   submission_id: submission-20261118181451-87399c
-updated_at: '2026-11-18T18:14:51Z'
+  review_id: review-20261118182330-617341
+updated_at: '2026-11-18T18:23:30Z'
