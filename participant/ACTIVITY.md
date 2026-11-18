@@ -74,3 +74,8 @@ Every change this application made to your files, newest last.
 - `2026-11-18T18:14:51Z` jira-detect-conflicts: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-18T18:14:51Z` Submitted jira-detect-conflicts for review as submission-20261118181451-87399c.
 - `2026-11-18T18:23:30Z` Review of jira-detect-conflicts: approved by Claude (automated reviewer).
+- `2026-11-18T18:39:39Z` Started trello-read-board as attempt trello-attempt-001.
+- `2026-11-18T20:31:44Z` trello-read-board: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-18T20:32:03Z` trello-read-board: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-18T20:33:15Z` trello-read-board: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-18T20:33:15Z` Submitted trello-read-board for review as submission-20261118203315-9df3d3.
