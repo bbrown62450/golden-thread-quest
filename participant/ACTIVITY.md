@@ -62,3 +62,8 @@ Every change this application made to your files, newest last.
 - `2026-11-17T21:06:26Z` base-camp-write-preview: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-17T21:06:26Z` Submitted base-camp-write-preview for review as submission-20261117210626-513783.
 - `2026-11-17T21:18:30Z` Review of base-camp-write-preview: approved by Claude (automated reviewer).
+- `2026-11-18T16:24:47Z` Started jira-compare-access-methods as attempt jira-attempt-003.
+- `2026-11-18T16:57:46Z` jira-compare-access-methods: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-18T16:58:04Z` jira-compare-access-methods: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-18T16:58:22Z` jira-compare-access-methods: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-18T16:58:22Z` Submitted jira-compare-access-methods for review as submission-20261118165822-063856.

@@ -104,4 +104,13 @@ attempts:
   evidence_path: participant/evidence/base-camp-write-preview/base-attempt-006
   submission_id: submission-20261117210626-513783
   review_id: review-20261117211830-74a3cd
-updated_at: '2026-11-17T21:18:30Z'
+- attempt_id: jira-attempt-003
+  quest_id: jira-compare-access-methods
+  quest_version: 1
+  content_hash: sha256:f0c582788dbe8b29c9597bb351797862ac5daafa64726852f49cbb59eaffaeeb
+  state: submitted
+  started_at: '2026-11-18T16:24:47Z'
+  updated_at: '2026-11-18T16:58:22Z'
+  evidence_path: participant/evidence/jira-compare-access-methods/jira-attempt-003
+  submission_id: submission-20261118165822-063856
+updated_at: '2026-11-18T16:58:22Z'
