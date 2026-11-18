@@ -114,4 +114,13 @@ attempts:
   evidence_path: participant/evidence/jira-compare-access-methods/jira-attempt-003
   submission_id: submission-20261118165822-063856
   review_id: review-20261118170929-124754
-updated_at: '2026-11-18T17:09:29Z'
+- attempt_id: jira-attempt-004
+  quest_id: jira-detect-conflicts
+  quest_version: 1
+  content_hash: sha256:d09b804143856619ba87e5ffb465687fb73aaea81aa82264bfb9c77f81bcc343
+  state: submitted
+  started_at: '2026-11-18T17:17:42Z'
+  updated_at: '2026-11-18T18:14:51Z'
+  evidence_path: participant/evidence/jira-detect-conflicts/jira-attempt-004
+  submission_id: submission-20261118181451-87399c
+updated_at: '2026-11-18T18:14:51Z'

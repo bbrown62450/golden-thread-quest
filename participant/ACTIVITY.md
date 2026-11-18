@@ -68,3 +68,8 @@ Every change this application made to your files, newest last.
 - `2026-11-18T16:58:22Z` jira-compare-access-methods: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-18T16:58:22Z` Submitted jira-compare-access-methods for review as submission-20261118165822-063856.
 - `2026-11-18T17:09:29Z` Review of jira-compare-access-methods: approved by Claude (automated reviewer).
+- `2026-11-18T17:17:42Z` Started jira-detect-conflicts as attempt jira-attempt-004.
+- `2026-11-18T18:13:01Z` jira-detect-conflicts: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-18T18:13:22Z` jira-detect-conflicts: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-18T18:14:51Z` jira-detect-conflicts: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-18T18:14:51Z` Submitted jira-detect-conflicts for review as submission-20261118181451-87399c.
