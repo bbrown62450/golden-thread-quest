@@ -148,9 +148,10 @@ attempts:
   quest_id: jira-list-projects
   quest_version: 1
   content_hash: sha256:4d280cfd49249a9d61c128ee06d08cee55e97858abe1e09cb597effd7b9316c6
-  state: submitted
+  state: verified
   started_at: '2026-11-19T01:40:17Z'
-  updated_at: '2026-11-19T01:59:05Z'
+  updated_at: '2026-11-19T02:05:34Z'
   evidence_path: participant/evidence/jira-list-projects/jira-attempt-006
   submission_id: submission-20261119015905-7d016e
-updated_at: '2026-11-19T01:59:05Z'
+  review_id: review-20261119020534-e37926
+updated_at: '2026-11-19T02:05:34Z'
