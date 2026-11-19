@@ -178,9 +178,10 @@ attempts:
   quest_id: jira-build-index
   quest_version: 1
   content_hash: sha256:61ecacc2487384925182d8e592818c8c4399ccc160e2ea45e38e7517a04e455a
-  state: submitted
+  state: verified
   started_at: '2026-11-19T18:26:42Z'
-  updated_at: '2026-11-19T18:41:03Z'
+  updated_at: '2026-11-19T18:50:27Z'
   evidence_path: participant/evidence/jira-build-index/jira-attempt-009
   submission_id: submission-20261119184103-2d742f
-updated_at: '2026-11-19T18:41:03Z'
+  review_id: review-20261119185027-55ce29
+updated_at: '2026-11-19T18:50:27Z'
