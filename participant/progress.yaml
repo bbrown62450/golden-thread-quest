@@ -138,9 +138,10 @@ attempts:
   quest_id: jira-verify-connection
   quest_version: 1
   content_hash: sha256:40070ac981ddd20cf761ded0bdde12346f955b3c8fd2590c990dfcbcf27f0c7d
-  state: submitted
+  state: verified
   started_at: '2026-11-19T00:51:04Z'
-  updated_at: '2026-11-19T01:24:59Z'
+  updated_at: '2026-11-19T01:33:32Z'
   evidence_path: participant/evidence/jira-verify-connection/jira-attempt-005
   submission_id: submission-20261119012459-58d066
-updated_at: '2026-11-19T01:24:59Z'
+  review_id: review-20261119013332-2e068c
+updated_at: '2026-11-19T01:33:32Z'
