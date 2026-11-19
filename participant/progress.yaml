@@ -134,4 +134,13 @@ attempts:
   evidence_path: participant/evidence/trello-read-board/trello-attempt-001
   submission_id: submission-20261118210026-782b46
   review_id: review-20261118211158-56ebb5
-updated_at: '2026-11-18T21:11:58Z'
+- attempt_id: jira-attempt-005
+  quest_id: jira-verify-connection
+  quest_version: 1
+  content_hash: sha256:40070ac981ddd20cf761ded0bdde12346f955b3c8fd2590c990dfcbcf27f0c7d
+  state: submitted
+  started_at: '2026-11-19T00:51:04Z'
+  updated_at: '2026-11-19T01:24:59Z'
+  evidence_path: participant/evidence/jira-verify-connection/jira-attempt-005
+  submission_id: submission-20261119012459-58d066
+updated_at: '2026-11-19T01:24:59Z'
