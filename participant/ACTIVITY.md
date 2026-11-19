@@ -92,3 +92,8 @@ Every change this application made to your files, newest last.
 - `2026-11-19T01:24:59Z` jira-verify-connection: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-19T01:24:59Z` Submitted jira-verify-connection for review as submission-20261119012459-58d066.
 - `2026-11-19T01:33:32Z` Review of jira-verify-connection: approved by Claude (automated reviewer).
+- `2026-11-19T01:40:17Z` Started jira-list-projects as attempt jira-attempt-006.
+- `2026-11-19T01:58:27Z` jira-list-projects: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-19T01:58:45Z` jira-list-projects: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-19T01:59:05Z` jira-list-projects: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-19T01:59:05Z` Submitted jira-list-projects for review as submission-20261119015905-7d016e.
