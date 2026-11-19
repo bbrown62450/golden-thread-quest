@@ -128,3 +128,8 @@ Every change this application made to your files, newest last.
 - `2026-11-19T21:05:01Z` jira-create-story-preview: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-19T21:05:01Z` Submitted jira-create-story-preview for review as submission-20261119210501-54d653.
 - `2026-11-19T21:07:39Z` Review of jira-create-story-preview: approved by Claude (automated reviewer).
+- `2026-11-19T21:10:22Z` Started jira-create-story as attempt jira-attempt-012.
+- `2026-11-19T21:41:11Z` jira-create-story: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-19T21:44:47Z` jira-create-story: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-19T21:46:52Z` jira-create-story: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-19T21:46:52Z` Submitted jira-create-story for review as submission-20261119214652-528212.

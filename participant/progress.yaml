@@ -204,4 +204,13 @@ attempts:
   evidence_path: participant/evidence/jira-create-story-preview/jira-attempt-011
   submission_id: submission-20261119210501-54d653
   review_id: review-20261119210739-c8f034
-updated_at: '2026-11-19T21:07:39Z'
+- attempt_id: jira-attempt-012
+  quest_id: jira-create-story
+  quest_version: 1
+  content_hash: sha256:3e67297d48a1c298a945bd97e574107597012309d16368a433a4606e95c15d9f
+  state: submitted
+  started_at: '2026-11-19T21:10:21Z'
+  updated_at: '2026-11-19T21:46:52Z'
+  evidence_path: participant/evidence/jira-create-story/jira-attempt-012
+  submission_id: submission-20261119214652-528212
+updated_at: '2026-11-19T21:46:52Z'
