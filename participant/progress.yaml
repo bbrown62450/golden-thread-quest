@@ -194,4 +194,13 @@ attempts:
   evidence_path: participant/evidence/jira-duplicate-search/jira-attempt-010
   submission_id: submission-20261119191627-219748
   review_id: review-20261119192232-6749b6
-updated_at: '2026-11-19T19:22:32Z'
+- attempt_id: jira-attempt-011
+  quest_id: jira-create-story-preview
+  quest_version: 1
+  content_hash: sha256:217f4b5c1d2af697d5b1f5445a3d648bfd6a561b421ca52528a901dec2ff7288
+  state: submitted
+  started_at: '2026-11-19T19:47:03Z'
+  updated_at: '2026-11-19T21:05:01Z'
+  evidence_path: participant/evidence/jira-create-story-preview/jira-attempt-011
+  submission_id: submission-20261119210501-54d653
+updated_at: '2026-11-19T21:05:01Z'

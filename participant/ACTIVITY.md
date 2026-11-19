@@ -122,3 +122,8 @@ Every change this application made to your files, newest last.
 - `2026-11-19T19:16:27Z` jira-duplicate-search: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-19T19:16:27Z` Submitted jira-duplicate-search for review as submission-20261119191627-219748.
 - `2026-11-19T19:22:32Z` Review of jira-duplicate-search: approved by Claude (automated reviewer).
+- `2026-11-19T19:47:03Z` Started jira-create-story-preview as attempt jira-attempt-011.
+- `2026-11-19T21:04:20Z` jira-create-story-preview: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-19T21:04:39Z` jira-create-story-preview: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-19T21:05:01Z` jira-create-story-preview: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-19T21:05:01Z` Submitted jira-create-story-preview for review as submission-20261119210501-54d653.
