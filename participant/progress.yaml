@@ -208,9 +208,10 @@ attempts:
   quest_id: jira-create-story
   quest_version: 1
   content_hash: sha256:3e67297d48a1c298a945bd97e574107597012309d16368a433a4606e95c15d9f
-  state: submitted
+  state: verified
   started_at: '2026-11-19T21:10:21Z'
-  updated_at: '2026-11-19T21:46:52Z'
+  updated_at: '2026-11-19T21:50:44Z'
   evidence_path: participant/evidence/jira-create-story/jira-attempt-012
   submission_id: submission-20261119214652-528212
-updated_at: '2026-11-19T21:46:52Z'
+  review_id: review-20261119215044-ae2332
+updated_at: '2026-11-19T21:50:44Z'
