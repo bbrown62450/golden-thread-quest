@@ -104,3 +104,8 @@ Every change this application made to your files, newest last.
 - `2026-11-19T12:55:36Z` jira-read-story: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-19T12:55:36Z` Submitted jira-read-story for review as submission-20261119125536-9bc9dc.
 - `2026-11-19T13:03:17Z` Review of jira-read-story: approved by Claude (automated reviewer).
+- `2026-11-19T15:00:37Z` Started jira-update-fields as attempt jira-attempt-008.
+- `2026-11-19T15:56:57Z` jira-update-fields: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-19T15:59:03Z` jira-update-fields: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-19T16:00:09Z` jira-update-fields: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-19T16:00:09Z` Submitted jira-update-fields for review as submission-20261119160009-9d1964.
