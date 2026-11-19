@@ -110,3 +110,8 @@ Every change this application made to your files, newest last.
 - `2026-11-19T16:00:09Z` jira-update-fields: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-19T16:00:09Z` Submitted jira-update-fields for review as submission-20261119160009-9d1964.
 - `2026-11-19T16:12:06Z` Review of jira-update-fields: approved by Claude (automated reviewer).
+- `2026-11-19T18:26:42Z` Started jira-build-index as attempt jira-attempt-009.
+- `2026-11-19T18:40:23Z` jira-build-index: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-19T18:40:42Z` jira-build-index: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-19T18:41:03Z` jira-build-index: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-19T18:41:03Z` Submitted jira-build-index for review as submission-20261119184103-2d742f.
