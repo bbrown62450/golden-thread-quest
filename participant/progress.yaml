@@ -158,9 +158,10 @@ attempts:
   quest_id: jira-read-story
   quest_version: 1
   content_hash: sha256:0549ccdee0f4acc04c78aef47afcb14a7449c9de22d042a208f9d793620aae47
-  state: submitted
+  state: verified
   started_at: '2026-11-19T12:13:26Z'
-  updated_at: '2026-11-19T12:55:36Z'
+  updated_at: '2026-11-19T13:03:17Z'
   evidence_path: participant/evidence/jira-read-story/jira-attempt-007
   submission_id: submission-20261119125536-9bc9dc
-updated_at: '2026-11-19T12:55:36Z'
+  review_id: review-20261119130317-4823ef
+updated_at: '2026-11-19T13:03:17Z'
