@@ -168,9 +168,10 @@ attempts:
   quest_id: jira-update-fields
   quest_version: 1
   content_hash: sha256:f4f54405820f01e39e3a37148cee432928dbbe18cec0c4296df6d4f12369d961
-  state: submitted
+  state: verified
   started_at: '2026-11-19T15:00:37Z'
-  updated_at: '2026-11-19T16:00:09Z'
+  updated_at: '2026-11-19T16:12:06Z'
   evidence_path: participant/evidence/jira-update-fields/jira-attempt-008
   submission_id: submission-20261119160009-9d1964
-updated_at: '2026-11-19T16:00:09Z'
+  review_id: review-20261119161206-74a6a5
+updated_at: '2026-11-19T16:12:06Z'
