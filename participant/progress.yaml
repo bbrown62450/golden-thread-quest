@@ -184,4 +184,13 @@ attempts:
   evidence_path: participant/evidence/jira-build-index/jira-attempt-009
   submission_id: submission-20261119184103-2d742f
   review_id: review-20261119185027-55ce29
-updated_at: '2026-11-19T18:50:27Z'
+- attempt_id: jira-attempt-010
+  quest_id: jira-duplicate-search
+  quest_version: 1
+  content_hash: sha256:5c93408a5eb3d66f14c69cdba7b19cb335f0902b41303dc4ef97c4f9395db554
+  state: submitted
+  started_at: '2026-11-19T18:57:25Z'
+  updated_at: '2026-11-19T19:16:27Z'
+  evidence_path: participant/evidence/jira-duplicate-search/jira-attempt-010
+  submission_id: submission-20261119191627-219748
+updated_at: '2026-11-19T19:16:27Z'

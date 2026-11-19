@@ -116,3 +116,8 @@ Every change this application made to your files, newest last.
 - `2026-11-19T18:41:03Z` jira-build-index: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-19T18:41:03Z` Submitted jira-build-index for review as submission-20261119184103-2d742f.
 - `2026-11-19T18:50:27Z` Review of jira-build-index: approved by Claude (automated reviewer).
+- `2026-11-19T18:57:25Z` Started jira-duplicate-search as attempt jira-attempt-010.
+- `2026-11-19T19:15:45Z` jira-duplicate-search: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-19T19:16:04Z` jira-duplicate-search: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-19T19:16:27Z` jira-duplicate-search: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-19T19:16:27Z` Submitted jira-duplicate-search for review as submission-20261119191627-219748.
