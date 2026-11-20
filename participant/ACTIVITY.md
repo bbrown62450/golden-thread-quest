@@ -170,3 +170,8 @@ Every change this application made to your files, newest last.
 - `2026-11-20T18:47:11Z` trello-duplicate-search: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-20T18:47:11Z` Submitted trello-duplicate-search for review as submission-20261120184711-101c75.
 - `2026-11-20T18:49:39Z` Review of trello-duplicate-search: approved by Claude (automated reviewer).
+- `2026-11-20T19:03:02Z` Started trello-create-card-preview as attempt trello-attempt-005.
+- `2026-11-20T19:22:01Z` trello-create-card-preview: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-20T19:22:23Z` trello-create-card-preview: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-20T19:23:10Z` trello-create-card-preview: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-20T19:23:10Z` Submitted trello-create-card-preview for review as submission-20261120192310-91507e.
