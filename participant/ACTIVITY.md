@@ -140,3 +140,8 @@ Every change this application made to your files, newest last.
 - `2026-11-20T01:53:08Z` context-staleness: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-20T01:53:08Z` Submitted context-staleness for review as submission-20261120015308-5286c4.
 - `2026-11-20T02:02:39Z` Review of context-staleness: approved by Claude (automated reviewer).
+- `2026-11-20T12:38:29Z` Started trello-read-card as attempt trello-attempt-002.
+- `2026-11-20T13:05:36Z` trello-read-card: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-20T13:06:12Z` trello-read-card: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-20T13:07:11Z` trello-read-card: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-20T13:07:11Z` Submitted trello-read-card for review as submission-20261120130711-268abb.
