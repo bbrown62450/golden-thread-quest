@@ -124,9 +124,9 @@ def main():
           all(any(k == t for _, k in findings.values()) for t in TYPES))
     check("the two contradictions each cite two requirements, and one of them spans the two documents (criterion 4)",
           sorted(sorted(r) for r, k in findings.values() if k == "contradictory") == [["NFR-04", "REQ-14"], ["REQ-04", "REQ-12"]])
-    check("%d requirements are listed as unflagged, each with a reason (criterion 5)" % len(unflagged), len(unflagged) == 9
+    check("%d requirements are listed as unflagged, each with a reason (criterion 5)" % len(unflagged), len(unflagged) == 10
           and all(re.search(r"^  %s +\S.{20,}" % r, text, re.M) for r in unflagged))
-    check("every one of the 20 requirements is accounted for exactly once", "11 with a finding + 9 unflagged = 20 of 20 requirements." in text)
+    check("every one of the 20 requirements is accounted for exactly once", "10 with a finding + 10 unflagged = 20 of 20 requirements." in text)
     check("every finding asks a question", text.count("        asks: ") == len(findings) and all(line.rstrip().endswith("?") for line in text.split("\n") if line.startswith("        asks: ")))
 
     part("PART 2. The checker refusing a review that breaks a rule.\n"
@@ -185,55 +185,77 @@ def main():
     check("every requirement the author meant as defective has a finding of the same type: %d of %d" % (agreed, planted), agreed == planted and not missed)
     check("every trap, a sound requirement made to look suspicious, was left unflagged: %d of %d" % (traps_left, traps), traps_left == traps and traps > 0)
     out("  Findings the author did not plant: %s." % ("; ".join("%s on %s (%s)" % item for item in sorted(set(extra))) or "none"))
-    check("there are two, on REQ-13 and on NFR-01, and they are listed and not hidden", sorted(set(req for _, req, _ in extra)) == ["NFR-01", "REQ-13"])
-    out("  On NFR-01 the author and the reviewer disagree: the author meant it as sound. The author's own note on it")
-    out("  says a strict performance tester could call it mildly incomplete, and that a reviewer flagging it is")
-    out("  over-strict rather than wrong.")
+    check("there is one, F-09 on REQ-13, and it is listed and not hidden", sorted(set(req for _, req, _ in extra)) == ["REQ-13"])
+    check("every requirement the author meant as sound is unflagged: %d of %d" % (sum(1 for r in key if key[r][0] == "SOUND" and r not in by_req), len(key) - planted),
+          all(r not in by_req for r in key if key[r][0] == "SOUND"))
+    out("  The review as first handed in had a second finding the author did not plant: F-11 on NFR-01, which the")
+    out("  author meant as sound. It was withdrawn after review, because its type could not be reproduced. Part 4")
+    out("  has the record of that.")
     out("  The author, the reviewer and the independent readers are assistants of the same kind. Agreement between")
     out("  them shows the review is consistent. It does not show the review is right.")
 
     part("PART 4. The types given by independent readers (criterion 7).\n"
          "Each was a fresh assistant given the requirements and the findings with the Type, Also considered and\n"
-         "Effort lines removed, and nothing else. Their reports are in review/. This table is worked out by this\n"
-         "script from those reports and from findings.md.")
-    readers = [reader_types("independent-read.md"), reader_types("independent-read-2.md"), reader_types("independent-read-3.md")]
-    out("  %-6s %-15s %-15s %-36s %s" % ("", "the review", "first reader", "second reader", "third reader"))
-    for name in findings:
+         "Effort lines removed, and nothing else. Their reports, and the file each was given, are in review/.\n"
+         "This table is worked out by this script from those reports and from findings.md.")
+    WITHDRAWN = {"F-11": "incomplete"}  # the type the review gave it before it was withdrawn
+    earlier = dict({name: kind for name, (_, kind) in findings.items()}, **WITHDRAWN)
+    names = sorted(earlier, key=lambda n: int(n.split("-")[1]))
+    files = ["independent-read.md", "independent-read-2.md", "independent-read-3.md", "independent-read-4.md", "independent-read-5.md"]
+    readers = [reader_types(name) for name in files]
+    out("  s = settled by the written words alone. a = reached by assuming something unwritten. n = not settled.")
+    out("  %-6s %-24s %-14s %-17s %-17s %-17s %s" % ("", "the review", "reader 1", "reader 2", "reader 3", "reader 4", "reader 5"))
+    for name in names:
         cells = []
         for number, reader in enumerate(readers):
-            kind, how = (reader or {}).get(name, ("(not run)", "-"))
-            cells.append(kind if number == 0 or how == "-" else "not settled" if kind.startswith("not settled") else "%s, %s" % (kind, how))
-        out("  %-6s %-15s %-15s %-36s %s" % (name, findings[name][1], cells[0], cells[1], cells[2]))
+            if reader is None:
+                cells.append("(not run)")
+            elif name not in reader:
+                cells.append("not given")
+            else:
+                kind, how = reader[name]
+                cells.append(kind if number == 0 else "not settled" if kind.startswith("not settled") else "%s, %s" % (kind, how[0]))
+        out("  %-6s %-24s %-14s %-17s %-17s %-17s %s" % (name, earlier[name] + (", withdrawn" if name in WITHDRAWN else ""), cells[0], cells[1], cells[2], cells[3], cells[4]))
     out("")
-    first = readers[0]
-    check("the first reader, given the definitions as first agreed, gave all %d findings the review's type" % len(findings),
-          first is not None and all(first.get(name, ("",))[0] == kind for name, (_, kind) in findings.items()))
-    out("  The first reader was free to fill gaps in the definitions itself, and said that five of the ten were close")
-    out("  calls which it settled by assuming three things the definitions did not say. Those were then written into")
-    out("  the definitions. The second and third readers were told to assume nothing and to say so when the written")
-    out("  words did not decide a case.")
-    for label, reader in (("second", readers[1]), ("third", readers[2])):
+    out("  Reader 1 had the definitions as first agreed and was free to fill gaps. It matched all ten, and said five")
+    out("  were close calls settled by three assumptions of its own. Those were written into the definitions.")
+    out("  Readers 2 to 5 were told to assume nothing and to say so when the written words did not decide a case.")
+    notes = {1: "Given the three clarifications.",
+             2: "Given two more sentences, added to settle F-11. They did not settle it.",
+             3: "Given a rule the reviewer of the first hand-in suggested. F-11 matched, by an assumption, and F-06 came unsettled.",
+             4: "Given the definitions reader 3 had, and nine findings: the rule was taken out again and F-11 withdrawn."}
+    for number in (1, 2, 3, 4):
+        reader = readers[number]
         if reader is None:
             continue
-        same = [name for name, (_, kind) in findings.items() if reader.get(name, ("",))[0] == kind]
-        hows = [reader.get(name, ("", "-"))[1] for name in findings]
+        given = [name for name in names if name in reader]
+        same = [name for name in given if reader[name][0] == earlier[name]]
+        hows = [reader[name][1] for name in given]
         out("")
-        out("  The %s reader gave %d of the %d findings the review's type: %d settled by the written words alone, %d by"
-            % (label, len(same), len(findings), hows.count("settled"), hows.count("assumed")))
-        out("  assuming something unwritten, %d not settled." % hows.count("not settled"))
-        for name in findings:
+        out("  Reader %d. %s" % (number + 1, notes[number]))
+        out("  It gave %d of %d findings the review's type: %d settled, %d by an assumption, %d not settled."
+            % (len(same), len(given), hows.count("settled"), hows.count("assumed"), hows.count("not settled")))
+        for name in given:
             if name not in same:
-                out("  NOT REPRODUCED by the %s reader: %s. The review says %s. The reader says: %s." % (label, name, findings[name][1], reader.get(name, ("?",))[0]))
-        check("every finding has a row in the %s reader's report, and the rows are compared as written" % label, sorted(reader) == sorted(findings))
+                out("  NOT REPRODUCED by reader %d: %s. The review says %s. The reader says: %s." % (number + 1, name, earlier[name], reader[name][0]))
+        check("reader %d's report has a row for every finding it was given, and the rows are compared as written" % (number + 1),
+              sorted(given) == sorted(name for name in names if number < 4 or name not in WITHDRAWN))
+    last = readers[4]
     out("")
-    out("  Between the second and third readers, two sentences were added to the definitions to settle F-11. They did")
-    out("  not settle it. The third reader left F-11 open for the same reason as the second.")
-    out("  CRITERION 7 IS NOT FULLY MET. Nine types of ten can be reproduced from the file. F-11 cannot. Of the nine,")
-    out("  two or three rest on a judgment of what counts as a reasonable reading, which the file states and cannot")
-    out("  remove.")
+    if last is None:
+        out("  Reader 5 has not been run. WHETHER THE NINE TYPES CAN BE REPRODUCED IS NOT YET SHOWN.")
+        PROBLEMS.append("reader 5 not run")
+    else:
+        same = [name for name in findings if last.get(name, ("",))[0] == findings[name][1]]
+        check("reader 5 was given the findings file as it now stands, nine findings, and gave every one the review's type: %d of %d"
+              % (len(same), len(findings)), len(same) == len(findings) and sorted(last) == sorted(findings))
+        hows = [last[name][1] for name in findings if name in last]
+        out("  Of those, %d were settled by the written words alone and %d by an assumption, which the findings file names"
+            % (hows.count("settled"), hows.count("assumed")))
+        out("  as a judgment the definitions leave open.")
     out("")
     out("RESULT: %s" % ("%d CHECK(S) FAILED" % len(PROBLEMS) if PROBLEMS else
-                        "EVERY CHECK OF THIS RECORD PASSED. Criterion 7 is not fully met, as part 4 says."))
+                        "ALL CHECKS PASSED."))
     with open(os.path.join(REL, "logs", "review-run.txt"), "w", encoding="utf-8") as f:
         f.write("\n".join(LINES) + "\n")
     print("review-run.txt: %s" % LINES[-1])

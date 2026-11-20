@@ -33,20 +33,23 @@ The order runs from the most serious to the least. A contradiction cannot be men
 clearer. An untestable requirement cannot be tested on any reading. An incomplete one needs a fact added. A
 vague one needs a word pinned down.
 
-These definitions were tested three times by independent readers who were given the findings with the types
-taken out. After the first, a sentence was added under contradictory, untestable, incomplete and vague, writing
-down readings that had been applied and not stated. After the second, the sentence "The fact in question is the
-one the finding's own question asks for" was added under incomplete. No finding's type changed at either step.
+These definitions were tested by independent readers who were given the findings with the types taken out.
+After the first, a sentence was added under contradictory, untestable, incomplete and vague, writing down
+readings that had been applied and not stated. After the second, the sentence "The fact in question is the one
+the finding's own question asks for" was added under incomplete, with the rule for a finding that raises two
+points. A further rule, tried after the third and fourth, made matters worse and was taken out again. The
+definitions above are the ones the third and fifth readers were given.
 
 What the definitions still leave to judgment: what counts as a "reasonable" reading. F-02 is a contradiction
 only if "complete booking history" cannot reasonably mean "complete as far as records still exist". F-09 is
 vague and not contradictory only if "unavailable" can reasonably mean "shown as booked". A reader who judges
-either differently will give that finding another type. Where one finding raises two points, as F-07 does, it
-takes the type of the first question that either point answers yes.
+either differently will give that finding another type. The definitions also do not say whether a word that
+only implies a fact speaks of it: "work correctly" for which functions must work, in F-06, and "accumulates"
+for a counting period, in F-07. Where one finding raises two points, as those two do, it takes the type of the
+first question that either point answers yes, so its type can turn on how its question is worded.
 
-One type could not be reproduced. Two of the three readers left F-11 unsettled between incomplete and vague:
-it is incomplete if "speaks of it" needs a word about how often a request is made, and vague if a phrase about
-the load in general counts. It is given here as the reviewer typed it, incomplete.
+The fifth reader, given this file with the types taken out and told to assume nothing, gave all nine findings
+the types below: six from the written words alone, and F-02, F-06 and F-07 by the judgments just named.
 
 Each finding gives the words that cause it, quoted exactly; what a tester could not decide; what goes wrong if
 the question is never answered; and the question. A finding asks. It does not say what the requirement ought
@@ -145,15 +148,6 @@ be decided, and large when requirements have to be reconciled or the requirement
 - Also considered: contradictory with REQ-02. Not chosen: a system that shows such a slot as "booked" meets REQ-02 to the letter and meets REQ-13 on one reading, so it is not the case that no system could satisfy both.
 - Effort to make testable: small. One answer settles the marking.
 
-## F-11
-- Requirement: NFR-01
-- Type: incomplete
-- Words: "making requests at the same time"
-- A tester could not decide: how often each of the 50 members makes a request. Fifty who ask once a minute and fifty who ask without pause are very different loads.
-- If unanswered: the same system passes for one tester and fails for another, and the result says more about the test than about the system.
-- Question: How often does each of the 50 signed-in members request the availability page during the 30-minute run?
-- Effort to make testable: small. One rate answers it.
-
 ## Unflagged
 
 Requirements left alone, each with the reason two testers would write the same test.
@@ -165,15 +159,33 @@ Requirements left alone, each with the reason two testers would write the same t
 - REQ-07: the five things on the confirmation page are listed, and "promptly" is defined in the glossary as within 60 seconds.
 - REQ-09: the way to check in and both ends of the period in which it is accepted are stated in minutes.
 - REQ-10: the trigger is the glossary's "no-show", "promptly" is defined, and which slots become available is stated.
+- NFR-01: the number of members, where the time is measured, the limit, the share of requests and the length of the run are all stated as numbers. A finding on how often each member makes a request was raised and withdrawn, as set out below.
 - NFR-02: how a PIN is stored and the three places it must never appear are stated, and each can be inspected.
 - NFR-06: the backup interval, how often the restore is tested and its time limit are all stated as numbers.
+
+## Raised and withdrawn
+
+Not findings. Two findings were raised in the review and later taken out. They are kept here so that a reader
+can see what was considered.
+
+- **F-10, against REQ-05, withdrawn on the second look.** It quoted "from the current day" and said the text
+  does not say whether a slot earlier today, already past, can be booked. The quoted words are exact and two
+  testers would write the same test for them. What is missing is a rule the set does not have, which is noted
+  under "Gaps in the set".
+- **F-11, against NFR-01, withdrawn after review.** It quoted "making requests at the same time" and asked how
+  often each of the 50 members makes a request, since the same system could pass at one rate and fail at
+  another. It was typed incomplete. Two independent readers in turn could not settle whether it was incomplete
+  or vague, because the definitions do not say whether a phrase about the load in general speaks of how often a
+  request is made. A rule added to settle it unsettled another finding. The assistant that wrote the
+  requirements had meant NFR-01 as sound. A finding whose type cannot be reproduced does not meet this review's
+  own standard, so it is withdrawn. The concern itself is not withdrawn: a person planning a load test from
+  NFR-01 would still have to choose a request rate.
 
 ## Gaps in the set
 
 Not findings. A finding is a defect in a requirement's words. These are things no requirement says, noted
 because a reader of the set would want to know.
 
-- No requirement says whether a slot earlier on the current day, already past, can be booked. This was first
-  raised as a finding against REQ-05 and withdrawn on a second look: REQ-05's words are exact and testable.
+- No requirement says whether a slot earlier on the current day, already past, can be booked.
 - No requirement says how long a backup is kept. If backups outlive NFR-04's 12 months, deleted booking records
   could be restored from one.

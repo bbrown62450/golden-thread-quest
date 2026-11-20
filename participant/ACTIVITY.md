@@ -152,3 +152,8 @@ Every change this application made to your files, newest last.
 - `2026-11-20T15:37:38Z` ba-detect-ambiguity: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-20T15:37:38Z` Submitted ba-detect-ambiguity for review as submission-20261120153738-0623a5.
 - `2026-11-20T15:49:37Z` Review of ba-detect-ambiguity: needs_changes by Claude (automated reviewer).
+- `2026-11-20T15:58:53Z` ba-detect-ambiguity: needs_changes → in_progress (Resume after a reviewer asked for changes.)
+- `2026-11-20T15:59:15Z` ba-detect-ambiguity: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-20T15:59:35Z` ba-detect-ambiguity: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-20T15:59:58Z` ba-detect-ambiguity: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-20T15:59:58Z` Submitted ba-detect-ambiguity for review as submission-20261120155958-43c379.

@@ -32,6 +32,6 @@ test_each_type_must_be_defined_in_the_file (test_check.Rule7Definitions) ... ok
 test_the_definitions_must_be_in_the_order_they_are_applied (test_check.Rule7Definitions) ... ok
 
 ----------------------------------------------------------------------
-Ran 32 tests in 0.022s
+Ran 32 tests in 0.023s
 
 OK
