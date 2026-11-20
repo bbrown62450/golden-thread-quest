@@ -258,9 +258,10 @@ attempts:
   quest_id: trello-duplicate-search
   quest_version: 1
   content_hash: sha256:5dd40795512287bd7c86101c1c2311c1de59736705aac02608db6d2b6919c436
-  state: submitted
+  state: verified
   started_at: '2026-11-20T17:58:26Z'
-  updated_at: '2026-11-20T18:47:11Z'
+  updated_at: '2026-11-20T18:49:39Z'
   evidence_path: participant/evidence/trello-duplicate-search/trello-attempt-004
   submission_id: submission-20261120184711-101c75
-updated_at: '2026-11-20T18:47:11Z'
+  review_id: review-20261120184939-981888
+updated_at: '2026-11-20T18:49:39Z'
