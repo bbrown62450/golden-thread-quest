@@ -228,9 +228,10 @@ attempts:
   quest_id: trello-read-card
   quest_version: 1
   content_hash: sha256:5428764f62eea3c742fa81180d241da494baf98f05517a3bdab98405f9963222
-  state: submitted
+  state: verified
   started_at: '2026-11-20T12:38:29Z'
-  updated_at: '2026-11-20T13:07:11Z'
+  updated_at: '2026-11-20T13:11:34Z'
   evidence_path: participant/evidence/trello-read-card/trello-attempt-002
   submission_id: submission-20261120130711-268abb
-updated_at: '2026-11-20T13:07:11Z'
+  review_id: review-20261120131134-fb398e
+updated_at: '2026-11-20T13:11:34Z'
