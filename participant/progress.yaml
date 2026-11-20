@@ -248,9 +248,10 @@ attempts:
   quest_id: trello-build-index
   quest_version: 1
   content_hash: sha256:38682f6dc467524d23256ffbdad88a3848330e13a666d5433047b8f79256efbb
-  state: submitted
+  state: verified
   started_at: '2026-11-20T16:23:54Z'
-  updated_at: '2026-11-20T16:55:04Z'
+  updated_at: '2026-11-20T17:04:43Z'
   evidence_path: participant/evidence/trello-build-index/trello-attempt-003
   submission_id: submission-20261120165504-b83f7c
-updated_at: '2026-11-20T16:55:04Z'
+  review_id: review-20261120170443-6feea4
+updated_at: '2026-11-20T17:04:43Z'
