@@ -164,3 +164,8 @@ Every change this application made to your files, newest last.
 - `2026-11-20T16:55:04Z` trello-build-index: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-20T16:55:04Z` Submitted trello-build-index for review as submission-20261120165504-b83f7c.
 - `2026-11-20T17:04:43Z` Review of trello-build-index: approved by Claude (automated reviewer).
+- `2026-11-20T17:58:26Z` Started trello-duplicate-search as attempt trello-attempt-004.
+- `2026-11-20T18:24:35Z` trello-duplicate-search: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-20T18:24:56Z` trello-duplicate-search: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-20T18:47:11Z` trello-duplicate-search: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-20T18:47:11Z` Submitted trello-duplicate-search for review as submission-20261120184711-101c75.
