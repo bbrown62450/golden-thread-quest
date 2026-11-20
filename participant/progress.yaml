@@ -214,4 +214,13 @@ attempts:
   evidence_path: participant/evidence/jira-create-story/jira-attempt-012
   submission_id: submission-20261119214652-528212
   review_id: review-20261119215044-ae2332
-updated_at: '2026-11-19T21:50:44Z'
+- attempt_id: context-attempt-001
+  quest_id: context-staleness
+  quest_version: 1
+  content_hash: sha256:30409ed9f20734f7c419564045e38b7cf74d44118555f2c8e5e0ecb8c8a14f7b
+  state: submitted
+  started_at: '2026-11-20T01:41:42Z'
+  updated_at: '2026-11-20T01:53:08Z'
+  evidence_path: participant/evidence/context-staleness/context-attempt-001
+  submission_id: submission-20261120015308-5286c4
+updated_at: '2026-11-20T01:53:08Z'

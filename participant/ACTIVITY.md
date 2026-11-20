@@ -134,3 +134,8 @@ Every change this application made to your files, newest last.
 - `2026-11-19T21:46:52Z` jira-create-story: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-19T21:46:52Z` Submitted jira-create-story for review as submission-20261119214652-528212.
 - `2026-11-19T21:50:44Z` Review of jira-create-story: approved by Claude (automated reviewer).
+- `2026-11-20T01:41:42Z` Started context-staleness as attempt context-attempt-001.
+- `2026-11-20T01:52:25Z` context-staleness: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-20T01:52:46Z` context-staleness: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-20T01:53:08Z` context-staleness: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-20T01:53:08Z` Submitted context-staleness for review as submission-20261120015308-5286c4.
