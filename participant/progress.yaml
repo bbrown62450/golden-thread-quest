@@ -268,9 +268,10 @@ attempts:
   quest_id: trello-create-card-preview
   quest_version: 1
   content_hash: sha256:fa9a7f5ed328b2e2b353c23973e600910f4c1db24c29ca8790e5d66699206c24
-  state: submitted
+  state: verified
   started_at: '2026-11-20T19:03:02Z'
-  updated_at: '2026-11-20T19:23:10Z'
+  updated_at: '2026-11-20T19:31:50Z'
   evidence_path: participant/evidence/trello-create-card-preview/trello-attempt-005
   submission_id: submission-20261120192310-91507e
-updated_at: '2026-11-20T19:23:10Z'
+  review_id: review-20261120193150-1be6dc
+updated_at: '2026-11-20T19:31:50Z'
