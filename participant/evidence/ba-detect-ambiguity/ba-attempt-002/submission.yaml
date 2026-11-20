@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261120153738-0623a5
+quest_id: ba-detect-ambiguity
+quest_version: 1
+attempt_id: ba-attempt-002
+content_hash: sha256:e3cf18a5bff25ac921596e436fe79f794950ac5afc3eb9348a3248117c504352
+evidence_hash: sha256:ab3226ec039b51bb68ec935c44143812d01fb0f00d5931be6e0d675e2a9fe2d8
+submitted_at: '2026-11-20T15:37:38Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/ambiguity/findings.md
+  digest: sha256:5c9263362ca6550bd606e937f090ee02342f713baea3d99cde84516f2f930348
+- path: participant/context/ambiguity/requirements.md
+  digest: sha256:867168549d1e89ce4292fa2a5721c3fb5e209d6d53b8ec84cb121505e368e484

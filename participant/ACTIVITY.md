@@ -146,3 +146,8 @@ Every change this application made to your files, newest last.
 - `2026-11-20T13:07:11Z` trello-read-card: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-20T13:07:11Z` Submitted trello-read-card for review as submission-20261120130711-268abb.
 - `2026-11-20T13:11:34Z` Review of trello-read-card: approved by Claude (automated reviewer).
+- `2026-11-20T15:10:21Z` Started ba-detect-ambiguity as attempt ba-attempt-002.
+- `2026-11-20T15:36:55Z` ba-detect-ambiguity: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-20T15:37:15Z` ba-detect-ambiguity: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-20T15:37:38Z` ba-detect-ambiguity: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-20T15:37:38Z` Submitted ba-detect-ambiguity for review as submission-20261120153738-0623a5.
