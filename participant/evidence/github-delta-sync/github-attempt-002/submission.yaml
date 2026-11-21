@@ -1,0 +1,13 @@
+schema_version: 1
+submission_id: submission-20261121222950-574700
+quest_id: github-delta-sync
+quest_version: 1
+attempt_id: github-attempt-002
+content_hash: sha256:3e3bee8d74aa51d0ddc0678b5e2215e2cf561a285661180f2ab8d2bcdb268a5f
+evidence_hash: sha256:dcfbfdff9fb8e59f51e764cbb138930381a5aeb202bc667ca2d6297ccafb26fa
+submitted_at: '2026-11-21T22:29:50Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/github/sync-state.md
+  digest: sha256:9b1e8afb9784cce0c05d28510c56b19599409b474f518c8a958f35e179dc1026

@@ -1,0 +1,360 @@
+Do the tests notice a broken sync? github-delta-sync, attempt github-attempt-002
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/github-delta-sync/sync.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. The cursor is taken from this machine's clock, not GitHub's (criteria 2 and 3, clock differences)
+  unittest result: FAILED (failures=41)
+  tests that failed (41):
+    TheMargin.test_a_change_stamped_before_the_cursor_and_shown_late_is_caught
+    OnlyTheChanged.test_a_changed_listing_beyond_one_page_is_followed
+    OnlyTheChanged.test_a_changed_pull_request_is_not_fetched
+    AFailedSync.test_a_crash_while_writing_the_issues_leaves_the_cursor
+    TheCursor.test_a_date_header_that_cannot_be_read_stops_the_run
+    OnlyTheChanged.test_a_delta_fetches_only_the_issues_changed_since_the_cursor
+    TheStateDocument.test_a_failed_sync_does_not_rewrite_it
+    AFailedSync.test_a_failure_on_the_last_issue_leaves_everything_too
+    AFailedSync.test_a_failure_partway_writes_nothing_and_leaves_the_cursor
+    CommandLine.test_a_forced_failure_says_the_cursor_is_where_it_was
+    FullAndDeltas.test_a_full_read_in_place_changes_nothing_when_the_deltas_were_right
+    FullAndDeltas.test_a_full_read_into_an_empty_folder_gives_the_digest_the_deltas_reached
+    OnlyTheChanged.test_a_listing_that_ignores_since_is_said_and_does_no_harm
+    AFailedSync.test_a_rate_limit_that_clears_is_waited_for
+    AFailedSync.test_a_rate_limit_that_does_not_clear_writes_nothing
+    TheCursor.test_a_sync_that_finds_nothing_still_succeeds_and_moves_the_cursor
+    TheCursor.test_a_wrong_local_clock_does_not_move_the_cursor_or_the_question
+    TheMargin.test_an_issue_returned_again_by_the_margin_is_not_held_twice
+    Counts.test_each_fetched_issue_is_said_to_be_new_or_changed_with_what_changed
+    OnlyReads.test_every_request_is_counted_and_said
+    CommandLine.test_fake_runs_from_the_command_line
+    TheStateDocument.test_it_records_the_cursor_and_how_it_advances
+    TheCursor.test_no_date_header_stops_the_run_and_the_local_clock_is_not_used_instead
+    TheStateDocument.test_staleness_is_said_and_flagged_past_the_limit
+    CommandLine.test_status_contacts_nothing_and_writes_nothing
+    Counts.test_the_counts_add_up_to_the_issues_held
+    TheCursor.test_the_cursor_is_githubs_clock_at_the_start_of_the_sync
+    TheCursor.test_the_cursor_is_taken_before_any_issue_is_read
+    OnlyTheChanged.test_the_delta_asks_github_with_since
+    FullAndDeltas.test_the_digest_changes_when_a_field_or_a_comment_does
+    FullAndDeltas.test_the_digest_is_printed_by_every_sync
+    TheCursor.test_the_local_clock_is_never_asked_for_when_setting_the_cursor
+    AFailedSync.test_the_next_sync_recovers_every_issue_the_failed_one_missed
+    Counts.test_the_run_reports_new_changed_and_unchanged
+    TheCursor.test_the_run_says_how_far_the_local_clock_is_from_githubs
+    Counts.test_the_state_file_holds_the_counts_of_the_last_sync
+    Gone.test_they_stay_flagged_and_are_not_flagged_again
+    AFailedSync.test_two_failures_in_a_row_then_a_recovery
+    FullAndDeltas.test_verify_finds_a_change_a_delta_has_not_fetched_yet
+    FullAndDeltas.test_verify_finds_a_missed_change_when_the_margin_is_taken_away
+    FullAndDeltas.test_verify_says_the_same_and_writes_nothing
+
+PLANTED BUG B. With no Date header, this machine's clock is used in its place (clock differences)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheCursor.test_a_date_header_that_cannot_be_read_stops_the_run
+    TheCursor.test_no_date_header_stops_the_run_and_the_local_clock_is_not_used_instead
+
+PLANTED BUG C. The cursor is saved as soon as the changed issues are listed, before they are fetched: the scenario (criteria 2 and 3)
+  unittest result: FAILED (failures=11)
+  tests that failed (11):
+    AFailedSync.test_a_failure_on_the_last_issue_leaves_everything_too
+    AFailedSync.test_a_failure_partway_writes_nothing_and_leaves_the_cursor
+    CommandLine.test_a_forced_failure_says_the_cursor_is_where_it_was
+    AFailedSync.test_a_rate_limit_that_does_not_clear_writes_nothing
+    AFailedSync.test_after_recovery_the_local_state_is_what_it_would_have_been_with_no_failure
+    Gone.test_an_unknown_answer_about_a_missing_issue_stops_the_run
+    AFailedSync.test_the_cursor_is_written_after_the_issues
+    AFailedSync.test_the_next_sync_recovers_every_issue_the_failed_one_missed
+    AFailedSync.test_two_failures_in_a_row_then_a_recovery
+    FullAndDeltas.test_verify_finds_a_change_a_delta_has_not_fetched_yet
+    FullAndDeltas.test_verify_says_the_same_and_writes_nothing
+
+PLANTED BUG D. An issue whose comments cannot be fetched is skipped, and the sync carries on and moves the cursor (criteria 2, 3 and 4)
+  unittest result: FAILED (failures=8)
+  tests that failed (8):
+    TheStateDocument.test_a_failed_sync_does_not_rewrite_it
+    CommandLine.test_a_failure_of_the_first_sync_says_there_is_no_cursor
+    AFailedSync.test_a_failure_on_the_last_issue_leaves_everything_too
+    AFailedSync.test_a_failure_partway_writes_nothing_and_leaves_the_cursor
+    CommandLine.test_a_forced_failure_says_the_cursor_is_where_it_was
+    AFailedSync.test_after_recovery_the_local_state_is_what_it_would_have_been_with_no_failure
+    AFailedSync.test_the_next_sync_recovers_every_issue_the_failed_one_missed
+    AFailedSync.test_two_failures_in_a_row_then_a_recovery
+
+PLANTED BUG E. The cursor is written before the issues (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    AFailedSync.test_the_cursor_is_written_after_the_issues
+
+PLANTED BUG F. The margin is not applied: a delta asks from the cursor exactly (the hint, criterion 7)
+  unittest result: FAILED (failures=11)
+  tests that failed (11):
+    TheMargin.test_a_change_stamped_before_the_cursor_and_shown_late_is_caught
+    FullAndDeltas.test_a_full_read_in_place_changes_nothing_when_the_deltas_were_right
+    FullAndDeltas.test_a_full_read_into_an_empty_folder_gives_the_digest_the_deltas_reached
+    TheCursor.test_a_wrong_local_clock_does_not_move_the_cursor_or_the_question
+    TheMargin.test_an_issue_returned_again_by_the_margin_is_not_held_twice
+    TheStateDocument.test_it_records_the_cursor_and_how_it_advances
+    TheMargin.test_since_is_the_cursor_less_the_margin
+    OnlyTheChanged.test_the_delta_asks_github_with_since
+    AFailedSync.test_the_next_sync_recovers_every_issue_the_failed_one_missed
+    AFailedSync.test_two_failures_in_a_row_then_a_recovery
+    FullAndDeltas.test_verify_says_the_same_and_writes_nothing
+
+PLANTED BUG G. The margin is added to the cursor, not taken from it (the hint, criterion 4)
+  unittest result: FAILED (failures=12)
+  tests that failed (12):
+    TheMargin.test_a_change_stamped_before_the_cursor_and_shown_late_is_caught
+    FullAndDeltas.test_a_full_read_in_place_changes_nothing_when_the_deltas_were_right
+    FullAndDeltas.test_a_full_read_into_an_empty_folder_gives_the_digest_the_deltas_reached
+    TheCursor.test_a_wrong_local_clock_does_not_move_the_cursor_or_the_question
+    TheMargin.test_an_issue_returned_again_by_the_margin_is_not_held_twice
+    TheStateDocument.test_it_records_the_cursor_and_how_it_advances
+    TheMargin.test_since_is_the_cursor_less_the_margin
+    TheCursor.test_the_cursor_is_taken_before_any_issue_is_read
+    OnlyTheChanged.test_the_delta_asks_github_with_since
+    AFailedSync.test_the_next_sync_recovers_every_issue_the_failed_one_missed
+    AFailedSync.test_two_failures_in_a_row_then_a_recovery
+    FullAndDeltas.test_verify_says_the_same_and_writes_nothing
+
+PLANTED BUG H. `since` is not sent, so every issue is fetched at every sync (criterion 1)
+  unittest result: FAILED (failures=17)
+  tests that failed (17):
+    OnlyTheChanged.test_a_changed_listing_beyond_one_page_is_followed
+    OnlyTheChanged.test_a_changed_pull_request_is_not_fetched
+    AFailedSync.test_a_crash_while_writing_the_issues_leaves_the_cursor
+    Gone.test_a_delta_does_not_see_a_deleted_or_transferred_issue
+    OnlyTheChanged.test_a_delta_fetches_only_the_issues_changed_since_the_cursor
+    OnlyTheChanged.test_a_delta_with_nothing_changed_fetches_nothing
+    TheCursor.test_a_wrong_local_clock_does_not_move_the_cursor_or_the_question
+    TheMargin.test_an_issue_returned_again_by_the_margin_is_not_held_twice
+    OnlyReads.test_every_request_is_counted_and_said
+    TheStateDocument.test_it_records_the_cursor_and_how_it_advances
+    OnlyTheChanged.test_the_delta_asks_github_with_since
+    AFailedSync.test_the_next_sync_recovers_every_issue_the_failed_one_missed
+    Counts.test_the_run_reports_new_changed_and_unchanged
+    Counts.test_the_state_file_holds_the_counts_of_the_last_sync
+    AFailedSync.test_two_failures_in_a_row_then_a_recovery
+    FullAndDeltas.test_verify_finds_a_missed_change_when_the_margin_is_taken_away
+    TheMargin.test_without_the_margin_that_change_is_missed
+
+PLANTED BUG I. A delta reads every issue, ignoring the cursor (criterion 1)
+  unittest result: FAILED (failures=21)
+  tests that failed (21):
+    OnlyTheChanged.test_a_changed_listing_beyond_one_page_is_followed
+    OnlyTheChanged.test_a_changed_pull_request_is_not_fetched
+    AFailedSync.test_a_crash_while_writing_the_issues_leaves_the_cursor
+    Gone.test_a_delta_does_not_see_a_deleted_or_transferred_issue
+    OnlyTheChanged.test_a_delta_fetches_only_the_issues_changed_since_the_cursor
+    OnlyTheChanged.test_a_delta_with_nothing_changed_fetches_nothing
+    Gone.test_a_full_read_flags_them_with_why_and_deletes_nothing
+    OnlyTheChanged.test_a_listing_that_ignores_since_is_said_and_does_no_harm
+    TheCursor.test_a_wrong_local_clock_does_not_move_the_cursor_or_the_question
+    TheMargin.test_an_issue_returned_again_by_the_margin_is_not_held_twice
+    Gone.test_an_unknown_answer_about_a_missing_issue_stops_the_run
+    OnlyReads.test_every_request_is_counted_and_said
+    TheStateDocument.test_it_records_the_cursor_and_how_it_advances
+    OnlyTheChanged.test_the_delta_asks_github_with_since
+    AFailedSync.test_the_next_sync_recovers_every_issue_the_failed_one_missed
+    Counts.test_the_run_reports_new_changed_and_unchanged
+    Counts.test_the_state_file_holds_the_counts_of_the_last_sync
+    AFailedSync.test_two_failures_in_a_row_then_a_recovery
+    FullAndDeltas.test_verify_finds_a_missed_change_when_the_margin_is_taken_away
+    Gone.test_verify_says_the_local_copy_differs
+    TheMargin.test_without_the_margin_that_change_is_missed
+
+PLANTED BUG J. Pull requests are kept as issues (criterion 1)
+  unittest result: FAILED (failures=20)
+  tests that failed (20):
+    OnlyTheChanged.test_a_changed_listing_beyond_one_page_is_followed
+    OnlyTheChanged.test_a_changed_pull_request_is_not_fetched
+    AFailedSync.test_a_crash_while_writing_the_issues_leaves_the_cursor
+    OnlyTheChanged.test_a_delta_fetches_only_the_issues_changed_since_the_cursor
+    OnlyTheChanged.test_a_delta_with_nothing_changed_fetches_nothing
+    Gone.test_a_full_read_flags_them_with_why_and_deletes_nothing
+    FullAndDeltas.test_a_full_read_in_place_changes_nothing_when_the_deltas_were_right
+    OnlyTheChanged.test_a_listing_that_ignores_since_is_said_and_does_no_harm
+    TheCursor.test_a_wrong_local_clock_does_not_move_the_cursor_or_the_question
+    TheMargin.test_an_issue_returned_again_by_the_margin_is_not_held_twice
+    OnlyReads.test_every_request_is_counted_and_said
+    CommandLine.test_fake_runs_from_the_command_line
+    TheStateDocument.test_it_records_the_cursor_and_how_it_advances
+    FirstSync.test_pull_requests_are_left_out_by_the_key
+    Counts.test_the_counts_add_up_to_the_issues_held
+    FullAndDeltas.test_the_digest_is_printed_by_every_sync
+    AFailedSync.test_the_next_sync_recovers_every_issue_the_failed_one_missed
+    Counts.test_the_run_reports_new_changed_and_unchanged
+    Counts.test_the_state_file_holds_the_counts_of_the_last_sync
+    FirstSync.test_with_no_cursor_every_issue_is_read
+
+PLANTED BUG K. Reading stops after the first page (criteria 1 and 4)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    OnlyTheChanged.test_a_changed_listing_beyond_one_page_is_followed
+    OnlyTheChanged.test_the_same_page_returned_again_is_not_taken_as_the_end
+
+PLANTED BUG L. The same page returned again is taken as the end (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OnlyTheChanged.test_the_same_page_returned_again_is_not_taken_as_the_end
+
+PLANTED BUG M. A new issue is counted as changed (criterion 5)
+  unittest result: FAILED (failures=10)
+  tests that failed (10):
+    OnlyTheChanged.test_a_changed_listing_beyond_one_page_is_followed
+    OnlyTheChanged.test_a_delta_fetches_only_the_issues_changed_since_the_cursor
+    OnlyTheChanged.test_a_listing_that_ignores_since_is_said_and_does_no_harm
+    TheMargin.test_an_issue_returned_again_by_the_margin_is_not_held_twice
+    Counts.test_each_fetched_issue_is_said_to_be_new_or_changed_with_what_changed
+    CommandLine.test_fake_runs_from_the_command_line
+    TheStateDocument.test_it_records_the_cursor_and_how_it_advances
+    Counts.test_the_run_reports_new_changed_and_unchanged
+    Counts.test_the_state_file_holds_the_counts_of_the_last_sync
+    FirstSync.test_with_no_cursor_every_issue_is_read
+
+PLANTED BUG N. Issues that were not fetched are left out of the unchanged count (criterion 5)
+  unittest result: FAILED (failures=10)
+  tests that failed (10):
+    OnlyTheChanged.test_a_changed_listing_beyond_one_page_is_followed
+    OnlyTheChanged.test_a_delta_fetches_only_the_issues_changed_since_the_cursor
+    OnlyTheChanged.test_a_delta_with_nothing_changed_fetches_nothing
+    TheMargin.test_an_issue_returned_again_by_the_margin_is_not_held_twice
+    CommandLine.test_fake_runs_from_the_command_line
+    TheStateDocument.test_it_records_the_cursor_and_how_it_advances
+    Counts.test_the_counts_add_up_to_the_issues_held
+    AFailedSync.test_the_next_sync_recovers_every_issue_the_failed_one_missed
+    Counts.test_the_run_reports_new_changed_and_unchanged
+    Counts.test_the_state_file_holds_the_counts_of_the_last_sync
+
+PLANTED BUG O. An issue fetched again and found the same is counted as changed (criterion 5)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    FullAndDeltas.test_a_full_read_in_place_changes_nothing_when_the_deltas_were_right
+    OnlyTheChanged.test_a_listing_that_ignores_since_is_said_and_does_no_harm
+    TheMargin.test_an_issue_returned_again_by_the_margin_is_not_held_twice
+
+PLANTED BUG P. Reading a notes file adds a line to it (criterion 6)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Notes.test_each_sync_prints_the_checksums_before_and_after
+    Notes.test_note_text_is_copied_nowhere
+    Notes.test_notes_are_byte_identical_after_every_kind_of_sync
+    Notes.test_the_issues_file_shows_which_issues_have_notes_even_when_gone
+
+PLANTED BUG Q. Writing in the notes folder is no longer refused (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Notes.test_the_one_writing_function_refuses_the_notes_folder
+
+PLANTED BUG R. The digest does not cover the issues' fields or comments (criterion 7)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    FullAndDeltas.test_the_digest_changes_when_a_field_or_a_comment_does
+    FullAndDeltas.test_verify_finds_a_change_a_delta_has_not_fetched_yet
+    FullAndDeltas.test_verify_finds_a_missed_change_when_the_margin_is_taken_away
+
+PLANTED BUG S. The digest covers when an issue was fetched, so two copies of the same repository differ (criterion 7)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    FullAndDeltas.test_a_full_read_in_place_changes_nothing_when_the_deltas_were_right
+    FullAndDeltas.test_a_full_read_into_an_empty_folder_gives_the_digest_the_deltas_reached
+    Gone.test_after_the_full_read_the_local_copy_and_github_agree
+    FullAndDeltas.test_the_digest_does_not_depend_on_when_or_how_often_it_was_synced
+    FullAndDeltas.test_verify_says_the_same_and_writes_nothing
+
+PLANTED BUG T. --verify always says the local copy and a full read are the same (second stretch goal)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    Gone.test_an_edited_comment_is_held_with_its_new_time
+    FullAndDeltas.test_verify_finds_a_change_a_delta_has_not_fetched_yet
+    FullAndDeltas.test_verify_finds_a_missed_change_when_the_margin_is_taken_away
+    FullAndDeltas.test_verify_finds_an_issue_not_held
+    Gone.test_verify_says_the_local_copy_differs
+
+PLANTED BUG U. --verify moves the cursor (criterion 2)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    FullAndDeltas.test_verify_finds_a_change_a_delta_has_not_fetched_yet
+    FullAndDeltas.test_verify_says_the_same_and_writes_nothing
+
+PLANTED BUG V. The time a comment was last edited is not kept (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Gone.test_an_edited_comment_is_held_with_its_new_time
+
+PLANTED BUG W. A deleted issue is not recognised (first stretch goal)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Gone.test_a_full_read_flags_them_with_why_and_deletes_nothing
+    Gone.test_after_the_full_read_the_local_copy_and_github_agree
+    Gone.test_they_stay_flagged_and_are_not_flagged_again
+
+PLANTED BUG X. A transferred issue is not recognised (first stretch goal)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Gone.test_a_full_read_flags_them_with_why_and_deletes_nothing
+    Gone.test_after_the_full_read_the_local_copy_and_github_agree
+    Gone.test_an_unknown_answer_about_a_missing_issue_stops_the_run
+    Gone.test_they_stay_flagged_and_are_not_flagged_again
+
+PLANTED BUG Y. An issue no longer in the repository is deleted locally (first stretch goal)
+  unittest result: FAILED (errors=5)
+  tests that failed (5):
+    Gone.test_a_full_read_flags_them_with_why_and_deletes_nothing
+    Gone.test_after_the_full_read_the_local_copy_and_github_agree
+    Notes.test_notes_are_byte_identical_after_every_kind_of_sync
+    Notes.test_the_issues_file_shows_which_issues_have_notes_even_when_gone
+    Gone.test_they_stay_flagged_and_are_not_flagged_again
+
+PLANTED BUG Z. A folder holding another repository's issues is synced into (safety)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Guards.test_one_folder_holds_one_repository_and_one_source
+
+PLANTED BUG AA. A folder holding made-up issues may be synced from live GitHub (safety)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Guards.test_one_folder_holds_one_repository_and_one_source
+
+PLANTED BUG AB. An issue's body is kept (safety: only the fields needed)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FirstSync.test_only_the_named_fields_are_kept_and_no_text_of_bodies_or_comments
+
+PLANTED BUG AC. The token is put in the address (safety)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OnlyReads.test_the_token_goes_in_a_header_and_never_in_the_address
+
+PLANTED BUG AD. The request is not a GET (safety)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    OnlyReads.test_the_skill_has_no_way_to_send_anything_but_a_get
+    OnlyReads.test_the_token_goes_in_a_header_and_never_in_the_address
+
+PLANTED BUG AE. A redirect to a host other than GitHub's API is followed (safety)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OnlyReads.test_a_redirect_to_anywhere_but_githubs_api_is_refused
+
+PLANTED BUG AF. A vertical bar in a title is not escaped (safety)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Guards.test_a_title_cannot_break_the_table
+
+PLANTED BUG AG. A sync that is long overdue is not called stale
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheStateDocument.test_staleness_is_said_and_flagged_past_the_limit
+
+PLANTED BUG AH. The state description is rewritten by a sync that only verifies
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FullAndDeltas.test_verify_says_the_same_and_writes_nothing
+
+After the last bug was taken out: sync.py is byte for byte what it was at the start. OK
+
+RESULT: all 34 planted bugs were caught by at least one test, and the file was restored.

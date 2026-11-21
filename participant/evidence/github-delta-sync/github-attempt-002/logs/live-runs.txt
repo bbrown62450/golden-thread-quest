@@ -1,0 +1,77 @@
+Three real runs. github-delta-sync, attempt github-attempt-002
+
+Run by the participant in their own terminal, against GitHub, with a fine-grained token limited to one private
+sandbox repository: Issues read-only, Pull requests read-only, Metadata read-only. The repository holds two
+made-up issues and one made-up pull request. Between run 1 and run 2 the participant added one comment to
+issue 1 by hand and left issue 2 alone.
+
+The output went to scratch folders outside the repository, shown here as SCRATCH and SCRATCH-FULL. The lines
+below are what the sync printed, copied by the assistant from the saved output, with the repository's owner and
+id replaced by [owner] and [repository id]. Nothing else was changed. The token was never shown to the assistant.
+
+Before run 1 the same command was run once in a terminal where the token had not been exported. The sync
+stopped before contacting GitHub, with "the environment variable GITHUB_TOKEN is not set", and wrote nothing.
+
+==============================================================================
+RUN 1. The first sync: no cursor, every issue read
+$ python3 participant/skills/github-delta-sync/sync.py --source live --repo [owner]/gtq-sandbox --out SCRATCH
+------------------------------------------------------------------------------
+github-delta: repository id [repository id], private
+github-delta: GitHub's clock at the start of this sync: 2026-11-21T22:25:21Z, from the Date header of its first answer. This machine's clock: 2026-11-21T22:25:21Z, the same as GitHub's. This machine's clock is not used for the cursor
+github-delta: cursor before this sync: none. This is the first sync, so every issue is read
+github-delta: asking for every issue in the repository
+github-delta: GitHub returned 3 items in 1 request (3). Pull requests left out: 1 (an item is a pull request when it carries a `pull_request` key, and only then). Issues: 2
+github-delta:   fetched: issue I_kwDOV207Gc8AAAABhVVp6g, number 1. NEW
+github-delta:   fetched: issue I_kwDOV207Gc8AAAABhVV3gQ, number 2. NEW
+github-delta: fetched: 2 issues, in 2 requests for their comments. Not fetched: 0
+github-delta: issues in the repository: 2. This sync: 2 new, 0 changed, 0 unchanged (0 not fetched, 0 fetched and found the same), 0 no longer in the repository
+github-delta: cursor after this sync: 2026-11-21T22:25:21Z, GitHub's clock at its start
+github-delta: local state digest: b2af069627f35135be5ffee83352dfb1a1d691fec3ca32bb654b58ab32427362 (2 issues in the repository; 0 more kept that are no longer in it)
+github-delta: notes: 0 files, opened for reading only. SHA-256 before and after this sync:
+github-delta: requests made: 4, every one a GET (1 repository, 1 listing, 2 comments, 0 look-ups)
+github-delta: written: issues.md, state.json and sync-state.md
+------------------------------------------------------------------------------
+
+==============================================================================
+RUN 2. The delta, after one comment was added to issue 1 by hand
+$ python3 participant/skills/github-delta-sync/sync.py --source live --repo [owner]/gtq-sandbox --out SCRATCH
+------------------------------------------------------------------------------
+github-delta: repository id [repository id], private
+github-delta: GitHub's clock at the start of this sync: 2026-11-21T22:26:11Z, from the Date header of its first answer. This machine's clock: 2026-11-21T22:26:11Z, the same as GitHub's. This machine's clock is not used for the cursor
+github-delta: cursor before this sync: 2026-11-21T22:25:21Z
+github-delta: how stale: the last successful sync started at 2026-11-21T22:25:21Z by GitHub's clock, 50 seconds before now (2026-11-21T22:26:11Z by this machine's clock)
+github-delta: asking for issues updated at or after 2026-11-21T22:20:21Z: the cursor less a margin of 300 seconds
+github-delta: GitHub returned 1 item in 1 request (1). Pull requests left out: 0 (an item is a pull request when it carries a `pull_request` key, and only then). Issues: 1
+github-delta:   fetched: issue I_kwDOV207Gc8AAAABhVVp6g, number 1. CHANGED (updated_at, comments)
+github-delta: fetched: 1 issue, in 1 request for their comments. Not fetched: 1
+github-delta: issues in the repository: 2. This sync: 0 new, 1 changed, 1 unchanged (1 not fetched, 0 fetched and found the same), 0 no longer in the repository
+github-delta: cursor after this sync: 2026-11-21T22:26:11Z, GitHub's clock at its start
+github-delta: local state digest: 1f9cbb5c6246602265899ffc4ff6cc8a0114365944a3beea10398c2bd72bd695 (2 issues in the repository; 0 more kept that are no longer in it)
+github-delta: notes: 0 files, opened for reading only. SHA-256 before and after this sync:
+github-delta: requests made: 3, every one a GET (1 repository, 1 listing, 1 comments, 0 look-ups)
+github-delta: written: issues.md, state.json and sync-state.md
+------------------------------------------------------------------------------
+
+==============================================================================
+RUN 3. A full read into a second, empty folder, to compare digests
+$ python3 participant/skills/github-delta-sync/sync.py --source live --repo [owner]/gtq-sandbox --out SCRATCH-FULL
+------------------------------------------------------------------------------
+github-delta: repository id [repository id], private
+github-delta: GitHub's clock at the start of this sync: 2026-11-21T22:26:24Z, from the Date header of its first answer. This machine's clock: 2026-11-21T22:26:24Z, the same as GitHub's. This machine's clock is not used for the cursor
+github-delta: cursor before this sync: none. This is the first sync, so every issue is read
+github-delta: asking for every issue in the repository
+github-delta: GitHub returned 3 items in 1 request (3). Pull requests left out: 1 (an item is a pull request when it carries a `pull_request` key, and only then). Issues: 2
+github-delta:   fetched: issue I_kwDOV207Gc8AAAABhVV3gQ, number 2. NEW
+github-delta:   fetched: issue I_kwDOV207Gc8AAAABhVVp6g, number 1. NEW
+github-delta: fetched: 2 issues, in 2 requests for their comments. Not fetched: 0
+github-delta: issues in the repository: 2. This sync: 2 new, 0 changed, 0 unchanged (0 not fetched, 0 fetched and found the same), 0 no longer in the repository
+github-delta: cursor after this sync: 2026-11-21T22:26:24Z, GitHub's clock at its start
+github-delta: local state digest: 1f9cbb5c6246602265899ffc4ff6cc8a0114365944a3beea10398c2bd72bd695 (2 issues in the repository; 0 more kept that are no longer in it)
+github-delta: notes: 0 files, opened for reading only. SHA-256 before and after this sync:
+github-delta: requests made: 4, every one a GET (1 repository, 1 listing, 2 comments, 0 look-ups)
+github-delta: written: issues.md, state.json and sync-state.md
+------------------------------------------------------------------------------
+
+Digest the delta reached in run 2:      1f9cbb5c6246602265899ffc4ff6cc8a0114365944a3beea10398c2bd72bd695
+Digest of the full read in run 3:       1f9cbb5c6246602265899ffc4ff6cc8a0114365944a3beea10398c2bd72bd695
+They are the same.

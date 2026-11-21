@@ -206,3 +206,8 @@ Every change this application made to your files, newest last.
 - `2026-11-21T17:29:30Z` github-read-assigned-issues: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-21T17:29:30Z` Submitted github-read-assigned-issues for review as submission-20261121172930-16258e.
 - `2026-11-21T17:43:05Z` Review of github-read-assigned-issues: approved by Claude (automated reviewer).
+- `2026-11-21T22:12:12Z` Started github-delta-sync as attempt github-attempt-002.
+- `2026-11-21T22:28:59Z` github-delta-sync: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-21T22:29:24Z` github-delta-sync: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-21T22:29:50Z` github-delta-sync: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-21T22:29:50Z` Submitted github-delta-sync for review as submission-20261121222950-574700.

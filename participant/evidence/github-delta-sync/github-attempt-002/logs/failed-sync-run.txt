@@ -1,0 +1,123 @@
+A sync that fails partway, and the recovery. github-delta-sync, attempt github-attempt-002
+Recorded by scripts/record_evidence.py. No request was sent to GitHub. The repository, its issues, comments and logins are made up.
+This follows delta-run.txt, in the same folder. The cursor is 2026-11-21T09:00:00Z.
+The made-up GitHub is now at step 2. Worked out by this script: the issues updated at or after 2026-11-21T08:55:00Z are numbers 2, 4, 6, 8, 9, 10, 11.
+Issue 11 is among them because of the margin: its change is stamped 2026-11-21T08:58:00Z, two minutes before the cursor,
+and the sync that set the cursor was not shown it.
+
+==============================================================================
+PART 1. A delta that fails partway: GitHub fails when asked for the comments of issue 8 (criteria 2 and 3)
+$ python3 participant/skills/github-delta-sync/sync.py --source fake --fake-step 2 --fake-fail-issue 8
+------------------------------------------------------------------------------
+github-delta: repository id 201, private
+github-delta: GitHub's clock at the start of this sync: 2026-11-22T09:00:00Z, from the Date header of its first answer. This machine's clock: 2026-11-22T09:00:00Z, the same as GitHub's. This machine's clock is not used for the cursor
+github-delta: cursor before this sync: 2026-11-21T09:00:00Z
+github-delta: how stale: the last successful sync started at 2026-11-21T09:00:00Z by GitHub's clock, 24.0 hours before now (2026-11-22T09:00:00Z by this machine's clock)
+github-delta: asking for issues updated at or after 2026-11-21T08:55:00Z: the cursor less a margin of 300 seconds
+github-delta: GitHub returned 7 items in 1 request (7). Pull requests left out: 0 (an item is a pull request when it carries a `pull_request` key, and only then). Issues: 7
+github-delta: STOPPED: GitHub did not return the comments of issue I_kwFX2010008 (status 500). A part may be missing, so nothing is saved.
+github-delta: Nothing was written. The cursor is where it was: 2026-11-21T09:00:00Z.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1
+  ok   the run had listed all 7 changed issues before it failed
+  ok   criterion 3: the cursor in the memory file is where it was: 2026-11-21T09:00:00Z
+  ok   the run says so
+  ok   criterion 2: every generated file is byte for byte as it was, by SHA-256 taken by this script
+
+==============================================================================
+PART 2. Where the cursor is, asked without contacting anything
+$ python3 participant/skills/github-delta-sync/sync.py --status
+------------------------------------------------------------------------------
+github-delta: repository id 201, from a fake run
+github-delta: cursor: 2026-11-21T09:00:00Z. It is GitHub's own clock, from the Date header of the first answer of the last successful sync
+github-delta: how stale: the last successful sync started at 2026-11-21T09:00:00Z by GitHub's clock, 13.4 hours before now (2026-11-21T22:22:30Z by this machine's clock)
+github-delta: local state digest: c780e257cf988725e7f081d3f72528ed52c6b72288a02d146483e39f5e87dbc9
+github-delta: nothing was contacted and nothing was written
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the status gives the same cursor
+
+==============================================================================
+PART 3. The next sync recovers what the failed one missed (criterion 4)
+$ python3 participant/skills/github-delta-sync/sync.py --source fake --fake-step 2
+------------------------------------------------------------------------------
+github-delta: repository id 201, private
+github-delta: GitHub's clock at the start of this sync: 2026-11-22T09:00:00Z, from the Date header of its first answer. This machine's clock: 2026-11-22T09:00:00Z, the same as GitHub's. This machine's clock is not used for the cursor
+github-delta: cursor before this sync: 2026-11-21T09:00:00Z
+github-delta: how stale: the last successful sync started at 2026-11-21T09:00:00Z by GitHub's clock, 24.0 hours before now (2026-11-22T09:00:00Z by this machine's clock)
+github-delta: asking for issues updated at or after 2026-11-21T08:55:00Z: the cursor less a margin of 300 seconds
+github-delta: GitHub returned 7 items in 1 request (7). Pull requests left out: 0 (an item is a pull request when it carries a `pull_request` key, and only then). Issues: 7
+github-delta:   fetched: issue I_kwFX2010011, number 11. CHANGED (updated_at, comments)
+github-delta:   fetched: issue I_kwFX2010002, number 2. CHANGED (labels, updated_at)
+github-delta:   fetched: issue I_kwFX2010004, number 4. CHANGED (labels, updated_at)
+github-delta:   fetched: issue I_kwFX2010006, number 6. CHANGED (labels, updated_at)
+github-delta:   fetched: issue I_kwFX2010008, number 8. CHANGED (labels, updated_at)
+github-delta:   fetched: issue I_kwFX2010009, number 9. CHANGED (labels, updated_at)
+github-delta:   fetched: issue I_kwFX2010010, number 10. CHANGED (labels, updated_at)
+github-delta: fetched: 7 issues, in 7 requests for their comments. Not fetched: 6
+github-delta: issues in the repository: 13. This sync: 0 new, 7 changed, 6 unchanged (6 not fetched, 0 fetched and found the same), 0 no longer in the repository
+github-delta: cursor after this sync: 2026-11-22T09:00:00Z, GitHub's clock at its start
+github-delta: local state digest: 1239cd7a5c77cfe0d74cac12eac73cabe2813e83dbfb12c88000d2c98ee20270 (13 issues in the repository; 0 more kept that are no longer in it)
+github-delta: notes: 3 files, opened for reading only. SHA-256 before and after this sync:
+github-delta:   notes/I_kwFX2010001.md  before c216ac9c4c2b9e40d4926e92c152beb99d26d84d22d980dfa6bad27811d68448  after c216ac9c4c2b9e40d4926e92c152beb99d26d84d22d980dfa6bad27811d68448  same
+github-delta:   notes/I_kwFX2010003.md  before 070aac9b6dc3dd268b5f7cf963bf78c00c449674332997a947da5682f2e705b5  after 070aac9b6dc3dd268b5f7cf963bf78c00c449674332997a947da5682f2e705b5  same
+github-delta:   notes/I_kwFX2010012.md  before e58c69ccc15dfeb36225793d3fa6a9c54840a6f2de75e231d603f5b0510fe8ae  after e58c69ccc15dfeb36225793d3fa6a9c54840a6f2de75e231d603f5b0510fe8ae  same
+github-delta: requests made: 9, every one a GET (1 repository, 1 listing, 7 comments, 0 look-ups)
+github-delta: written: issues.md, state.json and participant/context/github/sync-state.md
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0
+  ok   it asked from the same time as the failed one: 2026-11-21T08:55:00Z
+  ok   criterion 4: all 7 issues were fetched, the ones before the failure and the ones after it: [2, 4, 6, 8, 9, 10, 11]
+  ok   criterion 5: 0 new, 7 changed, 6 unchanged
+  ok   criterion 2: only now did the cursor move, to 2026-11-22T09:00:00Z
+  ok   issue 11's late change, found by the margin, is held
+  digest after the failure and the recovery:        1239cd7a5c77cfe0d74cac12eac73cabe2813e83dbfb12c88000d2c98ee20270
+  digest of three syncs with no failure, made here: 1239cd7a5c77cfe0d74cac12eac73cabe2813e83dbfb12c88000d2c98ee20270
+  ok   the local state is what it would have been had nothing failed
+
+==============================================================================
+PART 4. The same step with no margin, in a copy: the late change is missed, and --verify says so
+(inside this script) the delta at step 2 with a margin of 0 seconds
+------------------------------------------------------------------------------
+github-delta: repository id 201, private
+github-delta: GitHub's clock at the start of this sync: 2026-11-22T09:00:00Z, from the Date header of its first answer. This machine's clock: 2026-11-22T09:00:00Z, the same as GitHub's. This machine's clock is not used for the cursor
+github-delta: cursor before this sync: 2026-11-21T09:00:00Z
+github-delta: how stale: the last successful sync started at 2026-11-21T09:00:00Z by GitHub's clock, 24.0 hours before now (2026-11-22T09:00:00Z by this machine's clock)
+github-delta: asking for issues updated at or after 2026-11-21T09:00:00Z: the cursor less a margin of 0 seconds
+github-delta: GitHub returned 6 items in 1 request (6). Pull requests left out: 0 (an item is a pull request when it carries a `pull_request` key, and only then). Issues: 6
+github-delta:   fetched: issue I_kwFX2010002, number 2. CHANGED (labels, updated_at)
+github-delta:   fetched: issue I_kwFX2010004, number 4. CHANGED (labels, updated_at)
+github-delta:   fetched: issue I_kwFX2010006, number 6. CHANGED (labels, updated_at)
+github-delta:   fetched: issue I_kwFX2010008, number 8. CHANGED (labels, updated_at)
+github-delta:   fetched: issue I_kwFX2010009, number 9. CHANGED (labels, updated_at)
+github-delta:   fetched: issue I_kwFX2010010, number 10. CHANGED (labels, updated_at)
+github-delta: fetched: 6 issues, in 6 requests for their comments. Not fetched: 7
+github-delta: issues in the repository: 13. This sync: 0 new, 6 changed, 7 unchanged (7 not fetched, 0 fetched and found the same), 0 no longer in the repository
+github-delta: cursor after this sync: 2026-11-22T09:00:00Z, GitHub's clock at its start
+github-delta: local state digest: 18b57ccc13f86cf1a074e08e6c2581903c3e3fea88b666966cecfadefe3fda54 (13 issues in the repository; 0 more kept that are no longer in it)
+github-delta: notes: 0 files, opened for reading only. SHA-256 before and after this sync:
+github-delta: requests made: 8, every one a GET (1 repository, 1 listing, 6 comments, 0 look-ups)
+github-delta: written: issues.md, state.json and sync-state.md
+------------------------------------------------------------------------------
+exit code: 0
+  ok   without the margin, issue 11 is not fetched
+(inside this script) --verify, in the same copy
+------------------------------------------------------------------------------
+github-delta: repository id 201, private
+github-delta: GitHub's clock at the start of this sync: 2026-11-22T09:00:00Z, from the Date header of its first answer. This machine's clock: 2026-11-22T09:00:00Z, the same as GitHub's. This machine's clock is not used for the cursor
+github-delta: cursor before this sync: 2026-11-22T09:00:00Z
+github-delta: how stale: the last successful sync started at 2026-11-22T09:00:00Z by GitHub's clock, 0 seconds before now (2026-11-22T09:00:00Z by this machine's clock)
+github-delta: asking for every issue in the repository, ignoring the cursor (--verify)
+github-delta: GitHub returned 16 items in 1 request (16). Pull requests left out: 3 (an item is a pull request when it carries a `pull_request` key, and only then). Issues: 13
+github-delta: VERIFY: digest of the local copy:  18b57ccc13f86cf1a074e08e6c2581903c3e3fea88b666966cecfadefe3fda54 (13 issues)
+github-delta: VERIFY: digest of a full read now: 1239cd7a5c77cfe0d74cac12eac73cabe2813e83dbfb12c88000d2c98ee20270 (13 issues)
+github-delta:   DIFFERENT: issue I_kwFX2010011 is held with different fields or comments
+github-delta: VERIFY: the local copy and a full read DIFFER. Run a sync, or --full to find issues that were deleted or transferred
+github-delta: requests made: 15, every one a GET. Nothing was written, and the cursor was not moved
+------------------------------------------------------------------------------
+exit code: 3
+  ok   --verify exits 3 and names issue 11 as different
+
+RESULT: ALL CHECKS PASSED. 15 checks.
