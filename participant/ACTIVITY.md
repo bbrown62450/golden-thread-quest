@@ -188,3 +188,8 @@ Every change this application made to your files, newest last.
 - `2026-11-21T00:36:10Z` ba-search-existing-work: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-21T00:36:10Z` Submitted ba-search-existing-work for review as submission-20261121003610-78d8d3.
 - `2026-11-21T00:37:39Z` Review of ba-search-existing-work: approved by Claude (automated reviewer).
+- `2026-11-21T00:56:30Z` Started trello-read-assigned-cards as attempt trello-attempt-007.
+- `2026-11-21T01:08:48Z` trello-read-assigned-cards: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-21T01:09:29Z` trello-read-assigned-cards: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-21T01:10:06Z` trello-read-assigned-cards: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-21T01:10:06Z` Submitted trello-read-assigned-cards for review as submission-20261121011006-70098d.
