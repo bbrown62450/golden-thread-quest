@@ -314,4 +314,13 @@ attempts:
   evidence_path: participant/evidence/trello-delta-sync/trello-attempt-008
   submission_id: submission-20261121015413-9df447
   review_id: review-20261121020335-f24e08
-updated_at: '2026-11-21T02:03:35Z'
+- attempt_id: github-attempt-001
+  quest_id: github-read-assigned-issues
+  quest_version: 2
+  content_hash: sha256:68a888e3d237ce220c739aa1d60cf46c4e26bbc5ab0b71c03efdf2431c80c396
+  state: submitted
+  started_at: '2026-11-21T16:54:21Z'
+  updated_at: '2026-11-21T17:29:30Z'
+  evidence_path: participant/evidence/github-read-assigned-issues/github-attempt-001
+  submission_id: submission-20261121172930-16258e
+updated_at: '2026-11-21T17:29:30Z'

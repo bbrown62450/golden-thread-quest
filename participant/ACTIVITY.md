@@ -200,3 +200,8 @@ Every change this application made to your files, newest last.
 - `2026-11-21T01:54:14Z` trello-delta-sync: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-21T01:54:14Z` Submitted trello-delta-sync for review as submission-20261121015413-9df447.
 - `2026-11-21T02:03:35Z` Review of trello-delta-sync: approved by Claude (automated reviewer).
+- `2026-11-21T16:54:21Z` Started github-read-assigned-issues as attempt github-attempt-001.
+- `2026-11-21T17:28:33Z` github-read-assigned-issues: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-21T17:29:03Z` github-read-assigned-issues: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-21T17:29:30Z` github-read-assigned-issues: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-21T17:29:30Z` Submitted github-read-assigned-issues for review as submission-20261121172930-16258e.
