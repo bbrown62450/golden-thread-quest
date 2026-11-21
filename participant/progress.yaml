@@ -304,4 +304,13 @@ attempts:
   evidence_path: participant/evidence/trello-read-assigned-cards/trello-attempt-007
   submission_id: submission-20261121011006-70098d
   review_id: review-20261121012038-99e5e8
-updated_at: '2026-11-21T01:20:38Z'
+- attempt_id: trello-attempt-008
+  quest_id: trello-delta-sync
+  quest_version: 1
+  content_hash: sha256:da293b1c9b0b8705a76cecf5e600d5049295c972964c5da9a49ada7cd645fada
+  state: submitted
+  started_at: '2026-11-21T01:28:31Z'
+  updated_at: '2026-11-21T01:54:14Z'
+  evidence_path: participant/evidence/trello-delta-sync/trello-attempt-008
+  submission_id: submission-20261121015413-9df447
+updated_at: '2026-11-21T01:54:14Z'

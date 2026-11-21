@@ -194,3 +194,8 @@ Every change this application made to your files, newest last.
 - `2026-11-21T01:10:06Z` trello-read-assigned-cards: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-21T01:10:06Z` Submitted trello-read-assigned-cards for review as submission-20261121011006-70098d.
 - `2026-11-21T01:20:38Z` Review of trello-read-assigned-cards: approved by Claude (automated reviewer).
+- `2026-11-21T01:28:31Z` Started trello-delta-sync as attempt trello-attempt-008.
+- `2026-11-21T01:41:54Z` trello-delta-sync: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-21T01:49:24Z` trello-delta-sync: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-21T01:54:14Z` trello-delta-sync: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-21T01:54:14Z` Submitted trello-delta-sync for review as submission-20261121015413-9df447.
