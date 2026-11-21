@@ -288,9 +288,10 @@ attempts:
   quest_id: ba-search-existing-work
   quest_version: 1
   content_hash: sha256:e676fbf4ad23c79d99195c7f321b28d9979a4727a70634440c4b8176fd5cee08
-  state: submitted
+  state: verified
   started_at: '2026-11-20T21:25:42Z'
-  updated_at: '2026-11-21T00:36:10Z'
+  updated_at: '2026-11-21T00:37:39Z'
   evidence_path: participant/evidence/ba-search-existing-work/ba-attempt-003
   submission_id: submission-20261121003610-78d8d3
-updated_at: '2026-11-21T00:36:10Z'
+  review_id: review-20261121003739-5e9b6e
+updated_at: '2026-11-21T00:37:39Z'
