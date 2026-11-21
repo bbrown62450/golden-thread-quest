@@ -1,0 +1,25 @@
+schema_version: 1
+review_id: review-20261121223642-3d5a0b
+quest_id: github-delta-sync
+quest_version: 1
+attempt_id: github-attempt-002
+evidence_hash: sha256:dcfbfdff9fb8e59f51e764cbb138930381a5aeb202bc667ca2d6297ccafb26fa
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-21T22:36:42Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/github/sync-state.md
+  digest: sha256:9b1e8afb9784cce0c05d28510c56b19599409b474f518c8a958f35e179dc1026
+verification_statement: 'Automated review. Read all evidence: PROOF.md, sync-state.md
+  and the delta-run, failed-sync-run, analysis-intact, live-runs, tests and planted-bugs
+  logs, plus the recording scripts. The counts, digests and cursors agree across the
+  files: the recovery digest 1239cd… equals the full-read digest, the final digest
+  72760b… matches sync-state.md, the 6 successful syncs and 9 runs add up, and the
+  notes SHA-256 values are the same everywhere. PROOF.md explains clock handling and
+  cites the criteria by number. Minor issues: the evidence folder is github-attempt-002,
+  not the attempt-001 named in the quest (the pre-check found the required files),
+  and there is a small wording inconsistency about issue 8''s position in the run.
+  No text addressed to the reviewer, so no injection suspected. Each of the 7 acceptance
+  criteria was matched to text quoted word for word from the evidence.'
