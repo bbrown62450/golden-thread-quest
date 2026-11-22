@@ -1,0 +1,27 @@
+schema_version: 1
+review_id: review-20261122135645-96da1e
+quest_id: github-verify-connection
+quest_version: 1
+attempt_id: github-attempt-003
+evidence_hash: sha256:408017a60ad101b172ef39532038bc730ada1260c0288b4050470824abc8b30c
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-22T13:56:45Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/github/verify-notes.md
+  digest: sha256:aa5b20cf82fa32d7b47c8e7c9909110db69f91c510bca562bf0b48a3d20c09c2
+verification_statement: 'Automated review. I read every file shown: PROOF.md, logs/verify-run.txt,
+  logs/denied-run.txt, logs/live-runs.txt, logs/tests.txt, logs/planted-bugs.txt,
+  both scripts and verify-notes.md. The recorded runs come from the participant''s
+  made-up GitHub, which the quest''s risk notes allow as a local fixture. Two masked
+  real runs back them up. Identity, scopes or permissions, full repository names,
+  a 404 shown as INACCESSIBLE next to a truly empty repository, GET-only request lists
+  and a clean output scan all appear in the outputs. The notes say what the check
+  does not prove and which scopes are broader than needed. PROOF.md cites the criteria
+  by number and explains how a permission lost next week would be revealed. The evidence
+  sits under github-attempt-003 rather than the attempt-001 path in the quest, but
+  the automatic pre-check found the required files. No text addressed to the reviewer
+  was found. Each of the 7 acceptance criteria was matched to text quoted word for
+  word from the evidence.'
