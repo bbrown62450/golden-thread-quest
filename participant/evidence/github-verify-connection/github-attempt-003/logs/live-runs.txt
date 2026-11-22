@@ -1,0 +1,92 @@
+Two real verifications. github-verify-connection, attempt github-attempt-003
+
+Run by the participant in their own terminal, against GitHub, with a fine-grained token limited to one private
+sandbox repository, with Issues read-only and Metadata read-only and nothing else. The token was never shown to
+the assistant.
+
+The lines below are what the check printed, copied by the assistant from the saved output. The login is replaced
+by [login] and [owner], the user id and repository ids by [user id] and [repository id], and the names of the
+account's other public repositories by [public repository 1] and so on. Nothing else was changed.
+
+==============================================================================
+RUN 1. Expecting the sandbox, and a second repository that turned out to be public
+$ python3 participant/skills/github-verify-connection/verify.py --source live --expect [owner]/gtq-sandbox --expect [owner]/golden-thread-quest
+------------------------------------------------------------------------------
+github-verify: source: GitHub, with the token in the environment variable GITHUB_TOKEN
+github-verify: 1. WHO. The connection acts as login [login], user id [user id]. GitHub was asked "who am I?". No login was typed in or given to the check
+github-verify: 2. WHAT IT MAY DO. GitHub reports no scopes for this token, as it does for a fine-grained token. GitHub does not tell a fine-grained token its own permissions. What it may READ is tried in part 4. Whether it may write is NOT tested, because that would mean trying a write
+github-verify:      the token expires: 2026-11-29 13:41:47 UTC, 7.0 days from now by GitHub's clock. After that every request is rejected
+github-verify: 3. REPOSITORIES GITHUB LISTS FOR THIS CONNECTION: 9
+github-verify:      [public repository 1], public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [public repository 2], public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [owner]/golden-thread-quest, public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [owner]/gtq-sandbox, private. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [public repository 3], public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [public repository 4], public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [public repository 5], public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [public repository 6], public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [public repository 7], public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      note: that is what the account may do. GitHub does not say here whether this TOKEN may write
+github-verify: 4. REPOSITORIES THIS CONNECTION IS EXPECTED TO REACH: 2. Each is asked for by name
+github-verify:      [owner]/gtq-sandbox: REACHABLE. Reads allowed: repository (id [repository id], private); issues (2)
+github-verify:        pull requests: REFUSED (status 403). Not needed by the check, so this is only reported
+github-verify:        files: REFUSED (status 403). Not needed by the check, so this is only reported
+github-verify:      [owner]/golden-thread-quest: REACHABLE. Reads allowed: repository (id [repository id], public); issues (0); pull requests (0); files (33)
+github-verify: 5. ONE SAFE READ. The issues of [owner]/gtq-sandbox were asked for and GitHub returned 2. Only the count was used. No title or text was kept or printed
+github-verify: 6. ONLY READS. 10 requests were made, and every one was a GET. No write was tried, not even to see whether it would be refused:
+github-verify:      GET /user
+github-verify:      GET /user/repos
+github-verify:      GET /repos/[owner]/gtq-sandbox
+github-verify:      GET /repos/[owner]/gtq-sandbox/issues
+github-verify:      GET /repos/[owner]/gtq-sandbox/pulls
+github-verify:      GET /repos/[owner]/gtq-sandbox/contents
+github-verify:      GET /repos/[owner]/golden-thread-quest
+github-verify:      GET /repos/[owner]/golden-thread-quest/issues
+github-verify:      GET /repos/[owner]/golden-thread-quest/pulls
+github-verify:      GET /repos/[owner]/golden-thread-quest/contents
+github-verify: RESULT: every expected repository can be read
+github-verify: 7. SCAN OF THIS OUTPUT. 33 lines were scanned before any was printed, for the token's own value and for anything shaped like a GitHub token. Nothing was found
+------------------------------------------------------------------------------
+exit code: not saved. By the RESULT line it was 0
+
+==============================================================================
+RUN 2. Expecting the sandbox, and a private repository the token was not given. It is empty, and was made for this run
+$ python3 participant/skills/github-verify-connection/verify.py --source live --expect [owner]/gtq-sandbox --expect [owner]/gtq-outside
+------------------------------------------------------------------------------
+github-verify: source: GitHub, with the token in the environment variable GITHUB_TOKEN
+github-verify: 1. WHO. The connection acts as login [login], user id [user id]. GitHub was asked "who am I?". No login was typed in or given to the check
+github-verify: 2. WHAT IT MAY DO. GitHub reports no scopes for this token, as it does for a fine-grained token. GitHub does not tell a fine-grained token its own permissions. What it may READ is tried in part 4. Whether it may write is NOT tested, because that would mean trying a write
+github-verify:      the token expires: 2026-11-29 13:41:47 UTC, 7.0 days from now by GitHub's clock. After that every request is rejected
+github-verify: 3. REPOSITORIES GITHUB LISTS FOR THIS CONNECTION: 9
+github-verify:      [public repository 1], public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [public repository 2], public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [owner]/golden-thread-quest, public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [owner]/gtq-sandbox, private. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [public repository 3], public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [public repository 4], public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [public repository 5], public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [public repository 6], public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      [public repository 7], public. GitHub says the ACCOUNT may: read, write, administer
+github-verify:      note: 8 of these are public. A public repository is listed, and can be read, whatever the token was given. Being listed here does not show that the token was granted it
+github-verify:      note: that is what the account may do. GitHub does not say here whether this TOKEN may write
+github-verify: 4. REPOSITORIES THIS CONNECTION IS EXPECTED TO REACH: 2. Each is asked for by name
+github-verify:      [owner]/gtq-sandbox: REACHABLE. Reads allowed: repository (id [repository id], private); issues (2)
+github-verify:        pull requests: REFUSED (status 403). Not needed by the check, so this is only reported
+github-verify:        files: REFUSED (status 403). Not needed by the check, so this is only reported
+github-verify:      [owner]/gtq-outside: INACCESSIBLE (status 404). Nothing in it could be read. This is NOT an empty repository. GitHub gives this same answer for a repository that does not exist and for one this connection may not see, so the two cannot be told apart from here
+github-verify: 5. ONE SAFE READ. The issues of [owner]/gtq-sandbox were asked for and GitHub returned 2. Only the count was used. No title or text was kept or printed
+github-verify: 6. ONLY READS. 7 requests were made, and every one was a GET. No write was tried, not even to see whether it would be refused:
+github-verify:      GET /user
+github-verify:      GET /user/repos
+github-verify:      GET /repos/[owner]/gtq-sandbox
+github-verify:      GET /repos/[owner]/gtq-sandbox/issues
+github-verify:      GET /repos/[owner]/gtq-sandbox/pulls
+github-verify:      GET /repos/[owner]/gtq-sandbox/contents
+github-verify:      GET /repos/[owner]/gtq-outside
+github-verify: RESULT: 1 expected repository CANNOT be read: [owner]/gtq-outside
+github-verify: 7. SCAN OF THIS OUTPUT. 31 lines were scanned before any was printed, for the token's own value and for anything shaped like a GitHub token. Nothing was found
+------------------------------------------------------------------------------
+exit code: not saved. By the RESULT line it was 3
+
+Run 1 was made before the check printed its note about public repositories. That note was added because of what
+run 1 showed, and run 2 has it.

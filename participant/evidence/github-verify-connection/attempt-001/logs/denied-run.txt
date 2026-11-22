@@ -1,0 +1,170 @@
+A repository outside the token's scope. github-verify-connection, attempt github-attempt-003
+Recorded by scripts/record_evidence.py. No request was sent to GitHub. The account, repositories and tokens are made up.
+Known to this script from the made-up GitHub: acme-fixture/payroll exists, is private, holds 5 issues, and was NOT granted to the
+made-up fine-grained token. acme-fixture/empty-start was granted, and is truly empty: no issues, no pull requests, no files.
+
+==============================================================================
+PART 1. Three expected repositories: one with issues, one truly empty, one outside the token (criterion 4)
+$ python3 participant/skills/github-verify-connection/verify.py --source fake --expect acme-fixture/tracker --expect acme-fixture/empty-start --expect acme-fixture/payroll
+------------------------------------------------------------------------------
+github-verify: source: a made-up GitHub, fake_github.py, with the made-up token "fine-grained". No request leaves this machine
+github-verify: 1. WHO. The connection acts as login robin-fixture, user id 9001. GitHub was asked "who am I?". No login was typed in or given to the check
+github-verify: 2. WHAT IT MAY DO. GitHub reports no scopes for this token, as it does for a fine-grained token. GitHub does not tell a fine-grained token its own permissions. What it may READ is tried in part 4. Whether it may write is NOT tested, because that would mean trying a write
+github-verify:      the token expires: 2026-11-27 09:00:00 UTC, 7.0 days from now by GitHub's clock. After that every request is rejected
+github-verify: 3. REPOSITORIES GITHUB LISTS FOR THIS CONNECTION: 3
+github-verify:      acme-fixture/empty-start, private. GitHub says the ACCOUNT may: read, write
+github-verify:      acme-fixture/tracker, private. GitHub says the ACCOUNT may: read, write
+github-verify:      robin-fixture/notes, public. GitHub says the ACCOUNT may: read, write
+github-verify:      note: 1 of these is public. A public repository is listed, and can be read, whatever the token was given. Being listed here does not show that the token was granted it
+github-verify:      note: that is what the account may do. GitHub does not say here whether this TOKEN may write
+github-verify: 4. REPOSITORIES THIS CONNECTION IS EXPECTED TO REACH: 3. Each is asked for by name
+github-verify:      acme-fixture/tracker: REACHABLE. Reads allowed: repository (id 301, private); issues (12); pull requests (3); files (4)
+github-verify:      acme-fixture/empty-start: REACHABLE. Reads allowed: repository (id 302, private); issues (0); pull requests (0); files (none: GitHub says the repository is empty)
+github-verify:      acme-fixture/payroll: INACCESSIBLE (status 404). Nothing in it could be read. This is NOT an empty repository. GitHub gives this same answer for a repository that does not exist and for one this connection may not see, so the two cannot be told apart from here
+github-verify: 5. ONE SAFE READ. The issues of acme-fixture/tracker were asked for and GitHub returned 12. Only the count was used. No title or text was kept or printed
+github-verify: 6. ONLY READS. 11 requests were made, and every one was a GET. No write was tried, not even to see whether it would be refused:
+github-verify:      GET /user
+github-verify:      GET /user/repos
+github-verify:      GET /repos/acme-fixture/tracker
+github-verify:      GET /repos/acme-fixture/tracker/issues
+github-verify:      GET /repos/acme-fixture/tracker/pulls
+github-verify:      GET /repos/acme-fixture/tracker/contents
+github-verify:      GET /repos/acme-fixture/empty-start
+github-verify:      GET /repos/acme-fixture/empty-start/issues
+github-verify:      GET /repos/acme-fixture/empty-start/pulls
+github-verify:      GET /repos/acme-fixture/empty-start/contents
+github-verify:      GET /repos/acme-fixture/payroll
+github-verify: RESULT: 1 expected repository CANNOT be read: acme-fixture/payroll
+github-verify: 7. SCAN OF THIS OUTPUT. 28 lines were scanned before any was printed, for anything shaped like a GitHub token. Nothing was found
+------------------------------------------------------------------------------
+exit code: 3
+  ok   exit code 3: an expected repository cannot be read
+  ok   the repository outside the token is reported as INACCESSIBLE, with GitHub's status
+  ok   it is not given a count of issues, of 0 or of anything else
+  ok   the truly empty repository is reported as REACHABLE, with issues (0)
+  ok   so inaccessible and empty are different words on different lines
+  ok   the run does not claim to know more than it does: 404 is also what a repository that does not exist gives
+  ok   after the refusal, no other read was tried on that repository
+  ok   it is not in the list of reachable repositories either
+  ok   the result names it
+
+==============================================================================
+PART 2. A week later: the same token, after acme-fixture/tracker was taken out of it
+In part 1 this repository was REACHABLE with 12 issues. A sync that treated a refusal as "nothing there" would now
+report 0 issues and carry on.
+$ python3 participant/skills/github-verify-connection/verify.py --source fake --fake-case lost-access --expect acme-fixture/tracker --expect acme-fixture/empty-start
+------------------------------------------------------------------------------
+github-verify: source: a made-up GitHub, fake_github.py, with the made-up token "lost-access". No request leaves this machine
+github-verify: 1. WHO. The connection acts as login robin-fixture, user id 9001. GitHub was asked "who am I?". No login was typed in or given to the check
+github-verify: 2. WHAT IT MAY DO. GitHub reports no scopes for this token, as it does for a fine-grained token. GitHub does not tell a fine-grained token its own permissions. What it may READ is tried in part 4. Whether it may write is NOT tested, because that would mean trying a write
+github-verify:      the token expires: 2026-11-27 09:00:00 UTC, 7.0 days from now by GitHub's clock. After that every request is rejected
+github-verify: 3. REPOSITORIES GITHUB LISTS FOR THIS CONNECTION: 2
+github-verify:      acme-fixture/empty-start, private. GitHub says the ACCOUNT may: read, write
+github-verify:      robin-fixture/notes, public. GitHub says the ACCOUNT may: read, write
+github-verify:      note: 1 of these is public. A public repository is listed, and can be read, whatever the token was given. Being listed here does not show that the token was granted it
+github-verify:      note: that is what the account may do. GitHub does not say here whether this TOKEN may write
+github-verify: 4. REPOSITORIES THIS CONNECTION IS EXPECTED TO REACH: 2. Each is asked for by name
+github-verify:      acme-fixture/tracker: INACCESSIBLE (status 404). Nothing in it could be read. This is NOT an empty repository. GitHub gives this same answer for a repository that does not exist and for one this connection may not see, so the two cannot be told apart from here
+github-verify:      acme-fixture/empty-start: REACHABLE. Reads allowed: repository (id 302, private); issues (0); pull requests (0); files (none: GitHub says the repository is empty)
+github-verify: 5. ONE SAFE READ. The issues of acme-fixture/empty-start were asked for and GitHub returned 0. Only the count was used. No title or text was kept or printed
+github-verify: 6. ONLY READS. 7 requests were made, and every one was a GET. No write was tried, not even to see whether it would be refused:
+github-verify:      GET /user
+github-verify:      GET /user/repos
+github-verify:      GET /repos/acme-fixture/tracker
+github-verify:      GET /repos/acme-fixture/empty-start
+github-verify:      GET /repos/acme-fixture/empty-start/issues
+github-verify:      GET /repos/acme-fixture/empty-start/pulls
+github-verify:      GET /repos/acme-fixture/empty-start/contents
+github-verify: RESULT: 1 expected repository CANNOT be read: acme-fixture/tracker
+github-verify: 7. SCAN OF THIS OUTPUT. 22 lines were scanned before any was printed, for anything shaped like a GitHub token. Nothing was found
+------------------------------------------------------------------------------
+exit code: 3
+  ok   exit code 3: the check fails on the very next run
+  ok   the lost repository is INACCESSIBLE, not empty
+  ok   the repository that is still granted is still REACHABLE
+  ok   GitHub's own list now has 2 repositories where it had 3
+
+==============================================================================
+PART 3. The token keeps the repository and loses the permission to read issues
+$ python3 participant/skills/github-verify-connection/verify.py --source fake --fake-case issues-refused --expect acme-fixture/tracker
+------------------------------------------------------------------------------
+github-verify: source: a made-up GitHub, fake_github.py, with the made-up token "issues-refused". No request leaves this machine
+github-verify: 1. WHO. The connection acts as login robin-fixture, user id 9001. GitHub was asked "who am I?". No login was typed in or given to the check
+github-verify: 2. WHAT IT MAY DO. GitHub reports no scopes for this token, as it does for a fine-grained token. GitHub does not tell a fine-grained token its own permissions. What it may READ is tried in part 4. Whether it may write is NOT tested, because that would mean trying a write
+github-verify:      the token expires: 2026-11-27 09:00:00 UTC, 7.0 days from now by GitHub's clock. After that every request is rejected
+github-verify: 3. REPOSITORIES GITHUB LISTS FOR THIS CONNECTION: 3
+github-verify:      acme-fixture/empty-start, private. GitHub says the ACCOUNT may: read, write
+github-verify:      acme-fixture/tracker, private. GitHub says the ACCOUNT may: read, write
+github-verify:      robin-fixture/notes, public. GitHub says the ACCOUNT may: read, write
+github-verify:      note: 1 of these is public. A public repository is listed, and can be read, whatever the token was given. Being listed here does not show that the token was granted it
+github-verify:      note: that is what the account may do. GitHub does not say here whether this TOKEN may write
+github-verify: 4. REPOSITORIES THIS CONNECTION IS EXPECTED TO REACH: 1. Each is asked for by name
+github-verify:      acme-fixture/tracker: REACHABLE. Reads allowed: repository (id 301, private); pull requests (3); files (4)
+github-verify:        issues: REFUSED (status 403). The check needs this read, so the repository is counted as NOT readable. This is not the same as having no issues
+github-verify: 5. ONE SAFE READ. NOT MADE: no expected repository could be read
+github-verify: 6. ONLY READS. 6 requests were made, and every one was a GET. No write was tried, not even to see whether it would be refused:
+github-verify:      GET /user
+github-verify:      GET /user/repos
+github-verify:      GET /repos/acme-fixture/tracker
+github-verify:      GET /repos/acme-fixture/tracker/issues
+github-verify:      GET /repos/acme-fixture/tracker/pulls
+github-verify:      GET /repos/acme-fixture/tracker/contents
+github-verify: RESULT: 1 expected repository CANNOT be read: acme-fixture/tracker
+github-verify: 7. SCAN OF THIS OUTPUT. 22 lines were scanned before any was printed, for anything shaped like a GitHub token. Nothing was found
+------------------------------------------------------------------------------
+exit code: 3
+  ok   exit code 3
+  ok   the read of issues is reported as REFUSED (status 403), and the run says that is not the same as having no issues
+
+==============================================================================
+PART 4. GitHub refuses the list of repositories itself
+(inside this script) the verification, against a made-up GitHub that answers 403 for the list
+------------------------------------------------------------------------------
+github-verify: 1. WHO. The connection acts as login robin-fixture, user id 9001. GitHub was asked "who am I?". No login was typed in or given to the check
+github-verify: 2. WHAT IT MAY DO. GitHub reports no scopes for this token, as it does for a fine-grained token. GitHub does not tell a fine-grained token its own permissions. What it may READ is tried in part 4. Whether it may write is NOT tested, because that would mean trying a write
+github-verify:      the token expires: 2026-11-27 09:00:00 UTC, 7.0 days from now by GitHub's clock. After that every request is rejected
+github-verify: 3. REPOSITORIES GITHUB LISTS FOR THIS CONNECTION. THE LIST COULD NOT BE READ (status 403). This is not the same as an empty list: nothing is known about what it lists
+github-verify: 4. REPOSITORIES THIS CONNECTION IS EXPECTED TO REACH: 1. Each is asked for by name
+github-verify:      acme-fixture/tracker: REACHABLE. Reads allowed: repository (id 301, private); issues (12); pull requests (3); files (4)
+github-verify: 5. ONE SAFE READ. The issues of acme-fixture/tracker were asked for and GitHub returned 12. Only the count was used. No title or text was kept or printed
+github-verify: 6. ONLY READS. 6 requests were made, and every one was a GET. No write was tried, not even to see whether it would be refused:
+github-verify:      GET /user
+github-verify:      GET /user/repos
+github-verify:      GET /repos/acme-fixture/tracker
+github-verify:      GET /repos/acme-fixture/tracker/issues
+github-verify:      GET /repos/acme-fixture/tracker/pulls
+github-verify:      GET /repos/acme-fixture/tracker/contents
+github-verify: RESULT: every expected repository can be read
+github-verify: 7. SCAN OF THIS OUTPUT. 15 lines were scanned before any was printed, for anything shaped like a GitHub token. Nothing was found
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the list is reported as not readable, and not as empty
+
+==============================================================================
+PART 5. The expected repository was renamed
+$ python3 participant/skills/github-verify-connection/verify.py --source fake --fake-case renamed --expect acme-fixture/tracker
+------------------------------------------------------------------------------
+github-verify: source: a made-up GitHub, fake_github.py, with the made-up token "renamed". No request leaves this machine
+github-verify: 1. WHO. The connection acts as login robin-fixture, user id 9001. GitHub was asked "who am I?". No login was typed in or given to the check
+github-verify: 2. WHAT IT MAY DO. GitHub reports no scopes for this token, as it does for a fine-grained token. GitHub does not tell a fine-grained token its own permissions. What it may READ is tried in part 4. Whether it may write is NOT tested, because that would mean trying a write
+github-verify:      the token expires: 2026-11-27 09:00:00 UTC, 7.0 days from now by GitHub's clock. After that every request is rejected
+github-verify: 3. REPOSITORIES GITHUB LISTS FOR THIS CONNECTION: 3
+github-verify:      acme-fixture/empty-start, private. GitHub says the ACCOUNT may: read, write
+github-verify:      acme-fixture/issue-tracker, private. GitHub says the ACCOUNT may: read, write
+github-verify:      robin-fixture/notes, public. GitHub says the ACCOUNT may: read, write
+github-verify:      note: 1 of these is public. A public repository is listed, and can be read, whatever the token was given. Being listed here does not show that the token was granted it
+github-verify:      note: that is what the account may do. GitHub does not say here whether this TOKEN may write
+github-verify: 4. REPOSITORIES THIS CONNECTION IS EXPECTED TO REACH: 1. Each is asked for by name
+github-verify:      acme-fixture/tracker: MOVED (status 301). GitHub redirects this name, so the repository was renamed or transferred. The check does not follow it. Not counted as readable
+github-verify: 5. ONE SAFE READ. NOT MADE: no expected repository could be read
+github-verify: 6. ONLY READS. 3 requests were made, and every one was a GET. No write was tried, not even to see whether it would be refused:
+github-verify:      GET /user
+github-verify:      GET /user/repos
+github-verify:      GET /repos/acme-fixture/tracker
+github-verify: RESULT: 1 expected repository CANNOT be read: acme-fixture/tracker
+github-verify: 7. SCAN OF THIS OUTPUT. 18 lines were scanned before any was printed, for anything shaped like a GitHub token. Nothing was found
+------------------------------------------------------------------------------
+exit code: 3
+  ok   exit code 3, and the repository is reported as MOVED, not as empty and not as readable
+
+RESULT: ALL CHECKS PASSED. 17 checks.

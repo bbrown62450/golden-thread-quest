@@ -1,0 +1,56 @@
+test_a_fake_run_from_the_command_line (test_verify.CommandLine) ... ok
+test_a_live_run_needs_the_token_and_says_so_without_contacting_anything (test_verify.CommandLine) ... ok
+test_a_live_run_scans_for_the_tokens_own_value (test_verify.CommandLine) ... ok
+test_a_rate_limit_stops_the_check (test_verify.CommandLine) ... ok
+test_at_least_one_expected_repository_is_required (test_verify.CommandLine) ... ok
+test_bad_names_and_cases_are_refused (test_verify.CommandLine) ... ok
+test_anything_shaped_like_a_token_is_redacted_even_when_it_is_not_this_token (test_verify.Credential) ... ok
+test_nothing_is_printed_before_the_scan (test_verify.Credential) ... ok
+test_ordinary_words_are_not_redacted (test_verify.Credential) ... ok
+test_the_output_says_it_was_scanned_and_found_nothing (test_verify.Credential) ... ok
+test_the_token_echoed_back_by_github_is_redacted_before_printing (test_verify.Credential) ... ok
+test_the_token_goes_in_a_header_and_never_in_the_address (test_verify.Credential) ... ok
+test_a_reachable_repository_is_reported_with_what_was_read (test_verify.Expected) ... ok
+test_a_refused_read_of_issues_is_not_reported_as_no_issues (test_verify.Expected) ... ok
+test_a_refused_read_the_check_does_not_need_is_only_reported (test_verify.Expected) ... ok
+test_a_renamed_repository_is_reported_as_moved_and_not_followed (test_verify.Expected) ... ok
+test_a_repository_outside_the_token_is_inaccessible_not_empty (test_verify.Expected) ... ok
+test_a_repository_read_by_name_and_missing_from_the_list_is_noted (test_verify.Expected) ... ok
+test_a_repository_that_does_not_exist_gets_the_same_honest_answer (test_verify.Expected) ... ok
+test_a_server_error_on_a_repository_is_inaccessible_with_its_status (test_verify.Expected) ... ok
+test_access_lost_since_last_week_fails_the_check (test_verify.Expected) ... ok
+test_an_empty_repository_is_reachable_with_nothing_in_it (test_verify.Expected) ... ok
+test_empty_and_inaccessible_are_different_lines_with_different_words (test_verify.Expected) ... ok
+test_more_than_one_page_of_issues_is_said_not_counted_short (test_verify.Expected) ... ok
+test_no_title_is_printed (test_verify.Expected) ... ok
+test_pull_requests_are_not_counted_as_issues (test_verify.Expected) ... ok
+test_the_other_reads_are_not_tried_on_an_inaccessible_repository (test_verify.Expected) ... ok
+test_the_safe_read_is_reported_or_said_not_to_have_been_made (test_verify.Expected) ... ok
+test_a_live_request_does_not_follow_redirects (test_verify.OnlyReads) ... ok
+test_every_request_is_listed_and_the_list_matches_what_was_received (test_verify.OnlyReads) ... ok
+test_the_check_writes_no_file (test_verify.OnlyReads) ... ok
+test_the_skill_has_no_way_to_send_anything_but_a_get (test_verify.OnlyReads) ... ok
+test_a_list_that_cannot_be_read_is_not_reported_as_empty (test_verify.Reachable) ... ok
+test_a_list_that_is_truly_empty_says_so (test_verify.Reachable) ... ok
+test_a_long_list_is_followed_page_by_page (test_verify.Reachable) ... ok
+test_a_public_repository_is_listed_and_readable_without_being_granted_and_the_run_says_so (test_verify.Reachable) ... ok
+test_a_wider_token_lists_more (test_verify.Reachable) ... ok
+test_the_repositories_are_listed_by_full_name (test_verify.Reachable) ... ok
+test_what_the_account_may_do_is_not_passed_off_as_what_the_token_may_do (test_verify.Reachable) ... ok
+test_a_fine_grained_token_is_said_to_report_no_scopes (test_verify.Scopes) ... ok
+test_an_empty_scope_list_is_reported_as_none (test_verify.Scopes) ... ok
+test_an_expiry_that_has_passed_or_is_absent_is_said (test_verify.Scopes) ... ok
+test_classic_scopes_are_reported_one_by_one (test_verify.Scopes) ... ok
+test_scopes_broader_than_needed_are_counted_in_the_result (test_verify.Scopes) ... ok
+test_the_expiry_is_reported_with_the_days_left_by_githubs_clock (test_verify.Scopes) ... ok
+test_which_scopes_are_read_only (test_verify.Scopes) ... ok
+test_a_rejected_token_stops_the_check_and_is_not_called_fine (test_verify.Who) ... ok
+test_an_answer_with_no_login_stops_the_check (test_verify.Who) ... ok
+test_another_identity_is_reported_as_that_identity (test_verify.Who) ... ok
+test_no_login_is_written_in_the_skill_or_taken_as_an_argument (test_verify.Who) ... ok
+test_the_identity_is_asked_from_github (test_verify.Who) ... ok
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.007s
+
+OK

@@ -1,0 +1,174 @@
+Do the tests notice a broken check? github-verify-connection, attempt github-attempt-003
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/github-verify-connection/verify.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. The login is written into the check instead of read from the connection (criterion 1)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    CommandLine.test_a_live_run_scans_for_the_tokens_own_value
+    Who.test_another_identity_is_reported_as_that_identity
+    Credential.test_anything_shaped_like_a_token_is_redacted_even_when_it_is_not_this_token
+    Who.test_no_login_is_written_in_the_skill_or_taken_as_an_argument
+    Credential.test_the_token_echoed_back_by_github_is_redacted_before_printing
+
+PLANTED BUG B. A rejected token is not recognised (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Who.test_a_rejected_token_stops_the_check_and_is_not_called_fine
+
+PLANTED BUG C. The scopes GitHub reports are not reported (criterion 2)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Scopes.test_an_empty_scope_list_is_reported_as_none
+    Scopes.test_classic_scopes_are_reported_one_by_one
+    Scopes.test_scopes_broader_than_needed_are_counted_in_the_result
+
+PLANTED BUG D. Every scope is called read-only (criteria 2 and 7)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Scopes.test_classic_scopes_are_reported_one_by_one
+    Scopes.test_scopes_broader_than_needed_are_counted_in_the_result
+    Scopes.test_which_scopes_are_read_only
+
+PLANTED BUG E. The scope `repo`, which allows writing, is called read-only (criterion 7)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Scopes.test_classic_scopes_are_reported_one_by_one
+    Scopes.test_scopes_broader_than_needed_are_counted_in_the_result
+    Scopes.test_which_scopes_are_read_only
+
+PLANTED BUG F. The token's expiry date is not reported (criterion 2)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Scopes.test_an_expiry_that_has_passed_or_is_absent_is_said
+    Scopes.test_the_expiry_is_reported_with_the_days_left_by_githubs_clock
+
+PLANTED BUG G. What the account may do is passed off as what the token may do (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Reachable.test_what_the_account_may_do_is_not_passed_off_as_what_the_token_may_do
+
+PLANTED BUG H. A list of repositories that could not be read is reported as an empty list (criteria 3 and 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Reachable.test_a_list_that_cannot_be_read_is_not_reported_as_empty
+
+PLANTED BUG I. The list of repositories stops after the first page (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Reachable.test_a_long_list_is_followed_page_by_page
+
+PLANTED BUG J. A refused read is reported as a read that found nothing: the scenario (criterion 4)
+  unittest result: FAILED (failures=11)
+  tests that failed (11):
+    CommandLine.test_a_fake_run_from_the_command_line
+    Expected.test_a_refused_read_of_issues_is_not_reported_as_no_issues
+    Expected.test_a_refused_read_the_check_does_not_need_is_only_reported
+    Expected.test_a_repository_outside_the_token_is_inaccessible_not_empty
+    Expected.test_a_repository_that_does_not_exist_gets_the_same_honest_answer
+    Expected.test_a_server_error_on_a_repository_is_inaccessible_with_its_status
+    Expected.test_access_lost_since_last_week_fails_the_check
+    Expected.test_empty_and_inaccessible_are_different_lines_with_different_words
+    OnlyReads.test_every_request_is_listed_and_the_list_matches_what_was_received
+    Expected.test_the_other_reads_are_not_tried_on_an_inaccessible_repository
+    Expected.test_the_safe_read_is_reported_or_said_not_to_have_been_made
+
+PLANTED BUG K. A refused read of issues does not count against the repository (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Expected.test_a_refused_read_of_issues_is_not_reported_as_no_issues
+
+PLANTED BUG L. An expected repository that cannot be read does not fail the check (criterion 4)
+  unittest result: FAILED (failures=8)
+  tests that failed (8):
+    CommandLine.test_a_fake_run_from_the_command_line
+    Expected.test_a_refused_read_of_issues_is_not_reported_as_no_issues
+    Expected.test_a_renamed_repository_is_reported_as_moved_and_not_followed
+    Expected.test_a_repository_outside_the_token_is_inaccessible_not_empty
+    Expected.test_a_repository_that_does_not_exist_gets_the_same_honest_answer
+    Expected.test_a_server_error_on_a_repository_is_inaccessible_with_its_status
+    Expected.test_access_lost_since_last_week_fails_the_check
+    Expected.test_empty_and_inaccessible_are_different_lines_with_different_words
+
+PLANTED BUG M. A repository GitHub says is empty is not told from one whose files are refused (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Expected.test_an_empty_repository_is_reachable_with_nothing_in_it
+
+PLANTED BUG N. A renamed repository is reported as readable (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Expected.test_a_renamed_repository_is_reported_as_moved_and_not_followed
+
+PLANTED BUG O. A server error is described as a repository that may not exist (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Expected.test_a_server_error_on_a_repository_is_inaccessible_with_its_status
+
+PLANTED BUG P. Pull requests are counted as issues (criterion 4)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Expected.test_a_reachable_repository_is_reported_with_what_was_read
+    Expected.test_pull_requests_are_not_counted_as_issues
+    Expected.test_the_safe_read_is_reported_or_said_not_to_have_been_made
+
+PLANTED BUG Q. A count cut off at the first page is given as the whole count (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Expected.test_more_than_one_page_of_issues_is_said_not_counted_short
+
+PLANTED BUG R. The check may be run with no expected repository (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    CommandLine.test_at_least_one_expected_repository_is_required
+
+PLANTED BUG S. The request is not a GET (criterion 5)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    OnlyReads.test_the_skill_has_no_way_to_send_anything_but_a_get
+    Credential.test_the_token_goes_in_a_header_and_never_in_the_address
+
+PLANTED BUG T. A request is made and left out of the list of requests (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OnlyReads.test_every_request_is_listed_and_the_list_matches_what_was_received
+
+PLANTED BUG U. The token is put in the address (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Credential.test_the_token_goes_in_a_header_and_never_in_the_address
+
+PLANTED BUG V. Lines are printed as they are made, before the scan (criterion 6)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    CommandLine.test_a_live_run_scans_for_the_tokens_own_value
+    Credential.test_nothing_is_printed_before_the_scan
+
+PLANTED BUG W. The output is not scanned for the token's own value (criterion 6)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    CommandLine.test_a_live_run_scans_for_the_tokens_own_value
+    Credential.test_the_token_echoed_back_by_github_is_redacted_before_printing
+
+PLANTED BUG X. The output is not scanned for anything shaped like a token (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Credential.test_anything_shaped_like_a_token_is_redacted_even_when_it_is_not_this_token
+
+PLANTED BUG Y. A credential found in the output does not fail the check (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    CommandLine.test_a_live_run_scans_for_the_tokens_own_value
+
+PLANTED BUG Z. A rate limit is not recognised, and is reported as lost access
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    CommandLine.test_a_rate_limit_stops_the_check
+
+After the last bug was taken out: verify.py is byte for byte what it was at the start. OK
+
+RESULT: all 26 planted bugs were caught by at least one test, and the file was restored.

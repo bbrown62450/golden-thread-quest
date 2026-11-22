@@ -334,4 +334,13 @@ attempts:
   evidence_path: participant/evidence/github-delta-sync/github-attempt-002
   submission_id: submission-20261121222950-574700
   review_id: review-20261121223642-3d5a0b
-updated_at: '2026-11-21T22:36:42Z'
+- attempt_id: github-attempt-003
+  quest_id: github-verify-connection
+  quest_version: 1
+  content_hash: sha256:ff7bce5706db45529918ca582bb73533edc1b0a5722037e5579459366dc18aa2
+  state: submitted
+  started_at: '2026-11-22T13:33:59Z'
+  updated_at: '2026-11-22T13:51:29Z'
+  evidence_path: participant/evidence/github-verify-connection/github-attempt-003
+  submission_id: submission-20261122135129-2a7bc9
+updated_at: '2026-11-22T13:51:29Z'
