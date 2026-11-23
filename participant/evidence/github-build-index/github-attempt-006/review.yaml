@@ -1,0 +1,26 @@
+schema_version: 1
+review_id: review-20261123154638-dc461b
+quest_id: github-build-index
+quest_version: 1
+attempt_id: github-attempt-006
+evidence_hash: sha256:e4dfe1597bb394c7be45e49e30fd62b81e8a56133f9155a7f685721eb69c3dad
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-23T15:46:38Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/github/index.md
+  digest: sha256:56d97d028085d09ac509f043445919f8668d5804d29b5719627c827cdc1dd208
+- path: participant/skills/github-build-index/SKILL.md
+  digest: sha256:b913e763ece46cf4184f7b048ee5651c76f6b0a1088469a0e220498663509202
+verification_statement: Automated review. I read PROOF.md, logs/index-run.txt, tests.txt,
+  planted-bugs.txt, both scripts, SKILL.md and the generated index.md. The run log
+  shows a two-build byte-identical result, row and record counts that match with no
+  duplicates, four kinds of lookup checked against answers worked out independently,
+  a missing field reported as a GAP, an added record picked up by a rebuild, a hand
+  edit found and then overwritten, and the source-of-truth statement at the head of
+  the index. The index file agrees with the log. The evidence sits in github-attempt-006
+  rather than the attempt-001 path the quest names, but the pre-check reports all
+  required files present. No text in the evidence addresses the reviewer. Each of
+  the 7 acceptance criteria was matched to text quoted word for word from the evidence.
