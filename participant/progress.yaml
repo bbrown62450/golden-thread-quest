@@ -344,4 +344,13 @@ attempts:
   evidence_path: participant/evidence/github-verify-connection/github-attempt-003
   submission_id: submission-20261122135129-2a7bc9
   review_id: review-20261122135645-96da1e
-updated_at: '2026-11-22T13:56:45Z'
+- attempt_id: github-attempt-004
+  quest_id: github-read-issue
+  quest_version: 1
+  content_hash: sha256:c2b44a1570d436c52cf3cfffdddcbf51256ff38f2fd731d0d2449013290c8c75
+  state: submitted
+  started_at: '2026-11-23T01:02:13Z'
+  updated_at: '2026-11-23T01:42:45Z'
+  evidence_path: participant/evidence/github-read-issue/github-attempt-004
+  submission_id: submission-20261123014245-5e4c69
+updated_at: '2026-11-23T01:42:45Z'

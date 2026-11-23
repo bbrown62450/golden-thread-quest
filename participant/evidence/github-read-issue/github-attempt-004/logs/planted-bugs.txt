@@ -1,0 +1,801 @@
+Do the tests notice a broken skill? github-read-issue, attempt github-attempt-004
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/github-read-issue/read_issue.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. A field the format does not know is dropped (criteria 1 and 4)
+  unittest result: FAILED (failures=17, errors=36)
+  tests that failed (53):
+    ContentNotInstructions.test_a_body_that_copies_the_whole_file_format_changes_nothing
+    Unchanged.test_a_changed_issue_changes_the_file_and_the_run_says_what
+    EveryField.test_a_closed_issue_keeps_who_closed_it_and_why
+    ContentNotInstructions.test_a_comment_cannot_pass_itself_off_as_a_later_comment
+    Formatting.test_a_comment_keeps_its_code_block_and_its_trailing_blank_lines
+    Connection.test_a_count_that_differs_from_what_was_read_is_noted
+    Connection.test_a_failed_second_run_leaves_the_saved_file_as_it_was
+    CommandLine.test_a_fake_run_from_the_command_line_writes_the_named_file
+    Unknown.test_a_field_added_tomorrow_is_kept_whatever_its_shape
+    ContentNotInstructions.test_a_file_changed_by_hand_fails_the_check
+    Identity.test_a_file_from_another_source_is_not_overwritten
+    Identity.test_a_file_holding_another_issue_is_not_overwritten
+    Identity.test_a_file_the_skill_did_not_write_is_not_overwritten
+    NothingPrivate.test_a_mention_is_not_taken_for_an_email_address
+    Unknown.test_a_person_inside_an_unknown_field_is_kept_by_login_only
+    Connection.test_a_rate_limit_is_waited_for
+    Unchanged.test_a_second_run_leaves_the_same_bytes_and_does_not_write
+    ContentNotInstructions.test_a_title_cannot_add_a_line_to_the_front_matter
+    NothingPrivate.test_a_warning_names_the_comment_it_is_in
+    Unknown.test_an_unknown_field_on_a_comment_is_kept_and_named
+    Unknown.test_an_unknown_field_with_an_odd_name_is_kept_and_its_name_is_not_printed
+    EveryField.test_every_comment_is_saved_with_its_fields
+    EveryField.test_every_place_in_the_answer_is_accounted_for
+    EveryField.test_every_top_level_field_is_in_the_file_or_on_the_left_out_list
+    NothingPrivate.test_no_api_address_is_in_the_file
+    Unchanged.test_no_file_is_left_behind_besides_the_issue
+    NothingPrivate.test_no_part_of_a_person_s_record_but_the_login_is_in_the_file
+    Unknown.test_only_an_address_on_the_api_host_is_left_out
+    Unchanged.test_only_the_body_changing_is_reported_as_the_body
+    EveryField.test_reactions_are_kept_as_counts
+    ContentNotInstructions.test_text_in_the_body_that_imitates_the_file_is_only_text
+    Formatting.test_text_that_is_not_ascii_is_kept_as_it_is
+    Formatting.test_the_body_comes_back_character_for_character
+    CommandLine.test_the_check_reads_a_saved_file_back
+    Formatting.test_the_code_block_keeps_its_blank_line_its_indent_and_its_tab
+    EveryField.test_the_detail_of_labels_and_milestone_is_kept
+    Identity.test_the_file_is_named_by_repository_and_number
+    ContentNotInstructions.test_the_file_says_the_content_is_not_instructions
+    Unchanged.test_the_first_run_says_it_wrote
+    EveryField.test_the_front_matter_holds_the_required_fields
+    Identity.test_the_heading_and_the_front_matter_name_the_issue
+    ContentNotInstructions.test_the_instruction_changes_nothing_around_the_file
+    ContentNotInstructions.test_the_instruction_like_line_is_stored_inside_the_body_block
+    NothingPrivate.test_the_left_out_list_names_what_was_left_out_of_each_person
+    Unchanged.test_the_order_github_sends_fields_in_does_not_change_the_file
+    Unknown.test_the_preserved_section_is_under_its_own_heading
+    Formatting.test_the_recorded_size_and_checksum_are_the_body_s_own
+    Unknown.test_the_run_names_the_unknown_fields
+    EveryField.test_the_run_says_how_the_fields_were_shared_out
+    Formatting.test_the_table_is_in_the_file_line_for_line
+    Formatting.test_the_task_list_is_in_the_file_line_for_line
+    Unknown.test_the_unknown_fields_are_in_the_preserved_section
+    Formatting.test_two_spaces_at_the_end_of_a_line_are_kept
+
+PLANTED BUG B. An unknown field on a comment is dropped (criteria 1 and 4)
+  unittest result: FAILED (failures=17, errors=36)
+  tests that failed (53):
+    ContentNotInstructions.test_a_body_that_copies_the_whole_file_format_changes_nothing
+    Unchanged.test_a_changed_issue_changes_the_file_and_the_run_says_what
+    EveryField.test_a_closed_issue_keeps_who_closed_it_and_why
+    ContentNotInstructions.test_a_comment_cannot_pass_itself_off_as_a_later_comment
+    Formatting.test_a_comment_keeps_its_code_block_and_its_trailing_blank_lines
+    Connection.test_a_count_that_differs_from_what_was_read_is_noted
+    Connection.test_a_failed_second_run_leaves_the_saved_file_as_it_was
+    CommandLine.test_a_fake_run_from_the_command_line_writes_the_named_file
+    Unknown.test_a_field_added_tomorrow_is_kept_whatever_its_shape
+    ContentNotInstructions.test_a_file_changed_by_hand_fails_the_check
+    Identity.test_a_file_from_another_source_is_not_overwritten
+    Identity.test_a_file_holding_another_issue_is_not_overwritten
+    Identity.test_a_file_the_skill_did_not_write_is_not_overwritten
+    NothingPrivate.test_a_mention_is_not_taken_for_an_email_address
+    Unknown.test_a_person_inside_an_unknown_field_is_kept_by_login_only
+    Connection.test_a_rate_limit_is_waited_for
+    Unchanged.test_a_second_run_leaves_the_same_bytes_and_does_not_write
+    ContentNotInstructions.test_a_title_cannot_add_a_line_to_the_front_matter
+    NothingPrivate.test_a_warning_names_the_comment_it_is_in
+    Unknown.test_an_unknown_field_on_a_comment_is_kept_and_named
+    Unknown.test_an_unknown_field_with_an_odd_name_is_kept_and_its_name_is_not_printed
+    EveryField.test_every_comment_is_saved_with_its_fields
+    EveryField.test_every_place_in_the_answer_is_accounted_for
+    EveryField.test_every_top_level_field_is_in_the_file_or_on_the_left_out_list
+    NothingPrivate.test_no_api_address_is_in_the_file
+    Unchanged.test_no_file_is_left_behind_besides_the_issue
+    NothingPrivate.test_no_part_of_a_person_s_record_but_the_login_is_in_the_file
+    Unknown.test_only_an_address_on_the_api_host_is_left_out
+    Unchanged.test_only_the_body_changing_is_reported_as_the_body
+    EveryField.test_reactions_are_kept_as_counts
+    ContentNotInstructions.test_text_in_the_body_that_imitates_the_file_is_only_text
+    Formatting.test_text_that_is_not_ascii_is_kept_as_it_is
+    Formatting.test_the_body_comes_back_character_for_character
+    CommandLine.test_the_check_reads_a_saved_file_back
+    Formatting.test_the_code_block_keeps_its_blank_line_its_indent_and_its_tab
+    EveryField.test_the_detail_of_labels_and_milestone_is_kept
+    Identity.test_the_file_is_named_by_repository_and_number
+    ContentNotInstructions.test_the_file_says_the_content_is_not_instructions
+    Unchanged.test_the_first_run_says_it_wrote
+    EveryField.test_the_front_matter_holds_the_required_fields
+    Identity.test_the_heading_and_the_front_matter_name_the_issue
+    ContentNotInstructions.test_the_instruction_changes_nothing_around_the_file
+    ContentNotInstructions.test_the_instruction_like_line_is_stored_inside_the_body_block
+    NothingPrivate.test_the_left_out_list_names_what_was_left_out_of_each_person
+    Unchanged.test_the_order_github_sends_fields_in_does_not_change_the_file
+    Unknown.test_the_preserved_section_is_under_its_own_heading
+    Formatting.test_the_recorded_size_and_checksum_are_the_body_s_own
+    Unknown.test_the_run_names_the_unknown_fields
+    EveryField.test_the_run_says_how_the_fields_were_shared_out
+    Formatting.test_the_table_is_in_the_file_line_for_line
+    Formatting.test_the_task_list_is_in_the_file_line_for_line
+    Unknown.test_the_unknown_fields_are_in_the_preserved_section
+    Formatting.test_two_spaces_at_the_end_of_a_line_are_kept
+
+PLANTED BUG C. Labels are kept by name only, and their colour and description are lost (criterion 1)
+  unittest result: FAILED (failures=19, errors=39)
+  tests that failed (58):
+    ContentNotInstructions.test_a_body_that_copies_the_whole_file_format_changes_nothing
+    Unchanged.test_a_changed_issue_changes_the_file_and_the_run_says_what
+    EveryField.test_a_closed_issue_keeps_who_closed_it_and_why
+    ContentNotInstructions.test_a_comment_cannot_pass_itself_off_as_a_later_comment
+    Formatting.test_a_comment_keeps_its_code_block_and_its_trailing_blank_lines
+    Connection.test_a_count_that_differs_from_what_was_read_is_noted
+    Connection.test_a_failed_second_run_leaves_the_saved_file_as_it_was
+    CommandLine.test_a_fake_run_from_the_command_line_writes_the_named_file
+    Unknown.test_a_field_added_tomorrow_is_kept_whatever_its_shape
+    ContentNotInstructions.test_a_file_changed_by_hand_fails_the_check
+    Identity.test_a_file_from_another_source_is_not_overwritten
+    Identity.test_a_file_holding_another_issue_is_not_overwritten
+    Identity.test_a_file_the_skill_did_not_write_is_not_overwritten
+    NothingPrivate.test_a_mention_is_not_taken_for_an_email_address
+    Unknown.test_a_person_inside_an_unknown_field_is_kept_by_login_only
+    Connection.test_a_rate_limit_is_waited_for
+    Unchanged.test_a_second_run_leaves_the_same_bytes_and_does_not_write
+    ContentNotInstructions.test_a_title_cannot_add_a_line_to_the_front_matter
+    NothingPrivate.test_a_warning_names_the_comment_it_is_in
+    EveryField.test_all_comments_are_read_when_they_come_in_pages
+    Unknown.test_an_unknown_field_on_a_comment_is_kept_and_named
+    Unknown.test_an_unknown_field_with_an_odd_name_is_kept_and_its_name_is_not_printed
+    EveryField.test_every_comment_is_saved_with_its_fields
+    EveryField.test_every_place_in_the_answer_is_accounted_for
+    EveryField.test_every_top_level_field_is_in_the_file_or_on_the_left_out_list
+    Formatting.test_line_breaks_at_the_start_and_the_end_are_kept
+    NothingPrivate.test_no_api_address_is_in_the_file
+    Formatting.test_no_body_is_not_the_same_as_an_empty_body
+    Unchanged.test_no_file_is_left_behind_besides_the_issue
+    NothingPrivate.test_no_part_of_a_person_s_record_but_the_login_is_in_the_file
+    Unknown.test_only_an_address_on_the_api_host_is_left_out
+    Unchanged.test_only_the_body_changing_is_reported_as_the_body
+    EveryField.test_reactions_are_kept_as_counts
+    ContentNotInstructions.test_text_in_the_body_that_imitates_the_file_is_only_text
+    NothingPrivate.test_text_shaped_like_a_credential_or_an_email_is_warned_about_and_not_printed
+    Formatting.test_text_that_is_not_ascii_is_kept_as_it_is
+    Formatting.test_the_body_comes_back_character_for_character
+    CommandLine.test_the_check_reads_a_saved_file_back
+    Formatting.test_the_code_block_keeps_its_blank_line_its_indent_and_its_tab
+    EveryField.test_the_detail_of_labels_and_milestone_is_kept
+    Identity.test_the_file_is_named_by_repository_and_number
+    ContentNotInstructions.test_the_file_says_the_content_is_not_instructions
+    Unchanged.test_the_first_run_says_it_wrote
+    EveryField.test_the_front_matter_holds_the_required_fields
+    Identity.test_the_heading_and_the_front_matter_name_the_issue
+    ContentNotInstructions.test_the_instruction_changes_nothing_around_the_file
+    ContentNotInstructions.test_the_instruction_like_line_is_stored_inside_the_body_block
+    NothingPrivate.test_the_left_out_list_names_what_was_left_out_of_each_person
+    Unchanged.test_the_order_github_sends_fields_in_does_not_change_the_file
+    Unknown.test_the_preserved_section_is_under_its_own_heading
+    Formatting.test_the_recorded_size_and_checksum_are_the_body_s_own
+    Unknown.test_the_run_names_the_unknown_fields
+    EveryField.test_the_run_says_how_the_fields_were_shared_out
+    Formatting.test_the_table_is_in_the_file_line_for_line
+    Formatting.test_the_task_list_is_in_the_file_line_for_line
+    Unknown.test_the_unknown_fields_are_in_the_preserved_section
+    Formatting.test_two_spaces_at_the_end_of_a_line_are_kept
+    Formatting.test_windows_line_endings_are_kept_on_disk
+
+PLANTED BUG D. The read-back check before writing is skipped, so a lost field would go unnoticed (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    EveryField.test_a_field_that_would_be_lost_stops_the_run
+
+PLANTED BUG E. The read-back check takes false and 0 for the same value (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    EveryField.test_a_false_and_a_zero_are_not_mixed_up
+
+PLANTED BUG F. The quest's scenario: the body is flattened, so its task list, table and code block run together (criterion 2)
+  unittest result: FAILED (failures=18, errors=38)
+  tests that failed (56):
+    ContentNotInstructions.test_a_body_that_copies_the_whole_file_format_changes_nothing
+    Unchanged.test_a_changed_issue_changes_the_file_and_the_run_says_what
+    EveryField.test_a_closed_issue_keeps_who_closed_it_and_why
+    ContentNotInstructions.test_a_comment_cannot_pass_itself_off_as_a_later_comment
+    Formatting.test_a_comment_keeps_its_code_block_and_its_trailing_blank_lines
+    Connection.test_a_count_that_differs_from_what_was_read_is_noted
+    Connection.test_a_failed_second_run_leaves_the_saved_file_as_it_was
+    CommandLine.test_a_fake_run_from_the_command_line_writes_the_named_file
+    Unknown.test_a_field_added_tomorrow_is_kept_whatever_its_shape
+    ContentNotInstructions.test_a_file_changed_by_hand_fails_the_check
+    Identity.test_a_file_from_another_source_is_not_overwritten
+    Identity.test_a_file_holding_another_issue_is_not_overwritten
+    Identity.test_a_file_the_skill_did_not_write_is_not_overwritten
+    NothingPrivate.test_a_mention_is_not_taken_for_an_email_address
+    Unknown.test_a_person_inside_an_unknown_field_is_kept_by_login_only
+    Connection.test_a_rate_limit_is_waited_for
+    Unchanged.test_a_second_run_leaves_the_same_bytes_and_does_not_write
+    ContentNotInstructions.test_a_title_cannot_add_a_line_to_the_front_matter
+    NothingPrivate.test_a_warning_names_the_comment_it_is_in
+    Unknown.test_an_unknown_field_on_a_comment_is_kept_and_named
+    Unknown.test_an_unknown_field_with_an_odd_name_is_kept_and_its_name_is_not_printed
+    EveryField.test_every_comment_is_saved_with_its_fields
+    EveryField.test_every_place_in_the_answer_is_accounted_for
+    EveryField.test_every_top_level_field_is_in_the_file_or_on_the_left_out_list
+    Formatting.test_line_breaks_at_the_start_and_the_end_are_kept
+    NothingPrivate.test_no_api_address_is_in_the_file
+    Unchanged.test_no_file_is_left_behind_besides_the_issue
+    NothingPrivate.test_no_part_of_a_person_s_record_but_the_login_is_in_the_file
+    Unknown.test_only_an_address_on_the_api_host_is_left_out
+    Unchanged.test_only_the_body_changing_is_reported_as_the_body
+    EveryField.test_reactions_are_kept_as_counts
+    ContentNotInstructions.test_text_in_the_body_that_imitates_the_file_is_only_text
+    NothingPrivate.test_text_shaped_like_a_credential_or_an_email_is_warned_about_and_not_printed
+    Formatting.test_text_that_is_not_ascii_is_kept_as_it_is
+    Formatting.test_the_body_comes_back_character_for_character
+    CommandLine.test_the_check_reads_a_saved_file_back
+    Formatting.test_the_code_block_keeps_its_blank_line_its_indent_and_its_tab
+    EveryField.test_the_detail_of_labels_and_milestone_is_kept
+    Identity.test_the_file_is_named_by_repository_and_number
+    ContentNotInstructions.test_the_file_says_the_content_is_not_instructions
+    Unchanged.test_the_first_run_says_it_wrote
+    EveryField.test_the_front_matter_holds_the_required_fields
+    Identity.test_the_heading_and_the_front_matter_name_the_issue
+    ContentNotInstructions.test_the_instruction_changes_nothing_around_the_file
+    ContentNotInstructions.test_the_instruction_like_line_is_stored_inside_the_body_block
+    NothingPrivate.test_the_left_out_list_names_what_was_left_out_of_each_person
+    Unchanged.test_the_order_github_sends_fields_in_does_not_change_the_file
+    Unknown.test_the_preserved_section_is_under_its_own_heading
+    Formatting.test_the_recorded_size_and_checksum_are_the_body_s_own
+    Unknown.test_the_run_names_the_unknown_fields
+    EveryField.test_the_run_says_how_the_fields_were_shared_out
+    Formatting.test_the_table_is_in_the_file_line_for_line
+    Formatting.test_the_task_list_is_in_the_file_line_for_line
+    Unknown.test_the_unknown_fields_are_in_the_preserved_section
+    Formatting.test_two_spaces_at_the_end_of_a_line_are_kept
+    Formatting.test_windows_line_endings_are_kept_on_disk
+
+PLANTED BUG G. Spaces at the end of each line of the body are tidied away (criterion 2)
+  unittest result: FAILED (failures=18, errors=37)
+  tests that failed (55):
+    ContentNotInstructions.test_a_body_that_copies_the_whole_file_format_changes_nothing
+    Unchanged.test_a_changed_issue_changes_the_file_and_the_run_says_what
+    EveryField.test_a_closed_issue_keeps_who_closed_it_and_why
+    ContentNotInstructions.test_a_comment_cannot_pass_itself_off_as_a_later_comment
+    Formatting.test_a_comment_keeps_its_code_block_and_its_trailing_blank_lines
+    Connection.test_a_count_that_differs_from_what_was_read_is_noted
+    Connection.test_a_failed_second_run_leaves_the_saved_file_as_it_was
+    CommandLine.test_a_fake_run_from_the_command_line_writes_the_named_file
+    Unknown.test_a_field_added_tomorrow_is_kept_whatever_its_shape
+    ContentNotInstructions.test_a_file_changed_by_hand_fails_the_check
+    Identity.test_a_file_from_another_source_is_not_overwritten
+    Identity.test_a_file_holding_another_issue_is_not_overwritten
+    Identity.test_a_file_the_skill_did_not_write_is_not_overwritten
+    NothingPrivate.test_a_mention_is_not_taken_for_an_email_address
+    Unknown.test_a_person_inside_an_unknown_field_is_kept_by_login_only
+    Connection.test_a_rate_limit_is_waited_for
+    Unchanged.test_a_second_run_leaves_the_same_bytes_and_does_not_write
+    ContentNotInstructions.test_a_title_cannot_add_a_line_to_the_front_matter
+    NothingPrivate.test_a_warning_names_the_comment_it_is_in
+    Unknown.test_an_unknown_field_on_a_comment_is_kept_and_named
+    Unknown.test_an_unknown_field_with_an_odd_name_is_kept_and_its_name_is_not_printed
+    EveryField.test_every_comment_is_saved_with_its_fields
+    EveryField.test_every_place_in_the_answer_is_accounted_for
+    EveryField.test_every_top_level_field_is_in_the_file_or_on_the_left_out_list
+    Formatting.test_line_breaks_at_the_start_and_the_end_are_kept
+    NothingPrivate.test_no_api_address_is_in_the_file
+    Unchanged.test_no_file_is_left_behind_besides_the_issue
+    NothingPrivate.test_no_part_of_a_person_s_record_but_the_login_is_in_the_file
+    Unknown.test_only_an_address_on_the_api_host_is_left_out
+    Unchanged.test_only_the_body_changing_is_reported_as_the_body
+    EveryField.test_reactions_are_kept_as_counts
+    ContentNotInstructions.test_text_in_the_body_that_imitates_the_file_is_only_text
+    Formatting.test_text_that_is_not_ascii_is_kept_as_it_is
+    Formatting.test_the_body_comes_back_character_for_character
+    CommandLine.test_the_check_reads_a_saved_file_back
+    Formatting.test_the_code_block_keeps_its_blank_line_its_indent_and_its_tab
+    EveryField.test_the_detail_of_labels_and_milestone_is_kept
+    Identity.test_the_file_is_named_by_repository_and_number
+    ContentNotInstructions.test_the_file_says_the_content_is_not_instructions
+    Unchanged.test_the_first_run_says_it_wrote
+    EveryField.test_the_front_matter_holds_the_required_fields
+    Identity.test_the_heading_and_the_front_matter_name_the_issue
+    ContentNotInstructions.test_the_instruction_changes_nothing_around_the_file
+    ContentNotInstructions.test_the_instruction_like_line_is_stored_inside_the_body_block
+    NothingPrivate.test_the_left_out_list_names_what_was_left_out_of_each_person
+    Unchanged.test_the_order_github_sends_fields_in_does_not_change_the_file
+    Unknown.test_the_preserved_section_is_under_its_own_heading
+    Formatting.test_the_recorded_size_and_checksum_are_the_body_s_own
+    Unknown.test_the_run_names_the_unknown_fields
+    EveryField.test_the_run_says_how_the_fields_were_shared_out
+    Formatting.test_the_table_is_in_the_file_line_for_line
+    Formatting.test_the_task_list_is_in_the_file_line_for_line
+    Unknown.test_the_unknown_fields_are_in_the_preserved_section
+    Formatting.test_two_spaces_at_the_end_of_a_line_are_kept
+    Formatting.test_windows_line_endings_are_kept_on_disk
+
+PLANTED BUG H. Blank lines at the start and end of a text are trimmed (criterion 2)
+  unittest result: FAILED (failures=18, errors=38)
+  tests that failed (56):
+    ContentNotInstructions.test_a_body_that_copies_the_whole_file_format_changes_nothing
+    Unchanged.test_a_changed_issue_changes_the_file_and_the_run_says_what
+    EveryField.test_a_closed_issue_keeps_who_closed_it_and_why
+    ContentNotInstructions.test_a_comment_cannot_pass_itself_off_as_a_later_comment
+    Formatting.test_a_comment_keeps_its_code_block_and_its_trailing_blank_lines
+    Connection.test_a_count_that_differs_from_what_was_read_is_noted
+    Connection.test_a_failed_second_run_leaves_the_saved_file_as_it_was
+    CommandLine.test_a_fake_run_from_the_command_line_writes_the_named_file
+    Unknown.test_a_field_added_tomorrow_is_kept_whatever_its_shape
+    EveryField.test_a_field_that_would_be_lost_stops_the_run
+    ContentNotInstructions.test_a_file_changed_by_hand_fails_the_check
+    Identity.test_a_file_from_another_source_is_not_overwritten
+    Identity.test_a_file_holding_another_issue_is_not_overwritten
+    Identity.test_a_file_the_skill_did_not_write_is_not_overwritten
+    NothingPrivate.test_a_mention_is_not_taken_for_an_email_address
+    Unknown.test_a_person_inside_an_unknown_field_is_kept_by_login_only
+    Connection.test_a_rate_limit_is_waited_for
+    Unchanged.test_a_second_run_leaves_the_same_bytes_and_does_not_write
+    ContentNotInstructions.test_a_title_cannot_add_a_line_to_the_front_matter
+    Unknown.test_an_unknown_field_on_a_comment_is_kept_and_named
+    Unknown.test_an_unknown_field_with_an_odd_name_is_kept_and_its_name_is_not_printed
+    EveryField.test_every_comment_is_saved_with_its_fields
+    EveryField.test_every_place_in_the_answer_is_accounted_for
+    EveryField.test_every_top_level_field_is_in_the_file_or_on_the_left_out_list
+    Formatting.test_line_breaks_at_the_start_and_the_end_are_kept
+    NothingPrivate.test_no_api_address_is_in_the_file
+    Unchanged.test_no_file_is_left_behind_besides_the_issue
+    NothingPrivate.test_no_part_of_a_person_s_record_but_the_login_is_in_the_file
+    Unknown.test_only_an_address_on_the_api_host_is_left_out
+    Unchanged.test_only_the_body_changing_is_reported_as_the_body
+    EveryField.test_reactions_are_kept_as_counts
+    ContentNotInstructions.test_text_in_the_body_that_imitates_the_file_is_only_text
+    NothingPrivate.test_text_shaped_like_a_credential_or_an_email_is_warned_about_and_not_printed
+    Formatting.test_text_that_is_not_ascii_is_kept_as_it_is
+    Formatting.test_the_body_comes_back_character_for_character
+    CommandLine.test_the_check_reads_a_saved_file_back
+    Formatting.test_the_code_block_keeps_its_blank_line_its_indent_and_its_tab
+    EveryField.test_the_detail_of_labels_and_milestone_is_kept
+    Identity.test_the_file_is_named_by_repository_and_number
+    ContentNotInstructions.test_the_file_says_the_content_is_not_instructions
+    Unchanged.test_the_first_run_says_it_wrote
+    EveryField.test_the_front_matter_holds_the_required_fields
+    Identity.test_the_heading_and_the_front_matter_name_the_issue
+    ContentNotInstructions.test_the_instruction_changes_nothing_around_the_file
+    ContentNotInstructions.test_the_instruction_like_line_is_stored_inside_the_body_block
+    NothingPrivate.test_the_left_out_list_names_what_was_left_out_of_each_person
+    Unchanged.test_the_order_github_sends_fields_in_does_not_change_the_file
+    Unknown.test_the_preserved_section_is_under_its_own_heading
+    Formatting.test_the_recorded_size_and_checksum_are_the_body_s_own
+    Unknown.test_the_run_names_the_unknown_fields
+    EveryField.test_the_run_says_how_the_fields_were_shared_out
+    Formatting.test_the_table_is_in_the_file_line_for_line
+    Formatting.test_the_task_list_is_in_the_file_line_for_line
+    Unknown.test_the_unknown_fields_are_in_the_preserved_section
+    Formatting.test_two_spaces_at_the_end_of_a_line_are_kept
+    Formatting.test_windows_line_endings_are_kept_on_disk
+
+PLANTED BUG I. Windows line endings are turned into plain ones when the file is written (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Formatting.test_windows_line_endings_are_kept_on_disk
+
+PLANTED BUG J. No body is stored as an empty body (criteria 1 and 2)
+  unittest result: FAILED (errors=1)
+  tests that failed (1):
+    Formatting.test_no_body_is_not_the_same_as_an_empty_body
+
+PLANTED BUG K. A pull request is saved as if it were an issue (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Identity.test_a_pull_request_is_refused
+
+PLANTED BUG L. An issue that was transferred is not recognised as moved (criterion 3)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Identity.test_an_answer_from_another_repository_is_refused_even_without_a_redirect
+    Identity.test_an_issue_that_moved_is_not_saved_under_the_old_repository
+
+PLANTED BUG M. An answer with no usable node identifier is accepted (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Identity.test_an_answer_without_a_usable_node_id_is_refused
+
+PLANTED BUG N. A file holding another issue, with another node identifier, is overwritten (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Identity.test_a_file_holding_another_issue_is_not_overwritten
+
+PLANTED BUG O. A file from another source is overwritten (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Identity.test_a_file_from_another_source_is_not_overwritten
+
+PLANTED BUG P. A file the skill did not write is overwritten
+  unittest result: FAILED (errors=9)
+  tests that failed (9):
+    ContentNotInstructions.test_a_body_that_copies_the_whole_file_format_changes_nothing
+    Unchanged.test_a_changed_issue_changes_the_file_and_the_run_says_what
+    Unknown.test_a_field_added_tomorrow_is_kept_whatever_its_shape
+    Identity.test_a_file_from_another_source_is_not_overwritten
+    Identity.test_a_file_holding_another_issue_is_not_overwritten
+    Identity.test_a_file_the_skill_did_not_write_is_not_overwritten
+    Formatting.test_line_breaks_at_the_start_and_the_end_are_kept
+    Unchanged.test_no_file_is_left_behind_besides_the_issue
+    Unchanged.test_only_the_body_changing_is_reported_as_the_body
+
+PLANTED BUG Q. A deleted issue is not told apart from other failures (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Identity.test_a_missing_issue_and_a_deleted_one_are_told_apart
+
+PLANTED BUG R. A second retrieval always writes the file again (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Unchanged.test_a_second_run_leaves_the_same_bytes_and_does_not_write
+
+PLANTED BUG S. The time of retrieval is put in the file, so no two runs give the same bytes (criterion 5)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Unchanged.test_a_second_run_leaves_the_same_bytes_and_does_not_write
+    ContentNotInstructions.test_a_title_cannot_add_a_line_to_the_front_matter
+    Unchanged.test_the_order_github_sends_fields_in_does_not_change_the_file
+    Unchanged.test_the_same_answer_always_gives_the_same_text
+
+PLANTED BUG T. Fields are written in the order GitHub happens to send them (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Unchanged.test_the_order_github_sends_fields_in_does_not_change_the_file
+
+PLANTED BUG U. The report of what changed names every part, whatever changed (criterion 5)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Unchanged.test_a_changed_issue_changes_the_file_and_the_run_says_what
+    Unchanged.test_only_the_body_changing_is_reported_as_the_body
+
+PLANTED BUG V. The title is written into the front matter as it is, so a title can add lines to it (criterion 6)
+  unittest result: FAILED (failures=20, errors=39)
+  tests that failed (59):
+    ContentNotInstructions.test_a_body_that_copies_the_whole_file_format_changes_nothing
+    Unchanged.test_a_changed_issue_changes_the_file_and_the_run_says_what
+    EveryField.test_a_closed_issue_keeps_who_closed_it_and_why
+    ContentNotInstructions.test_a_comment_cannot_pass_itself_off_as_a_later_comment
+    Formatting.test_a_comment_keeps_its_code_block_and_its_trailing_blank_lines
+    Connection.test_a_count_that_differs_from_what_was_read_is_noted
+    Connection.test_a_failed_second_run_leaves_the_saved_file_as_it_was
+    CommandLine.test_a_fake_run_from_the_command_line_writes_the_named_file
+    Unknown.test_a_field_added_tomorrow_is_kept_whatever_its_shape
+    EveryField.test_a_field_that_would_be_lost_stops_the_run
+    ContentNotInstructions.test_a_file_changed_by_hand_fails_the_check
+    Identity.test_a_file_from_another_source_is_not_overwritten
+    Identity.test_a_file_holding_another_issue_is_not_overwritten
+    Identity.test_a_file_the_skill_did_not_write_is_not_overwritten
+    NothingPrivate.test_a_mention_is_not_taken_for_an_email_address
+    Unknown.test_a_person_inside_an_unknown_field_is_kept_by_login_only
+    Connection.test_a_rate_limit_is_waited_for
+    Unchanged.test_a_second_run_leaves_the_same_bytes_and_does_not_write
+    ContentNotInstructions.test_a_title_cannot_add_a_line_to_the_front_matter
+    NothingPrivate.test_a_warning_names_the_comment_it_is_in
+    EveryField.test_all_comments_are_read_when_they_come_in_pages
+    Unknown.test_an_unknown_field_on_a_comment_is_kept_and_named
+    Unknown.test_an_unknown_field_with_an_odd_name_is_kept_and_its_name_is_not_printed
+    EveryField.test_every_comment_is_saved_with_its_fields
+    EveryField.test_every_place_in_the_answer_is_accounted_for
+    EveryField.test_every_top_level_field_is_in_the_file_or_on_the_left_out_list
+    Formatting.test_line_breaks_at_the_start_and_the_end_are_kept
+    NothingPrivate.test_no_api_address_is_in_the_file
+    Formatting.test_no_body_is_not_the_same_as_an_empty_body
+    Unchanged.test_no_file_is_left_behind_besides_the_issue
+    NothingPrivate.test_no_part_of_a_person_s_record_but_the_login_is_in_the_file
+    Unknown.test_only_an_address_on_the_api_host_is_left_out
+    Unchanged.test_only_the_body_changing_is_reported_as_the_body
+    EveryField.test_reactions_are_kept_as_counts
+    ContentNotInstructions.test_text_in_the_body_that_imitates_the_file_is_only_text
+    NothingPrivate.test_text_shaped_like_a_credential_or_an_email_is_warned_about_and_not_printed
+    Formatting.test_text_that_is_not_ascii_is_kept_as_it_is
+    Formatting.test_the_body_comes_back_character_for_character
+    CommandLine.test_the_check_reads_a_saved_file_back
+    Formatting.test_the_code_block_keeps_its_blank_line_its_indent_and_its_tab
+    EveryField.test_the_detail_of_labels_and_milestone_is_kept
+    Identity.test_the_file_is_named_by_repository_and_number
+    ContentNotInstructions.test_the_file_says_the_content_is_not_instructions
+    Unchanged.test_the_first_run_says_it_wrote
+    EveryField.test_the_front_matter_holds_the_required_fields
+    Identity.test_the_heading_and_the_front_matter_name_the_issue
+    ContentNotInstructions.test_the_instruction_changes_nothing_around_the_file
+    ContentNotInstructions.test_the_instruction_like_line_is_stored_inside_the_body_block
+    NothingPrivate.test_the_left_out_list_names_what_was_left_out_of_each_person
+    Unchanged.test_the_order_github_sends_fields_in_does_not_change_the_file
+    Unknown.test_the_preserved_section_is_under_its_own_heading
+    Formatting.test_the_recorded_size_and_checksum_are_the_body_s_own
+    Unknown.test_the_run_names_the_unknown_fields
+    EveryField.test_the_run_says_how_the_fields_were_shared_out
+    Formatting.test_the_table_is_in_the_file_line_for_line
+    Formatting.test_the_task_list_is_in_the_file_line_for_line
+    Unknown.test_the_unknown_fields_are_in_the_preserved_section
+    Formatting.test_two_spaces_at_the_end_of_a_line_are_kept
+    Formatting.test_windows_line_endings_are_kept_on_disk
+
+PLANTED BUG W. The markers do not depend on the text, so a line in the body can pass for the end marker (criterion 6)
+  unittest result: FAILED (failures=20, errors=40)
+  tests that failed (60):
+    ContentNotInstructions.test_a_body_that_copies_the_whole_file_format_changes_nothing
+    Unchanged.test_a_changed_issue_changes_the_file_and_the_run_says_what
+    EveryField.test_a_closed_issue_keeps_who_closed_it_and_why
+    ContentNotInstructions.test_a_comment_cannot_pass_itself_off_as_a_later_comment
+    Formatting.test_a_comment_keeps_its_code_block_and_its_trailing_blank_lines
+    Connection.test_a_count_that_differs_from_what_was_read_is_noted
+    Connection.test_a_failed_second_run_leaves_the_saved_file_as_it_was
+    CommandLine.test_a_fake_run_from_the_command_line_writes_the_named_file
+    Unknown.test_a_field_added_tomorrow_is_kept_whatever_its_shape
+    EveryField.test_a_field_that_would_be_lost_stops_the_run
+    ContentNotInstructions.test_a_file_changed_by_hand_fails_the_check
+    Identity.test_a_file_from_another_source_is_not_overwritten
+    Identity.test_a_file_holding_another_issue_is_not_overwritten
+    Identity.test_a_file_the_skill_did_not_write_is_not_overwritten
+    NothingPrivate.test_a_mention_is_not_taken_for_an_email_address
+    Unknown.test_a_person_inside_an_unknown_field_is_kept_by_login_only
+    Connection.test_a_rate_limit_is_waited_for
+    Unchanged.test_a_second_run_leaves_the_same_bytes_and_does_not_write
+    ContentNotInstructions.test_a_title_cannot_add_a_line_to_the_front_matter
+    NothingPrivate.test_a_warning_names_the_comment_it_is_in
+    EveryField.test_all_comments_are_read_when_they_come_in_pages
+    Unknown.test_an_unknown_field_on_a_comment_is_kept_and_named
+    Unknown.test_an_unknown_field_with_an_odd_name_is_kept_and_its_name_is_not_printed
+    EveryField.test_every_comment_is_saved_with_its_fields
+    EveryField.test_every_place_in_the_answer_is_accounted_for
+    EveryField.test_every_top_level_field_is_in_the_file_or_on_the_left_out_list
+    Formatting.test_line_breaks_at_the_start_and_the_end_are_kept
+    NothingPrivate.test_no_api_address_is_in_the_file
+    Formatting.test_no_body_is_not_the_same_as_an_empty_body
+    Unchanged.test_no_file_is_left_behind_besides_the_issue
+    NothingPrivate.test_no_part_of_a_person_s_record_but_the_login_is_in_the_file
+    Unknown.test_only_an_address_on_the_api_host_is_left_out
+    Unchanged.test_only_the_body_changing_is_reported_as_the_body
+    EveryField.test_reactions_are_kept_as_counts
+    ContentNotInstructions.test_text_in_the_body_that_imitates_the_file_is_only_text
+    NothingPrivate.test_text_shaped_like_a_credential_or_an_email_is_warned_about_and_not_printed
+    Formatting.test_text_that_is_not_ascii_is_kept_as_it_is
+    Formatting.test_the_body_comes_back_character_for_character
+    CommandLine.test_the_check_reads_a_saved_file_back
+    Formatting.test_the_code_block_keeps_its_blank_line_its_indent_and_its_tab
+    EveryField.test_the_detail_of_labels_and_milestone_is_kept
+    Identity.test_the_file_is_named_by_repository_and_number
+    ContentNotInstructions.test_the_file_says_the_content_is_not_instructions
+    Unchanged.test_the_first_run_says_it_wrote
+    EveryField.test_the_front_matter_holds_the_required_fields
+    Identity.test_the_heading_and_the_front_matter_name_the_issue
+    ContentNotInstructions.test_the_instruction_changes_nothing_around_the_file
+    ContentNotInstructions.test_the_instruction_like_line_is_stored_inside_the_body_block
+    NothingPrivate.test_the_left_out_list_names_what_was_left_out_of_each_person
+    Unchanged.test_the_order_github_sends_fields_in_does_not_change_the_file
+    Unknown.test_the_preserved_section_is_under_its_own_heading
+    Formatting.test_the_recorded_size_and_checksum_are_the_body_s_own
+    Unknown.test_the_run_names_the_unknown_fields
+    EveryField.test_the_run_says_how_the_fields_were_shared_out
+    Unchanged.test_the_same_answer_always_gives_the_same_text
+    Formatting.test_the_table_is_in_the_file_line_for_line
+    Formatting.test_the_task_list_is_in_the_file_line_for_line
+    Unknown.test_the_unknown_fields_are_in_the_preserved_section
+    Formatting.test_two_spaces_at_the_end_of_a_line_are_kept
+    Formatting.test_windows_line_endings_are_kept_on_disk
+
+PLANTED BUG X. A text that holds its own end marker is stored anyway, and would be cut short (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ContentNotInstructions.test_a_text_holding_its_own_end_marker_is_refused
+
+PLANTED BUG Y. A comment's text is looked for from the top of the file, so an earlier comment can pass for a later one (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ContentNotInstructions.test_a_comment_cannot_pass_itself_off_as_a_later_comment
+
+PLANTED BUG Z. A file changed by hand after it was written passes the check (criterion 6)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    ContentNotInstructions.test_a_file_changed_by_hand_fails_the_check
+    CommandLine.test_the_check_reads_a_saved_file_back
+
+PLANTED BUG AA. A person's whole record is kept in the file (criterion 7)
+  unittest result: FAILED (failures=20, errors=39)
+  tests that failed (59):
+    ContentNotInstructions.test_a_body_that_copies_the_whole_file_format_changes_nothing
+    Unchanged.test_a_changed_issue_changes_the_file_and_the_run_says_what
+    EveryField.test_a_closed_issue_keeps_who_closed_it_and_why
+    ContentNotInstructions.test_a_comment_cannot_pass_itself_off_as_a_later_comment
+    Formatting.test_a_comment_keeps_its_code_block_and_its_trailing_blank_lines
+    Connection.test_a_count_that_differs_from_what_was_read_is_noted
+    Connection.test_a_failed_second_run_leaves_the_saved_file_as_it_was
+    CommandLine.test_a_fake_run_from_the_command_line_writes_the_named_file
+    Unknown.test_a_field_added_tomorrow_is_kept_whatever_its_shape
+    EveryField.test_a_field_that_would_be_lost_stops_the_run
+    ContentNotInstructions.test_a_file_changed_by_hand_fails_the_check
+    Identity.test_a_file_from_another_source_is_not_overwritten
+    Identity.test_a_file_holding_another_issue_is_not_overwritten
+    Identity.test_a_file_the_skill_did_not_write_is_not_overwritten
+    NothingPrivate.test_a_mention_is_not_taken_for_an_email_address
+    Unknown.test_a_person_inside_an_unknown_field_is_kept_by_login_only
+    Connection.test_a_rate_limit_is_waited_for
+    Unchanged.test_a_second_run_leaves_the_same_bytes_and_does_not_write
+    ContentNotInstructions.test_a_title_cannot_add_a_line_to_the_front_matter
+    NothingPrivate.test_a_warning_names_the_comment_it_is_in
+    EveryField.test_all_comments_are_read_when_they_come_in_pages
+    Unknown.test_an_unknown_field_on_a_comment_is_kept_and_named
+    Unknown.test_an_unknown_field_with_an_odd_name_is_kept_and_its_name_is_not_printed
+    EveryField.test_every_comment_is_saved_with_its_fields
+    EveryField.test_every_place_in_the_answer_is_accounted_for
+    EveryField.test_every_top_level_field_is_in_the_file_or_on_the_left_out_list
+    Formatting.test_line_breaks_at_the_start_and_the_end_are_kept
+    NothingPrivate.test_no_api_address_is_in_the_file
+    Formatting.test_no_body_is_not_the_same_as_an_empty_body
+    Unchanged.test_no_file_is_left_behind_besides_the_issue
+    NothingPrivate.test_no_part_of_a_person_s_record_but_the_login_is_in_the_file
+    Unknown.test_only_an_address_on_the_api_host_is_left_out
+    Unchanged.test_only_the_body_changing_is_reported_as_the_body
+    EveryField.test_reactions_are_kept_as_counts
+    ContentNotInstructions.test_text_in_the_body_that_imitates_the_file_is_only_text
+    NothingPrivate.test_text_shaped_like_a_credential_or_an_email_is_warned_about_and_not_printed
+    Formatting.test_text_that_is_not_ascii_is_kept_as_it_is
+    Formatting.test_the_body_comes_back_character_for_character
+    CommandLine.test_the_check_reads_a_saved_file_back
+    Formatting.test_the_code_block_keeps_its_blank_line_its_indent_and_its_tab
+    EveryField.test_the_detail_of_labels_and_milestone_is_kept
+    Identity.test_the_file_is_named_by_repository_and_number
+    ContentNotInstructions.test_the_file_says_the_content_is_not_instructions
+    Unchanged.test_the_first_run_says_it_wrote
+    EveryField.test_the_front_matter_holds_the_required_fields
+    Identity.test_the_heading_and_the_front_matter_name_the_issue
+    ContentNotInstructions.test_the_instruction_changes_nothing_around_the_file
+    ContentNotInstructions.test_the_instruction_like_line_is_stored_inside_the_body_block
+    NothingPrivate.test_the_left_out_list_names_what_was_left_out_of_each_person
+    Unchanged.test_the_order_github_sends_fields_in_does_not_change_the_file
+    Unknown.test_the_preserved_section_is_under_its_own_heading
+    Formatting.test_the_recorded_size_and_checksum_are_the_body_s_own
+    Unknown.test_the_run_names_the_unknown_fields
+    EveryField.test_the_run_says_how_the_fields_were_shared_out
+    Formatting.test_the_table_is_in_the_file_line_for_line
+    Formatting.test_the_task_list_is_in_the_file_line_for_line
+    Unknown.test_the_unknown_fields_are_in_the_preserved_section
+    Formatting.test_two_spaces_at_the_end_of_a_line_are_kept
+    Formatting.test_windows_line_endings_are_kept_on_disk
+
+PLANTED BUG AB. A person's record is not reduced, though the check knows it should be (criterion 7)
+  unittest result: FAILED (failures=20, errors=39)
+  tests that failed (59):
+    ContentNotInstructions.test_a_body_that_copies_the_whole_file_format_changes_nothing
+    Unchanged.test_a_changed_issue_changes_the_file_and_the_run_says_what
+    EveryField.test_a_closed_issue_keeps_who_closed_it_and_why
+    ContentNotInstructions.test_a_comment_cannot_pass_itself_off_as_a_later_comment
+    Formatting.test_a_comment_keeps_its_code_block_and_its_trailing_blank_lines
+    Connection.test_a_count_that_differs_from_what_was_read_is_noted
+    Connection.test_a_failed_second_run_leaves_the_saved_file_as_it_was
+    CommandLine.test_a_fake_run_from_the_command_line_writes_the_named_file
+    Unknown.test_a_field_added_tomorrow_is_kept_whatever_its_shape
+    EveryField.test_a_field_that_would_be_lost_stops_the_run
+    ContentNotInstructions.test_a_file_changed_by_hand_fails_the_check
+    Identity.test_a_file_from_another_source_is_not_overwritten
+    Identity.test_a_file_holding_another_issue_is_not_overwritten
+    Identity.test_a_file_the_skill_did_not_write_is_not_overwritten
+    NothingPrivate.test_a_mention_is_not_taken_for_an_email_address
+    Unknown.test_a_person_inside_an_unknown_field_is_kept_by_login_only
+    Connection.test_a_rate_limit_is_waited_for
+    Unchanged.test_a_second_run_leaves_the_same_bytes_and_does_not_write
+    ContentNotInstructions.test_a_title_cannot_add_a_line_to_the_front_matter
+    NothingPrivate.test_a_warning_names_the_comment_it_is_in
+    EveryField.test_all_comments_are_read_when_they_come_in_pages
+    Unknown.test_an_unknown_field_on_a_comment_is_kept_and_named
+    Unknown.test_an_unknown_field_with_an_odd_name_is_kept_and_its_name_is_not_printed
+    EveryField.test_every_comment_is_saved_with_its_fields
+    EveryField.test_every_place_in_the_answer_is_accounted_for
+    EveryField.test_every_top_level_field_is_in_the_file_or_on_the_left_out_list
+    Formatting.test_line_breaks_at_the_start_and_the_end_are_kept
+    NothingPrivate.test_no_api_address_is_in_the_file
+    Formatting.test_no_body_is_not_the_same_as_an_empty_body
+    Unchanged.test_no_file_is_left_behind_besides_the_issue
+    NothingPrivate.test_no_part_of_a_person_s_record_but_the_login_is_in_the_file
+    Unknown.test_only_an_address_on_the_api_host_is_left_out
+    Unchanged.test_only_the_body_changing_is_reported_as_the_body
+    EveryField.test_reactions_are_kept_as_counts
+    ContentNotInstructions.test_text_in_the_body_that_imitates_the_file_is_only_text
+    NothingPrivate.test_text_shaped_like_a_credential_or_an_email_is_warned_about_and_not_printed
+    Formatting.test_text_that_is_not_ascii_is_kept_as_it_is
+    Formatting.test_the_body_comes_back_character_for_character
+    CommandLine.test_the_check_reads_a_saved_file_back
+    Formatting.test_the_code_block_keeps_its_blank_line_its_indent_and_its_tab
+    EveryField.test_the_detail_of_labels_and_milestone_is_kept
+    Identity.test_the_file_is_named_by_repository_and_number
+    ContentNotInstructions.test_the_file_says_the_content_is_not_instructions
+    Unchanged.test_the_first_run_says_it_wrote
+    EveryField.test_the_front_matter_holds_the_required_fields
+    Identity.test_the_heading_and_the_front_matter_name_the_issue
+    ContentNotInstructions.test_the_instruction_changes_nothing_around_the_file
+    ContentNotInstructions.test_the_instruction_like_line_is_stored_inside_the_body_block
+    NothingPrivate.test_the_left_out_list_names_what_was_left_out_of_each_person
+    Unchanged.test_the_order_github_sends_fields_in_does_not_change_the_file
+    Unknown.test_the_preserved_section_is_under_its_own_heading
+    Formatting.test_the_recorded_size_and_checksum_are_the_body_s_own
+    Unknown.test_the_run_names_the_unknown_fields
+    EveryField.test_the_run_says_how_the_fields_were_shared_out
+    Formatting.test_the_table_is_in_the_file_line_for_line
+    Formatting.test_the_task_list_is_in_the_file_line_for_line
+    Unknown.test_the_unknown_fields_are_in_the_preserved_section
+    Formatting.test_two_spaces_at_the_end_of_a_line_are_kept
+    Formatting.test_windows_line_endings_are_kept_on_disk
+
+PLANTED BUG AC. API addresses are kept in the file
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    NothingPrivate.test_no_api_address_is_in_the_file
+    Unknown.test_only_an_address_on_the_api_host_is_left_out
+    NothingPrivate.test_the_left_out_list_names_what_was_left_out_of_each_person
+    EveryField.test_the_run_says_how_the_fields_were_shared_out
+
+PLANTED BUG AD. The token's own value in an issue's text does not stop the run (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    NothingPrivate.test_the_token_s_own_value_in_the_issue_stops_the_run
+
+PLANTED BUG AE. Text shaped like a credential or an email address is not counted (criterion 7)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    NothingPrivate.test_a_warning_names_the_comment_it_is_in
+    NothingPrivate.test_text_shaped_like_a_credential_or_an_email_is_warned_about_and_not_printed
+
+PLANTED BUG AF. A file with such text is reported as saved, with no warning in the result (criterion 7)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    NothingPrivate.test_a_warning_names_the_comment_it_is_in
+    NothingPrivate.test_text_shaped_like_a_credential_or_an_email_is_warned_about_and_not_printed
+
+PLANTED BUG AG. The run prints the issue's title (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    NothingPrivate.test_what_is_printed_holds_no_title_and_no_text_of_the_issue
+
+PLANTED BUG AH. A field name is printed whatever it holds (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Unknown.test_an_unknown_field_with_an_odd_name_is_kept_and_its_name_is_not_printed
+
+PLANTED BUG AI. Only the first page of comments is read (criterion 1)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    EveryField.test_all_comments_are_read_when_they_come_in_pages
+    Connection.test_paging_that_repeats_itself_is_not_taken_for_the_end
+
+PLANTED BUG AJ. A page that repeats itself is taken for the end of the comments (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Connection.test_paging_that_repeats_itself_is_not_taken_for_the_end
+
+PLANTED BUG AK. Comments that could not be read are saved as no comments (criterion 1)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Connection.test_a_failed_second_run_leaves_the_saved_file_as_it_was
+    Connection.test_comments_that_cannot_be_read_mean_nothing_is_saved
+
+PLANTED BUG AL. A count of comments that differs from what was read is not mentioned
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Connection.test_a_count_that_differs_from_what_was_read_is_noted
+
+PLANTED BUG AM. A rejected token is not recognised
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Connection.test_a_rejected_token_stops_the_run
+
+PLANTED BUG AN. A rate limit is not recognised
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Connection.test_a_long_wait_is_not_sat_through
+    Connection.test_a_rate_limit_is_waited_for
+
+PLANTED BUG AO. A redirect to another host is followed, taking the token's request with it (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Connection.test_a_redirect_to_another_host_is_not_followed
+
+PLANTED BUG AP. A file name that is not a plain .md name is accepted
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    CommandLine.test_a_file_name_cannot_leave_the_folder
+
+After the last bug was taken out: read_issue.py is byte for byte what it was at the start. OK
+
+RESULT: all 42 planted bugs were caught by at least one test, and the file was restored.

@@ -1,0 +1,134 @@
+Saving one issue as Markdown, and retrieving it again. github-read-issue, attempt github-attempt-004
+Recorded by scripts/record_evidence.py. No request was sent to GitHub. The repository, people and issues are made up.
+Before part 1 this script removed participant/context/github/issues/issue-sample.md, left by the last recording, so that the first run is a first run.
+
+==============================================================================
+PART 1. Retrieve the issue and write the file
+$ python3 participant/skills/github-read-issue/read_issue.py --source fake --save-as issue-sample.md
+------------------------------------------------------------------------------
+github-issue: source: the made-up GitHub in fake_github.py. No request leaves this machine
+github-issue: read: issue 42 of the repository asked for, node ID I_kwFX0042, and 2 comments in 1 page
+github-issue: fields: GitHub returned 31 for the issue. 12 are in the front matter, 1 the body, 10 kept in full, 2 this format does not know and preserved, 6 left out on purpose and listed in the file
+github-issue: fields this format does not know: on the issue: sub_issues_summary, x_fixture_priority. On comments: x_fixture_minimized
+github-issue: people: kept by login only. 6 places of GitHub's answer held a person's record, and each is on the left-out list
+github-issue: read back: the file was read back into fields before anything was written, and compared with GitHub's answer. Nothing is missing that is not on the left-out list
+github-issue: body: 1755 characters, 71 lines, SHA-256 731e48174f0dc23b29571b21c5c1ac4f82e344ee067e4f9e83d081671ff41286. Kept word for word
+github-issue: file: WROTE participant/context/github/issues/issue-sample.md, 10542 bytes, SHA-256 3fefc4c14586113c79da36ae90c305599febf711f13cff0db834907b3a8ccf40
+github-issue: scan: the file was scanned for the token's own value, for anything shaped like a credential, and for anything shaped like an email address. Found: 0 and 0
+github-issue: requests made: 2, every one a GET: its comments, the issue
+github-issue: RESULT: saved
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the run says it WROTE the file
+  ok   the file is there, and its SHA-256 worked out by this script is the one the run printed: 3fefc4c14586113c79da36ae90c305599febf711f13cff0db834907b3a8ccf40
+  ok   the run made 2 requests, and both were GET
+  ok   the run printed no title and no line of the issue's text
+
+==============================================================================
+PART 2. Retrieve it again. Nothing has changed on the made-up GitHub
+Before: 10542 bytes, SHA-256 3fefc4c14586113c79da36ae90c305599febf711f13cff0db834907b3a8ccf40, last written at 1795397277298627178 (nanoseconds, from the file system).
+$ python3 participant/skills/github-read-issue/read_issue.py --source fake --save-as issue-sample.md
+------------------------------------------------------------------------------
+github-issue: source: the made-up GitHub in fake_github.py. No request leaves this machine
+github-issue: read: issue 42 of the repository asked for, node ID I_kwFX0042, and 2 comments in 1 page
+github-issue: fields: GitHub returned 31 for the issue. 12 are in the front matter, 1 the body, 10 kept in full, 2 this format does not know and preserved, 6 left out on purpose and listed in the file
+github-issue: fields this format does not know: on the issue: sub_issues_summary, x_fixture_priority. On comments: x_fixture_minimized
+github-issue: people: kept by login only. 6 places of GitHub's answer held a person's record, and each is on the left-out list
+github-issue: read back: the file was read back into fields before anything was written, and compared with GitHub's answer. Nothing is missing that is not on the left-out list
+github-issue: body: 1755 characters, 71 lines, SHA-256 731e48174f0dc23b29571b21c5c1ac4f82e344ee067e4f9e83d081671ff41286. Kept word for word
+github-issue: file: participant/context/github/issues/issue-sample.md already holds exactly these 10542 bytes, SHA-256 3fefc4c14586113c79da36ae90c305599febf711f13cff0db834907b3a8ccf40. UNCHANGED: it was not written again
+github-issue: scan: the file was scanned for the token's own value, for anything shaped like a credential, and for anything shaped like an email address. Found: 0 and 0
+github-issue: requests made: 2, every one a GET: its comments, the issue
+github-issue: RESULT: saved
+------------------------------------------------------------------------------
+exit code: 0
+After:  10542 bytes, SHA-256 3fefc4c14586113c79da36ae90c305599febf711f13cff0db834907b3a8ccf40, last written at 1795397277298627178.
+  ok   exit code 0, and the run says UNCHANGED and does not say it wrote
+  ok   the file is byte-identical: this script compared all 10542 bytes before and after
+  ok   the file was not even written again: its last-written time is the same
+  ok   no other file was left beside it
+
+==============================================================================
+PART 3. Read the saved file back, without contacting anything
+$ python3 participant/skills/github-read-issue/read_issue.py --check participant/context/github/issues/issue-sample.md
+------------------------------------------------------------------------------
+github-issue: check: participant/context/github/issues/issue-sample.md is in the format github-issue-markdown/1: issue 42 of acme-fixture/tracker, node ID I_kwFX0042
+github-issue: check: the body and 2 comments were cut back out, and each matches the SHA-256 recorded for it
+github-issue: check: nothing was contacted and nothing was written
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0: the body and both comments were cut back out and match their recorded SHA-256
+
+==============================================================================
+PART 4. "Unchanged" is not "never writes": the issue changes on the made-up GitHub
+In a scratch folder, so that the handed-in file stays as part 1 wrote it. Step 2 of the made-up GitHub is the same
+issue a day later: one more comment and one more label.
+$ python3 participant/skills/github-read-issue/read_issue.py --source fake --out SCRATCH
+------------------------------------------------------------------------------
+github-issue: source: the made-up GitHub in fake_github.py. No request leaves this machine
+github-issue: read: issue 42 of the repository asked for, node ID I_kwFX0042, and 2 comments in 1 page
+github-issue: fields: GitHub returned 31 for the issue. 12 are in the front matter, 1 the body, 10 kept in full, 2 this format does not know and preserved, 6 left out on purpose and listed in the file
+github-issue: fields this format does not know: on the issue: sub_issues_summary, x_fixture_priority. On comments: x_fixture_minimized
+github-issue: people: kept by login only. 6 places of GitHub's answer held a person's record, and each is on the left-out list
+github-issue: read back: the file was read back into fields before anything was written, and compared with GitHub's answer. Nothing is missing that is not on the left-out list
+github-issue: body: 1755 characters, 71 lines, SHA-256 731e48174f0dc23b29571b21c5c1ac4f82e344ee067e4f9e83d081671ff41286. Kept word for word
+github-issue: file: WROTE acme-fixture__tracker__issue-42.md, 10542 bytes, SHA-256 3fefc4c14586113c79da36ae90c305599febf711f13cff0db834907b3a8ccf40
+github-issue: scan: the file was scanned for the token's own value, for anything shaped like a credential, and for anything shaped like an email address. Found: 0 and 0
+github-issue: requests made: 2, every one a GET: its comments, the issue
+github-issue: RESULT: saved
+------------------------------------------------------------------------------
+exit code: 0
+  ok   in the scratch folder the file is byte-identical to the handed-in one, though it has another name
+$ python3 participant/skills/github-read-issue/read_issue.py --source fake --out SCRATCH --fake-step 2
+------------------------------------------------------------------------------
+github-issue: source: the made-up GitHub in fake_github.py. No request leaves this machine
+github-issue: read: issue 42 of the repository asked for, node ID I_kwFX0042, and 3 comments in 1 page
+github-issue: fields: GitHub returned 31 for the issue. 12 are in the front matter, 1 the body, 10 kept in full, 2 this format does not know and preserved, 6 left out on purpose and listed in the file
+github-issue: fields this format does not know: on the issue: sub_issues_summary, x_fixture_priority. On comments: x_fixture_minimized
+github-issue: people: kept by login only. 6 places of GitHub's answer held a person's record, and each is on the left-out list
+github-issue: read back: the file was read back into fields before anything was written, and compared with GitHub's answer. Nothing is missing that is not on the left-out list
+github-issue: body: 1755 characters, 71 lines, SHA-256 731e48174f0dc23b29571b21c5c1ac4f82e344ee067e4f9e83d081671ff41286. Kept word for word
+github-issue: file: the issue has CHANGED on GitHub since it was saved. Rewrote acme-fixture__tracker__issue-42.md, 11630 bytes, SHA-256 b81c85bf67957ce9e15e1b8b8b9249bdfd027b00f8bd67d29f6d43355df6d11e. What differs: the front matter, the fields kept in full, the comment fields, the comments' text
+github-issue: scan: the file was scanned for the token's own value, for anything shaped like a credential, and for anything shaped like an email address. Found: 0 and 0
+github-issue: requests made: 2, every one a GET: its comments, the issue
+github-issue: RESULT: saved
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the run says the issue has CHANGED and what differs
+  ok   the file is different now, and holds 3 comments where it held 2
+  ok   the body did not change on GitHub, and its SHA-256 in the file is the same as before
+$ python3 participant/skills/github-read-issue/read_issue.py --source fake --out SCRATCH --fake-step 2
+------------------------------------------------------------------------------
+github-issue: source: the made-up GitHub in fake_github.py. No request leaves this machine
+github-issue: read: issue 42 of the repository asked for, node ID I_kwFX0042, and 3 comments in 1 page
+github-issue: fields: GitHub returned 31 for the issue. 12 are in the front matter, 1 the body, 10 kept in full, 2 this format does not know and preserved, 6 left out on purpose and listed in the file
+github-issue: fields this format does not know: on the issue: sub_issues_summary, x_fixture_priority. On comments: x_fixture_minimized
+github-issue: people: kept by login only. 6 places of GitHub's answer held a person's record, and each is on the left-out list
+github-issue: read back: the file was read back into fields before anything was written, and compared with GitHub's answer. Nothing is missing that is not on the left-out list
+github-issue: body: 1755 characters, 71 lines, SHA-256 731e48174f0dc23b29571b21c5c1ac4f82e344ee067e4f9e83d081671ff41286. Kept word for word
+github-issue: file: acme-fixture__tracker__issue-42.md already holds exactly these 11630 bytes, SHA-256 b81c85bf67957ce9e15e1b8b8b9249bdfd027b00f8bd67d29f6d43355df6d11e. UNCHANGED: it was not written again
+github-issue: scan: the file was scanned for the token's own value, for anything shaped like a credential, and for anything shaped like an email address. Found: 0 and 0
+github-issue: requests made: 2, every one a GET: its comments, the issue
+github-issue: RESULT: saved
+------------------------------------------------------------------------------
+exit code: 0
+  ok   retrieved once more at step 2: UNCHANGED, and byte-identical
+
+==============================================================================
+PART 5. A retrieval that fails leaves the saved file as it was
+(inside this script) the retrieval, against a made-up GitHub that answers 500 for the comments
+------------------------------------------------------------------------------
+github-issue: source: the made-up GitHub in fake_github.py. No request leaves this machine
+github-issue: STOPPED: GitHub did not return the issue's comments (status 500). A part may be missing, so nothing is saved.
+github-issue: Nothing was written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1, and the run says nothing was written
+  ok   the file still holds the bytes it held before the failed run
+  ok   no half-written file was left: the folder holds only the issue
+
+==============================================================================
+PART 6. The handed-in file at the end of this recording
+  ok   participant/context/github/issues/issue-sample.md is still byte for byte what part 1 wrote: SHA-256 3fefc4c14586113c79da36ae90c305599febf711f13cff0db834907b3a8ccf40
+
+RESULT: ALL CHECKS PASSED. 18 checks.

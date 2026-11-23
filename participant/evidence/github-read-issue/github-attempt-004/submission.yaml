@@ -1,0 +1,13 @@
+schema_version: 1
+submission_id: submission-20261123014245-5e4c69
+quest_id: github-read-issue
+quest_version: 1
+attempt_id: github-attempt-004
+content_hash: sha256:c2b44a1570d436c52cf3cfffdddcbf51256ff38f2fd731d0d2449013290c8c75
+evidence_hash: sha256:133b17555fced5b069612c89f3509f9804b0c16e20b5c51b9462ed76ce6bc13b
+submitted_at: '2026-11-23T01:42:45Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/github/issues/issue-sample.md
+  digest: sha256:31c2d753855f75e526965d9571724ca02dfe2e90194ed7aaca656d6f7ee3bd2b
