@@ -1,0 +1,222 @@
+Do the tests notice a broken sync? github-read-comments-events, attempt github-attempt-010
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/github-read-comments-events/sync.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. Comments are matched by their text, not by GitHub's identifier: the quest's hint, the wrong way round (criterion 1)
+  unittest result: FAILED (failures=15, errors=7)
+  tests that failed (22):
+    OtherPeoplesText.test_a_comment_cannot_pass_for_the_file_s_own_structure
+    DeletedIsFlagged.test_a_deletion_is_flagged_even_when_github_lists_no_event_for_it
+    CommandLine.test_a_fake_run_a_status_and_the_rules_from_the_command_line
+    AddedOnce.test_a_new_event_is_added_once
+    EditedInPlace.test_an_edit_back_to_the_first_wording_is_still_an_edit
+    EditedInPlace.test_an_edit_seen_only_by_its_time_changes_no_text_and_keeps_no_version
+    DeletedIsFlagged.test_an_edited_and_then_deleted_comment_keeps_both_texts
+    Keyed.test_comments_are_held_under_their_node_ids
+    Keyed.test_each_comment_and_event_in_the_file_shows_its_key
+    DeletedIsFlagged.test_github_is_asked_for_the_missing_comment_by_its_id_before_it_is_flagged
+    DeletedIsFlagged.test_it_stays_flagged_on_later_syncs_and_is_not_flagged_again
+    DeletedIsFlagged.test_the_comment_deleted_event_is_recorded_as_material
+    EditedInPlace.test_the_comment_s_text_is_kept_word_for_word
+    OnlyMaterial.test_the_delay_between_an_event_and_its_sync_is_shown
+    DeletedIsFlagged.test_the_deleted_comment_is_still_held_and_marked
+    EditedInPlace.test_the_earlier_text_is_kept_under_the_same_comment
+    EditedInPlace.test_the_edit_changes_one_entry_and_adds_none
+    SecondSyncAddsNothing.test_the_first_seen_time_of_an_item_never_moves
+    AddedOnce.test_the_new_comment_is_added_once_and_stays_once
+    NotesIntact.test_the_notes_file_has_the_same_checksum_after_every_sync
+    Keyed.test_two_comments_with_the_same_text_stay_two
+    EditedInPlace.test_two_edits_keep_two_earlier_versions_in_order
+
+PLANTED BUG B. Every sync takes every comment for a new one: the quest's scenario (criterion 2)
+  unittest result: FAILED (failures=9, errors=2)
+  tests that failed (11):
+    CommandLine.test_a_fake_run_a_status_and_the_rules_from_the_command_line
+    SecondSyncAddsNothing.test_a_later_sync_time_does_not_change_the_file
+    SecondSyncAddsNothing.test_a_second_sync_adds_no_comment_and_no_event
+    EditedInPlace.test_an_edit_back_to_the_first_wording_is_still_an_edit
+    EditedInPlace.test_an_edit_seen_only_by_its_time_changes_no_text_and_keeps_no_version
+    DeletedIsFlagged.test_an_edited_and_then_deleted_comment_keeps_both_texts
+    EditedInPlace.test_the_earlier_text_is_kept_under_the_same_comment
+    EditedInPlace.test_the_edit_changes_one_entry_and_adds_none
+    SecondSyncAddsNothing.test_the_first_seen_time_of_an_item_never_moves
+    AddedOnce.test_the_new_comment_is_added_once_and_stays_once
+    EditedInPlace.test_two_edits_keep_two_earlier_versions_in_order
+
+PLANTED BUG C. Every sync takes every event for a new one (criterion 2)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    SecondSyncAddsNothing.test_a_later_sync_time_does_not_change_the_file
+    AddedOnce.test_a_new_event_is_added_once
+    SecondSyncAddsNothing.test_a_second_sync_adds_no_comment_and_no_event
+    SecondSyncAddsNothing.test_the_first_seen_time_of_an_item_never_moves
+
+PLANTED BUG D. The time of the last sync is written into the file, so it changes at every sync (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    SecondSyncAddsNothing.test_a_later_sync_time_does_not_change_the_file
+
+PLANTED BUG E. An edited comment keeps its old text (criterion 3)
+  unittest result: FAILED (failures=4, errors=2)
+  tests that failed (6):
+    CommandLine.test_a_fake_run_a_status_and_the_rules_from_the_command_line
+    EditedInPlace.test_an_edit_back_to_the_first_wording_is_still_an_edit
+    DeletedIsFlagged.test_an_edited_and_then_deleted_comment_keeps_both_texts
+    EditedInPlace.test_the_earlier_text_is_kept_under_the_same_comment
+    EditedInPlace.test_the_edit_changes_one_entry_and_adds_none
+    EditedInPlace.test_two_edits_keep_two_earlier_versions_in_order
+
+PLANTED BUG F. An edit replaces the text and the earlier version is thrown away (criterion 3)
+  unittest result: FAILED (errors=17)
+  tests that failed (17):
+    CommandLine.test_a_fake_run_a_status_and_the_rules_from_the_command_line
+    AddedOnce.test_a_new_event_is_added_once
+    EditedInPlace.test_an_edit_back_to_the_first_wording_is_still_an_edit
+    DeletedIsFlagged.test_an_edited_and_then_deleted_comment_keeps_both_texts
+    DeletedIsFlagged.test_github_is_asked_for_the_missing_comment_by_its_id_before_it_is_flagged
+    DeletedIsFlagged.test_it_stays_flagged_on_later_syncs_and_is_not_flagged_again
+    DeletedIsFlagged.test_the_comment_deleted_event_is_recorded_as_material
+    OnlyMaterial.test_the_delay_between_an_event_and_its_sync_is_shown
+    DeletedIsFlagged.test_the_deleted_comment_is_still_held_and_marked
+    EditedInPlace.test_the_earlier_text_is_kept_under_the_same_comment
+    EditedInPlace.test_the_edit_changes_one_entry_and_adds_none
+    SecondSyncAddsNothing.test_the_first_seen_time_of_an_item_never_moves
+    AddedOnce.test_the_new_comment_is_added_once_and_stays_once
+    NotesIntact.test_the_notes_file_has_the_same_checksum_after_every_sync
+    NotesIntact.test_the_only_files_written_are_the_markdown_file_and_the_memory
+    EditedInPlace.test_two_edits_keep_two_earlier_versions_in_order
+    OtherPeoplesText.test_what_is_printed_holds_no_text_of_a_comment
+
+PLANTED BUG G. Only the first page of comments is read (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    AddedOnce.test_every_comment_is_read_when_they_come_in_pages
+
+PLANTED BUG H. Noise is recorded along with the material events (criterion 5)
+  unittest result: FAILED (failures=8)
+  tests that failed (8):
+    OnlyMaterial.test_a_kind_the_rules_do_not_name_is_kept_and_marked
+    OtherPeoplesText.test_a_label_or_title_cannot_break_the_events_table
+    AddedOnce.test_a_new_event_is_added_once
+    SecondSyncAddsNothing.test_a_second_sync_adds_no_comment_and_no_event
+    Keyed.test_each_comment_and_event_in_the_file_shows_its_key
+    Keyed.test_events_are_held_under_their_github_ids
+    OnlyMaterial.test_noise_is_counted_in_the_output_and_is_not_in_the_file
+    OnlyMaterial.test_only_material_and_unclassified_events_are_held
+
+PLANTED BUG I. An event of a kind the rules do not name is dropped without a word (criterion 5)
+  unittest result: FAILED (failures=7, errors=1)
+  tests that failed (8):
+    OnlyMaterial.test_a_kind_the_rules_do_not_name_is_kept_and_marked
+    OtherPeoplesText.test_a_label_or_title_cannot_break_the_events_table
+    AddedOnce.test_a_new_event_is_added_once
+    SecondSyncAddsNothing.test_a_second_sync_adds_no_comment_and_no_event
+    Keyed.test_each_comment_and_event_in_the_file_shows_its_key
+    Keyed.test_events_are_held_under_their_github_ids
+    OnlyMaterial.test_noise_is_counted_in_the_output_and_is_not_in_the_file
+    OnlyMaterial.test_only_material_and_unclassified_events_are_held
+
+PLANTED BUG J. An event of a kind the rules do not name is passed off as material (criterion 5)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    OnlyMaterial.test_a_kind_the_rules_do_not_name_is_kept_and_marked
+    OnlyMaterial.test_only_material_and_unclassified_events_are_held
+
+PLANTED BUG K. Each comment is recorded a second time, as a timeline event (criterion 5)
+  unittest result: FAILED (failures=8)
+  tests that failed (8):
+    OnlyMaterial.test_a_kind_the_rules_do_not_name_is_kept_and_marked
+    OtherPeoplesText.test_a_label_or_title_cannot_break_the_events_table
+    AddedOnce.test_a_new_event_is_added_once
+    SecondSyncAddsNothing.test_a_second_sync_adds_no_comment_and_no_event
+    Keyed.test_events_are_held_under_their_github_ids
+    OnlyMaterial.test_no_kind_is_both_material_and_noise_and_every_one_has_a_reason
+    OnlyMaterial.test_noise_is_counted_in_the_output_and_is_not_in_the_file
+    OnlyMaterial.test_only_material_and_unclassified_events_are_held
+
+PLANTED BUG L. The sync may write in the notes folder (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    NotesIntact.test_the_sync_refuses_to_write_in_the_notes_folder
+
+PLANTED BUG M. A notes file that changed during the sync is not reported (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    NotesIntact.test_a_notes_file_changed_during_the_sync_is_reported
+
+PLANTED BUG N. A deleted comment is removed from the local copy (criterion 7)
+  unittest result: FAILED (errors=16)
+  tests that failed (16):
+    DeletedIsFlagged.test_a_deletion_is_flagged_even_when_github_lists_no_event_for_it
+    CommandLine.test_a_fake_run_a_status_and_the_rules_from_the_command_line
+    AddedOnce.test_a_new_event_is_added_once
+    DeletedIsFlagged.test_an_edited_and_then_deleted_comment_keeps_both_texts
+    DeletedIsFlagged.test_github_is_asked_for_the_missing_comment_by_its_id_before_it_is_flagged
+    DeletedIsFlagged.test_it_stays_flagged_on_later_syncs_and_is_not_flagged_again
+    DeletedIsFlagged.test_the_comment_deleted_event_is_recorded_as_material
+    OnlyMaterial.test_the_delay_between_an_event_and_its_sync_is_shown
+    DeletedIsFlagged.test_the_deleted_comment_is_still_held_and_marked
+    EditedInPlace.test_the_earlier_text_is_kept_under_the_same_comment
+    EditedInPlace.test_the_edit_changes_one_entry_and_adds_none
+    SecondSyncAddsNothing.test_the_first_seen_time_of_an_item_never_moves
+    AddedOnce.test_the_new_comment_is_added_once_and_stays_once
+    NotesIntact.test_the_notes_file_has_the_same_checksum_after_every_sync
+    NotesIntact.test_the_only_files_written_are_the_markdown_file_and_the_memory
+    OtherPeoplesText.test_what_is_printed_holds_no_text_of_a_comment
+
+PLANTED BUG O. A comment missing from the list is flagged as deleted without asking GitHub for it (criterion 7)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    DeletedIsFlagged.test_a_comment_missing_from_the_list_that_still_exists_stops_the_sync
+    DeletedIsFlagged.test_a_failed_read_flags_nothing_as_deleted
+    DeletedIsFlagged.test_an_empty_list_of_comments_does_not_flag_them_all_without_asking
+    DeletedIsFlagged.test_github_is_asked_for_the_missing_comment_by_its_id_before_it_is_flagged
+
+PLANTED BUG P. A comment GitHub failed to return is flagged as deleted (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    DeletedIsFlagged.test_a_failed_read_flags_nothing_as_deleted
+
+PLANTED BUG Q. A comment already flagged as deleted is flagged again at every sync (criteria 2 and 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    DeletedIsFlagged.test_it_stays_flagged_on_later_syncs_and_is_not_flagged_again
+
+PLANTED BUG R. A list of comments that could not be read is taken for an empty list
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    DeletedIsFlagged.test_a_failed_read_flags_nothing_as_deleted
+    Connection.test_a_timeline_that_cannot_be_read_means_nothing_is_saved
+
+PLANTED BUG S. A comment's text is tidied on the way in
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    EditedInPlace.test_the_comment_s_text_is_kept_word_for_word
+
+PLANTED BUG T. A pull request is synced as if it were an issue
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Keyed.test_a_pull_request_another_repository_and_a_changed_node_id_are_refused
+
+PLANTED BUG U. An issue whose node ID changed is synced into the old one's copy (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Keyed.test_a_pull_request_another_repository_and_a_changed_node_id_are_refused
+
+PLANTED BUG V. The sync prints the text of a comment
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OtherPeoplesText.test_what_is_printed_holds_no_text_of_a_comment
+
+PLANTED BUG W. A label or a title is written into the events table as it is
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OtherPeoplesText.test_a_label_or_title_cannot_break_the_events_table
+
+After the last bug was taken out: sync.py is byte for byte what it was at the start. OK
+
+RESULT: all 23 planted bugs were caught by at least one test, and the file was restored.

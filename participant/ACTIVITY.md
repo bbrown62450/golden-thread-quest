@@ -266,3 +266,8 @@ Every change this application made to your files, newest last.
 - `2026-11-23T19:59:52Z` playwright-data-isolation: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-23T19:59:52Z` Submitted playwright-data-isolation for review as submission-20261123195952-a220b4.
 - `2026-11-23T20:05:25Z` Review of playwright-data-isolation: approved by Claude (automated reviewer).
+- `2026-11-23T20:13:23Z` Started github-read-comments-events as attempt github-attempt-010.
+- `2026-11-23T20:46:34Z` github-read-comments-events: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-23T20:48:39Z` github-read-comments-events: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-23T20:50:14Z` github-read-comments-events: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-23T20:50:14Z` Submitted github-read-comments-events for review as submission-20261123205014-2656db.

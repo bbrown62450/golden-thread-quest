@@ -1,0 +1,80 @@
+The real syncs. github-read-comments-events, attempt github-attempt-010
+A masked copy of what four syncs printed in the participant's own terminal, made by scripts/mask_real_run.py.
+The issue is issue 1 of the participant's private sandbox repository. Every request was a GET. The edit, the new comment and the
+deletion before sync 3 were made by the participant by hand. The skill changed nothing on GitHub.
+Masked: the owner's login, every node ID, every numeric id of a comment, and the scratch folder. Nothing else was changed.
+
+==============================================================================
+Sync 1. The first sync of the real issue
+$ python3 participant/skills/github-read-comments-events/sync.py --source live --repo [owner]/gtq-sandbox --issue 1 --out SCRATCH
+------------------------------------------------------------------------------
+github-comments: source: GitHub, with the token in the environment variable GITHUB_TOKEN
+github-comments: read: issue 1, node ID [issue node id]. 3 comments in 1 page, and 7 timeline entries in 1 page. GitHub's clock: 2026-11-23T20:33:49Z
+github-comments: comments: held before this sync: 0. This sync: 3 new, 0 edited, 0 unchanged, 0 found deleted. Held now: 3
+github-comments:   ADDED: comment [comment node id 1], GitHub id [comment id 1]. Added once, under its node ID
+github-comments:   ADDED: comment [comment node id 2], GitHub id [comment id 2]. Added once, under its node ID
+github-comments:   ADDED: comment [comment node id 3], GitHub id [comment id 3]. Added once, under its node ID
+github-comments: timeline: 7 entries read. Material or unclassified, and kept: 4. Comments, kept as comments: 3. Noise, not recorded: 0 (none)
+github-comments: events: 4 new this sync. Held now: 4
+github-comments:   ADDED: event [event node id 1], assigned
+github-comments:   ADDED: event xref:[pull request node id 1]:2026-11-21T17:14:58Z, cross-referenced
+github-comments:   ADDED: event [event node id 2], labeled
+github-comments:   ADDED: event [event node id 3], labeled
+github-comments: file: WROTE comments.md, 3429 bytes, SHA-256 efdf7ccab7f07880137cb27539b8bcc37f5cb101bb2851b8283e86f2cc4958cb
+github-comments: notes: 1 file, opened for reading only. SHA-256 before and after this sync:
+github-comments:   notes/my-notes.md  before 8d9feead0a5402b943cc0dfc809df39bcbcbba7964880929fbde2e748c904c36  after 8d9feead0a5402b943cc0dfc809df39bcbcbba7964880929fbde2e748c904c36  same
+github-comments: requests made: 3, every one a GET
+github-comments: RESULT: synchronized. This was the first sync
+exit code: 0
+
+==============================================================================
+Sync 2. Nothing had changed on GitHub (criterion 2)
+$ python3 participant/skills/github-read-comments-events/sync.py --source live --repo [owner]/gtq-sandbox --issue 1 --out SCRATCH
+------------------------------------------------------------------------------
+github-comments: source: GitHub, with the token in the environment variable GITHUB_TOKEN
+github-comments: read: issue 1, node ID [issue node id]. 3 comments in 1 page, and 7 timeline entries in 1 page. GitHub's clock: 2026-11-23T20:34:20Z
+github-comments: comments: held before this sync: 3. This sync: 0 new, 0 edited, 3 unchanged, 0 found deleted. Held now: 3
+github-comments: timeline: 7 entries read. Material or unclassified, and kept: 4. Comments, kept as comments: 3. Noise, not recorded: 0 (none)
+github-comments: events: 0 new this sync. Held now: 4
+github-comments: file: comments.md already holds exactly these 3429 bytes, SHA-256 efdf7ccab7f07880137cb27539b8bcc37f5cb101bb2851b8283e86f2cc4958cb. UNCHANGED: it was not written again
+github-comments: notes: 1 file, opened for reading only. SHA-256 before and after this sync:
+github-comments:   notes/my-notes.md  before 8d9feead0a5402b943cc0dfc809df39bcbcbba7964880929fbde2e748c904c36  after 8d9feead0a5402b943cc0dfc809df39bcbcbba7964880929fbde2e748c904c36  same
+github-comments: requests made: 3, every one a GET
+github-comments: RESULT: synchronized. Sync number 2
+exit code: 0
+
+==============================================================================
+Sync 3. Before it, the participant by hand, on GitHub's web page: EDITED one comment, ADDED one, DELETED one (criteria 3, 4 and 7)
+$ python3 participant/skills/github-read-comments-events/sync.py --source live --repo [owner]/gtq-sandbox --issue 1 --out SCRATCH
+------------------------------------------------------------------------------
+github-comments: source: GitHub, with the token in the environment variable GITHUB_TOKEN
+github-comments: read: issue 1, node ID [issue node id]. 3 comments in 1 page, and 7 timeline entries in 1 page. GitHub's clock: 2026-11-23T20:39:00Z
+github-comments: comments: held before this sync: 3. This sync: 1 new, 1 edited, 1 unchanged, 1 found deleted. Held now: 4
+github-comments:   ADDED: comment [comment node id 4], GitHub id [comment id 4]. Added once, under its node ID
+github-comments:   EDITED: comment [comment node id 2]. Updated in place, under the same node ID. Its text changed (SHA-256 946729e4cabd, was 6ce99e3e42f7). Earlier versions kept: 1
+github-comments:   DELETED on GitHub: comment [comment node id 3]. FLAGGED, not removed: it is still held, with its last text. GitHub answered 404 when asked for this comment by its id
+github-comments: timeline: 7 entries read. Material or unclassified, and kept: 4. Comments, kept as comments: 3. Noise, not recorded: 0 (none)
+github-comments: events: 0 new this sync. Held now: 4
+github-comments: file: WROTE comments.md, 4393 bytes, SHA-256 9c05f483a9246b28292e2baa7adb08e3168ef39d655484e81743c0c2e37e0346
+github-comments: notes: 1 file, opened for reading only. SHA-256 before and after this sync:
+github-comments:   notes/my-notes.md  before 8d9feead0a5402b943cc0dfc809df39bcbcbba7964880929fbde2e748c904c36  after 8d9feead0a5402b943cc0dfc809df39bcbcbba7964880929fbde2e748c904c36  same
+github-comments: requests made: 4, every one a GET
+github-comments: RESULT: synchronized. Sync number 3
+exit code: 0
+
+==============================================================================
+Sync 4. Nothing had changed since sync 3 (criterion 2)
+$ python3 participant/skills/github-read-comments-events/sync.py --source live --repo [owner]/gtq-sandbox --issue 1 --out SCRATCH
+------------------------------------------------------------------------------
+github-comments: source: GitHub, with the token in the environment variable GITHUB_TOKEN
+github-comments: read: issue 1, node ID [issue node id]. 3 comments in 1 page, and 7 timeline entries in 1 page. GitHub's clock: 2026-11-23T20:39:24Z
+github-comments: comments: held before this sync: 4. This sync: 0 new, 0 edited, 3 unchanged, 0 found deleted. Held now: 4
+github-comments: timeline: 7 entries read. Material or unclassified, and kept: 4. Comments, kept as comments: 3. Noise, not recorded: 0 (none)
+github-comments: events: 0 new this sync. Held now: 4
+github-comments: file: comments.md already holds exactly these 4393 bytes, SHA-256 9c05f483a9246b28292e2baa7adb08e3168ef39d655484e81743c0c2e37e0346. UNCHANGED: it was not written again
+github-comments: notes: 1 file, opened for reading only. SHA-256 before and after this sync:
+github-comments:   notes/my-notes.md  before 8d9feead0a5402b943cc0dfc809df39bcbcbba7964880929fbde2e748c904c36  after 8d9feead0a5402b943cc0dfc809df39bcbcbba7964880929fbde2e748c904c36  same
+github-comments: requests made: 3, every one a GET
+github-comments: RESULT: synchronized. Sync number 4
+exit code: 0
+

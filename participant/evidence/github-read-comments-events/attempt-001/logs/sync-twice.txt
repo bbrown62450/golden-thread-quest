@@ -1,0 +1,131 @@
+Syncing an issue's comments and events. github-read-comments-events, attempt github-attempt-010
+Recorded by scripts/record_evidence.py. No request was sent to GitHub. The repository, people, issue and comments are made up.
+Before part 1 this script removed the sync's memory and participant/context/github/comments-sample.md, left by the last recording.
+Asked directly, the made-up GitHub holds for issue 61: 4 comments and 15 timeline entries of its own, of which 5 are of a kind the rules call noise.
+
+==============================================================================
+PART 1. The first sync
+$ python3 participant/skills/github-read-comments-events/sync.py --source fake --out participant/context/github/comments-events --markdown participant/context/github/comments-sample.md
+------------------------------------------------------------------------------
+github-comments: source: the made-up GitHub in fake_github.py. No request leaves this machine
+github-comments: read: issue 61, node ID I_kwFX0061. 4 comments in 1 page, and 19 timeline entries in 1 page. GitHub's clock: 2026-11-24T09:00:00Z
+github-comments: comments: held before this sync: 0. This sync: 4 new, 0 edited, 0 unchanged, 0 found deleted. Held now: 4
+github-comments:   ADDED: comment IC_kwFX6101, GitHub id 6101. Added once, under its node ID
+github-comments:   ADDED: comment IC_kwFX6102, GitHub id 6102. Added once, under its node ID
+github-comments:   ADDED: comment IC_kwFX6103, GitHub id 6103. Added once, under its node ID
+github-comments:   ADDED: comment IC_kwFX6104, GitHub id 6104. Added once, under its node ID
+github-comments: timeline: 19 entries read. Material or unclassified, and kept: 10. Comments, kept as comments: 4. Noise, not recorded: 5 (mentioned 1, pinned 1, referenced 1, subscribed 2)
+github-comments: events: 10 new this sync. Held now: 10
+github-comments:   ADDED: event EV_kwFX4002, labeled
+github-comments:   ADDED: event EV_kwFX4003, labeled
+github-comments:   ADDED: event EV_kwFX4006, assigned
+github-comments:   ADDED: event EV_kwFX4007, milestoned
+github-comments:   ADDED: event EV_kwFX4008, renamed
+github-comments:   ADDED: event xref:PR_kwFX0077:2026-11-17T15:00:00Z, cross-referenced
+github-comments:   ADDED: event EV_kwFX4011, x_fixture_sparkled. UNCLASSIFIED: the rules do not name this kind
+github-comments:   ADDED: event EV_kwFX4012, closed
+github-comments:   ADDED: event EV_kwFX4013, reopened
+github-comments:   ADDED: event EV_kwFX4014, unlabeled
+github-comments: NOTE: 1 kind of event the rules do not name: "x_fixture_sparkled". Kept and marked UNCLASSIFIED, so that a person can extend the rules
+github-comments: file: WROTE participant/context/github/comments-sample.md, 4836 bytes, SHA-256 a8c0635ed3ddda49734f993a6c4257fb95aada432706f877dbdd5f761a494a7e
+github-comments: notes: 1 file, opened for reading only. SHA-256 before and after this sync:
+github-comments:   notes/my-notes.md  before 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  after 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  same
+github-comments: requests made: 3, every one a GET
+github-comments: RESULT: synchronized. This was the first sync
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the sync wrote the file
+  ok   the file holds the 4 comments of the made-up GitHub, each under its own node ID (criterion 1)
+  ok   the file holds 10 events, each under GitHub's id for it (criterion 1)
+
+==============================================================================
+PART 2. The second sync. Nothing has changed on the made-up GitHub (criterion 2)
+$ python3 participant/skills/github-read-comments-events/sync.py --source fake --out participant/context/github/comments-events --markdown participant/context/github/comments-sample.md
+------------------------------------------------------------------------------
+github-comments: source: the made-up GitHub in fake_github.py. No request leaves this machine
+github-comments: read: issue 61, node ID I_kwFX0061. 4 comments in 1 page, and 19 timeline entries in 1 page. GitHub's clock: 2026-11-24T09:00:00Z
+github-comments: comments: held before this sync: 4. This sync: 0 new, 0 edited, 4 unchanged, 0 found deleted. Held now: 4
+github-comments: timeline: 19 entries read. Material or unclassified, and kept: 10. Comments, kept as comments: 4. Noise, not recorded: 5 (mentioned 1, pinned 1, referenced 1, subscribed 2)
+github-comments: events: 0 new this sync. Held now: 10
+github-comments: NOTE: 1 kind of event the rules do not name: "x_fixture_sparkled". Kept and marked UNCLASSIFIED, so that a person can extend the rules
+github-comments: file: participant/context/github/comments-sample.md already holds exactly these 4836 bytes, SHA-256 a8c0635ed3ddda49734f993a6c4257fb95aada432706f877dbdd5f761a494a7e. UNCHANGED: it was not written again
+github-comments: notes: 1 file, opened for reading only. SHA-256 before and after this sync:
+github-comments:   notes/my-notes.md  before 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  after 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  same
+github-comments: requests made: 3, every one a GET
+github-comments: RESULT: synchronized. Sync number 2
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the sync says: 0 new, 0 edited, 4 unchanged, 0 found deleted, and 0 new events
+  ok   nothing is duplicated: this script counted 4 comments and 10 events in the file again, and no key twice
+  ok   the file is byte for byte what the first sync wrote, and was not even written again
+  ok   each comment's text is in the file once: this script counted
+
+==============================================================================
+PART 3. On the made-up GitHub, a day later: one comment EDITED, one ADDED, one DELETED
+Asked directly, the made-up GitHub at step 2 holds 4 comments for issue 61. Compared with step 1:
+  IC_kwFX6102 was edited: its text and its last-changed time are different
+  IC_kwFX6105 is new
+  IC_kwFX6103 is gone: the made-up GitHub no longer lists it, and answers 404 when asked for it by id
+  ok   that is what the made-up GitHub holds: this script looked
+$ python3 participant/skills/github-read-comments-events/sync.py --source fake --out participant/context/github/comments-events --markdown participant/context/github/comments-sample.md --fake-step 2
+------------------------------------------------------------------------------
+github-comments: source: the made-up GitHub in fake_github.py. No request leaves this machine
+github-comments: read: issue 61, node ID I_kwFX0061. 4 comments in 1 page, and 22 timeline entries in 1 page. GitHub's clock: 2026-11-25T09:30:00Z
+github-comments: comments: held before this sync: 4. This sync: 1 new, 1 edited, 2 unchanged, 1 found deleted. Held now: 5
+github-comments:   ADDED: comment IC_kwFX6105, GitHub id 6105. Added once, under its node ID
+github-comments:   EDITED: comment IC_kwFX6102. Updated in place, under the same node ID. Its text changed (SHA-256 22c05592473c, was bceb05441f99). Earlier versions kept: 1
+github-comments:   DELETED on GitHub: comment IC_kwFX6103. FLAGGED, not removed: it is still held, with its last text. GitHub answered 404 when asked for this comment by its id
+github-comments: timeline: 22 entries read. Material or unclassified, and kept: 12. Comments, kept as comments: 4. Noise, not recorded: 6 (mentioned 1, pinned 1, referenced 1, subscribed 2, unsubscribed 1)
+github-comments: events: 2 new this sync. Held now: 12
+github-comments:   ADDED: event EV_kwFX4016, labeled
+github-comments:   ADDED: event EV_kwFX4015, comment_deleted
+github-comments: NOTE: 1 kind of event the rules do not name: "x_fixture_sparkled". Kept and marked UNCLASSIFIED, so that a person can extend the rules
+github-comments: file: WROTE participant/context/github/comments-sample.md, 6165 bytes, SHA-256 72d8ed14bbb388a78c7f8ee2b745a09952cb750f69b1e522e1e2e4943734e9ef
+github-comments: notes: 1 file, opened for reading only. SHA-256 before and after this sync:
+github-comments:   notes/my-notes.md  before 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  after 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  same
+github-comments: requests made: 4, every one a GET
+github-comments: RESULT: synchronized. Sync number 3
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the sync says: 1 new, 1 edited, 2 unchanged, 1 found deleted
+  ok   the EDIT was applied in place: the comment IC_kwFX6102 is in the file once, under the same key, with its new text (criterion 3)
+  ok   its earlier text is kept under it, as "Earlier version 1", and not as another comment
+  ok   the NEW comment IC_kwFX6105 was added once (criterion 4)
+  ok   the DELETED comment IC_kwFX6103 is still in the file, FLAGGED as deleted, with its last text. It was not removed (criterion 7)
+  ok   the sync asked the made-up GitHub for that one comment by its id before flagging it, and says so
+  ok   the file holds 5 comments, one more than before, and no key twice
+  ok   the two comments nobody touched are word for word what they were
+
+==============================================================================
+PART 4. One more sync, with nothing changed since part 3
+$ python3 participant/skills/github-read-comments-events/sync.py --source fake --out participant/context/github/comments-events --markdown participant/context/github/comments-sample.md --fake-step 2
+------------------------------------------------------------------------------
+github-comments: source: the made-up GitHub in fake_github.py. No request leaves this machine
+github-comments: read: issue 61, node ID I_kwFX0061. 4 comments in 1 page, and 22 timeline entries in 1 page. GitHub's clock: 2026-11-25T09:30:00Z
+github-comments: comments: held before this sync: 5. This sync: 0 new, 0 edited, 4 unchanged, 0 found deleted. Held now: 5
+github-comments: timeline: 22 entries read. Material or unclassified, and kept: 12. Comments, kept as comments: 4. Noise, not recorded: 6 (mentioned 1, pinned 1, referenced 1, subscribed 2, unsubscribed 1)
+github-comments: events: 0 new this sync. Held now: 12
+github-comments: NOTE: 1 kind of event the rules do not name: "x_fixture_sparkled". Kept and marked UNCLASSIFIED, so that a person can extend the rules
+github-comments: file: participant/context/github/comments-sample.md already holds exactly these 6165 bytes, SHA-256 72d8ed14bbb388a78c7f8ee2b745a09952cb750f69b1e522e1e2e4943734e9ef. UNCHANGED: it was not written again
+github-comments: notes: 1 file, opened for reading only. SHA-256 before and after this sync:
+github-comments:   notes/my-notes.md  before 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  after 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  same
+github-comments: requests made: 3, every one a GET
+github-comments: RESULT: synchronized. Sync number 4
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0: 0 new, 0 edited, 0 found deleted. The deleted comment is not flagged a second time
+  ok   the file is byte for byte what part 3 wrote
+
+==============================================================================
+PART 5. Only the events the rules call material are recorded (criterion 5)
+The rules are in participant/context/github/event-rules.md. This script read the made-up GitHub's timeline for itself and sorted its entries by those rules:
+  material (11): assigned, closed, comment_deleted, cross-referenced, labeled, labeled, labeled, milestoned, renamed, reopened, unlabeled
+  noise (6): mentioned, pinned, referenced, subscribed, subscribed, unsubscribed
+  of a kind the rules do not name (1): x_fixture_sparkled
+  ok   the file's events are exactly the 11 material ones and the 1 the rules do not name
+  ok   not one of the 6 noise entries is in the file: no subscribed, unsubscribed, mentioned, pinned or referenced
+  ok   the comments are not recorded a second time as events of the kind "commented"
+  ok   the kind the rules do not name is kept and marked UNCLASSIFIED, not dropped and not passed off as material
+  ok   the sync counted the noise in its output, by kind, so that it is not silently lost
+
+RESULT: ALL CHECKS PASSED. 23 checks.

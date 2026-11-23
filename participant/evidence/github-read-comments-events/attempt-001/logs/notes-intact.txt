@@ -1,0 +1,66 @@
+The notes file before and after the syncs. github-read-comments-events, attempt github-attempt-010
+Recorded by scripts/record_evidence.py. No request was sent to GitHub. The repository, people, issue and comments are made up.
+
+==============================================================================
+PART 1. The notes file before any sync
+The file is participant/context/github/comments-events/notes/my-notes.md. It stands for a person's own notes, kept beside the synced copy.
+SHA-256, worked out by this script: 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904
+Size: 135 bytes.
+  ok   the notes file is there and holds what a person wrote
+
+==============================================================================
+PART 2. After sync 1
+SHA-256, worked out by this script: 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904
+What the sync itself printed: notes/my-notes.md  before 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  after 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  same
+  ok   the checksum is the same as before any sync
+  ok   the sync's own before and after checksums are that same value, and it says "same"
+  ok   the file was not written at all: its last-written time has not moved
+
+==============================================================================
+PART 3. After sync 2
+SHA-256, worked out by this script: 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904
+What the sync itself printed: notes/my-notes.md  before 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  after 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  same
+  ok   the checksum is the same as before any sync
+  ok   the sync's own before and after checksums are that same value, and it says "same"
+  ok   the file was not written at all: its last-written time has not moved
+
+==============================================================================
+PART 4. After sync 3
+SHA-256, worked out by this script: 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904
+What the sync itself printed: notes/my-notes.md  before 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  after 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  same
+  ok   the checksum is the same as before any sync
+  ok   the sync's own before and after checksums are that same value, and it says "same"
+  ok   the file was not written at all: its last-written time has not moved
+
+==============================================================================
+PART 5. After sync 4
+SHA-256, worked out by this script: 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904
+What the sync itself printed: notes/my-notes.md  before 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  after 1b1bde52db7f147f4b33cf8fabf3a08255dfeee57a165e1e5a5fe5fd59117904  same
+  ok   the checksum is the same as before any sync
+  ok   the sync's own before and after checksums are that same value, and it says "same"
+  ok   the file was not written at all: its last-written time has not moved
+
+==============================================================================
+PART 6. The sync cannot be told to write in the notes folder
+The sync is pointed at the notes file as the place to write its own Markdown.
+$ python3 participant/skills/github-read-comments-events/sync.py --source fake --out participant/context/github/comments-events --markdown participant/context/github/comments-events/notes/my-notes.md --fake-step 2
+------------------------------------------------------------------------------
+github-comments: source: the made-up GitHub in fake_github.py. No request leaves this machine
+github-comments: read: issue 61, node ID I_kwFX0061. 4 comments in 1 page, and 22 timeline entries in 1 page. GitHub's clock: 2026-11-25T09:30:00Z
+github-comments: comments: held before this sync: 5. This sync: 0 new, 0 edited, 4 unchanged, 0 found deleted. Held now: 5
+github-comments: timeline: 22 entries read. Material or unclassified, and kept: 12. Comments, kept as comments: 4. Noise, not recorded: 6 (mentioned 1, pinned 1, referenced 1, subscribed 2, unsubscribed 1)
+github-comments: events: 0 new this sync. Held now: 12
+github-comments: NOTE: 1 kind of event the rules do not name: "x_fixture_sparkled". Kept and marked UNCLASSIFIED, so that a person can extend the rules
+github-comments: STOPPED: the sync does not write in the notes folder.
+github-comments: Nothing was written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1: it stops, saying it does not write in the notes folder
+  ok   the notes file still has the checksum it had before any sync
+
+==============================================================================
+PART 7. In all
+  ok   across 4 syncs and one refused write, the notes file is byte for byte what it was (criterion 6)
+  ok   the notes folder holds that one file and nothing the sync put there
+
+RESULT: ALL CHECKS PASSED. 17 checks.
