@@ -260,3 +260,8 @@ Every change this application made to your files, newest last.
 - `2026-11-23T19:20:19Z` github-create-issue: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-23T19:20:20Z` Submitted github-create-issue for review as submission-20261123192019-630c76.
 - `2026-11-23T19:31:40Z` Review of github-create-issue: approved by Claude (automated reviewer).
+- `2026-11-23T19:41:18Z` Started playwright-data-isolation as attempt playwright-attempt-002.
+- `2026-11-23T19:58:54Z` playwright-data-isolation: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-23T19:59:23Z` playwright-data-isolation: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-23T19:59:52Z` playwright-data-isolation: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-23T19:59:52Z` Submitted playwright-data-isolation for review as submission-20261123195952-a220b4.

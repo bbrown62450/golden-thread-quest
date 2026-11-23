@@ -404,4 +404,13 @@ attempts:
   evidence_path: participant/evidence/github-create-issue/github-attempt-009
   submission_id: submission-20261123192019-630c76
   review_id: review-20261123193140-5a88db
-updated_at: '2026-11-23T19:31:40Z'
+- attempt_id: playwright-attempt-002
+  quest_id: playwright-data-isolation
+  quest_version: 1
+  content_hash: sha256:6969c8aed0ecf6d47055241e0dc839f23aa2caf93a6a166edb811ea5dc2a544c
+  state: submitted
+  started_at: '2026-11-23T19:41:18Z'
+  updated_at: '2026-11-23T19:59:52Z'
+  evidence_path: participant/evidence/playwright-data-isolation/playwright-attempt-002
+  submission_id: submission-20261123195952-a220b4
+updated_at: '2026-11-23T19:59:52Z'

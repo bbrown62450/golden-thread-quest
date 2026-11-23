@@ -1,0 +1,55 @@
+Does the check notice broken tests? playwright-data-isolation, attempt playwright-attempt-002
+Recorded by tools/planted-faults.ts.
+
+Each fault below was put into participant/tests/playwright/isolated.spec.ts, the whole check
+(tools/data-isolation-check.ts) was run, and the fault was taken out again. Only this computer is used.
+
+Before any fault: exit code 0. shuffle-run.txt: RESULT: ALL CHECKS PASSED. 15 checks. cleanup-check.txt: RESULT: ALL CHECKS PASSED. 26 checks.
+
+PLANTED FAULT A. Every test gives its customers a fixed name, not a unique one (criterion 2). This is the scenario's "Test User"
+  the check's exit code: 1. shuffle-run.txt: RESULT: 1 OF 15 CHECKS FAILED. cleanup-check.txt: RESULT: ALL CHECKS PASSED. 26 checks.
+  checks that failed (1):
+    both runs pass all 5, though they shared one application and ran at once
+  noticed, by the check it should trip
+
+PLANTED FAULT B. Tests do not clean up at all (criterion 3)
+  the check's exit code: 1. shuffle-run.txt: RESULT: ALL CHECKS PASSED. 15 checks. cleanup-check.txt: RESULT: 9 OF 26 CHECKS FAILED.
+  checks that failed (9):
+    no test data remains: the application holds no customer that was not there before the runs
+    no test data remains: the application holds no customer that was not there before the runs
+    no test data remains: the application holds no customer that was not there before the runs
+    no test data remains: the application holds no customer that was not there before the runs
+    no test data remains: the application holds no customer that was not there before the runs
+    no test data remains: the application holds no customer that was not there before the runs
+    that test created 2 customers before it failed, and both are gone: cleanup ran although the test did not finish
+    every customer a test created was removed: the two counts are the same
+    at the end the application holds exactly what it held at the start, compared as a whole
+  noticed, by the check it should trip
+
+PLANTED FAULT C. Cleanup runs only after a pass. This is the quest's hint: debris exactly when the evidence is needed
+  the check's exit code: 1. shuffle-run.txt: RESULT: ALL CHECKS PASSED. 15 checks. cleanup-check.txt: RESULT: 4 OF 26 CHECKS FAILED.
+  checks that failed (4):
+    no test data remains: the application holds no customer that was not there before the runs
+    that test created 2 customers before it failed, and both are gone: cleanup ran although the test did not finish
+    every customer a test created was removed: the two counts are the same
+    at the end the application holds exactly what it held at the start, compared as a whole
+  noticed, by the check it should trip
+
+PLANTED FAULT D. Cleanup also removes every customer whose name starts with "Test", to be thorough (criteria 3 and 7)
+  the check's exit code: 1. shuffle-run.txt: RESULT: ALL CHECKS PASSED. 15 checks. cleanup-check.txt: RESULT: 10 OF 26 CHECKS FAILED.
+  checks that failed (10):
+    no data that existed before was removed or altered: each of the 4 is still there with the same name, plan and id (criterion 7)
+    no data that existed before was removed or altered: each of the 4 is still there with the same name, plan and id (criterion 7)
+    no data that existed before was removed or altered: each of the 4 is still there with the same name, plan and id (criterion 7)
+    no data that existed before was removed or altered: each of the 4 is still there with the same name, plan and id (criterion 7)
+    no data that existed before was removed or altered: each of the 4 is still there with the same name, plan and id (criterion 7)
+    no data that existed before was removed or altered: each of the 4 is still there with the same name, plan and id (criterion 7)
+    that test created 2 customers before it failed, and both are gone: cleanup ran although the test did not finish
+    every customer a test created was removed: the two counts are the same
+    at the end the application holds exactly what it held at the start, compared as a whole
+    "Test Userson" is still there, unchanged, though its name starts with "Test"
+  noticed, by the check it should trip
+
+After the last fault was taken out: isolated.spec.ts is byte for byte what it was at the start.
+
+RESULT: all 4 planted faults were noticed by the check, and the file was restored.

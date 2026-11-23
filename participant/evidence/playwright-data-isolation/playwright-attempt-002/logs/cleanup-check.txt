@@ -1,0 +1,108 @@
+What the runs left behind. playwright-data-isolation, attempt playwright-attempt-002
+Recorded by tools/data-isolation-check.ts. The application is a made-up customer directory on this computer. Nobody in it is real.
+
+==============================================================================
+PART 1. Before any isolated test ran: the data that was already there
+The application was started and asked for every customer. These four stand for data that existed before the tests:
+  "Asha Verma", plan plus, id seed-1
+  "Bo Lindqvist", plan basic, id seed-2
+  "Carmen Ortiz", plan basic, id seed-3
+  "Test Userson", plan plus, id seed-4
+  ok   the application starts with 4 customers, and none of them was made by a test
+  ok   one of them, "Test Userson", has a name that starts with "Test". A cleanup that deleted by name pattern would take it
+
+==============================================================================
+PART 2. After the run in the order written
+This script asked the application for every customer again, and compared with part 1:
+  customers in the application now:          4
+  created by tests since it started:         7
+  removed since it started:                  7
+  left behind (not there before the runs):   0
+  there before and now missing:              0
+  there before and now different:            0
+  ok   the tests did real work: 7 customers were created in all so far, 7 of them in this run
+  ok   no test data remains: the application holds no customer that was not there before the runs
+  ok   no data that existed before was removed or altered: each of the 4 is still there with the same name, plan and id (criterion 7)
+
+==============================================================================
+PART 3. After the reversed run
+This script asked the application for every customer again, and compared with part 1:
+  customers in the application now:          4
+  created by tests since it started:         14
+  removed since it started:                  14
+  left behind (not there before the runs):   0
+  there before and now missing:              0
+  there before and now different:            0
+  ok   the tests did real work: 14 customers were created in all so far, 7 of them in this run
+  ok   no test data remains: the application holds no customer that was not there before the runs
+  ok   no data that existed before was removed or altered: each of the 4 is still there with the same name, plan and id (criterion 7)
+
+==============================================================================
+PART 4. After the shuffled run
+This script asked the application for every customer again, and compared with part 1:
+  customers in the application now:          4
+  created by tests since it started:         21
+  removed since it started:                  21
+  left behind (not there before the runs):   0
+  there before and now missing:              0
+  there before and now different:            0
+  ok   the tests did real work: 21 customers were created in all so far, 7 of them in this run
+  ok   no test data remains: the application holds no customer that was not there before the runs
+  ok   no data that existed before was removed or altered: each of the 4 is still there with the same name, plan and id (criterion 7)
+
+==============================================================================
+PART 5. After the parallel run
+This script asked the application for every customer again, and compared with part 1:
+  customers in the application now:          4
+  created by tests since it started:         28
+  removed since it started:                  28
+  left behind (not there before the runs):   0
+  there before and now missing:              0
+  there before and now different:            0
+  ok   the tests did real work: 28 customers were created in all so far, 7 of them in this run
+  ok   no test data remains: the application holds no customer that was not there before the runs
+  ok   no data that existed before was removed or altered: each of the 4 is still there with the same name, plan and id (criterion 7)
+
+==============================================================================
+PART 6. After the two runs at once
+This script asked the application for every customer again, and compared with part 1:
+  customers in the application now:          4
+  created by tests since it started:         42
+  removed since it started:                  42
+  left behind (not there before the runs):   0
+  there before and now missing:              0
+  there before and now different:            0
+  ok   the tests did real work: 42 customers were created in all so far, 14 of them in this run
+  ok   no test data remains: the application holds no customer that was not there before the runs
+  ok   no data that existed before was removed or altered: each of the 4 is still there with the same name, plan and id (criterion 7)
+
+==============================================================================
+PART 7. After the test that fails halfway
+This script asked the application for every customer again, and compared with part 1:
+  customers in the application now:          4
+  created by tests since it started:         44
+  removed since it started:                  44
+  left behind (not there before the runs):   0
+  there before and now missing:              0
+  there before and now different:            0
+  ok   the tests did real work: 44 customers were created in all so far, 2 of them in this run
+  ok   no test data remains: the application holds no customer that was not there before the runs
+  ok   no data that existed before was removed or altered: each of the 4 is still there with the same name, plan and id (criterion 7)
+  ok   that test created 2 customers before it failed, and both are gone: cleanup ran although the test did not finish
+
+==============================================================================
+PART 8. The check can find leftovers: the coupled tests
+The same comparison, run after the coupled tests of logs/shuffle-run.txt part 1, on their own fresh application.
+  left behind (not there when the application started):   1
+      "Test User", plan plus
+  ok   it reports 1 leftover, "Test User": the coupled tests clean nothing up, and this check sees it
+  ok   so "no test data remains" above is a finding and not something this check always says
+
+==============================================================================
+PART 9. In all
+Across every isolated run, against the one application: 44 customers created by tests, 44 removed.
+  ok   every customer a test created was removed: the two counts are the same
+  ok   at the end the application holds exactly what it held at the start, compared as a whole
+  ok   "Test Userson" is still there, unchanged, though its name starts with "Test"
+
+RESULT: ALL CHECKS PASSED. 26 checks.

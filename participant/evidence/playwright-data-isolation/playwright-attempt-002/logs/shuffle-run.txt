@@ -1,0 +1,435 @@
+Order and parallel runs. playwright-data-isolation, attempt playwright-attempt-002
+Recorded by tools/data-isolation-check.ts. The application is a made-up customer directory on this computer. Nobody in it is real.
+Each block between dashed lines is what Playwright printed. Folder names of this computer are shown as REPO and HOME.
+Playwright runs a file's tests in the order written, so to reorder them each test is run on its own, one after another.
+
+==============================================================================
+PART 1. The coupled tests, in the order written, on a freshly started application
+run 1 of 2: coupled: adds Test User through the form
+$ npx playwright test -c playwright.isolation.config.ts coupled.spec.ts --workers=1 -g 'coupled: adds Test User through the form' --timeout=5000
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 coupled.spec.ts:26:5 › coupled: adds Test User through the form (127ms)
+
+  1 passed (373ms)
+------------------------------------------------------------------------------
+exit code: 0
+run 2 of 2: coupled: upgrades Test User to the plus plan
+$ npx playwright test -c playwright.isolation.config.ts coupled.spec.ts --workers=1 -g 'coupled: upgrades Test User to the plus plan' --timeout=5000
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 coupled.spec.ts:35:5 › coupled: upgrades Test User to the plus plan (106ms)
+
+  1 passed (346ms)
+------------------------------------------------------------------------------
+exit code: 0
+  ok   both pass: in this order, on an application nobody has used, the fault does not show
+
+==============================================================================
+PART 2. The coupled tests REVERSED, on a freshly started application (criterion 6)
+run 1 of 2: coupled: upgrades Test User to the plus plan
+$ npx playwright test -c playwright.isolation.config.ts coupled.spec.ts --workers=1 -g 'coupled: upgrades Test User to the plus plan' --timeout=5000
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✘  1 coupled.spec.ts:35:5 › coupled: upgrades Test User to the plus plan (5.0s)
+
+  1) coupled.spec.ts:35:5 › coupled: upgrades Test User to the plus plan ───────────────────────────
+
+    Test timeout of 5000ms exceeded.
+
+    Error: locator.click: Test timeout of 5000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Upgrade Test User', exact: true })
+
+      37 |
+      38 |   // Depends on the customer the test above left behind.
+    > 39 |   await page.getByRole("button", { name: "Upgrade Test User", exact: true }).click();
+         |                                                                              ^
+      40 |
+      41 |   await expect(page.getByRole("row").filter({ hasText: /^\s*Test User\s/ })).toContainText("plus");
+      42 | });
+        at REPO/participant/tests/playwright/coupled.spec.ts:39:78
+
+    Error Context: ../../../local-data/playwright-isolation-results/coupled-coupled-upgrades-Test-User-to-the-plus-plan/error-context.md
+
+  1 failed
+    coupled.spec.ts:35:5 › coupled: upgrades Test User to the plus plan ────────────────────────────
+------------------------------------------------------------------------------
+exit code: 1
+run 2 of 2: coupled: adds Test User through the form
+$ npx playwright test -c playwright.isolation.config.ts coupled.spec.ts --workers=1 -g 'coupled: adds Test User through the form' --timeout=5000
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 coupled.spec.ts:26:5 › coupled: adds Test User through the form (126ms)
+
+  1 passed (367ms)
+------------------------------------------------------------------------------
+exit code: 0
+  ok   "upgrades Test User" FAILS when it runs first: it needs a customer that only the other test creates
+  ok   the failure is the missing customer: Playwright waited for the button "Upgrade Test User" and it never appeared
+  ok   "adds Test User" still passes when it runs second. Only the one that leaned on the other broke
+
+==============================================================================
+PART 3. The coupled tests run TWICE, in the order written, against the same application
+This is the scenario: two testers, or one tester twice, and a customer called Test User.
+run 1 of 4: coupled: adds Test User through the form
+$ npx playwright test -c playwright.isolation.config.ts coupled.spec.ts --workers=1 -g 'coupled: adds Test User through the form' --timeout=5000
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 coupled.spec.ts:26:5 › coupled: adds Test User through the form (126ms)
+
+  1 passed (366ms)
+------------------------------------------------------------------------------
+exit code: 0
+run 2 of 4: coupled: upgrades Test User to the plus plan
+$ npx playwright test -c playwright.isolation.config.ts coupled.spec.ts --workers=1 -g 'coupled: upgrades Test User to the plus plan' --timeout=5000
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 coupled.spec.ts:35:5 › coupled: upgrades Test User to the plus plan (123ms)
+
+  1 passed (371ms)
+------------------------------------------------------------------------------
+exit code: 0
+run 3 of 4: coupled: adds Test User through the form
+$ npx playwright test -c playwright.isolation.config.ts coupled.spec.ts --workers=1 -g 'coupled: adds Test User through the form' --timeout=5000
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✘  1 coupled.spec.ts:26:5 › coupled: adds Test User through the form (5.0s)
+
+  1) coupled.spec.ts:26:5 › coupled: adds Test User through the form ───────────────────────────────
+
+    Test timeout of 5000ms exceeded.
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('status')
+    Expected: "Added Test User."
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" getByRole('status') with timeout 5000ms
+      - waiting for getByRole('status')
+      - Test timeout of 5000ms exceeded.
+
+      29 |   await page.getByRole("button", { name: "Add customer" }).click();
+      30 |
+    > 31 |   await expect(page.getByRole("status")).toHaveText("Added Test User.");
+         |                                          ^
+      32 |   await expect(page.getByRole("row").filter({ hasText: /^\s*Test User\s/ })).toContainText("basic");
+      33 | });
+      34 |
+        at REPO/participant/tests/playwright/coupled.spec.ts:31:42
+
+    Error Context: ../../../local-data/playwright-isolation-results/coupled-coupled-adds-Test-User-through-the-form/error-context.md
+
+  1 failed
+    coupled.spec.ts:26:5 › coupled: adds Test User through the form ────────────────────────────────
+------------------------------------------------------------------------------
+exit code: 1
+run 4 of 4: coupled: upgrades Test User to the plus plan
+$ npx playwright test -c playwright.isolation.config.ts coupled.spec.ts --workers=1 -g 'coupled: upgrades Test User to the plus plan' --timeout=5000
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 coupled.spec.ts:35:5 › coupled: upgrades Test User to the plus plan (106ms)
+
+  1 passed (356ms)
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the first time, both pass
+  ok   the second time, "adds Test User" FAILS: the first run's Test User is still there, and the application refuses a second one
+
+==============================================================================
+PART 4. The isolated tests, in the order written (criterion 4)
+From here to the end, every run is against ONE running application, with no reset in between.
+run 1 of 5: a customer is listed with the plan it was given
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'a customer is listed with the plan it was given'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 isolated.spec.ts:84:1 › a customer is listed with the plan it was given (76ms)
+
+  1 passed (356ms)
+------------------------------------------------------------------------------
+exit code: 0
+run 2 of 5: upgrading one customer changes that customer and no other
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'upgrading one customer changes that customer and no other'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 isolated.spec.ts:93:1 › upgrading one customer changes that customer and no other (126ms)
+
+  1 passed (372ms)
+------------------------------------------------------------------------------
+exit code: 0
+run 3 of 5: removing one customer through the page removes that customer and no other
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'removing one customer through the page removes that customer and no other'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 isolated.spec.ts:104:1 › removing one customer through the page removes that customer and no other (133ms)
+
+  1 passed (369ms)
+------------------------------------------------------------------------------
+exit code: 0
+run 4 of 5: a customer added through the form is listed
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'a customer added through the form is listed'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 isolated.spec.ts:116:1 › a customer added through the form is listed (157ms)
+
+  1 passed (402ms)
+------------------------------------------------------------------------------
+exit code: 0
+run 5 of 5: a second customer with a name already in use is refused
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'a second customer with a name already in use is refused'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 isolated.spec.ts:134:1 › a second customer with a name already in use is refused (162ms)
+
+  1 passed (407ms)
+------------------------------------------------------------------------------
+exit code: 0
+  ok   all 5 pass in the order written
+
+==============================================================================
+PART 5. The isolated tests REVERSED (criterion 4)
+run 1 of 5: a second customer with a name already in use is refused
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'a second customer with a name already in use is refused'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 isolated.spec.ts:134:1 › a second customer with a name already in use is refused (158ms)
+
+  1 passed (398ms)
+------------------------------------------------------------------------------
+exit code: 0
+run 2 of 5: a customer added through the form is listed
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'a customer added through the form is listed'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 isolated.spec.ts:116:1 › a customer added through the form is listed (160ms)
+
+  1 passed (405ms)
+------------------------------------------------------------------------------
+exit code: 0
+run 3 of 5: removing one customer through the page removes that customer and no other
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'removing one customer through the page removes that customer and no other'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 isolated.spec.ts:104:1 › removing one customer through the page removes that customer and no other (127ms)
+
+  1 passed (365ms)
+------------------------------------------------------------------------------
+exit code: 0
+run 4 of 5: upgrading one customer changes that customer and no other
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'upgrading one customer changes that customer and no other'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 isolated.spec.ts:93:1 › upgrading one customer changes that customer and no other (125ms)
+
+  1 passed (370ms)
+------------------------------------------------------------------------------
+exit code: 0
+run 5 of 5: a customer is listed with the plan it was given
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'a customer is listed with the plan it was given'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 isolated.spec.ts:84:1 › a customer is listed with the plan it was given (77ms)
+
+  1 passed (319ms)
+------------------------------------------------------------------------------
+exit code: 0
+  ok   all 5 pass in reversed order
+
+==============================================================================
+PART 6. The isolated tests in RANDOM order (criterion 4)
+The shuffle's seed is 1487525443. Run this script with GTQ_SHUFFLE_SEED=1487525443 to get the same order again.
+The order it gave, by position in the file: 4, 2, 3, 5, 1
+run 1 of 5: a customer added through the form is listed
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'a customer added through the form is listed'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 isolated.spec.ts:116:1 › a customer added through the form is listed (155ms)
+
+  1 passed (399ms)
+------------------------------------------------------------------------------
+exit code: 0
+run 2 of 5: upgrading one customer changes that customer and no other
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'upgrading one customer changes that customer and no other'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 isolated.spec.ts:93:1 › upgrading one customer changes that customer and no other (131ms)
+
+  1 passed (389ms)
+------------------------------------------------------------------------------
+exit code: 0
+run 3 of 5: removing one customer through the page removes that customer and no other
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'removing one customer through the page removes that customer and no other'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 isolated.spec.ts:104:1 › removing one customer through the page removes that customer and no other (125ms)
+
+  1 passed (367ms)
+------------------------------------------------------------------------------
+exit code: 0
+run 4 of 5: a second customer with a name already in use is refused
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'a second customer with a name already in use is refused'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 isolated.spec.ts:134:1 › a second customer with a name already in use is refused (160ms)
+
+  1 passed (411ms)
+------------------------------------------------------------------------------
+exit code: 0
+run 5 of 5: a customer is listed with the plan it was given
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'a customer is listed with the plan it was given'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✓  1 isolated.spec.ts:84:1 › a customer is listed with the plan it was given (75ms)
+
+  1 passed (316ms)
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the shuffled order holds each of the 5 tests once
+  ok   all 5 pass in the shuffled order
+
+==============================================================================
+PART 7. The isolated tests IN PARALLEL (criterion 5)
+One Playwright run of the whole file, with 5 workers and every test allowed to run at the same time as the others.
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=5 --fully-parallel
+------------------------------------------------------------------------------
+
+Running 6 tests using 5 workers
+
+  ✓  2 isolated.spec.ts:84:1 › a customer is listed with the plan it was given (169ms)
+  -  6 isolated.spec.ts:150:1 › FAILS ON PURPOSE: cleanup still runs when a test fails halfway
+  ✓  5 isolated.spec.ts:104:1 › removing one customer through the page removes that customer and no other (225ms)
+  ✓  4 isolated.spec.ts:93:1 › upgrading one customer changes that customer and no other (224ms)
+  ✓  3 isolated.spec.ts:134:1 › a second customer with a name already in use is refused (266ms)
+  ✓  1 isolated.spec.ts:116:1 › a customer added through the form is listed (274ms)
+
+  1 skipped
+  5 passed (602ms)
+------------------------------------------------------------------------------
+exit code: 0
+  ok   Playwright used 5 workers, so the 5 tests ran at the same time
+  ok   all 5 pass in parallel. The sixth test, which fails on purpose, is skipped unless asked for
+
+==============================================================================
+PART 8. Stretch goal: the whole suite TWICE AT ONCE against the same application
+Two separate Playwright runs started together, each with 3 workers. This is two testers at the same time.
+the first of the two:
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=3 --fully-parallel
+------------------------------------------------------------------------------
+
+Running 6 tests using 3 workers
+
+  ✓  1 isolated.spec.ts:84:1 › a customer is listed with the plan it was given (174ms)
+  ✓  3 isolated.spec.ts:93:1 › upgrading one customer changes that customer and no other (235ms)
+  ✓  2 isolated.spec.ts:104:1 › removing one customer through the page removes that customer and no other (262ms)
+  -  6 isolated.spec.ts:150:1 › FAILS ON PURPOSE: cleanup still runs when a test fails halfway
+  ✓  4 isolated.spec.ts:116:1 › a customer added through the form is listed (160ms)
+  ✓  5 isolated.spec.ts:134:1 › a second customer with a name already in use is refused (159ms)
+
+  1 skipped
+  5 passed (757ms)
+------------------------------------------------------------------------------
+exit code: 0
+the second of the two:
+$ npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=3 --fully-parallel
+------------------------------------------------------------------------------
+
+Running 6 tests using 3 workers
+
+  ✓  1 isolated.spec.ts:84:1 › a customer is listed with the plan it was given (182ms)
+  ✓  2 isolated.spec.ts:104:1 › removing one customer through the page removes that customer and no other (234ms)
+  ✓  3 isolated.spec.ts:93:1 › upgrading one customer changes that customer and no other (249ms)
+  -  6 isolated.spec.ts:150:1 › FAILS ON PURPOSE: cleanup still runs when a test fails halfway
+  ✓  4 isolated.spec.ts:116:1 › a customer added through the form is listed (178ms)
+  ✓  5 isolated.spec.ts:134:1 › a second customer with a name already in use is refused (161ms)
+
+  1 skipped
+  5 passed (759ms)
+------------------------------------------------------------------------------
+exit code: 0
+  ok   both runs pass all 5, though they shared one application and ran at once
+
+==============================================================================
+PART 9. A test that fails halfway
+One test is made to fail after it has created two customers. It only runs when asked, with GTQ_FAIL_HALFWAY=1.
+$ GTQ_FAIL_HALFWAY=1 npx playwright test -c playwright.isolation.config.ts isolated.spec.ts --workers=1 -g 'FAILS ON PURPOSE: cleanup still runs when a test fails halfway'
+------------------------------------------------------------------------------
+
+Running 1 test using 1 worker
+
+  ✘  1 isolated.spec.ts:150:1 › FAILS ON PURPOSE: cleanup still runs when a test fails halfway (90ms)
+
+  1) isolated.spec.ts:150:1 › FAILS ON PURPOSE: cleanup still runs when a test fails halfway ───────
+
+    Error: it fails here on purpose, halfway, with two customers created
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "finished"
+    Received: "this test"
+
+      156 |   await expect(rowOf(page, alan)).toHaveCount(1);
+      157 |
+    > 158 |   expect("this test", "it fails here on purpose, halfway, with two customers created").toBe("finished");
+          |                                                                                        ^
+      159 | });
+      160 |
+        at REPO/participant/tests/playwright/isolated.spec.ts:158:88
+
+    Error Context: ../../../local-data/playwright-isolation-results/isolated-FAILS-ON-PURPOSE--dd700-s-when-a-test-fails-halfway/error-context.md
+
+  1 failed
+    isolated.spec.ts:150:1 › FAILS ON PURPOSE: cleanup still runs when a test fails halfway ────────
+------------------------------------------------------------------------------
+exit code: 1
+  ok   the test FAILS, as it was made to, at the line that says it fails on purpose
+  ok   the failure is the test's own, not the cleanup's: no cleanup error was reported
+
+RESULT: ALL CHECKS PASSED. 15 checks.
