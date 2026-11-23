@@ -272,3 +272,8 @@ Every change this application made to your files, newest last.
 - `2026-11-23T20:50:14Z` github-read-comments-events: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-23T20:50:14Z` Submitted github-read-comments-events for review as submission-20261123205014-2656db.
 - `2026-11-23T20:58:50Z` Review of github-read-comments-events: needs_changes by Claude (automated reviewer).
+- `2026-11-23T21:01:57Z` github-read-comments-events: needs_changes → in_progress (Resume after a reviewer asked for changes.)
+- `2026-11-23T21:02:35Z` github-read-comments-events: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-23T21:03:03Z` github-read-comments-events: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-23T21:03:33Z` github-read-comments-events: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-23T21:03:33Z` Submitted github-read-comments-events for review as submission-20261123210333-ecf9a3.

@@ -418,10 +418,10 @@ attempts:
   quest_id: github-read-comments-events
   quest_version: 1
   content_hash: sha256:ca1c48d5158d9a3ac6da5e1c0d41120c8c41735b7e24ca86e389fbdaa73e36db
-  state: needs_changes
+  state: submitted
   started_at: '2026-11-23T20:13:23Z'
-  updated_at: '2026-11-23T20:58:50Z'
+  updated_at: '2026-11-23T21:03:33Z'
   evidence_path: participant/evidence/github-read-comments-events/github-attempt-010
-  submission_id: submission-20261123205014-2656db
+  submission_id: submission-20261123210333-ecf9a3
   review_id: review-20261123205850-f7d513
-updated_at: '2026-11-23T20:58:50Z'
+updated_at: '2026-11-23T21:03:33Z'
