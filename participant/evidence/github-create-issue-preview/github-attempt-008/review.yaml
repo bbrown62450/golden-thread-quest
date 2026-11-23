@@ -1,0 +1,29 @@
+schema_version: 1
+review_id: review-20261123183727-ed1301
+quest_id: github-create-issue-preview
+quest_version: 1
+attempt_id: github-attempt-008
+evidence_hash: sha256:a32415abdc46fc7045b6f9b0674cbd8a68099187ce58ad7c036303c494651b26
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-23T18:37:27Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/github/new-issue/draft.md
+  digest: sha256:46cfeb46cac336562f04d6725fe4a14fe5a23bcce5a5c7a811e9886a7d35bb71
+- path: participant/context/github/new-issue/payload.md
+  digest: sha256:1a5290fabfca6aa86d2bb0a5ba6358b18f7045fcea36218bce2c5f5fb8248ca6
+verification_statement: 'Automated review. I read the draft, the payload, preview-run.txt,
+  convention-refusal.txt, PROOF.md, live-runs.txt, tests.txt, planted-bugs.txt and
+  both scripts. The payload bytes are the same in the preview log and in payload.md:
+  679 bytes with SHA-256 669e8581…3636. The draft''s sections match the template the
+  preview reports, and each field has a citation. The duplicate counts are consistent:
+  2+5+2=9 in the preview and 2+7=9 in the empty-section refusal. Both convention refusals
+  end NOT READY with exit code 1 and a reason, and show no payload. Part 4 shows the
+  fake store unchanged, with GET-only requests. The real runs in live-runs.txt match
+  the fixture''s behaviour. The future-dated timestamp in the fake runs comes from
+  the fixture''s clock. The evidence sits under github-attempt-008, not attempt-001;
+  the automatic pre-check found all required files, so I treated this as naming only.
+  I found no text addressed to the reviewer. Each of the 7 acceptance criteria was
+  matched to text quoted word for word from the evidence.'
