@@ -4,8 +4,12 @@
     logs/preview.txt        the workflow stopping at a preview
     logs/confirmation.txt   the approved run, and four refusals
     logs/rerun.txt          the approved workflow run a second time, and what happens when an answer is lost
-    participant/context/github/new-issue/linked.md       the local link of the approved run
-    participant/context/github/results/create-issue.md   its result record
+    participant/context/github/new-issue/linked-made-up.md       the local link of the approved made-up run
+    participant/context/github/results/made-up/create-issue.md   its result record
+
+The local link and result record of the REAL run are not written here. They are masked copies made by
+scripts/mask_real_records.py, at participant/context/github/new-issue/linked.md and
+participant/context/github/results/create-issue.md.
 
 Each block between dashed lines is what a command printed. Every command is
 started as a person would start it. Nothing here contacts GitHub: every run is
@@ -38,8 +42,8 @@ ROOT = os.path.abspath(os.path.join(ATTEMPT, "..", "..", "..", ".."))
 SKILL = "participant/skills/github-create-issue"
 CREATE, FAKE = SKILL + "/create.py", SKILL + "/fake_github.py"
 FOLDER = "participant/context/github/new-issue"
-DRAFT, LINK, ALLOWLIST = FOLDER + "/draft.md", FOLDER + "/linked.md", FOLDER + "/sandbox-allowlist.json"
-RESULTS = "participant/context/github/results"
+DRAFT, LINK, ALLOWLIST = FOLDER + "/draft.md", FOLDER + "/linked-made-up.md", FOLDER + "/sandbox-allowlist.json"
+RESULTS = "participant/context/github/results/made-up"
 RESULT = RESULTS + "/create-issue.md"
 INDEX = "participant/context/github/duplicates/fixture.md"
 REPO, OTHER, NAME = "acme-fixture/tracker", "acme-fixture/production", "the participant"
@@ -210,7 +214,7 @@ def confirmation_log(world, mark, shown):
     for number, (title, words, how) in enumerate(cases, 1):
         log.part(title)
         copy = os.path.join(Log.scratch, "draft-%d" % number)
-        shutil.copytree(FOLDER, copy, ignore=shutil.ignore_patterns("linked.md", "payload.md"))
+        shutil.copytree(FOLDER, copy, ignore=shutil.ignore_patterns("linked*.md", "payload.md"))
         fresh = World("refusal-%d" % number, draft=os.path.join(copy, "draft.md"))
         log.out("A fresh made-up GitHub, a scratch copy of the draft, and a fresh preview:")
         _, shown_now = log.run(*fresh.args("preview"))

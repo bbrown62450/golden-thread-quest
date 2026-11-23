@@ -14,7 +14,7 @@ exit code: 0
 
 ==============================================================================
 PART 2. The very same approved command, run again
-$ python3 participant/skills/github-create-issue/create.py confirm --source fake --fake-store SCRATCH/approved/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link participant/context/github/new-issue/linked.md --state SCRATCH/approved/previews --results participant/context/github/results --fingerprint 420af1396d5b8b7837a378f6837250f7 --confirmed-by 'the participant'
+$ python3 participant/skills/github-create-issue/create.py confirm --source fake --fake-store SCRATCH/approved/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link participant/context/github/new-issue/linked-made-up.md --state SCRATCH/approved/previews --results participant/context/github/results/made-up --fingerprint 420af1396d5b8b7837a378f6837250f7 --confirmed-by 'the participant'
 ------------------------------------------------------------------------------
 github-create: CONFIRM the creation of one previewed issue
 github-create: REFUSED: this draft is ALREADY the GitHub issue number 108 of acme-fixture/tracker (node ID I_kwFX4010108), created at 2026-11-24T09:00:00Z. It is not created again. `verify` reads it back and compares it.
@@ -27,7 +27,7 @@ exit code: 1
 
 ==============================================================================
 PART 3. The whole workflow again from the start
-$ python3 participant/skills/github-create-issue/create.py preview --source fake --fake-store SCRATCH/approved/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link participant/context/github/new-issue/linked.md --index participant/context/github/duplicates/fixture.md --state SCRATCH/approved/previews
+$ python3 participant/skills/github-create-issue/create.py preview --source fake --fake-store SCRATCH/approved/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link participant/context/github/new-issue/linked-made-up.md --index participant/context/github/duplicates/fixture.md --state SCRATCH/approved/previews
 ------------------------------------------------------------------------------
 github-create: REFUSED: this draft is ALREADY the GitHub issue number 108 of acme-fixture/tracker (node ID I_kwFX4010108), created at 2026-11-24T09:00:00Z. It is not created again. `verify` reads it back and compares it.
 github-create: Nothing was sent to GitHub by this command that could change anything.
@@ -38,7 +38,7 @@ exit code: 1
 
 ==============================================================================
 PART 4. The local link is matched to the issue by its identifier (criterion 3)
-$ python3 participant/skills/github-create-issue/create.py verify --source fake --fake-store SCRATCH/approved/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link participant/context/github/new-issue/linked.md
+$ python3 participant/skills/github-create-issue/create.py verify --source fake --fake-store SCRATCH/approved/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link participant/context/github/new-issue/linked-made-up.md
 ------------------------------------------------------------------------------
 github-create: VERIFY that the linked issue is still what the preview showed. This command only reads
 github-create: 1. THE LOCAL LINK says: issue number 108 of "acme-fixture/tracker", node ID I_kwFX4010108

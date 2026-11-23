@@ -1,15 +1,15 @@
 schema_version: 1
-submission_id: submission-20261123190732-76c342
+submission_id: submission-20261123192019-630c76
 quest_id: github-create-issue
 quest_version: 1
 attempt_id: github-attempt-009
 content_hash: sha256:7c3cb5858dc64dd21bce0b7854a50bb46ef0a4144234596c83c8712f5e97ecd3
-evidence_hash: sha256:e56bda48995d52ce4bb5a3d6ec5da9b3e61966fdd755e5960bab4b8ce85cf262
-submitted_at: '2026-11-23T19:07:32Z'
+evidence_hash: sha256:addb2cedaecb54e7ab74061abec4066b43ef5dc385eaf9e041020fd4518a14ad
+submitted_at: '2026-11-23T19:20:19Z'
 submitted_by: beaubrown
 secret_scan_clean: true
 proof_files:
 - path: participant/context/github/new-issue/linked.md
-  digest: sha256:1a5bc009784cdcf9840a2cc9e94edb871466c3a78c7f77e2e9b4199a044e035e
+  digest: sha256:0761cf0519d9255669b16fb4890b83c684f7e6e2d3af9b65470c98cfdfecc30e
 - path: participant/context/github/results/create-issue.md
-  digest: sha256:2e59ef83ffd3757f715464af25a1036429719aaf709ac338390132b2bd1da45d
+  digest: sha256:91f9c84285eebb90f1e7ff252efbf0c13002305645dae573f06c548749e4e3c5

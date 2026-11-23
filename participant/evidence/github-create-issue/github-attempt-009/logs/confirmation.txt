@@ -4,7 +4,7 @@ The approved run continues from logs/preview.txt: the same made-up GitHub and th
 
 ==============================================================================
 PART 1. The approved run: the confirmation and the write, in one command
-$ python3 participant/skills/github-create-issue/create.py confirm --source fake --fake-store SCRATCH/approved/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link participant/context/github/new-issue/linked.md --state SCRATCH/approved/previews --results participant/context/github/results --fingerprint 420af1396d5b8b7837a378f6837250f7 --confirmed-by 'the participant'
+$ python3 participant/skills/github-create-issue/create.py confirm --source fake --fake-store SCRATCH/approved/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link participant/context/github/new-issue/linked-made-up.md --state SCRATCH/approved/previews --results participant/context/github/results/made-up --fingerprint 420af1396d5b8b7837a378f6837250f7 --confirmed-by 'the participant'
 ------------------------------------------------------------------------------
 github-create: CONFIRM the creation of one previewed issue
 github-create: 1. CONFIRMATION. Given by "the participant", for the preview with fingerprint 420af1396d5b8b7837a378f6837250f7, in this same command
@@ -13,16 +13,16 @@ github-create: 2. ALLOWLIST. The repository "acme-fixture/tracker" is on the san
 github-create: 3. THE DRAFT is the draft of the preview: its SHA-256 is the same, adf517df1b0f39c2. The saved payload gives the bytes the preview showed: 679 bytes, SHA-256 669e858129780c413d269e767c1dc8d84a8c831ca0e5d9a7907354c90d103636
 github-create: 4. AGE. The preview was made at 2026-11-24T09:00:00Z and it is now 2026-11-24T09:00:00Z by GitHub's clock: 0 minutes. The limit is 15
 github-create: 5. STILL TRUE. The labels and milestone of the payload still exist, and no issue with this title was created since the preview
-github-create: 6. WRITING. The local link participant/context/github/new-issue/linked.md now says a create is about to be sent. Then one request: POST /repos/acme-fixture/tracker/issues, the 679 bytes of the preview
+github-create: 6. WRITING. The local link participant/context/github/new-issue/linked-made-up.md now says a create is about to be sent. Then one request: POST /repos/acme-fixture/tracker/issues, the 679 bytes of the preview
 github-create:      -> status 201. GitHub created issue number 108, node ID I_kwFX4010108
-github-create: 7. RECORDED. Issue number 108, node ID I_kwFX4010108, was written to participant/context/github/new-issue/linked.md before anything else was done
+github-create: 7. RECORDED. Issue number 108, node ID I_kwFX4010108, was written to participant/context/github/new-issue/linked-made-up.md before anything else was done
 github-create: 8. READ BACK AND COMPARED. The issue was read back from GitHub by its number, matched by its node ID, and compared with the previewed payload:
 github-create:      title      the same: previewed "Export writes dates in two different formats in one file", read back "Export writes dates in two different formats in one file"
 github-create:      body       the same, character for character: previewed 516 characters, read back 516 characters
 github-create:      labels     the same: previewed ["bug", "export"], read back ["bug", "export"]
 github-create:      assignees  the same: previewed ["robin-fixture"], read back ["robin-fixture"]
 github-create:      milestone  the same: previewed 3, read back 3
-github-create: 9. RESULT RECORD. Written to participant/context/github/results/create-issue.md. The local link is participant/context/github/new-issue/linked.md
+github-create: 9. RESULT RECORD. Written to participant/context/github/results/made-up/create-issue.md. The local link is participant/context/github/new-issue/linked-made-up.md
 github-create: RESULT: DONE. Issue 108 was created, recorded, read back, and is the same as the preview field for field
 github-create:      Requests made by this command: 7. Writes: 1, the one create
 ------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ exit code: 0
   ok   the bytes it received are, byte for byte, the bytes the preview printed in logs/preview.txt: 679 bytes, SHA-256 669e858129780c41
   ok   the issue the made-up GitHub now holds equals the previewed payload field for field: title, body, labels, assignees, milestone (criterion 1)
   ok   the workflow read the issue back and found every one of the five fields the same
-  ok   the returned number and identifier are in the local link file participant/context/github/new-issue/linked.md: number 108, node ID I_kwFX4010108 (criterion 2)
+  ok   the returned number and identifier are in the local link file participant/context/github/new-issue/linked-made-up.md: number 108, node ID I_kwFX4010108 (criterion 2)
   ok   the local link holds the read-back-and-compare record, with every field the same
   ok   the result record holds the repository, the number, the identifier, the timestamp and the confirmer (criterion 8)
 

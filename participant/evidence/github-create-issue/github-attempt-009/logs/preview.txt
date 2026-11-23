@@ -13,7 +13,7 @@ The draft is participant/context/github/new-issue/draft.md, the one the last que
 
 ==============================================================================
 PART 2. The preview
-$ python3 participant/skills/github-create-issue/create.py preview --source fake --fake-store SCRATCH/approved/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link participant/context/github/new-issue/linked.md --index participant/context/github/duplicates/fixture.md --state SCRATCH/approved/previews
+$ python3 participant/skills/github-create-issue/create.py preview --source fake --fake-store SCRATCH/approved/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link participant/context/github/new-issue/linked-made-up.md --index participant/context/github/duplicates/fixture.md --state SCRATCH/approved/previews
 ------------------------------------------------------------------------------
 github-preview: PREVIEW of a new issue. This command only reads. It has no way to write
 github-preview: 1. WHERE. Repository "acme-fixture/tracker", id 401, private. On the sandbox allowlist participant/context/github/new-issue/sandbox-allowlist.json, which names 1 repository. The connection acts as login "robin-fixture"

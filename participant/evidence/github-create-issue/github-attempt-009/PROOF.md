@@ -57,13 +57,13 @@ This closes what the last quest left open: that a write really sends the preview
 | # | Criterion | Status | Where |
 |---|---|---|---|
 | 1 | The issue created matches the previewed payload field for field | recorded, tested, observed | See above. Tests `SameAsThePreview`; real run 2 |
-| 2 | The returned number and identifier are written to the local file | recorded, tested, observed | `participant/context/github/new-issue/linked.md`; `confirmation.txt` part 1; tests `Recorded`; real run 2 |
+| 2 | The returned number and identifier are written to the local file | recorded, tested, observed | `participant/context/github/new-issue/linked.md`, the real run's link, masked: issue number 4 with its node ID; `confirmation.txt` part 1 for the made-up run; tests `Recorded`; real run 2 |
 | 3 | The local file is matched to the GitHub issue by identifier afterwards | recorded, tested, observed | `rerun.txt` part 4; tests `MatchedByIdentifier`: the same number with another node ID is "not the same issue"; real run 4 |
 | 4 | A preview shows the repository and the exact changes, and nothing is written before the human confirms | recorded, tested, observed | `preview.txt`; tests `PreviewFirst`; real run 1 |
 | 5 | The preview records the permission check and the duplicate check, or states where GitHub cannot perform one | recorded, tested, observed | `preview.txt` part 2; real run 1. It is the preview skill's output, unchanged |
 | 6 | Writes only to a repository on an explicit sandbox allowlist | recorded, tested, observed in part | `confirmation.txt` part 5: refused with no request sent; tests `Allowlist`. On real GitHub only the allowed case was seen |
 | 7 | The confirmation is tied to a fingerprint, refused when missing or when the change differs, and expires | recorded, tested, observed in part | `confirmation.txt` parts 1 to 4; tests `Confirmation`; real run 2. The refusals were not tried on real GitHub |
-| 8 | A result record holds the repository, number, identifier, timestamp and confirmer | recorded, tested, observed | `participant/context/github/results/create-issue.md`; tests `ResultRecord`; real run 2 |
+| 8 | A result record holds the repository, number, identifier, timestamp and confirmer | recorded, tested, observed | `participant/context/github/results/create-issue.md`, the real run's record, masked: issue 4, created at 2026-11-23T18:59:17Z; tests `ResultRecord`; real run 2 |
 | 9 | Running it again creates no duplicate, or the quest states the limit where GitHub cannot prevent it | recorded, tested, observed for the plain rerun | `rerun.txt`; tests `Rerun`; real run 3. The limit is stated below |
 
 ### Criterion 2: recorded before anything else
@@ -102,10 +102,10 @@ check for an issue with the same title created since the preview, which covers 1
 
 | Required item | File |
 |---|---|
-| The local link | `participant/context/github/new-issue/linked.md` |
+| The local link | `participant/context/github/new-issue/linked.md`: a masked copy of the link the **real** run wrote, for issue 4 |
 | The preview | `logs/preview.txt`, 10 checks |
 | The confirmation and four refusals | `logs/confirmation.txt`, 25 checks |
-| The result record | `participant/context/github/results/create-issue.md` |
+| The result record | `participant/context/github/results/create-issue.md`: a masked copy of the record the **real** run wrote, for issue 4 |
 | The rerun | `logs/rerun.txt`, 20 checks |
 | This narrative | `PROOF.md` |
 
@@ -114,9 +114,23 @@ Also here: `logs/live-runs.txt` (the four real runs, masked), `logs/tests.txt` (
 skill is `participant/skills/github-create-issue/`: `SKILL.md`, `create.py`, `fake_github.py`,
 `tests/test_create.py`.
 
-The draft is the one handed in for the last quest, `participant/context/github/new-issue/draft.md`, unchanged.
-The local link, the result record and the three required logs come from the made-up GitHub, so that nothing
-real is shared. In them the issue is number 108 of the made-up repository.
+**Where the files are.** The quest names `attempt-001` for the logs and this document. The app's Start button
+made the attempt folder `github-attempt-009`, and the work is there. `attempt-001/` holds copies of the three
+logs and of this file, with a README that says so, so that the paths the quest names exist.
+
+**Real and made-up, kept apart.**
+
+- The **local link** and the **result record** at the paths the quest names are from the **real** run: issue 4
+  in the participant's sandbox. They are masked copies, made by `scripts/mask_real_records.py`. Five values
+  are replaced: the owner's login, the issue's node ID, the repository's id, GitHub's numeric id of the issue,
+  and the name typed as confirmer. Each file says so under its heading. Nothing else in them was changed.
+- The **made-up** run's versions are kept beside them under names that say so:
+  `participant/context/github/new-issue/linked-made-up.md` and
+  `participant/context/github/results/made-up/create-issue.md`. In them the issue is number 108 of the made-up
+  repository. The three required logs are from the made-up run, and refer to these two files.
+- The real link names its draft as `draft.md`. That is the sandbox draft, which names the participant's
+  account and is kept outside the repository. It is the made-up bug shown in `logs/live-runs.txt`. The
+  `draft.md` in this repository is the made-up repository's draft, handed in for the last quest and unchanged.
 
 No run saved as evidence skipped the preview or the confirmation.
 
@@ -131,6 +145,32 @@ Four, in `logs/live-runs.txt`, on the participant's private sandbox.
 4. Verify: matched by node ID, and the same field for field. One GET.
 
 The made-up GitHub matched the real one. The workflow was not changed after the real runs.
+
+**Why two times in the real runs differ by one second.** Run 1 ends "good for 15 minutes from 18:58:46". Run 2
+says the preview "was made at 18:58:45". Both are GitHub's clock, read from the Date header of its answers at
+two different moments of the same preview. The preview saves its time when it builds the payload: 18:58:45.
+It then reads the repository once more, to show that nothing changed, and the closing line prints GitHub's
+clock as of that last request: 18:58:46. The time limit is measured from the saved time, the earlier one, so
+the preview expires one second **sooner** than its closing line suggests, never later. The line is printed by
+the `github-create-issue-preview` skill. That skill is approved and was not edited for this quest. The closing
+line should print the saved time, and that is noted here as a known fault of that skill.
+
+## Review, round 1
+
+The automated reviewer asked for changes. It accepted the workflow and the real runs, and found fault with
+which files were handed in.
+
+| Finding | What was changed |
+|---|---|
+| 1, high: the local link handed in described made-up issue 108, not the real issue | `linked.md` is now a masked copy of the link the real run wrote, for issue 4. The made-up one is `linked-made-up.md` |
+| 2, high: the result record handed in was for made-up issue 108 | `results/create-issue.md` is now a masked copy of the record the real run wrote. The made-up one is `results/made-up/create-issue.md` |
+| 3, low: the preview's time differs by one second between real runs 1 and 2 | Explained above, under "The real runs" |
+| 4, advisory: the evidence folder is `github-attempt-009`, not `attempt-001` | The mapping is stated above, under "Artifacts" |
+
+The reviewer was right about 1 and 2. In the earlier quests the real records were kept out of the repository
+and made-up ones were handed in. That was the assistant's habit, carried into a quest whose subject is the
+local record of a real write. The workflow, its tests and the three logs were not changed for this round. The
+recording script now writes the made-up link and result record to their new names, and was run again.
 
 ## Stretch goals
 
@@ -147,8 +187,10 @@ The made-up GitHub matched the real one. The workflow was not changed after the 
     python3 participant/evidence/github-create-issue/github-attempt-009/scripts/record_evidence.py
     python3 participant/evidence/github-create-issue/github-attempt-009/scripts/planted_bugs.py
 
-None of these contacts GitHub. The second writes the three logs, `linked.md` and the result record again. The
-third changes `create.py` while it runs and restores it.
+None of these contacts GitHub. The second writes the three logs and the made-up link and result record again.
+The third changes `create.py` while it runs and restores it. The masked copies of the real link and result
+record can be made again only by the participant, with `scripts/mask_real_records.py`, because only their
+computer holds the real files.
 
 ## What was tested
 
@@ -223,9 +265,12 @@ memory, and GitHub will not refuse the repeat.
 - The token was typed by the participant into their own terminal and was never shown to the assistant. It is
   in no file. It is limited to one private sandbox repository, with Issues read and write and Contents
   read-only, and expires in 7 days. It should be deleted now that the quest is done, because it can write.
-- The real draft, saved preview, local link and result record are in a scratch folder outside the repository
-  and are not handed in. `logs/live-runs.txt` is a masked copy of what the runs printed: the owner's login, the
-  issue's node ID, the repository's id and the name typed as confirmer are replaced.
+- The real draft and saved preview are in a scratch folder outside the repository and are not handed in. The
+  real local link and result record are handed in as **masked copies**, by the participant's decision after
+  the first review: the owner's login, the issue's node ID, the repository's id, GitHub's numeric id of the
+  issue and the name typed as confirmer are replaced. `logs/live-runs.txt` is masked the same way.
+- What the masked files and the log do show: the sandbox repository's name, the issue number, the title and
+  body of the made-up bug, the times, the preview's fingerprint and the checksums.
 - The one real change is a made-up bug report, issue 4, in the participant's own private sandbox.
 - Everything else in this attempt comes from the made-up GitHub. Its logins, such as `robin-fixture`, its
   repositories, labels, milestones and issues are invented.
