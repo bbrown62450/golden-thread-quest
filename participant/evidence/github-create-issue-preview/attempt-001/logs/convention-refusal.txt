@@ -1,0 +1,165 @@
+Previews refused for breaking the repository's conventions. github-create-issue-preview, attempt github-attempt-008
+Recorded by scripts/record_evidence.py. No request was sent to GitHub. The repository, people, labels, milestones and issues are made up.
+
+==============================================================================
+PART 1. A required template section is empty
+In this draft the section "Steps to reproduce" holds only "1.", which is the template's own placeholder.
+$ python3 participant/skills/github-create-issue-preview/preview.py --source fake --fake-store SCRATCH/refusal-1/github.json --draft participant/context/github/new-issue/draft-empty-section.md --index participant/context/github/duplicates/fixture.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --state SCRATCH/refusal-1/previews
+------------------------------------------------------------------------------
+github-preview: PREVIEW of a new issue. This command only reads. It has no way to write
+github-preview: 1. WHERE. Repository "acme-fixture/tracker", id 401, private. On the sandbox allowlist participant/context/github/new-issue/sandbox-allowlist.json, which names 1 repository. The connection acts as login "robin-fixture"
+github-preview:      Draft: participant/context/github/new-issue/draft-empty-section.md, title "Export writes dates in two different formats in one file"
+github-preview: 2. TEMPLATE. The repository's own template "bug_report.md" was read from the repository. It has 4 sections. Every section is required unless its heading ends "(optional)"
+github-preview:      section "What happened" (required): filled in, 1 line
+github-preview:      section "Steps to reproduce" (required): EMPTY. It holds nothing but the template's own placeholder or blank lines
+github-preview:      section "What you expected" (required): filled in, 1 line
+github-preview:      section "Environment (optional)" (optional): EMPTY. It holds nothing but the template's own placeholder or blank lines
+github-preview:      the template gives issues of this kind the label(s): "bug"
+github-preview: 3. LABELS, ASSIGNEES, MILESTONE. Each one was looked up in the repository:
+github-preview:      label "bug": exists, id 7001
+github-preview:      label "export": exists, id 7011
+github-preview:      assignee "robin-fixture": can be assigned in this repository
+github-preview:      milestone "Sprint 13": exists, is open, number 3
+github-preview:      the repository has 6 labels and 3 milestones to choose from
+github-preview: 4. SOURCES. 6 citations checked against the file and lines each one names:
+github-preview:      title: sources/notes.md, line 7. The words quoted are there
+github-preview:      body: sources/notes.md, line 8. The words quoted are there
+github-preview:      body: sources/notes.md, lines 9-10. The words quoted are there
+github-preview:      labels: sources/notes.md, line 11. The words quoted are there
+github-preview:      assignees: sources/notes.md, line 11. The words quoted are there
+github-preview:      milestone: sources/notes.md, line 12. The words quoted are there
+github-preview: 5. DUPLICATE CHECK.
+github-preview:      searched the local index participant/context/github/duplicates/fixture.md: 9 issues. 2 matched on nothing, 7 matched on fewer than 3 signals beyond the title and are not candidates
+github-preview:      duplicate result: proceed. No likely duplicate was found
+github-preview: 6. PERMISSION CHECK.
+github-preview:      GitHub says the ACCOUNT may: admin: no, maintain: no, pull: yes, push: yes, triage: yes
+github-preview:      issues are turned on in this repository, and it is not archived
+github-preview:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. Whether it may create an issue is known only when the write is tried. The preview does not try it
+github-preview: 7. THE EXACT PAYLOAD. Not shown: the draft cannot be sent as it is, so there is no payload to show
+github-preview: 8. NOTHING WAS WRITTEN. The repository was read at the start and again at the end. Newest issue number: 107 then 107. Labels: 6 then 6. Milestones: 3 then 3. The same
+github-preview:      Requests made by this command: 12, every one a GET
+github-preview: RESULT: NOT READY. 1 reason:
+github-preview:   1. the required template section "Steps to reproduce" is empty
+github-preview: No fingerprint is given and no payload was saved, so there is nothing a write could send
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1, and the run ends NOT READY with 1 reason
+  ok   the reason is given: the required template section "Steps to reproduce" is empty
+  ok   no payload is shown, no fingerprint is given and no preview was saved, so there is nothing a write could send
+  ok   nothing was written: the made-up GitHub received no request but GETs, and holds exactly what it held before
+  ok   the optional section, also left empty in this draft, is reported and is not a reason
+
+==============================================================================
+PART 2. A label does not exist
+In this draft the labels are bug, export and data-quality. The repository has no label data-quality.
+$ python3 participant/skills/github-create-issue-preview/preview.py --source fake --fake-store SCRATCH/refusal-2/github.json --draft participant/context/github/new-issue/draft-unknown-label.md --index participant/context/github/duplicates/fixture.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --state SCRATCH/refusal-2/previews
+------------------------------------------------------------------------------
+github-preview: PREVIEW of a new issue. This command only reads. It has no way to write
+github-preview: 1. WHERE. Repository "acme-fixture/tracker", id 401, private. On the sandbox allowlist participant/context/github/new-issue/sandbox-allowlist.json, which names 1 repository. The connection acts as login "robin-fixture"
+github-preview:      Draft: participant/context/github/new-issue/draft-unknown-label.md, title "Export writes dates in two different formats in one file"
+github-preview: 2. TEMPLATE. The repository's own template "bug_report.md" was read from the repository. It has 4 sections. Every section is required unless its heading ends "(optional)"
+github-preview:      section "What happened" (required): filled in, 1 line
+github-preview:      section "Steps to reproduce" (required): filled in, 2 lines
+github-preview:      section "What you expected" (required): filled in, 1 line
+github-preview:      section "Environment (optional)" (optional): filled in, 1 line
+github-preview:      the template gives issues of this kind the label(s): "bug"
+github-preview: 3. LABELS, ASSIGNEES, MILESTONE. Each one was looked up in the repository:
+github-preview:      label "bug": exists, id 7001
+github-preview:      label "export": exists, id 7011
+github-preview:      label "data-quality": DOES NOT EXIST in the repository
+github-preview:      assignee "robin-fixture": can be assigned in this repository
+github-preview:      milestone "Sprint 13": exists, is open, number 3
+github-preview:      the repository has 6 labels and 3 milestones to choose from
+github-preview: 4. SOURCES. 6 citations checked against the file and lines each one names:
+github-preview:      title: sources/notes.md, line 7. The words quoted are there
+github-preview:      body: sources/notes.md, line 8. The words quoted are there
+github-preview:      body: sources/notes.md, lines 9-10. The words quoted are there
+github-preview:      labels: sources/notes.md, line 11. The words quoted are there
+github-preview:      assignees: sources/notes.md, line 11. The words quoted are there
+github-preview:      milestone: sources/notes.md, line 12. The words quoted are there
+github-preview: 5. DUPLICATE CHECK.
+github-preview:      searched the local index participant/context/github/duplicates/fixture.md: 9 issues. 2 matched on nothing, 5 matched on fewer than 3 signals beyond the title and are not candidates
+github-preview:      candidate acme-fixture/tracker#101 "Export crashes on files over 2 GB", open: medium confidence, 10 of 14 points (Named things, Body wording, Labels, Repository). The search recommends: link
+github-preview:      candidate acme-fixture/tracker#102 "Export is slow on large files", open: low confidence, 6 of 14 points (Named things, Labels, Repository). The search recommends: link
+github-preview:      to LINK: the new issue should point to acme-fixture/tracker#101, acme-fixture/tracker#102. The preview does not add that to the issue's text: a person does
+github-preview:      duplicate result: link
+github-preview: 6. PERMISSION CHECK.
+github-preview:      GitHub says the ACCOUNT may: admin: no, maintain: no, pull: yes, push: yes, triage: yes
+github-preview:      issues are turned on in this repository, and it is not archived
+github-preview:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. Whether it may create an issue is known only when the write is tried. The preview does not try it
+github-preview: 7. THE EXACT PAYLOAD. Not shown: the draft cannot be sent as it is, so there is no payload to show
+github-preview: 8. NOTHING WAS WRITTEN. The repository was read at the start and again at the end. Newest issue number: 107 then 107. Labels: 6 then 6. Milestones: 3 then 3. The same
+github-preview:      Requests made by this command: 12, every one a GET
+github-preview: RESULT: NOT READY. 1 reason:
+github-preview:   1. the label "data-quality" does not exist in the repository. The preview does not invent labels, and GitHub would create one without saying
+github-preview: No fingerprint is given and no payload was saved, so there is nothing a write could send
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1, and the run ends NOT READY with 1 reason
+  ok   the reason is given: the label "data-quality" does not exist in the repository
+  ok   no payload is shown, no fingerprint is given and no preview was saved, so there is nothing a write could send
+  ok   nothing was written: the made-up GitHub received no request but GETs, and holds exactly what it held before
+  ok   the label was not created: the made-up repository still has its 6 labels
+
+==============================================================================
+PART 3. A source citation that is not true
+In a scratch copy of the draft the milestone is changed to Sprint 14, and so is its citation. The notes still say Sprint 13.
+$ python3 participant/skills/github-create-issue-preview/preview.py --source fake --fake-store SCRATCH/refusal-3/github.json --draft SCRATCH/refusal-3/new-issue/draft.md --index participant/context/github/duplicates/fixture.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --state SCRATCH/refusal-3/previews
+------------------------------------------------------------------------------
+github-preview: PREVIEW of a new issue. This command only reads. It has no way to write
+github-preview: 1. WHERE. Repository "acme-fixture/tracker", id 401, private. On the sandbox allowlist participant/context/github/new-issue/sandbox-allowlist.json, which names 1 repository. The connection acts as login "robin-fixture"
+github-preview:      Draft: draft.md, title "Export writes dates in two different formats in one file"
+github-preview: 2. TEMPLATE. The repository's own template "bug_report.md" was read from the repository. It has 4 sections. Every section is required unless its heading ends "(optional)"
+github-preview:      section "What happened" (required): filled in, 1 line
+github-preview:      section "Steps to reproduce" (required): filled in, 2 lines
+github-preview:      section "What you expected" (required): filled in, 1 line
+github-preview:      section "Environment (optional)" (optional): filled in, 1 line
+github-preview:      the template gives issues of this kind the label(s): "bug"
+github-preview: 3. LABELS, ASSIGNEES, MILESTONE. Each one was looked up in the repository:
+github-preview:      label "bug": exists, id 7001
+github-preview:      label "export": exists, id 7011
+github-preview:      assignee "robin-fixture": can be assigned in this repository
+github-preview:      milestone "Sprint 14": exists, is open, number 4
+github-preview:      the repository has 6 labels and 3 milestones to choose from
+github-preview: 4. SOURCES. 6 citations checked against the file and lines each one names:
+github-preview:      title: sources/notes.md, line 7. The words quoted are there
+github-preview:      body: sources/notes.md, line 8. The words quoted are there
+github-preview:      body: sources/notes.md, lines 9-10. The words quoted are there
+github-preview:      labels: sources/notes.md, line 11. The words quoted are there
+github-preview:      assignees: sources/notes.md, line 11. The words quoted are there
+github-preview: 5. DUPLICATE CHECK.
+github-preview:      searched the local index participant/context/github/duplicates/fixture.md: 9 issues. 2 matched on nothing, 5 matched on fewer than 3 signals beyond the title and are not candidates
+github-preview:      candidate acme-fixture/tracker#101 "Export crashes on files over 2 GB", open: medium confidence, 10 of 14 points (Named things, Body wording, Labels, Repository). The search recommends: link
+github-preview:      candidate acme-fixture/tracker#102 "Export is slow on large files", open: low confidence, 6 of 14 points (Named things, Labels, Repository). The search recommends: link
+github-preview:      to LINK: the new issue should point to acme-fixture/tracker#101, acme-fixture/tracker#102. The preview does not add that to the issue's text: a person does
+github-preview:      duplicate result: link
+github-preview: 6. PERMISSION CHECK.
+github-preview:      GitHub says the ACCOUNT may: admin: no, maintain: no, pull: yes, push: yes, triage: yes
+github-preview:      issues are turned on in this repository, and it is not archived
+github-preview:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. Whether it may create an issue is known only when the write is tried. The preview does not try it
+github-preview: 7. THE EXACT PAYLOAD. Not shown: the draft cannot be sent as it is, so there is no payload to show
+github-preview: 8. NOTHING WAS WRITTEN. The repository was read at the start and again at the end. Newest issue number: 107 then 107. Labels: 6 then 6. Milestones: 3 then 3. The same
+github-preview:      Requests made by this command: 12, every one a GET
+github-preview: RESULT: NOT READY. 2 reasons:
+github-preview:   1. the citation for milestone is NOT TRUE: the words quoted are not on line 12 of sources/notes.md
+github-preview:   2. the draft gives no source for its milestone
+github-preview: No fingerprint is given and no payload was saved, so there is nothing a write could send
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1: the milestone exists, but the citation for it is NOT TRUE, and that is the reason
+  ok   nothing was written: the made-up GitHub received no request but GETs, and holds exactly what it held before
+
+==============================================================================
+PART 4. A repository that is not on the sandbox allowlist
+In the scratch copy the draft is put back as it was, and its repository is changed to acme-fixture/production, which exists
+in the made-up GitHub and is not on the allowlist.
+$ python3 participant/skills/github-create-issue-preview/preview.py --source fake --fake-store SCRATCH/refusal-3/github.json --draft SCRATCH/refusal-3/new-issue/draft.md --index participant/context/github/duplicates/fixture.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --state SCRATCH/refusal-3/previews
+------------------------------------------------------------------------------
+github-preview: PREVIEW of a new issue. This command only reads. It has no way to write
+github-preview: STOPPED: the repository "acme-fixture/production" is NOT ON THE SANDBOX ALLOWLIST participant/context/github/new-issue/sandbox-allowlist.json. No request was sent to GitHub.
+github-preview: Nothing was written. Requests made by this command: 0
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1: refused, and not one request of any kind was sent for it
+
+RESULT: ALL CHECKS PASSED. 13 checks.

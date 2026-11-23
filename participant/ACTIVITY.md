@@ -242,3 +242,8 @@ Every change this application made to your files, newest last.
 - `2026-11-23T16:12:39Z` github-duplicate-search: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-23T16:12:39Z` Submitted github-duplicate-search for review as submission-20261123161239-06bf35.
 - `2026-11-23T16:18:42Z` Review of github-duplicate-search: approved by Claude (automated reviewer).
+- `2026-11-23T16:29:05Z` Started github-create-issue-preview as attempt github-attempt-008.
+- `2026-11-23T18:28:31Z` github-create-issue-preview: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-23T18:28:57Z` github-create-issue-preview: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-23T18:29:25Z` github-create-issue-preview: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-23T18:29:25Z` Submitted github-create-issue-preview for review as submission-20261123182925-73b212.

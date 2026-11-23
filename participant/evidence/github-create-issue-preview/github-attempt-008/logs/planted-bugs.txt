@@ -1,0 +1,195 @@
+Do the tests notice a broken preview? github-create-issue-preview, attempt github-attempt-008
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/github-create-issue-preview/preview.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. A required section that is empty is accepted (criteria 1 and 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Refusals.test_a_required_section_holding_only_the_template_s_placeholder_is_empty
+
+PLANTED BUG B. A section holding only the template's placeholder counts as filled in (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Refusals.test_a_required_section_holding_only_the_template_s_placeholder_is_empty
+
+PLANTED BUG C. A required section that is missing is accepted (criteria 1 and 3)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Refusals.test_a_required_section_that_is_missing_stops_the_preview
+    Refusals.test_every_reason_is_listed_not_only_the_first
+
+PLANTED BUG D. Every section of the template is treated as optional (criterion 1)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Refusals.test_a_required_section_holding_only_the_template_s_placeholder_is_empty
+    Refusals.test_a_required_section_that_is_missing_stops_the_preview
+    Template.test_each_section_is_shown_with_whether_it_is_required_and_filled
+    Refusals.test_every_reason_is_listed_not_only_the_first
+
+PLANTED BUG E. A section marked optional is treated as required (criterion 1)
+  unittest result: FAILED (failures=6)
+  tests that failed (6):
+    DuplicateAndPermission.test_a_person_s_override_makes_it_ready_and_is_recorded
+    Template.test_an_optional_section_may_be_left_out_or_left_empty
+    Template.test_each_section_is_shown_with_whether_it_is_required_and_filled
+    Refusals.test_every_reason_is_listed_not_only_the_first
+    ExactPayload.test_the_body_is_the_draft_s_body_character_for_character
+    ExactPayload.test_the_fingerprint_changes_with_the_draft_the_payload_and_the_checks
+
+PLANTED BUG F. Sections in another order than the template's are accepted (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Template.test_sections_in_another_order_are_refused
+
+PLANTED BUG G. A section the template does not have is accepted (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Template.test_a_section_the_template_does_not_have_is_refused
+
+PLANTED BUG H. A heading inside a code block is taken for a section (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Template.test_a_heading_inside_a_code_block_is_not_a_section
+
+PLANTED BUG I. A label the repository does not have is put in the payload (criteria 2 and 3)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Refusals.test_a_refused_preview_shows_no_payload_and_says_why_nothing_can_be_sent
+    Refusals.test_an_unknown_label_stops_the_preview_and_is_not_created
+    Refusals.test_every_reason_is_listed_not_only_the_first
+
+PLANTED BUG J. A label is sent as the draft writes it, not as the repository does (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OnlyWhatExists.test_a_label_is_written_as_the_repository_writes_it
+
+PLANTED BUG K. The label the template gives is not required of the draft (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OnlyWhatExists.test_the_label_the_template_gives_must_be_in_the_draft
+
+PLANTED BUG L. A login that cannot be assigned is accepted (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OnlyWhatExists.test_an_assignee_who_cannot_be_assigned_is_refused
+
+PLANTED BUG M. A closed milestone is accepted (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OnlyWhatExists.test_a_milestone_that_is_missing_closed_or_not_unique_is_refused
+
+PLANTED BUG N. The milestone is sent as its title, which GitHub does not take (criterion 5)
+  unittest result: FAILED (errors=24)
+  tests that failed (24):
+    DuplicateAndPermission.test_a_classic_token_s_scopes_are_reported
+    Template.test_a_heading_inside_a_code_block_is_not_a_section
+    OnlyWhatExists.test_a_label_is_written_as_the_repository_writes_it
+    NothingWritten.test_a_repository_that_changes_during_the_preview_is_not_ready
+    DuplicateAndPermission.test_a_weaker_candidate_is_shown_and_does_not_stop_the_preview
+    Template.test_an_optional_section_may_be_left_out_or_left_empty
+    Sources.test_each_citation_is_checked_and_shown
+    OnlyWhatExists.test_each_one_is_looked_up_and_shown
+    Template.test_each_section_is_shown_with_whether_it_is_required_and_filled
+    NothingWritten.test_every_request_is_a_get_and_the_repository_is_as_it_was
+    AllowlistAndCommandLine.test_from_the_command_line_with_a_made_up_github_kept_in_a_file
+    Sources.test_line_breaks_in_the_source_do_not_stop_a_quote_that_runs_over_two_lines
+    DuplicateAndPermission.test_no_duplicate_says_so
+    ExactPayload.test_the_body_is_the_draft_s_body_character_for_character
+    ExactPayload.test_the_bytes_do_not_depend_on_the_order_the_payload_is_held_in
+    ExactPayload.test_the_bytes_printed_are_the_payload_s_bytes_and_their_checksum
+    ExactPayload.test_the_fingerprint_changes_with_the_draft_the_payload_and_the_checks
+    ExactPayload.test_the_milestone_is_sent_as_its_number_and_shown_with_its_title
+    ExactPayload.test_the_payload_file_shows_it_field_by_field_and_as_bytes
+    ExactPayload.test_the_payload_holds_exactly_the_fields_of_the_draft
+    DuplicateAndPermission.test_the_permission_check_is_shown
+    NothingWritten.test_the_preview_reads_the_repository_at_the_start_and_the_end_and_compares
+    ExactPayload.test_the_saved_preview_holds_the_payload_and_its_checksum
+    Template.test_the_template_is_read_from_the_repository
+
+PLANTED BUG O. A citation is not checked against the words on the lines it names (criterion 7)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Sources.test_a_line_that_is_not_a_citation_and_empty_quoted_words_are_refused
+    Sources.test_a_source_that_changed_after_the_draft_was_written_fails
+    Sources.test_words_that_are_not_on_the_lines_named_are_refused
+
+PLANTED BUG P. A citation may point outside the draft's folder (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Sources.test_a_source_outside_the_draft_s_folder_or_missing_is_refused
+
+PLANTED BUG Q. A field with no citation is accepted (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Sources.test_a_field_with_no_citation_is_refused
+
+PLANTED BUG R. A likely duplicate does not stop the preview (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    DuplicateAndPermission.test_a_likely_duplicate_stops_the_preview_and_says_how_a_person_goes_on
+
+PLANTED BUG S. An override naming any issue at all is accepted (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    DuplicateAndPermission.test_an_override_must_name_the_issue_the_search_reported
+
+PLANTED BUG T. A person's override is not recorded in the preview (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    DuplicateAndPermission.test_a_person_s_override_makes_it_ready_and_is_recorded
+
+PLANTED BUG U. Labels set by an account that may not triage are not flagged, though GitHub would drop them (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    DuplicateAndPermission.test_an_account_that_may_not_triage_cannot_set_labels_and_github_would_drop_them
+
+PLANTED BUG V. An archived repository is still READY (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    DuplicateAndPermission.test_an_archived_repository_issues_turned_off_and_no_stated_permissions_are_not_ready
+
+PLANTED BUG W. The payload holds only the start of the body: a summary, not the payload (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ExactPayload.test_the_payload_holds_exactly_the_fields_of_the_draft
+
+PLANTED BUG X. The body is tidied on its way into the payload (criterion 5)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    ExactPayload.test_the_body_is_the_draft_s_body_character_for_character
+    ExactPayload.test_the_payload_holds_exactly_the_fields_of_the_draft
+
+PLANTED BUG Y. The payload's bytes depend on the order its fields are held in, so a saved payload gives other bytes (criterion 5)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    ExactPayload.test_the_bytes_do_not_depend_on_the_order_the_payload_is_held_in
+    ExactPayload.test_the_bytes_printed_are_the_payload_s_bytes_and_their_checksum
+    ExactPayload.test_the_saved_preview_holds_the_payload_and_its_checksum
+
+PLANTED BUG Z. A field this workflow does not know is sent (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ExactPayload.test_the_bytes_do_not_depend_on_the_order_the_payload_is_held_in
+
+PLANTED BUG AA. A payload is shown for a draft that was refused (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Refusals.test_a_refused_preview_shows_no_payload_and_says_why_nothing_can_be_sent
+
+PLANTED BUG AB. A repository that changes during the preview is still READY (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    NothingWritten.test_a_repository_that_changes_during_the_preview_is_not_ready
+
+PLANTED BUG AC. The sandbox allowlist is not checked (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    AllowlistAndCommandLine.test_a_repository_off_the_allowlist_is_refused_before_any_request
+
+After the last bug was taken out: preview.py is byte for byte what it was at the start. OK
+
+RESULT: all 29 planted bugs were caught by at least one test, and the file was restored.

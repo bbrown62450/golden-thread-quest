@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261123182925-73b212
+quest_id: github-create-issue-preview
+quest_version: 1
+attempt_id: github-attempt-008
+content_hash: sha256:ea1392716bc7122455fba5c6852b1f634dbdbeeb06e3a9e2c04b55cfa83dc4d2
+evidence_hash: sha256:a32415abdc46fc7045b6f9b0674cbd8a68099187ce58ad7c036303c494651b26
+submitted_at: '2026-11-23T18:29:25Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/github/new-issue/draft.md
+  digest: sha256:46cfeb46cac336562f04d6725fe4a14fe5a23bcce5a5c7a811e9886a7d35bb71
+- path: participant/context/github/new-issue/payload.md
+  digest: sha256:1a5290fabfca6aa86d2bb0a5ba6358b18f7045fcea36218bce2c5f5fb8248ca6

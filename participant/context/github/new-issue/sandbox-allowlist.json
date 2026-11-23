@@ -1,0 +1,6 @@
+{
+  "note": "The repositories a new issue may be previewed for. This one is the made-up sandbox of the fixture. The made-up production repository is left off on purpose. A real run uses its own allowlist, kept outside this repository.",
+  "sandbox_repositories": [
+    "acme-fixture/tracker"
+  ]
+}

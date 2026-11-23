@@ -384,4 +384,13 @@ attempts:
   evidence_path: participant/evidence/github-duplicate-search/github-attempt-007
   submission_id: submission-20261123161239-06bf35
   review_id: review-20261123161842-686a90
-updated_at: '2026-11-23T16:18:42Z'
+- attempt_id: github-attempt-008
+  quest_id: github-create-issue-preview
+  quest_version: 1
+  content_hash: sha256:ea1392716bc7122455fba5c6852b1f634dbdbeeb06e3a9e2c04b55cfa83dc4d2
+  state: submitted
+  started_at: '2026-11-23T16:29:05Z'
+  updated_at: '2026-11-23T18:29:25Z'
+  evidence_path: participant/evidence/github-create-issue-preview/github-attempt-008
+  submission_id: submission-20261123182925-73b212
+updated_at: '2026-11-23T18:29:25Z'

@@ -1,0 +1,113 @@
+The real runs. github-create-issue-preview, attempt github-attempt-008
+
+The participant ran these in their own terminal, against their private sandbox repository on GitHub, which holds
+only made-up issues. The assistant sent no request to GitHub and never saw the token. The token was a fine-grained
+one, limited to that repository, with Issues and Contents set to read-only. It could not write. The output was
+saved to scratch files outside this repository. This is a masked copy: the owner's login is shown as [owner] and
+the repository's id as [repository id]. Nothing else was changed.
+
+Before the runs the participant added an issue template to the sandbox by hand: the file
+.github/ISSUE_TEMPLATE/bug_report.md, with the same four sections as the made-up one.
+
+The draft, its source notes, the local index and the allowlist were written by the assistant in a scratch folder
+outside this repository, shown here as SCRATCH. The draft is a made-up bug. The index holds the one sandbox issue
+saved in the github-read-issue quest. The allowlist names one repository, the sandbox.
+
+==============================================================================
+RUN 1. The preview of a draft that follows the template
+$ preview.py --source live --draft SCRATCH/draft.md --index SCRATCH/index.md --allowlist SCRATCH/allowlist.json --state SCRATCH/previews --payload-out SCRATCH/payload.md
+------------------------------------------------------------------------------
+github-preview: PREVIEW of a new issue. This command only reads. It has no way to write
+github-preview: 1. WHERE. Repository "[owner]/gtq-sandbox", id [repository id], private. On the sandbox allowlist allowlist.json, which names 1 repository. The connection acts as login "[owner]"
+github-preview:      Draft: draft.md, title "Made-up bug: the export leaves the last row out"
+github-preview: 2. TEMPLATE. The repository's own template "bug_report.md" was read from the repository. It has 4 sections. Every section is required unless its heading ends "(optional)"
+github-preview:      section "What happened" (required): filled in, 1 line
+github-preview:      section "Steps to reproduce" (required): filled in, 2 lines
+github-preview:      section "What you expected" (required): filled in, 1 line
+github-preview:      section "Environment (optional)" (optional): MISSING from the draft
+github-preview:      the template gives issues of this kind the label(s): "bug"
+github-preview: 3. LABELS, ASSIGNEES, MILESTONE. Each one was looked up in the repository:
+github-preview:      label "bug": exists, id 13171207345
+github-preview:      assignee "[owner]": can be assigned in this repository
+github-preview:      milestone: none asked for
+github-preview:      the repository has 11 labels and 0 milestones to choose from
+github-preview: 4. SOURCES. 4 citations checked against the file and lines each one names:
+github-preview:      title: sources/notes.md, line 5. The words quoted are there
+github-preview:      body: sources/notes.md, lines 6-8. The words quoted are there
+github-preview:      labels: sources/notes.md, line 9. The words quoted are there
+github-preview:      assignees: sources/notes.md, line 9. The words quoted are there
+github-preview: 5. DUPLICATE CHECK.
+github-preview:      searched the local index index.md: 1 issue. 0 matched on nothing, 1 matched on fewer than 3 signals beyond the title and are not candidates
+github-preview:      duplicate result: proceed. No likely duplicate was found
+github-preview: 6. PERMISSION CHECK.
+github-preview:      GitHub says the ACCOUNT may: admin: yes, maintain: yes, pull: yes, push: yes, triage: yes
+github-preview:      issues are turned on in this repository, and it is not archived
+github-preview:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. Whether it may create an issue is known only when the write is tried. The preview does not try it
+github-preview: 7. THE EXACT PAYLOAD a later write would send. It is built once, here, and saved. A write sends these bytes and builds nothing of its own:
+github-preview:      POST /repos/[owner]/gtq-sandbox/issues
+github-preview:      title      "Made-up bug: the export leaves the last row out"
+github-preview:      body       330 characters, 12 lines. First line: "### What happened"
+github-preview:      labels     ["bug"]
+github-preview:      assignees  ["[owner]"]
+github-preview:      milestone  not sent
+github-preview:      the exact bytes, 455 of them, SHA-256 b62fef3e09ee02f21a3a7cb1fb9951012e8f730d9b53cd4f12106578ab35f72a:
+github-preview:      {"title":"Made-up bug: the export leaves the last row out","body":"### What happened\n\nThe made-up export leaves the last row out of the file. The file `small-orders.csv` has 12 orders and the export writes 11 rows. No error is shown.\n\n### Steps to reproduce\n\n1. Run the made-up export on `small-orders.csv`.\n2. Count the rows in the file it writes.\n\n### What you expected\n\nAll 12 rows in the file.","labels":["bug"],"assignees":["[owner]"]}
+github-preview: 8. NOTHING WAS WRITTEN. The repository was read at the start and again at the end. Newest issue number: 3 then 3. Labels: 11 then 11. Milestones: 0 then 0. The same
+github-preview:      Requests made by this command: 12, every one a GET
+github-preview:      The payload was written, field by field, to payload.md
+github-preview: 9. FINGERPRINT of this preview: 6b4e76ad65b96ceb579c0dd48a6d9f6d. It covers the repository, the draft, the checks and the exact payload. Saved for a later write, good for 15 minutes from 2026-11-23T18:25:15Z by GitHub's clock
+github-preview: RESULT: READY. Nothing has been written
+------------------------------------------------------------------------------
+exit code: 0
+
+==============================================================================
+RUN 2. The same draft with one more label, "data-quality", which the sandbox does not have
+$ preview.py --source live --draft SCRATCH/draft-unknown-label.md --index SCRATCH/index.md --allowlist SCRATCH/allowlist.json --state SCRATCH/previews-refused
+------------------------------------------------------------------------------
+github-preview: PREVIEW of a new issue. This command only reads. It has no way to write
+github-preview: 1. WHERE. Repository "[owner]/gtq-sandbox", id [repository id], private. On the sandbox allowlist allowlist.json, which names 1 repository. The connection acts as login "[owner]"
+github-preview:      Draft: draft-unknown-label.md, title "Made-up bug: the export leaves the last row out"
+github-preview: 2. TEMPLATE. The repository's own template "bug_report.md" was read from the repository. It has 4 sections. Every section is required unless its heading ends "(optional)"
+github-preview:      section "What happened" (required): filled in, 1 line
+github-preview:      section "Steps to reproduce" (required): filled in, 2 lines
+github-preview:      section "What you expected" (required): filled in, 1 line
+github-preview:      section "Environment (optional)" (optional): MISSING from the draft
+github-preview:      the template gives issues of this kind the label(s): "bug"
+github-preview: 3. LABELS, ASSIGNEES, MILESTONE. Each one was looked up in the repository:
+github-preview:      label "bug": exists, id 13171207345
+github-preview:      label "data-quality": DOES NOT EXIST in the repository
+github-preview:      assignee "[owner]": can be assigned in this repository
+github-preview:      milestone: none asked for
+github-preview:      the repository has 11 labels and 0 milestones to choose from
+github-preview: 4. SOURCES. 4 citations checked against the file and lines each one names:
+github-preview:      title: sources/notes.md, line 5. The words quoted are there
+github-preview:      body: sources/notes.md, lines 6-8. The words quoted are there
+github-preview:      labels: sources/notes.md, line 9. The words quoted are there
+github-preview:      assignees: sources/notes.md, line 9. The words quoted are there
+github-preview: 5. DUPLICATE CHECK.
+github-preview:      searched the local index index.md: 1 issue. 0 matched on nothing, 1 matched on fewer than 3 signals beyond the title and are not candidates
+github-preview:      duplicate result: proceed. No likely duplicate was found
+github-preview: 6. PERMISSION CHECK.
+github-preview:      GitHub says the ACCOUNT may: admin: yes, maintain: yes, pull: yes, push: yes, triage: yes
+github-preview:      issues are turned on in this repository, and it is not archived
+github-preview:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. Whether it may create an issue is known only when the write is tried. The preview does not try it
+github-preview: 7. THE EXACT PAYLOAD. Not shown: the draft cannot be sent as it is, so there is no payload to show
+github-preview: 8. NOTHING WAS WRITTEN. The repository was read at the start and again at the end. Newest issue number: 3 then 3. Labels: 11 then 11. Milestones: 0 then 0. The same
+github-preview:      Requests made by this command: 12, every one a GET
+github-preview: RESULT: NOT READY. 1 reason:
+github-preview:   1. the label "data-quality" does not exist in the repository. The preview does not invent labels, and GitHub would create one without saying
+github-preview: No fingerprint is given and no payload was saved, so there is nothing a write could send
+------------------------------------------------------------------------------
+exit code: 1
+
+==============================================================================
+WHAT THE ASSISTANT CHECKED AFTERWARDS, on the saved files, without contacting GitHub
+
+- Run 1 saved one preview, under its fingerprint. The payload in it, written out again by the skill's own
+  function, gives the 455 bytes and the SHA-256 that run 1 printed.
+- Run 1's payload file holds the same bytes, and shows milestone as "not sent".
+- Run 2 saved nothing: the folder it was given for saved previews was never made.
+- In both runs GitHub reported 11 labels at the start and 11 at the end, and newest issue number 3 both times. So
+  the label "data-quality" was not created, and no issue was.
+- Not looked up afterwards, by other means: the sandbox itself. Both runs made 12 requests, every one a GET, and
+  the token could not write.
