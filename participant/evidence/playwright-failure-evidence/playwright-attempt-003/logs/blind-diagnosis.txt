@@ -1,0 +1,157 @@
+Can a stranger diagnose the failure from the bundle alone? playwright-failure-evidence, attempt playwright-attempt-003
+Written by the assistant (Claude) from the reports of two blind readers. No script made this file.
+
+WHAT WAS DONE
+  Two fresh AI assistants were started, one after the other. Each had no memory of this work. Each was given one folder,
+  a copy of the failure bundle, and these rules: read only files in that folder; do not read the test, the application or
+  any other file; do not run the test; do not guess. Each was asked for a diagnosis, the file and line behind each claim,
+  what it ruled out, its confidence, and what it wished the bundle had held.
+  Neither was told the cause, what the application does, or that there were two faults.
+
+  Reader 1 read an earlier bundle. In it, the application's own log said of the 404 for promo.png: "Every page asks for it.
+           Harmless". That gave the answer to one question away, so the words were taken out of the application.
+  Reader 2 read the bundle that is handed in, byte for byte (the checksums of the copy were compared with the handed-in
+           files). Its report is below, whole.
+
+WHAT THIS IS NOT
+  The readers were AI assistants, not people, of the same kind as the assistant that built the bundle. A person was not
+  asked. The rules were given in words and nothing enforced them: each reader said it kept them and listed the files it
+  read, and that is all that is known. The test's title begins "FAILS ON PURPOSE", which told both readers the failure was
+  staged, though not how.
+
+THE TRUE CAUSE, which the readers were not told
+  The application answers 500 for order ord-1003, because the order's region, north-2, has no price list. The order page
+  does not handle that: it writes to the console and leaves "Loading order..." on the screen. The 404 for promo.png is on
+  every page and is harmless.
+
+RESULT
+  Reader 1: correct. Cause: the server's 500, "no price list for region north-2". Second fault: the page shows no error.
+            Not at fault: the test, the network, the sign-in, the three 404s. Confidence high for the chain of events,
+            medium to low on whether it is missing data or a server defect. It quoted the log's word "Harmless" as one of
+            its two reasons for ruling out the 404; the other was that pages with the 404 worked.
+  Reader 2: correct, with the same findings and the same doubt, without that hint. It ruled out the 404 because the
+            sign-in page and the orders page have it too and worked.
+  Neither ran the test. Both cited a file and line for each claim.
+
+WHAT THE READERS FOUND MISSING OR CONFUSING (both, unless marked)
+  - The test's source is not in the bundle. Both rebuilt the steps from the trace.
+  - Nothing says why the price list is missing: no stack trace, one log line, nothing about the server's data.
+  - No passing comparison: whether an order in the other region loads in the same run.
+  - Times do not order exactly across files. The browser's and the server's times for one request differ by 2 to 5 ms, so
+    the server seems to answer before the request starts. The bundle's read-me promises more than that.
+  - failed-requests.json is three parts noise: three 404s before the one entry that matters.
+  - failed-requests.json leaves the Cookie header out of the request, where the trace shows it (redacted). A reader of the
+    JSON alone might suspect a missing session.
+  - "durationMs" is 0 or 1 for everything, and tells nothing.
+  - The trace's page snapshots are in Playwright's own compact form and are hard to read without its viewer.
+  - The screenshot alone suggests a slow page, not a failed one.
+  - The trace holds the evidence collector's own calls among the test's steps, unexplained (reader 1).
+  - Line numbers in console.log count from 0, so they are one less than the line in the page's HTML (reader 2).
+  - The checksums of the files under test cannot be checked against anything from inside the bundle.
+  None of these was fixed before hand-in, so that the bundle handed in is the one reader 2 read.
+
+==============================================================================
+READER 2'S REPORT, WHOLE. The folder's path is shown as SCRATCH. Nothing else was changed.
+------------------------------------------------------------------------------
+All paths below are relative to the bundle folder:
+SCRATCH/blind2/failure-bundle
+
+1. DIAGNOSIS
+
+The test failed because the application's server answered the page's data request, GET /api/orders/ord-1003, with a 500
+error: price_list_unavailable, "no price list for region north-2". The order page only creates the data-testid='total'
+element after a successful answer, so the element never existed and the test's toBeVisible check timed out after 5 seconds.
+
+The primary fault is on the server/data side: the server has no price list for region north-2, which is the region of
+ord-1003. I cannot tell from the folder whether that is missing data or a server defect in how it looks the list up.
+
+There is a second, lesser fault in the front end. On a failed answer the page only writes to the console and returns, so
+the user is left on "Loading order..." forever with no error shown. This did not cause the failure, but it hides it.
+
+The test itself behaved correctly (sign-in worked, navigation worked, and its expectation is reasonable), and the network
+is not at fault (every request got a prompt answer). The test title says "FAILS ON PURPOSE", so the fault appears to be
+deliberately planted.
+
+2. EVIDENCE
+
+- The assertion that failed: error.txt lines 7-16 (getByTestId('total'), expected visible, 5000ms timeout, "element(s) not
+  found"), raised at spec line 48:43 (error.txt line 19). The same appears in trace.zip -> trace.trace lines 82-88
+  (call@37, start 691.775, end 5694.289, "Expect failed").
+- The server returned 500 with a stated reason: server.log line 8; requests.txt line 8; failed-requests.json lines 83-110
+  (body on line 109); console.log lines 5-6; trace.zip -> trace.network entry 8, and
+  resources/d1f97fa2b582b98efcbe21bf4f8e52c983147601.json.
+- ord-1003 is in region north-2; the other two orders are in north-1: trace.zip ->
+  resources/266a555a9d863be5a6abeb37c9e6a88dc95980be.html lines 23-25 (the orders list).
+- The page only renders total on success, and shows no error on failure: trace.zip ->
+  resources/7dd20f2e849d6858833a6d151aaf001ee2f24c47.html lines 28-31 (on !answer.ok it logs and returns) and line 37 (the
+  only place data-testid='total' is created); line 22 is the "Loading order..." placeholder.
+- The page was stuck on "Loading order...": screenshot.png, and the DOM snapshot in trace.trace line 79 (DIV#order
+  contains only P[data-testid=loading]).
+- The test steps before the failure succeeded: trace.trace lines 3-49 (goto /, fill Name and Password, click Sign in,
+  navigated to /orders), lines 50-56 (who has text "Fixture Clerk"), lines 58-76 (click on the ord-1003 link, navigated to
+  /orders/ord-1003). server.log line 3 confirms POST /session 303 signed in.
+- The request was authenticated: trace.network entry 8 carries an Authorization header and the demo_session cookie, both
+  redacted, and the answer was 500, not 401 or 403.
+- The network was not at fault: every line of requests.txt shows an answer in 0-2ms, and every "failure" field in
+  failed-requests.json is null.
+- Marked as deliberate: bundle.json line 4 and error.txt line 1 ("FAILS ON PURPOSE").
+
+3. RULED OUT
+
+- /static/promo.png 404, three times (console.log lines 1-3, server.log lines 2, 5, 7, failed-requests.json first three
+  entries, and the broken-image icon in the screenshot). This is a missing header image on every page, including the
+  sign-in and orders pages that worked. It has no connection to the total element; it is noise.
+- Authentication or session problem. Sign-in succeeded, the cookie was set, and the API answered 500 with a business error
+  rather than an auth error.
+- Wrong selector or impatient test. The page really does use data-testid='total' (order page HTML line 37). The 500
+  arrived within about 2ms of the page loading, and the page code does not retry, so a longer wait would not have helped.
+- Network failure or slowness. All answers arrived in milliseconds with no failed connections.
+- Uncommitted changes (bundle.json lines 23-24). These mean the commit alone does not identify the code that ran, but
+  nothing suggests they caused the failure. The checksums are given, though I had no way to check them against anything.
+- Wrong page or wrong order. The URL, title and heading are all ord-1003.
+
+4. CONFIDENCE
+
+High for the immediate cause. Five independent records agree (server log, request list, failed-request body, browser
+console, trace), and the page's own script shows exactly why a 500 leaves total absent.
+
+Medium to low on the deeper cause: whether "no price list for region north-2" is missing fixture data, a server defect, or
+(given the title) a planted fault. The folder has no server source and no data listing, so I am not guessing further.
+
+5. MISSING / CONFUSING
+
+Missing:
+- The test source. error.txt gives only file and line (48:43), not the line's text. I could reconstruct the steps from the
+  trace, but a few lines of spec around line 48 would have saved effort.
+- Anything about the server's data or code: which regions have price lists, a stack trace or more than one log line for
+  the 500, and whether ord-1001 or ord-1002 (north-1) load fine. Without this I cannot separate "data missing" from
+  "server bug".
+- A plain statement of what "FAILS ON PURPOSE" means and what fault was planted.
+- The trace has no screenshots (the README does say so), and it carries no links from network entries to response bodies
+  that I could see, so matching bodies in resources/ to requests is by content only.
+
+Confusing or slightly misleading:
+- Timestamps do not order cleanly across files, despite the README's promise. server.log records the 500 at 21:39:13.304,
+  while requests.txt and failed-requests.json say the same request started at .307. All are within a few milliseconds, but
+  the server appears to answer before the request starts.
+- failed-requests.json reports durationMs: 0 and started == ended for every entry, so those fields carry no information.
+- failed-requests.json request headers omit the Cookie header that trace.network shows was sent (entries 4, 6, 8). A
+  reader using only the JSON might wrongly suspect a missing session.
+- console.log source line numbers (:25, :28) are zero-based. The matching lines in the page HTML are 26 and 29.
+- Three of the four entries in failed-requests.json, and three of the five console errors, are the irrelevant promo.png
+  404. That is fair as raw evidence, but it buries the one that matters.
+- bundle.json says the trace has 9 entries, which matches the zip, but the meaning of "entries" is not explained.
+- underTest lists paths to files outside the folder. They are useful as checksums but cannot be consulted from the bundle
+  alone.
+
+6. RULES
+
+I kept to the rules: no test run, no server started, no network request, no disk search, and no source repository or other
+scratchpad file read. I wrote no file other than the unzipped trace, in trace-unzipped/ inside the bundle folder.
+
+One disclosure: one of my shell commands printed too much, and the tool saved its overflow to a file outside the folder. I
+did not open that file; I re-ran smaller commands against the bundle instead.
+
+Files read, all inside the bundle folder: READ-ME-FIRST.md, bundle.json, console.log, error.txt, failed-requests.json,
+requests.txt, server.log, screenshot.png (viewed), and trace.zip, unzipped: trace.trace, trace.network, trace.stacks, and
+the six files under resources/.

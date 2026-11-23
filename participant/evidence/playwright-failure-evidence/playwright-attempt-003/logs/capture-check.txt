@@ -1,0 +1,116 @@
+A failing test and its failure bundle. playwright-failure-evidence, attempt playwright-attempt-003
+Recorded by tools/failure-evidence-check.ts. The application is a made-up order desk on this computer. Nothing in it is real.
+
+==============================================================================
+PART 1. The test that fails on purpose is run
+$ npx playwright test --config evidence.config.ts -g "FAILS ON PURPOSE: the total of order ord-1003 is shown"
+------------------------------------------------------------------------------
+evidence: kept for 14 days. Before this run: 0 expired failure bundle(s) deleted, 0 kept, 0 folder(s) that are not bundles left alone, 0 old passing line(s) deleted.
+
+Running 1 test using 1 worker
+
+evidence: failure bundle written: 20261123T214740Z-fails-on-purpose-the-total-of-order-ord-1003-is-shown-4bb67b  (9 files)
+  ✘  1 failure-evidence.spec.ts:45:5 › FAILS ON PURPOSE: the total of order ord-1003 is shown (5.4s)
+
+  1) failure-evidence.spec.ts:45:5 › FAILS ON PURPOSE: the total of order ord-1003 is shown ────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('total')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByTestId('total') with timeout 5000ms
+      - waiting for getByTestId('total')
+
+      46 |   await signIn(page, evidence);
+      47 |   await page.getByRole("link", { name: "ord-1003" }).click();
+    > 48 |   await expect(page.getByTestId("total")).toBeVisible({ timeout: 5_000 });
+         |                                           ^
+      49 | });
+      50 |
+        at REPO/participant/tests/playwright/failure-evidence.spec.ts:48:43
+
+    Error Context: ../../../../../../../..SCRATCH/playwright-output/failure-evidence-FAILS-ON--713c5--of-order-ord-1003-is-shown/error-context.md
+
+  1 failed
+    failure-evidence.spec.ts:45:5 › FAILS ON PURPOSE: the total of order ord-1003 is shown ─────────
+------------------------------------------------------------------------------
+exit code: 1
+  ok   the test failed: exit code 1, and Playwright counts 1 failed
+  ok   the error Playwright printed says only that it waited and timed out. It names no cause
+  ok   exactly one failure bundle was written
+
+==============================================================================
+PART 2. What the bundle of that run holds
+Files in this run's bundle:
+     1779 bytes  READ-ME-FIRST.md
+     3114 bytes  bundle.json
+      983 bytes  console.log
+      573 bytes  error.txt
+     4096 bytes  failed-requests.json
+      508 bytes  requests.txt
+    21496 bytes  screenshot.png
+      540 bytes  server.log
+    11179 bytes  trace.zip
+
+  ok   this run's bundle: bundle.json is there and names the failed test, "FAILS ON PURPOSE: the total of order ord-1003 is shown"
+  trace.zip: 9 entries. Steps recorded: 13. Page snapshots: 18. Network entries: 8
+  ok   this run's bundle: TRACE. trace.zip opens, and holds the steps of the test (13), snapshots of the page (18) and the network (8 entries) (criterion 1)
+  ok   this run's bundle: the trace's network file holds the request that was answered 500
+  screenshot.png: a PNG picture, 1280 by 720
+  ok   this run's bundle: SCREENSHOT. screenshot.png is a PNG picture of a page-sized area (criterion 1)
+  ok   this run's bundle: CONSOLE LOG. console.log has the page's own error line about ord-1003, with its time (criterion 1)
+  failed-requests.json: 4 requests: 404 /static/promo.png, 404 /static/promo.png, 404 /static/promo.png, 500 /api/orders/ord-1003
+  ok   this run's bundle: FAILED REQUESTS. failed-requests.json has the request answered 500, with the answer's body (criterion 1)
+  ok   this run's bundle: requests.txt lists every request in order, the failed one among them
+  ok   this run's bundle: ERROR TEXT. error.txt has Playwright's message, the timeout, and the line of the test that raised it (criterion 1)
+  ok   this run's bundle: SERVER LOG (stretch goal). server.log holds the application's own line for the 500, inside the test's time window
+  ok   this run's bundle: server.log holds only lines from the test's own time window, not the application's whole log
+  ok   this run's bundle: COMMIT (stretch goal). bundle.json names a commit, says whether there were uncommitted changes, and gives a checksum of each file under test
+  ok   this run's bundle: bundle.json lists exactly the files that are there (8), and each one's checksum matches
+  ok   this run's bundle: the bundle reports no problem of its own while it was being made
+  bundle.json: ended 2026-11-23T21:47:46.129Z. To be deleted after 2026-12-07T21:47:46.129Z
+  ok   this run's bundle: the bundle says when it is to be deleted: 14 days after the test ended, to the millisecond (criterion 6)
+  ok   the commit in the bundle is the commit git reports for this repository now
+  ok   the checksum the bundle gives for the test file is the checksum of the test file as it is now
+Playwright's own scratch folder after the run: .last-run.json, failure-evidence-FAILS-ON--713c5--of-order-ord-1003-is-shown/error-context.md
+  ok   Playwright itself saved no trace, screenshot or video of its own, so there is no second, unredacted copy
+  ok   this run's bundle, scanned for secrets: none found
+
+==============================================================================
+PART 3. The handed-in bundle, REPO/participant/evidence/playwright-failure-evidence/playwright-attempt-003/failure-bundle
+The same checks, on the bundle that is handed in. It was made by an earlier run of this script with --save-bundle.
+Files in the handed-in bundle:
+     1779 bytes  READ-ME-FIRST.md
+     3120 bytes  bundle.json
+      983 bytes  console.log
+      573 bytes  error.txt
+     4096 bytes  failed-requests.json
+      508 bytes  requests.txt
+    21496 bytes  screenshot.png
+      540 bytes  server.log
+    11146 bytes  trace.zip
+
+  ok   the handed-in bundle: bundle.json is there and names the failed test, "FAILS ON PURPOSE: the total of order ord-1003 is shown"
+  trace.zip: 9 entries. Steps recorded: 13. Page snapshots: 18. Network entries: 8
+  ok   the handed-in bundle: TRACE. trace.zip opens, and holds the steps of the test (13), snapshots of the page (18) and the network (8 entries) (criterion 1)
+  ok   the handed-in bundle: the trace's network file holds the request that was answered 500
+  screenshot.png: a PNG picture, 1280 by 720
+  ok   the handed-in bundle: SCREENSHOT. screenshot.png is a PNG picture of a page-sized area (criterion 1)
+  ok   the handed-in bundle: CONSOLE LOG. console.log has the page's own error line about ord-1003, with its time (criterion 1)
+  failed-requests.json: 4 requests: 404 /static/promo.png, 404 /static/promo.png, 404 /static/promo.png, 500 /api/orders/ord-1003
+  ok   the handed-in bundle: FAILED REQUESTS. failed-requests.json has the request answered 500, with the answer's body (criterion 1)
+  ok   the handed-in bundle: requests.txt lists every request in order, the failed one among them
+  ok   the handed-in bundle: ERROR TEXT. error.txt has Playwright's message, the timeout, and the line of the test that raised it (criterion 1)
+  ok   the handed-in bundle: SERVER LOG (stretch goal). server.log holds the application's own line for the 500, inside the test's time window
+  ok   the handed-in bundle: server.log holds only lines from the test's own time window, not the application's whole log
+  ok   the handed-in bundle: COMMIT (stretch goal). bundle.json names a commit, says whether there were uncommitted changes, and gives a checksum of each file under test
+  ok   the handed-in bundle: bundle.json lists exactly the files that are there (8), and each one's checksum matches
+  ok   the handed-in bundle: the bundle reports no problem of its own while it was being made
+  bundle.json: ended 2026-11-23T21:39:18.316Z. To be deleted after 2026-12-07T21:39:18.316Z
+  ok   the handed-in bundle: the bundle says when it is to be deleted: 14 days after the test ended, to the millisecond (criterion 6)
+
+RESULT: ALL CHECKS PASSED. 35 checks.

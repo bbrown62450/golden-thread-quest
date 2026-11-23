@@ -1,0 +1,19 @@
+Test: FAILS ON PURPOSE: the total of order ord-1003 is shown
+Test declared at: participant/tests/playwright/failure-evidence.spec.ts:45
+Result: failed. Expected: passed
+Started 2026-11-23T21:39:13.161Z, ended 2026-11-23T21:39:18.316Z
+
+Error 1 of 1
+Error: expect(locator).toBeVisible() failed
+
+Locator: getByTestId('total')
+Expected: visible
+Timeout: 5000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toBeVisible" getByTestId('total') with timeout 5000ms
+  - waiting for getByTestId('total')
+
+
+    at REPO/participant/tests/playwright/failure-evidence.spec.ts:48:43

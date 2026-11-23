@@ -1,0 +1,54 @@
+A passing test, and how long evidence is kept. playwright-failure-evidence, attempt playwright-attempt-003
+Recorded by tools/failure-evidence-check.ts. The application is a made-up order desk on this computer. Nothing in it is real.
+
+==============================================================================
+PART 1. The test that passes is run, into an empty folder
+$ npx playwright test --config evidence.config.ts -g "the total of order ord-1001 is shown"
+------------------------------------------------------------------------------
+evidence: kept for 14 days. Before this run: 0 expired failure bundle(s) deleted, 0 kept, 0 folder(s) that are not bundles left alone, 0 old passing line(s) deleted.
+
+Running 1 test using 1 worker
+
+  ✓  1 failure-evidence.spec.ts:39:5 › the total of order ord-1001 is shown (189ms)
+
+  1 passed (456ms)
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the test passed: exit code 0, and Playwright counts 1 passed
+Everything the run left behind, in the evidence folder and in Playwright's own scratch folder:
+      102 bytes  SCRATCH/passing-bundles/passing-runs.log
+       45 bytes  SCRATCH/passing-output/.last-run.json
+      147 bytes in all
+passing-runs.log, whole:
+  2026-11-23T21:47:46.856Z PASSED "the total of order ord-1001 is shown" in 152ms. Kept: this line only
+  ok   no failure bundle was written
+  ok   the evidence folder holds one file, passing-runs.log, with one line: the time, the title and how long the test took (criterion 2)
+  ok   no trace, screenshot, video, console log or request log was kept anywhere (criterion 2)
+  ok   in all, the passing run kept under 1,000 bytes
+  ok   the trace WAS recorded during the passing test and then thrown away: the same test, failing, would have had one
+
+==============================================================================
+PART 2. Evidence is deleted after 14 days (criterion 6)
+Put in place before the run: a bundle whose date passed yesterday (made 15 days ago), a bundle whose date is tomorrow
+(made 13 days ago), a folder that is not a bundle, a folder with a bundle.json of another format and an old date, and two
+made-up lines in passing-runs.log, 15 and 13 days old.
+$ npx playwright test --config evidence.config.ts -g "the total of order ord-1001 is shown"
+------------------------------------------------------------------------------
+evidence: kept for 14 days. Before this run: 1 expired failure bundle(s) deleted, 1 kept, 2 folder(s) that are not bundles left alone, 1 old passing line(s) deleted.
+
+Running 1 test using 1 worker
+
+  ✓  1 failure-evidence.spec.ts:39:5 › the total of order ord-1001 is shown (188ms)
+
+  1 passed (448ms)
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the bundle past its date was deleted
+  ok   the bundle not yet at its date was kept, with its files
+  ok   the folder that is not a bundle was left alone
+  ok   the folder with a bundle.json of another format was left alone, though its date is long past
+  ok   the passing line 15 days old was deleted, and the one 13 days old was kept
+  ok   the run said what it deleted: 1 expired bundle, 1 kept, 2 folders left alone, 1 old line
+  ok   the configuration file states the 14 days in words and as the setting keepFailureBundleDays: 14
+
+RESULT: ALL CHECKS PASSED. 13 checks.

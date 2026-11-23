@@ -424,4 +424,13 @@ attempts:
   evidence_path: participant/evidence/github-read-comments-events/github-attempt-010
   submission_id: submission-20261123210333-ecf9a3
   review_id: review-20261123211045-5c203a
-updated_at: '2026-11-23T21:10:45Z'
+- attempt_id: playwright-attempt-003
+  quest_id: playwright-failure-evidence
+  quest_version: 1
+  content_hash: sha256:7816c307b6a150261ab05964641f35486ab56bdfe3256a8b90c1bdadf81e1268
+  state: submitted
+  started_at: '2026-11-23T21:20:54Z'
+  updated_at: '2026-11-23T21:56:35Z'
+  evidence_path: participant/evidence/playwright-failure-evidence/playwright-attempt-003
+  submission_id: submission-20261123215635-da4eb7
+updated_at: '2026-11-23T21:56:35Z'

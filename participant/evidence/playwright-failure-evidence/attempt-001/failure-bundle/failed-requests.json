@@ -1,0 +1,111 @@
+[
+  {
+    "started": "2026-11-23T21:39:13.175Z",
+    "ended": "2026-11-23T21:39:13.175Z",
+    "method": "GET",
+    "url": "http://127.0.0.1:4794/static/promo.png",
+    "resourceType": "image",
+    "status": 404,
+    "failure": null,
+    "durationMs": 0,
+    "requestHeaders": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "http://127.0.0.1:4794/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+      "sec-ch-ua": "\"HeadlessChrome\";v=\"153\", \"Not_A Brand\";v=\"8\", \"Chromium\";v=\"153\"",
+      "accept-language": "en-US",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "responseHeaders": {
+      "connection": "keep-alive",
+      "date": "Mon, 23 Nov 2026 21:39:13 GMT",
+      "keep-alive": "timeout=5",
+      "transfer-encoding": "chunked",
+      "cache-control": "no-store",
+      "content-type": "text/plain"
+    },
+    "responseBody": "not found"
+  },
+  {
+    "started": "2026-11-23T21:39:13.269Z",
+    "ended": "2026-11-23T21:39:13.269Z",
+    "method": "GET",
+    "url": "http://127.0.0.1:4794/static/promo.png",
+    "resourceType": "image",
+    "status": 404,
+    "failure": null,
+    "durationMs": 0,
+    "requestHeaders": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "http://127.0.0.1:4794/orders",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+      "sec-ch-ua": "\"HeadlessChrome\";v=\"153\", \"Not_A Brand\";v=\"8\", \"Chromium\";v=\"153\"",
+      "accept-language": "en-US",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "responseHeaders": {
+      "connection": "keep-alive",
+      "date": "Mon, 23 Nov 2026 21:39:13 GMT",
+      "keep-alive": "timeout=5",
+      "transfer-encoding": "chunked",
+      "cache-control": "no-store",
+      "content-type": "text/plain"
+    },
+    "responseBody": "not found"
+  },
+  {
+    "started": "2026-11-23T21:39:13.304Z",
+    "ended": "2026-11-23T21:39:13.304Z",
+    "method": "GET",
+    "url": "http://127.0.0.1:4794/static/promo.png",
+    "resourceType": "image",
+    "status": 404,
+    "failure": null,
+    "durationMs": 0,
+    "requestHeaders": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "http://127.0.0.1:4794/orders/ord-1003",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+      "sec-ch-ua": "\"HeadlessChrome\";v=\"153\", \"Not_A Brand\";v=\"8\", \"Chromium\";v=\"153\"",
+      "accept-language": "en-US",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "responseHeaders": {
+      "connection": "keep-alive",
+      "date": "Mon, 23 Nov 2026 21:39:13 GMT",
+      "keep-alive": "timeout=5",
+      "transfer-encoding": "chunked",
+      "cache-control": "no-store",
+      "content-type": "text/plain"
+    },
+    "responseBody": "not found"
+  },
+  {
+    "started": "2026-11-23T21:39:13.307Z",
+    "ended": "2026-11-23T21:39:13.307Z",
+    "method": "GET",
+    "url": "http://127.0.0.1:4794/api/orders/ord-1003",
+    "resourceType": "fetch",
+    "status": 500,
+    "failure": null,
+    "durationMs": 0,
+    "requestHeaders": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "authorization": "[REDACTED header]",
+      "referer": "http://127.0.0.1:4794/orders/ord-1003",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+      "sec-ch-ua": "\"HeadlessChrome\";v=\"153\", \"Not_A Brand\";v=\"8\", \"Chromium\";v=\"153\"",
+      "accept-language": "en-US",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "responseHeaders": {
+      "connection": "keep-alive",
+      "date": "Mon, 23 Nov 2026 21:39:13 GMT",
+      "keep-alive": "timeout=5",
+      "transfer-encoding": "chunked",
+      "cache-control": "no-store",
+      "content-type": "application/json"
+    },
+    "responseBody": "{\"error\":\"price_list_unavailable\",\"detail\":\"no price list for region north-2\",\"order\":\"ord-1003\"}"
+  }
+]

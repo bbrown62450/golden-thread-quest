@@ -1,0 +1,165 @@
+Does the check notice a broken evidence setup? playwright-failure-evidence, attempt playwright-attempt-003
+Recorded by tools/failure-evidence-planted-faults.ts.
+
+Each fault below was put into the files under participant/tests/playwright that collect, redact and delete evidence
+(support/evidence.ts, support/retention.ts, evidence.config.ts, failure-evidence.spec.ts). The whole check
+(tools/failure-evidence-check.ts) was then run, and the fault was taken out again. Only this computer is used.
+"Noticed" means more than "the check failed": the check that failed must be the one the fault is about.
+
+Before any fault: exit code 0. RESULT: every check in the three logs passed.
+
+PLANTED FAULT A. The trace is not saved when a test fails (criterion 1)
+  the check's exit code: 1. RESULT: NOT ALL CHECKS PASSED. See above.
+  checks that failed (12):
+    this run's bundle: TRACE. trace.zip opens, and holds the steps of the test (0), snapshots of the page (0) and the network (0 entries) (criterion 1)
+    this run's bundle: the trace's network file holds the request that was answered 500
+    this run's bundle: the bundle reports no problem of its own while it was being made
+    the bundle could be saved: every check above passed
+    the trace WAS recorded during the passing test and then thrown away: the same test, failing, would have had one
+    with redaction off, the scan finds a cookie with a value
+    with redaction off, the scan finds the password
+    with redaction off, the scan finds the token the page was given, inside a page snapshot in the trace
+    with redaction off, secrets are found inside the trace and outside it
+    so the 0 findings of part 1 are the work of the redaction, not of a scan that sees nothing
+    with redaction off, the password this script chose is in the bundle, inside the trace: where it was typed, and where it was sent
+    with redaction on, the password this script chose is nowhere in the bundle: 0 times, in any file or any entry of the trace
+  noticed, by the check it should trip
+
+PLANTED FAULT B. No screenshot is taken (criterion 1)
+  the check's exit code: 1. 
+  checks that failed (4):
+    this run's bundle: SCREENSHOT. screenshot.png is a PNG picture of a page-sized area (criterion 1)
+    this run's bundle: the bundle reports no problem of its own while it was being made
+    the bundle could be saved: every check above passed
+    there is a handed-in bundle. Run this script once with --save-bundle
+  noticed, by the check it should trip
+
+PLANTED FAULT C. The console log keeps only what the browser itself wrote, not what the page's own script wrote (criterion 1)
+  the check's exit code: 1. 
+  checks that failed (3):
+    this run's bundle: CONSOLE LOG. console.log has the page's own error line about ord-1003, with its time (criterion 1)
+    the bundle could be saved: every check above passed
+    there is a handed-in bundle. Run this script once with --save-bundle
+  noticed, by the check it should trip
+
+PLANTED FAULT D. A failed request is recorded without the body of its answer (criterion 1)
+  the check's exit code: 1. 
+  checks that failed (3):
+    this run's bundle: FAILED REQUESTS. failed-requests.json has the request answered 500, with the answer's body (criterion 1)
+    the bundle could be saved: every check above passed
+    there is a handed-in bundle. Run this script once with --save-bundle
+  noticed, by the check it should trip
+
+PLANTED FAULT E. Only requests that got no answer at all count as failed. One answered 500 does not (criterion 1)
+  the check's exit code: 1. 
+  checks that failed (3):
+    this run's bundle: FAILED REQUESTS. failed-requests.json has the request answered 500, with the answer's body (criterion 1)
+    the bundle could be saved: every check above passed
+    there is a handed-in bundle. Run this script once with --save-bundle
+  noticed, by the check it should trip
+
+PLANTED FAULT F. The error file holds a fixed sentence, not Playwright's message (criterion 1)
+  the check's exit code: 1. 
+  checks that failed (3):
+    this run's bundle: ERROR TEXT. error.txt has Playwright's message, the timeout, and the line of the test that raised it (criterion 1)
+    the bundle could be saved: every check above passed
+    there is a handed-in bundle. Run this script once with --save-bundle
+  noticed, by the check it should trip
+
+PLANTED FAULT G. A passing test keeps its trace too (criterion 2)
+  the check's exit code: 1. RESULT: NOT ALL CHECKS PASSED. See above.
+  checks that failed (3):
+    the evidence folder holds one file, passing-runs.log, with one line: the time, the title and how long the test took (criterion 2)
+    no trace, screenshot, video, console log or request log was kept anywhere (criterion 2)
+    in all, the passing run kept under 1,000 bytes
+  noticed, by the check it should trip
+
+PLANTED FAULT H. Playwright's own trace is switched on as well, so a second, unredacted copy is saved (criterion 3)
+  the check's exit code: 1. 
+  checks that failed (3):
+    Playwright itself saved no trace, screenshot or video of its own, so there is no second, unredacted copy
+    the bundle could be saved: every check above passed
+    there is a handed-in bundle. Run this script once with --save-bundle
+  noticed, by the check it should trip
+
+PLANTED FAULT I. Redaction does nothing at all (criterion 3)
+  the check's exit code: 1. 
+  checks that failed (3):
+    this run's bundle, scanned for secrets: none found
+    the bundle could be saved: every check above passed
+    there is a handed-in bundle. Run this script once with --save-bundle
+  noticed, by the check it should trip
+
+PLANTED FAULT J. The text files are redacted, but the trace is saved as Playwright wrote it (criterion 3)
+  the check's exit code: 1. 
+  checks that failed (3):
+    this run's bundle, scanned for secrets: none found
+    the bundle could be saved: every check above passed
+    there is a handed-in bundle. Run this script once with --save-bundle
+  noticed, by the check it should trip
+
+PLANTED FAULT K. Cookies are not learned, and are not redacted by place either. One alone would be made good by the other (criterion 3)
+  the check's exit code: 1. 
+  checks that failed (3):
+    this run's bundle, scanned for secrets: none found
+    the bundle could be saved: every check above passed
+    there is a handed-in bundle. Run this script once with --save-bundle
+  noticed, by the check it should trip
+
+PLANTED FAULT L. The token is not learned, and "Bearer ..." is not redacted by place (criterion 3)
+  the check's exit code: 1. 
+  checks that failed (3):
+    this run's bundle, scanned for secrets: none found
+    the bundle could be saved: every check above passed
+    there is a handed-in bundle. Run this script once with --save-bundle
+  noticed, by the check it should trip
+
+PLANTED FAULT M. The test does not say its password is a secret, and what is typed into a password field is not redacted by place (criterion 3)
+  the check's exit code: 1. RESULT: NOT ALL CHECKS PASSED. See above.
+  checks that failed (2):
+    "none found" is not because there was nothing: the bundle says it replaced a cookie, a password and a token, each at least once
+    with redaction on, the password this script chose is nowhere in the bundle: 0 times, in any file or any entry of the trace
+  noticed, by the check it should trip
+
+PLANTED FAULT N. This computer's folder and user name are left in the evidence (criterion 3, and the quest's rule on personal data)
+  the check's exit code: 1. 
+  checks that failed (3):
+    this run's bundle, scanned for secrets: none found
+    the bundle could be saved: every check above passed
+    there is a handed-in bundle. Run this script once with --save-bundle
+  noticed, by the check it should trip
+
+PLANTED FAULT O. Expired evidence is never deleted (criterion 6)
+  the check's exit code: 1. RESULT: NOT ALL CHECKS PASSED. See above.
+  checks that failed (2):
+    the bundle past its date was deleted
+    the run said what it deleted: 1 expired bundle, 1 kept, 2 folders left alone, 1 old line
+  noticed, by the check it should trip
+
+PLANTED FAULT P. The cleanup deletes any folder with a bundle.json and an old date, whatever its format (criterion 6)
+  the check's exit code: 1. RESULT: NOT ALL CHECKS PASSED. See above.
+  checks that failed (2):
+    the folder with a bundle.json of another format was left alone, though its date is long past
+    the run said what it deleted: 1 expired bundle, 1 kept, 2 folders left alone, 1 old line
+  noticed, by the check it should trip
+
+PLANTED FAULT Q. Evidence is kept for 30 days, though the configuration's own words say 14 (criterion 6)
+  the check's exit code: 1. 
+  checks that failed (4):
+    this run's bundle: the bundle says when it is to be deleted: 14 days after the test ended, to the millisecond (criterion 6)
+    the bundle could be saved: every check above passed
+    there is a handed-in bundle. Run this script once with --save-bundle
+    the configuration file states the 14 days in words and as the setting keepFailureBundleDays: 14
+  noticed, by the check it should trip
+
+PLANTED FAULT R. The bundle holds the application's whole log, not the part for the test's own seconds (stretch goal; criterion 7)
+  the check's exit code: 1. 
+  checks that failed (3):
+    this run's bundle: server.log holds only lines from the test's own time window, not the application's whole log
+    the bundle could be saved: every check above passed
+    there is a handed-in bundle. Run this script once with --save-bundle
+  noticed, by the check it should trip
+
+After the last fault was taken out: the 4 files are byte for byte what they were at the start.
+
+RESULT: all 18 planted faults were noticed by the check, and the files were restored.

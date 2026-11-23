@@ -1,0 +1,8 @@
+2026-11-23T21:39:13.171Z GET / 200 0ms
+2026-11-23T21:39:13.174Z GET /static/promo.png 404 0ms no such file
+2026-11-23T21:39:13.261Z POST /session 303 1ms signed in
+2026-11-23T21:39:13.262Z GET /orders 200 0ms
+2026-11-23T21:39:13.264Z GET /static/promo.png 404 0ms no such file
+2026-11-23T21:39:13.301Z GET /orders/ord-1003 200 0ms
+2026-11-23T21:39:13.303Z GET /static/promo.png 404 0ms no such file
+2026-11-23T21:39:13.304Z GET /api/orders/ord-1003 500 0ms ERROR price_list_unavailable: no price list for region north-2, needed by ord-1003

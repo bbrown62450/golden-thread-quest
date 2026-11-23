@@ -1,0 +1,17 @@
+schema_version: 1
+submission_id: submission-20261123215635-da4eb7
+quest_id: playwright-failure-evidence
+quest_version: 1
+attempt_id: playwright-attempt-003
+content_hash: sha256:7816c307b6a150261ab05964641f35486ab56bdfe3256a8b90c1bdadf81e1268
+evidence_hash: sha256:b7523207d0dab10b4e36fab267f0b44d38c8781042134814f67799845d9cf217
+submitted_at: '2026-11-23T21:56:35Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/playwright/diagnosis.md
+  digest: sha256:af7e1b8838bb1e472858c4efed182f29516ec80c82145be88714100332bf7043
+- path: participant/tests/playwright/evidence.config.ts
+  digest: sha256:c7cdcd7a3e882b425ea331492aed223fd66b409f49d0b081c2e80739321a1399
+- path: participant/tests/playwright/tools/failure-evidence-check.ts
+  digest: sha256:d12767f78f3e5326df8a83a54b0f718afcc375823eaabcb154a48243af8d57d4

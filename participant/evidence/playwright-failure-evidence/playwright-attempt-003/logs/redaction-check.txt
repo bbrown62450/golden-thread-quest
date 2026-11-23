@@ -1,0 +1,136 @@
+The scan of the failure bundle for secrets. playwright-failure-evidence, attempt playwright-attempt-003
+Recorded by tools/failure-evidence-check.ts. The application is a made-up order desk on this computer. Nothing in it is real.
+A finding is reported as a file, a line and a kind. The value is never shown. Inside trace.zip, a file is written
+as trace.zip!NAME. The shapes looked for:
+  - authorization header with a value
+  - bearer token
+  - cookie with a value
+  - session cookie
+  - password with a value
+  - token or key assigned to a name
+  - private key
+  - well-known key shape
+  - this computer's folder, user or machine name
+
+==============================================================================
+PART 1. The handed-in bundle is scanned (criterion 3). REPO/participant/evidence/playwright-failure-evidence/playwright-attempt-003/failure-bundle
+Searched, line by line (16):
+  READ-ME-FIRST.md
+  bundle.json
+  console.log
+  error.txt
+  failed-requests.json
+  requests.txt
+  server.log
+  trace.zip!trace.trace
+  trace.zip!trace.network
+  trace.zip!resources/094b763b4cfcc0b05e5d040581cd513c3ca08067.txt
+  trace.zip!resources/3b83fd5deb065a25c84a9d395e3322608cecdf25.html
+  trace.zip!resources/d299a403e5d1aae5983274ac7b7c842a774b4e8f.dat
+  trace.zip!resources/266a555a9d863be5a6abeb37c9e6a88dc95980be.html
+  trace.zip!resources/7dd20f2e849d6858833a6d151aaf001ee2f24c47.html
+  trace.zip!resources/d1f97fa2b582b98efcbe21bf4f8e52c983147601.json
+  trace.zip!trace.stacks
+Not searched, because it is not text (1):
+  screenshot.png
+Found (0):
+  none
+  ok   the scan opened trace.zip and searched the files inside it, not only the zip file's own bytes
+  ok   every text file of the bundle was searched: the error, the console log, the requests, the server log, bundle.json
+  ok   the handed-in bundle holds no token, cookie, credential or name of this computer that the scan can find: 0 findings (criterion 3)
+  ok   the only file not searched is the screenshot, which is a picture and has to be looked at by a person
+What the bundle says was replaced while it was made (kinds and counts, never values):
+    7  by value: REPO
+   13  by value: cookie
+    6  by value: password
+    2  by value: token
+    1  by place: header
+  ok   "none found" is not because there was nothing: the bundle says it replaced a cookie, a password and a token, each at least once
+
+==============================================================================
+PART 2. Can the scan find what redaction removes? The same test, run with redaction turned OFF
+$ GTQ_EVIDENCE_REDACT=off npx playwright test --config evidence.config.ts -g "FAILS ON PURPOSE: the total of order ord-1003 is shown"
+exit code: 1. The bundle went to the scratch folder, which is deleted when this script ends.
+Every secret in it is made up: the application accepts any password, and its cookie and token open nothing else.
+Found in the unredacted bundle (21):
+  error.txt: line 19: this computer's folder, user or machine name
+  failed-requests.json: line 94: authorization header with a value
+  failed-requests.json: line 94: bearer token
+  trace.zip!trace.trace: line 89: this computer's folder, user or machine name
+  trace.zip!trace.trace: line 99: cookie with a value
+  trace.zip!trace.network: line 3: password with a value
+  trace.zip!trace.network: line 4: cookie with a value
+  trace.zip!trace.network: line 4: session cookie
+  trace.zip!trace.network: line 5: cookie with a value
+  trace.zip!trace.network: line 5: session cookie
+  trace.zip!trace.network: line 6: cookie with a value
+  trace.zip!trace.network: line 6: session cookie
+  trace.zip!trace.network: line 7: cookie with a value
+  trace.zip!trace.network: line 7: session cookie
+  trace.zip!trace.network: line 8: authorization header with a value
+  trace.zip!trace.network: line 8: bearer token
+  trace.zip!trace.network: line 8: cookie with a value
+  trace.zip!trace.network: line 8: session cookie
+  trace.zip!resources/664bfdaa2fb6349d81a197ab29c62f88b8ca932d.dat: line 1: password with a value
+  trace.zip!resources/2e84912798feb86ac3194672cf7156b58f22f990.html: line 24: token or key assigned to a name
+  trace.zip!trace.stacks: line 1: this computer's folder, user or machine name
+  ok   the unredacted bundle is marked as such, in its folder's name and in its bundle.json
+  ok   with redaction off, the scan finds a cookie with a value
+  ok   with redaction off, the scan finds the bearer token
+  ok   with redaction off, the scan finds the password
+  ok   with redaction off, the scan finds the token the page was given, inside a page snapshot in the trace
+  ok   with redaction off, the scan finds this computer's folder or user name, which a trace records
+  ok   with redaction off, secrets are found inside the trace and outside it
+  ok   so the 0 findings of part 1 are the work of the redaction, not of a scan that sees nothing
+
+A second way of looking, that does not depend on shapes. This script chose the password the test typed, so it can look
+for exactly that string: in every file, and in every entry of the trace, text or not.
+  with redaction OFF: 6 times, in trace.zip!trace.trace, trace.zip!trace.network, trace.zip!resources/664bfdaa2fb6349d81a197ab29c62f88b8ca932d.dat
+  with redaction ON, in the bundle part 1 of capture-check.txt made in this same run: 0 times
+  ok   with redaction off, the password this script chose is in the bundle, inside the trace: where it was typed, and where it was sent
+  ok   with redaction on, the password this script chose is nowhere in the bundle: 0 times, in any file or any entry of the trace
+
+==============================================================================
+PART 3. Planted fake values are found (criterion 4)
+7 fake values, made up when this script ran, were put into a copy of the handed-in bundle, at these places:
+  console.log: line 3: a fake bearer token
+  failed-requests.json: line 12: a fake cookie with a value
+  server.log: line 2: a fake password with a value
+  error.txt: line 5: a fake well-known key shape
+  trace.zip!trace.network: line 2: a fake cookie with a value
+  trace.zip!resources/planted.html: line 4: a fake token or key assigned to a name
+  trace.zip!trace.trace: line 3: a fake bearer token
+Found in the copy (11):
+  console.log: line 3: authorization header with a value
+  console.log: line 3: bearer token
+  error.txt: line 5: well-known key shape
+  failed-requests.json: line 12: cookie with a value
+  failed-requests.json: line 12: session cookie
+  server.log: line 2: password with a value
+  trace.zip!trace.trace: line 3: authorization header with a value
+  trace.zip!trace.trace: line 3: bearer token
+  trace.zip!trace.network: line 2: cookie with a value
+  trace.zip!trace.network: line 2: session cookie
+  trace.zip!resources/planted.html: line 4: token or key assigned to a name
+  ok   the planted bearer token in console.log was found, at line 3 (criterion 4)
+  ok   the planted cookie with a value in failed-requests.json was found, at line 12 (criterion 4)
+  ok   the planted password with a value in server.log was found, at line 2 (criterion 4)
+  ok   the planted well-known key shape in error.txt was found, at line 5 (criterion 4)
+  ok   the planted cookie with a value in trace.zip!trace.network was found, at line 2 (criterion 4)
+  ok   the planted token or key assigned to a name in trace.zip!resources/planted.html was found, at line 4 (criterion 4)
+  ok   the planted bearer token in trace.zip!trace.trace was found, at line 3 (criterion 4)
+  ok   nothing was reported at any other place: every finding is at a line where a value was planted
+
+==============================================================================
+PART 4. The report gives the file and the line, and never the value
+  ok   every one of the 32 report lines above is a file, a line number and a kind from the list, and nothing more
+  ok   not one of the planted values, and not the password this script chose, is anywhere in this log
+  ok   no report line holds a run of 16 or more letters and digits, which is what a token looks like
+
+==============================================================================
+PART 5. The trace still opens after the secrets were taken out of it
+$ unzip -tq trace.zip
+  No errors detected in compressed data of REPO/participant/evidence/playwright-failure-evidence/playwright-attempt-003/failure-bundle/trace.zip.
+  ok   a second tool, the system's own unzip, tests the rewritten trace.zip and finds no error
+
+RESULT: ALL CHECKS PASSED. 27 checks.

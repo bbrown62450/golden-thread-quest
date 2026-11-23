@@ -278,3 +278,8 @@ Every change this application made to your files, newest last.
 - `2026-11-23T21:03:33Z` github-read-comments-events: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-23T21:03:33Z` Submitted github-read-comments-events for review as submission-20261123210333-ecf9a3.
 - `2026-11-23T21:10:45Z` Review of github-read-comments-events: approved by Claude (automated reviewer).
+- `2026-11-23T21:20:54Z` Started playwright-failure-evidence as attempt playwright-attempt-003.
+- `2026-11-23T21:54:36Z` playwright-failure-evidence: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-23T21:55:34Z` playwright-failure-evidence: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-23T21:56:35Z` playwright-failure-evidence: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-23T21:56:35Z` Submitted playwright-failure-evidence for review as submission-20261123215635-da4eb7.

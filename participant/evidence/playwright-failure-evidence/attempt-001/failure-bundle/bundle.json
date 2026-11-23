@@ -1,0 +1,112 @@
+{
+  "format": "gtq-failure-bundle/1",
+  "test": {
+    "title": "FAILS ON PURPOSE: the total of order ord-1003 is shown",
+    "file": "participant/tests/playwright/failure-evidence.spec.ts",
+    "line": 45,
+    "retry": 0
+  },
+  "result": {
+    "status": "failed",
+    "expected": "passed"
+  },
+  "startedAt": "2026-11-23T21:39:13.161Z",
+  "endedAt": "2026-11-23T21:39:18.316Z",
+  "durationMs": 5155,
+  "browser": {
+    "name": "chromium",
+    "version": "153.0.8010.12"
+  },
+  "baseURL": "http://127.0.0.1:4794",
+  "commit": {
+    "sha": "2c38ad9fe1e6eb5b63e5e7a823821120b9690b39",
+    "uncommittedChanges": true,
+    "note": "The tests folder had changes that were not committed. The commit alone does not say what code ran: see underTest for a checksum of each file."
+  },
+  "underTest": [
+    {
+      "file": "participant/tests/playwright/failure-evidence.spec.ts",
+      "sha256": "02f2659a456628b5d6f3570e45b9888725a5431cee76f20ca112b87a8876df5c"
+    },
+    {
+      "file": "participant/tests/playwright/support/evidence.ts",
+      "sha256": "a776edae989a7c4ce58d70e55e9b48d5413040337c482fb9a665d436684e58b3"
+    },
+    {
+      "file": "participant/tests/playwright/demo-app/orders-server.mjs",
+      "sha256": "1d2957a0666911b7ebc99b5f82c5c4b3819270dbd43deddaad046e612fb94ecd"
+    }
+  ],
+  "kept": {
+    "days": 14,
+    "deleteAfter": "2026-12-07T21:39:18.316Z"
+  },
+  "counts": {
+    "consoleLines": 6,
+    "requests": 8,
+    "failedRequests": 4,
+    "serverLogLines": 8
+  },
+  "trace": {
+    "entries": 9,
+    "textEntriesRedacted": 9,
+    "binaryEntriesKeptAsTheyWere": 0
+  },
+  "redaction": {
+    "on": true,
+    "replacements": {
+      "by value: REPO": 7,
+      "by value: cookie": 13,
+      "by value: password": 6,
+      "by value: token": 2,
+      "by place: header": 1
+    },
+    "secretValuesTooShortToReplaceByValue": 0,
+    "notSearched": [
+      "screenshot.png: a picture"
+    ]
+  },
+  "problems": [],
+  "files": [
+    {
+      "name": "screenshot.png",
+      "bytes": 21496,
+      "sha256": "6b37b5b9674e4a692edc8f180bbe6fa985baf7e3750b81f63ef568c3665aedd4"
+    },
+    {
+      "name": "trace.zip",
+      "bytes": 11146,
+      "sha256": "8c9aa58bcfc135960461f2584bc81f8fb6f3fceb8e05c2143037efce30ec910d"
+    },
+    {
+      "name": "error.txt",
+      "bytes": 573,
+      "sha256": "9b24a71079759d177759565fa728b2f347c9f4b33f185a0c9937e8f086df490d"
+    },
+    {
+      "name": "console.log",
+      "bytes": 983,
+      "sha256": "57534f2558b1b4d0dd921a60bf6011d0a6c9735edf6843a8dd1241dd0d271aae"
+    },
+    {
+      "name": "requests.txt",
+      "bytes": 508,
+      "sha256": "43d278d207f23925209603bdc4e33f66656e2e8a5dac08337f4902797a17cb8c"
+    },
+    {
+      "name": "failed-requests.json",
+      "bytes": 4096,
+      "sha256": "6d0f24a04fdb63a91874aa3e7332905d27e1af5d2b8368aad41a578e20fcffc3"
+    },
+    {
+      "name": "server.log",
+      "bytes": 540,
+      "sha256": "e4e0ef8bcb5cb9d8726cd262fb3981483911e9b8eec21d198f667af71595bd99"
+    },
+    {
+      "name": "READ-ME-FIRST.md",
+      "bytes": 1779,
+      "sha256": "43fd4b891d67b45b7e5cd570bf8f4130fb500737a6f7a617b2744060af47d1b8"
+    }
+  ]
+}
