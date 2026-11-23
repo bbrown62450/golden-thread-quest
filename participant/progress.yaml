@@ -398,10 +398,10 @@ attempts:
   quest_id: github-create-issue
   quest_version: 1
   content_hash: sha256:7c3cb5858dc64dd21bce0b7854a50bb46ef0a4144234596c83c8712f5e97ecd3
-  state: submitted
+  state: verified
   started_at: '2026-11-23T18:45:22Z'
-  updated_at: '2026-11-23T19:20:19Z'
+  updated_at: '2026-11-23T19:31:40Z'
   evidence_path: participant/evidence/github-create-issue/github-attempt-009
   submission_id: submission-20261123192019-630c76
-  review_id: review-20261123191004-9b5bb6
-updated_at: '2026-11-23T19:20:19Z'
+  review_id: review-20261123193140-5a88db
+updated_at: '2026-11-23T19:31:40Z'

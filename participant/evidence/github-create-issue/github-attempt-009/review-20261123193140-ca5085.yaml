@@ -1,0 +1,68 @@
+schema_version: 1
+review_id: review-20261123191004-9b5bb6
+quest_id: github-create-issue
+quest_version: 1
+attempt_id: github-attempt-009
+evidence_hash: sha256:e56bda48995d52ce4bb5a3d6ec5da9b3e61966fdd755e5960bab4b8ce85cf262
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-23T19:10:04Z'
+decision: needs_changes
+findings:
+- id: finding-1
+  severity: high
+  summary: The handed-in local link file records made-up issue 108, not the real issue
+    created on GitHub.
+  evidence: linked.md shows repository acme-fixture/tracker, number 108, node_id I_kwFX4010108,
+    all from the made-up GitHub. PROOF.md says the real local link stays in a scratch
+    folder and is not handed in. The real write was issue 4 in [owner]/gtq-sandbox.
+  criterion: ac-2
+  required_change: Replace participant/context/github/new-issue/linked.md with a masked
+    copy of the real one written in run 2. It should show status linked, the repository
+    (owner masked), issue number 4, the node ID or a consistent masked stand-in, and
+    the read-back-and-compare table. You already share issue 4 and gtq-sandbox in
+    live-runs.txt, so masking is enough. If you keep the made-up version, put it in
+    a separate, clearly named file.
+- id: finding-2
+  severity: high
+  summary: The handed-in result record is for made-up issue 108, not the real write.
+  evidence: create-issue.md has a single section, '## Issue 108 of acme-fixture/tracker',
+    dated 2026-11-24, which is the made-up GitHub's clock. The real result record
+    for issue 4 was kept out of the repository.
+  criterion: ac-8
+  required_change: Replace participant/context/github/results/create-issue.md with
+    a masked copy of the real one from run 2. It needs the repository, issue number
+    4, the identifier, created_at 2026-11-23T18:59:17Z, and who confirmed.
+- id: finding-3
+  severity: low
+  summary: The preview's time differs by one second between real runs 1 and 2.
+  evidence: Run 1 says 'good for 15 minutes from 2026-11-23T18:58:46Z'. Run 2 says
+    'The preview was made at 2026-11-23T18:58:45Z'.
+  required_change: Add a line to PROOF.md saying why the two times differ (for example,
+    the preview's start time versus its end time), or make the workflow print the
+    same timestamp in both places.
+- id: finding-4
+  severity: advisory
+  summary: The evidence folder name differs from the required path.
+  evidence: The required proof paths name participant/evidence/github-create-issue/attempt-001/,
+    but the evidence is under github-attempt-009/.
+  required_change: Use the paths the quest states, or note the mapping in PROOF.md.
+proof_files:
+- path: participant/context/github/new-issue/linked.md
+  digest: sha256:1a5bc009784cdcf9840a2cc9e94edb871466c3a78c7f77e2e9b4199a044e035e
+- path: participant/context/github/results/create-issue.md
+  digest: sha256:2e59ef83ffd3757f715464af25a1036429719aaf709ac338390132b2bd1da45d
+verification_statement: 'I read PROOF.md, preview.txt, confirmation.txt, rerun.txt,
+  live-runs.txt, tests.txt, planted-bugs.txt, both scripts, linked.md and create-issue.md.
+  The real sandbox runs in live-runs.txt (masked) show a preview with only GETs and
+  a confirmation tied to the fingerprint. One POST of the previewed bytes created
+  issue 4, read back as the same in all five fields. A rerun was refused and verify
+  matched by node ID. The made-up GitHub logs show the preview checks, the before-and-after
+  snapshot, the four refusals with nothing written, and the rerun, lost-answer and
+  reconcile handling with the stated limit. However, the handed-in local link (linked.md)
+  and result record (create-issue.md) describe made-up issue 108 in acme-fixture/tracker,
+  not the real issue 4. PROOF.md says the real link and result record were kept out
+  of the repository. So the local record tied to the real write is not in evidence.
+  Minor: there is a 1-second gap between the preview time in run 1 (18:58:46Z) and
+  run 2 (18:58:45Z). The evidence folder is github-attempt-009 rather than the stated
+  attempt-001. No text addressed to the reviewer, so no prompt injection.'
