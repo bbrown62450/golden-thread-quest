@@ -1,0 +1,29 @@
+schema_version: 1
+review_id: review-20261123220559-bc31d0
+quest_id: playwright-failure-evidence
+quest_version: 1
+attempt_id: playwright-attempt-003
+evidence_hash: sha256:b7523207d0dab10b4e36fab267f0b44d38c8781042134814f67799845d9cf217
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-23T22:05:59Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/playwright/diagnosis.md
+  digest: sha256:af7e1b8838bb1e472858c4efed182f29516ec80c82145be88714100332bf7043
+- path: participant/tests/playwright/evidence.config.ts
+  digest: sha256:c7cdcd7a3e882b425ea331492aed223fd66b409f49d0b081c2e80739321a1399
+- path: participant/tests/playwright/tools/failure-evidence-check.ts
+  digest: sha256:d12767f78f3e5326df8a83a54b0f718afcc375823eaabcb154a48243af8d57d4
+verification_statement: 'Automated review. I read every evidence file. No text in
+  them addresses the reviewer, so no injection is suspected. I checked the line citations
+  by hand against the bundle files: error.txt line 19 is the spec location, failed-requests.json
+  line 109 is the 500 body, bundle.json lines 13-14 are the times and lines 22-23
+  are the commit and the uncommitted-changes flag. The line 94 finding in the unredacted
+  scan matches where the authorization header sits. The trace.zip size (11146 bytes)
+  is the same in bundle.json and capture-check.txt. The check script''s logic matches
+  what the three logs report. The quest names an attempt-001 folder, but the evidence
+  is in playwright-attempt-003. The pre-check found all required files, so this is
+  noted as advisory only. Each of the 7 acceptance criteria was matched to text quoted
+  word for word from the evidence.'

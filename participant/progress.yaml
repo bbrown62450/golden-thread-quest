@@ -428,9 +428,10 @@ attempts:
   quest_id: playwright-failure-evidence
   quest_version: 1
   content_hash: sha256:7816c307b6a150261ab05964641f35486ab56bdfe3256a8b90c1bdadf81e1268
-  state: submitted
+  state: verified
   started_at: '2026-11-23T21:20:54Z'
-  updated_at: '2026-11-23T21:56:35Z'
+  updated_at: '2026-11-23T22:05:59Z'
   evidence_path: participant/evidence/playwright-failure-evidence/playwright-attempt-003
   submission_id: submission-20261123215635-da4eb7
-updated_at: '2026-11-23T21:56:35Z'
+  review_id: review-20261123220559-bc31d0
+updated_at: '2026-11-23T22:05:59Z'
