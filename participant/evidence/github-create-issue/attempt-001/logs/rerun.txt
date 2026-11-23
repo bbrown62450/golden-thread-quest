@@ -1,0 +1,289 @@
+The approved workflow run a second time. github-create-issue, attempt github-attempt-009
+Recorded by scripts/record_evidence.py. No request was sent to GitHub. The repository, people, labels, milestones and issues are made up.
+This continues from logs/confirmation.txt, part 1: the same made-up GitHub, after issue 108 was created.
+
+==============================================================================
+PART 1. The made-up GitHub after the approved run
+$ python3 participant/skills/github-create-issue/fake_github.py SCRATCH/approved/github.json show
+------------------------------------------------------------------------------
+made-up GitHub: acme-fixture/tracker: newest issue number 108. Issues created since the store was made: 1
+made-up GitHub:   issue 108, node ID I_kwFX4010108, by robin-fixture: "Export writes dates in two different formats in one file", labels ["bug", "export"], assignees ["robin-fixture"], milestone "Sprint 13"
+made-up GitHub: writes received so far, to any repository: 1
+------------------------------------------------------------------------------
+exit code: 0
+
+==============================================================================
+PART 2. The very same approved command, run again
+$ python3 participant/skills/github-create-issue/create.py confirm --source fake --fake-store SCRATCH/approved/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link participant/context/github/new-issue/linked.md --state SCRATCH/approved/previews --results participant/context/github/results --fingerprint 420af1396d5b8b7837a378f6837250f7 --confirmed-by 'the participant'
+------------------------------------------------------------------------------
+github-create: CONFIRM the creation of one previewed issue
+github-create: REFUSED: this draft is ALREADY the GitHub issue number 108 of acme-fixture/tracker (node ID I_kwFX4010108), created at 2026-11-24T09:00:00Z. It is not created again. `verify` reads it back and compares it.
+github-create: Nothing was sent to GitHub by this command that could change anything.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1: refused, because the draft is ALREADY the issue number 108, named with its node ID
+  ok   nothing was written: the made-up GitHub received no write, holds no new issue, and both repositories are exactly as they were
+  ok   it was refused before any request was sent
+
+==============================================================================
+PART 3. The whole workflow again from the start
+$ python3 participant/skills/github-create-issue/create.py preview --source fake --fake-store SCRATCH/approved/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link participant/context/github/new-issue/linked.md --index participant/context/github/duplicates/fixture.md --state SCRATCH/approved/previews
+------------------------------------------------------------------------------
+github-create: REFUSED: this draft is ALREADY the GitHub issue number 108 of acme-fixture/tracker (node ID I_kwFX4010108), created at 2026-11-24T09:00:00Z. It is not created again. `verify` reads it back and compares it.
+github-create: Nothing was sent to GitHub by this command that could change anything.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1: the preview itself refuses a draft that is already an issue, so there is no second fingerprint to confirm
+  ok   nothing was written: the made-up GitHub received no write, holds no new issue, and both repositories are exactly as they were
+
+==============================================================================
+PART 4. The local link is matched to the issue by its identifier (criterion 3)
+$ python3 participant/skills/github-create-issue/create.py verify --source fake --fake-store SCRATCH/approved/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link participant/context/github/new-issue/linked.md
+------------------------------------------------------------------------------
+github-create: VERIFY that the linked issue is still what the preview showed. This command only reads
+github-create: 1. THE LOCAL LINK says: issue number 108 of "acme-fixture/tracker", node ID I_kwFX4010108
+github-create: 2. MATCHED BY IDENTIFIER. GitHub's issue number 108 has the same node ID as the local link
+github-create: 3. COMPARED with the payload of the preview, field by field:
+github-create:      title      the same: previewed "Export writes dates in two different formats in one file", read back "Export writes dates in two different formats in one file"
+github-create:      body       the same, character for character: previewed 516 characters, read back 516 characters
+github-create:      labels     the same: previewed ["bug", "export"], read back ["bug", "export"]
+github-create:      assignees  the same: previewed ["robin-fixture"], read back ["robin-fixture"]
+github-create:      milestone  the same: previewed 3, read back 3
+github-create:      Requests made by this command: 1, every one a GET. Nothing was written, on GitHub or locally
+github-create: RESULT: THE SAME. The issue on GitHub is the previewed payload, field for field
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0: the issue number 108 on the made-up GitHub has the node ID in the local link, and equals the preview field for field
+  ok   verify only read: one GET, and the local link file is byte for byte what it was
+
+==============================================================================
+PART 5. What there is in place of a duplicate
+$ python3 participant/skills/github-create-issue/fake_github.py SCRATCH/approved/github.json show
+------------------------------------------------------------------------------
+made-up GitHub: acme-fixture/tracker: newest issue number 108. Issues created since the store was made: 1
+made-up GitHub:   issue 108, node ID I_kwFX4010108, by robin-fixture: "Export writes dates in two different formats in one file", labels ["bug", "export"], assignees ["robin-fixture"], milestone "Sprint 13"
+made-up GitHub: writes received so far, to any repository: 1
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the made-up GitHub holds one issue made by this workflow, number 108, and received one write in all
+  ok   the result record still has one section, and is what the approved run wrote
+
+==============================================================================
+PART 6. Where GitHub cannot prevent a repeat: the answer is lost
+GitHub creates an issue every time it is asked. It has no way to be told "only if I have not sent this before". So if the
+answer to a create is lost, the issue may exist and this computer does not know its number. Here the made-up GitHub is
+told to create the issue and lose the answer.
+$ python3 participant/skills/github-create-issue/create.py preview --source fake --fake-store SCRATCH/lost-answer/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link SCRATCH/lost-answer/linked.md --index participant/context/github/duplicates/fixture.md --state SCRATCH/lost-answer/previews
+------------------------------------------------------------------------------
+github-preview: PREVIEW of a new issue. This command only reads. It has no way to write
+github-preview: 1. WHERE. Repository "acme-fixture/tracker", id 401, private. On the sandbox allowlist participant/context/github/new-issue/sandbox-allowlist.json, which names 1 repository. The connection acts as login "robin-fixture"
+github-preview:      Draft: participant/context/github/new-issue/draft.md, title "Export writes dates in two different formats in one file"
+github-preview: 2. TEMPLATE. The repository's own template "bug_report.md" was read from the repository. It has 4 sections. Every section is required unless its heading ends "(optional)"
+github-preview:      section "What happened" (required): filled in, 1 line
+github-preview:      section "Steps to reproduce" (required): filled in, 2 lines
+github-preview:      section "What you expected" (required): filled in, 1 line
+github-preview:      section "Environment (optional)" (optional): filled in, 1 line
+github-preview:      the template gives issues of this kind the label(s): "bug"
+github-preview: 3. LABELS, ASSIGNEES, MILESTONE. Each one was looked up in the repository:
+github-preview:      label "bug": exists, id 7001
+github-preview:      label "export": exists, id 7011
+github-preview:      assignee "robin-fixture": can be assigned in this repository
+github-preview:      milestone "Sprint 13": exists, is open, number 3
+github-preview:      the repository has 6 labels and 3 milestones to choose from
+github-preview: 4. SOURCES. 6 citations checked against the file and lines each one names:
+github-preview:      title: sources/notes.md, line 7. The words quoted are there
+github-preview:      body: sources/notes.md, line 8. The words quoted are there
+github-preview:      body: sources/notes.md, lines 9-10. The words quoted are there
+github-preview:      labels: sources/notes.md, line 11. The words quoted are there
+github-preview:      assignees: sources/notes.md, line 11. The words quoted are there
+github-preview:      milestone: sources/notes.md, line 12. The words quoted are there
+github-preview: 5. DUPLICATE CHECK.
+github-preview:      searched the local index participant/context/github/duplicates/fixture.md: 9 issues. 2 matched on nothing, 5 matched on fewer than 3 signals beyond the title and are not candidates
+github-preview:      candidate acme-fixture/tracker#101 "Export crashes on files over 2 GB", open: medium confidence, 10 of 14 points (Named things, Body wording, Labels, Repository). The search recommends: link
+github-preview:      candidate acme-fixture/tracker#102 "Export is slow on large files", open: low confidence, 6 of 14 points (Named things, Labels, Repository). The search recommends: link
+github-preview:      to LINK: the new issue should point to acme-fixture/tracker#101, acme-fixture/tracker#102. The preview does not add that to the issue's text: a person does
+github-preview:      duplicate result: link
+github-preview: 6. PERMISSION CHECK.
+github-preview:      GitHub says the ACCOUNT may: admin: no, maintain: no, pull: yes, push: yes, triage: yes
+github-preview:      issues are turned on in this repository, and it is not archived
+github-preview:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. Whether it may create an issue is known only when the write is tried. The preview does not try it
+github-preview: 7. THE EXACT PAYLOAD a later write would send. It is built once, here, and saved. A write sends these bytes and builds nothing of its own:
+github-preview:      POST /repos/acme-fixture/tracker/issues
+github-preview:      title      "Export writes dates in two different formats in one file"
+github-preview:      body       516 characters, 16 lines. First line: "### What happened"
+github-preview:      labels     ["bug", "export"]
+github-preview:      assignees  ["robin-fixture"]
+github-preview:      milestone  3 ("Sprint 13")
+github-preview:      the exact bytes, 679 of them, SHA-256 669e858129780c413d269e767c1dc8d84a8c831ca0e5d9a7907354c90d103636:
+github-preview:      {"title":"Export writes dates in two different formats in one file","body":"### What happened\n\nThe export writes dates in two different formats in the same file. In `orders-march.csv` the column `order_date` is `2026-03-04` in some rows and `04/03/2026` in others. No error is shown, and the file looks complete.\n\n### Steps to reproduce\n\n1. Run `export.py` from `v2.3.1` on the March orders.\n2. Open `orders-march.csv` and look at the column `order_date`.\n\n### What you expected\n\nEvery date in the file written the same way, as `2026-03-04`.\n\n### Environment (optional)\n\n`export.py`, `v2.3.1`","labels":["bug","export"],"assignees":["robin-fixture"],"milestone":3}
+github-preview: 8. NOTHING WAS WRITTEN. The repository was read at the start and again at the end. Newest issue number: 107 then 107. Labels: 6 then 6. Milestones: 3 then 3. The same
+github-preview:      Requests made by this command: 12, every one a GET
+github-preview: 9. FINGERPRINT of this preview: 420af1396d5b8b7837a378f6837250f7. It covers the repository, the draft, the checks and the exact payload. Saved for a later write, good for 15 minutes from 2026-11-24T09:00:00Z by GitHub's clock
+github-preview: RESULT: READY. Nothing has been written
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/github-create-issue/fake_github.py SCRATCH/lost-answer/github.json mode lost-answer
+------------------------------------------------------------------------------
+made-up GitHub: the next create will go: lost-answer
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/github-create-issue/create.py confirm --source fake --fake-store SCRATCH/lost-answer/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link SCRATCH/lost-answer/linked.md --state SCRATCH/lost-answer/previews --results SCRATCH/lost-answer/results --fingerprint 420af1396d5b8b7837a378f6837250f7 --confirmed-by 'the participant'
+------------------------------------------------------------------------------
+github-create: CONFIRM the creation of one previewed issue
+github-create: 1. CONFIRMATION. Given by "the participant", for the preview with fingerprint 420af1396d5b8b7837a378f6837250f7, in this same command
+github-create:      The name is recorded as it was typed. This workflow cannot check who typed it
+github-create: 2. ALLOWLIST. The repository "acme-fixture/tracker" is on the sandbox allowlist, which names 1 repository
+github-create: 3. THE DRAFT is the draft of the preview: its SHA-256 is the same, adf517df1b0f39c2. The saved payload gives the bytes the preview showed: 679 bytes, SHA-256 669e858129780c413d269e767c1dc8d84a8c831ca0e5d9a7907354c90d103636
+github-create: 4. AGE. The preview was made at 2026-11-24T09:00:00Z and it is now 2026-11-24T09:00:00Z by GitHub's clock: 0 minutes. The limit is 15
+github-create: 5. STILL TRUE. The labels and milestone of the payload still exist, and no issue with this title was created since the preview
+github-create: 6. WRITING. The local link linked.md now says a create is about to be sent. Then one request: POST /repos/acme-fixture/tracker/issues, the 679 bytes of the preview
+github-create:      NO ANSWER CAME BACK (TimeoutError). The request was sent and may have arrived
+github-create: RESULT: OUTCOME UNKNOWN. The issue MAY exist on GitHub. It was NOT sent again, and it will not be: the local link says the outcome is unknown, and every run refuses until `reconcile` has looked on GitHub and settled it
+------------------------------------------------------------------------------
+exit code: 3
+  ok   exit code 3: OUTCOME UNKNOWN, and the run says the issue may exist and was not sent again
+  ok   the made-up GitHub did create the issue: it holds issue 108, and received one write
+  ok   the local link says the outcome is unknown, not that nothing happened
+$ python3 participant/skills/github-create-issue/fake_github.py SCRATCH/lost-answer/github.json mode ok
+------------------------------------------------------------------------------
+made-up GitHub: the next create will go: ok
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/github-create-issue/create.py confirm --source fake --fake-store SCRATCH/lost-answer/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link SCRATCH/lost-answer/linked.md --state SCRATCH/lost-answer/previews --results SCRATCH/lost-answer/results --fingerprint 420af1396d5b8b7837a378f6837250f7 --confirmed-by 'the participant'
+------------------------------------------------------------------------------
+github-create: CONFIRM the creation of one previewed issue
+github-create: REFUSED: a create for this draft was sent at 2026-11-24T09:00:00Z and its OUTCOME IS NOT KNOWN. The issue may exist on GitHub. Nothing more is sent until `reconcile` has settled it.
+github-create: Nothing was sent to GitHub by this command that could change anything.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   run again, it is refused: the outcome is not known, and nothing more is sent until it is settled
+$ python3 participant/skills/github-create-issue/create.py preview --source fake --fake-store SCRATCH/lost-answer/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link SCRATCH/lost-answer/linked.md --index participant/context/github/duplicates/fixture.md --state SCRATCH/lost-answer/previews
+------------------------------------------------------------------------------
+github-create: REFUSED: a create for this draft was sent at 2026-11-24T09:00:00Z and its OUTCOME IS NOT KNOWN. The issue may exist on GitHub. Nothing more is sent until `reconcile` has settled it.
+github-create: Nothing was sent to GitHub by this command that could change anything.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   a new preview is refused too, so there is no way round it
+$ python3 participant/skills/github-create-issue/fake_github.py SCRATCH/lost-answer/github.json advance 2
+------------------------------------------------------------------------------
+made-up GitHub: 2 minutes passed. GitHub's clock now says 2026-11-24T09:02:00Z
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/github-create-issue/create.py reconcile --source fake --fake-store SCRATCH/lost-answer/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link SCRATCH/lost-answer/linked.md --results SCRATCH/lost-answer/results
+------------------------------------------------------------------------------
+github-create: RECONCILE a create whose outcome is not known. This command only reads GitHub
+github-create: 1. THE LOCAL LINK says a create was sent at 2026-11-24T09:00:00Z by GitHub's clock, and its outcome is not known
+github-create: 2. LOOKED ON GITHUB for issues made by "robin-fixture" since 2026-11-24T08:55:00Z with exactly the previewed title and body. Found: 1 (numbers 108)
+github-create: 3. RECORDED. Issue number 108, node ID I_kwFX4010108, was written to linked.md before anything else was done
+github-create: 4. READ BACK AND COMPARED. The issue was read back from GitHub by its number, matched by its node ID, and compared with the previewed payload:
+github-create:      title      the same: previewed "Export writes dates in two different formats in one file", read back "Export writes dates in two different formats in one file"
+github-create:      body       the same, character for character: previewed 516 characters, read back 516 characters
+github-create:      labels     the same: previewed ["bug", "export"], read back ["bug", "export"]
+github-create:      assignees  the same: previewed ["robin-fixture"], read back ["robin-fixture"]
+github-create:      milestone  the same: previewed 3, read back 3
+github-create: 5. RESULT RECORD. Written to create-issue.md. The local link is linked.md
+github-create: RESULT: DONE. Issue 108 was created, recorded, read back, and is the same as the preview field for field
+------------------------------------------------------------------------------
+exit code: 0
+  ok   reconcile looks on GitHub, finds the one issue with the previewed title and body by this account, and links it
+  ok   reconcile only read: the made-up GitHub still holds one issue and received one write in all
+  ok   the local link is now linked to number 108 by its node ID, and the result record says how it was found
+
+==============================================================================
+PART 7. The other way round: the request never arrived
+$ python3 participant/skills/github-create-issue/create.py preview --source fake --fake-store SCRATCH/never-arrived/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link SCRATCH/never-arrived/linked.md --index participant/context/github/duplicates/fixture.md --state SCRATCH/never-arrived/previews
+------------------------------------------------------------------------------
+github-preview: PREVIEW of a new issue. This command only reads. It has no way to write
+github-preview: 1. WHERE. Repository "acme-fixture/tracker", id 401, private. On the sandbox allowlist participant/context/github/new-issue/sandbox-allowlist.json, which names 1 repository. The connection acts as login "robin-fixture"
+github-preview:      Draft: participant/context/github/new-issue/draft.md, title "Export writes dates in two different formats in one file"
+github-preview: 2. TEMPLATE. The repository's own template "bug_report.md" was read from the repository. It has 4 sections. Every section is required unless its heading ends "(optional)"
+github-preview:      section "What happened" (required): filled in, 1 line
+github-preview:      section "Steps to reproduce" (required): filled in, 2 lines
+github-preview:      section "What you expected" (required): filled in, 1 line
+github-preview:      section "Environment (optional)" (optional): filled in, 1 line
+github-preview:      the template gives issues of this kind the label(s): "bug"
+github-preview: 3. LABELS, ASSIGNEES, MILESTONE. Each one was looked up in the repository:
+github-preview:      label "bug": exists, id 7001
+github-preview:      label "export": exists, id 7011
+github-preview:      assignee "robin-fixture": can be assigned in this repository
+github-preview:      milestone "Sprint 13": exists, is open, number 3
+github-preview:      the repository has 6 labels and 3 milestones to choose from
+github-preview: 4. SOURCES. 6 citations checked against the file and lines each one names:
+github-preview:      title: sources/notes.md, line 7. The words quoted are there
+github-preview:      body: sources/notes.md, line 8. The words quoted are there
+github-preview:      body: sources/notes.md, lines 9-10. The words quoted are there
+github-preview:      labels: sources/notes.md, line 11. The words quoted are there
+github-preview:      assignees: sources/notes.md, line 11. The words quoted are there
+github-preview:      milestone: sources/notes.md, line 12. The words quoted are there
+github-preview: 5. DUPLICATE CHECK.
+github-preview:      searched the local index participant/context/github/duplicates/fixture.md: 9 issues. 2 matched on nothing, 5 matched on fewer than 3 signals beyond the title and are not candidates
+github-preview:      candidate acme-fixture/tracker#101 "Export crashes on files over 2 GB", open: medium confidence, 10 of 14 points (Named things, Body wording, Labels, Repository). The search recommends: link
+github-preview:      candidate acme-fixture/tracker#102 "Export is slow on large files", open: low confidence, 6 of 14 points (Named things, Labels, Repository). The search recommends: link
+github-preview:      to LINK: the new issue should point to acme-fixture/tracker#101, acme-fixture/tracker#102. The preview does not add that to the issue's text: a person does
+github-preview:      duplicate result: link
+github-preview: 6. PERMISSION CHECK.
+github-preview:      GitHub says the ACCOUNT may: admin: no, maintain: no, pull: yes, push: yes, triage: yes
+github-preview:      issues are turned on in this repository, and it is not archived
+github-preview:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. Whether it may create an issue is known only when the write is tried. The preview does not try it
+github-preview: 7. THE EXACT PAYLOAD a later write would send. It is built once, here, and saved. A write sends these bytes and builds nothing of its own:
+github-preview:      POST /repos/acme-fixture/tracker/issues
+github-preview:      title      "Export writes dates in two different formats in one file"
+github-preview:      body       516 characters, 16 lines. First line: "### What happened"
+github-preview:      labels     ["bug", "export"]
+github-preview:      assignees  ["robin-fixture"]
+github-preview:      milestone  3 ("Sprint 13")
+github-preview:      the exact bytes, 679 of them, SHA-256 669e858129780c413d269e767c1dc8d84a8c831ca0e5d9a7907354c90d103636:
+github-preview:      {"title":"Export writes dates in two different formats in one file","body":"### What happened\n\nThe export writes dates in two different formats in the same file. In `orders-march.csv` the column `order_date` is `2026-03-04` in some rows and `04/03/2026` in others. No error is shown, and the file looks complete.\n\n### Steps to reproduce\n\n1. Run `export.py` from `v2.3.1` on the March orders.\n2. Open `orders-march.csv` and look at the column `order_date`.\n\n### What you expected\n\nEvery date in the file written the same way, as `2026-03-04`.\n\n### Environment (optional)\n\n`export.py`, `v2.3.1`","labels":["bug","export"],"assignees":["robin-fixture"],"milestone":3}
+github-preview: 8. NOTHING WAS WRITTEN. The repository was read at the start and again at the end. Newest issue number: 107 then 107. Labels: 6 then 6. Milestones: 3 then 3. The same
+github-preview:      Requests made by this command: 12, every one a GET
+github-preview: 9. FINGERPRINT of this preview: 420af1396d5b8b7837a378f6837250f7. It covers the repository, the draft, the checks and the exact payload. Saved for a later write, good for 15 minutes from 2026-11-24T09:00:00Z by GitHub's clock
+github-preview: RESULT: READY. Nothing has been written
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/github-create-issue/fake_github.py SCRATCH/never-arrived/github.json mode never-arrived
+------------------------------------------------------------------------------
+made-up GitHub: the next create will go: never-arrived
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/github-create-issue/create.py confirm --source fake --fake-store SCRATCH/never-arrived/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link SCRATCH/never-arrived/linked.md --state SCRATCH/never-arrived/previews --results SCRATCH/never-arrived/results --fingerprint 420af1396d5b8b7837a378f6837250f7 --confirmed-by 'the participant'
+------------------------------------------------------------------------------
+github-create: CONFIRM the creation of one previewed issue
+github-create: 1. CONFIRMATION. Given by "the participant", for the preview with fingerprint 420af1396d5b8b7837a378f6837250f7, in this same command
+github-create:      The name is recorded as it was typed. This workflow cannot check who typed it
+github-create: 2. ALLOWLIST. The repository "acme-fixture/tracker" is on the sandbox allowlist, which names 1 repository
+github-create: 3. THE DRAFT is the draft of the preview: its SHA-256 is the same, adf517df1b0f39c2. The saved payload gives the bytes the preview showed: 679 bytes, SHA-256 669e858129780c413d269e767c1dc8d84a8c831ca0e5d9a7907354c90d103636
+github-create: 4. AGE. The preview was made at 2026-11-24T09:00:00Z and it is now 2026-11-24T09:00:00Z by GitHub's clock: 0 minutes. The limit is 15
+github-create: 5. STILL TRUE. The labels and milestone of the payload still exist, and no issue with this title was created since the preview
+github-create: 6. WRITING. The local link linked.md now says a create is about to be sent. Then one request: POST /repos/acme-fixture/tracker/issues, the 679 bytes of the preview
+github-create:      NO ANSWER CAME BACK (TimeoutError). The request was sent and may have arrived
+github-create: RESULT: OUTCOME UNKNOWN. The issue MAY exist on GitHub. It was NOT sent again, and it will not be: the local link says the outcome is unknown, and every run refuses until `reconcile` has looked on GitHub and settled it
+------------------------------------------------------------------------------
+exit code: 3
+  ok   exit code 3: from this side it looks the same as a lost answer, so it is also OUTCOME UNKNOWN
+$ python3 participant/skills/github-create-issue/create.py reconcile --source fake --fake-store SCRATCH/never-arrived/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link SCRATCH/never-arrived/linked.md --results SCRATCH/never-arrived/results
+------------------------------------------------------------------------------
+github-create: RECONCILE a create whose outcome is not known. This command only reads GitHub
+github-create: 1. THE LOCAL LINK says a create was sent at 2026-11-24T09:00:00Z by GitHub's clock, and its outcome is not known
+github-create: 2. LOOKED ON GITHUB for issues made by "robin-fixture" since 2026-11-24T08:55:00Z with exactly the previewed title and body. Found: 0
+github-create: RESULT: NOT SETTLED YET. No such issue is listed, and the create was sent only 0 seconds ago. GitHub's list can lag. Nothing was changed. Run `reconcile` again in a minute
+------------------------------------------------------------------------------
+exit code: 3
+  ok   reconcile straight away does not settle it: GitHub's list can lag, so "none listed" is not yet believed
+$ python3 participant/skills/github-create-issue/fake_github.py SCRATCH/never-arrived/github.json advance 2
+------------------------------------------------------------------------------
+made-up GitHub: 2 minutes passed. GitHub's clock now says 2026-11-24T09:02:00Z
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/github-create-issue/create.py reconcile --source fake --fake-store SCRATCH/never-arrived/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link SCRATCH/never-arrived/linked.md --results SCRATCH/never-arrived/results
+------------------------------------------------------------------------------
+github-create: RECONCILE a create whose outcome is not known. This command only reads GitHub
+github-create: 1. THE LOCAL LINK says a create was sent at 2026-11-24T09:00:00Z by GitHub's clock, and its outcome is not known
+github-create: 2. LOOKED ON GITHUB for issues made by "robin-fixture" since 2026-11-24T08:55:00Z with exactly the previewed title and body. Found: 0
+github-create: RESULT: NOT CREATED. GitHub lists no such issue, 120 seconds after the create was sent. The local link now says so, and a new preview is allowed
+------------------------------------------------------------------------------
+exit code: 0
+  ok   two minutes later reconcile settles it as NOT CREATED, and a new preview is allowed
+How a person would notice a repeat that got through all the same: two issues with the same title and body by the same
+account. `reconcile` reports MORE THAN ONE in that case and links nothing until a person names the one to keep.
+
+RESULT: ALL CHECKS PASSED. 20 checks.

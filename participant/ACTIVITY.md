@@ -248,3 +248,8 @@ Every change this application made to your files, newest last.
 - `2026-11-23T18:29:25Z` github-create-issue-preview: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-23T18:29:25Z` Submitted github-create-issue-preview for review as submission-20261123182925-73b212.
 - `2026-11-23T18:37:27Z` Review of github-create-issue-preview: approved by Claude (automated reviewer).
+- `2026-11-23T18:45:22Z` Started github-create-issue as attempt github-attempt-009.
+- `2026-11-23T19:03:19Z` github-create-issue: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-23T19:04:51Z` github-create-issue: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-23T19:07:32Z` github-create-issue: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-23T19:07:32Z` Submitted github-create-issue for review as submission-20261123190732-76c342.

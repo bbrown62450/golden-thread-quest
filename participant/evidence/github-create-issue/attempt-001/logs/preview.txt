@@ -1,0 +1,86 @@
+The workflow stopping at a preview. github-create-issue, attempt github-attempt-009
+Recorded by scripts/record_evidence.py. No request was sent to GitHub. The repository, people, labels, milestones and issues are made up.
+
+==============================================================================
+PART 1. The made-up GitHub before anything is asked
+$ python3 participant/skills/github-create-issue/fake_github.py SCRATCH/approved/github.json show
+------------------------------------------------------------------------------
+made-up GitHub: acme-fixture/tracker: newest issue number 107. Issues created since the store was made: 0
+made-up GitHub: writes received so far, to any repository: 0
+------------------------------------------------------------------------------
+exit code: 0
+The draft is participant/context/github/new-issue/draft.md, the one the last quest previewed. The sandbox allowlist is participant/context/github/new-issue/sandbox-allowlist.json.
+
+==============================================================================
+PART 2. The preview
+$ python3 participant/skills/github-create-issue/create.py preview --source fake --fake-store SCRATCH/approved/github.json --draft participant/context/github/new-issue/draft.md --allowlist participant/context/github/new-issue/sandbox-allowlist.json --link participant/context/github/new-issue/linked.md --index participant/context/github/duplicates/fixture.md --state SCRATCH/approved/previews
+------------------------------------------------------------------------------
+github-preview: PREVIEW of a new issue. This command only reads. It has no way to write
+github-preview: 1. WHERE. Repository "acme-fixture/tracker", id 401, private. On the sandbox allowlist participant/context/github/new-issue/sandbox-allowlist.json, which names 1 repository. The connection acts as login "robin-fixture"
+github-preview:      Draft: participant/context/github/new-issue/draft.md, title "Export writes dates in two different formats in one file"
+github-preview: 2. TEMPLATE. The repository's own template "bug_report.md" was read from the repository. It has 4 sections. Every section is required unless its heading ends "(optional)"
+github-preview:      section "What happened" (required): filled in, 1 line
+github-preview:      section "Steps to reproduce" (required): filled in, 2 lines
+github-preview:      section "What you expected" (required): filled in, 1 line
+github-preview:      section "Environment (optional)" (optional): filled in, 1 line
+github-preview:      the template gives issues of this kind the label(s): "bug"
+github-preview: 3. LABELS, ASSIGNEES, MILESTONE. Each one was looked up in the repository:
+github-preview:      label "bug": exists, id 7001
+github-preview:      label "export": exists, id 7011
+github-preview:      assignee "robin-fixture": can be assigned in this repository
+github-preview:      milestone "Sprint 13": exists, is open, number 3
+github-preview:      the repository has 6 labels and 3 milestones to choose from
+github-preview: 4. SOURCES. 6 citations checked against the file and lines each one names:
+github-preview:      title: sources/notes.md, line 7. The words quoted are there
+github-preview:      body: sources/notes.md, line 8. The words quoted are there
+github-preview:      body: sources/notes.md, lines 9-10. The words quoted are there
+github-preview:      labels: sources/notes.md, line 11. The words quoted are there
+github-preview:      assignees: sources/notes.md, line 11. The words quoted are there
+github-preview:      milestone: sources/notes.md, line 12. The words quoted are there
+github-preview: 5. DUPLICATE CHECK.
+github-preview:      searched the local index participant/context/github/duplicates/fixture.md: 9 issues. 2 matched on nothing, 5 matched on fewer than 3 signals beyond the title and are not candidates
+github-preview:      candidate acme-fixture/tracker#101 "Export crashes on files over 2 GB", open: medium confidence, 10 of 14 points (Named things, Body wording, Labels, Repository). The search recommends: link
+github-preview:      candidate acme-fixture/tracker#102 "Export is slow on large files", open: low confidence, 6 of 14 points (Named things, Labels, Repository). The search recommends: link
+github-preview:      to LINK: the new issue should point to acme-fixture/tracker#101, acme-fixture/tracker#102. The preview does not add that to the issue's text: a person does
+github-preview:      duplicate result: link
+github-preview: 6. PERMISSION CHECK.
+github-preview:      GitHub says the ACCOUNT may: admin: no, maintain: no, pull: yes, push: yes, triage: yes
+github-preview:      issues are turned on in this repository, and it is not archived
+github-preview:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. Whether it may create an issue is known only when the write is tried. The preview does not try it
+github-preview: 7. THE EXACT PAYLOAD a later write would send. It is built once, here, and saved. A write sends these bytes and builds nothing of its own:
+github-preview:      POST /repos/acme-fixture/tracker/issues
+github-preview:      title      "Export writes dates in two different formats in one file"
+github-preview:      body       516 characters, 16 lines. First line: "### What happened"
+github-preview:      labels     ["bug", "export"]
+github-preview:      assignees  ["robin-fixture"]
+github-preview:      milestone  3 ("Sprint 13")
+github-preview:      the exact bytes, 679 of them, SHA-256 669e858129780c413d269e767c1dc8d84a8c831ca0e5d9a7907354c90d103636:
+github-preview:      {"title":"Export writes dates in two different formats in one file","body":"### What happened\n\nThe export writes dates in two different formats in the same file. In `orders-march.csv` the column `order_date` is `2026-03-04` in some rows and `04/03/2026` in others. No error is shown, and the file looks complete.\n\n### Steps to reproduce\n\n1. Run `export.py` from `v2.3.1` on the March orders.\n2. Open `orders-march.csv` and look at the column `order_date`.\n\n### What you expected\n\nEvery date in the file written the same way, as `2026-03-04`.\n\n### Environment (optional)\n\n`export.py`, `v2.3.1`","labels":["bug","export"],"assignees":["robin-fixture"],"milestone":3}
+github-preview: 8. NOTHING WAS WRITTEN. The repository was read at the start and again at the end. Newest issue number: 107 then 107. Labels: 6 then 6. Milestones: 3 then 3. The same
+github-preview:      Requests made by this command: 12, every one a GET
+github-preview: 9. FINGERPRINT of this preview: 420af1396d5b8b7837a378f6837250f7. It covers the repository, the draft, the checks and the exact payload. Saved for a later write, good for 15 minutes from 2026-11-24T09:00:00Z by GitHub's clock
+github-preview: RESULT: READY. Nothing has been written
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the run ends READY and says nothing has been written
+  ok   it shows the repository, its id and the account (criterion 4)
+  ok   it shows the exact change: one request, POST to the repository's issues, with the whole payload as bytes (criterion 4)
+  ok   it records the permission check, and states what GitHub cannot say: what the token may do (criterion 5)
+  ok   it records the duplicate check: the local index was searched, two weaker candidates are to be linked, and none stops it (criterion 5)
+  ok   it gives a fingerprint of the preview, saved for 15 minutes: 420af1396d5b8b7837a378f6837250f7
+
+==============================================================================
+PART 3. Before and after: the repository is unchanged
+$ python3 participant/skills/github-create-issue/fake_github.py SCRATCH/approved/github.json show
+------------------------------------------------------------------------------
+made-up GitHub: acme-fixture/tracker: newest issue number 107. Issues created since the store was made: 0
+made-up GitHub: writes received so far, to any repository: 0
+------------------------------------------------------------------------------
+exit code: 0
+This script opened the made-up GitHub's file before the preview and after it.
+  ok   the made-up GitHub received 12 requests during the preview, and every one was a GET
+  ok   everything it holds for both repositories is identical before and after, and no issue was created
+  ok   the preview's own reading at the start and the end agrees
+  ok   no local link file was made by the preview
+
+RESULT: ALL CHECKS PASSED. 10 checks.

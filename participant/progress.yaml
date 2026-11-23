@@ -394,4 +394,13 @@ attempts:
   evidence_path: participant/evidence/github-create-issue-preview/github-attempt-008
   submission_id: submission-20261123182925-73b212
   review_id: review-20261123183727-ed1301
-updated_at: '2026-11-23T18:37:27Z'
+- attempt_id: github-attempt-009
+  quest_id: github-create-issue
+  quest_version: 1
+  content_hash: sha256:7c3cb5858dc64dd21bce0b7854a50bb46ef0a4144234596c83c8712f5e97ecd3
+  state: submitted
+  started_at: '2026-11-23T18:45:22Z'
+  updated_at: '2026-11-23T19:07:32Z'
+  evidence_path: participant/evidence/github-create-issue/github-attempt-009
+  submission_id: submission-20261123190732-76c342
+updated_at: '2026-11-23T19:07:32Z'

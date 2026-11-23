@@ -1,0 +1,127 @@
+The real runs. github-create-issue, attempt github-attempt-009
+
+The participant ran these in their own terminal, against their private sandbox repository on GitHub, which holds
+only made-up issues. The assistant sent no request to GitHub and never saw the token. The token was a fine-grained
+one, limited to that repository, with Issues set to read and write and Contents to read-only. The output was
+saved to scratch files outside this repository. This is a masked copy: the owner's login is shown as [owner], the
+issue's node ID as [node id], the repository's id as [repository id], and the name the participant typed with
+--confirmed-by as "the participant". Nothing else was changed. The draft, the saved preview, the local link and
+the result record of these runs stay outside the repository.
+
+Every command had these arguments, with SCRATCH for the scratch folder:
+
+    --source live --draft SCRATCH/draft.md --allowlist SCRATCH/allowlist.json --link SCRATCH/linked.md
+
+The draft is a made-up bug, the one previewed on the sandbox in the last quest. The allowlist named one repository.
+
+==============================================================================
+RUN 1. The preview
+$ create.py preview ... --index SCRATCH/index.md --state SCRATCH/previews
+------------------------------------------------------------------------------
+github-preview: PREVIEW of a new issue. This command only reads. It has no way to write
+github-preview: 1. WHERE. Repository "[owner]/gtq-sandbox", id [repository id], private. On the sandbox allowlist allowlist.json, which names 1 repository. The connection acts as login "[owner]"
+github-preview:      Draft: draft.md, title "Made-up bug: the export leaves the last row out"
+github-preview: 2. TEMPLATE. The repository's own template "bug_report.md" was read from the repository. It has 4 sections. Every section is required unless its heading ends "(optional)"
+github-preview:      section "What happened" (required): filled in, 1 line
+github-preview:      section "Steps to reproduce" (required): filled in, 2 lines
+github-preview:      section "What you expected" (required): filled in, 1 line
+github-preview:      section "Environment (optional)" (optional): MISSING from the draft
+github-preview:      the template gives issues of this kind the label(s): "bug"
+github-preview: 3. LABELS, ASSIGNEES, MILESTONE. Each one was looked up in the repository:
+github-preview:      label "bug": exists, id 13171207345
+github-preview:      assignee "[owner]": can be assigned in this repository
+github-preview:      milestone: none asked for
+github-preview:      the repository has 11 labels and 0 milestones to choose from
+github-preview: 4. SOURCES. 4 citations checked against the file and lines each one names:
+github-preview:      title: sources/notes.md, line 5. The words quoted are there
+github-preview:      body: sources/notes.md, lines 6-8. The words quoted are there
+github-preview:      labels: sources/notes.md, line 9. The words quoted are there
+github-preview:      assignees: sources/notes.md, line 9. The words quoted are there
+github-preview: 5. DUPLICATE CHECK.
+github-preview:      searched the local index index.md: 1 issue. 0 matched on nothing, 1 matched on fewer than 3 signals beyond the title and are not candidates
+github-preview:      duplicate result: proceed. No likely duplicate was found
+github-preview: 6. PERMISSION CHECK.
+github-preview:      GitHub says the ACCOUNT may: admin: yes, maintain: yes, pull: yes, push: yes, triage: yes
+github-preview:      issues are turned on in this repository, and it is not archived
+github-preview:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. Whether it may create an issue is known only when the write is tried. The preview does not try it
+github-preview: 7. THE EXACT PAYLOAD a later write would send. It is built once, here, and saved. A write sends these bytes and builds nothing of its own:
+github-preview:      POST /repos/[owner]/gtq-sandbox/issues
+github-preview:      title      "Made-up bug: the export leaves the last row out"
+github-preview:      body       330 characters, 12 lines. First line: "### What happened"
+github-preview:      labels     ["bug"]
+github-preview:      assignees  ["[owner]"]
+github-preview:      milestone  not sent
+github-preview:      the exact bytes, 455 of them, SHA-256 b62fef3e09ee02f21a3a7cb1fb9951012e8f730d9b53cd4f12106578ab35f72a:
+github-preview:      {"title":"Made-up bug: the export leaves the last row out","body":"### What happened\n\nThe made-up export leaves the last row out of the file. The file `small-orders.csv` has 12 orders and the export writes 11 rows. No error is shown.\n\n### Steps to reproduce\n\n1. Run the made-up export on `small-orders.csv`.\n2. Count the rows in the file it writes.\n\n### What you expected\n\nAll 12 rows in the file.","labels":["bug"],"assignees":["[owner]"]}
+github-preview: 8. NOTHING WAS WRITTEN. The repository was read at the start and again at the end. Newest issue number: 3 then 3. Labels: 11 then 11. Milestones: 0 then 0. The same
+github-preview:      Requests made by this command: 12, every one a GET
+github-preview: 9. FINGERPRINT of this preview: 7d2f66b4612b03758a3887b72b49c04d. It covers the repository, the draft, the checks and the exact payload. Saved for a later write, good for 15 minutes from 2026-11-23T18:58:46Z by GitHub's clock
+github-preview: RESULT: READY. Nothing has been written
+------------------------------------------------------------------------------
+exit code: 0
+
+==============================================================================
+RUN 2. The participant's confirmation, and the one real write: an issue is created
+$ create.py confirm ... --state SCRATCH/previews --results SCRATCH/results --fingerprint 7d2f66b4612b03758a3887b72b49c04d --confirmed-by "the participant"
+------------------------------------------------------------------------------
+github-create: CONFIRM the creation of one previewed issue
+github-create: 1. CONFIRMATION. Given by "the participant", for the preview with fingerprint 7d2f66b4612b03758a3887b72b49c04d, in this same command
+github-create:      The name is recorded as it was typed. This workflow cannot check who typed it
+github-create: 2. ALLOWLIST. The repository "[owner]/gtq-sandbox" is on the sandbox allowlist, which names 1 repository
+github-create: 3. THE DRAFT is the draft of the preview: its SHA-256 is the same, 571120a34f12ec5e. The saved payload gives the bytes the preview showed: 455 bytes, SHA-256 b62fef3e09ee02f21a3a7cb1fb9951012e8f730d9b53cd4f12106578ab35f72a
+github-create: 4. AGE. The preview was made at 2026-11-23T18:58:45Z and it is now 2026-11-23T18:59:15Z by GitHub's clock: 0 minutes. The limit is 15
+github-create: 5. STILL TRUE. The labels and milestone of the payload still exist, and no issue with this title was created since the preview
+github-create: 6. WRITING. The local link linked.md now says a create is about to be sent. Then one request: POST /repos/[owner]/gtq-sandbox/issues, the 455 bytes of the preview
+github-create:      -> status 201. GitHub created issue number 4, node ID [node id]
+github-create: 7. RECORDED. Issue number 4, node ID [node id], was written to linked.md before anything else was done
+github-create: 8. READ BACK AND COMPARED. The issue was read back from GitHub by its number, matched by its node ID, and compared with the previewed payload:
+github-create:      title      the same: previewed "Made-up bug: the export leaves the last row out", read back "Made-up bug: the export leaves the last row out"
+github-create:      body       the same, character for character: previewed 330 characters, read back 330 characters
+github-create:      labels     the same: previewed ["bug"], read back ["bug"]
+github-create:      assignees  the same: previewed ["[owner]"], read back ["[owner]"]
+github-create:      milestone  the same: previewed null, read back null
+github-create: 9. RESULT RECORD. Written to create-issue.md. The local link is linked.md
+github-create: RESULT: DONE. Issue 4 was created, recorded, read back, and is the same as the preview field for field
+github-create:      Requests made by this command: 7. Writes: 1, the one create
+------------------------------------------------------------------------------
+exit code: 0
+
+==============================================================================
+RUN 3. The very same confirmation, run a second time
+$ create.py confirm ... --state SCRATCH/previews --results SCRATCH/results --fingerprint 7d2f66b4612b03758a3887b72b49c04d --confirmed-by "the participant"
+------------------------------------------------------------------------------
+github-create: CONFIRM the creation of one previewed issue
+github-create: REFUSED: this draft is ALREADY the GitHub issue number 4 of [owner]/gtq-sandbox (node ID [node id]), created at 2026-11-23T18:59:17Z. It is not created again. `verify` reads it back and compares it.
+github-create: Nothing was sent to GitHub by this command that could change anything.
+------------------------------------------------------------------------------
+exit code: 1
+
+==============================================================================
+RUN 4. Verify: the local link against the issue on GitHub
+$ create.py verify ...
+------------------------------------------------------------------------------
+github-create: VERIFY that the linked issue is still what the preview showed. This command only reads
+github-create: 1. THE LOCAL LINK says: issue number 4 of "[owner]/gtq-sandbox", node ID [node id]
+github-create: 2. MATCHED BY IDENTIFIER. GitHub's issue number 4 has the same node ID as the local link
+github-create: 3. COMPARED with the payload of the preview, field by field:
+github-create:      title      the same: previewed "Made-up bug: the export leaves the last row out", read back "Made-up bug: the export leaves the last row out"
+github-create:      body       the same, character for character: previewed 330 characters, read back 330 characters
+github-create:      labels     the same: previewed ["bug"], read back ["bug"]
+github-create:      assignees  the same: previewed ["[owner]"], read back ["[owner]"]
+github-create:      milestone  the same: previewed null, read back null
+github-create:      Requests made by this command: 1, every one a GET. Nothing was written, on GitHub or locally
+github-create: RESULT: THE SAME. The issue on GitHub is the previewed payload, field for field
+------------------------------------------------------------------------------
+exit code: 0
+
+==============================================================================
+WHAT THE ASSISTANT CHECKED AFTERWARDS, on the saved files, without contacting GitHub
+
+- The payload sent in run 2 was 455 bytes with the SHA-256 that run 1 printed. It is also the SHA-256 printed by
+  the real preview of the last quest, github-create-issue-preview, for the same draft: b62fef3e09ee02f2...
+- The local link of these runs says status linked, issue number 4, with the node ID GitHub returned, GitHub's own
+  id for the issue, the time of creation by GitHub's clock, and the comparison: every field the same.
+- The result record has one section, for issue 4. Run 3 added nothing to it.
+- Run 3 was refused before any request: it printed no numbered step, and says nothing was sent.
+- Before run 1 the repository's newest issue number was 3. GitHub gave the new issue number 4. So one issue was
+  made, as far as these files show. The sandbox was not looked at by other means.

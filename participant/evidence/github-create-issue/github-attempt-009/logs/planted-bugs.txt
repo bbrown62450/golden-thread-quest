@@ -1,0 +1,229 @@
+Do the tests notice a broken workflow? github-create-issue, attempt github-attempt-009
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/github-create-issue/create.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. The write builds its own bytes from the payload instead of sending the preview's (criterion 1)
+  unittest result: FAILED (failures=26, errors=10)
+  tests that failed (36):
+    MatchedByIdentifier.test_a_change_made_on_github_afterwards_is_found
+    Rerun.test_a_lost_answer_is_an_unknown_outcome_and_is_never_sent_again
+    Confirmation.test_a_milestone_closed_after_the_preview_is_refused
+    Confirmation.test_a_preview_can_be_confirmed_once
+    Confirmation.test_a_preview_older_than_the_limit_is_refused_and_one_at_the_limit_is_good
+    Rerun.test_a_refusal_by_github_creates_nothing_and_says_so
+    ResultRecord.test_a_refusal_writes_no_record_and_a_second_issue_adds_a_section
+    Rerun.test_a_request_that_never_arrived_is_settled_as_not_created_but_not_too_soon
+    SameAsThePreview.test_an_issue_github_made_differently_needs_looking_and_is_not_fixed
+    Confirmation.test_another_account_or_a_repository_that_changed_is_refused
+    SameAsThePreview.test_every_field_is_read_back_and_compared
+    Recorded.test_if_the_number_cannot_be_recorded_it_is_shouted_and_nothing_is_created_again
+    CommandLine.test_preview_confirm_and_verify_as_separate_commands
+    Rerun.test_reconcile_does_not_take_another_issue_for_this_one
+    Rerun.test_reconcile_finds_the_issue_that_was_created_and_links_it
+    Rerun.test_reconcile_only_reads
+    Confirmation.test_the_approved_run_says_who_confirmed_for_which_fingerprint
+    SameAsThePreview.test_the_bytes_github_received_are_the_bytes_the_preview_showed
+    Recorded.test_the_intent_is_on_disk_and_the_preview_is_spent_before_the_create_is_sent
+    SameAsThePreview.test_the_issue_created_holds_exactly_the_previewed_fields
+    Recorded.test_the_link_holds_the_read_back_comparison_and_the_payload
+    Recorded.test_the_local_link_holds_what_github_returned
+    Recorded.test_the_number_is_on_disk_before_the_issue_is_read_back
+    ResultRecord.test_the_record_holds_everything_the_criterion_names
+    Rerun.test_the_same_confirmation_again_is_refused_and_no_second_issue_is_made
+    MatchedByIdentifier.test_the_same_number_with_another_identifier_is_not_the_same_issue
+    Confirmation.test_the_same_title_filed_by_someone_else_after_the_preview_is_refused
+    Rerun.test_the_whole_workflow_again_stops_at_the_preview
+    Rerun.test_the_workflow_never_retries_a_create
+    SameAsThePreview.test_the_write_builds_no_payload_of_its_own
+    Rerun.test_there_is_nothing_to_reconcile_when_the_outcome_is_known
+    Rerun.test_two_matching_issues_are_left_for_a_person_who_then_names_one
+    Allowlist.test_verify_and_reconcile_check_the_allowlist_too
+    MatchedByIdentifier.test_verify_matches_by_node_id_and_compares
+    MatchedByIdentifier.test_verify_needs_a_linked_draft
+    MatchedByIdentifier.test_verify_only_reads_and_changes_nothing_locally
+
+PLANTED BUG B. The saved payload's bytes are not checked against the checksum the preview recorded (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Confirmation.test_a_payload_altered_under_a_fingerprint_worked_out_again_is_still_refused
+
+PLANTED BUG C. The issue is read back and the comparison is not used (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    SameAsThePreview.test_an_issue_github_made_differently_needs_looking_and_is_not_fixed
+
+PLANTED BUG D. Only the title and the body are compared (criterion 1)
+  unittest result: FAILED (failures=6)
+  tests that failed (6):
+    MatchedByIdentifier.test_a_change_made_on_github_afterwards_is_found
+    SameAsThePreview.test_an_issue_github_made_differently_needs_looking_and_is_not_fixed
+    SameAsThePreview.test_every_field_is_read_back_and_compared
+    SameAsThePreview.test_the_comparison_is_exact
+    Recorded.test_the_link_holds_the_read_back_comparison_and_the_payload
+    ResultRecord.test_the_record_holds_everything_the_criterion_names
+
+PLANTED BUG E. The comparison forgives white space and kinds of value (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    SameAsThePreview.test_the_comparison_is_exact
+
+PLANTED BUG F. The number GitHub returned is not written down until after the issue is read back (criterion 2)
+  unittest result: FAILED (failures=1, errors=1)
+  tests that failed (2):
+    Recorded.test_if_the_number_cannot_be_recorded_it_is_shouted_and_nothing_is_created_again
+    Recorded.test_the_number_is_on_disk_before_the_issue_is_read_back
+
+PLANTED BUG G. Nothing is written locally before the create is sent, so a crash leaves no trace: the quest's scenario (criteria 2 and 9)
+  unittest result: FAILED (failures=1, errors=1)
+  tests that failed (2):
+    Recorded.test_if_the_number_cannot_be_recorded_it_is_shouted_and_nothing_is_created_again
+    Recorded.test_the_intent_is_on_disk_and_the_preview_is_spent_before_the_create_is_sent
+
+PLANTED BUG H. The local link is matched to the issue by number only (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    MatchedByIdentifier.test_the_same_number_with_another_identifier_is_not_the_same_issue
+
+PLANTED BUG I. A local link file that cannot be read is taken to mean the draft has no issue (criteria 3 and 9)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    MatchedByIdentifier.test_a_link_file_that_cannot_be_trusted_stops_everything
+
+PLANTED BUG J. The preview does not look at the local link (criteria 4 and 9)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    MatchedByIdentifier.test_a_link_file_that_cannot_be_trusted_stops_everything
+    Rerun.test_a_lost_answer_is_an_unknown_outcome_and_is_never_sent_again
+    Rerun.test_the_whole_workflow_again_stops_at_the_preview
+
+PLANTED BUG K. A second create can be sent on one connection (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    PreviewFirst.test_a_writer_sends_one_create_and_only_where_it_was_allowed
+
+PLANTED BUG L. A create can be sent without a repository being allowed (criteria 4 and 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    PreviewFirst.test_a_writer_sends_one_create_and_only_where_it_was_allowed
+
+PLANTED BUG M. The confirmation does not check the allowlist (criterion 6)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Allowlist.test_a_repository_off_the_allowlist_is_refused_before_any_request
+    Allowlist.test_a_repository_taken_off_the_allowlist_after_the_preview_is_refused
+
+PLANTED BUG N. A confirmation with no name is accepted (criterion 7)
+  unittest result: FAILED (errors=1)
+  tests that failed (1):
+    Confirmation.test_a_missing_confirmation_is_refused_before_any_request
+
+PLANTED BUG O. An email address is accepted as the confirmer's name (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Confirmation.test_the_confirmer_must_be_a_plain_name
+
+PLANTED BUG P. A draft changed after the preview is created all the same (criterion 7)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Confirmation.test_a_change_to_any_field_of_the_draft_is_refused
+    Confirmation.test_a_draft_changed_after_the_preview_is_refused
+
+PLANTED BUG Q. A saved preview that was altered is accepted (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Confirmation.test_a_saved_preview_whose_payload_was_altered_is_refused
+
+PLANTED BUG R. The time limit is not checked (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Confirmation.test_a_preview_older_than_the_limit_is_refused_and_one_at_the_limit_is_good
+
+PLANTED BUG S. A preview exactly at the limit is refused (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Confirmation.test_a_preview_older_than_the_limit_is_refused_and_one_at_the_limit_is_good
+
+PLANTED BUG T. A preview that was used can be confirmed again (criteria 7 and 9)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Confirmation.test_a_preview_can_be_confirmed_once
+
+PLANTED BUG U. Another account than the one of the preview is accepted (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Confirmation.test_another_account_or_a_repository_that_changed_is_refused
+
+PLANTED BUG V. A label deleted after the preview is not noticed, and GitHub would create it again (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Confirmation.test_another_account_or_a_repository_that_changed_is_refused
+
+PLANTED BUG W. The same title filed by someone else after the preview is not noticed (criterion 9)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Confirmation.test_the_same_title_filed_by_someone_else_after_the_preview_is_refused
+
+PLANTED BUG X. The result record does not name who confirmed (criterion 8)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ResultRecord.test_the_record_holds_everything_the_criterion_names
+
+PLANTED BUG Y. A draft that is already an issue can be created again (criterion 9)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Rerun.test_a_lost_answer_is_an_unknown_outcome_and_is_never_sent_again
+    Recorded.test_if_the_number_cannot_be_recorded_it_is_shouted_and_nothing_is_created_again
+    Rerun.test_the_same_confirmation_again_is_refused_and_no_second_issue_is_made
+    Rerun.test_the_whole_workflow_again_stops_at_the_preview
+
+PLANTED BUG Z. A lost answer is recorded as "not created", so the next run creates a second issue (criterion 9)
+  unittest result: FAILED (failures=7)
+  tests that failed (7):
+    Rerun.test_a_lost_answer_is_an_unknown_outcome_and_is_never_sent_again
+    Rerun.test_a_request_that_never_arrived_is_settled_as_not_created_but_not_too_soon
+    Rerun.test_reconcile_does_not_take_another_issue_for_this_one
+    Rerun.test_reconcile_finds_the_issue_that_was_created_and_links_it
+    Rerun.test_reconcile_only_reads
+    Rerun.test_two_matching_issues_are_left_for_a_person_who_then_names_one
+    MatchedByIdentifier.test_verify_needs_a_linked_draft
+
+PLANTED BUG AA. A lost answer is answered by sending the create again (criterion 9)
+  unittest result: FAILED (failures=1, errors=7)
+  tests that failed (8):
+    Rerun.test_a_lost_answer_is_an_unknown_outcome_and_is_never_sent_again
+    Rerun.test_a_request_that_never_arrived_is_settled_as_not_created_but_not_too_soon
+    Rerun.test_reconcile_does_not_take_another_issue_for_this_one
+    Rerun.test_reconcile_finds_the_issue_that_was_created_and_links_it
+    Rerun.test_reconcile_only_reads
+    Rerun.test_the_workflow_never_retries_a_create
+    Rerun.test_two_matching_issues_are_left_for_a_person_who_then_names_one
+    MatchedByIdentifier.test_verify_needs_a_linked_draft
+
+PLANTED BUG AB. A refusal by GitHub is recorded as an unknown outcome
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Confirmation.test_a_preview_can_be_confirmed_once
+    Rerun.test_a_refusal_by_github_creates_nothing_and_says_so
+
+PLANTED BUG AC. Reconcile believes at once that no issue was created (criterion 9)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Rerun.test_a_request_that_never_arrived_is_settled_as_not_created_but_not_too_soon
+
+PLANTED BUG AD. Reconcile takes any issue with the same title for the one that was sent (criterion 9)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Rerun.test_reconcile_does_not_take_another_issue_for_this_one
+
+PLANTED BUG AE. Reconcile links the first of several matching issues without asking (criterion 9)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Rerun.test_two_matching_issues_are_left_for_a_person_who_then_names_one
+
+After the last bug was taken out: create.py is byte for byte what it was at the start. OK
+
+RESULT: all 31 planted bugs were caught by at least one test, and the file was restored.
