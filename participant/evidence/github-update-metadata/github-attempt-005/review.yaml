@@ -1,0 +1,27 @@
+schema_version: 1
+review_id: review-20261123124743-ba338f
+quest_id: github-update-metadata
+quest_version: 1
+attempt_id: github-attempt-005
+evidence_hash: sha256:237fcf1ff670ab7ab3f360c76b25d0871d9f1f4ba4c5387d040bd9344438653e
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-23T12:47:43Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/github/results/update-metadata.md
+  digest: sha256:6da032349757d0f0d497157e7a65c07963520197556beaad3f6adc8037cc4557
+- path: participant/context/github/update/supported-fields.md
+  digest: sha256:d656237535380933e20acb7e6cda65990e34a513a16cb138de8d8944b377d6d3
+verification_statement: 'Automated review. I read every evidence file: the preview,
+  confirmation, stale-run and rerun logs, supported-fields.md, the result record,
+  live-runs.txt, the test and planted-bug logs, and the two recording scripts. Most
+  runs use a made-up GitHub. live-runs.txt adds real-sandbox evidence: one confirmed
+  write, a refused rerun and a real stale refusal. The logs agree with each other:
+  fingerprint 589af57e… and events 9100–9102 match across the preview, the confirmation
+  and the result record. Every criterion has recorded output behind it. The files
+  are under github-attempt-005, while the brief names attempt-001. The pre-check reported
+  all required files present, so this is not blocking. No evidence text was addressed
+  to the reviewer. Each of the 9 acceptance criteria was matched to text quoted word
+  for word from the evidence.'

@@ -358,9 +358,10 @@ attempts:
   quest_id: github-update-metadata
   quest_version: 1
   content_hash: sha256:2d588d526bf7391c15dc0539c5deba9dd3c21dad1cbfd92a501ff66f8c09f695
-  state: submitted
+  state: verified
   started_at: '2026-11-23T12:02:54Z'
-  updated_at: '2026-11-23T12:45:06Z'
+  updated_at: '2026-11-23T12:47:43Z'
   evidence_path: participant/evidence/github-update-metadata/github-attempt-005
   submission_id: submission-20261123124506-07081c
-updated_at: '2026-11-23T12:45:06Z'
+  review_id: review-20261123124743-ba338f
+updated_at: '2026-11-23T12:47:43Z'
