@@ -1,0 +1,343 @@
+Building the index of local issue records. github-build-index, attempt github-attempt-006
+Recorded by scripts/record_evidence.py. Nothing was contacted. Every repository, person, label and issue is made up.
+Before part 1 this script removed participant/context/github/index.md, left by the last recording.
+The records folder participant/context/github/issues holds 12 files, counted by this script.
+
+==============================================================================
+PART 1. Build the index twice. The results are identical (criterion 5)
+$ python3 participant/skills/github-build-index/index.py build
+------------------------------------------------------------------------------
+github-index: records folder: participant/context/github/issues. Record files found: 12
+github-index: indexed, one row each: 12. Of those, with a gap: 0. Could not be indexed: 0. Issues held in more than one file: 0
+github-index: count check: the index has 12 rows for 12 files (12 indexed and 0 that could not be), and no file has two rows
+github-index: lookups: 2 by repository, 6 by label, 4 by milestone, 4 by assignee
+github-index: fingerprint of the records: 09860b605d629bc5084b6d8e3eb327e4e69f844f9fc91dfdfd2b8d1c802b2cae
+github-index: index: WROTE participant/context/github/index.md, 10546 bytes, SHA-256 04c665f9e3a7e8c7ce78ee610fa28020a4b207bc1e2485ba1d0d8ab5672d15ac. The whole file was written from the records
+github-index: RESULT: built
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the build says it WROTE the index
+$ python3 participant/skills/github-build-index/index.py build
+------------------------------------------------------------------------------
+github-index: records folder: participant/context/github/issues. Record files found: 12
+github-index: indexed, one row each: 12. Of those, with a gap: 0. Could not be indexed: 0. Issues held in more than one file: 0
+github-index: count check: the index has 12 rows for 12 files (12 indexed and 0 that could not be), and no file has two rows
+github-index: lookups: 2 by repository, 6 by label, 4 by milestone, 4 by assignee
+github-index: fingerprint of the records: 09860b605d629bc5084b6d8e3eb327e4e69f844f9fc91dfdfd2b8d1c802b2cae
+github-index: index: participant/context/github/index.md already holds exactly these 10546 bytes, SHA-256 04c665f9e3a7e8c7ce78ee610fa28020a4b207bc1e2485ba1d0d8ab5672d15ac. UNCHANGED
+github-index: RESULT: built
+------------------------------------------------------------------------------
+exit code: 0
+This script read the index after each build: 10546 bytes, SHA-256 04c665f9e3a7e8c7ce78ee610fa28020a4b207bc1e2485ba1d0d8ab5672d15ac, both times.
+  ok   exit code 0, and the second build says UNCHANGED
+  ok   the two results are byte for byte identical: this script compared all 10546 bytes
+  ok   the second build did not even write the file again: its last-written time is the same
+  ok   the index holds no date and no time of day
+The same 12 records copied to a scratch folder, in the reverse order and with other file dates, and built there:
+$ python3 participant/skills/github-build-index/index.py build --records SCRATCH/issues --out SCRATCH/index.md
+------------------------------------------------------------------------------
+github-index: records folder: issues. Record files found: 12
+github-index: indexed, one row each: 12. Of those, with a gap: 0. Could not be indexed: 0. Issues held in more than one file: 0
+github-index: count check: the index has 12 rows for 12 files (12 indexed and 0 that could not be), and no file has two rows
+github-index: lookups: 2 by repository, 6 by label, 4 by milestone, 4 by assignee
+github-index: fingerprint of the records: 09860b605d629bc5084b6d8e3eb327e4e69f844f9fc91dfdfd2b8d1c802b2cae
+github-index: index: WROTE index.md, 10546 bytes, SHA-256 04c665f9e3a7e8c7ce78ee610fa28020a4b207bc1e2485ba1d0d8ab5672d15ac. The whole file was written from the records
+github-index: RESULT: built
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the index built from the copies is byte for byte the one built above: it does not depend on file dates or order
+
+==============================================================================
+PART 2. The row count equals the record count, and no record is repeated (criterion 2)
+Counted by this script, with its own reading of the folder and of the index:
+  record files in the folder:                 12
+  rows in the index's table:                  12
+  different record files those rows link to:  12
+  different issues (repository and number):   12
+  ok   the index has 12 rows and the folder has 12 record files
+  ok   every record file is linked from exactly one row, and every row links to a file that is there
+  ok   no issue is in the index twice: 12 rows, 12 different issues
+  ok   each row's repository and number are the ones in its record's front matter, read by this script
+  ok   the index's own header gives the same counts: 12 found, 12 indexed, 0 with a gap, 0 that could not be indexed
+
+==============================================================================
+PART 3. Lookups by repository, label, milestone and assignee, from the index (criterion 3)
+For each lookup this script worked out the answer itself from the records' front matter, and compared.
+$ python3 participant/skills/github-build-index/index.py lookup repository acme-fixture/website
+------------------------------------------------------------------------------
+github-index: looking in the INDEX, participant/context/github/index.md, not in the records. Run `check` to see whether the index is current
+github-index:   acme-fixture/website#3, closed, issues/acme-fixture__website__issue-3.md: Broken link on the pricing page
+github-index:   acme-fixture/website#4, open, issues/acme-fixture__website__issue-4.md: Add a search box
+github-index:   acme-fixture/website#5, open, issues/acme-fixture__website__issue-5.md: Fix the footer year
+github-index:   acme-fixture/website#8, open, issues/acme-fixture__website__issue-8.md: \# Not a heading
+github-index:   acme-fixture/website#9, open, issues/acme-fixture__website__issue-9.md: Translate the home page
+github-index:   acme-fixture/website#11, closed, issues/acme-fixture__website__issue-11.md: Ünïcödé title — with a long dash
+github-index: RESULT: records with the repository "acme-fixture/website": 6
+------------------------------------------------------------------------------
+exit code: 0
+  ok   by repository: the lookup gives the 6 issues this script found in the records: acme-fixture/website#11, acme-fixture/website#3, acme-fixture/website#4, acme-fixture/website#5, acme-fixture/website#8, acme-fixture/website#9
+$ python3 participant/skills/github-build-index/index.py lookup label bug
+------------------------------------------------------------------------------
+github-index: looking in the INDEX, participant/context/github/index.md, not in the records. Run `check` to see whether the index is current
+github-index:   acme-fixture/tracker#12, open, issues/acme-fixture__tracker__issue-12.md: Import fails on an empty file
+github-index:   acme-fixture/tracker#17, open, issues/acme-fixture__tracker__issue-17.md: Rename the \| pipe \| option
+github-index:   acme-fixture/tracker#42, open, issues/issue-sample.md: Export drops the "customer reference" --- state: closed
+github-index:   acme-fixture/website#3, closed, issues/acme-fixture__website__issue-3.md: Broken link on the pricing page
+github-index:   acme-fixture/website#5, open, issues/acme-fixture__website__issue-5.md: Fix the footer year
+github-index: RESULT: records with the label "bug": 5
+------------------------------------------------------------------------------
+exit code: 0
+  ok   by label: the lookup gives the 5 issues this script found in the records: acme-fixture/tracker#12, acme-fixture/tracker#17, acme-fixture/tracker#42, acme-fixture/website#3, acme-fixture/website#5
+$ python3 participant/skills/github-build-index/index.py lookup milestone Launch
+------------------------------------------------------------------------------
+github-index: looking in the INDEX, participant/context/github/index.md, not in the records. Run `check` to see whether the index is current
+github-index:   acme-fixture/website#3, closed, issues/acme-fixture__website__issue-3.md: Broken link on the pricing page
+github-index:   acme-fixture/website#4, open, issues/acme-fixture__website__issue-4.md: Add a search box
+github-index:   acme-fixture/website#5, open, issues/acme-fixture__website__issue-5.md: Fix the footer year
+github-index:   acme-fixture/website#11, closed, issues/acme-fixture__website__issue-11.md: Ünïcödé title — with a long dash
+github-index: RESULT: records with the milestone "Launch": 4
+------------------------------------------------------------------------------
+exit code: 0
+  ok   by milestone: the lookup gives the 4 issues this script found in the records: acme-fixture/website#11, acme-fixture/website#3, acme-fixture/website#4, acme-fixture/website#5
+$ python3 participant/skills/github-build-index/index.py lookup assignee kit-fixture
+------------------------------------------------------------------------------
+github-index: looking in the INDEX, participant/context/github/index.md, not in the records. Run `check` to see whether the index is current
+github-index:   acme-fixture/tracker#17, open, issues/acme-fixture__tracker__issue-17.md: Rename the \| pipe \| option
+github-index:   acme-fixture/tracker#30, open, issues/acme-fixture__tracker__issue-30.md: Title with \`backticks\`, \[brackets\] and &lt;b&gt;tags&lt;/b&gt;
+github-index:   acme-fixture/tracker#42, open, issues/issue-sample.md: Export drops the "customer reference" --- state: closed
+github-index:   acme-fixture/website#4, open, issues/acme-fixture__website__issue-4.md: Add a search box
+github-index:   acme-fixture/website#11, closed, issues/acme-fixture__website__issue-11.md: Ünïcödé title — with a long dash
+github-index: RESULT: records with the assignee "kit-fixture": 5
+------------------------------------------------------------------------------
+exit code: 0
+  ok   by assignee: the lookup gives the 5 issues this script found in the records: acme-fixture/tracker#17, acme-fixture/tracker#30, acme-fixture/tracker#42, acme-fixture/website#11, acme-fixture/website#4
+$ python3 participant/skills/github-build-index/index.py lookup assignee --none
+------------------------------------------------------------------------------
+github-index: looking in the INDEX, participant/context/github/index.md, not in the records. Run `check` to see whether the index is current
+github-index:   acme-fixture/tracker#21, open, issues/acme-fixture__tracker__issue-21.md: Nobody owns this yet
+github-index:   acme-fixture/website#5, open, issues/acme-fixture__website__issue-5.md: Fix the footer year
+github-index: RESULT: records with nobody assigned: 2
+------------------------------------------------------------------------------
+exit code: 0
+  ok   issues with nobody assigned can be looked up too: acme-fixture/tracker#21, acme-fixture/website#5
+$ python3 participant/skills/github-build-index/index.py lookup label --list
+------------------------------------------------------------------------------
+github-index: looking in the INDEX, participant/context/github/index.md, not in the records. Run `check` to see whether the index is current
+github-index:   "needs: triage [export] | `urgent`": 1
+github-index:   bug: 5
+github-index:   docs: 3
+github-index:   enhancement: 3
+github-index:   good first issue: 2
+github-index:   (no label): 2
+github-index: RESULT: 6 label values in the index
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the list of labels has every label in the records with the count this script got: 5 labels, and 2 issues with none
+  ok   the lookups read the index and say so, not the records
+$ python3 participant/skills/github-build-index/index.py lookup label docs --out SCRATCH/index-alone/index.md
+------------------------------------------------------------------------------
+github-index: looking in the INDEX, index.md, not in the records. Run `check` to see whether the index is current
+github-index:   acme-fixture/tracker#13, closed, issues/acme-fixture__tracker__issue-13.md: Document the export format
+github-index:   acme-fixture/website#8, open, issues/acme-fixture__website__issue-8.md: \# Not a heading
+github-index:   acme-fixture/website#11, closed, issues/acme-fixture__website__issue-11.md: Ünïcödé title — with a long dash
+github-index: RESULT: records with the label "docs": 3
+------------------------------------------------------------------------------
+exit code: 0
+  ok   a copy of the index in a folder with no records beside it still answers: the lookup works from the index alone
+
+==============================================================================
+PART 4. Adding a record changes the index without a hand edit (criterion 6)
+In the scratch copy, so that the handed-in index stays as part 1 built it.
+$ python3 participant/skills/github-build-index/index.py check --records SCRATCH/issues --out SCRATCH/index.md
+------------------------------------------------------------------------------
+github-index: age: the index file was last written 0 seconds ago. Record files written after it: 0
+github-index: the records now: 12 files, fingerprint 09860b605d629bc5084b6d8e3eb327e4e69f844f9fc91dfdfd2b8d1c802b2cae
+github-index: RESULT: UP TO DATE. The index on disk is byte for byte what the records give now
+------------------------------------------------------------------------------
+exit code: 0
+A new made-up record is written, as a sync would write one. It is website issue 14:
+$ python3 participant/skills/github-build-index/make_records.py SCRATCH/issues --one
+------------------------------------------------------------------------------
+make_records: wrote 1 made-up issue record(s): acme-fixture__website__issue-14.md
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/github-build-index/index.py check --records SCRATCH/issues --out SCRATCH/index.md
+------------------------------------------------------------------------------
+github-index: age: the index file was last written 0 seconds ago. Record files written after it: 1
+github-index: the records now: 13 files, fingerprint f330de3709e4004205d2b7d5ed180de27f82befaa848f85e081d0c10bd8156ef
+github-index:   ADDED since the index was built: acme-fixture\_\_website\_\_issue-14.md
+github-index: RESULT: STALE. The records are not the ones the index was built from: 1 added, 0 removed, 0 changed. Build it again
+------------------------------------------------------------------------------
+exit code: 3
+  ok   before the index is built again, the check says it is STALE and names the added record
+  ok   the index file itself has not been touched yet: same bytes as before
+$ python3 participant/skills/github-build-index/index.py build --records SCRATCH/issues --out SCRATCH/index.md
+------------------------------------------------------------------------------
+github-index: records folder: issues. Record files found: 13
+github-index: indexed, one row each: 13. Of those, with a gap: 0. Could not be indexed: 0. Issues held in more than one file: 0
+github-index: count check: the index has 13 rows for 13 files (13 indexed and 0 that could not be), and no file has two rows
+github-index: lookups: 2 by repository, 6 by label, 4 by milestone, 4 by assignee
+github-index: fingerprint of the records: f330de3709e4004205d2b7d5ed180de27f82befaa848f85e081d0c10bd8156ef
+github-index: index: WROTE index.md, 11207 bytes, SHA-256 59ee9ded56d127e35d8e8bbd7eb624976ea7707f17f7617f77f6d6d4e2fb83e8. The whole file was written from the records. What was there before was not kept
+github-index: RESULT: built
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the build now counts 13 rows for 13 files
+  ok   the index changed, and the only thing that wrote to it was the build command
+  ok   the new record has one row: acme-fixture/website, number 14
+  ok   every row that was there before is still there, unchanged
+$ python3 participant/skills/github-build-index/index.py lookup assignee robin-fixture --records SCRATCH/issues --out SCRATCH/index.md
+------------------------------------------------------------------------------
+github-index: looking in the INDEX, index.md, not in the records. Run `check` to see whether the index is current
+github-index:   acme-fixture/tracker#12, open, issues/acme-fixture__tracker__issue-12.md: Import fails on an empty file
+github-index:   acme-fixture/tracker#17, open, issues/acme-fixture__tracker__issue-17.md: Rename the \| pipe \| option
+github-index:   acme-fixture/tracker#42, open, issues/issue-sample.md: Export drops the "customer reference" --- state: closed
+github-index:   acme-fixture/website#8, open, issues/acme-fixture__website__issue-8.md: \# Not a heading
+github-index:   acme-fixture/website#9, open, issues/acme-fixture__website__issue-9.md: Translate the home page
+github-index:   acme-fixture/website#14, open, issues/acme-fixture__website__issue-14.md: Add a footer link to the handbook
+github-index: RESULT: records with the assignee "robin-fixture": 6
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the new issue is found by a lookup
+$ python3 participant/skills/github-build-index/index.py check --records SCRATCH/issues --out SCRATCH/index.md
+------------------------------------------------------------------------------
+github-index: age: the index file was last written 0 seconds ago. Record files written after it: 0
+github-index: the records now: 13 files, fingerprint f330de3709e4004205d2b7d5ed180de27f82befaa848f85e081d0c10bd8156ef
+github-index: RESULT: UP TO DATE. The index on disk is byte for byte what the records give now
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the check now says UP TO DATE
+
+==============================================================================
+PART 5. A record with a missing field is reported as a gap (criterion 4)
+This script damaged one scratch record: it deleted the line `milestone: ...` from tracker issue 12. It also put a
+file in the folder that is not a record at all, meeting-notes.md.
+$ python3 participant/skills/github-build-index/index.py build --records SCRATCH/issues --out SCRATCH/index.md
+------------------------------------------------------------------------------
+github-index: records folder: issues. Record files found: 14
+github-index: indexed, one row each: 13. Of those, with a gap: 1. Could not be indexed: 1. Issues held in more than one file: 0
+github-index: count check: the index has 14 rows for 14 files (13 indexed and 1 that could not be), and no file has two rows
+github-index:   GAP: acme-fixture__tracker__issue-12.md: the field `milestone`: the line is missing
+github-index:   COULD NOT BE INDEXED: meeting-notes.md: it has no front matter, so it is not an issue record
+github-index: lookups: 2 by repository, 6 by label, 5 by milestone, 4 by assignee
+github-index: fingerprint of the records: 00fe2152bed56971b5e8f3117d54788afaa8dce34159ddb292cc22cb5ac2cf21
+github-index: index: WROTE index.md, 11529 bytes, SHA-256 b790f060205a14d6ebf4db3dd40f0c103ce69dfd57a2199da7323e893cd6870d. The whole file was written from the records. What was there before was not kept
+github-index: RESULT: built, and a person should look: see the lines above. Every file is still in the index, once
+------------------------------------------------------------------------------
+exit code: 3
+  ok   exit code 3: built, and a person should look
+  ok   the missing field is reported as a gap, naming the file and the field
+  ok   the record keeps its row, with GAP where the milestone would be, not a blank and not "none"
+  ok   the index lists it under "Gaps (1)"
+  ok   the file that is not a record is counted and listed under "Could not be indexed (1)", with the reason
+  ok   the counts still add up: 14 files found, 13 indexed and 1 that could not be
+$ python3 participant/skills/github-build-index/index.py lookup milestone --gap --records SCRATCH/issues --out SCRATCH/index.md
+------------------------------------------------------------------------------
+github-index: looking in the INDEX, index.md, not in the records. Run `check` to see whether the index is current
+github-index:   acme-fixture/tracker#12, open, issues/acme-fixture__tracker__issue-12.md: Import fails on an empty file
+github-index: RESULT: records whose milestone could not be read: 1
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the record with the gap can be looked up as one
+$ python3 participant/skills/github-build-index/index.py lookup milestone --none --records SCRATCH/issues --out SCRATCH/index.md
+------------------------------------------------------------------------------
+github-index: looking in the INDEX, index.md, not in the records. Run `check` to see whether the index is current
+github-index:   acme-fixture/tracker#21, open, issues/acme-fixture__tracker__issue-21.md: Nobody owns this yet
+github-index:   acme-fixture/tracker#30, open, issues/acme-fixture__tracker__issue-30.md: Title with \`backticks\`, \[brackets\] and &lt;b&gt;tags&lt;/b&gt;
+github-index:   acme-fixture/website#8, open, issues/acme-fixture__website__issue-8.md: \# Not a heading
+github-index: RESULT: records with no milestone: 3
+------------------------------------------------------------------------------
+exit code: 0
+  ok   it is not mixed in with the issues that truly have no milestone (acme-fixture/tracker#21, acme-fixture/tracker#30, acme-fixture/website#8): a gap is not "none"
+$ python3 participant/skills/github-build-index/index.py lookup label bug --records SCRATCH/issues --out SCRATCH/index.md
+------------------------------------------------------------------------------
+github-index: looking in the INDEX, index.md, not in the records. Run `check` to see whether the index is current
+github-index:   acme-fixture/tracker#12, open, issues/acme-fixture__tracker__issue-12.md: Import fails on an empty file
+github-index:   acme-fixture/tracker#17, open, issues/acme-fixture__tracker__issue-17.md: Rename the \| pipe \| option
+github-index:   acme-fixture/tracker#42, open, issues/issue-sample.md: Export drops the "customer reference" --- state: closed
+github-index:   acme-fixture/website#3, closed, issues/acme-fixture__website__issue-3.md: Broken link on the pricing page
+github-index:   acme-fixture/website#5, open, issues/acme-fixture__website__issue-5.md: Fix the footer year
+github-index: RESULT: records with the label "bug": 5
+------------------------------------------------------------------------------
+exit code: 0
+  ok   it is still found by its label, which the record does have
+
+==============================================================================
+PART 6. The index is generated, never hand-edited (criterion 1)
+The damaged record is put back and the stray file removed. The index is built again, and is clean:
+$ python3 participant/skills/github-build-index/index.py build --records SCRATCH/issues --out SCRATCH/index.md
+------------------------------------------------------------------------------
+github-index: records folder: issues. Record files found: 13
+github-index: indexed, one row each: 13. Of those, with a gap: 0. Could not be indexed: 0. Issues held in more than one file: 0
+github-index: count check: the index has 13 rows for 13 files (13 indexed and 0 that could not be), and no file has two rows
+github-index: lookups: 2 by repository, 6 by label, 4 by milestone, 4 by assignee
+github-index: fingerprint of the records: f330de3709e4004205d2b7d5ed180de27f82befaa848f85e081d0c10bd8156ef
+github-index: index: WROTE index.md, 11207 bytes, SHA-256 59ee9ded56d127e35d8e8bbd7eb624976ea7707f17f7617f77f6d6d4e2fb83e8. The whole file was written from the records. What was there before was not kept
+github-index: RESULT: built
+------------------------------------------------------------------------------
+exit code: 0
+Now this script edits the scratch index by hand: in the row of website issue 5 it changes "open" to "closed".
+$ python3 participant/skills/github-build-index/index.py check --records SCRATCH/issues --out SCRATCH/index.md
+------------------------------------------------------------------------------
+github-index: age: the index file was last written 0 seconds ago. Record files written after it: 0
+github-index: the records now: 13 files, fingerprint f330de3709e4004205d2b7d5ed180de27f82befaa848f85e081d0c10bd8156ef
+github-index: RESULT: EDITED BY HAND. The records are the ones the index was built from, and the file's text is not what they give. The first line that differs is line 32. Build it again: the edit will be lost, as it should be
+------------------------------------------------------------------------------
+exit code: 3
+  ok   exit code 3: the check says EDITED BY HAND, and not stale, because the records are the ones it was built from
+$ python3 participant/skills/github-build-index/index.py build --records SCRATCH/issues --out SCRATCH/index.md
+------------------------------------------------------------------------------
+github-index: records folder: issues. Record files found: 13
+github-index: indexed, one row each: 13. Of those, with a gap: 0. Could not be indexed: 0. Issues held in more than one file: 0
+github-index: count check: the index has 13 rows for 13 files (13 indexed and 0 that could not be), and no file has two rows
+github-index: lookups: 2 by repository, 6 by label, 4 by milestone, 4 by assignee
+github-index: fingerprint of the records: f330de3709e4004205d2b7d5ed180de27f82befaa848f85e081d0c10bd8156ef
+github-index: index: WROTE index.md, 11207 bytes, SHA-256 59ee9ded56d127e35d8e8bbd7eb624976ea7707f17f7617f77f6d6d4e2fb83e8. The whole file was written from the records. What was there before was not kept
+github-index: RESULT: built
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the next build writes the whole file again and says what was there was not kept
+  ok   the hand edit is gone: the index is byte for byte what it was before the edit
+
+==============================================================================
+PART 7. Stretch goals: a text search, and the index's age
+$ python3 participant/skills/github-build-index/index.py find footer --records SCRATCH/issues --out SCRATCH/index.md
+------------------------------------------------------------------------------
+github-index: searching the RECORDS in issues, not the index: 13 records. Capitals do not matter
+github-index:   acme-fixture/website#5 (acme-fixture__website__issue-5.md): in the title, the body
+github-index:   acme-fixture/website#14 (acme-fixture__website__issue-14.md): in the title
+github-index: RESULT: found in 2 records
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the search finds the two issues that mention a footer, and says it searched the records, not the index
+$ python3 participant/skills/github-build-index/index.py check --records SCRATCH/issues --out SCRATCH/index.md
+------------------------------------------------------------------------------
+github-index: age: the index file was last written 0 seconds ago. Record files written after it: 0
+github-index: the records now: 13 files, fingerprint f330de3709e4004205d2b7d5ed180de27f82befaa848f85e081d0c10bd8156ef
+github-index: RESULT: UP TO DATE. The index on disk is byte for byte what the records give now
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the check reports the index's age, and how many records were written after it: 0
+The age is reported by the check and is not stored in the index, so that two builds stay identical.
+
+==============================================================================
+PART 8. The handed-in index, and its statement (criterion 7)
+  | # Index of the local GitHub issue records
+  | 
+  | **This file is generated. It is not the source of truth, and it must not be edited by hand.** The source of
+  | truth is the issue records in `issues/`. To change this index, change or add a record and build it again with
+  | `index.py build`. A build writes the whole file from the records and keeps nothing that was here. `index.py check`
+  | says whether this file is still what the records give, and finds a hand edit.
+  | 
+  | - format of this index: `github-issue-index/1`
+  | - record files found: 12
+  | - indexed, one row each: 12
+  | - of those, with a gap: 0
+  | - could not be indexed: 0
+  | - issues held in more than one file: 0
+  | - fingerprint of the records: `09860b605d629bc5084b6d8e3eb327e4e69f844f9fc91dfdfd2b8d1c802b2cae`
+  ok   the index is headed by the statement that it is generated and is not the source of truth, and names the records as the source
+  ok   participant/context/github/index.md is still byte for byte what part 1 built: SHA-256 04c665f9e3a7e8c7ce78ee610fa28020a4b207bc1e2485ba1d0d8ab5672d15ac
+  ok   the twelve records were not changed by any of this: this script read them again
+
+RESULT: ALL CHECKS PASSED. 44 checks.

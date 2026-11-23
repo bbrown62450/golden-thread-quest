@@ -364,4 +364,13 @@ attempts:
   evidence_path: participant/evidence/github-update-metadata/github-attempt-005
   submission_id: submission-20261123124506-07081c
   review_id: review-20261123124743-ba338f
-updated_at: '2026-11-23T12:47:43Z'
+- attempt_id: github-attempt-006
+  quest_id: github-build-index
+  quest_version: 1
+  content_hash: sha256:b8792643e504eb47111b97b685f76e64b95efa6198effd4089d757230a3ee11b
+  state: submitted
+  started_at: '2026-11-23T14:58:53Z'
+  updated_at: '2026-11-23T15:37:06Z'
+  evidence_path: participant/evidence/github-build-index/github-attempt-006
+  submission_id: submission-20261123153706-ba7f6b
+updated_at: '2026-11-23T15:37:06Z'

@@ -1,0 +1,201 @@
+Do the tests notice a broken generator? github-build-index, attempt github-attempt-006
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/github-build-index/index.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. The index does not say it is generated and is not the source of truth (criteria 1 and 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    NotTheSourceOfTruth.test_the_statement_heads_the_file
+
+PLANTED BUG B. A build leaves an existing index as it is, hand edits and all (criterion 1)
+  unittest result: FAILED (failures=6)
+  tests that failed (6):
+    Generated.test_a_build_keeps_nothing_of_a_hand_edit
+    Generated.test_a_build_writes_over_a_file_that_was_never_an_index
+    Adding.test_a_changed_record_changes_its_row
+    Adding.test_a_new_record_gets_a_row_and_is_in_every_lookup
+    OtherPeoplesText.test_a_title_cannot_add_a_row_a_heading_or_a_link
+    Adding.test_until_it_is_built_again_the_check_says_the_index_is_stale_and_names_the_record
+
+PLANTED BUG C. The check compares only the list of records, so a hand edit to a row is not found (criterion 1)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Generated.test_a_hand_edit_is_found_by_the_check
+    Generated.test_a_hand_edit_to_the_fingerprint_line_is_still_a_hand_edit
+    Generated.test_the_check_says_which_line_was_edited
+
+PLANTED BUG D. A record with a gap is left out of the table (criteria 2 and 4)
+  unittest result: FAILED (failures=6, errors=1)
+  tests that failed (7):
+    Gaps.test_a_body_that_no_longer_matches_its_checksum_is_a_gap
+    Gaps.test_a_field_of_the_wrong_kind_is_a_gap
+    Gaps.test_a_line_that_cannot_be_read_is_a_gap
+    Gaps.test_a_missing_milestone_line_is_a_gap_and_the_record_keeps_its_row
+    Gaps.test_a_record_with_a_gap_is_looked_up_under_gap_and_not_under_none
+    Gaps.test_a_record_without_its_number_or_repository_still_has_a_row
+    Gaps.test_several_gaps_in_one_record_are_each_listed
+
+PLANTED BUG E. A file that is not a record is dropped without a word (criterion 2)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    EveryRecordOnce.test_a_file_that_is_not_a_record_is_counted_and_not_dropped
+    EveryRecordOnce.test_every_kind_of_file_that_is_not_a_record_gets_its_reason
+    Find.test_files_that_could_not_be_read_are_reported_as_not_searched
+
+PLANTED BUG F. The check that every file has exactly one row is skipped (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    EveryRecordOnce.test_an_index_that_would_miss_a_row_is_not_written
+
+PLANTED BUG G. The check that the counts in the index agree with the files is skipped (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    EveryRecordOnce.test_an_index_whose_counts_are_wrong_is_not_written
+
+PLANTED BUG H. Hidden files are counted as records (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    EveryRecordOnce.test_folders_hidden_files_and_other_kinds_of_file_are_not_records
+
+PLANTED BUG I. One issue held in two files is not flagged (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    EveryRecordOnce.test_one_issue_in_two_files_keeps_both_rows_and_is_flagged
+
+PLANTED BUG J. A file in another format is indexed as if it were a record (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    EveryRecordOnce.test_every_kind_of_file_that_is_not_a_record_gets_its_reason
+
+PLANTED BUG K. Only the first label of an issue is indexed (criterion 3)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    Lookups.test_a_label_with_odd_characters_can_be_looked_up_and_one_named_like_a_special_group_is_kept_apart
+    Lookups.test_by_assignee
+    Lookups.test_by_label
+    Lookups.test_capitals_do_not_matter
+    Lookups.test_the_list_shows_every_value_with_its_count
+
+PLANTED BUG L. A lookup finds a value only when its capitals match (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Lookups.test_capitals_do_not_matter
+
+PLANTED BUG M. A lookup of the issues with none returns the ones with a gap (criteria 3 and 4)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Lookups.test_a_label_with_odd_characters_can_be_looked_up_and_one_named_like_a_special_group_is_kept_apart
+    Gaps.test_a_record_with_a_gap_is_looked_up_under_gap_and_not_under_none
+    Lookups.test_the_ones_that_have_none
+
+PLANTED BUG N. A label named like a special group is mixed in with that group (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Lookups.test_a_label_with_odd_characters_can_be_looked_up_and_one_named_like_a_special_group_is_kept_apart
+
+PLANTED BUG O. A missing line is taken to mean none (criterion 4)
+  unittest result: FAILED (failures=3, errors=1)
+  tests that failed (4):
+    Gaps.test_a_missing_milestone_line_is_a_gap_and_the_record_keeps_its_row
+    Gaps.test_a_record_with_a_gap_is_looked_up_under_gap_and_not_under_none
+    Gaps.test_a_record_without_its_number_or_repository_still_has_a_row
+    Gaps.test_several_gaps_in_one_record_are_each_listed
+
+PLANTED BUG P. A field that holds the wrong kind of thing is accepted (criterion 4)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Gaps.test_a_field_of_the_wrong_kind_is_a_gap
+    Gaps.test_a_record_without_its_number_or_repository_still_has_a_row
+
+PLANTED BUG Q. A gap is shown in the table as none (criterion 4)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Gaps.test_a_missing_milestone_line_is_a_gap_and_the_record_keeps_its_row
+    Gaps.test_a_record_without_its_number_or_repository_still_has_a_row
+
+PLANTED BUG R. A record with a gap is looked up under none (criterion 4)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Gaps.test_a_line_that_cannot_be_read_is_a_gap
+    Gaps.test_a_record_with_a_gap_is_looked_up_under_gap_and_not_under_none
+
+PLANTED BUG S. A body that no longer matches its checksum is not noticed (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Gaps.test_a_body_that_no_longer_matches_its_checksum_is_a_gap
+
+PLANTED BUG T. The index holds the time it was built (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Identical.test_the_index_holds_no_date_and_no_time
+
+PLANTED BUG U. The rows are not in a fixed order (criterion 5)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Gaps.test_a_record_without_its_number_or_repository_still_has_a_row
+    Identical.test_the_rows_are_in_order_of_repository_and_number
+
+PLANTED BUG V. Every build writes the file again (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Identical.test_a_second_build_gives_the_same_bytes_and_does_not_write
+
+PLANTED BUG W. A stale index is reported as edited by hand, and the records that changed are not named (criterion 6)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Adding.test_a_removed_and_a_changed_record_are_named_too
+    Adding.test_until_it_is_built_again_the_check_says_the_index_is_stale_and_names_the_record
+
+PLANTED BUG X. A record that changed is not noticed by the check (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Adding.test_a_removed_and_a_changed_record_are_named_too
+
+PLANTED BUG Y. A pipe in a title is not escaped, so a title can break a row
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    OtherPeoplesText.test_a_file_with_an_odd_name_is_indexed_once_and_linked
+    EveryRecordOnce.test_each_row_holds_what_the_record_holds
+    OtherPeoplesText.test_the_titles_that_could_break_a_table_are_written_safely
+
+PLANTED BUG Z. A line break in a title is kept, so a title can add a line to the index
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OtherPeoplesText.test_a_title_cannot_add_a_row_a_heading_or_a_link
+
+PLANTED BUG AA. Brackets are not escaped, so a title can add a link
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    OtherPeoplesText.test_a_file_with_an_odd_name_is_indexed_once_and_linked
+    OtherPeoplesText.test_a_title_cannot_add_a_row_a_heading_or_a_link
+    OtherPeoplesText.test_the_titles_that_could_break_a_table_are_written_safely
+
+PLANTED BUG AB. The link to a record file with an odd name is not made safe
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OtherPeoplesText.test_a_file_with_an_odd_name_is_indexed_once_and_linked
+
+PLANTED BUG AC. The search does not look in comments
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Find.test_text_is_found_in_a_title_a_body_and_a_comment
+
+PLANTED BUG AD. The search minds capitals
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Find.test_the_search_reads_the_records_and_says_so
+
+PLANTED BUG AE. The search looks through the whole file, fields and all
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Find.test_text_is_found_in_a_title_a_body_and_a_comment
+    Find.test_the_search_does_not_look_in_the_fields_or_the_file_s_own_words
+    Find.test_the_search_reads_the_records_and_says_so
+
+After the last bug was taken out: index.py is byte for byte what it was at the start. OK
+
+RESULT: all 31 planted bugs were caught by at least one test, and the file was restored.

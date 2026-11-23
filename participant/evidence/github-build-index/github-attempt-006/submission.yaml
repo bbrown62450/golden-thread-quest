@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261123153706-ba7f6b
+quest_id: github-build-index
+quest_version: 1
+attempt_id: github-attempt-006
+content_hash: sha256:b8792643e504eb47111b97b685f76e64b95efa6198effd4089d757230a3ee11b
+evidence_hash: sha256:e4dfe1597bb394c7be45e49e30fd62b81e8a56133f9155a7f685721eb69c3dad
+submitted_at: '2026-11-23T15:37:06Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/github/index.md
+  digest: sha256:56d97d028085d09ac509f043445919f8668d5804d29b5719627c827cdc1dd208
+- path: participant/skills/github-build-index/SKILL.md
+  digest: sha256:b913e763ece46cf4184f7b048ee5651c76f6b0a1088469a0e220498663509202
