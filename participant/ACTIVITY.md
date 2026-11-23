@@ -236,3 +236,8 @@ Every change this application made to your files, newest last.
 - `2026-11-23T15:37:06Z` github-build-index: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-23T15:37:06Z` Submitted github-build-index for review as submission-20261123153706-ba7f6b.
 - `2026-11-23T15:46:38Z` Review of github-build-index: approved by Claude (automated reviewer).
+- `2026-11-23T16:00:23Z` Started github-duplicate-search as attempt github-attempt-007.
+- `2026-11-23T16:11:23Z` github-duplicate-search: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-23T16:12:05Z` github-duplicate-search: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-23T16:12:39Z` github-duplicate-search: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-23T16:12:39Z` Submitted github-duplicate-search for review as submission-20261123161239-06bf35.

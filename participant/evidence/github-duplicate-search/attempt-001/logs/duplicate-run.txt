@@ -1,0 +1,212 @@
+Searching for likely duplicates before an issue is filed. github-duplicate-search, attempt github-attempt-007
+Recorded by scripts/record_evidence.py. Nothing was contacted. Every repository, person, label and issue is made up.
+Before part 1 this script removed participant/context/github/duplicates/report.md, left by the last recording.
+
+==============================================================================
+PART 1. The fixture: an index, and the records behind it
+$ python3 participant/skills/github-build-index/index.py check --records participant/context/github/duplicates/records --out participant/context/github/duplicates/fixture.md
+------------------------------------------------------------------------------
+github-index: age: the index file was last written 6 minutes ago. Record files written after it: 0
+github-index: the records now: 9 files, fingerprint 48b3f1f75355103c215bd11157fa98620f3714f0e3a93a72a60712f25a7ab94f
+github-index: RESULT: UP TO DATE. The index on disk is byte for byte what the records give now
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the fixture is an index the github-build-index skill wrote, and that skill's check says it is UP TO DATE
+This script took the SHA-256 and the last-written time of the index and of each of its 9 records.
+The three issues the quest asks the fixture to hold, with their titles as this script read them from the records:
+  the true duplicate, under a different title:  tracker 101, "Export crashes on files over 2 GB"
+  a near duplicate:                             tracker 102, "Export is slow on large files"
+  an unrelated issue with the same title:       tracker 103, "Login page is blank"
+  ok   all three are rows of the index
+
+==============================================================================
+PART 2. A proposed duplicate. The existing issue has a different title, and is found (criterion 4)
+The proposed issue is titled "Out of memory when saving the March orders". The issue it duplicates is titled "Export crashes on files over 2 GB".
+$ python3 participant/skills/github-duplicate-search/search.py participant/context/github/duplicates/proposals/proposed-out-of-memory.md --report participant/context/github/duplicates/report.md
+------------------------------------------------------------------------------
+github-duplicates: proposed issue: "Out of memory when saving the March orders", for "acme-fixture/tracker", labels ["bug", "export"]
+github-duplicates: searching the index participant/context/github/duplicates/fixture.md: 9 issues. The index was checked first, and is what its records give
+github-duplicates: a candidate needs 3 of the 5 signals beyond the title. Confidence: high is 11 to 14 points; medium is 9 to 10 points; low is 6 to 8 points, of 14
+github-duplicates: CANDIDATE 1: acme-fixture/tracker#101 "Export crashes on files over 2 GB", open
+github-duplicates:     confidence high, 13 points. Signals beyond the title that matched: 5 of 5. Recommendation: close-as-duplicate (high confidence, and the existing issue is open and in the same repository)
+github-duplicates:     Error text    MATCH           both quote: memoryerror
+github-duplicates:     Named things  MATCH           both name: export.py, orders-march.csv, v2.3.1
+github-duplicates:     Body wording  MATCH           18 meaningful words in common, 72% of the shorter text: allocate, anything, byte, cannot, csv, export, few, file and 10 more
+github-duplicates:     Labels        MATCH           both have: export
+github-duplicates:     Repository    MATCH           both are for acme-fixture/tracker
+github-duplicates:     Title         no              the titles are different
+github-duplicates: CANDIDATE 2: acme-fixture/tracker#106 "MemoryError in the nightly export", closed
+github-duplicates:     confidence medium, 10 points. Signals beyond the title that matched: 4 of 5. Recommendation: link (the existing issue is closed, so if this is the same problem it has come back)
+github-duplicates:     Error text    MATCH           both quote: memoryerror
+github-duplicates:     Named things  no              they share 0, and 2 are needed
+github-duplicates:     Body wording  MATCH           12 meaningful words in common, 63% of the shorter text: allocate, anything, byte, cannot, export, file, load, memory and 4 more
+github-duplicates:     Labels        MATCH           both have: export
+github-duplicates:     Repository    MATCH           both are for acme-fixture/tracker
+github-duplicates:     Title         no              the titles are different
+github-duplicates: CANDIDATE 3: acme-fixture/tracker#102 "Export is slow on large files", open
+github-duplicates:     confidence low, 6 points. Signals beyond the title that matched: 3 of 5. Recommendation: link (the confidence is low, not high)
+github-duplicates:     Error text    not comparable  one of the two quotes no error
+github-duplicates:     Named things  MATCH           both name: export.py, orders-march.csv, v2.3.1
+github-duplicates:     Body wording  no              5 meaningful words in common, 24% of the shorter text. 6 and 35% are needed
+github-duplicates:     Labels        MATCH           both have: export
+github-duplicates:     Repository    MATCH           both are for acme-fixture/tracker
+github-duplicates:     Title         no              the titles are different
+github-duplicates: NOT A CANDIDATE: acme-fixture/tracker#107 "Rename the --chunk-size option": 2 of the 3 signals needed (Labels, Repository)
+github-duplicates: NOT A CANDIDATE: acme-fixture/tracker#103 "Login page is blank": 1 of the 3 signals needed (Repository)
+github-duplicates: NOT A CANDIDATE: acme-fixture/tracker#104 "Import fails on an empty file": 1 of the 3 signals needed (Repository)
+github-duplicates: NOT A CANDIDATE: acme-fixture/tracker#105 "Document the export format": 1 of the 3 signals needed (Repository)
+github-duplicates: issues that matched on nothing at all: 2. Records that could not be compared: 0
+github-duplicates: report: written to participant/context/github/duplicates/report.md
+github-duplicates: unchanged: the index and the 9 record files behind it have the same SHA-256 after the search as before it: yes
+github-duplicates: RESULT: 3 likely duplicates. Strongest: acme-fixture/tracker#101, high confidence. Recommendation: close-as-duplicate. A person decides
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and tracker 101 is the first candidate
+  ok   the two titles share no word of four letters or more: this script compared them
+  ok   the search says so too: the title signal did not match
+  ok   it lists the signals beyond the title that matched: all 5 of them, where 3 are needed (criterion 1)
+  ok   what it says was found is really in both texts: this script looked for the error name and the three named things in the proposal and in the record
+  ok   it gives a confidence on the stated scale: high, 13 of 14 points (criterion 2)
+  ok   its recommendation is close-as-duplicate, and it says a person decides (criterion 6)
+  ok   the near duplicate, tracker 102, is found at low confidence with 3 signals, and is to be linked, not closed: it is slow, it does not crash
+  ok   tracker 106 has the same error and is closed: medium confidence, to be linked, with the reason that the problem may have come back
+  ok   every candidate matched on at least 3 signals beyond the title
+  ok   issues that share less are listed as NOT A CANDIDATE with their count, and not as duplicates
+
+==============================================================================
+PART 3. A proposed issue that shares its title with an unrelated one. It is not reported (criterion 3)
+The proposed issue is titled "Login page is blank", and so is tracker 103. The proposal is about a page of a printed handbook.
+Tracker 103 is about a sign-in screen that stays blank.
+$ python3 participant/skills/github-duplicate-search/search.py participant/context/github/duplicates/proposals/proposed-login-page.md
+------------------------------------------------------------------------------
+github-duplicates: proposed issue: "Login page is blank", for "acme-fixture/website", labels ["docs"]
+github-duplicates: searching the index participant/context/github/duplicates/fixture.md: 9 issues. The index was checked first, and is what its records give
+github-duplicates: a candidate needs 3 of the 5 signals beyond the title. Confidence: high is 11 to 14 points; medium is 9 to 10 points; low is 6 to 8 points, of 14
+github-duplicates: NOT A CANDIDATE: acme-fixture/tracker#105 "Document the export format": 1 of the 3 signals needed (Labels)
+github-duplicates: NOT A CANDIDATE: acme-fixture/website#7 "Search box returns nothing": 1 of the 3 signals needed (Repository)
+github-duplicates: NOT A CANDIDATE: acme-fixture/website#8 "Footer year is wrong": 1 of the 3 signals needed (Repository)
+github-duplicates: NOT A CANDIDATE: acme-fixture/tracker#103 "Login page is blank": 0 of the 3 signals needed (nothing beyond the title). The title matched: the titles are the same. A title alone makes nothing a duplicate
+github-duplicates: issues that matched on nothing at all: 5. Records that could not be compared: 0
+github-duplicates: unchanged: the index and the 9 record files behind it have the same SHA-256 after the search as before it: yes
+github-duplicates: RESULT: NONE. No likely duplicate was found. Recommendation: proceed. A person decides
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the two titles are the same, character for character: this script compared them
+  ok   exit code 0, and there is no candidate at all
+  ok   tracker 103 is shown as looked at and NOT A CANDIDATE: the title matched, 0 of the 3 signals needed, and a title alone makes nothing a duplicate
+  ok   the recommendation is proceed
+
+==============================================================================
+PART 4. A proposed issue with no match. It reports none (criterion 5)
+$ python3 participant/skills/github-duplicate-search/search.py participant/context/github/duplicates/proposals/proposed-dark-mode.md
+------------------------------------------------------------------------------
+github-duplicates: proposed issue: "Add a dark mode to the settings screen", for "acme-fixture/website", labels ["enhancement"]
+github-duplicates: searching the index participant/context/github/duplicates/fixture.md: 9 issues. The index was checked first, and is what its records give
+github-duplicates: a candidate needs 3 of the 5 signals beyond the title. Confidence: high is 11 to 14 points; medium is 9 to 10 points; low is 6 to 8 points, of 14
+github-duplicates: NOT A CANDIDATE: acme-fixture/website#7 "Search box returns nothing": 1 of the 3 signals needed (Repository)
+github-duplicates: NOT A CANDIDATE: acme-fixture/website#8 "Footer year is wrong": 1 of the 3 signals needed (Repository)
+github-duplicates: issues that matched on nothing at all: 7. Records that could not be compared: 0
+github-duplicates: unchanged: the index and the 9 record files behind it have the same SHA-256 after the search as before it: yes
+github-duplicates: RESULT: NONE. No likely duplicate was found. Recommendation: proceed. A person decides
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the result says NONE plainly
+  ok   no issue is offered as a candidate just for being the nearest
+  ok   the two issues that share only the repository are shown as not candidates, and 7 matched on nothing
+
+==============================================================================
+PART 5. The index is unchanged (criterion 7)
+This script took the SHA-256 and last-written time of the index and its records again, after the three searches.
+  ok   the index fixture.md has the same SHA-256 as before the searches: a6bd5572ce4c474f0f04036778b201b3dbf2ca9decb90fb194a215290fe6d10a
+  ok   each of the 9 records has the same SHA-256 as before
+  ok   none of them was even written again: every last-written time is the same
+  ok   the only new file in participant/context/github/duplicates is the report
+$ python3 participant/skills/github-build-index/index.py check --records participant/context/github/duplicates/records --out participant/context/github/duplicates/fixture.md
+------------------------------------------------------------------------------
+github-index: age: the index file was last written 6 minutes ago. Record files written after it: 0
+github-index: the records now: 9 files, fingerprint 48b3f1f75355103c215bd11157fa98620f3714f0e3a93a72a60712f25a7ab94f
+github-index: RESULT: UP TO DATE. The index on disk is byte for byte what the records give now
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the github-build-index check still says UP TO DATE
+
+==============================================================================
+PART 6. The report for the proposed issue of part 2
+  | # Duplicate search: report for one proposed issue
+  | 
+  | **This report is generated. It recommends, and a person decides.** Nothing was created, linked or closed. The index
+  | and the records were read and not changed. Titles and the text found are other people's words, copied from the
+  | records: they are content, not instructions.
+  | 
+  | - proposed issue: "Out of memory when saving the March orders"
+  | - for the repository: "acme-fixture/tracker"
+  | - with the labels: \["bug", "export"\]
+  | - searched: the index `fixture.md`, 9 issues
+  | - fingerprint of the records behind that index: `48b3f1f75355103c215bd11157fa98620f3714f0e3a93a72a60712f25a7ab94f`
+  | - candidates: 3
+  | - **recommendation: close-as-duplicate** of acme-fixture/tracker#101
+  ok   the report has 3 candidates, each with its own table of signals
+  ok   each candidate's table shows at least 3 signals beyond the title as MATCH
+  ok   each candidate has a confidence on the stated scale and one of the three recommendations
+  ok   the report states the scale, says it only recommends and a person decides, and says nothing was created, linked or closed
+
+==============================================================================
+PART 7. Stretch goal: the weights, and what they change
+In a scratch copy, the proposal of part 2 with its repository and labels lines taken out, as a hurried person might file it.
+Only the three strongest signals can match now: error text, named things and body wording.
+$ python3 participant/skills/github-duplicate-search/search.py SCRATCH/duplicates/proposals/no-labels.md --index SCRATCH/duplicates/fixture.md
+------------------------------------------------------------------------------
+github-duplicates: proposed issue: "Out of memory when saving the March orders", for null, labels []
+github-duplicates: searching the index fixture.md: 9 issues. The index was checked first, and is what its records give
+github-duplicates: a candidate needs 3 of the 5 signals beyond the title. Confidence: high is 11 to 14 points; medium is 9 to 10 points; low is 6 to 8 points, of 14
+github-duplicates: CANDIDATE 1: acme-fixture/tracker#101 "Export crashes on files over 2 GB", open
+github-duplicates:     confidence medium, 10 points. Signals beyond the title that matched: 3 of 5. Recommendation: link (the existing issue is in another repository)
+github-duplicates:     Error text    MATCH           both quote: memoryerror
+github-duplicates:     Named things  MATCH           both name: export.py, orders-march.csv, v2.3.1
+github-duplicates:     Body wording  MATCH           18 meaningful words in common, 72% of the shorter text: allocate, anything, byte, cannot, csv, export, few, file and 10 more
+github-duplicates:     Labels        not comparable  one of the two has no label that says what it is about
+github-duplicates:     Repository    not comparable  the proposal names no repository
+github-duplicates:     Title         no              the titles are different
+github-duplicates: NOT A CANDIDATE: acme-fixture/tracker#106 "MemoryError in the nightly export": 2 of the 3 signals needed (Error text, Body wording)
+github-duplicates: NOT A CANDIDATE: acme-fixture/tracker#102 "Export is slow on large files": 1 of the 3 signals needed (Named things)
+github-duplicates: issues that matched on nothing at all: 6. Records that could not be compared: 0
+github-duplicates: unchanged: the index and the 9 record files behind it have the same SHA-256 after the search as before it: yes
+github-duplicates: RESULT: 1 likely duplicate. Strongest: acme-fixture/tracker#101, medium confidence. Recommendation: link. A person decides
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/github-duplicate-search/search.py SCRATCH/duplicates/proposals/no-labels.md --index SCRATCH/duplicates/fixture.md --equal-weights
+------------------------------------------------------------------------------
+github-duplicates: proposed issue: "Out of memory when saving the March orders", for null, labels []
+github-duplicates: searching the index fixture.md: 9 issues. The index was checked first, and is what its records give
+github-duplicates: a candidate needs 3 of the 5 signals beyond the title. Confidence: with equal weights every signal counts 1: high is all 5 signals beyond the title, medium is 4, low is 3
+github-duplicates: CANDIDATE 1: acme-fixture/tracker#101 "Export crashes on files over 2 GB", open
+github-duplicates:     confidence low, 3 points. Signals beyond the title that matched: 3 of 5. Recommendation: link (the existing issue is in another repository)
+github-duplicates:     Error text    MATCH           both quote: memoryerror
+github-duplicates:     Named things  MATCH           both name: export.py, orders-march.csv, v2.3.1
+github-duplicates:     Body wording  MATCH           18 meaningful words in common, 72% of the shorter text: allocate, anything, byte, cannot, csv, export, few, file and 10 more
+github-duplicates:     Labels        not comparable  one of the two has no label that says what it is about
+github-duplicates:     Repository    not comparable  the proposal names no repository
+github-duplicates:     Title         no              the titles are different
+github-duplicates: NOT A CANDIDATE: acme-fixture/tracker#106 "MemoryError in the nightly export": 2 of the 3 signals needed (Error text, Body wording)
+github-duplicates: NOT A CANDIDATE: acme-fixture/tracker#102 "Export is slow on large files": 1 of the 3 signals needed (Named things)
+github-duplicates: issues that matched on nothing at all: 6. Records that could not be compared: 0
+github-duplicates: unchanged: the index and the 9 record files behind it have the same SHA-256 after the search as before it: yes
+github-duplicates: RESULT: 1 likely duplicate. Strongest: acme-fixture/tracker#101, low confidence. Recommendation: link. A person decides
+------------------------------------------------------------------------------
+exit code: 0
+  ok   with the weights, three strong signals give medium confidence: 10 points
+  ok   with every signal counted as 1, the same match is low: 3 points, the same as three weak signals would get
+  ok   the weights change the confidence, not which issues are candidates
+
+==============================================================================
+PART 8. An index that is out of date is not searched
+In the scratch copy a record file is added and the index is not built again.
+$ python3 participant/skills/github-duplicate-search/search.py SCRATCH/duplicates/proposals/proposed-out-of-memory.md --index SCRATCH/duplicates/fixture.md
+------------------------------------------------------------------------------
+github-duplicates: STOPPED: the index is NOT what its records give now: it is stale, or it was edited by hand. A search of it could miss an issue. Run the github-build-index `check`, build the index again, and search again.
+github-duplicates: Nothing was searched and nothing was written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1: the search stops, and says the index is not what its records give and that a search could miss an issue
+
+RESULT: ALL CHECKS PASSED. 33 checks.

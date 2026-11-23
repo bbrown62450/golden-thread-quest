@@ -374,4 +374,13 @@ attempts:
   evidence_path: participant/evidence/github-build-index/github-attempt-006
   submission_id: submission-20261123153706-ba7f6b
   review_id: review-20261123154638-dc461b
-updated_at: '2026-11-23T15:46:38Z'
+- attempt_id: github-attempt-007
+  quest_id: github-duplicate-search
+  quest_version: 1
+  content_hash: sha256:afb4234f9e0ee5413ad5746dbb632549a268662d5d1cdfc6c5db8a5970719b0a
+  state: submitted
+  started_at: '2026-11-23T16:00:23Z'
+  updated_at: '2026-11-23T16:12:39Z'
+  evidence_path: participant/evidence/github-duplicate-search/github-attempt-007
+  submission_id: submission-20261123161239-06bf35
+updated_at: '2026-11-23T16:12:39Z'

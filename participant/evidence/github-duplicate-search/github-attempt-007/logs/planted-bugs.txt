@@ -1,0 +1,227 @@
+Do the tests notice a broken search? github-duplicate-search, attempt github-attempt-007
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/github-duplicate-search/search.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. The title counts toward the signals a candidate needs (criteria 1 and 3)
+  unittest result: FAILED (failures=4, errors=2)
+  tests that failed (6):
+    TheProposal.test_a_proposal_with_only_a_title_matches_nothing
+    EachMatchExplained.test_confidence_follows_the_points
+    SameTitleUnrelated.test_it_is_shown_as_looked_at_with_the_reason
+    SameTitleUnrelated.test_the_report_says_so_too
+    SameTitleUnrelated.test_the_same_title_with_two_more_signals_is_still_not_a_candidate
+    Signals.test_the_title_is_worth_least_and_never_counts_toward_a_candidate
+
+PLANTED BUG B. Two signals beyond the title are enough (criterion 1)
+  unittest result: FAILED (failures=8, errors=23)
+  tests that failed (31):
+    Recommendation.test_a_closed_issue_with_the_same_error_is_linked_and_the_reason_is_given
+    DifferentTitleDuplicate.test_a_comment_on_the_existing_issue_counts_as_its_text
+    TheProposal.test_a_proposal_with_only_a_title_matches_nothing
+    OtherPeoplesText.test_a_record_with_a_gap_is_not_compared_and_is_counted
+    OtherPeoplesText.test_a_title_in_a_record_cannot_break_the_report
+    EachMatchExplained.test_candidates_are_listed_strongest_first
+    EachMatchExplained.test_confidence_follows_the_points
+    EachMatchExplained.test_each_signal_says_what_was_found
+    Weights.test_equal_weights_do_not_change_which_issues_are_candidates
+    EachMatchExplained.test_every_candidate_shows_all_six_signals_a_score_and_a_confidence
+    Recommendation.test_every_result_says_a_person_decides_and_the_report_says_nothing_was_done
+    DifferentTitleDuplicate.test_it_is_found_with_no_labels_and_no_repository_on_the_proposal
+    SameTitleUnrelated.test_it_is_shown_as_looked_at_with_the_reason
+    DifferentTitleDuplicate.test_its_title_did_not_match
+    Recommendation.test_only_the_three_recommendations_are_ever_given
+    DifferentTitleDuplicate.test_the_duplicate_is_the_first_candidate_at_high_confidence
+    IndexUnchanged.test_the_index_and_every_record_are_byte_for_byte_and_untouched_after_each_search
+    EachMatchExplained.test_the_least_a_candidate_can_score_is_the_bottom_of_the_scale
+    DifferentTitleDuplicate.test_the_near_duplicate_is_found_at_a_lower_confidence_and_is_not_called_the_same
+    Recommendation.test_the_overall_recommendation_is_the_strongest_candidate_s
+    IndexUnchanged.test_the_report_cannot_be_written_over_the_index_or_a_record
+    NoMatch.test_the_report_for_no_match
+    EachMatchExplained.test_the_report_holds_a_table_of_signals_for_each_candidate
+    SameTitleUnrelated.test_the_report_says_so_too
+    Weights.test_the_report_shows_each_signal_s_points
+    EachMatchExplained.test_the_run_states_the_scale
+    IndexUnchanged.test_the_same_search_gives_the_same_report
+    SameTitleUnrelated.test_the_same_title_with_two_more_signals_is_still_not_a_candidate
+    Signals.test_the_title_is_worth_least_and_never_counts_toward_a_candidate
+    Signals.test_there_are_five_signals_beyond_the_title_and_three_are_needed
+    OtherPeoplesText.test_what_was_found_is_written_safely
+
+PLANTED BUG C. A signal with nothing to compare counts as a match (criterion 1)
+  unittest result: FAILED (failures=13)
+  tests that failed (13):
+    TheProposal.test_a_proposal_with_only_a_title_matches_nothing
+    OtherPeoplesText.test_a_title_in_a_record_cannot_break_the_report
+    EachMatchExplained.test_candidates_are_listed_strongest_first
+    Signals.test_error_text
+    SameTitleUnrelated.test_it_is_shown_as_looked_at_with_the_reason
+    Signals.test_not_comparable_is_neither_a_match_nor_points
+    DifferentTitleDuplicate.test_the_near_duplicate_is_found_at_a_lower_confidence_and_is_not_called_the_same
+    NoMatch.test_the_nearest_issue_is_not_offered_as_a_candidate_just_for_being_nearest
+    Recommendation.test_the_overall_recommendation_is_the_strongest_candidate_s
+    EachMatchExplained.test_the_report_holds_a_table_of_signals_for_each_candidate
+    SameTitleUnrelated.test_the_report_says_so_too
+    SameTitleUnrelated.test_the_same_title_with_two_more_signals_is_still_not_a_candidate
+    Signals.test_the_title_is_worth_least_and_never_counts_toward_a_candidate
+
+PLANTED BUG D. One shared file name is enough for the named-things signal (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Signals.test_named_things_need_two_in_common
+
+PLANTED BUG E. A label that only says what kind of issue it is counts as a signal (criterion 1)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Signals.test_a_label_that_only_says_what_kind_of_issue_it_is_is_not_a_signal
+    EachMatchExplained.test_each_signal_says_what_was_found
+    Signals.test_not_comparable_is_neither_a_match_nor_points
+    NoMatch.test_the_nearest_issue_is_not_offered_as_a_candidate_just_for_being_nearest
+
+PLANTED BUG F. An error name is counted a second time as a named thing (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Signals.test_an_error_name_is_not_counted_again_as_a_named_thing
+
+PLANTED BUG G. Any shared word is enough for the body-wording signal (criterion 1)
+  unittest result: FAILED (failures=8)
+  tests that failed (8):
+    OtherPeoplesText.test_a_title_in_a_record_cannot_break_the_report
+    Signals.test_body_wording_needs_enough_words_and_a_large_enough_share
+    EachMatchExplained.test_candidates_are_listed_strongest_first
+    Weights.test_equal_weights_do_not_change_which_issues_are_candidates
+    DifferentTitleDuplicate.test_the_near_duplicate_is_found_at_a_lower_confidence_and_is_not_called_the_same
+    NoMatch.test_the_nearest_issue_is_not_offered_as_a_candidate_just_for_being_nearest
+    Recommendation.test_the_overall_recommendation_is_the_strongest_candidate_s
+    EachMatchExplained.test_the_report_holds_a_table_of_signals_for_each_candidate
+
+PLANTED BUG H. Every candidate is given high confidence (criterion 2)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    EachMatchExplained.test_candidates_are_listed_strongest_first
+    EachMatchExplained.test_confidence_follows_the_points
+    Weights.test_equal_weights_change_the_confidence_of_three_strong_signals
+    DifferentTitleDuplicate.test_it_is_found_with_no_labels_and_no_repository_on_the_proposal
+    DifferentTitleDuplicate.test_the_near_duplicate_is_found_at_a_lower_confidence_and_is_not_called_the_same
+
+PLANTED BUG I. The steps of the confidence scale are in the wrong places (criterion 2)
+  unittest result: FAILED (failures=7)
+  tests that failed (7):
+    EachMatchExplained.test_candidates_are_listed_strongest_first
+    EachMatchExplained.test_confidence_follows_the_points
+    Weights.test_equal_weights_change_the_confidence_of_three_strong_signals
+    DifferentTitleDuplicate.test_it_is_found_with_no_labels_and_no_repository_on_the_proposal
+    EachMatchExplained.test_the_report_holds_a_table_of_signals_for_each_candidate
+    EachMatchExplained.test_the_run_states_the_scale
+    EachMatchExplained.test_the_scale_has_three_steps_and_no_gaps
+
+PLANTED BUG J. Candidates are listed weakest first (criterion 2)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    EachMatchExplained.test_candidates_are_listed_strongest_first
+    DifferentTitleDuplicate.test_the_duplicate_is_the_first_candidate_at_high_confidence
+    Recommendation.test_the_overall_recommendation_is_the_strongest_candidate_s
+    EachMatchExplained.test_the_report_holds_a_table_of_signals_for_each_candidate
+
+PLANTED BUG K. Comments on an existing issue are not searched (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    DifferentTitleDuplicate.test_a_comment_on_the_existing_issue_counts_as_its_text
+
+PLANTED BUG L. An issue that matched on one signal is reported as a low-confidence duplicate, so a search never says none (criteria 3 and 5)
+  unittest result: FAILED (failures=15)
+  tests that failed (15):
+    OtherPeoplesText.test_a_title_in_a_record_cannot_break_the_report
+    EachMatchExplained.test_candidates_are_listed_strongest_first
+    EachMatchExplained.test_confidence_follows_the_points
+    Weights.test_equal_weights_do_not_change_which_issues_are_candidates
+    DifferentTitleDuplicate.test_it_is_found_with_no_labels_and_no_repository_on_the_proposal
+    NoMatch.test_no_match_says_none_plainly
+    Recommendation.test_only_the_three_recommendations_are_ever_given
+    SameTitleUnrelated.test_the_issue_with_the_same_title_is_not_a_candidate
+    NoMatch.test_the_nearest_issue_is_not_offered_as_a_candidate_just_for_being_nearest
+    Recommendation.test_the_overall_recommendation_is_the_strongest_candidate_s
+    NoMatch.test_the_report_for_no_match
+    EachMatchExplained.test_the_report_holds_a_table_of_signals_for_each_candidate
+    SameTitleUnrelated.test_the_report_says_so_too
+    SameTitleUnrelated.test_the_same_title_with_two_more_signals_is_still_not_a_candidate
+    Signals.test_the_title_is_worth_least_and_never_counts_toward_a_candidate
+
+PLANTED BUG M. Closing as a duplicate is recommended against a closed issue (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Recommendation.test_close_as_duplicate_needs_high_confidence_an_open_issue_and_the_same_repository
+
+PLANTED BUG N. Closing as a duplicate is recommended at any confidence (criterion 6)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Recommendation.test_close_as_duplicate_needs_high_confidence_an_open_issue_and_the_same_repository
+    DifferentTitleDuplicate.test_the_near_duplicate_is_found_at_a_lower_confidence_and_is_not_called_the_same
+
+PLANTED BUG O. Closing as a duplicate is recommended across repositories (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Recommendation.test_close_as_duplicate_needs_high_confidence_an_open_issue_and_the_same_repository
+
+PLANTED BUG P. A fourth recommendation is given (criterion 6)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Recommendation.test_close_as_duplicate_needs_high_confidence_an_open_issue_and_the_same_repository
+    Recommendation.test_only_the_three_recommendations_are_ever_given
+    Recommendation.test_the_overall_recommendation_is_the_strongest_candidate_s
+    EachMatchExplained.test_the_report_holds_a_table_of_signals_for_each_candidate
+
+PLANTED BUG Q. The result does not say that a person decides (criterion 6)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Recommendation.test_every_result_says_a_person_decides_and_the_report_says_nothing_was_done
+    NoMatch.test_no_match_says_none_plainly
+
+PLANTED BUG R. The search touches the index (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    IndexUnchanged.test_the_index_and_every_record_are_byte_for_byte_and_untouched_after_each_search
+
+PLANTED BUG S. The report can be written over the index or a record (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    IndexUnchanged.test_the_report_cannot_be_written_over_the_index_or_a_record
+
+PLANTED BUG T. An index that is stale or edited is searched anyway (criterion 7)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    IndexUnchanged.test_a_stale_index_is_not_searched
+    IndexUnchanged.test_an_index_edited_by_hand_is_not_searched
+
+PLANTED BUG U. A record with a gap is compared as if it were whole
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OtherPeoplesText.test_a_record_with_a_gap_is_not_compared_and_is_counted
+
+PLANTED BUG V. The equal-weights option changes nothing it should
+  unittest result: FAILED (errors=2)
+  tests that failed (2):
+    Weights.test_equal_weights_change_the_confidence_of_three_strong_signals
+    Weights.test_equal_weights_do_not_change_which_issues_are_candidates
+
+PLANTED BUG W. A title from a record is written into the report as it is
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OtherPeoplesText.test_a_title_in_a_record_cannot_break_the_report
+
+PLANTED BUG X. What was found is written into the report's table as it is
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OtherPeoplesText.test_what_was_found_is_written_safely
+
+PLANTED BUG Y. A proposed issue with no title is accepted
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheProposal.test_a_proposal_needs_a_front_matter_and_a_title
+
+After the last bug was taken out: search.py is byte for byte what it was at the start. OK
+
+RESULT: all 25 planted bugs were caught by at least one test, and the file was restored.

@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261123161239-06bf35
+quest_id: github-duplicate-search
+quest_version: 1
+attempt_id: github-attempt-007
+content_hash: sha256:afb4234f9e0ee5413ad5746dbb632549a268662d5d1cdfc6c5db8a5970719b0a
+evidence_hash: sha256:420a21f791f6b663b63d7f4e1629236cc164015763e41ae0cc8ce32cb04dd88d
+submitted_at: '2026-11-23T16:12:39Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/github/duplicates/fixture.md
+  digest: sha256:320bfe901cd0dd650d8e7e823429329330d4bbce54609ba6fd1692dc7b262201
+- path: participant/context/github/duplicates/report.md
+  digest: sha256:e996c1939e1437be1d3133204fa328a03ee77f48556bfa511384ff481b2bda25
