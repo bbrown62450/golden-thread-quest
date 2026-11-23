@@ -1,0 +1,29 @@
+schema_version: 1
+review_id: review-20261123161842-686a90
+quest_id: github-duplicate-search
+quest_version: 1
+attempt_id: github-attempt-007
+evidence_hash: sha256:420a21f791f6b663b63d7f4e1629236cc164015763e41ae0cc8ce32cb04dd88d
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-23T16:18:42Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/github/duplicates/fixture.md
+  digest: sha256:320bfe901cd0dd650d8e7e823429329330d4bbce54609ba6fd1692dc7b262201
+- path: participant/context/github/duplicates/report.md
+  digest: sha256:e996c1939e1437be1d3133204fa328a03ee77f48556bfa511384ff481b2bda25
+verification_statement: 'Automated review. I read PROOF.md, duplicate-run.txt, tests.txt,
+  planted-bugs.txt, both scripts, fixture.md and report.md. The fixture is an index
+  of 9 made-up records. It includes the different-title duplicate (#101), a near duplicate
+  (#102) and a same-title unrelated issue (#103). The run log shows three searches.
+  The different-title duplicate is found at high confidence. The same-title issue
+  is shown as NOT A CANDIDATE with 0 of 3 signals. The search with no match reports
+  "RESULT: NONE". The script''s own before and after SHA-256 checks show the index
+  and records unchanged. report.md lists each candidate with a table of signals, points
+  out of 14, a confidence on the stated scale and a recommendation. The evidence is
+  consistent across files. The evidence is filed under attempt folder github-attempt-007,
+  not attempt-001 as the quest lists, but the automatic pre-check found all required
+  files. The evidence contains no text addressed to the reviewer. Each of the 7 acceptance
+  criteria was matched to text quoted word for word from the evidence.'
