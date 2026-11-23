@@ -1,0 +1,246 @@
+The approved run, and four refusals. github-update-metadata, attempt github-attempt-005
+Recorded by scripts/record_evidence.py. No request was sent to GitHub. The repositories, people, labels and issues are made up.
+The approved run continues from logs/preview.txt: the same made-up GitHub and the preview with fingerprint 589af57e276472d5d89287f09d16696d.
+
+==============================================================================
+PART 1. The approved run: the confirmation and the write, in one command
+$ python3 participant/skills/github-update-metadata/update.py confirm --source fake --fake-store SCRATCH/approved/github.json --repo acme-fixture/sandbox --issue 7 --change 'label.add=in progress' --change 'label.remove=needs triage' --change label.add=bug --change 'milestone.set=Sprint 13' --allowlist participant/context/github/update/sandbox-allowlist.json --state SCRATCH/approved/previews --results participant/context/github/results --fingerprint 589af57e276472d5d89287f09d16696d --confirmed-by 'the participant'
+------------------------------------------------------------------------------
+github-update: CONFIRM a change to an issue's metadata
+github-update: 1. CONFIRMATION. Given by "the participant", for the preview with fingerprint 589af57e276472d5d89287f09d16696d, in this same command
+github-update:      The name is recorded as it was typed. This workflow cannot check who typed it
+github-update: 2. ALLOWLIST. The repository "acme-fixture/sandbox" is on the sandbox allowlist, which names 1 repository
+github-update: 3. THE CHANGE asked for now is the change of the preview: ["label.add=bug", "label.add=in progress", "label.remove=needs triage", "milestone.set=Sprint 13"]
+github-update: 4. AGE. The preview was made at 2026-11-23T09:00:00Z and it is now 2026-11-23T09:00:00Z by GitHub's clock: 0 minutes. The limit is 15
+github-update: 5. HAS ANYTHING MOVED? No. Labels, assignees and milestone were read again just now and are what the preview showed (d9ec373ce5378387)
+github-update: 6. WRITING. 3 requests, as shown in the preview:
+github-update:      POST /repos/acme-fixture/sandbox/issues/7/labels {"labels": ["in progress"]} -> status 200
+github-update:      DELETE /repos/acme-fixture/sandbox/issues/7/labels/needs%20triage -> status 200
+github-update:      PATCH /repos/acme-fixture/sandbox/issues/7 {"milestone": 3} -> status 200
+github-update: 7. READ BACK. The issue was read again after the writes:
+github-update:      now:       labels     ["bug", "in progress"]
+github-update:                 assignees  ["robin-fixture"]
+github-update:                 milestone  "Sprint 13" (number 3)
+github-update:      This is exactly what the preview promised
+github-update: 8. IDENTIFIERS. Events GitHub recorded for this update: labeled 9100, unlabeled 9101, milestoned 9102. Labels added, with their ids: {"in progress": 7003}
+github-update: 9. RESULT RECORD. Written to participant/context/github/results/update-metadata.md
+github-update:      Requests made by this command: 9. Writes: 3, all to issue 7 of the repository of the preview
+github-update: RESULT: DONE. The update of the preview was made, and the issue was read back and matches
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the run ends DONE
+  ok   the confirmation names a person and the fingerprint of the preview, and is given in the command that writes (criterion 7)
+  ok   the run checked that nothing had moved before it wrote (criterion 3)
+  ok   the writes the made-up GitHub received are exactly the 3 requests the preview showed, in the same order
+  ok   every write went to issue 7 of acme-fixture/sandbox, and none to any other place
+  ok   the issue now holds what the preview promised: labels bug and in progress, milestone number 3, the same assignee
+  ok   no label was sent as part of a whole list: each request carries one label
+  ok   the result record was written: participant/context/github/results/update-metadata.md
+
+==============================================================================
+PART 2. Refusal 1 of 4: a missing confirmation
+A fresh made-up GitHub, and a fresh preview of the same four changes:
+$ python3 participant/skills/github-update-metadata/update.py preview --source fake --fake-store SCRATCH/refusal-1/github.json --repo acme-fixture/sandbox --issue 7 --change 'label.add=in progress' --change 'label.remove=needs triage' --change label.add=bug --change 'milestone.set=Sprint 13' --allowlist participant/context/github/update/sandbox-allowlist.json --state SCRATCH/refusal-1/previews
+------------------------------------------------------------------------------
+github-update: PREVIEW of a change to an issue's metadata. This command only reads. It has no way to write
+github-update: 1. WHERE. Repository "acme-fixture/sandbox", id 401, private. Issue 7, node ID I_kwFX4010007, state open. The connection acts as login "robin-fixture"
+github-update: 2. ALLOWLIST. The repository is on the sandbox allowlist participant/context/github/update/sandbox-allowlist.json, which names 1 repository
+github-update: 3. WHAT WAS ASKED, change by change:
+github-update:      label.add="bug": ALREADY SO, nothing is sent for it. the issue already has this label
+github-update:      label.add="in progress": WILL CHANGE
+github-update:      label.remove="needs triage": WILL CHANGE
+github-update:      milestone.set="Sprint 13": WILL CHANGE
+github-update: 4. OLD AND NEW VALUES of every field this workflow can change:
+github-update:      old:       labels     ["bug", "needs triage"]
+github-update:                 assignees  ["robin-fixture"]
+github-update:                 milestone  "Sprint 12" (number 1)
+github-update:      new:       labels     ["bug", "in progress"]
+github-update:                 assignees  ["robin-fixture"]
+github-update:                 milestone  "Sprint 13" (number 3)
+github-update:      difference: labels: added "in progress", removed "needs triage"
+github-update:      difference: milestone: "Sprint 12" (number 1) became "Sprint 13" (number 3)
+github-update: 5. EXACT REQUESTS a confirmation would send, in this order: 3
+github-update:      POST /repos/acme-fixture/sandbox/issues/7/labels {"labels": ["in progress"]}
+github-update:      DELETE /repos/acme-fixture/sandbox/issues/7/labels/needs%20triage
+github-update:      PATCH /repos/acme-fixture/sandbox/issues/7 {"milestone": 3}
+github-update: 6. PERMISSION CHECK. GitHub says the ACCOUNT may change issues here (admin: no, maintain: no, pull: yes, push: yes, triage: yes)
+github-update:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. That is known only when a write is tried: a token that may not write is refused by GitHub with status 403, and nothing changes
+github-update: 7. DUPLICATE CHECK. Each change was compared with the issue as it is now. Already so, and not sent: 1. GitHub does not refuse a repeated change of this kind itself: it accepts it and changes nothing
+github-update: 8. NOTHING WAS WRITTEN. The issue was read again at the end. Its labels, assignees and milestone before: d9ec373ce5378387. After: d9ec373ce5378387. The same
+github-update:      Requests made by this command: 6, every one a GET
+github-update: 9. FINGERPRINT of this preview: 589af57e276472d5d89287f09d16696d. It covers the repository, the issue, the old values, the new values and the exact requests
+github-update:      Made at 2026-11-23T09:00:00Z by GitHub's clock. It can be confirmed once, for 15 minutes
+github-update:      To confirm: run the same command with `confirm` in place of `preview`, and add --fingerprint 589af57e276472d5d89287f09d16696d --confirmed-by YOUR-NAME
+github-update: RESULT: READY. Nothing has been written
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/github-update-metadata/update.py confirm --source fake --fake-store SCRATCH/refusal-1/github.json --repo acme-fixture/sandbox --issue 7 --change 'label.add=in progress' --change 'label.remove=needs triage' --change label.add=bug --change 'milestone.set=Sprint 13' --allowlist participant/context/github/update/sandbox-allowlist.json --state SCRATCH/refusal-1/previews --results SCRATCH/refusal-1/results
+------------------------------------------------------------------------------
+github-update: CONFIRM a change to an issue's metadata
+github-update: REFUSED: NO CONFIRMATION was given. A write needs --fingerprint, from the preview, and --confirmed-by, the name of the person confirming.
+github-update: Nothing was written. Requests made by this command: 0
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1, refused with the words "NO CONFIRMATION was given", and the run says nothing was written
+  ok   nothing was written: the made-up GitHub received no write, and both repositories are exactly as they were
+  ok   the refusal comes before any request is sent
+  ok   no result record was written
+
+==============================================================================
+PART 3. Refusal 2 of 4: a change that differs from the preview
+A fresh made-up GitHub, and a fresh preview of the same four changes:
+$ python3 participant/skills/github-update-metadata/update.py preview --source fake --fake-store SCRATCH/refusal-2/github.json --repo acme-fixture/sandbox --issue 7 --change 'label.add=in progress' --change 'label.remove=needs triage' --change label.add=bug --change 'milestone.set=Sprint 13' --allowlist participant/context/github/update/sandbox-allowlist.json --state SCRATCH/refusal-2/previews
+------------------------------------------------------------------------------
+github-update: PREVIEW of a change to an issue's metadata. This command only reads. It has no way to write
+github-update: 1. WHERE. Repository "acme-fixture/sandbox", id 401, private. Issue 7, node ID I_kwFX4010007, state open. The connection acts as login "robin-fixture"
+github-update: 2. ALLOWLIST. The repository is on the sandbox allowlist participant/context/github/update/sandbox-allowlist.json, which names 1 repository
+github-update: 3. WHAT WAS ASKED, change by change:
+github-update:      label.add="bug": ALREADY SO, nothing is sent for it. the issue already has this label
+github-update:      label.add="in progress": WILL CHANGE
+github-update:      label.remove="needs triage": WILL CHANGE
+github-update:      milestone.set="Sprint 13": WILL CHANGE
+github-update: 4. OLD AND NEW VALUES of every field this workflow can change:
+github-update:      old:       labels     ["bug", "needs triage"]
+github-update:                 assignees  ["robin-fixture"]
+github-update:                 milestone  "Sprint 12" (number 1)
+github-update:      new:       labels     ["bug", "in progress"]
+github-update:                 assignees  ["robin-fixture"]
+github-update:                 milestone  "Sprint 13" (number 3)
+github-update:      difference: labels: added "in progress", removed "needs triage"
+github-update:      difference: milestone: "Sprint 12" (number 1) became "Sprint 13" (number 3)
+github-update: 5. EXACT REQUESTS a confirmation would send, in this order: 3
+github-update:      POST /repos/acme-fixture/sandbox/issues/7/labels {"labels": ["in progress"]}
+github-update:      DELETE /repos/acme-fixture/sandbox/issues/7/labels/needs%20triage
+github-update:      PATCH /repos/acme-fixture/sandbox/issues/7 {"milestone": 3}
+github-update: 6. PERMISSION CHECK. GitHub says the ACCOUNT may change issues here (admin: no, maintain: no, pull: yes, push: yes, triage: yes)
+github-update:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. That is known only when a write is tried: a token that may not write is refused by GitHub with status 403, and nothing changes
+github-update: 7. DUPLICATE CHECK. Each change was compared with the issue as it is now. Already so, and not sent: 1. GitHub does not refuse a repeated change of this kind itself: it accepts it and changes nothing
+github-update: 8. NOTHING WAS WRITTEN. The issue was read again at the end. Its labels, assignees and milestone before: d9ec373ce5378387. After: d9ec373ce5378387. The same
+github-update:      Requests made by this command: 6, every one a GET
+github-update: 9. FINGERPRINT of this preview: 589af57e276472d5d89287f09d16696d. It covers the repository, the issue, the old values, the new values and the exact requests
+github-update:      Made at 2026-11-23T09:00:00Z by GitHub's clock. It can be confirmed once, for 15 minutes
+github-update:      To confirm: run the same command with `confirm` in place of `preview`, and add --fingerprint 589af57e276472d5d89287f09d16696d --confirmed-by YOUR-NAME
+github-update: RESULT: READY. Nothing has been written
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/github-update-metadata/update.py confirm --source fake --fake-store SCRATCH/refusal-2/github.json --repo acme-fixture/sandbox --issue 7 --change 'label.add=in progress' --change 'label.remove=needs triage' --change label.add=bug --change 'milestone.set=Sprint 13' --change label.remove=bug --allowlist participant/context/github/update/sandbox-allowlist.json --state SCRATCH/refusal-2/previews --results SCRATCH/refusal-2/results --fingerprint 589af57e276472d5d89287f09d16696d --confirmed-by 'the participant'
+------------------------------------------------------------------------------
+github-update: CONFIRM a change to an issue's metadata
+github-update: REFUSED: THE CHANGE DIFFERS FROM THE PREVIEW. Asked for now and not in the preview: ["label.remove=bug"]. In the preview and not asked for now: []. A confirmation covers exactly what its preview showed. Make a new preview.
+github-update: Nothing was written. Requests made by this command: 0
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1, refused with the words "THE CHANGE DIFFERS FROM THE PREVIEW", and the run says nothing was written
+  ok   nothing was written: the made-up GitHub received no write, and both repositories are exactly as they were
+  ok   the refusal names the change that was not in the preview
+  ok   no result record was written
+
+==============================================================================
+PART 4. Refusal 3 of 4: a preview older than the time limit
+A fresh made-up GitHub, and a fresh preview of the same four changes:
+$ python3 participant/skills/github-update-metadata/update.py preview --source fake --fake-store SCRATCH/refusal-3/github.json --repo acme-fixture/sandbox --issue 7 --change 'label.add=in progress' --change 'label.remove=needs triage' --change label.add=bug --change 'milestone.set=Sprint 13' --allowlist participant/context/github/update/sandbox-allowlist.json --state SCRATCH/refusal-3/previews
+------------------------------------------------------------------------------
+github-update: PREVIEW of a change to an issue's metadata. This command only reads. It has no way to write
+github-update: 1. WHERE. Repository "acme-fixture/sandbox", id 401, private. Issue 7, node ID I_kwFX4010007, state open. The connection acts as login "robin-fixture"
+github-update: 2. ALLOWLIST. The repository is on the sandbox allowlist participant/context/github/update/sandbox-allowlist.json, which names 1 repository
+github-update: 3. WHAT WAS ASKED, change by change:
+github-update:      label.add="bug": ALREADY SO, nothing is sent for it. the issue already has this label
+github-update:      label.add="in progress": WILL CHANGE
+github-update:      label.remove="needs triage": WILL CHANGE
+github-update:      milestone.set="Sprint 13": WILL CHANGE
+github-update: 4. OLD AND NEW VALUES of every field this workflow can change:
+github-update:      old:       labels     ["bug", "needs triage"]
+github-update:                 assignees  ["robin-fixture"]
+github-update:                 milestone  "Sprint 12" (number 1)
+github-update:      new:       labels     ["bug", "in progress"]
+github-update:                 assignees  ["robin-fixture"]
+github-update:                 milestone  "Sprint 13" (number 3)
+github-update:      difference: labels: added "in progress", removed "needs triage"
+github-update:      difference: milestone: "Sprint 12" (number 1) became "Sprint 13" (number 3)
+github-update: 5. EXACT REQUESTS a confirmation would send, in this order: 3
+github-update:      POST /repos/acme-fixture/sandbox/issues/7/labels {"labels": ["in progress"]}
+github-update:      DELETE /repos/acme-fixture/sandbox/issues/7/labels/needs%20triage
+github-update:      PATCH /repos/acme-fixture/sandbox/issues/7 {"milestone": 3}
+github-update: 6. PERMISSION CHECK. GitHub says the ACCOUNT may change issues here (admin: no, maintain: no, pull: yes, push: yes, triage: yes)
+github-update:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. That is known only when a write is tried: a token that may not write is refused by GitHub with status 403, and nothing changes
+github-update: 7. DUPLICATE CHECK. Each change was compared with the issue as it is now. Already so, and not sent: 1. GitHub does not refuse a repeated change of this kind itself: it accepts it and changes nothing
+github-update: 8. NOTHING WAS WRITTEN. The issue was read again at the end. Its labels, assignees and milestone before: d9ec373ce5378387. After: d9ec373ce5378387. The same
+github-update:      Requests made by this command: 6, every one a GET
+github-update: 9. FINGERPRINT of this preview: 589af57e276472d5d89287f09d16696d. It covers the repository, the issue, the old values, the new values and the exact requests
+github-update:      Made at 2026-11-23T09:00:00Z by GitHub's clock. It can be confirmed once, for 15 minutes
+github-update:      To confirm: run the same command with `confirm` in place of `preview`, and add --fingerprint 589af57e276472d5d89287f09d16696d --confirmed-by YOUR-NAME
+github-update: RESULT: READY. Nothing has been written
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/github-update-metadata/fake_github.py SCRATCH/refusal-3/github.json advance 16
+------------------------------------------------------------------------------
+made-up GitHub: 16 minutes passed. GitHub's clock now says 2026-11-23T09:16:00Z
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/github-update-metadata/update.py confirm --source fake --fake-store SCRATCH/refusal-3/github.json --repo acme-fixture/sandbox --issue 7 --change 'label.add=in progress' --change 'label.remove=needs triage' --change label.add=bug --change 'milestone.set=Sprint 13' --allowlist participant/context/github/update/sandbox-allowlist.json --state SCRATCH/refusal-3/previews --results SCRATCH/refusal-3/results --fingerprint 589af57e276472d5d89287f09d16696d --confirmed-by 'the participant'
+------------------------------------------------------------------------------
+github-update: CONFIRM a change to an issue's metadata
+github-update: 1. CONFIRMATION. Given by "the participant", for the preview with fingerprint 589af57e276472d5d89287f09d16696d, in this same command
+github-update:      The name is recorded as it was typed. This workflow cannot check who typed it
+github-update: 2. ALLOWLIST. The repository "acme-fixture/sandbox" is on the sandbox allowlist, which names 1 repository
+github-update: 3. THE CHANGE asked for now is the change of the preview: ["label.add=bug", "label.add=in progress", "label.remove=needs triage", "milestone.set=Sprint 13"]
+github-update: REFUSED: THE PREVIEW HAS EXPIRED. It was made at 2026-11-23T09:00:00Z and it is now 2026-11-23T09:16:00Z by GitHub's clock: 16 minutes, and the limit is 15. Make a new preview.
+github-update: Nothing was written. Requests made by this command: 3, every one a GET
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1, refused with the words "THE PREVIEW HAS EXPIRED", and the run says nothing was written
+  ok   nothing was written: the made-up GitHub received no write, and both repositories are exactly as they were
+  ok   the age is measured on GitHub's clock: 16 minutes against a limit of 15
+  ok   no result record was written
+
+==============================================================================
+PART 5. Refusal 4 of 4: a repository that is not on the sandbox allowlist
+A fresh made-up GitHub, and a fresh preview of the same four changes:
+$ python3 participant/skills/github-update-metadata/update.py preview --source fake --fake-store SCRATCH/refusal-4/github.json --repo acme-fixture/sandbox --issue 7 --change 'label.add=in progress' --change 'label.remove=needs triage' --change label.add=bug --change 'milestone.set=Sprint 13' --allowlist participant/context/github/update/sandbox-allowlist.json --state SCRATCH/refusal-4/previews
+------------------------------------------------------------------------------
+github-update: PREVIEW of a change to an issue's metadata. This command only reads. It has no way to write
+github-update: 1. WHERE. Repository "acme-fixture/sandbox", id 401, private. Issue 7, node ID I_kwFX4010007, state open. The connection acts as login "robin-fixture"
+github-update: 2. ALLOWLIST. The repository is on the sandbox allowlist participant/context/github/update/sandbox-allowlist.json, which names 1 repository
+github-update: 3. WHAT WAS ASKED, change by change:
+github-update:      label.add="bug": ALREADY SO, nothing is sent for it. the issue already has this label
+github-update:      label.add="in progress": WILL CHANGE
+github-update:      label.remove="needs triage": WILL CHANGE
+github-update:      milestone.set="Sprint 13": WILL CHANGE
+github-update: 4. OLD AND NEW VALUES of every field this workflow can change:
+github-update:      old:       labels     ["bug", "needs triage"]
+github-update:                 assignees  ["robin-fixture"]
+github-update:                 milestone  "Sprint 12" (number 1)
+github-update:      new:       labels     ["bug", "in progress"]
+github-update:                 assignees  ["robin-fixture"]
+github-update:                 milestone  "Sprint 13" (number 3)
+github-update:      difference: labels: added "in progress", removed "needs triage"
+github-update:      difference: milestone: "Sprint 12" (number 1) became "Sprint 13" (number 3)
+github-update: 5. EXACT REQUESTS a confirmation would send, in this order: 3
+github-update:      POST /repos/acme-fixture/sandbox/issues/7/labels {"labels": ["in progress"]}
+github-update:      DELETE /repos/acme-fixture/sandbox/issues/7/labels/needs%20triage
+github-update:      PATCH /repos/acme-fixture/sandbox/issues/7 {"milestone": 3}
+github-update: 6. PERMISSION CHECK. GitHub says the ACCOUNT may change issues here (admin: no, maintain: no, pull: yes, push: yes, triage: yes)
+github-update:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. That is known only when a write is tried: a token that may not write is refused by GitHub with status 403, and nothing changes
+github-update: 7. DUPLICATE CHECK. Each change was compared with the issue as it is now. Already so, and not sent: 1. GitHub does not refuse a repeated change of this kind itself: it accepts it and changes nothing
+github-update: 8. NOTHING WAS WRITTEN. The issue was read again at the end. Its labels, assignees and milestone before: d9ec373ce5378387. After: d9ec373ce5378387. The same
+github-update:      Requests made by this command: 6, every one a GET
+github-update: 9. FINGERPRINT of this preview: 589af57e276472d5d89287f09d16696d. It covers the repository, the issue, the old values, the new values and the exact requests
+github-update:      Made at 2026-11-23T09:00:00Z by GitHub's clock. It can be confirmed once, for 15 minutes
+github-update:      To confirm: run the same command with `confirm` in place of `preview`, and add --fingerprint 589af57e276472d5d89287f09d16696d --confirmed-by YOUR-NAME
+github-update: RESULT: READY. Nothing has been written
+------------------------------------------------------------------------------
+exit code: 0
+The made-up GitHub also has acme-fixture/production, which exists and is not on the allowlist. The confirmation is pointed at it:
+$ python3 participant/skills/github-update-metadata/update.py confirm --source fake --fake-store SCRATCH/refusal-4/github.json --repo acme-fixture/production --issue 7 --change 'label.add=in progress' --change 'label.remove=needs triage' --change label.add=bug --change 'milestone.set=Sprint 13' --allowlist participant/context/github/update/sandbox-allowlist.json --state SCRATCH/refusal-4/previews --results SCRATCH/refusal-4/results --fingerprint 589af57e276472d5d89287f09d16696d --confirmed-by 'the participant'
+------------------------------------------------------------------------------
+github-update: CONFIRM a change to an issue's metadata
+github-update: REFUSED: the repository "acme-fixture/production" is NOT ON THE SANDBOX ALLOWLIST. This workflow writes only to the repositories named in participant/context/github/update/sandbox-allowlist.json. No request was sent to GitHub.
+github-update: Nothing was written. Requests made by this command: 0
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1, refused with the words "NOT ON THE SANDBOX ALLOWLIST", and the run says nothing was written
+  ok   nothing was written: the made-up GitHub received no write, and both repositories are exactly as they were
+  ok   not one request of any kind was sent to GitHub for it: the made-up GitHub's count did not move
+  ok   no result record was written
+
+RESULT: ALL CHECKS PASSED. 24 checks.

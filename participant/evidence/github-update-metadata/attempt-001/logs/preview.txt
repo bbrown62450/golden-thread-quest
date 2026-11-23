@@ -1,0 +1,75 @@
+The workflow stopping at a preview. github-update-metadata, attempt github-attempt-005
+Recorded by scripts/record_evidence.py. No request was sent to GitHub. The repositories, people, labels and issues are made up.
+
+==============================================================================
+PART 1. The made-up GitHub before anything is asked
+$ python3 participant/skills/github-update-metadata/fake_github.py SCRATCH/approved/github.json show
+------------------------------------------------------------------------------
+made-up GitHub: issue 7 of acme-fixture/sandbox: labels ["bug", "needs triage"], assignees ["robin-fixture"], milestone 1
+made-up GitHub: writes received so far, to any repository: 0
+------------------------------------------------------------------------------
+exit code: 0
+The sandbox allowlist is participant/context/github/update/sandbox-allowlist.json. It names: acme-fixture/sandbox.
+
+==============================================================================
+PART 2. The preview
+Four changes are asked for. One of them, adding the label "bug", is already so.
+$ python3 participant/skills/github-update-metadata/update.py preview --source fake --fake-store SCRATCH/approved/github.json --repo acme-fixture/sandbox --issue 7 --change 'label.add=in progress' --change 'label.remove=needs triage' --change label.add=bug --change 'milestone.set=Sprint 13' --allowlist participant/context/github/update/sandbox-allowlist.json --state SCRATCH/approved/previews
+------------------------------------------------------------------------------
+github-update: PREVIEW of a change to an issue's metadata. This command only reads. It has no way to write
+github-update: 1. WHERE. Repository "acme-fixture/sandbox", id 401, private. Issue 7, node ID I_kwFX4010007, state open. The connection acts as login "robin-fixture"
+github-update: 2. ALLOWLIST. The repository is on the sandbox allowlist participant/context/github/update/sandbox-allowlist.json, which names 1 repository
+github-update: 3. WHAT WAS ASKED, change by change:
+github-update:      label.add="bug": ALREADY SO, nothing is sent for it. the issue already has this label
+github-update:      label.add="in progress": WILL CHANGE
+github-update:      label.remove="needs triage": WILL CHANGE
+github-update:      milestone.set="Sprint 13": WILL CHANGE
+github-update: 4. OLD AND NEW VALUES of every field this workflow can change:
+github-update:      old:       labels     ["bug", "needs triage"]
+github-update:                 assignees  ["robin-fixture"]
+github-update:                 milestone  "Sprint 12" (number 1)
+github-update:      new:       labels     ["bug", "in progress"]
+github-update:                 assignees  ["robin-fixture"]
+github-update:                 milestone  "Sprint 13" (number 3)
+github-update:      difference: labels: added "in progress", removed "needs triage"
+github-update:      difference: milestone: "Sprint 12" (number 1) became "Sprint 13" (number 3)
+github-update: 5. EXACT REQUESTS a confirmation would send, in this order: 3
+github-update:      POST /repos/acme-fixture/sandbox/issues/7/labels {"labels": ["in progress"]}
+github-update:      DELETE /repos/acme-fixture/sandbox/issues/7/labels/needs%20triage
+github-update:      PATCH /repos/acme-fixture/sandbox/issues/7 {"milestone": 3}
+github-update: 6. PERMISSION CHECK. GitHub says the ACCOUNT may change issues here (admin: no, maintain: no, pull: yes, push: yes, triage: yes)
+github-update:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. That is known only when a write is tried: a token that may not write is refused by GitHub with status 403, and nothing changes
+github-update: 7. DUPLICATE CHECK. Each change was compared with the issue as it is now. Already so, and not sent: 1. GitHub does not refuse a repeated change of this kind itself: it accepts it and changes nothing
+github-update: 8. NOTHING WAS WRITTEN. The issue was read again at the end. Its labels, assignees and milestone before: d9ec373ce5378387. After: d9ec373ce5378387. The same
+github-update:      Requests made by this command: 6, every one a GET
+github-update: 9. FINGERPRINT of this preview: 589af57e276472d5d89287f09d16696d. It covers the repository, the issue, the old values, the new values and the exact requests
+github-update:      Made at 2026-11-23T09:00:00Z by GitHub's clock. It can be confirmed once, for 15 minutes
+github-update:      To confirm: run the same command with `confirm` in place of `preview`, and add --fingerprint 589af57e276472d5d89287f09d16696d --confirmed-by YOUR-NAME
+github-update: RESULT: READY. Nothing has been written
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the run ends READY and says nothing has been written
+  ok   it shows the repository, its id, the issue and the account (criterion 4)
+  ok   it shows the old and the new value of labels, assignees and milestone (criterion 1)
+  ok   the old values it shows are what the made-up GitHub holds: this script read them from its file
+  ok   it shows the exact changes as the 3 requests a confirmation would send (criterion 4)
+  ok   it records the permission check, and states what GitHub cannot say: what the token may do (criterion 5)
+  ok   it records the duplicate check: 1 change is already so and is not sent, and it states that GitHub would not refuse a repeat (criterion 5)
+  ok   it gives a fingerprint of the preview: 589af57e276472d5d89287f09d16696d
+  ok   it says how long the fingerprint is good for: 15 minutes, once
+
+==============================================================================
+PART 3. Before and after: the repository is unchanged
+$ python3 participant/skills/github-update-metadata/fake_github.py SCRATCH/approved/github.json show
+------------------------------------------------------------------------------
+made-up GitHub: issue 7 of acme-fixture/sandbox: labels ["bug", "needs triage"], assignees ["robin-fixture"], milestone 1
+made-up GitHub: writes received so far, to any repository: 0
+------------------------------------------------------------------------------
+exit code: 0
+This script opened the made-up GitHub's file before the preview and after it.
+  ok   the made-up GitHub received 6 requests during the preview, and every one was a GET
+  ok   the number the preview printed is the number the made-up GitHub counted
+  ok   everything the made-up GitHub holds for both repositories (issues, labels, milestones, events) is identical before and after
+  ok   the preview's own before-and-after reading of the issue agrees
+
+RESULT: ALL CHECKS PASSED. 13 checks.

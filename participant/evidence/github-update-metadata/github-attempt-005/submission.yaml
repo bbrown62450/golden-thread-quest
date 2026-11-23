@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261123124506-07081c
+quest_id: github-update-metadata
+quest_version: 1
+attempt_id: github-attempt-005
+content_hash: sha256:2d588d526bf7391c15dc0539c5deba9dd3c21dad1cbfd92a501ff66f8c09f695
+evidence_hash: sha256:237fcf1ff670ab7ab3f360c76b25d0871d9f1f4ba4c5387d040bd9344438653e
+submitted_at: '2026-11-23T12:45:06Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/github/results/update-metadata.md
+  digest: sha256:6da032349757d0f0d497157e7a65c07963520197556beaad3f6adc8037cc4557
+- path: participant/context/github/update/supported-fields.md
+  digest: sha256:d656237535380933e20acb7e6cda65990e34a513a16cb138de8d8944b377d6d3

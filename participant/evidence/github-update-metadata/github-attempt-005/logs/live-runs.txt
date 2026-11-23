@@ -1,0 +1,150 @@
+The real runs. github-update-metadata, attempt github-attempt-005
+
+The participant ran these in their own terminal, against issue 1 of a private sandbox repository on GitHub that
+holds only made-up issues. The assistant sent no request to GitHub and never saw the token. The token was a
+fine-grained one, limited to that repository, with Issues set to read and write. The output was saved to scratch
+files outside this repository. This is a masked copy: the owner's login is shown as [owner], the issue's node ID
+as [node id], the repository's id as [repository id], and the name the participant typed with --confirmed-by as
+"the participant". Nothing else was changed. The saved previews, the allowlist and the result record of these
+runs stay outside the repository. Each command had the same arguments:
+
+    --source live --repo [owner]/gtq-sandbox --issue 1 --allowlist SCRATCH/allowlist.json --state SCRATCH/previews --results SCRATCH/results
+
+The allowlist named one repository, the sandbox.
+
+==============================================================================
+RUN 1. A preview: add the label "enhancement"
+$ update.py preview ... --change label.add=enhancement
+------------------------------------------------------------------------------
+github-update: PREVIEW of a change to an issue's metadata. This command only reads. It has no way to write
+github-update: 1. WHERE. Repository "[owner]/gtq-sandbox", id [repository id], private. Issue 1, node ID [node id], state open. The connection acts as login "[owner]"
+github-update: 2. ALLOWLIST. The repository is on the sandbox allowlist allowlist.json, which names 1 repository
+github-update: 3. WHAT WAS ASKED, change by change:
+github-update:      label.add="enhancement": WILL CHANGE
+github-update: 4. OLD AND NEW VALUES of every field this workflow can change:
+github-update:      old:       labels     []
+github-update:                 assignees  ["[owner]"]
+github-update:                 milestone  none
+github-update:      new:       labels     ["enhancement"]
+github-update:                 assignees  ["[owner]"]
+github-update:                 milestone  none
+github-update:      difference: labels: added "enhancement"
+github-update: 5. EXACT REQUESTS a confirmation would send, in this order: 1
+github-update:      POST /repos/[owner]/gtq-sandbox/issues/1/labels {"labels": ["enhancement"]}
+github-update: 6. PERMISSION CHECK. GitHub says the ACCOUNT may change issues here (admin: yes, maintain: yes, pull: yes, push: yes, triage: yes)
+github-update:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. That is known only when a write is tried: a token that may not write is refused by GitHub with status 403, and nothing changes
+github-update: 7. DUPLICATE CHECK. Each change was compared with the issue as it is now. Already so, and not sent: 0. GitHub does not refuse a repeated change of this kind itself: it accepts it and changes nothing
+github-update: 8. NOTHING WAS WRITTEN. The issue was read again at the end. Its labels, assignees and milestone before: ea7658f7b704be8d. After: ea7658f7b704be8d. The same
+github-update:      Requests made by this command: 6, every one a GET
+github-update: 9. FINGERPRINT of this preview: f5383f1e89e7b6b893b1945895dddfeb. It covers the repository, the issue, the old values, the new values and the exact requests
+github-update:      Made at 2026-11-23T12:29:49Z by GitHub's clock. It can be confirmed once, for 15 minutes
+github-update:      To confirm: run the same command with `confirm` in place of `preview`, and add --fingerprint f5383f1e89e7b6b893b1945895dddfeb --confirmed-by YOUR-NAME
+github-update: RESULT: READY. Nothing has been written
+------------------------------------------------------------------------------
+exit code: 0
+
+==============================================================================
+RUN 2. The participant's confirmation, and the one real write
+$ update.py confirm ... --change label.add=enhancement --fingerprint f5383f1e89e7b6b893b1945895dddfeb --confirmed-by "the participant"
+------------------------------------------------------------------------------
+github-update: CONFIRM a change to an issue's metadata
+github-update: 1. CONFIRMATION. Given by "the participant", for the preview with fingerprint f5383f1e89e7b6b893b1945895dddfeb, in this same command
+github-update:      The name is recorded as it was typed. This workflow cannot check who typed it
+github-update: 2. ALLOWLIST. The repository "[owner]/gtq-sandbox" is on the sandbox allowlist, which names 1 repository
+github-update: 3. THE CHANGE asked for now is the change of the preview: ["label.add=enhancement"]
+github-update: 4. AGE. The preview was made at 2026-11-23T12:29:49Z and it is now 2026-11-23T12:30:22Z by GitHub's clock: 1 minutes. The limit is 15
+github-update: 5. HAS ANYTHING MOVED? No. Labels, assignees and milestone were read again just now and are what the preview showed (ea7658f7b704be8d)
+github-update: 6. WRITING. 1 request, as shown in the preview:
+github-update:      POST /repos/[owner]/gtq-sandbox/issues/1/labels {"labels": ["enhancement"]} -> status 200
+github-update: 7. READ BACK. The issue was read again after the writes:
+github-update:      now:       labels     ["enhancement"]
+github-update:                 assignees  ["[owner]"]
+github-update:                 milestone  none
+github-update:      This is exactly what the preview promised
+github-update: 8. IDENTIFIERS. Events GitHub recorded for this update: labeled 37006896768. Labels added, with their ids: {"enhancement": 13171207413}
+github-update: 9. RESULT RECORD. Written to update-metadata.md
+github-update:      Requests made by this command: 7. Writes: 1, all to issue 1 of the repository of the preview
+github-update: RESULT: DONE. The update of the preview was made, and the issue was read back and matches
+------------------------------------------------------------------------------
+exit code: 0
+
+==============================================================================
+RUN 3. The very same confirmation, run a second time
+$ update.py confirm ... --change label.add=enhancement --fingerprint f5383f1e89e7b6b893b1945895dddfeb --confirmed-by "the participant"
+------------------------------------------------------------------------------
+github-update: CONFIRM a change to an issue's metadata
+github-update: REFUSED: this preview was ALREADY USED, at 2026-11-23T12:30:22Z by GitHub's clock, confirmed by "the participant". A preview can be confirmed once. To change something more, make a new preview.
+github-update: Nothing was written. Requests made by this command: 0
+------------------------------------------------------------------------------
+exit code: 1
+
+==============================================================================
+RUN 4. A second preview: add "enhancement" again, and add "bug"
+$ update.py preview ... --change label.add=enhancement --change label.add=bug
+------------------------------------------------------------------------------
+github-update: PREVIEW of a change to an issue's metadata. This command only reads. It has no way to write
+github-update: 1. WHERE. Repository "[owner]/gtq-sandbox", id [repository id], private. Issue 1, node ID [node id], state open. The connection acts as login "[owner]"
+github-update: 2. ALLOWLIST. The repository is on the sandbox allowlist allowlist.json, which names 1 repository
+github-update: 3. WHAT WAS ASKED, change by change:
+github-update:      label.add="bug": WILL CHANGE
+github-update:      label.add="enhancement": ALREADY SO, nothing is sent for it. the issue already has this label
+github-update: 4. OLD AND NEW VALUES of every field this workflow can change:
+github-update:      old:       labels     ["enhancement"]
+github-update:                 assignees  ["[owner]"]
+github-update:                 milestone  none
+github-update:      new:       labels     ["bug", "enhancement"]
+github-update:                 assignees  ["[owner]"]
+github-update:                 milestone  none
+github-update:      difference: labels: added "bug"
+github-update: 5. EXACT REQUESTS a confirmation would send, in this order: 1
+github-update:      POST /repos/[owner]/gtq-sandbox/issues/1/labels {"labels": ["bug"]}
+github-update: 6. PERMISSION CHECK. GitHub says the ACCOUNT may change issues here (admin: yes, maintain: yes, pull: yes, push: yes, triage: yes)
+github-update:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. That is known only when a write is tried: a token that may not write is refused by GitHub with status 403, and nothing changes
+github-update: 7. DUPLICATE CHECK. Each change was compared with the issue as it is now. Already so, and not sent: 1. GitHub does not refuse a repeated change of this kind itself: it accepts it and changes nothing
+github-update: 8. NOTHING WAS WRITTEN. The issue was read again at the end. Its labels, assignees and milestone before: b18b8b075f229646. After: b18b8b075f229646. The same
+github-update:      Requests made by this command: 6, every one a GET
+github-update: 9. FINGERPRINT of this preview: c348ed76a86b8356267f1f0dbe136abd. It covers the repository, the issue, the old values, the new values and the exact requests
+github-update:      Made at 2026-11-23T12:32:55Z by GitHub's clock. It can be confirmed once, for 15 minutes
+github-update:      To confirm: run the same command with `confirm` in place of `preview`, and add --fingerprint c348ed76a86b8356267f1f0dbe136abd --confirmed-by YOUR-NAME
+github-update: RESULT: READY. Nothing has been written
+------------------------------------------------------------------------------
+exit code: 0
+
+==============================================================================
+BETWEEN RUN 4 AND RUN 5 the participant, by hand in the browser, added the label "question" to the issue, as a
+maintainer might after the preview was made.
+
+RUN 5. The participant confirms the second preview, which is now out of date
+$ update.py confirm ... --change label.add=enhancement --change label.add=bug --fingerprint c348ed76a86b8356267f1f0dbe136abd --confirmed-by "the participant"
+------------------------------------------------------------------------------
+github-update: CONFIRM a change to an issue's metadata
+github-update: 1. CONFIRMATION. Given by "the participant", for the preview with fingerprint c348ed76a86b8356267f1f0dbe136abd, in this same command
+github-update:      The name is recorded as it was typed. This workflow cannot check who typed it
+github-update: 2. ALLOWLIST. The repository "[owner]/gtq-sandbox" is on the sandbox allowlist, which names 1 repository
+github-update: 3. THE CHANGE asked for now is the change of the preview: ["label.add=bug", "label.add=enhancement"]
+github-update: 4. AGE. The preview was made at 2026-11-23T12:32:55Z and it is now 2026-11-23T12:35:53Z by GitHub's clock: 3 minutes. The limit is 15
+github-update: 5. HAS ANYTHING MOVED? YES. The issue's metadata on GitHub is no longer what the preview showed:
+github-update:      preview:   labels     ["enhancement"]
+github-update:                 assignees  ["[owner]"]
+github-update:                 milestone  none
+github-update:      now:       labels     ["enhancement", "question"]
+github-update:                 assignees  ["[owner]"]
+github-update:                 milestone  none
+github-update:      MOVED since the preview: labels: added "question"
+github-update: REFUSED: STALE: a field changed on GitHub after the preview. The person confirmed a picture that is out of date, so the update is not made. Make a new preview, which will show the issue as it is now.
+github-update: Nothing was written. Requests made by this command: 3, every one a GET
+------------------------------------------------------------------------------
+exit code: 1
+
+==============================================================================
+WHAT THE ASSISTANT CHECKED AFTERWARDS, on the saved files, without contacting GitHub
+
+- The result record of these runs has one section, for run 2. It holds the repository and its id, issue 1 and its
+  node ID, the name typed, the account, the fingerprint, GitHub's time of the write, old value [], promised value
+  ["enhancement"], read-back value ["enhancement"], the request with status 200, the id of the "labeled" event,
+  the id of the label, and the change that would put the old value back: label.remove=enhancement.
+- Runs 3 and 5 added nothing to it.
+- Run 2 printed "1 minutes". The wording was corrected afterwards to "1 minute". Nothing else in the workflow
+  was changed after these runs.
+- Not looked up afterwards: the issue on GitHub after run 5. Run 5 made three requests, all GET. As far as the
+  assistant knows the issue has the labels "enhancement" and "question", and not "bug".

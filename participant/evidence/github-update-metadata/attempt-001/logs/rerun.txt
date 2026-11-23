@@ -1,0 +1,82 @@
+The approved workflow run a second time. github-update-metadata, attempt github-attempt-005
+Recorded by scripts/record_evidence.py. No request was sent to GitHub. The repositories, people, labels and issues are made up.
+This continues from logs/confirmation.txt, part 1: the same made-up GitHub, after the approved update was made.
+
+==============================================================================
+PART 1. The made-up GitHub after the approved run
+$ python3 participant/skills/github-update-metadata/fake_github.py SCRATCH/approved/github.json show
+------------------------------------------------------------------------------
+made-up GitHub: issue 7 of acme-fixture/sandbox: labels ["bug", "in progress"], assignees ["robin-fixture"], milestone 3
+made-up GitHub: writes received so far, to any repository: 3
+made-up GitHub:   POST /repos/acme-fixture/sandbox/issues/7/labels {"labels": ["in progress"]}
+made-up GitHub:   DELETE /repos/acme-fixture/sandbox/issues/7/labels/needs%20triage 
+made-up GitHub:   PATCH /repos/acme-fixture/sandbox/issues/7 {"milestone": 3}
+------------------------------------------------------------------------------
+exit code: 0
+
+==============================================================================
+PART 2. The very same approved command, run again
+$ python3 participant/skills/github-update-metadata/update.py confirm --source fake --fake-store SCRATCH/approved/github.json --repo acme-fixture/sandbox --issue 7 --change 'label.add=in progress' --change 'label.remove=needs triage' --change label.add=bug --change 'milestone.set=Sprint 13' --allowlist participant/context/github/update/sandbox-allowlist.json --state SCRATCH/approved/previews --results participant/context/github/results --fingerprint 589af57e276472d5d89287f09d16696d --confirmed-by 'the participant'
+------------------------------------------------------------------------------
+github-update: CONFIRM a change to an issue's metadata
+github-update: REFUSED: this preview was ALREADY USED, at 2026-11-23T09:00:00Z by GitHub's clock, confirmed by "the participant". A preview can be confirmed once. To change something more, make a new preview.
+github-update: Nothing was written. Requests made by this command: 0
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1: the preview was ALREADY USED, and the run says when and by whom
+  ok   nothing was written: the made-up GitHub received no write, and both repositories are exactly as they were
+  ok   it was refused before any request was sent
+
+==============================================================================
+PART 3. The whole workflow again from the start: a new preview of the same changes
+$ python3 participant/skills/github-update-metadata/update.py preview --source fake --fake-store SCRATCH/approved/github.json --repo acme-fixture/sandbox --issue 7 --change 'label.add=in progress' --change 'label.remove=needs triage' --change label.add=bug --change 'milestone.set=Sprint 13' --allowlist participant/context/github/update/sandbox-allowlist.json --state SCRATCH/approved/previews
+------------------------------------------------------------------------------
+github-update: PREVIEW of a change to an issue's metadata. This command only reads. It has no way to write
+github-update: 1. WHERE. Repository "acme-fixture/sandbox", id 401, private. Issue 7, node ID I_kwFX4010007, state open. The connection acts as login "robin-fixture"
+github-update: 2. ALLOWLIST. The repository is on the sandbox allowlist participant/context/github/update/sandbox-allowlist.json, which names 1 repository
+github-update: 3. WHAT WAS ASKED, change by change:
+github-update:      label.add="bug": ALREADY SO, nothing is sent for it. the issue already has this label
+github-update:      label.add="in progress": ALREADY SO, nothing is sent for it. the issue already has this label
+github-update:      label.remove="needs triage": ALREADY SO, nothing is sent for it. the issue does not have this label
+github-update:      milestone.set="Sprint 13": ALREADY SO, nothing is sent for it. the issue is already in this milestone
+github-update: 4. OLD AND NEW VALUES of every field this workflow can change:
+github-update:      old:       labels     ["bug", "in progress"]
+github-update:                 assignees  ["robin-fixture"]
+github-update:                 milestone  "Sprint 13" (number 3)
+github-update:      new:       labels     ["bug", "in progress"]
+github-update:                 assignees  ["robin-fixture"]
+github-update:                 milestone  "Sprint 13" (number 3)
+github-update:      difference: none. Nothing would change
+github-update: 5. EXACT REQUESTS a confirmation would send, in this order: 0
+github-update: 6. PERMISSION CHECK. GitHub says the ACCOUNT may change issues here (admin: no, maintain: no, pull: yes, push: yes, triage: yes)
+github-update:      GitHub reports no scopes for this token, as for a fine-grained token, and does not say what the TOKEN may do. That is known only when a write is tried: a token that may not write is refused by GitHub with status 403, and nothing changes
+github-update: 7. DUPLICATE CHECK. Each change was compared with the issue as it is now. Already so, and not sent: 4. GitHub does not refuse a repeated change of this kind itself: it accepts it and changes nothing
+github-update: 8. NOTHING WAS WRITTEN. The issue was read again at the end. Its labels, assignees and milestone before: cdaa8b4fcac3a1d9. After: cdaa8b4fcac3a1d9. The same
+github-update:      Requests made by this command: 6, every one a GET
+github-update: RESULT: NOTHING TO CHANGE. The issue already has every value that was asked for. No fingerprint is given, so there is nothing to confirm
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the run ends NOTHING TO CHANGE: every value asked for is already there
+  ok   each of the 4 changes is reported ALREADY SO, and 0 requests would be sent
+  ok   no fingerprint is given, so there is nothing that could be confirmed: the only saved preview is the used one
+  ok   nothing was written: the made-up GitHub received no write, and both repositories are exactly as they were
+
+==============================================================================
+PART 4. What a repeat would have looked like, and what there is instead
+$ python3 participant/skills/github-update-metadata/fake_github.py SCRATCH/approved/github.json show
+------------------------------------------------------------------------------
+made-up GitHub: issue 7 of acme-fixture/sandbox: labels ["bug", "in progress"], assignees ["robin-fixture"], milestone 3
+made-up GitHub: writes received so far, to any repository: 3
+made-up GitHub:   POST /repos/acme-fixture/sandbox/issues/7/labels {"labels": ["in progress"]}
+made-up GitHub:   DELETE /repos/acme-fixture/sandbox/issues/7/labels/needs%20triage 
+made-up GitHub:   PATCH /repos/acme-fixture/sandbox/issues/7 {"milestone": 3}
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the made-up GitHub received 3 writes in all, the ones of the approved run, and none since
+  ok   the issue has 4 events, as it had after the approved run: no second "labeled" or "milestoned" event
+  ok   the issue has the label "in progress" once, and the labels and milestone the approved run left
+  ok   the result record still has one section, and is byte for byte what the approved run wrote
+Where GitHub cannot prevent a repeat: GitHub accepts the same label, assignee or milestone a second time and changes
+nothing, so a repeated request would do no harm. It is still never sent, because the preview compares first.
+
+RESULT: ALL CHECKS PASSED. 11 checks.

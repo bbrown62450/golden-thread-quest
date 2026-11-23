@@ -1,0 +1,306 @@
+Do the tests notice a broken skill? github-update-metadata, attempt github-attempt-005
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/github-update-metadata/update.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. The preview shows the new values in place of the old ones (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OldAndNew.test_the_preview_shows_all_three_fields_old_and_new
+
+PLANTED BUG B. A value from GitHub is printed as it is, so it can break a line of the preview (criterion 1)
+  unittest result: FAILED (failures=20)
+  tests that failed (20):
+    Stale.test_a_change_in_the_moment_between_the_check_and_the_write_is_not_overwritten_and_is_reported
+    Checks.test_a_change_that_is_already_so_is_reported_and_not_sent
+    Stale.test_a_change_to_a_field_the_update_does_not_touch_stops_it_too
+    OldAndNew.test_a_field_that_is_not_changed_is_shown_too_with_the_same_value
+    SupportedOnly.test_a_label_is_matched_whatever_its_capitals_and_written_as_github_writes_it
+    Stale.test_a_label_removed_meanwhile_stops_the_update
+    Allowlist.test_a_repository_off_the_allowlist_is_refused_before_any_request
+    OldAndNew.test_a_value_from_github_is_printed_as_json_and_cannot_break_a_line
+    ResultRecord.test_putting_the_old_values_back_works
+    Confirmation.test_the_approved_run_says_who_confirmed_and_for_which_fingerprint
+    PreviewWritesNothing.test_the_preview_names_the_repository_the_issue_and_the_account
+    OldAndNew.test_the_preview_says_in_words_what_differs
+    OldAndNew.test_the_preview_shows_all_three_fields_old_and_new
+    ResultRecord.test_the_record_holds_everything_the_criterion_names
+    ResultRecord.test_the_record_keeps_the_old_values_and_how_to_put_them_back
+    Confirmation.test_the_refusal_names_what_differs
+    Stale.test_the_refusal_shows_the_preview_s_values_and_the_values_now
+    Rerun.test_the_same_confirmation_a_second_time_is_refused_and_writes_nothing
+    Stale.test_the_scenario_a_label_added_by_a_maintainer_after_the_preview_stops_the_update_and_stays
+    Checks.test_the_scopes_of_a_classic_token_are_reported
+
+PLANTED BUG C. A field that is not supported is let through (criterion 2)
+  unittest result: FAILED (failures=2, errors=3)
+  tests that failed (5):
+    SupportedOnly.test_a_field_nobody_has_heard_of_is_refused
+    SupportedOnly.test_a_project_field_is_refused
+    SupportedOnly.test_every_field_on_the_refused_list_is_refused_with_its_reason
+    SupportedOnly.test_one_refused_change_stops_the_whole_preview
+    SupportedOnly.test_replacing_the_whole_list_of_labels_is_refused
+
+PLANTED BUG D. A label the repository does not have is added, and GitHub creates it (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    SupportedOnly.test_a_label_the_repository_does_not_have_is_refused_and_not_created
+
+PLANTED BUG E. A login that cannot be assigned is accepted (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    SupportedOnly.test_a_person_who_cannot_be_assigned_is_refused
+
+PLANTED BUG F. A closed milestone is accepted (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    SupportedOnly.test_a_closed_or_missing_milestone_is_refused
+
+PLANTED BUG G. A request for a thing and its opposite is accepted (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    SupportedOnly.test_asking_for_a_thing_and_its_opposite_is_refused
+
+PLANTED BUG H. A pull request is accepted (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    SupportedOnly.test_a_pull_request_is_refused
+
+PLANTED BUG I. The same change asked for twice is accepted (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    SupportedOnly.test_the_same_change_twice_and_too_many_changes_are_refused
+
+PLANTED BUG J. More than ten changes are accepted (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    SupportedOnly.test_the_same_change_twice_and_too_many_changes_are_refused
+
+PLANTED BUG K. A label is matched only when its capitals match (criterion 2)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    SupportedOnly.test_a_label_is_matched_whatever_its_capitals_and_written_as_github_writes_it
+    Checks.test_every_kind_of_change_has_its_already_so
+
+PLANTED BUG L. The check for a field that moved is skipped (criterion 3)
+  unittest result: FAILED (failures=7)
+  tests that failed (7):
+    Stale.test_a_change_to_a_field_the_update_does_not_touch_stops_it_too
+    Stale.test_a_label_removed_meanwhile_stops_the_update
+    Stale.test_after_a_stale_refusal_a_new_preview_shows_the_issue_as_it_is_now
+    CommandLine.test_the_made_up_world_can_change_between_the_two_commands
+    Stale.test_the_refusal_shows_the_preview_s_values_and_the_values_now
+    Stale.test_the_scenario_a_label_added_by_a_maintainer_after_the_preview_stops_the_update_and_stays
+    Stale.test_the_very_change_asked_for_made_by_someone_else_meanwhile_stops_it
+
+PLANTED BUG M. Only the labels are checked for having moved (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Stale.test_a_change_to_a_field_the_update_does_not_touch_stops_it_too
+
+PLANTED BUG N. The issue is compared with itself, not with the old values of the preview (criterion 3)
+  unittest result: FAILED (failures=7)
+  tests that failed (7):
+    Stale.test_a_change_to_a_field_the_update_does_not_touch_stops_it_too
+    Stale.test_a_label_removed_meanwhile_stops_the_update
+    Stale.test_after_a_stale_refusal_a_new_preview_shows_the_issue_as_it_is_now
+    CommandLine.test_the_made_up_world_can_change_between_the_two_commands
+    Stale.test_the_refusal_shows_the_preview_s_values_and_the_values_now
+    Stale.test_the_scenario_a_label_added_by_a_maintainer_after_the_preview_stops_the_update_and_stays
+    Stale.test_the_very_change_asked_for_made_by_someone_else_meanwhile_stops_it
+
+PLANTED BUG O. The quest's scenario: a label is added by sending the whole list of labels (criterion 3)
+  unittest result: FAILED (failures=11)
+  tests that failed (11):
+    Stale.test_a_change_in_the_moment_between_the_check_and_the_write_is_not_overwritten_and_is_reported
+    SupportedOnly.test_a_label_is_matched_whatever_its_capitals_and_written_as_github_writes_it
+    WhenGitHubRefuses.test_a_write_refused_part_way_stops_the_rest_and_needs_looking
+    ResultRecord.test_events_that_were_there_before_or_made_by_someone_else_s_comment_are_not_claimed
+    Stale.test_no_request_ever_carries_the_whole_list_of_labels
+    CommandLine.test_preview_then_confirm_as_two_separate_commands
+    ResultRecord.test_putting_the_old_values_back_works
+    OldAndNew.test_the_new_values_are_what_the_issue_holds_after_the_update
+    OldAndNew.test_the_preview_shows_the_exact_requests
+    ResultRecord.test_the_record_holds_everything_the_criterion_names
+    Rerun.test_the_same_confirmation_a_second_time_is_refused_and_writes_nothing
+
+PLANTED BUG P. The milestone request carries the whole list of labels as well (criterion 3)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Stale.test_no_request_ever_carries_the_whole_list_of_labels
+    ResultRecord.test_putting_the_old_values_back_works
+    OldAndNew.test_the_preview_shows_the_exact_requests
+    ResultRecord.test_the_record_holds_everything_the_criterion_names
+
+PLANTED BUG Q. The read-back is not compared with what the preview promised (criterion 3)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Stale.test_a_change_in_the_moment_between_the_check_and_the_write_is_not_overwritten_and_is_reported
+    WhenGitHubRefuses.test_a_token_that_may_not_write_changes_nothing_and_says_so
+
+PLANTED BUG R. A connection can write without one issue being allowed (criterion 4)
+  unittest result: FAILED (errors=1)
+  tests that failed (1):
+    PreviewWritesNothing.test_a_connection_cannot_write_until_one_issue_is_allowed
+
+PLANTED BUG S. A write outside the one issue of the preview is sent (criteria 4 and 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    PreviewWritesNothing.test_a_write_outside_the_one_issue_is_not_sent
+
+PLANTED BUG T. An issue that changes while it is previewed is still READY (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    PreviewWritesNothing.test_an_issue_that_changes_during_the_preview_is_not_ready
+
+PLANTED BUG U. A preview with nothing to change still gives a fingerprint (criteria 4 and 9)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Rerun.test_a_new_preview_of_the_same_change_finds_nothing_to_do
+    Checks.test_every_kind_of_change_has_its_already_so
+    PreviewWritesNothing.test_without_a_ready_preview_there_is_no_fingerprint_to_confirm
+
+PLANTED BUG V. An account that may only read is still READY (criterion 5)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Checks.test_a_repository_that_does_not_say_what_the_account_may_do_is_not_ready
+    Checks.test_an_account_that_may_only_read_is_not_ready
+
+PLANTED BUG W. An archived repository is still READY (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Checks.test_an_archived_repository_is_not_ready
+
+PLANTED BUG X. A change that is already so is sent anyway (criteria 5 and 9)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Checks.test_a_change_that_is_already_so_is_reported_and_not_sent
+    Rerun.test_a_new_preview_of_the_same_change_finds_nothing_to_do
+    Checks.test_every_kind_of_change_has_its_already_so
+    PreviewWritesNothing.test_without_a_ready_preview_there_is_no_fingerprint_to_confirm
+
+PLANTED BUG Y. The preview does not check the allowlist (criterion 6)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Allowlist.test_a_repository_off_the_allowlist_is_refused_before_any_request
+    Allowlist.test_an_allowlist_that_cannot_be_read_allows_nothing
+    Allowlist.test_the_name_must_be_exactly_the_one_on_the_list
+
+PLANTED BUG Z. The confirmation does not check the allowlist (criterion 6)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Allowlist.test_a_repository_off_the_allowlist_is_refused_before_any_request
+    Allowlist.test_a_repository_taken_off_the_allowlist_after_the_preview_is_refused
+
+PLANTED BUG AA. An allowlist that cannot be read allows every repository (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Allowlist.test_an_allowlist_that_cannot_be_read_allows_nothing
+
+PLANTED BUG AB. An allowlist that is not a list is searched as text (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Allowlist.test_an_allowlist_that_cannot_be_read_allows_nothing
+
+PLANTED BUG AC. A repository GitHub knows under another name is accepted (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhenGitHubRefuses.test_a_repository_github_knows_under_another_name_is_refused
+
+PLANTED BUG AD. A redirect is not recognised as a repository that moved (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhenGitHubRefuses.test_a_rejected_token_and_a_moved_repository_stop_the_run
+
+PLANTED BUG AE. A confirmation with no name is accepted (criterion 7)
+  unittest result: FAILED (errors=2)
+  tests that failed (2):
+    Confirmation.test_a_missing_confirmation_is_refused_before_any_request
+    Rerun.test_a_refused_confirmation_does_not_spend_the_preview
+
+PLANTED BUG AF. An email address is accepted as the confirmer's name (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Confirmation.test_the_confirmer_must_be_a_plain_name
+
+PLANTED BUG AG. A change that differs from the preview is accepted (criterion 7)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Confirmation.test_a_change_that_differs_from_the_preview_is_refused
+    Rerun.test_a_refused_confirmation_does_not_spend_the_preview
+    Confirmation.test_the_refusal_names_what_differs
+
+PLANTED BUG AH. A preview for another issue is accepted (criterion 7)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Confirmation.test_a_preview_for_another_issue_is_refused
+    Allowlist.test_a_preview_made_for_the_sandbox_cannot_be_confirmed_against_another_repository
+
+PLANTED BUG AI. A saved preview that was altered is accepted (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Confirmation.test_a_saved_preview_that_was_altered_is_refused
+
+PLANTED BUG AJ. A fingerprint of any shape is used as a file name (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Confirmation.test_a_fingerprint_cannot_name_a_file_elsewhere
+
+PLANTED BUG AK. The time limit is not checked (criterion 7)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Confirmation.test_a_preview_older_than_the_limit_is_refused
+    ResultRecord.test_a_refused_confirmation_writes_no_record
+
+PLANTED BUG AL. A preview exactly at the limit is refused (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Confirmation.test_a_preview_at_the_limit_is_still_good
+
+PLANTED BUG AM. Another account, or an issue that was recreated, is accepted (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Confirmation.test_another_account_or_a_recreated_issue_is_refused
+
+PLANTED BUG AN. The result record does not name who confirmed (criterion 8)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ResultRecord.test_the_record_holds_everything_the_criterion_names
+
+PLANTED BUG AO. Events that were there before the update are claimed as its identifiers (criterion 8)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ResultRecord.test_events_that_were_there_before_or_made_by_someone_else_s_comment_are_not_claimed
+
+PLANTED BUG AP. The changes given for putting the old values back do not reverse anything (criterion 8)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ResultRecord.test_the_record_keeps_the_old_values_and_how_to_put_them_back
+
+PLANTED BUG AQ. A preview that was used can be confirmed again (criterion 9)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Rerun.test_the_same_confirmation_a_second_time_is_refused_and_writes_nothing
+
+PLANTED BUG AR. The preview is not marked as used (criterion 9)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Rerun.test_the_preview_is_spent_before_the_first_write
+    Rerun.test_the_same_confirmation_a_second_time_is_refused_and_writes_nothing
+
+PLANTED BUG AS. After GitHub refuses a write, the rest are sent anyway
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhenGitHubRefuses.test_a_token_that_may_not_write_changes_nothing_and_says_so
+
+PLANTED BUG AT. A write GitHub refused is not reported as refused
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhenGitHubRefuses.test_a_token_that_may_not_write_changes_nothing_and_says_so
+
+After the last bug was taken out: update.py is byte for byte what it was at the start. OK
+
+RESULT: all 46 planted bugs were caught by at least one test, and the file was restored.
