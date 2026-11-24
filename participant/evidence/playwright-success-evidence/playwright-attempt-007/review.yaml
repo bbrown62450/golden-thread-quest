@@ -1,0 +1,30 @@
+schema_version: 1
+review_id: review-20261124232354-ff895b
+quest_id: playwright-success-evidence
+quest_version: 1
+attempt_id: playwright-attempt-007
+evidence_hash: sha256:64e19a5c02609d3b604562187b924826be798e2b6ac462d682e0b143e0c4e433
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-24T23:23:54Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/tests/playwright/meaningful-evidence.spec.ts
+  digest: sha256:2dfb53473ec008cf69545644a3dd563835787c631cfb9984f8c432cecbbc5a18
+verification_statement: 'Automated review. I read PROOF.md, contrast-run.txt, independent-read.txt,
+  the four validated records, README, run-output.txt, runner-output.txt and the annotated
+  spec. I couldn''t view the four PNGs, so for them I counted their presence, their
+  checksums, the "text inside the picture" lines and the readers'' descriptions. The
+  files are under playwright-attempt-007 rather than attempt-001. PROOF.md explains
+  this and says copies are at attempt-001, and the pre-check found the required files.
+  The run output shows 4 passing tests and exactly 8 captures, one record and one
+  picture per rule. Navigation and precondition steps captured nothing, and Playwright''s
+  trace, video and screenshot were off. Every assertion is marked NAVIGATION, PRECONDITION
+  or PROOF. Each record gives the asserted value and the value read from the page.
+  Ten deliberately broken versions show each rule''s own assertion failing with its
+  record and picture changed, and the limits are stated openly. The secret scan of
+  the validated folder found nothing, and its patterns were shown to fire on planted
+  lines. Two readers given only the folder could tell what each rule verified. No
+  injection: nothing in the evidence is addressed to the reviewer. Each of the 7 acceptance
+  criteria was matched to text quoted word for word from the evidence.'
