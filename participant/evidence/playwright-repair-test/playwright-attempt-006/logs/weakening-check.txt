@@ -1,0 +1,376 @@
+The weakening check. playwright-repair-test, attempt playwright-attempt-006
+Recorded by participant/tests/playwright/tools/repair-test-check.ts.
+The checkout is made up and ran on this computer only, on 127.0.0.1. Every price, product and code in it is invented.
+Every weakened test and every broken application below was a copy in a scratch folder, deleted at the end. Paths are shown from the repository's top folder.
+
+==============================================================================
+PART 1. What is compared
+BEFORE  participant/tests/playwright/needs-maintenance.spec.ts
+        sha256 346bc90d1453c9d9002beeebe2879cee96d76c81cdf0ddd877ff63867117ce0c
+AFTER   participant/tests/playwright/needs-maintenance.repaired.spec.ts
+        sha256 7ee32b00fb1c28cb0d203dabee212fac01583f8e68476c1b91813bf4c645f4d6
+PLAN    participant/context/playwright/maintenance-report.md, part 4: 6 changes, for lines 8, 9, 11, 12, 13, 15
+  ok   the test before the repair is byte for byte the file the maintenance report was written for (the checksum the earlier quest recorded)
+  ok   the report's part 4 can be read: six changes, each with the line now and the line to put there
+
+==============================================================================
+PART 2. The check, run on the repair (criteria 1, 2 and 3)
+LAYER 1, from the two test files alone.
+  assertions before: 6. assertions after: 6.
+  WEAKENED: nothing reported.
+  Changes it cannot judge by itself, to be accounted for by the report:
+    line  8: the expected value gained characters: "40.00" is now "£40.00"
+    line  8: the subject changed: page.locator("#subtotal") is now page.getByTestId("summary-subtotal")
+    line  9: the expected value gained characters: "-4.00" is now "-£4.00"
+    line  9: the subject changed: page.locator("#discount") is now page.getByTestId("summary-discount")
+    line 11: the expected value gained characters: "7.20" is now "£7.20"
+    line 11: the subject changed: page.locator("#tax") is now page.getByTestId("summary-tax")
+    line 12: the expected value gained characters: "43.20" is now "£43.20"
+    line 12: the subject changed: page.locator("#total") is now page.getByTestId("summary-total")
+    line 15: the expected value gained characters: "43.20" is now "£43.20"
+    line 15: the subject changed: page.locator("#confirm-total") is now page.getByTestId("confirmation-total")
+    line 13: a statement changed in place: await page.getByRole("button", { name: "Place order" }).click(); is now await page.getByRole("button", { name: "Buy now" }).click();
+LAYER 2, against the maintenance report.
+  Every line that differs is a line the report lists, and reads exactly as the report says to make it.
+VERDICT ON THE REPAIR: SOUND
+  ok   criterion 2: no assertion is removed. Six before, six after, each paired with its counterpart on the same line
+  ok   criterion 2: no assertion is loosened. Each has the same matcher and the same number, and each expected value gained exactly the one character £ and lost none
+  ok   criterion 2: no assertion is made conditional. Each is still a plain awaited statement in the test's own body, with nothing before or after it
+  ok   Layer 1 reports nothing weakened
+  ok   criterion 1: the repair follows the report. All six of its changes are made, each exactly as written
+Lines that differ between the two files: 8, 9, 11, 12, 13, 15. Lines the report said would change: 8, 9, 11, 12, 13, 15.
+  ok   criterion 3: the lines that differ are exactly the lines the report said would change, and the test has the same number of lines
+  ok   line 10, the comment that states the business rule, is unchanged
+
+==============================================================================
+PART 3. The diff of the repair (criteria 1 and 3)
+participant/evidence/playwright-repair-test/playwright-attempt-006/repair.diff
+  @@ -8 +8 @@ maintenance report line 106, "Change 1 · line 8"
+  @@ -9 +9 @@ maintenance report line 120, "Change 2 · line 9"
+  @@ -11 +11 @@ maintenance report line 134, "Change 3 · line 11"
+  @@ -12 +12 @@ maintenance report line 150, "Change 4 · line 12"
+  @@ -13 +13 @@ maintenance report line 164, "Change 5 · line 13"
+  @@ -15 +15 @@ maintenance report line 178, "Change 6 · line 15"
+  ok   repair.diff is what this program writes from the two files. It was not adjusted by hand
+  ok   it has one hunk for each changed line, six, and every hunk is labelled with a line of the report
+  ok   each label is true: that line of the report is the heading of the change, and names the same line of the test
+  patch -o SCRATCH/patched.spec.ts needs-maintenance.spec.ts repair.diff: exit code 0
+  ok   applying repair.diff to the test before, with the system's patch program, gives the repaired test byte for byte
+
+==============================================================================
+PART 4. The comparison of assertions (criterion 7)
+  ok   participant/context/playwright/assertion-comparison.md is what this program writes from the two files. It was not adjusted by hand
+  ok   it has a section for each of the six assertions, and each shows the whole line before and the whole line after
+  ok   it gives no assertion the verdict WEAKENED, and none the verdict of a change the report does not call for
+
+==============================================================================
+PART 5. The check, run on deliberately weakened versions (criterion 6)
+Each version below is the repaired test with one thing done to it. LAYER 1 must report it from the test files alone.
+Beside each: what that version does when it is run. "green" is against the corrected application. "broken rule" is against
+the three applications of the mutation run and a fourth where only the tax figure shown is wrong. A weakened test that
+still fails against all four is one that running alone would never expose.
+
+WEAKENED VERSION 1: THE SCENARIO'S REPAIR: the tax and the totals only have to contain a number.
+    WEAKENED: A3: line 11: the expected value was the text "7.20" and is now /\d/, which is not a plain piece of text in quotes
+    WEAKENED: A3: line 12: the expected value was the text "43.20" and is now /\d/, which is not a plain piece of text in quotes
+    WEAKENED: A3: line 15: the expected value was the text "43.20" and is now /\d/, which is not a plain piece of text in quotes
+    Layer 2 also reports 3 lines the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 0 of 4.
+  ok   version 1 is reported as weakened by Layer 1, under A3
+
+WEAKENED VERSION 2: the tax assertion deleted.
+    WEAKENED: A1: the assertion on line 11 of the test before has no counterpart after: await expect(page.locator("#tax")).toHaveText("7.20");
+    Layer 2 also reports 8 lines the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 3 of 4.
+  ok   version 2 is reported as weakened by Layer 1, under A1
+
+WEAKENED VERSION 3: the tax assertion commented out.
+    WEAKENED: A1: the assertion on line 11 of the test before has no counterpart after: await expect(page.locator("#tax")).toHaveText("7.20");
+    WEAKENED: A1: an assertion is commented out, on line 11
+    Layer 2 also reports 1 line the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 3 of 4.
+  ok   version 3 is reported as weakened by Layer 1, under A1
+
+WEAKENED VERSION 4: the expected amounts set to what a wrong page shows: 8.00, 44.00, 44.00.
+    WEAKENED: A3: line 11: the expected value had the number 7.20 and now has 8.00
+    WEAKENED: A3: line 12: the expected value had the number 43.20 and now has 44.00
+    WEAKENED: A3: line 15: the expected value had the number 43.20 and now has 44.00
+    Layer 2 also reports 3 lines the report does not account for.
+    when run: against the corrected application it failed at line 11: Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-tax') | Expected: "£8.00" | Received: "£7.20" | Timeout:  1500ms. With the rule broken it fails in 3 of 4.
+  ok   version 4 is reported as weakened by Layer 1, under A3
+
+WEAKENED VERSION 5: toHaveText became toContainText on the tax.
+    WEAKENED: A2: line 11: the matcher was toHaveText and is now toContainText
+    WEAKENED: A3: line 11: the expected value had the number 7.20 and now has (none)
+    Layer 2 also reports 1 line the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 3 of 4.
+  ok   version 5 is reported as weakened by Layer 1, under A2
+
+WEAKENED VERSION 6: toHaveText became toBeVisible on the tax.
+    WEAKENED: A2: line 11: the matcher was toHaveText and is now toBeVisible
+    WEAKENED: A3: line 11: the expected value was the text "7.20" and is now nothing, which is not a plain piece of text in quotes
+    Layer 2 also reports 1 line the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 3 of 4.
+  ok   version 6 is reported as weakened by Layer 1, under A2
+
+WEAKENED VERSION 7: the tax checked only if it is on the page (an if on the same line).
+    WEAKENED: A5: line 11: before the assertion the line had "await" and now has "if (await page.getByTestId("summary-tax").isVisible()) await"
+    WEAKENED: A9: new in the test: a condition
+    Layer 2 also reports 1 line the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 4 of 4.
+  ok   version 7 is reported as weakened by Layer 1, under A5
+
+WEAKENED VERSION 8: the tax checked only when a condition holds (an if with braces).
+    WEAKENED: A6: line 12: the assertion is 1 level of braces deeper than it was, so it is inside something that may not run
+    WEAKENED: A8: a statement was added on line 11: if ((await page.getByTestId("summary-tax").innerText()) === "£7.20") {
+    WEAKENED: A8: a statement was added on line 13: }
+    WEAKENED: A9: new in the test: a condition
+    Layer 2 also reports 10 lines the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 3 of 4.
+  ok   version 8 is reported as weakened by Layer 1, under A6
+
+WEAKENED VERSION 9: the tax assertion inside a try with an empty catch.
+    WEAKENED: A6: line 12: the assertion is 1 level of braces deeper than it was, so it is inside something that may not run
+    WEAKENED: A8: a statement was added on line 11: try {
+    WEAKENED: A8: a statement was added on line 13: } catch {              }
+    WEAKENED: A9: new in the test: a try or a catch
+    Layer 2 also reports 10 lines the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 3 of 4.
+  ok   version 9 is reported as weakened by Layer 1, under A6
+
+WEAKENED VERSION 10: a .catch() on the end of the tax assertion.
+    WEAKENED: A5: line 11: after the assertion the line had ";" and now has ".catch(() => {});"
+    WEAKENED: A9: new in the test: a try or a catch, a function, which may never be called
+    Layer 2 also reports 1 line the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 3 of 4.
+  ok   version 10 is reported as weakened by Layer 1, under A5
+
+WEAKENED VERSION 11: the await taken off the tax assertion.
+    WEAKENED: A5: line 11: before the assertion the line had "await" and now has ""
+    Layer 2 also reports 1 line the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 4 of 4.
+  ok   version 11 is reported as weakened by Layer 1, under A5
+
+WEAKENED VERSION 12: expect.soft on the tax.
+    WEAKENED: A4: line 11: soft was put between expect and the matcher
+    Layer 2 also reports 1 line the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 4 of 4.
+  ok   version 12 is reported as weakened by Layer 1, under A4
+
+WEAKENED VERSION 13: the tax turned round: not £0.00.
+    WEAKENED: A3: line 11: the expected value had the number 7.20 and now has 0.00
+    WEAKENED: A4: line 11: not was put between expect and the matcher
+    Layer 2 also reports 1 line the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 3 of 4.
+  ok   version 13 is reported as weakened by Layer 1, under A4
+
+WEAKENED VERSION 14: the tax compared with itself: the expected value is read from the page.
+    WEAKENED: A3: line 12: the expected value was the text "7.20" and is now taxShown, which is not a plain piece of text in quotes
+    WEAKENED: A8: a statement was added on line 11: const taxShown = await page.getByTestId("summary-tax").innerText();
+    Layer 2 also reports 9 lines the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 3 of 4.
+  ok   version 14 is reported as weakened by Layer 1, under A3
+
+WEAKENED VERSION 15: a constant compared with itself.
+    WEAKENED: A2: line 11: the matcher was toHaveText and is now toBe
+    WEAKENED: A7: line 11: the assertion looked at page.locator("#tax") and now looks at "£7.20", which is not the page
+    Layer 2 also reports 1 line the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 3 of 4.
+  ok   version 15 is reported as weakened by Layer 1, under A7
+
+WEAKENED VERSION 16: an option added to the tax: ignoreCase.
+    WEAKENED: A3: line 11: something was added after the expected value: { ignoreCase: true }
+    Layer 2 also reports 1 line the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 4 of 4.
+  ok   version 16 is reported as weakened by Layer 1, under A3
+
+WEAKENED VERSION 17: the test switched off with fixme.
+    WEAKENED: A8: a statement was added on line 6: test.fixme("checkout shows the right amounts and places the order", async ({ page }) => {
+    WEAKENED: A8: a statement was removed. It was on line 6: test("checkout shows the right amounts and places the order", async ({ page }) => {
+    WEAKENED: A9: new in the test: skip, fixme, fail or only, however it is written
+    Layer 2 also reports 1 line the report does not account for.
+    when run: against the corrected application it skipped. With the rule broken it fails in 0 of 4.
+  ok   version 17 is reported as weakened by Layer 1, under A9
+
+WEAKENED VERSION 18: a skip at the top of the test.
+    WEAKENED: A8: a statement was added on line 7: test.skip(true, "flaky since the redesign");
+    WEAKENED: A9: new in the test: skip, fixme, fail or only, however it is written
+    Layer 2 also reports 13 lines the report does not account for.
+    when run: against the corrected application it skipped. With the rule broken it fails in 0 of 4.
+  ok   version 18 is reported as weakened by Layer 1, under A8
+
+WEAKENED VERSION 19: a return before the tax assertion.
+    WEAKENED: A8: a statement was added on line 11: return;
+    WEAKENED: A9: new in the test: a return
+    Layer 2 also reports 9 lines the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 0 of 4.
+  ok   version 19 is reported as weakened by Layer 1, under A8
+
+WEAKENED VERSION 20: the page replaced by a stub: page.route answers with fixed amounts.
+    WEAKENED: A8: a statement was added on line 7: await page.route("**/", (route) => route.fulfill({ contentType: "text/html; charset=utf-8", body: '<dl><dd dat ...
+    WEAKENED: A9: new in the test: a route that replaces what the application sends, a function, which may never be called
+    Layer 2 also reports 13 lines the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 3 of 4.
+  ok   version 20 is reported as weakened by Layer 1, under A8
+
+WEAKENED VERSION 21: the amounts written into the page before they are checked: page.evaluate.
+    WEAKENED: A8: a statement was added on line 11: await page.evaluate(() => { document.querySelector('[data-testid="summary-tax"]')!.textContent = "£7.20"; });
+    WEAKENED: A9: new in the test: code run inside the page, a function, which may never be called
+    Layer 2 also reports 9 lines the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 3 of 4.
+  ok   version 21 is reported as weakened by Layer 1, under A8
+
+WEAKENED VERSION 22: retries switched on for the file.
+    WEAKENED: A8: a statement was added on line 6: test.describe.configure({ retries: 3 });
+    WEAKENED: A9: new in the test: retries
+    Layer 2 also reports 14 lines the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 4 of 4.
+  ok   version 22 is reported as weakened by Layer 1, under A8
+
+Reported as weakened: 22 of 22.
+Of the 22, 14 are green against the corrected application and let at least one broken rule through. Those are the dangerous ones: nothing but a check like this, or a mutation run, shows them.
+  ok   the scenario's own repair, "contains a number", is green against the corrected application, lets every one of the four broken rules through, and is reported
+
+==============================================================================
+PART 6. Changes Layer 1 cannot judge, which Layer 2 reports because the report did not ask for them
+The first is not a weakening at all. The check is strict on purpose: it reports any change the plan did not call for, and a person decides.
+
+VERSION S1: an equal-looking locator the report did not write: locator('[data-testid="summary-tax"]').
+    Layer 1: nothing reported as weakened.
+    NOT ACCOUNTED FOR: line 11 is not what the report's Change 3 says to put there
+    when run against the corrected application: passed
+  ok   version S1 is reported by Layer 2: "line 11 is not what the report's Change 3 says to put there"
+
+VERSION S2: the tax assertion pointed at a different element with the same expected value: the total.
+    Layer 1: nothing reported as weakened.
+    NOT ACCOUNTED FOR: line 11 is not what the report's Change 3 says to put there
+    when run against the corrected application: failed at line 11: Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-total') | Expected: "£7.20" | Received: "£43.20" | Timeout:  1500ms
+  ok   version S2 is reported by Layer 2: "line 11 is not what the report's Change 3 says to put there"
+
+VERSION S3: the test's title changed.
+    Layer 1: nothing reported as weakened.
+    NOT ACCOUNTED FOR: line 6 differs and the report does not list it
+    when run against the corrected application: passed
+  ok   version S3 is reported by Layer 2: "line 6 differs and the report does not list it"
+
+VERSION S4: one of the report's changes left undone: line 15 as it was.
+    Layer 1: nothing reported as weakened.
+    NOT ACCOUNTED FOR: the report's Change 6 was not made: line 15 is as it was
+    when run against the corrected application: failed at line 15: Error: expect(locator).toHaveText(expected) failed | Locator: locator('#confirm-total') | Expected: "43.20" | Timeout: 1500ms | Error: element(s) not found
+  ok   version S4 is reported by Layer 2: "the report's Change 6 was not made"
+  ok   Layer 1 by itself reports nothing for S1 and S2. Without a report to hold a change to, it would let a re-pointed locator through, and says so at the head of the program
+
+==============================================================================
+PART 6B. Versions an independent reader wrote to get past Layer 1
+A reader was given this program as first built and asked for weakened tests that Layer 1 would not report. It wrote these eight.
+AS FIRST BUILT, LAYER 1 REPORTED NONE OF THE EIGHT. Layer 2 reported all eight. Layer 1 was then changed, and what follows is Layer 1 as it is now.
+
+READER'S VERSION E1: a return hidden after a comment on the same line.
+    WEAKENED: A8: a statement was added on line 10: return;
+    WEAKENED: A9: new in the test: a return
+    Layer 2 reports 1 line the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 0 of 4.
+  ok   version E1 is reported by Layer 2, which holds every line to the report
+
+READER'S VERSION E2: a block comment opened in the middle of line 7 and closed on line 15, so six lines of the test are a comment.
+    WEAKENED: A1: the assertion on line 8 of the test before has no counterpart after: await expect(page.locator("#subtotal")).toHaveText("40.00");
+    WEAKENED: A1: the assertion on line 9 of the test before has no counterpart after: await expect(page.locator("#discount")).toHaveText("-4.00");
+    WEAKENED: A1: the assertion on line 11 of the test before has no counterpart after: await expect(page.locator("#tax")).toHaveText("7.20");
+    WEAKENED: A1: the assertion on line 12 of the test before has no counterpart after: await expect(page.locator("#total")).toHaveText("43.20");
+    WEAKENED: A1: the assertion on line 14 of the test before has no counterpart after: await expect(page.getByRole("heading", { name: "Order placed" })).toBeVisible();
+    WEAKENED: A1: the assertion on line 15 of the test before has no counterpart after: await expect(page.locator("#confirm-total")).toHaveText("43.20");
+    WEAKENED: A1: an assertion is commented out, on line 8, 9, 11, 12, 14, 15
+    WEAKENED: A8: a statement was removed. It was on line 13: await page.getByRole("button", { name: "Place order" }).click();
+    Layer 2 reports 2 lines the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 0 of 4.
+  ok   version E2 is reported by Layer 2, which holds every line to the report
+
+READER'S VERSION E3: the same six lines inside a template string.
+    WEAKENED: A1: the assertion on line 8 of the test before has no counterpart after: await expect(page.locator("#subtotal")).toHaveText("40.00");
+    WEAKENED: A1: the assertion on line 9 of the test before has no counterpart after: await expect(page.locator("#discount")).toHaveText("-4.00");
+    WEAKENED: A1: the assertion on line 11 of the test before has no counterpart after: await expect(page.locator("#tax")).toHaveText("7.20");
+    WEAKENED: A1: the assertion on line 12 of the test before has no counterpart after: await expect(page.locator("#total")).toHaveText("43.20");
+    WEAKENED: A1: the assertion on line 14 of the test before has no counterpart after: await expect(page.getByRole("heading", { name: "Order placed" })).toBeVisible();
+    WEAKENED: A1: the assertion on line 15 of the test before has no counterpart after: await expect(page.locator("#confirm-total")).toHaveText("43.20");
+    WEAKENED: A8: a statement was added on line 15: await expect(page.getByTestId("confirmation-total")).toHaveText("£43.20"); //`;
+    WEAKENED: A8: a statement was removed. It was on line 13: await page.getByRole("button", { name: "Place order" }).click();
+    Layer 2 reports 2 lines the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 0 of 4.
+  ok   version E3 is reported by Layer 2, which holds every line to the report
+
+READER'S VERSION E4: expect itself replaced, on the import line, by a function that checks nothing.
+    WEAKENED: A8: line 1 held one statement and now holds more: import { expect as real, test } from "@playwright/test"; const expect = (_: unknown) => ({ toHaveText: async ( ...
+    WEAKENED: A9: new in the test: a function, which may never be called
+    WEAKENED: A10: the word expect appears 2 times without being called, and appeared 1 before. It has been imported under another name, or defined again
+    Layer 2 reports 1 line the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 0 of 4.
+  ok   version E4 is reported by Layer 2, which holds every line to the report
+
+READER'S VERSION E5: the page loaded from a data: address holding fixed amounts, and never from the application.
+    WEAKENED: A9: new in the test: a page loaded from somewhere other than the application's own address
+    Layer 2 reports 1 line the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 0 of 4.
+  ok   version E5 is reported by Layer 2, which holds every line to the report
+
+READER'S VERSION E6: the tax written into the page from inside the assertion's own subject.
+    WEAKENED: A7: line 11: what the assertion looks at now does something besides finding an element: page.getByTestId((await page.evaluateHandle(() => { document.querySelector('[data-testid=" ...
+    WEAKENED: A9: new in the test: code run inside the page, a function, which may never be called
+    Layer 2 reports 1 line the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 3 of 4.
+  ok   version E6 is reported by Layer 2, which holds every line to the report
+
+READER'S VERSION E7: a return after a bare carriage return inside the comment line, which ends the comment for JavaScript.
+    WEAKENED: A8: a statement was added on line 11: return;
+    WEAKENED: A9: new in the test: a return
+    Layer 2 reports 1 line the report does not account for.
+    when run: against the corrected application it PASSES (green). With the rule broken it fails in 0 of 4.
+  ok   version E7 is reported by Layer 2, which holds every line to the report
+
+READER'S VERSION E8: a skip written without a dot: test["skip"]().
+    WEAKENED: A8: line 7 held one statement and now holds more: await page.goto("/"); test["skip"]();
+    WEAKENED: A9: new in the test: skip, fixme, fail or only, however it is written
+    Layer 2 reports 1 line the report does not account for.
+    when run: against the corrected application it skipped. With the rule broken it fails in 0 of 4.
+  ok   version E8 is reported by Layer 2, which holds every line to the report
+
+Layer 1, as it is now, reports 8 of the 8. That it now catches these eight says nothing about a ninth.
+  ok   Layer 1, as changed after the reader's findings, reports each of the eight, under the rule expected
+
+==============================================================================
+PART 7. What the check cannot see: a weakening that is not in the test file
+The repaired test, unchanged, run by a command that selects no test and is told that this is acceptable. The rule is broken
+(tax before the discount). The test file is exactly the repaired one, so the weakening check has nothing to report.
+  the command's exit code: 0. tests that ran: 0. status: no test ran.
+  the weakening check on the same file: 0 problems reported.
+  ok   the command exits 0 with the rule broken, having run no test, and the weakening check reports nothing. This is recorded as a limit, not a pass
+  ok   this program labels that run "no test ran", so the mutation run cannot count it as the test failing or as the test passing
+
+==============================================================================
+PART 8. That this check can fail
+Spoiled: the diff with one hunk's label pointing at a different line of the report (in memory)
+    PROBLEM: the diff is not what this program writes
+  ok   reported: "not what this program writes"
+Spoiled: the comparison with one "After" cell edited (in memory)
+    PROBLEM: the comparison is not what this program writes
+  ok   reported: "not what this program writes"
+Spoiled: the repaired test with nothing changed at all: the test before, offered as the repair
+    PROBLEM: the report's Change 1 was not made: line 8 is as it was
+    PROBLEM: the report's Change 2 was not made: line 9 is as it was
+    PROBLEM: the report's Change 3 was not made: line 11 is as it was
+    PROBLEM: the report's Change 4 was not made: line 12 is as it was
+    PROBLEM: the report's Change 5 was not made: line 13 is as it was
+    PROBLEM: the report's Change 6 was not made: line 15 is as it was
+  ok   reported: "the report's Change 1 was not made"
+Spoiled: a report with one change fewer than the repair makes (Change 5 taken out, in memory)
+    PROBLEM: line 13 differs and the report does not list it
+  ok   reported: "line 13 differs and the report does not list it"
+  ok   and the repair itself, checked again at the end, is still sound
+
+==============================================================================
+AT THE END
+sha256 of the test before the repair:  346bc90d1453c9d9002beeebe2879cee96d76c81cdf0ddd877ff63867117ce0c
+sha256 of the repaired test:           7ee32b00fb1c28cb0d203dabee212fac01583f8e68476c1b91813bf4c645f4d6
+sha256 of the corrected checkout:      6bdc9bb3839b1c45700e1ab451816915eba7270de6ac64b7fac7fad0284ed5b3
+  ok   the test before the repair, the repaired test and the corrected checkout are each byte for byte what they were at the start, and the scratch folder is gone
+
+RESULT: ALL CHECKS PASSED. 61 checks.

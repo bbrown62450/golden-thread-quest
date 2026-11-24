@@ -564,4 +564,13 @@ attempts:
   evidence_path: participant/evidence/ba-write-story/ba-attempt-007
   submission_id: submission-20261124202910-59bc5c
   review_id: review-20261124203253-e25258
-updated_at: '2026-11-24T20:32:53Z'
+- attempt_id: playwright-attempt-006
+  quest_id: playwright-repair-test
+  quest_version: 1
+  content_hash: sha256:6946d5b6ed49ba95bbe92f8d964e501c809bca3d5785e2c716c6e513d3f63d9b
+  state: submitted
+  started_at: '2026-11-24T20:47:41Z'
+  updated_at: '2026-11-24T21:35:39Z'
+  evidence_path: participant/evidence/playwright-repair-test/playwright-attempt-006
+  submission_id: submission-20261124213539-fbae12
+updated_at: '2026-11-24T21:35:39Z'

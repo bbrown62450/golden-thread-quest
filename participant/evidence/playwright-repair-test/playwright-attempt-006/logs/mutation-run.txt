@@ -1,0 +1,152 @@
+The mutation run. playwright-repair-test, attempt playwright-attempt-006
+Recorded by participant/tests/playwright/tools/repair-test-check.ts.
+The checkout is made up and ran on this computer only, on 127.0.0.1. Every price, product and code in it is invented.
+Every weakened test and every broken application below was a copy in a scratch folder, deleted at the end. Paths are shown from the repository's top folder.
+
+==============================================================================
+PART 1. What is run
+THE REPAIRED TEST      participant/tests/playwright/needs-maintenance.repaired.spec.ts
+                       sha256 7ee32b00fb1c28cb0d203dabee212fac01583f8e68476c1b91813bf4c645f4d6
+THE CORRECTED CHECKOUT participant/tests/playwright/demo-app/checkout-server.corrected.mjs
+                       sha256 6bdc9bb3839b1c45700e1ab451816915eba7270de6ac64b7fac7fad0284ed5b3
+SETTINGS               participant/tests/playwright/repair.config.ts: no retries, one worker, no trace, screenshot or video
+
+How the corrected checkout differs from the redesigned one in use, demo-app/checkout-server.mjs, leaving comment lines aside:
+    in use:    const tax = subtotal * (fault === "tax-rate-wrong" ? 0.25 : TAX_RATE);
+    corrected: const tax = goods * (fault === "tax-rate-wrong" ? 0.25 : TAX_RATE);
+    in use:    return { subtotal, discount, tax, shownTax: fault === "tax-shown-wrong" ? subtotal * 0.25 : tax, total };
+    corrected: return { subtotal, discount, tax, shownTax: fault === "tax-shown-wrong" ? goods * 0.25 : tax, total };
+  ok   the corrected checkout differs from the one in use in two lines of code, both the tax, and in nothing else but comments
+  ok   the settings are those the test ran under before the repair: apart from which file is run and where output goes, the two settings files set the same things, retries 0 and the same two time limits among them
+  ok   the repaired test has no skip, fixme, fail, only or retries in it, however written
+
+==============================================================================
+PART 2. The repaired test against the corrected application (criterion 4)
+What the corrected checkout shows: subtotal £40.00, discount -£4.00, tax £7.20, total £43.20, charged on the confirmation £43.20. Button: "Buy now".
+The repaired test: passed. Tests that ran: 1. Exit code: 0.
+  ok   the corrected checkout shows subtotal £40.00, discount -£4.00, and the amounts the business rule then gives: tax £7.20, total £43.20, and £43.20 charged
+  ok   the repaired test PASSES against the corrected application. One test ran, and the command's exit code is 0
+For contrast, the test as it was before the repair, against the same application: failed at line 8: Error: expect(locator).toHaveText(expected) failed | Locator: locator('#subtotal') | Expected: "40.00" | Timeout: 1500ms | Error: element(s) not found
+  ok   the test before the repair fails there, at line 8. So the repair is what makes it pass
+
+==============================================================================
+PART 3. The business rule, broken on purpose, three ways (criterion 5)
+THE RULE (line 10 of the test): tax is 20% of what the customer pays for the goods, after the discount. 36.00 x 20% = 7.20.
+Each broken application is a copy of the corrected one with ONE line of its source changed, written to a scratch folder.
+The corrected application itself is never written to. What each copy shows on its page was read back before the test ran.
+
+WAY 1: Tax worked out on the subtotal, before the discount is taken off.
+  why this way: It is the fault the redesign really shipped: one word, goods, became subtotal. The customer is charged tax on money they did not pay.
+  the line:  const tax = goods * (fault
+  became:    const tax = subtotal * (fault
+  the page then shows: subtotal £40.00, discount -£4.00, tax £8.00, total £44.00, charged £44.00. Button: "Buy now".
+  the repaired test: failed at line 11: Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-tax') | Expected: "£7.20" | Received: "£8.00" | Timeout:  1500ms. Tests that ran: 1. Exit code: 1.
+  ok   way 1: the page shows a tax or a total that the rule does not give. Every amount is still on the page as an amount, and the subtotal, the discount and the button are as they were
+  ok   way 1: the repaired test FAILS, at line 11, expecting £7.20 and receiving £8.00
+
+WAY 2: The wrong rate: 25% where the rule says 20%.
+  why this way: The rule has two halves, a rate and what the rate is taken of. The first way breaks the second half. This breaks the first.
+  the line:  const TAX_RATE = 0.2;
+  became:    const TAX_RATE = 0.25;
+  the page then shows: subtotal £40.00, discount -£4.00, tax £9.00, total £45.00, charged £45.00. Button: "Buy now".
+  the repaired test: failed at line 11: Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-tax') | Expected: "£7.20" | Received: "£9.00" | Timeout:  1500ms. Tests that ran: 1. Exit code: 1.
+  ok   way 2: the page shows a tax or a total that the rule does not give. Every amount is still on the page as an amount, and the subtotal, the discount and the button are as they were
+  ok   way 2: the repaired test FAILS, at line 11, expecting £7.20 and receiving £9.00
+
+WAY 3: The tax is shown correctly and is left out of what the customer is charged.
+  why this way: The tax line on the page stays right, so the assertion on the tax cannot see it. It asks whether the test guards the rule or only one figure.
+  the line:  let total = goods + tax;
+  became:    let total = goods;
+  the page then shows: subtotal £40.00, discount -£4.00, tax £7.20, total £36.00, charged £36.00. Button: "Buy now".
+  the repaired test: failed at line 12: Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-total') | Expected: "£43.20" | Received: "£36.00" | Timeout:  1500ms. Tests that ran: 1. Exit code: 1.
+  ok   way 3: the page shows a tax or a total that the rule does not give. Every amount is still on the page as an amount, and the subtotal, the discount and the button are as they were
+  ok   way 3: the repaired test FAILS, at line 12, expecting £43.20 and receiving £36.00
+
+The three ways were chosen by the author of the test's repair, who knew what each would do. They are a demonstration and not a search.
+Ways that the test does not catch are in part 6.
+
+==============================================================================
+PART 4. Controls: that a failure means the rule, and a pass means something
+CONTROL: the same rule written another way. The goods are worked out again inside the tax line, as the subtotal less the discount.
+  the line:  const tax = goods * (fault
+  became:    const tax = (subtotal - discount) * (fault
+  the page then shows: tax £7.20, total £43.20, charged £43.20.
+  the repaired test: passed
+  ok   a change to the tax line that keeps the rule leaves the amounts right and the test passing. So the test does not fail merely because that line was touched or a copy was made
+
+The redesigned checkout in use, which has the fault the report found: failed at line 11: Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-tax') | Expected: "£7.20" | Received: "£8.00" | Timeout:  1500ms
+  ok   against the checkout in use, uncorrected, the repaired test fails at line 11 expecting £7.20 and receiving £8.00, as the maintenance report predicted
+
+A run in which no test is found, with the rule broken: status "no test ran", tests that ran: 0.
+  ok   this program labels such a run "no test ran". Everywhere in this record, "fails" means that one test ran and its status was failed
+
+==============================================================================
+PART 5. Eight more faults, switched on in the corrected application by its harness switch
+These were already in the application from the earlier quest. The test before the repair is run against the checkout before the
+redesign. The repaired test is run against the corrected checkout.
+  fault                    the test before, old checkout    the repaired test, corrected checkout
+  tax-left-out-of-total    caught at line 12                caught at line 12
+  tax-rate-wrong           caught at line 11                caught at line 11
+  tax-shown-wrong          caught at line 11                caught at line 11
+  discount-ignored         caught at line 11                caught at line 11
+  total-ignores-discount   caught at line 12                caught at line 12
+  subtotal-wrong           caught at line 8                 caught at line 8
+  button-dead              caught at line 14                caught at line 14
+  confirmation-wrong       caught at line 15                caught at line 15
+  ok   the test before the repair caught 8 of 8, and the repaired test catches 8 of 8. Every fault caught before is caught after, and at the same line
+
+==============================================================================
+PART 6. What the test does NOT catch: the rule broken in ways that give the right figures for this one basket
+Proposed by an independent reader of this program. The application has one basket and one discount, so the test checks the rule at one
+point: 40.00 of goods, 10% off. A fault that agrees with the rule at that point passes. Each is tried twice: the repaired test against
+the corrected checkout with the fault, and the test before the repair against the checkout before the redesign with the same fault.
+
+NOT CAUGHT 1: a rate of 20.01%.
+  the line:  const TAX_RATE = 0.2;
+  became:    const TAX_RATE = 0.2001;
+  the page then shows: tax £7.20, total £43.20, charged £43.20.
+  the repaired test: passed. The test before the repair, old checkout, same fault: passed.
+
+NOT CAUGHT 2: 18% of the subtotal before the discount, which is right only when the discount is 10%.
+  the line:  const tax = goods * (fault === "tax-rate-wrong" ? 0.25 : TAX_RATE);
+  became:    const tax = subtotal * 0.18;
+  the page then shows: tax £7.20, total £43.20, charged £43.20.
+  the repaired test: passed. The test before the repair, old checkout, same fault: passed.
+
+NOT CAUGHT 3: the tax is always 7.20, whatever is in the basket.
+  the line:  const tax = goods * (fault === "tax-rate-wrong" ? 0.25 : TAX_RATE);
+  became:    const tax = 7.2;
+  the page then shows: tax £7.20, total £43.20, charged £43.20.
+  the repaired test: passed. The test before the repair, old checkout, same fault: passed.
+
+NOT CAUGHT 4: the discount taken off before tax is always 4.00, whatever the discount is.
+  the line:  const tax = goods * (fault === "tax-rate-wrong" ? 0.25 : TAX_RATE);
+  became:    const tax = (subtotal - 4) * TAX_RATE;
+  the page then shows: tax £7.20, total £43.20, charged £43.20.
+  the repaired test: passed. The test before the repair, old checkout, same fault: passed.
+
+NOT CAUGHT 5: the tax is never more than 7.20.
+  the line:  const tax = goods * (fault === "tax-rate-wrong" ? 0.25 : TAX_RATE);
+  became:    const tax = Math.min(goods * TAX_RATE, 7.2);
+  the page then shows: tax £7.20, total £43.20, charged £43.20.
+  the repaired test: passed. The test before the repair, old checkout, same fault: passed.
+  ok   all 5 of these broken rules get past the repaired test. This is recorded as a limit of the test, and is not a pass
+  ok   every one of them got past the test before the repair as well. The repair did not open this gap: the test never guarded the rule beyond one basket
+
+==============================================================================
+PART 7. The contrast: the scenario's repair, which only checks that a number is shown
+The same three broken applications, and the test as the scenario's repair would have left it. Its text is weakened version 1 of logs/weakening-check.txt.
+  against the corrected application: passed
+  way 1, tax-before-discount: passed
+  way 2, tax-rate-25: passed
+  way 3, tax-not-charged: passed
+  ok   the scenario's repair passes against the corrected application and against all three broken ones. It is green, and the pricing bug passes unnoticed
+
+==============================================================================
+AT THE END
+sha256 of the test before the repair:  346bc90d1453c9d9002beeebe2879cee96d76c81cdf0ddd877ff63867117ce0c
+sha256 of the repaired test:           7ee32b00fb1c28cb0d203dabee212fac01583f8e68476c1b91813bf4c645f4d6
+sha256 of the corrected checkout:      6bdc9bb3839b1c45700e1ab451816915eba7270de6ac64b7fac7fad0284ed5b3
+  ok   the test before the repair, the repaired test and the corrected checkout are each byte for byte what they were at the start, and the scratch folder is gone
+
+RESULT: ALL CHECKS PASSED. 20 checks.

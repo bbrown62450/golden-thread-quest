@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261124213539-fbae12
+quest_id: playwright-repair-test
+quest_version: 1
+attempt_id: playwright-attempt-006
+content_hash: sha256:6946d5b6ed49ba95bbe92f8d964e501c809bca3d5785e2c716c6e513d3f63d9b
+evidence_hash: sha256:2642281e08a3a449016ad6e23d9bc98f6a7e7749d3134c00a19775f908826edf
+submitted_at: '2026-11-24T21:35:39Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/playwright/assertion-comparison.md
+  digest: sha256:f7e5d3ed7c1a3dc9b3eff5a6df97ddbae1f67d93134a13b31357cb357cb813ca
+- path: participant/tests/playwright/tools/repair-test-check.ts
+  digest: sha256:5458106ffc7790ea800684510ad388080b92d97a5f49f901624385b5e538d90d

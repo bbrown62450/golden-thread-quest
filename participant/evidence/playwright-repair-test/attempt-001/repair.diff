@@ -1,0 +1,26 @@
+The repair of the checkout test. playwright-repair-test, attempt playwright-attempt-006.
+Written by participant/tests/playwright/tools/repair-test-check.ts --write, from the two files. Not typed by hand.
+One hunk for each line that differs. The words after the second @@ of a hunk say which line of the maintenance
+report, participant/context/playwright/maintenance-report.md, called for it. A line that differs and that the
+report does not call for is labelled NOT IN THE REPORT.
+
+--- a/participant/tests/playwright/needs-maintenance.spec.ts
++++ b/participant/tests/playwright/needs-maintenance.repaired.spec.ts
+@@ -8 +8 @@ maintenance report line 106, "Change 1 · line 8"
+-  await expect(page.locator("#subtotal")).toHaveText("40.00");
++  await expect(page.getByTestId("summary-subtotal")).toHaveText("£40.00");
+@@ -9 +9 @@ maintenance report line 120, "Change 2 · line 9"
+-  await expect(page.locator("#discount")).toHaveText("-4.00");
++  await expect(page.getByTestId("summary-discount")).toHaveText("-£4.00");
+@@ -11 +11 @@ maintenance report line 134, "Change 3 · line 11"
+-  await expect(page.locator("#tax")).toHaveText("7.20");
++  await expect(page.getByTestId("summary-tax")).toHaveText("£7.20");
+@@ -12 +12 @@ maintenance report line 150, "Change 4 · line 12"
+-  await expect(page.locator("#total")).toHaveText("43.20");
++  await expect(page.getByTestId("summary-total")).toHaveText("£43.20");
+@@ -13 +13 @@ maintenance report line 164, "Change 5 · line 13"
+-  await page.getByRole("button", { name: "Place order" }).click();
++  await page.getByRole("button", { name: "Buy now" }).click();
+@@ -15 +15 @@ maintenance report line 178, "Change 6 · line 15"
+-  await expect(page.locator("#confirm-total")).toHaveText("43.20");
++  await expect(page.getByTestId("confirmation-total")).toHaveText("£43.20");

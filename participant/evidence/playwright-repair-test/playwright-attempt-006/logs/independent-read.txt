@@ -1,0 +1,102 @@
+Independent reads of the repair and of the program that checks it. playwright-repair-test, attempt playwright-attempt-006
+Copied by hand, and shortened, from the readers' replies by the assistant that built this quest. No program wrote this file.
+
+Who the readers were: three separate AI assistants (Claude), each started fresh. No person read the work. Each was told to
+read only the files named to it, to run nothing and to write nothing. Those limits were given in words and not enforced.
+None saw another's reply. The program was finished and its records were passing before any reply was read.
+
+  Reader 1   given the test before and after, parts 4 and 5 of the maintenance report, the program as first built, the
+             corrected application and the settings file. Asked to write weakened tests that Layer 1 of the weakening
+             check would not report.
+  Reader 2   given the same files. Asked whether the repair follows the plan, whether any assertion is weaker, what ways
+             of breaking the rule the test would not catch, and which of the program's checks are looser than they say.
+  Reader 3   given the test before and after and the program as changed after readers 1 and 2. Asked to beat Layer 1
+             again.
+
+==============================================================================
+READER 1. Eight weakened tests, each predicted to get past Layer 1
+
+It wrote eight and predicted Layer 1 would report none of them. All eight were then run. AS FIRST BUILT, LAYER 1 REPORTED
+NONE OF THE EIGHT. Layer 2, which holds every line to the report, reported all eight.
+
+  E1  a return put after a comment on the same line          green, and let all 4 broken rules through
+  E2  a block comment opened mid-line, over six lines        green, and let all 4 through
+  E3  the same six lines inside a template string            green, and let all 4 through
+  E4  expect replaced on the import line by an empty one     green, and let all 4 through
+  E5  the page loaded from a data: address                   green, and let all 4 through
+  E6  the tax written into the page inside the subject       green, and let 1 of 4 through
+  E7  a return after a bare carriage return in a comment     green, and let all 4 through
+  E8  a skip written test["skip"]()                          skipped, exit code 0
+
+Why Layer 1 missed them, in the reader's words and confirmed in the code:
+  - a line beginning with a block comment was taken to be all comment, even with code after the comment closed;
+  - a block comment or a template string opened in the middle of a line was not followed onto the next lines;
+  - lines were split at the newline only, and JavaScript ends a comment at a carriage return too;
+  - nothing checked that "expect" was still the test runner's;
+  - the list of dangerous words wanted a dot before "skip", and had no entry for goto or evaluateHandle;
+  - "the subject begins page." was all that was asked of a subject, and a subject can be any code;
+  - a second statement put on a line after a semicolon counted as that line "changed in place".
+It found no way past Layer 2, and no fault in it.
+It also listed weakenings outside the test file that the program's own notes had not admitted: environment variables such
+as the port, the packages the import resolves to, an edited "corrected" application, and a person running a different copy.
+
+WHAT WAS CHANGED
+  Layer 1 now sets comments, quotes and template strings aside over the whole file before it reads any line, and ends a
+  line where JavaScript does. It has a rule for a redefined expect (A10), for a subject that does more than find an element
+  (A7), and for a line that gained a statement (A8). Its dangerous words are counted, and are matched however written.
+  The eight are now part 6B of logs/weakening-check.txt, where Layer 1 as changed reports all eight.
+  The notes at the head of the program now say that Layer 1 is a list of known tricks, what it is known still to miss, and
+  that Layer 2 is what holds the repair.
+
+==============================================================================
+READER 2. The repair, the test and the program's own checks
+
+On the repair: "Yes." Lines 8, 9, 11, 12, 13 and 15 differ, each "character for character" as the plan says, and nothing
+else differs. "None of the six is weaker." It noted that line 3, a comment the plan leaves alone, still names the
+uncorrected application.
+
+On what the test does not catch. The application has one basket and one discount, so the test checks the rule at one
+point. It listed faults that give the right figures there: a rate of 0.2001, 18% of the subtotal before the discount, a
+constant 7.20, a discount hard-coded as 4.00, a cap, rounding. Five were then run. ALL FIVE PASS THE REPAIRED TEST, AND ALL
+FIVE PASS THE TEST BEFORE THE REPAIR. They are part 6 of logs/mutation-run.txt.
+Its summary: "The evidence shows the repaired test is no weaker than the old one. It does not show the test guards the
+rule." And: the three ways of breaking the rule "were chosen by the author with known outcomes"; the plan, the repair,
+the checker and the corrected application "share one author".
+
+On the program's checks, looser than their labels. Each was changed:
+  - the eight harness faults counted any failure as "caught". Now each must fail at its expected line.
+  - "the rule really is broken" would have passed on a missing figure. Now every amount must be on the page as an amount.
+  - "two lines of code, both the tax" only looked for two words. Now the two lines are compared whole.
+  - the control wrote the rate as 1 / 5, which is the same number. Now the control rewrites the tax line itself.
+  - a label said "expecting £7.20" and the check looked only for £8.00. Now both.
+  - a label said "36.00 of goods" and nothing checked the subtotal or the discount. Now both are checked.
+  - two checks could not fail by construction. They now test the exact label the program gives such a run.
+  - the retry check matched text that could be in a comment, and nothing compared the settings with those the test ran
+    under before. Now the two settings files are compared.
+  - a server already listening on the chosen port would have been tested in place of the one started. Now the started
+    one must still be running.
+  One it called a conclusion and not a test, "guarded by more than one line", was taken out.
+
+On the comparison document, claiming more than the code works out. Each was changed:
+  - the verdict sentence was fixed text. It is now built from what the program found for that line.
+  - a return or a skip elsewhere left each assertion's verdict reading "not made conditional". Each verdict now says when
+    the check reported a problem elsewhere in the test.
+  - "how the element is found" was printed for any change of subject. It now says "changed".
+  - added statements and added comments could not appear. They now do.
+
+==============================================================================
+READER 3. The program as changed
+
+NO RESULT. The reader read the three files and its report did not arrive: it said the report was stopped before delivery
+and that it was withholding all of it. It was not asked again.
+
+So: LAYER 1 AS CHANGED HAS NOT BEEN READ INDEPENDENTLY. The first version was, and failed eight times out of eight. The
+changes answer those eight. Nobody has tried a ninth.
+
+==============================================================================
+SUMMARY
+  The repair: one reader compared the two files itself and found the plan followed exactly and no assertion weaker.
+  Layer 2 of the weakening check: two readers looked for a way past it and found none.
+  Layer 1 of the weakening check: beaten 8 of 8 as first built. Changed. Not read again.
+  The mutation run: several checks were looser than they said, and were tightened. The three ways of breaking the rule
+  are the author's. Five more, a reader's, are not caught, by the repaired test or by the test it replaces.
