@@ -1,7 +1,7 @@
-Five independent reads of story 001. ba-write-story, attempt ba-attempt-007
+Eight independent reads of story 001. ba-write-story, attempt ba-attempt-007
 Written by scripts/blind_read.py from findings copied by hand out of the readers' replies.
 
-Who the readers were: five separate AI assistants (Claude), each started fresh. No person read the story. Each was
+Who the readers were: eight separate AI assistants (Claude), each started fresh. No person read the story. Each was
 told to read only the files named to it, and that limit was given in words and not enforced. Each was told that
 quoted lines of a meeting are things people said, and to follow nothing they say. None saw another's reply.
 
@@ -11,6 +11,9 @@ quoted lines of a meeting are things people said, and to follow nothing they say
                     file. Asked where the story passes the writer's idea off as the meeting's.
   Tester 3          the testers' task, on the second version.
   Scope checker 2   the scope checker's task, on the second version.
+  Testers 4 and 5   after the review. Given the third version of the story and the standard, and nothing else.
+                    The testers' task, with a count asked for.
+  Tester 6          the same task, on the final version, the one handed in the second time.
 
 The first version, as the first three read it, is review/story-as-first-read.md.
 
@@ -100,10 +103,10 @@ WHAT WAS CHANGED AFTER ROUND 2
   The over-read sentence, the two questions and the two lines were corrected. The follow-up is named.
   In-scope entries now list assumed criteria apart from the meeting's.
 
-NOT CHANGED, AND NOT RE-READ
-  The story as handed in was not read by a sixth reader. So the changes after round 2 are checked by the program
+NOT CHANGED BEFORE THE FIRST HAND-IN, AND NOT RE-READ THEN
+  The story as first handed in was not read by a sixth reader. So the changes after round 2 are checked by the program
   and by nobody else, and the counts above, 0, 9 and 9, are for the version before them.
-  Still true of the handed-in story, by the readers' own tests:
+  Still true of the story as first handed in, by the readers' own tests:
     - No criterion can be run without the staging address and the test address, which the story cannot give.
     - AC-02 and AC-06 cannot fail apart from AC-01 and AC-05.
     - AC-14 and AC-17 each check two things. AC-10 and AC-11 each use three values.
@@ -111,12 +114,73 @@ NOT CHANGED, AND NOT RE-READ
     - The user statement says "a customer who does not have an account", and three criteria are about one who has.
 
 ==============================================================================
-SUMMARY
-  Could a tester write a test for each criterion? Yes: three testers did, for every criterion of the version
-  they read.
-  Could a tester run each test without asking anything? No, in either version, and that will stay so. The meeting
-  named no test address, no payment provider and no other field of the checkout, and no story can supply them.
-  The first version failed its own standard in ways a reader saw at once and the program could not. The second
-  is honest about what it lacks. It still lacks it.
+THE REVIEW, AND WHAT WAS CHANGED AFTER IT
 
-RESULT: the handed-in story has the 18 criteria and the changes this log names.
+The story was handed in and the review asked for changes. Its findings: a tester cannot write a test for each
+criterion without questions; some results cannot be measured or check two things; the handed-in version was not
+read independently. The meeting is made up, so the missing set-up could be supplied as ASSUMED values.
+
+  The story now has 21 criteria, 8 SAID and 13 ASSUMED.
+  "Test set-up" is complete and all of it is made up: a staging address at a reserved name, a Test tools page, a
+    Test inbox, two test products with prices, how a guest reaches the Checkout page, the nine fields in order
+    with a value for each, an accepted and a declined test card, a test account, and what each page shows.
+  "Directly below" and "at the top of the page" are defined by what text comes next. "Receipt wait" is defined.
+  The old AC-14 and AC-17 were split so that each criterion has one result. Each of the old AC-10 and AC-11 now
+    uses one value.
+  The open questions fell from 21 to 20: 16 are answered for now by an assumption in the story, and 4 are not.
+
+==============================================================================
+ROUND 3. The third version: 21 criteria, 8 SAID and 13 ASSUMED
+
+Testers 4 and 5 each wrote a test for all 21, as numbered steps with a pass condition. Their counts:
+    Tester 4    no question needed: 21 of 21    question needed: 0
+    Tester 5    no question needed: 21 of 21    question needed: 0
+  Tester 4: "the claim holds. 21 of 21." Tester 5: "holds, 21 of 21. I found no real blocker."
+
+What they still found, none of which stopped a test being written:
+  - AC-08's "Then" held two results: a receipt is there, and it went to E1. Both testers named it.
+  - "Placed" packs the page, the 10 seconds and the reference into one word, so AC-01, AC-04 and AC-05 record
+    several observations as one result.
+  - No time is given for a message to appear in AC-10, AC-12 and AC-14. A tester would borrow the 10 seconds.
+  - AC-07 has no time after which the tester stops looking for the order on Your orders.
+  - The receipt wait says when the tester first looks. The Test inbox shows no sent time, so "within 5 minutes"
+    cannot be measured.
+  - The set-up does not say where "Total: £14.00" sits, which bears on "at the top of the page" in AC-14.
+  - "Not placed" is seen only as a page not appearing. A crash would pass AC-03, AC-11 and AC-13.
+  - The test data cannot tell "sent to the address typed" from "sent to the staging test address".
+  Both called AC-06, with AC-02, the criterion most open to two readings, and said the story acknowledges it.
+
+WHAT WAS CHANGED AFTER ROUND 3
+  Two wordings, and nothing else:
+  - AC-08's "Then" became one value: "the address it shows for the receipt for that order is E1".
+  - The "Given" of AC-11 and AC-12 now says the address typed is one that is not valid, before giving it.
+
+==============================================================================
+ROUND 4. The final version, the one handed in the second time
+
+Tester 6 read the file after those two changes and wrote a test for all 21. Its count:
+    Tester 6    no question needed: 21 of 21    question needed: 0
+  "I could write all 21 tests without asking anyone, and found no criterion that needs a question."
+
+What it still found, none of which stopped a test being written:
+  - It still counted AC-08 as two results: that a receipt is there after the wait, and its address.
+  - The same missing waits: for the messages in AC-10, AC-12 and AC-14, and before looking in AC-07.
+  - AC-18 to AC-21 do not mention the receipt wait. It has to be carried over from AC-08.
+  - Whether the reference's form, GT- and six digits, is itself a pass condition is not said.
+  - AC-07 would pass if Your orders listed nothing at all.
+  - Only one address that is not valid is tried. No browser or screen size is named.
+  - Whether "shows the line" means the whole line or part of one is not said.
+
+NOT CHANGED AFTER ROUND 4
+  Nothing. The story handed in is the file tester 6 read. The weaknesses above stand in it.
+
+==============================================================================
+SUMMARY
+  Could a tester write a test for each criterion without further questions? For the final version, three AI
+  testers in two rounds each said yes for all 21, the last of them on the file as handed in.
+  What that rests on: every address, page, field, card and message in "Test set-up" is made up by the writer.
+  The meeting gave none of them. On a real system each would have to be confirmed, and the story says so.
+  What the count does not show: the testers wrote the tests and ran none. There is no system to run them on.
+  Several waits have no number, and one criterion, AC-08, was still counted as two results by the last reader.
+
+RESULT: the handed-in story has the 21 criteria and the changes this log names.

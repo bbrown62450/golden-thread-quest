@@ -6,9 +6,9 @@ Written by `participant/skills/ba-write-story/story.py standard`, at the partici
 A story meets this standard when another person can tell, for every part of it, whether it came from the meeting or
 from the writer, and can write a test for every criterion from what the story itself gives.
 
-**What this standard cannot do.** A meeting that said little cannot be turned into a story that leaves nothing to ask.
-The writer can supply what is missing, and this standard makes them say so each time. It does not make the supplied
-parts right. A story that meets it is honest about its gaps. It may still have many.
+**What the writer supplies.** A meeting rarely says enough to test from. It does not give a test address, a card number
+or the fields of a page. The writer supplies them, so that a tester can run every test without asking anyone, and marks
+every one ASSUMED. Supplying a value does not make it right. Each has to be confirmed by whoever owns it.
 
 ## 1. The sections, in this order
 
@@ -19,7 +19,7 @@ parts right. A story that meets it is honest about its gaps. It may still have m
 | In scope | what is built, each entry citing the meeting and naming the criteria that test it |
 | Taken as given | what the story assumes is already there. Marked as the writer's |
 | Words this story defines | any word a criterion uses in a particular meaning, each SAID or ASSUMED |
-| Test set-up | the data a tester uses, under the names the criteria use. Marked as the writer's |
+| Test set-up | everything a tester needs to run each test: where, how to get there, every field and what to type in it, the cards, where to read email. Marked as the writer's |
 | Acceptance criteria | numbered AC-01, AC-02 and so on. Section 3 |
 | Dependencies | what the story cannot be built or tested without, or the word None |
 | Open questions that still affect it | every question an assumption answers for now, and any other that bears on the story |
@@ -41,13 +41,14 @@ parts right. A story that meets it is honest about its gaps. It may still have m
 A criterion is testable when a tester can write its test without asking anything. Here that means all of these.
 
 1. **It has three parts and one of each.** *Given* a starting state a tester can set up from the story's own test
-   set-up. *When* one thing a person does. That may be a journey of several steps, such as completing a checkout, if the
-   story defines it. *Then* one result. Two results are two criteria.
+   set-up. *When* one thing a person does. If it takes several steps, the test set-up names it and gives the steps.
+   *Then* one result, with one value. Two results are two criteria, and so are two values.
 2. **The result can be seen or read.** A page shown, a message with its exact words, an email received, a thing that did
    not happen. Not a state inside the system that nobody can look at.
 3. **Every amount is a number**, and so is every wait. "5 minutes", never "promptly". "Not placed" needs a time after
    which the tester stops waiting.
-4. **Every message is given word for word**, in double quotes, with where on the page it is shown.
+4. **Every message is given word for word**, in double quotes, with where on the page it is shown. A position such as
+   "directly below" is a defined word, with a meaning a tester can check.
 5. **It uses no undefined word.** The list is in section 4.
 6. **It says what it rests on.** Section 5.
 
@@ -107,5 +108,4 @@ and never lets it pass as the meeting's.
 - Whether the assumptions are sensible ones.
 - Whether the criteria, taken together, cover the story.
 - Whether a "Then" is really one result.
-- Whether the test set-up is enough to run a test. It names the data. It cannot name what the meeting never mentioned,
-  such as the other fields of a checkout.
+- Whether the test set-up is enough to run every test. Only a tester trying to write the tests can say.

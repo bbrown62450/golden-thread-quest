@@ -1,15 +1,15 @@
 schema_version: 1
-submission_id: submission-20261124200756-ee8357
+submission_id: submission-20261124202910-59bc5c
 quest_id: ba-write-story
 quest_version: 1
 attempt_id: ba-attempt-007
 content_hash: sha256:6a76f71a8f120cd0e2d9383fcb3cc033af38c5a908bd29ca1177532f8be12666
-evidence_hash: sha256:0646b6a37548bffbf790ac07e6ec1d5573a3236b5244dfcc81acb71061771644
-submitted_at: '2026-11-24T20:07:56Z'
+evidence_hash: sha256:4220c30b23bb12045ca3619dc6150cd362f5fe8c68b111e251378dac7227d556
+submitted_at: '2026-11-24T20:29:10Z'
 submitted_by: beaubrown
 secret_scan_clean: true
 proof_files:
 - path: participant/context/stories/story-001.md
-  digest: sha256:0928e6e6c13d7d52e695df49d5dfe866cf1f1501b8bda77dcfd185aa3e8e341e
+  digest: sha256:b2145a1b65e044a0b12a0529e0ec621a186dc6523406e23ee2d94082fc1a7d9a
 - path: participant/context/stories/story-standard.md
-  digest: sha256:0200934c382d236abb4e8de6a71e0e1a1ffdd2c5b0816c258ac2d74e8531e57e
+  digest: sha256:673f4e495fa1b6f22fda9a8dbba58821e7992085754fb7de089a6e0a49475e6b

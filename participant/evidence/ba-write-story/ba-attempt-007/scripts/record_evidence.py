@@ -157,7 +157,7 @@ def main():
         log.check("the only listed word any criterion uses is \"valid\", and the story defines it", used == ["valid"] and "valid" in facts["defined"])
         for word in ("fast", "easy", "intuitive"):
             trial("the word \"%s\" put into a criterion" % word, "- Then: the order is not placed.", "- Then: the order is not placed and the page is %s." % word, "AC-03 uses the word \"%s\", which the story does not define." % word)
-        text = good[:good.index("- **valid**")] + good[good.index("- **accepted test card**"):]
+        text = good[:good.index("- **valid**")] + good[good.index("- **receipt**"):]
         trial("the definition of \"valid\" taken out of the story", "", "", "uses the word \"valid\", which the story does not define.", text=text)
         log.check("a word is matched whole: \"breakfast\" is not \"fast\"", story.vague_in("the breakfast order", []) == [] and story.vague_in("it is Fast", []) == ["fast"])
 
@@ -200,16 +200,16 @@ def main():
         trial("an assumption relabelled as SAID", "### AC-09 · ASSUMED", "### AC-09 · SAID", "AC-09 is marked SAID and cites no line of the meeting.")
         trial("an assumption given a line of the meeting as its source", "- ASSUMPTION, to be confirmed by: the product owner.\n- Answers the open question: Q-01.",
               "- Source: Priya Natarajan, Product owner, in U-0004: \"Yes, email is required. Phone is optional.\"\n- ASSUMPTION, to be confirmed by: the product owner.\n- Answers the open question: Q-01.",
-              "AC-09 is marked ASSUMED and cites a line of the meeting as its source. It is one or the other.")
-        trial("a writer-defined word left off a SAID criterion's list", "These words in it are defined by the writer: guest, placed, complete the checkout, pay with, accepted test card.", "These words in it are defined by the writer: guest, complete the checkout, pay with, accepted test card.",
-              "By the story's own list of words it is: guest, placed, complete the checkout, pay with, accepted test card.")
+              "AC-10 is marked ASSUMED and cites a line of the meeting as its source. It is one or the other.")
+        trial("a writer-defined word left off a SAID criterion's list", "These words in it are defined by the writer: guest, placed.", "These words in it are defined by the writer: guest.",
+              "By the story's own list of words it is: guest, placed.")
         trial("the count at the head changed", "Of the 8 SAID, 8 use", "Of the 8 SAID, 2 use", "The head of the story does not say that 8 of its 8 SAID criteria use a word the writer defined.")
 
         log.part("PART 9. Criterion 4: dependencies are listed or stated as none")
         deps = re.findall(r"^\d+\. (.+)$", facts["parts"]["Dependencies"], re.M)
         for number, dep in enumerate(deps, 1):
             log.out("  %d. %s" % (number, dep[:150]))
-        log.check("%d dependencies are listed, and each says whether it is SAID or ASSUMED" % len(deps), len(deps) == 4 and all(d.endswith(("SAID.", "ASSUMED.")) for d in deps))
+        log.check("%d dependencies are listed, and each says whether it is SAID or ASSUMED" % len(deps), len(deps) == 3 and all(d.endswith(("SAID.", "ASSUMED.")) for d in deps))
         none = good[:good.index("\n## Dependencies\n")] + "\n## Dependencies\n\nNone.\n" + good[good.index("\n## Open questions that still affect it\n"):]
         log.check("a story whose dependencies section says only \"None.\" is accepted on that point", not any("Dependencies" in p for p in story.check(none, record, provenance, decisions, items)[0]))
         trial("a dependencies section that neither lists one nor says None", "", "", "\"Dependencies\" neither lists one nor says None.", text=none.replace("\nNone.\n", "\nTo be worked out.\n"))
@@ -219,7 +219,7 @@ def main():
         log.check("the definition of done is a checklist of %d lines in its own section, and holds no acceptance criterion" % len(re.findall(r"^- \[ \] ", done_part, re.M)),
                   len(re.findall(r"^- \[ \] ", done_part, re.M)) == len(story_001.DEFINITION_OF_DONE) and "### AC-" not in done_part)
         trial("a criterion put inside the definition of done", "- [ ] Every acceptance criterion above passes on staging.", "### AC-19 · SAID\n\n- [ ] Every acceptance criterion above passes on staging.", "The definition of done and the acceptance criteria are mixed together.")
-        from_decisions = [(q, origin) for q, _, _, origin in story_001.QUESTIONS if origin]
+        from_decisions = [(q, origin) for q, _, _, origin, _ in story_001.QUESTIONS if origin]
         log.out("Open questions: %d. From an open item of the decisions file: %s. The rest the meeting did not raise." % (len(facts["questions"]), ", ".join("%s from %s" % pair for pair in from_decisions)))
         log.check("every open question that names an item of the decisions file names one that exists there and is open", all(origin in story.item_ids(decisions) and origin.startswith("O-") for _, origin in from_decisions) and len(from_decisions) >= 1)
         log.check("every criterion a question names is a criterion of this story", all(ac in ids for acs in facts["questions"].values() for ac in acs))

@@ -4,6 +4,7 @@
 """
 import copy
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -168,7 +169,8 @@ class Criteria(unittest.TestCase):
     def test_no_criteria_at_all_is_reported(self):
         def change(content):
             content.CRITERIA = []
-            content.QUESTIONS = [(q, text, [], origin) for q, text, _, origin in content.QUESTIONS]
+            content.QUESTIONS = [(q, text, [], origin, answered) for q, text, _, origin, answered in content.QUESTIONS]
+            content.IN_SCOPE = []
         self.assertTrue(has(problems(built(change)), "The story has no acceptance criteria that could be read."))
 
     def test_every_criterion_has_one_given_one_when_and_one_then(self):
@@ -212,7 +214,7 @@ class VagueWords(unittest.TestCase):
 
         def change(content):
             content.GLOSSARY = [g for g in content.GLOSSARY if g[0] != "valid"]
-        self.assertTrue(has(problems(built(change)), "AC-10 uses the word \"valid\", which the story does not define. A tester cannot check it."))
+        self.assertTrue(has(problems(built(change)), "AC-11 uses the word \"valid\", which the story does not define. A tester cannot check it."))
 
     def test_should_and_soon_are_on_the_list(self):
         self.assertEqual(story.vague_in("the receipt should arrive soon", []), ["soon", "should"])
@@ -247,23 +249,23 @@ class Basis(unittest.TestCase):
     def test_an_assumption_given_a_source_line_is_reported(self):
         got = edited("- ASSUMPTION, to be confirmed by: the product owner.\n- Answers the open question: Q-01.",
                      "- Source: Priya Natarajan, Product owner, in U-0004: \"Yes, email is required. Phone is optional.\"\n- ASSUMPTION, to be confirmed by: the product owner.\n- Answers the open question: Q-01.")
-        self.assertIn("AC-09 is marked ASSUMED and cites a line of the meeting as its source. It is one or the other.", got)
+        self.assertIn("AC-10 is marked ASSUMED and cites a line of the meeting as its source. It is one or the other.", got)
 
     def test_an_assumption_with_nobody_to_confirm_it_is_reported(self):
         got = edited("- ASSUMPTION, to be confirmed by: the product owner.\n- Answers the open question: Q-01.", "- Answers the open question: Q-01.")
-        self.assertIn("AC-09 is marked ASSUMED and does not say who is to confirm it.", got)
+        self.assertIn("AC-10 is marked ASSUMED and does not say who is to confirm it.", got)
 
     def test_an_assumption_with_no_question_is_reported(self):
         got = edited("- Answers the open question: Q-01.\n", "")
-        self.assertIn("AC-09 is marked ASSUMED and does not name the open question it answers.", got)
+        self.assertIn("AC-10 is marked ASSUMED and does not name the open question it answers.", got)
 
     def test_an_assumption_answering_a_question_that_is_not_listed_is_reported(self):
         got = edited("- Answers the open question: Q-01.", "- Answers the open question: Q-41.")
-        self.assertIn("AC-09 answers Q-41, which is not in the list of open questions.", got)
+        self.assertIn("AC-10 answers Q-41, which is not in the list of open questions.", got)
 
     def test_a_question_that_does_not_list_the_criterion_back_is_reported(self):
         got = edited("- Answers the open question: Q-01.", "- Answers the open question: Q-02.")
-        self.assertIn("AC-09 answers Q-02, and Q-02 does not list AC-09 among the criteria that depend on it.", got)
+        self.assertIn("AC-10 answers Q-02, and Q-02 does not list AC-10 among the criteria that depend on it.", got)
 
     def test_a_criterion_with_no_basis_is_reported(self):
         self.assertIn("AC-05 does not say whether it is SAID or ASSUMED.", edited("### AC-05 · SAID", "### AC-05 · AGREED"))
@@ -291,7 +293,7 @@ class Dependencies(unittest.TestCase):
         self.assertIn("\"Dependencies\" neither lists one nor says None.", problems(text))
 
     def test_a_dependency_with_no_basis_is_reported(self):
-        got = edited("It did not say how. ASSUMED.", "It did not say how.")
+        got = edited("It did not say what sends it. ASSUMED.", "It did not say what sends it.")
         self.assertTrue(has(got, "A dependency does not say whether it is SAID or ASSUMED"), got)
 
 
@@ -357,7 +359,7 @@ class Source(unittest.TestCase):
     def test_the_rule_that_was_missing_from_the_first_version_is_a_criterion(self):
         c = criterion(story_001, "AC-07")
         self.assertEqual((c["basis"], c["lines"]), ("SAID", ["U-0009", "U-0010"]))
-        self.assertIn("that order is not in the list", c["then"])
+        self.assertIn("no order on that page has that order reference", c["then"])
 
     def test_build_never_writes_to_the_record(self):
         scratch = tempfile.mkdtemp(prefix="gtq-story-")
@@ -384,11 +386,11 @@ class LeaningOnDefinedWords(unittest.TestCase):
         self.assertEqual(story.assumed_words("once the receipt wait has passed, a receipt is there", glossary), ["receipt", "receipt wait"])
 
     def test_a_word_left_off_that_list_is_reported(self):
-        got = edited("These words in it are defined by the writer: guest, placed, complete the checkout, pay with, accepted test card.", "These words in it are defined by the writer: guest, complete the checkout, pay with, accepted test card.")
-        self.assertTrue(has(got, "AC-01 says the writer defined \"guest, complete the checkout, pay with, accepted test card\" in it. By the story's own list of words it is: guest, placed, complete the checkout, pay with, accepted test card."), got)
+        got = edited("These words in it are defined by the writer: guest, placed.", "These words in it are defined by the writer: guest.")
+        self.assertTrue(has(got, "AC-01 says the writer defined \"guest\" in it. By the story's own list of words it is: guest, placed."), got)
 
     def test_a_said_criterion_without_that_line_is_reported(self):
-        got = edited("- The requirement is the meeting's. These words in it are defined by the writer: guest, placed, complete the checkout, pay with, accepted test card.\n", "")
+        got = edited("- The requirement is the meeting's. These words in it are defined by the writer: guest, placed.\n", "")
         self.assertIn("AC-01 is marked SAID and does not say which of its words the writer defined.", got)
 
     def test_the_head_counts_how_many_said_criteria_lean_on_a_defined_word(self):
@@ -417,8 +419,8 @@ class InScopeIsTested(unittest.TestCase):
         self.assertIn("In-scope entry 5 says it is tested by AC-70, which is not a criterion of this story.", got)
 
     def test_an_assumed_criterion_listed_as_if_it_were_the_meetings_is_reported(self):
-        got = edited("   - Tested by: AC-03\n   - And, on the writer's assumptions, by: AC-09, AC-10, AC-11\n", "   - Tested by: AC-03, AC-09\n   - And, on the writer's assumptions, by: AC-10, AC-11\n")
-        self.assertTrue(has(got, "In-scope entry 2 lists AC-09 on the wrong line."), got)
+        got = edited("   - Tested by: AC-03\n   - And, on the writer's assumptions, by: AC-10, AC-11, AC-12\n", "   - Tested by: AC-03, AC-10\n   - And, on the writer's assumptions, by: AC-11, AC-12\n")
+        self.assertTrue(has(got, "In-scope entry 2 lists AC-10 on the wrong line."), got)
 
     def test_every_in_scope_entry_is_tested_by_at_least_one_said_criterion(self):
         basis = {c["id"]: c["basis"] for c in story_001.CRITERIA}
@@ -428,6 +430,24 @@ class InScopeIsTested(unittest.TestCase):
     def test_the_removed_acceptance_criterion_is_named_at_the_head_of_the_story(self):
         head = built().split("## The story")[0]
         self.assertIn("**One of the product owner's three acceptance criteria, the linking offer, is not in this story.**", head)
+
+    def test_every_question_with_an_assumed_answer_lists_criteria_and_the_rest_stop_no_test(self):
+        text = built()
+        part = text[text.index("## Open questions that still affect it"):text.index("## Definition of done")]
+        answered, rest = part.split("**Not answered here.**")
+        self.assertEqual(len(re.findall(r"^\| Q-\d+ \|", answered, re.M)), sum(1 for q in story_001.QUESTIONS if q[4]))
+        self.assertEqual(len(re.findall(r"^\| Q-\d+ \|", rest, re.M)), sum(1 for q in story_001.QUESTIONS if not q[4]))
+        for q in story_001.QUESTIONS:
+            self.assertEqual(bool(q[2]), q[4], q[0])
+
+    def test_the_test_set_up_gives_every_value_a_criterion_names(self):
+        names = " ".join(row[0] for row in story_001.TEST_SETUP) + " " + " ".join(row[1] for row in story_001.TEST_SETUP)
+        for needed in ("B1", "D1", "E1", "X1", "A1", "Test inbox", "Checkout page", "accepted card", "declined card", "Order confirmed", "Your orders", "Basket page", "Place order"):
+            self.assertIn(needed, names)
+
+    def test_every_then_gives_one_quoted_value_at_most(self):
+        for c in story_001.CRITERIA:
+            self.assertLessEqual(c["then"].count("\""), 2, c["id"])
 
     def test_every_criterion_tests_some_in_scope_entry(self):
         tested = {ac for _, _, acs in story_001.IN_SCOPE for ac in acs}
@@ -456,14 +476,14 @@ class Stretch(unittest.TestCase):
         self.assertTrue(has(problems(built(change)), "\"Definition of done\" has no checklist."))
 
     def test_every_assumption_is_tied_to_an_open_question_and_back(self):
-        questions = {q: acs for q, _, acs, _ in story_001.QUESTIONS}
+        questions = {q: acs for q, _, acs, _, _ in story_001.QUESTIONS}
         for c in story_001.CRITERIA:
             if c["basis"] == "ASSUMED":
                 self.assertIn(c["id"], questions[c["question"]])
 
     def test_questions_from_the_decisions_file_name_open_items_that_exist(self):
         known = story.item_ids(DECISIONS)
-        origins = [origin for _, _, _, origin in story_001.QUESTIONS if origin]
+        origins = [origin for _, _, _, origin, _ in story_001.QUESTIONS if origin]
         self.assertTrue(origins)
         for origin in origins:
             self.assertIn(origin, known)

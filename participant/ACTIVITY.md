@@ -368,3 +368,8 @@ Every change this application made to your files, newest last.
 - `2026-11-24T20:07:56Z` ba-write-story: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-24T20:07:56Z` Submitted ba-write-story for review as submission-20261124200756-ee8357.
 - `2026-11-24T20:10:56Z` Review of ba-write-story: needs_changes by Claude (automated reviewer).
+- `2026-11-24T20:26:39Z` ba-write-story: needs_changes → in_progress (Resume after a reviewer asked for changes.)
+- `2026-11-24T20:27:42Z` ba-write-story: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-24T20:28:29Z` ba-write-story: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-24T20:29:10Z` ba-write-story: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-24T20:29:10Z` Submitted ba-write-story for review as submission-20261124202910-59bc5c.

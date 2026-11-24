@@ -33,8 +33,11 @@ test_an_entry_that_names_no_criterion_is_reported (test_story.InScopeIsTested) .
 test_every_criterion_tests_some_in_scope_entry (test_story.InScopeIsTested) ... ok
 test_every_in_scope_entry_is_tested_by_at_least_one_said_criterion (test_story.InScopeIsTested) ... ok
 test_every_in_scope_entry_names_criteria_that_exist (test_story.InScopeIsTested) ... ok
+test_every_question_with_an_assumed_answer_lists_criteria_and_the_rest_stop_no_test (test_story.InScopeIsTested) ... ok
+test_every_then_gives_one_quoted_value_at_most (test_story.InScopeIsTested) ... ok
 test_no_test_data_is_reported (test_story.InScopeIsTested) ... ok
 test_the_removed_acceptance_criterion_is_named_at_the_head_of_the_story (test_story.InScopeIsTested) ... ok
+test_the_test_set_up_gives_every_value_a_criterion_names (test_story.InScopeIsTested) ... ok
 test_a_said_criterion_without_that_line_is_reported (test_story.LeaningOnDefinedWords) ... ok
 test_a_word_left_off_that_list_is_reported (test_story.LeaningOnDefinedWords) ... ok
 test_a_word_marked_said_in_the_list_is_not_counted_as_assumed (test_story.LeaningOnDefinedWords) ... ok
@@ -94,6 +97,6 @@ test_valid_is_allowed_only_because_the_story_defines_it (test_story.VagueWords) 
 test_words_the_product_shows_in_quotes_are_not_counted (test_story.VagueWords) ... ok
 
 ----------------------------------------------------------------------
-Ran 94 tests in 0.401s
+Ran 97 tests in 0.439s
 
 OK

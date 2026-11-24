@@ -8,7 +8,7 @@ $ python3 participant/skills/ba-write-story/story.py check
 ------------------------------------------------------------------------------
 Source record: transcript tr-2026-10-21-checkout-refinement, 24 utterances.
 Sections required: 12. Found: 12.
-In scope: 7 entries. Out of scope: 7 entries. Dependencies: 4. Open questions: 21. Words defined: guest, placed, not placed, complete the checkout, pay with, require, empty, valid, accepted test card, declined test card, receipt, receipt wait, list of orders.
+In scope: 7 entries. Out of scope: 7 entries. Dependencies: 3. Open questions: 20. Words defined: guest, placed, not placed, order reference, require, empty, valid, receipt, receipt wait, directly below, at the top of the page.
 Citations: 47, to 17 different lines. Lines listed as not used: 7. Lines of the record neither cited nor listed: 0.
 
 Acceptance criteria:
@@ -20,16 +20,19 @@ Acceptance criteria:
   AC-06  SAID     cites U-0007, U-0008
   AC-07  SAID     cites U-0009, U-0010
   AC-08  SAID     cites U-0003, U-0004, U-0019
-  AC-09  ASSUMED  answers Q-01
-  AC-10  ASSUMED  answers Q-02
+  AC-09  ASSUMED  answers Q-17
+  AC-10  ASSUMED  answers Q-01
   AC-11  ASSUMED  answers Q-02
-  AC-12  ASSUMED  answers Q-03
+  AC-12  ASSUMED  answers Q-02
   AC-13  ASSUMED  answers Q-03
   AC-14  ASSUMED  answers Q-03
-  AC-15  ASSUMED  answers Q-04
-  AC-16  ASSUMED  answers Q-05
-  AC-17  ASSUMED  answers Q-05
+  AC-15  ASSUMED  answers Q-03
+  AC-16  ASSUMED  answers Q-03
+  AC-17  ASSUMED  answers Q-04
   AC-18  ASSUMED  answers Q-05
+  AC-19  ASSUMED  answers Q-05
+  AC-20  ASSUMED  answers Q-05
+  AC-21  ASSUMED  answers Q-05
 
 CHECK PASSED. The story has every required section, each criterion is numbered, and each cited source identifier exists.
 ------------------------------------------------------------------------------
@@ -106,47 +109,48 @@ PART 5. Criterion 3: each acceptance criterion is numbered, and observable
   AC-04  SAID     Then: the order is placed.
   AC-05  SAID     Then: the order is placed.
   AC-06  SAID     Then: the checkout did not require them to log in.
-  AC-07  SAID     Then: that order is not in the list.
-  AC-08  SAID     Then: a receipt for that order is in the inbox.
-  AC-09  ASSUMED  Then: the message "Enter an email address" is shown directly below the email field.
-  AC-10  ASSUMED  Then: the order is not placed.
-  AC-11  ASSUMED  Then: the message "Enter a valid email address" is shown directly below the email field.
-  AC-12  ASSUMED  Then: the order is not placed.
-  AC-13  ASSUMED  Then: the message "Your card was declined" is shown at the top of the page they are on.
-  AC-14  ASSUMED  Then: it holds the two products of B1 in the quantities of B1.
-  AC-15  ASSUMED  Then: it shows the sentence "A receipt has been sent to" followed by E1 as it was typed.
-  AC-16  ASSUMED  Then: its body holds the order reference that the confirmation page showed.
-  AC-17  ASSUMED  Then: it names each of the two products of B1 with its quantity.
-  AC-18  ASSUMED  Then: it gives a total equal to the total the checkout showed before payment.
-  ok   the 18 criteria are numbered AC-01 to AC-18, in order, with none missing and none twice
+  AC-07  SAID     Then: no order on that page has that order reference.
+  AC-08  SAID     Then: the address it shows for the receipt for that order is E1.
+  AC-09  ASSUMED  Then: it shows the line "Phone: 01632 960001".
+  AC-10  ASSUMED  Then: the message "Enter an email address" is shown directly below the Email address field.
+  AC-11  ASSUMED  Then: the order is not placed.
+  AC-12  ASSUMED  Then: the message "Enter a valid email address" is shown directly below the Email address field.
+  AC-13  ASSUMED  Then: the order is not placed.
+  AC-14  ASSUMED  Then: the message "Your card was declined" is shown at the top of the page.
+  AC-15  ASSUMED  Then: it shows the line "Test Mug, quantity 2".
+  AC-16  ASSUMED  Then: it shows the line "Test Notebook, quantity 1".
+  AC-17  ASSUMED  Then: it shows the line "A receipt has been sent to receipts@staging.example.test".
+  AC-18  ASSUMED  Then: the body holds the order reference.
+  AC-19  ASSUMED  Then: the body holds the line "Test Mug, quantity 2".
+  AC-20  ASSUMED  Then: the body holds the line "Test Notebook, quantity 1".
+  AC-21  ASSUMED  Then: the body holds the line "Total: £14.00".
+  ok   the 21 criteria are numbered AC-01 to AC-21, in order, with none missing and none twice
   ok   each has exactly one Given, one When and one Then, each a single sentence
 Spoiled: a criterion renumbered so that a number is missing
     PROBLEM: In-scope entry 4 says it is tested by AC-05, which is not a criterion of this story.
-    PROBLEM: The acceptance criteria are not numbered AC-01, AC-02 and so on, in order with none missing: AC-01, AC-02, AC-03, AC-04, AC-15, AC-06, AC-07, AC-08, AC-09, AC-10, AC-11, AC-12, AC-13, AC-14, AC-15, AC-16, AC-17, AC-18.
+    PROBLEM: The acceptance criteria are not numbered AC-01, AC-02 and so on, in order with none missing: AC-01, AC-02, AC-03, AC-04, AC-15, AC-06, AC-07, AC-08, AC-09, AC-10, AC-11, AC-12, AC-13, AC-14, AC-15, AC-16, AC-17, AC-18, AC-19, AC-20, AC-21.
     PROBLEM: Q-04 names AC-05, which is not a criterion of this story.
     PROBLEM: Q-10 names AC-05, which is not a criterion of this story.
     PROBLEM: Q-12 names AC-05, which is not a criterion of this story.
     PROBLEM: Q-13 names AC-05, which is not a criterion of this story.
     PROBLEM: Q-14 names AC-05, which is not a criterion of this story.
-    PROBLEM: Q-16 names AC-05, which is not a criterion of this story.
     PROBLEM: Q-18 names AC-05, which is not a criterion of this story.
     PROBLEM: Q-20 names AC-05, which is not a criterion of this story.
   ok   reported: "are not numbered AC-01, AC-02 and so on"
 Spoiled: a criterion with its number replaced by a word
     PROBLEM: In-scope entry 4 says it is tested by AC-05, which is not a criterion of this story.
-    PROBLEM: The acceptance criteria are not numbered AC-01, AC-02 and so on, in order with none missing: AC-01, AC-02, AC-03, AC-04, Payment, AC-06, AC-07, AC-08, AC-09, AC-10, AC-11, AC-12, AC-13, AC-14, AC-15, AC-16, AC-17, AC-18.
+    PROBLEM: The acceptance criteria are not numbered AC-01, AC-02 and so on, in order with none missing: AC-01, AC-02, AC-03, AC-04, Payment, AC-06, AC-07, AC-08, AC-09, AC-10, AC-11, AC-12, AC-13, AC-14, AC-15, AC-16, AC-17, AC-18, AC-19, AC-20, AC-21.
     PROBLEM: Q-04 names AC-05, which is not a criterion of this story.
     PROBLEM: Q-10 names AC-05, which is not a criterion of this story.
     PROBLEM: Q-12 names AC-05, which is not a criterion of this story.
     PROBLEM: Q-13 names AC-05, which is not a criterion of this story.
     PROBLEM: Q-14 names AC-05, which is not a criterion of this story.
-    PROBLEM: Q-16 names AC-05, which is not a criterion of this story.
     PROBLEM: Q-18 names AC-05, which is not a criterion of this story.
     PROBLEM: Q-20 names AC-05, which is not a criterion of this story.
   ok   reported: "are not numbered AC-01, AC-02 and so on"
 Spoiled: a criterion with no Then
     PROBLEM: AC-03 has 0 "Then" lines. A criterion has exactly one.
-    PROBLEM: AC-03 says the writer defined "guest, not placed, empty, accepted test card" in it. By the story's own list of words it is: guest, empty, accepted test card.
+    PROBLEM: AC-03 says the writer defined "guest, not placed, empty" in it. By the story's own list of words it is: guest, empty.
   ok   reported: "AC-03 has 0 "Then" lines."
 Spoiled: a Then of two sentences
     PROBLEM: AC-03: its "Then" is not one sentence.
@@ -160,8 +164,8 @@ PART 6. Criterion 6: no criterion uses an undefined word such as fast, easy or i
 The standard lists 67 such words. A criterion may use one only if the story defines it. Words inside double quotes are what
 the product shows, and are not counted.
 
-Words the story defines: guest, placed, not placed, complete the checkout, pay with, require, empty, valid, accepted test card, declined test card, receipt, receipt wait, list of orders.
-Listed words that appear in a criterion at all: valid (in AC-10, AC-11).
+Words the story defines: guest, placed, not placed, order reference, require, empty, valid, receipt, receipt wait, directly below, at the top of the page.
+Listed words that appear in a criterion at all: valid (in AC-11, AC-12).
   ok   no criterion uses a listed word that the story does not define
   ok   the only listed word any criterion uses is "valid", and the story defines it
 Spoiled: the word "fast" put into a criterion
@@ -174,8 +178,8 @@ Spoiled: the word "intuitive" put into a criterion
     PROBLEM: AC-03 uses the word "intuitive", which the story does not define. A tester cannot check it.
   ok   reported: "AC-03 uses the word "intuitive", which the story does not define."
 Spoiled: the definition of "valid" taken out of the story
-    PROBLEM: AC-10 uses the word "valid", which the story does not define. A tester cannot check it.
     PROBLEM: AC-11 uses the word "valid", which the story does not define. A tester cannot check it.
+    PROBLEM: AC-12 uses the word "valid", which the story does not define. A tester cannot check it.
   ok   reported: "uses the word "valid", which the story does not define."
   ok   a word is matched whole: "breakfast" is not "fast"
 
@@ -209,56 +213,58 @@ Spoiled: one word changed in a quotation
 
 ==============================================================================
 PART 8. SAID and ASSUMED: what is the meeting's, and what is the writer's
-  AC-01  SAID     cites U-0002, U-0019. Writer-defined words in it: guest, placed, complete the checkout, pay with, accepted test card
-  AC-02  SAID     cites U-0002. Writer-defined words in it: guest, complete the checkout, pay with, require, accepted test card
-  AC-03  SAID     cites U-0003, U-0004. Writer-defined words in it: guest, not placed, empty, accepted test card
-  AC-04  SAID     cites U-0004. Writer-defined words in it: guest, placed, pay with, empty, accepted test card
-  AC-05  SAID     cites U-0007, U-0008. Writer-defined words in it: guest, placed, complete the checkout, pay with, accepted test card
-  AC-06  SAID     cites U-0007, U-0008. Writer-defined words in it: guest, complete the checkout, pay with, require, accepted test card
-  AC-07  SAID     cites U-0009, U-0010. Writer-defined words in it: guest, placed, list of orders
+  AC-01  SAID     cites U-0002, U-0019. Writer-defined words in it: guest, placed
+  AC-02  SAID     cites U-0002. Writer-defined words in it: guest, require
+  AC-03  SAID     cites U-0003, U-0004. Writer-defined words in it: guest, not placed, empty
+  AC-04  SAID     cites U-0004. Writer-defined words in it: guest, placed, empty
+  AC-05  SAID     cites U-0007, U-0008. Writer-defined words in it: guest, placed
+  AC-06  SAID     cites U-0007, U-0008. Writer-defined words in it: guest, require
+  AC-07  SAID     cites U-0009, U-0010. Writer-defined words in it: guest, placed, order reference
   AC-08  SAID     cites U-0003, U-0004, U-0019. Writer-defined words in it: guest, placed, receipt, receipt wait
-  AC-09  ASSUMED  answers Q-01
-  AC-10  ASSUMED  answers Q-02
+  AC-09  ASSUMED  answers Q-17
+  AC-10  ASSUMED  answers Q-01
   AC-11  ASSUMED  answers Q-02
-  AC-12  ASSUMED  answers Q-03
+  AC-12  ASSUMED  answers Q-02
   AC-13  ASSUMED  answers Q-03
   AC-14  ASSUMED  answers Q-03
-  AC-15  ASSUMED  answers Q-04
-  AC-16  ASSUMED  answers Q-05
-  AC-17  ASSUMED  answers Q-05
+  AC-15  ASSUMED  answers Q-03
+  AC-16  ASSUMED  answers Q-03
+  AC-17  ASSUMED  answers Q-04
   AC-18  ASSUMED  answers Q-05
-  ok   every criterion is SAID or ASSUMED: 8 and 10 of 18
+  AC-19  ASSUMED  answers Q-05
+  AC-20  ASSUMED  answers Q-05
+  AC-21  ASSUMED  answers Q-05
+  ok   every criterion is SAID or ASSUMED: 8 and 13 of 21
   ok   every SAID criterion cites at least one line, and none is written as an assumption
   ok   every ASSUMED criterion says who is to confirm it and names an open question that lists it back, and none cites the meeting as its source
   ok   every SAID criterion names the writer-defined words it leans on, and the list is the one the program works out from the story's own definitions
 
 All 8 SAID criteria lean on at least one word the writer had to define. The head of the story says so.
-  ok   the head of the story gives these counts: 18 criteria, 8 SAID, 10 ASSUMED, and 8 of the SAID leaning on a defined word
+  ok   the head of the story gives these counts: 21 criteria, 8 SAID, 13 ASSUMED, and 8 of the SAID leaning on a defined word
 Spoiled: an assumption relabelled as SAID
-    PROBLEM: In-scope entry 2 lists AC-09 on the wrong line. A criterion marked ASSUMED is listed apart, as testing it on the writer's assumptions.
+    PROBLEM: In-scope entry 3 lists AC-09 on the wrong line. A criterion marked ASSUMED is listed apart, as testing it on the writer's assumptions.
     PROBLEM: AC-09 is marked SAID and cites no line of the meeting.
     PROBLEM: AC-09 is marked SAID and is also written as an assumption. It is one or the other.
     PROBLEM: AC-09 is marked SAID and does not say which of its words the writer defined.
-    PROBLEM: The count at the head of the story is not the count of its criteria: 18, of which 9 SAID and 9 ASSUMED.
+    PROBLEM: The count at the head of the story is not the count of its criteria: 21, of which 9 SAID and 12 ASSUMED.
     PROBLEM: The head of the story does not say that 9 of its 9 SAID criteria use a word the writer defined.
   ok   reported: "AC-09 is marked SAID and cites no line of the meeting."
 Spoiled: an assumption given a line of the meeting as its source
-    PROBLEM: AC-09 is marked ASSUMED and cites a line of the meeting as its source. It is one or the other.
-  ok   reported: "AC-09 is marked ASSUMED and cites a line of the meeting as its source. It is one or the other."
+    PROBLEM: AC-10 is marked ASSUMED and cites a line of the meeting as its source. It is one or the other.
+  ok   reported: "AC-10 is marked ASSUMED and cites a line of the meeting as its source. It is one or the other."
 Spoiled: a writer-defined word left off a SAID criterion's list
-    PROBLEM: AC-01 says the writer defined "guest, complete the checkout, pay with, accepted test card" in it. By the story's own list of words it is: guest, placed, complete the checkout, pay with, accepted test card.
-  ok   reported: "By the story's own list of words it is: guest, placed, complete the checkout, pay with, accepted test card."
+    PROBLEM: AC-01 says the writer defined "guest" in it. By the story's own list of words it is: guest, placed.
+  ok   reported: "By the story's own list of words it is: guest, placed."
 Spoiled: the count at the head changed
     PROBLEM: The head of the story does not say that 8 of its 8 SAID criteria use a word the writer defined.
   ok   reported: "The head of the story does not say that 8 of its 8 SAID criteria use a word the writer defined."
 
 ==============================================================================
 PART 9. Criterion 4: dependencies are listed or stated as none
-  1. The staging test address, work item W-04. AC-08 and AC-15 to AC-18 are tested by reading the inbox of E1. That a test address may be used was agreed i
-  2. A second test address, and a test account that has it, for AC-05 to AC-07. ASSUMED.
-  3. A way to take a card payment in test mode. The meeting said a guest can pay with a card. It did not say how. ASSUMED.
-  4. A way to send email from the checkout. The meeting said a guest gets an email receipt. It did not say what sends it. ASSUMED.
-  ok   4 dependencies are listed, and each says whether it is SAID or ASSUMED
+  1. The staging test address, work item W-04. That a test address may be used was agreed in the meeting. That this story waits on it is the writer's. ASSU
+  2. A staging system with the Test tools page, the two test products, the test account A1 and a payment test mode, as "Test set-up" describes them. ASSUME
+  3. A way to send email from the checkout. The meeting said a guest gets an email receipt. It did not say what sends it. ASSUMED.
+  ok   3 dependencies are listed, and each says whether it is SAID or ASSUMED
   ok   a story whose dependencies section says only "None." is accepted on that point
 Spoiled: a dependencies section that neither lists one nor says None
     PROBLEM: "Dependencies" neither lists one nor says None.
@@ -270,7 +276,7 @@ PART 10. Stretch goals: a definition of done kept apart, and the open questions 
 Spoiled: a criterion put inside the definition of done
     PROBLEM: The definition of done and the acceptance criteria are mixed together.
   ok   reported: "The definition of done and the acceptance criteria are mixed together."
-Open questions: 21. From an open item of the decisions file: Q-09 from O-03. The rest the meeting did not raise.
+Open questions: 20. From an open item of the decisions file: Q-09 from O-03. The rest the meeting did not raise.
   ok   every open question that names an item of the decisions file names one that exists there and is open
   ok   every criterion a question names is a criterion of this story
   ok   at the end, every story file and every transcript file is what it was at the start
