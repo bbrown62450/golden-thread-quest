@@ -1,0 +1,31 @@
+schema_version: 1
+review_id: review-20261124155041-c9b524
+quest_id: ba-clarification-questions
+quest_version: 1
+attempt_id: ba-attempt-004
+evidence_hash: sha256:895378cf2bc617035a05295fe607dbe3c4af13a21efba76f13b25a6aff9ba283
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-24T15:50:41Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/clarification/dropped.md
+  digest: sha256:888860f2237c50351c5573b5cd173f0310594e12b29094d9be6ac37c9082796f
+- path: participant/context/clarification/questions.md
+  digest: sha256:1322c8762df118396fb0e792ca13abe93079bb311bb0da6ec1285dda06e2cd48
+verification_statement: Automated review. I read questions.md, dropped.md, the check
+  log (question-check.txt), PROOF.md, and the supporting logs, sheets and scripts.
+  - **Questions:** all 11 name a finding (F-01 to F-09) and quote that finding's own
+  words. Each has 2 to 4 lettered answers, and each answer has a work sentence and
+  named pieces. - **Dropped list:** 6 questions, each giving the single set of pieces
+  every answer shares and the reason it was dropped. - **Check log:** part 1 shows
+  the check run on the handed-in files with exit code 0 and "CHECK PASSED". Parts
+  2 to 7 deal with each criterion in turn, including deliberately broken copies that
+  the check reported. - **PROOF.md:** explains how the questions were ordered (criterion
+  6) and how C-08 was rewritten. It cites the criteria by number and is open about
+  its limits (AI readers only, the C-10 borderline call). The handed-in files sit
+  under ba-attempt-004, not the attempt-001 paths the quest names. The automatic pre-check
+  found the required files, so I note this only as a small point. No text in the evidence
+  is addressed to the reviewer, and I found no attempt at manipulation. Each of the
+  7 acceptance criteria was matched to text quoted word for word from the evidence.
