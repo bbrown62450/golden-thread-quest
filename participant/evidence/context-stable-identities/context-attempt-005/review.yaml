@@ -1,0 +1,32 @@
+schema_version: 1
+review_id: review-20261124132151-52c942
+quest_id: context-stable-identities
+quest_version: 1
+attempt_id: context-attempt-005
+evidence_hash: sha256:5e7a8c31b01b6901cdbee8604e07448db0b4a7c80bf33143021f684f178c37e3
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-24T13:21:51Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/identity/map.md
+  digest: sha256:3c1cb35598443e155a6ea96fca8a126227a9a65a9c93d56f4aebca3247b03313
+- path: participant/context/identity/rules.md
+  digest: sha256:15474b5a9cfcbe73a8a1b39caf79a29ba4e64e5684437d0fe1151ae650adbc3d
+verification_statement: Automated review. Read PROOF.md, rules.md, map.md, identity-run.txt,
+  derive-by-hand.txt, tests.txt, planted-bugs.txt and both scripts. The rules define
+  the identity as SYSTEM:IDENTIFIER, with one immutable field per system, and list
+  the refused fields with reasons. Part 2 of the run log shows rename and move (DEMO-3→OPS-17,
+  Trello card to another board, GitHub issue transferred 2→41) with all 20 identities
+  unchanged. Part 3 shows a collision reported with neither record written, and a
+  clash on an identity already held leaving the held item as it was. Part 4 shows
+  a reused Jira id reported, with the held item untouched and the newcomer held aside.
+  The map has 21 invented records across 3 systems, including renamed and moved items,
+  and the run checks that map.md and rules.md are exactly what the code generates.
+  A second derivation that shares no code with the skill, and blind AI readers working
+  from the rules (22/22 in round 2), support criterion 7. The evidence is filed under
+  context-attempt-005, not the attempt-001 path the quest names. The pre-check reported
+  the required files present, so this is advisory only. Nothing in the evidence addresses
+  the reviewer. Each of the 7 acceptance criteria was matched to text quoted word
+  for word from the evidence.

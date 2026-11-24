@@ -478,9 +478,10 @@ attempts:
   quest_id: context-stable-identities
   quest_version: 1
   content_hash: sha256:78183bc80e8921fb989080cca26d76c16df93b3c5c5398dd519a3c17230e8b30
-  state: submitted
+  state: verified
   started_at: '2026-11-24T12:55:13Z'
-  updated_at: '2026-11-24T13:10:55Z'
+  updated_at: '2026-11-24T13:21:51Z'
   evidence_path: participant/evidence/context-stable-identities/context-attempt-005
   submission_id: submission-20261124131055-1d83b6
-updated_at: '2026-11-24T13:10:55Z'
+  review_id: review-20261124132151-52c942
+updated_at: '2026-11-24T13:21:51Z'
