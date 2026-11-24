@@ -1,0 +1,30 @@
+schema_version: 1
+review_id: review-20261124175853-234124
+quest_id: ba-extract-decisions
+quest_version: 1
+attempt_id: ba-attempt-005
+evidence_hash: sha256:7f1a4f7c9cc6112437188b62a7ba28434cc18cc560983392d3b0841d36556e8d
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-24T17:58:53Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/decision-rules.md
+  digest: sha256:dbe307ef33a888f2d4fa8ad4b53d2a779686e3202335654cdd77d09e759c38c5
+- path: participant/context/transcripts/sample-meeting.decisions.md
+  digest: sha256:511baf0a66faf59b214acabe5e3647939962213303ac92adaa6aed8d05fbce6d
+verification_statement: 'Automated review. Read the PROOF.md, the citation-check log,
+  the tests log, the planted-bugs log, the blind-read log, the scripts, the two rounds
+  of rules, the final decision-rules.md and sample-meeting.decisions.md. Part 1 of
+  the citation check runs `check` on both decisions files and each ends with exit
+  code 0. Parts 2-8 show each criterion with ok lines and spoiled trials that were
+  caught. The decisions file shows the decisions, the ''agreement was not stated''
+  markers, and separate headings for open items and instruction-like lines. The rules
+  state the test and classify six borderline lines. PROOF.md explains the reversed
+  decision and the answer taken back in the same line, citing criteria by number.
+  One advisory: the evidence folder is ba-attempt-005, not the attempt-001 path the
+  quest names; the pre-check found the required files. The instruction-like transcript
+  line (U-0016) is sample meeting data and is not addressed to the reviewer, so no
+  injection is suspected. Each of the 7 acceptance criteria was matched to text quoted
+  word for word from the evidence.'

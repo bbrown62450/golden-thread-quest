@@ -518,9 +518,10 @@ attempts:
   quest_id: ba-extract-decisions
   quest_version: 1
   content_hash: sha256:df3f835c09e57dee712d5cefbe1b13863ee8a31d722721d793c5bb6e55f374bd
-  state: submitted
+  state: verified
   started_at: '2026-11-24T17:28:18Z'
-  updated_at: '2026-11-24T17:55:33Z'
+  updated_at: '2026-11-24T17:58:53Z'
   evidence_path: participant/evidence/ba-extract-decisions/ba-attempt-005
   submission_id: submission-20261124175533-06603a
-updated_at: '2026-11-24T17:55:33Z'
+  review_id: review-20261124175853-234124
+updated_at: '2026-11-24T17:58:53Z'
