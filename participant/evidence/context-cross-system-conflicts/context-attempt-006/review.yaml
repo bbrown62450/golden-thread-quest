@@ -1,0 +1,31 @@
+schema_version: 1
+review_id: review-20261124151753-5b95b6
+quest_id: context-cross-system-conflicts
+quest_version: 1
+attempt_id: context-attempt-006
+evidence_hash: sha256:8cb5821621e527cceab5653f1fde8352cd3e08ab4787146532ad3b0bc2c14d35
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-24T15:17:53Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/conflicts/records.md
+  digest: sha256:cbdc77a7af0f58faad3a4daa4f45c9312bac68d89d6600d27c0440ee859caac8
+- path: participant/context/conflicts/report.md
+  digest: sha256:9ab134554ef796168a1a794f5e981d09e154cfb35887dfa2a8e94367fadc24e7
+verification_statement: 'Automated review. Read PROOF.md, conflict-run.txt, tests.txt,
+  planted-bugs.txt, both scripts, records.md and report.md. The report and the run
+  log agree with each other and with the records. Counts check out: 30 linked records
+  plus 7 unlinked makes 37; 4 three-system items × 12 plus 9 two-system items × 4
+  makes 84 comparisons; 8 conflicts + 5 lag + 6 not comparable + 60 agree + 5 titles
+  that differ makes 84. The report''s SHA-256 matches the handed-in file. The run
+  log shows: checksums unchanged before and after the run, a refusal to write over
+  the records file, byte-identical second runs and shuffled-order runs, lag edge cases,
+  unlinked records and faulty links reported separately, and every comparison listed
+  with its reason. PROOF.md explains the lag rule and an ambiguous case (W-09), citing
+  criteria by number. I cannot run code, so execution is judged from the recorded
+  logs. No text addressed to the reviewer was found. Minor: evidence sits in context-attempt-006
+  rather than the attempt-001 path the quest names, but the pre-check reported all
+  required files present. Each of the 7 acceptance criteria was matched to text quoted
+  word for word from the evidence.'

@@ -488,9 +488,10 @@ attempts:
   quest_id: context-cross-system-conflicts
   quest_version: 1
   content_hash: sha256:1f91ed457e68eb9c5472155301fa56d1f90c1fe014ce8db0610c709a3c4bd334
-  state: submitted
+  state: verified
   started_at: '2026-11-24T14:52:10Z'
-  updated_at: '2026-11-24T15:08:34Z'
+  updated_at: '2026-11-24T15:17:53Z'
   evidence_path: participant/evidence/context-cross-system-conflicts/context-attempt-006
   submission_id: submission-20261124150834-247222
-updated_at: '2026-11-24T15:08:34Z'
+  review_id: review-20261124151753-5b95b6
+updated_at: '2026-11-24T15:17:53Z'
