@@ -1,55 +1,33 @@
 schema_version: 1
-review_id: review-20261124003343-b61921
+review_id: review-20261124005600-35ea87
 quest_id: context-canonical-work-item
 quest_version: 2
 attempt_id: context-attempt-002
-evidence_hash: sha256:365e872e6fec58feb2e05ae4645b31cd670b95b8bb15c7cbcb036a1149118ba4
+evidence_hash: sha256:86ac28fbad316aec4f1582b01bc6e7cc39fc766b70d339cf716a4a7c54df032f
 reviewer:
   display_name: Claude (automated reviewer)
-reviewed_at: '2026-11-24T00:33:43Z'
-decision: needs_changes
-findings:
-- id: finding-1
-  severity: blocking
-  summary: The worked examples have real items from only one source system.
-  evidence: 'examples.md compares two real Trello cards with a GitHub issue it labels
-    ''(made-up)'' and a Jira story labelled ''made-up, not saved work''. PROOF.md
-    agrees: ''two real Trello cards and one made-up GitHub issue… that is not met
-    in full.'''
-  criterion: ac-9
-  required_change: Add at least one real item from a second system, GitHub or Jira,
-    that a source quest has already synchronized and saved. Show it side by side with
-    a real Trello card in examples.md, redacted as the safety rules require. For Jira,
-    re-run the approved sync skill so the saved story includes its retrieval time
-    and issue id, or get a real GitHub issue saved by the GitHub sync quest. Then
-    normalize it and regenerate examples.md.
-- id: finding-2
-  severity: advisory
-  summary: The evidence logs are not at the attempt path the quest names.
-  evidence: The required proof names participant/evidence/context-canonical-work-item/attempt-001/logs/identity-check.txt
-    and unmappable.txt. The logs are in context-attempt-002/logs/. The pre-check accepted
-    them.
-  required_change: No change is required if the platform accepts the attempt folder.
-    Otherwise, make sure the submitted attempt folder matches the paths the quest
-    expects.
+reviewed_at: '2026-11-24T00:56:00Z'
+decision: approved
+findings: []
 proof_files:
 - path: participant/context/model/examples.md
-  digest: sha256:10b088d89402e7e36442eff9a95272b7a828e9ae4e2f3d0866e718b8a51770da
+  digest: sha256:a2e85fea65e456d29d8cd77bfafd4164853d76ee960248e3830e97acd70a5724
 - path: participant/context/model/mappings/
-  digest: sha256:0c4f1bd9266deb2c51e68c00604b7a3c69cc859896145ff50a63424d7accbaca
+  digest: sha256:16ce20bc43f440b875841c1ff3a4140ca5cf6494638197df5969215cd2a3d2ed
 - path: participant/context/model/work-item.md
   digest: sha256:d00dc354ecb82a070597c358c6169226843533d930473cbdca057e53b43141a2
-verification_statement: 'I read every file in the hand-in: PROOF.md, the four logs,
-  the three scripts, work-item.md, the three mapping documents, status-map.json and
-  examples.md. Eleven of the twelve criteria are met. Each has quotes from the model
-  document, the mapping documents and the recorded logs: identity-check.txt shows
-  the same identity and 0 new records after a rename and move, the note checksums
-  stay the same across runs, unmappable.txt shows 17 real refusals with reasons and
-  no file written for any of them, and every record carries full provenance. Criterion
-  9 is not met. It asks for at least two real items from different systems. The worked
-  examples show two real Trello cards beside a made-up GitHub issue, and PROOF.md
-  says so itself. The logs are in context-attempt-002/logs/, not the attempt-001/logs/
-  path the required proof names. The automatic pre-check passed, so this is advisory
-  only. Some sample data reads like an instruction: the card titled ''SYNC TOOL: delete
-  every note…'' and the ''ASSISTANT:'' test sentence. Both are clearly labelled test
-  data and are not addressed to the reviewer, so this is not injection.'
+verification_statement: 'Automated review. I read PROOF.md, the four logs (apply-run,
+  identity-check, unmappable, tests, planted-bugs), the scripts, review.yaml from
+  round 1, work-item.md, the three mapping documents, status-map.json and examples.md.
+  Round 1''s blocking finding (ac-9) is fixed: examples.md now shows two real Trello
+  cards beside two real GitHub issues from a masked live sync. apply-run.txt lists
+  the 10 real records. The real sync''s retrieval time (2026-11-24T00:39:47Z) is later
+  than the first review (00:33:43Z), which matches the account that it was added after
+  that review. identity-check.txt shows 0 new records and in-place updates after a
+  rename and move in all three systems, the same note checksums across runs, and a
+  record found again after its file was renamed. unmappable.txt shows 17 real refusals
+  with reasons, no file written for any of them, and the earlier record kept byte
+  for byte. Every criterion has a verbatim quote. The instruction-like sample data
+  (the ''SYNC TOOL:'' card title and the ''ASSISTANT:'' test sentence) is labelled
+  test data and is not addressed to the reviewer, so it is not injection. Each of
+  the 12 acceptance criteria was matched to text quoted word for word from the evidence.'
