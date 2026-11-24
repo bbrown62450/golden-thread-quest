@@ -1,0 +1,34 @@
+schema_version: 1
+review_id: review-20261124024248-ef83df
+quest_id: playwright-failure-triage
+quest_version: 1
+attempt_id: playwright-attempt-004
+evidence_hash: sha256:04df651e1bc41684535b2ef2afbf1d4317c1977466238d72e6c92b760e872ace
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-24T02:42:48Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/playwright/ground-truth.md
+  digest: sha256:633f7dbecef826f9703a4cd378fcc3ebc572013bffe73221cd9ac4e9891d24ce
+- path: participant/context/playwright/triage-report.md
+  digest: sha256:ef12487e26539a228f16498491eea7cce47ba1481559ef39434205d7e57703dc
+- path: participant/context/playwright/triage-rules.md
+  digest: sha256:a7fa1b6bf8b6113c62c89df0d1f784d15832458ceb32addf41c4e187c245fe98
+- path: participant/tests/playwright/tools/failure-triage-check.ts
+  digest: sha256:e465c51e0f0b793c142726838bda7023240309a7b70bfebd71880847847b132d
+verification_statement: 'Automated review. Read all six bundles'' text files, the
+  rules, report, ground truth, check script and its logs. Cross-checked report facts
+  against raw bundle files: failure-02 retry timings (151/206 ms failed vs 150/128
+  ms passed) match attempts.json; failure-04 durations 3199/3211 ms vs 152/11 ms match;
+  failure-03 duration 154 ms and page-text 357 ms later match; failure-05 server.log
+  shows lines answered before summary as claimed; failure-01 and failure-06 error
+  bodies match the quoted text. Independently reached the same class for each bundle.
+  The check log shows 49 passing checks including 16 planted report-breakages each
+  reported, consistent with the check script''s code. Ground truth predates bundles
+  per sequence.txt checksums. Screenshots are binary and were not viewed; page-text.txt
+  covers the same moments. The folder is named playwright-attempt-004 rather than
+  attempt-001; the pre-check found the required files present. No text addresses the
+  reviewer; no injection. Each of the 7 acceptance criteria was matched to text quoted
+  word for word from the evidence.'
