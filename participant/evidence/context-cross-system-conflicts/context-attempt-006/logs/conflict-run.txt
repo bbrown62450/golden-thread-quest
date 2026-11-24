@@ -1,0 +1,177 @@
+The conflict run. context-cross-system-conflicts, attempt context-attempt-006
+Recorded by scripts/record_evidence.py. No request was sent anywhere. Every record is made up.
+
+==============================================================================
+PART 1. The run, on participant/context/conflicts/records.md (criterion 4: no value is overwritten)
+SHA-256 of every file in participant/context/conflicts before the run:
+  84251dc0636e7ab10573174118b44125e37dbc516c90262cc6953dbe4153c8f0  earlier-records.md
+  ededf8a9ee9f368ad7f6ad30f58bed5791a3f5d69902fc3be9d99d5fb3d721f7  previous-run.json
+  bdc9f2f11064db0645964be3b6894c0644cf750787dcce7701d0402650efe72d  records.md
+  8a290af9a9188b678582a266d00eaf885fa7fcc7d65ea9a096f4d3b55c1c0419  report.md
+$ python3 participant/skills/context-cross-system-conflicts/conflicts.py report --previous participant/context/conflicts/previous-run.json --out SCRATCH/report.md
+------------------------------------------------------------------------------
+conflicts: read 37 records and 16 links. Compared 13 pieces of work, field by field
+conflicts: 8 conflicts, 5 lag, 6 not comparable, 60 agree, 5 titles that differ
+conflicts: 7 unlinked records, 3 links that could not be used
+conflicts: against the previous run, 2026-11-16: 6 of the conflicts were already there, 2 are new
+conflicts: wrote the report. No record was changed, and no value was chosen over another
+------------------------------------------------------------------------------
+exit code: 0
+SHA-256 after the run:
+  84251dc0636e7ab10573174118b44125e37dbc516c90262cc6953dbe4153c8f0  earlier-records.md  same
+  ededf8a9ee9f368ad7f6ad30f58bed5791a3f5d69902fc3be9d99d5fb3d721f7  previous-run.json  same
+  bdc9f2f11064db0645964be3b6894c0644cf750787dcce7701d0402650efe72d  records.md  same
+  8a290af9a9188b678582a266d00eaf885fa7fcc7d65ea9a096f4d3b55c1c0419  report.md  same
+  ok   the run finished: exit code 0
+  ok   records.md is byte for byte what it was. No record was changed
+  ok   no file in the folder was changed, added or removed by the run
+Told to write its report over the records file itself:
+  conflicts: STOPPED: refused to write over the records file
+  ok   it refuses, with exit code 1, and the records file is still unchanged
+  ok   the report it wrote is the handed-in report, participant/context/conflicts/report.md, byte for byte
+
+==============================================================================
+PART 2. What the report says, case by case (criteria 1, 2, 3, 5 and 7)
+Each piece of work in records.md was made up to be one case. The answer the report gives for each pair of systems, for the field the case is about:
+  W-01  All three agree.
+        status: jira "done" against trello "done" -> AGREE
+            both say "done"
+        status: jira "done" against github "done" -> AGREE
+            both say "done"
+        status: trello "done" against github "done" -> AGREE
+            both say "done"
+  ok   W-01: agree, agree, agree
+  W-02  The quest's scenario: the tracker says done, the board says in review, and the issue is still open. Days apart.
+        status: jira "done" against trello "in_progress" -> CONFLICT
+            the two records last changed 115 hours apart, which is more than the 24 hours allowed for one side to catch up
+        status: jira "done" against github "open" -> CONFLICT
+            the two records last changed 143 hours apart, which is more than the 24 hours allowed for one side to catch up
+        status: trello "in_progress" against github "open" -> NOT COMPARABLE
+            GitHub has open and closed, and nothing between. An issue someone is working on is still "open". So github saying "open" is not a disagreement with trello saying "in_progress"
+  ok   W-02: conflict, conflict, not comparable
+  W-03  The tracker and the issue were closed two hours after the card last moved.
+        status: jira "done" against trello "in_progress" -> LAG
+            jira changed 2 hours after trello, and it is the one further along. That is within 24 hours, so trello may simply not have caught up
+        status: jira "done" against github "done" -> AGREE
+            both say "done"
+        status: trello "in_progress" against github "done" -> LAG
+            github changed 2 hours, 5 minutes after trello, and it is the one further along. That is within 24 hours, so trello may simply not have caught up
+  ok   W-03: lag, agree, lag
+  W-04  The tracker was closed in the morning. In the afternoon the card was moved back to Doing.
+        status: jira "done" against trello "in_progress" -> CONFLICT
+            trello changed LATER, by 6 hours, and it is the one that is LESS far along ("in_progress" against "done"). A delay cannot explain that: someone set trello back, or disagreed
+  ok   W-04: conflict
+  W-05  The tracker says in progress. GitHub can only say open.
+        status: jira "in_progress" against github "open" -> NOT COMPARABLE
+            GitHub has open and closed, and nothing between. An issue someone is working on is still "open". So github saying "open" is not a disagreement with jira saying "in_progress"
+  ok   W-05: not comparable
+  W-06  The tracker says done. The issue was closed as not planned, half an hour later.
+        status: jira "done" against github "dropped" -> CONFLICT
+            jira says "done" and github says "dropped". Those are two different ends, and a delay does not turn one into the other
+  ok   W-06: conflict
+  W-07  The card and the issue were last changed at the same second, and differ.
+        status: trello "done" against github "open" -> CONFLICT
+            both records were last changed at the same moment and still differ, so neither is behind the other
+  ok   W-07: conflict
+  W-08  The tracker's record does not say when it last changed.
+        status: jira "in_progress" against trello "done" -> CONFLICT
+            jira does not say when it last changed, so it cannot be told whether one side is merely behind
+  ok   W-08: conflict
+  W-09  The tracker was closed six hours after the issue last changed. The issue is still open.
+        status: jira "done" against github "open" -> LAG
+            jira changed 6 hours after github, and it is the one further along. That is within 24 hours, so github may simply not have caught up
+  ok   W-09: lag
+  W-10  The card was moved to Done exactly 24 hours after the tracker last changed.
+        status: jira "in_progress" against trello "done" -> LAG
+            trello changed 24 hours after jira, and it is the one further along. That is within 24 hours, so jira may simply not have caught up
+  ok   W-10: lag
+  W-11  The card was moved to Done 24 hours and one second after the tracker last changed.
+        status: jira "in_progress" against trello "done" -> CONFLICT
+            the two records last changed 24 hours, 1 second apart, which is more than the 24 hours allowed for one side to catch up
+  ok   W-11: conflict
+  W-12  The statuses agree as far as each system can say. The due dates do not, three days apart, and the three titles differ.
+        due: jira "2026-12-01" against trello "2026-12-04" -> CONFLICT
+            the two records last changed 72 hours apart, which is more than the 24 hours allowed for one side to catch up
+        due: jira "2026-12-01" against github null -> NOT COMPARABLE
+            a GitHub issue has no due date. So github saying null is not a disagreement with jira saying "2026-12-01"
+        due: trello "2026-12-04" against github null -> NOT COMPARABLE
+            a GitHub issue has no due date. So github saying null is not a disagreement with trello saying "2026-12-04"
+  ok   W-12: conflict, not comparable, not comparable
+  W-13  The tracker gained an assignee ninety minutes after the card last changed. The card has none.
+        assigned: jira "someone" against trello "nobody" -> LAG
+            jira changed 1 hour, 30 minutes after trello. That is within 24 hours, so trello may simply not have caught up
+  ok   W-13: lag
+  ok   the quest's scenario, W-02, is reported as a conflict: done in the tracker against in progress on the board, and against open in the repository
+  ok   each of the 8 conflicts shows two rows: two systems, two values, what each source itself wrote, and when each last changed (criterion 2)
+  ok   each conflict says why it is one, and what a person would need to find out to settle it (the quest's hint)
+  ok   every pair compared is two records from different systems that one link names, by identity (criterion 1)
+  ok   all 84 comparisons are listed in the report with the answer and the reason, so a reader can see why each was or was not a conflict (criterion 7)
+
+==============================================================================
+PART 3. The lag rule at its edges (criterion 3)
+  exactly 24 hours apart, the later one further along: LAG
+      trello changed 24 hours after jira, and it is the one further along. That is within 24 hours, so jira may simply not have caught up
+  ok   exactly 24 hours apart, the later one further along: lag, whichever record is given first
+  24 hours and 1 second apart: CONFLICT
+      the two records last changed 24 hours, 1 second apart, which is more than the 24 hours allowed for one side to catch up
+  ok   24 hours and 1 second apart: conflict, whichever record is given first
+  5 minutes apart, the later one LESS far along: CONFLICT
+      trello changed LATER, by 5 minutes, and it is the one that is LESS far along ("in_progress" against "done"). A delay cannot explain that: someone set trello back, or disagreed
+  ok   5 minutes apart, the later one LESS far along: conflict, whichever record is given first
+  the same moment, written in two time zones: CONFLICT
+      both records were last changed at the same moment and still differ, so neither is behind the other
+  ok   the same moment, written in two time zones: conflict, whichever record is given first
+  done against dropped, one second apart: CONFLICT
+      jira says "done" and github says "dropped". Those are two different ends, and a delay does not turn one into the other
+  ok   done against dropped, one second apart: conflict, whichever record is given first
+  one record with no time of last change: CONFLICT
+      jira does not say when it last changed, so it cannot be told whether one side is merely behind
+  ok   one record with no time of last change: conflict, whichever record is given first
+  in progress against GitHub's open, a year apart: NOT COMPARABLE
+      GitHub has open and closed, and nothing between. An issue someone is working on is still "open". So github saying "open" is not a disagreement with jira saying "in_progress"
+  ok   in progress against GitHub's open, a year apart: not comparable, whichever record is given first
+  ok   the allowance is measured between the two records' own times. The skill reads no clock, so the answer is the same on any day
+
+==============================================================================
+PART 4. No winner is chosen (criterion 4)
+  ok   below its introduction the report uses none of the words that would pick a side: winner, correct value, should be, is right, is wrong, stale, authoritative, resolved, true state, probably, trust 
+  ok   no piece of work is given one resolved value: what is kept for each is its records, its link and its comparisons, and nothing else
+  ok   a difference judged to be lag still shows both values and both times: 5 lags, 10 rows
+
+==============================================================================
+PART 5. Records with no counterpart (criterion 5)
+Unlinked records: github:I_kwFIX0450, jira:41014, jira:41015, jira:41016, jira:41050, trello:6ae924000000000000000a15, trello:6aeb10300000000000000a50
+Links that could not be used:
+  W-14: its link names github:I_kwFIX0499, and there is no such record here. It is not compared
+  W-15: its link names trello:6ae924000000000000000a15, which another link names too (W-16). One record cannot be two pieces of work. Neither link is compared
+  W-16: its link names trello:6ae924000000000000000a15, which another link names too (W-15). One record cannot be two pieces of work. Neither link is compared
+Same title, not linked: "Fix export": github:I_kwFIX0450, trello:6aeb10300000000000000a50
+  ok   the story with no counterpart, jira:41050, is listed as unlinked and appears in no conflict, lag or comparison
+  ok   no unlinked record is in any conflict
+  ok   a card and an issue with the same title and no link were not compared. They are listed as a hint for a person, marked as not a link
+  ok   three faulty links are reported and not used: one names a record that is not there, and two name the same card
+
+==============================================================================
+PART 6. The same input gives the same report (criterion 6)
+SHA-256 of the first report:  8a290af9a9188b678582a266d00eaf885fa7fcc7d65ea9a096f4d3b55c1c0419
+SHA-256 of the second report: 8a290af9a9188b678582a266d00eaf885fa7fcc7d65ea9a096f4d3b55c1c0419
+  ok   a second run on the same input gives a report that is byte for byte the same
+  ok   with the records and the links given in 10 other orders, the report is the same every time: the order of the input plays no part
+  ok   and it is not the same whatever the input: with one status changed, the report differs
+
+==============================================================================
+PART 7. Ranking, and conflicts that have lasted (stretch goals)
+Conflicts in the order the report gives them, with the work that depends on each:
+  1. W-02 status: 3 other pieces of work depend on it (W-04, W-06, W-09). Seen in the previous run: yes
+  2. W-02 status: 3 other pieces of work depend on it (W-04, W-06, W-09). Seen in the previous run: yes
+  3. W-06 status: 1 other piece of work depend on it (W-09). Seen in the previous run: yes
+  4. W-08 status: 1 other piece of work depend on it (W-11). Seen in the previous run: yes
+  5. W-04 status: 0 other pieces of work depend on it. Seen in the previous run: no
+  6. W-07 status: 0 other pieces of work depend on it. Seen in the previous run: yes
+  7. W-11 status: 0 other pieces of work depend on it. Seen in the previous run: no
+  8. W-12 due: 0 other pieces of work depend on it. Seen in the previous run: yes
+  ok   the conflicts are ordered by how many other pieces of work depend on them, most first
+  ok   previous-run.json is exactly what a run on earlier-records.md writes: the 6 conflicts of 16 November
+  ok   6 of the 8 conflicts were already there in the previous run, and 2 are new: W-04 and W-11
+
+RESULT: ALL CHECKS PASSED. 44 checks.

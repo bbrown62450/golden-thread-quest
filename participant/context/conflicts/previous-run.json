@@ -1,0 +1,53 @@
+{
+ "run": "2026-11-16",
+ "conflicts": [
+  [
+   "W-02",
+   "status",
+   "jira:41002",
+   "github:I_kwFIX0402",
+   "\"done\"",
+   "\"open\""
+  ],
+  [
+   "W-02",
+   "status",
+   "jira:41002",
+   "trello:6ae86d300000000000000a02",
+   "\"done\"",
+   "\"in_progress\""
+  ],
+  [
+   "W-06",
+   "status",
+   "jira:41006",
+   "github:I_kwFIX0406",
+   "\"done\"",
+   "\"dropped\""
+  ],
+  [
+   "W-08",
+   "status",
+   "jira:41008",
+   "trello:6ae8c1900000000000000a08",
+   "\"in_progress\"",
+   "\"done\""
+  ],
+  [
+   "W-07",
+   "status",
+   "trello:6ae8b3800000000000000a07",
+   "github:I_kwFIX0407",
+   "\"done\"",
+   "\"open\""
+  ],
+  [
+   "W-12",
+   "due",
+   "jira:41012",
+   "trello:6ae8f9d00000000000000a12",
+   "\"2026-12-01\"",
+   "\"2026-12-04\""
+  ]
+ ]
+}

@@ -1,0 +1,223 @@
+Do the tests notice a broken conflict report? context-cross-system-conflicts, attempt context-attempt-006
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/context-cross-system-conflicts/conflicts.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. The allowance is measured from today, not between the two records, so the report changes as days pass (criteria 3 and 6)
+  unittest result: FAILED (failures=11)
+  tests that failed (11):
+    ThePair.test_a_due_date_on_github_is_not_comparable_and_between_the_others_is_compared_by_the_day
+    NoWinner.test_a_lag_still_shows_both_values_and_both_times
+    ThePair.test_assigned_compares_whether_anyone_is_and_not_how_many
+    TheReport.test_each_case_in_the_records_gets_the_answer_it_was_built_to_get
+    TheReport.test_every_comparison_is_listed_with_its_reason
+    TheReport.test_every_conflict_shows_both_values_both_systems_and_both_times
+    ThePair.test_github_open_against_done_is_comparable_and_judged_by_the_rule
+    ThePair.test_later_and_further_along_within_the_allowance_is_lag
+    SameInputSameReport.test_no_clock_is_read
+    ThePair.test_the_allowance_is_24_hours_between_the_two_records_and_the_edge_is_inside
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+
+PLANTED BUG B. The allowance is 48 hours where the stated rule is 24 (criterion 3)
+  unittest result: FAILED (failures=6, errors=1)
+  tests that failed (7):
+    Stretch.test_a_conflict_already_in_the_previous_run_is_marked_and_a_new_one_is_not
+    NoWinner.test_a_lag_still_shows_both_values_and_both_times
+    TheReport.test_each_case_in_the_records_gets_the_answer_it_was_built_to_get
+    TheReport.test_every_comparison_is_listed_with_its_reason
+    TheReport.test_every_conflict_shows_both_values_both_systems_and_both_times
+    ThePair.test_the_allowance_is_24_hours_between_the_two_records_and_the_edge_is_inside
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+
+PLANTED BUG C. Exactly 24 hours counts as outside the allowance (criterion 3)
+  unittest result: FAILED (failures=6)
+  tests that failed (6):
+    NoWinner.test_a_lag_still_shows_both_values_and_both_times
+    TheReport.test_each_case_in_the_records_gets_the_answer_it_was_built_to_get
+    TheReport.test_every_comparison_is_listed_with_its_reason
+    TheReport.test_every_conflict_shows_both_values_both_systems_and_both_times
+    ThePair.test_the_allowance_is_24_hours_between_the_two_records_and_the_edge_is_inside
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+
+PLANTED BUG D. Any difference within 24 hours is lag, even when the later record is the one LESS far along (criterion 3)
+  unittest result: FAILED (failures=6, errors=1)
+  tests that failed (7):
+    Stretch.test_a_conflict_already_in_the_previous_run_is_marked_and_a_new_one_is_not
+    NoWinner.test_a_lag_still_shows_both_values_and_both_times
+    TheReport.test_each_case_in_the_records_gets_the_answer_it_was_built_to_get
+    TheReport.test_every_comparison_is_listed_with_its_reason
+    TheReport.test_every_conflict_shows_both_values_both_systems_and_both_times
+    ThePair.test_later_and_less_far_along_is_a_conflict_however_close
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+
+PLANTED BUG E. Done against dropped within 24 hours is called lag (criterion 3)
+  unittest result: FAILED (failures=6, errors=1)
+  tests that failed (7):
+    Stretch.test_a_conflict_already_in_the_previous_run_is_marked_and_a_new_one_is_not
+    NoWinner.test_a_lag_still_shows_both_values_and_both_times
+    ThePair.test_done_against_dropped_is_always_a_conflict
+    TheReport.test_each_case_in_the_records_gets_the_answer_it_was_built_to_get
+    TheReport.test_every_comparison_is_listed_with_its_reason
+    TheReport.test_every_conflict_shows_both_values_both_systems_and_both_times
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+
+PLANTED BUG F. Two records changed at the same moment that differ are not reported (criterion 2)
+  unittest result: FAILED (failures=6, errors=1)
+  tests that failed (7):
+    Stretch.test_a_conflict_already_in_the_previous_run_is_marked_and_a_new_one_is_not
+    TheReport.test_each_case_in_the_records_gets_the_answer_it_was_built_to_get
+    TheReport.test_every_comparison_is_listed_with_its_reason
+    TheReport.test_every_conflict_shows_both_values_both_systems_and_both_times
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+    ThePair.test_the_same_moment_is_a_conflict
+    Stretch.test_the_same_pair_in_conflict_with_other_values_is_a_new_conflict
+
+PLANTED BUG G. A record with no time of last change is given the benefit of the doubt, and the difference is called lag (criterion 3)
+  unittest result: FAILED (failures=6, errors=1)
+  tests that failed (7):
+    Stretch.test_a_conflict_already_in_the_previous_run_is_marked_and_a_new_one_is_not
+    NoWinner.test_a_lag_still_shows_both_values_and_both_times
+    TheReport.test_each_case_in_the_records_gets_the_answer_it_was_built_to_get
+    TheReport.test_every_comparison_is_listed_with_its_reason
+    TheReport.test_every_conflict_shows_both_values_both_systems_and_both_times
+    ThePair.test_no_update_time_on_either_side_is_a_conflict_and_says_what_is_missing
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+
+PLANTED BUG H. GitHub's "open" against "in progress" is reported as a conflict (criterion 7)
+  unittest result: FAILED (failures=7)
+  tests that failed (7):
+    Stretch.test_a_conflict_already_in_the_previous_run_is_marked_and_a_new_one_is_not
+    NoWinner.test_a_lag_still_shows_both_values_and_both_times
+    TheReport.test_each_case_in_the_records_gets_the_answer_it_was_built_to_get
+    TheReport.test_every_comparison_is_listed_with_its_reason
+    TheReport.test_every_conflict_shows_both_values_both_systems_and_both_times
+    ThePair.test_github_saying_open_where_another_says_in_progress_is_not_comparable
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+
+PLANTED BUG I. GitHub's "open" against "done" is waved through as not comparable, so the scenario is not reported (criterion 2)
+  unittest result: FAILED (failures=6, errors=1)
+  tests that failed (7):
+    Stretch.test_a_conflict_already_in_the_previous_run_is_marked_and_a_new_one_is_not
+    NoWinner.test_a_lag_still_shows_both_values_and_both_times
+    TheReport.test_each_case_in_the_records_gets_the_answer_it_was_built_to_get
+    TheReport.test_every_comparison_is_listed_with_its_reason
+    TheReport.test_every_conflict_shows_both_values_both_systems_and_both_times
+    ThePair.test_github_open_against_done_is_comparable_and_judged_by_the_rule
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+
+PLANTED BUG J. Records are linked by matching title when no link names them (criterion 1)
+  unittest result: FAILED (failures=4, errors=1)
+  tests that failed (5):
+    TheReport.test_a_record_with_no_counterpart_is_unlinked_and_is_not_a_conflict
+    TheReport.test_every_comparison_is_listed_with_its_reason
+    TheReport.test_records_are_compared_by_identity_through_the_links_and_only_through_them
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+    TheReport.test_the_same_title_never_links_two_records_and_is_only_a_hint
+
+PLANTED BUG K. A record with no counterpart is reported as a conflict (criterion 5)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    TheReport.test_a_record_with_no_counterpart_is_unlinked_and_is_not_a_conflict
+    TheReport.test_every_conflict_shows_both_values_both_systems_and_both_times
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+
+PLANTED BUG L. A link naming a record that is not there is compared anyway, with what there is (criterion 5)
+  unittest result: FAILED (errors=18)
+  tests that failed (18):
+    SameInputSameReport.test_a_changed_input_changes_the_report
+    Stretch.test_a_conflict_already_in_the_previous_run_is_marked_and_a_new_one_is_not
+    NoWinner.test_a_lag_still_shows_both_values_and_both_times
+    TheReport.test_a_link_that_cannot_be_used_is_reported_and_its_records_are_left_unlinked
+    TheReport.test_a_record_with_no_counterpart_is_unlinked_and_is_not_a_conflict
+    NoWinner.test_analysing_does_not_alter_the_records_in_memory_either
+    Stretch.test_conflicts_are_ordered_by_how_much_other_work_depends_on_them
+    TheReport.test_each_case_in_the_records_gets_the_answer_it_was_built_to_get
+    TheReport.test_every_comparison_is_listed_with_its_reason
+    TheReport.test_every_conflict_shows_both_values_both_systems_and_both_times
+    TheReport.test_records_are_compared_by_identity_through_the_links_and_only_through_them
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+    SameInputSameReport.test_the_order_of_the_records_and_of_the_links_changes_nothing
+    NoWinner.test_the_report_names_no_winner_and_gives_no_single_resolved_state
+    NoWinner.test_the_run_changes_no_file_but_the_report_and_cannot_write_over_the_records
+    Stretch.test_the_same_pair_in_conflict_with_other_values_is_a_new_conflict
+    TheReport.test_the_same_title_never_links_two_records_and_is_only_a_hint
+    SameInputSameReport.test_two_runs_give_the_same_report
+
+PLANTED BUG M. One record named by two links is compared in both (criterion 1)
+  unittest result: FAILED (failures=5, errors=1)
+  tests that failed (6):
+    TheReport.test_a_link_that_cannot_be_used_is_reported_and_its_records_are_left_unlinked
+    TheReport.test_a_record_with_no_counterpart_is_unlinked_and_is_not_a_conflict
+    TheReport.test_every_comparison_is_listed_with_its_reason
+    TheReport.test_every_conflict_shows_both_values_both_systems_and_both_times
+    TheReport.test_records_are_compared_by_identity_through_the_links_and_only_through_them
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+
+PLANTED BUG N. The later value is written over the earlier one when a difference is lag: a winner is chosen (criterion 4)
+  unittest result: FAILED (failures=8)
+  tests that failed (8):
+    NoWinner.test_a_lag_still_shows_both_values_and_both_times
+    NoWinner.test_analysing_does_not_alter_the_records_in_memory_either
+    TheReport.test_each_case_in_the_records_gets_the_answer_it_was_built_to_get
+    ThePair.test_the_allowance_is_24_hours_between_the_two_records_and_the_edge_is_inside
+    ThePair.test_the_answer_does_not_depend_on_which_record_comes_first
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+    SameInputSameReport.test_the_order_of_the_records_and_of_the_links_changes_nothing
+    SameInputSameReport.test_two_runs_give_the_same_report
+
+PLANTED BUG O. The report adds a line saying which system is probably right (criterion 4)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+    NoWinner.test_the_report_names_no_winner_and_gives_no_single_resolved_state
+
+PLANTED BUG P. The report will write over the records file if told to (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    NoWinner.test_the_run_changes_no_file_but_the_report_and_cannot_write_over_the_records
+
+PLANTED BUG Q. The report's order follows the order of the input, so the same records in another order give another report (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    SameInputSameReport.test_the_order_of_the_records_and_of_the_links_changes_nothing
+
+PLANTED BUG R. A conflict shows only the first system's value (criterion 2)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheReport.test_every_conflict_shows_both_values_both_systems_and_both_times
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+
+PLANTED BUG S. Conflicts are not ordered by what depends on them (stretch goal)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Stretch.test_conflicts_are_ordered_by_how_much_other_work_depends_on_them
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+
+PLANTED BUG T. Every conflict is said to have been seen before (stretch goal)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Stretch.test_a_conflict_already_in_the_previous_run_is_marked_and_a_new_one_is_not
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+    Stretch.test_the_same_pair_in_conflict_with_other_values_is_a_new_conflict
+
+PLANTED BUG U. A title that differs is reported as a conflict (criterion 7)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    ThePair.test_a_title_that_differs_is_different_and_never_a_conflict
+    TheReport.test_every_comparison_is_listed_with_its_reason
+    TheReport.test_every_conflict_shows_both_values_both_systems_and_both_times
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+
+PLANTED BUG V. Whether anyone is assigned is compared by the number of people, so 1 against 3 is a difference
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    ThePair.test_assigned_compares_whether_anyone_is_and_not_how_many
+    TheReport.test_every_comparison_is_listed_with_its_reason
+    TheReport.test_the_handed_in_report_and_state_are_what_the_code_writes
+
+After the last bug was taken out: conflicts.py is byte for byte what it was at the start. OK
+
+RESULT: all 22 planted bugs were caught by at least one test, and the file was restored.

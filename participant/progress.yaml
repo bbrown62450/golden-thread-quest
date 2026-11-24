@@ -484,4 +484,13 @@ attempts:
   evidence_path: participant/evidence/context-stable-identities/context-attempt-005
   submission_id: submission-20261124131055-1d83b6
   review_id: review-20261124132151-52c942
-updated_at: '2026-11-24T13:21:51Z'
+- attempt_id: context-attempt-006
+  quest_id: context-cross-system-conflicts
+  quest_version: 1
+  content_hash: sha256:1f91ed457e68eb9c5472155301fa56d1f90c1fe014ce8db0610c709a3c4bd334
+  state: submitted
+  started_at: '2026-11-24T14:52:10Z'
+  updated_at: '2026-11-24T15:08:34Z'
+  evidence_path: participant/evidence/context-cross-system-conflicts/context-attempt-006
+  submission_id: submission-20261124150834-247222
+updated_at: '2026-11-24T15:08:34Z'
