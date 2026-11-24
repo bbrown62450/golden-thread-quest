@@ -1,0 +1,33 @@
+schema_version: 1
+review_id: review-20261124183122-1014a3
+quest_id: context-next-work
+quest_version: 1
+attempt_id: context-attempt-008
+evidence_hash: sha256:773081c118cc4d8936cf4195b6bc8b8c61a7c4d3faf9a0b79c2a92fbfda157ae
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-24T18:31:22Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/next-work/inputs.md
+  digest: sha256:a246b38a83c0cef5af071993c8a3038e3bb863c5e0795239b3fa847202db40cb
+- path: participant/context/next-work/recommendation.md
+  digest: sha256:53b0313aaeef5d8b295b7bbabf3db8741f3f90bd768b9b9ff0a966ac9ff48fb9
+- path: participant/context/next-work/rules.md
+  digest: sha256:80aec9ac33a30dad54a1eedcb847e1f71e59618b1a301bc47b10bb58be6c5685
+verification_statement: 'Automated review. I read inputs.md, rules.md, recommendation.md,
+  logs/ranking-run.txt, tests.txt, planted-bugs.txt, both scripts and PROOF.md. Then
+  I checked the ranking by hand against the 24 records. Priority-first ordering puts
+  61004, 61001, 61002, 61018, 61003, trello-e0001, 61006, 61007, 61016, 61019, 61015,
+  61008 and trello-e0002 in that order, and this matches the log and the recommendation.
+  The run after the dependency was completed is also consistent: 61005 (medium, due
+  12-08) lands at place 9, and 61009 (no priority, has a due date) lands at 13, ahead
+  of trello-e0002. The inputs include the required blocked item, stale item and missing-data
+  item. Runs 1 and 2 show identical output and the same SHA-256. PROOF.md explains
+  how conflicting criteria were weighed, names a recommendation the participant would
+  not trust (jira:61008), and cites the criteria by number. One minor mismatch: the
+  evidence folder is named context-attempt-008, while the brief says attempt-001.
+  The automatic pre-check reported all required files present, so I treat this as
+  advisory. Nothing in the evidence is addressed to the reviewer. Each of the 7 acceptance
+  criteria was matched to text quoted word for word from the evidence.'

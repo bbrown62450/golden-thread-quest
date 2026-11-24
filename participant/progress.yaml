@@ -528,9 +528,10 @@ attempts:
   quest_id: context-next-work
   quest_version: 1
   content_hash: sha256:d81af6b3b3db5c38547b9d3a295f7e22a2dcf9322999a34185c9486f1497b195
-  state: submitted
+  state: verified
   started_at: '2026-11-24T18:07:34Z'
-  updated_at: '2026-11-24T18:26:09Z'
+  updated_at: '2026-11-24T18:31:22Z'
   evidence_path: participant/evidence/context-next-work/context-attempt-008
   submission_id: submission-20261124182609-0b6c70
-updated_at: '2026-11-24T18:26:09Z'
+  review_id: review-20261124183122-1014a3
+updated_at: '2026-11-24T18:31:22Z'
