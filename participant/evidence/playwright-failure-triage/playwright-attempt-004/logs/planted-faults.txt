@@ -1,0 +1,113 @@
+Does the check notice when it has itself been weakened? playwright-failure-triage, attempt playwright-attempt-004
+Recorded by tools/failure-triage-planted-faults.ts.
+
+Each fault below was put into participant/tests/playwright/tools/failure-triage-check.ts: one rule the check silently stops enforcing. The check was then
+run, and the fault was taken out again. Nothing is run but the check, which reads files only.
+"Noticed" means more than "the check failed": the check that failed must be the one the fault is about.
+
+Before any fault: exit code 0. triage-check.txt: RESULT: ALL CHECKS PASSED. 49 checks.
+
+PLANTED FAULT A. Any word is accepted as a class, so "flaky" passes (criteria 1 and 3)
+  the check's exit code: 1. triage-check.txt: RESULT: 1 OF 49 CHECKS FAILED.
+  checks that failed (1):
+    a failure classed as "flaky" (criteria 1 and 3): reported
+  noticed, by the check it should trip
+
+PLANTED FAULT B. Two classes on one failure are not noticed (criterion 1)
+  the check's exit code: 1. triage-check.txt: RESULT: 1 OF 49 CHECKS FAILED.
+  checks that failed (1):
+    a failure given two classes (criterion 1): reported
+  noticed, by the check it should trip
+
+PLANTED FAULT C. A classification that cites nothing is accepted (criterion 2)
+  the check's exit code: 1. triage-check.txt: RESULT: 1 OF 49 CHECKS FAILED.
+  checks that failed (1):
+    a classification that cites no file (criterion 2): reported
+  noticed, by the check it should trip
+
+PLANTED FAULT D. A cited file need not be in the bundle (criterion 2)
+  the check's exit code: 1. triage-check.txt: RESULT: 1 OF 49 CHECKS FAILED.
+  checks that failed (1):
+    a classification that cites a file that does not exist in the bundle (criterion 2): reported
+  noticed, by the check it should trip
+
+PLANTED FAULT E. A cited file need not be used in the reason (criterion 2)
+  the check's exit code: 1. triage-check.txt: RESULT: 1 OF 49 CHECKS FAILED.
+  checks that failed (1):
+    a classification that cites a real file its reason never uses (criterion 2): reported
+  noticed, by the check it should trip
+
+PLANTED FAULT F. A failure that passed on retry need not explain the retry (criterion 3)
+  the check's exit code: 1. triage-check.txt: RESULT: 1 OF 49 CHECKS FAILED.
+  checks that failed (1):
+    the retry-passing failure without its explanation of the retry (criterion 3): reported
+  noticed, by the check it should trip
+
+PLANTED FAULT G. A failure that passed on retry need not cite attempts.json (criterion 3)
+  the check's exit code: 1. triage-check.txt: RESULT: 1 OF 49 CHECKS FAILED.
+  checks that failed (1):
+    the retry-passing failure that does not cite attempts.json (criterion 3): reported
+  noticed, by the check it should trip
+
+PLANTED FAULT H. Inconclusive need not say what would settle it (criterion 4)
+  the check's exit code: 1. triage-check.txt: RESULT: 1 OF 49 CHECKS FAILED.
+  checks that failed (1):
+    an inconclusive failure that does not say what would settle it (criterion 4): reported
+  noticed, by the check it should trip
+
+PLANTED FAULT I. Inconclusive need not name two possible classes (criterion 4)
+  the check's exit code: 1. triage-check.txt: RESULT: 1 OF 49 CHECKS FAILED.
+  checks that failed (1):
+    an inconclusive failure that names only one possible class (criterion 4): reported
+  noticed, by the check it should trip
+
+PLANTED FAULT J. A classification need not state a next action (criterion 5)
+  the check's exit code: 1. triage-check.txt: RESULT: 1 OF 49 CHECKS FAILED.
+  checks that failed (1):
+    a classification with no next action (criterion 5): reported
+  noticed, by the check it should trip
+
+PLANTED FAULT K. A classification need not say who acts (criterion 5)
+  the check's exit code: 1. triage-check.txt: RESULT: 1 OF 49 CHECKS FAILED.
+  checks that failed (1):
+    a classification that names nobody to act (criterion 5): reported
+  noticed, by the check it should trip
+
+PLANTED FAULT L. Any role may be given any class of failure (criterion 5)
+  the check's exit code: 1. triage-check.txt: RESULT: 1 OF 49 CHECKS FAILED.
+  checks that failed (1):
+    a classification sent to the wrong role (criterion 5): reported
+  noticed, by the check it should trip
+
+PLANTED FAULT M. A bundle the report leaves out is not noticed
+  the check's exit code: 1. triage-check.txt: RESULT: 1 OF 49 CHECKS FAILED.
+  checks that failed (1):
+    a failure left out of the report: reported
+  noticed, by the check it should trip
+
+PLANTED FAULT N. A classification with no bundle behind it is accepted
+  the check's exit code: 1. triage-check.txt: RESULT: 1 OF 49 CHECKS FAILED.
+  checks that failed (1):
+    a classification of a failure that has no bundle: reported
+  noticed, by the check it should trip
+
+PLANTED FAULT O. A failure classified twice is not noticed (criterion 1)
+  the check's exit code: 1. triage-check.txt: RESULT: 1 OF 49 CHECKS FAILED.
+  checks that failed (1):
+    a failure classified twice: reported
+  noticed, by the check it should trip
+
+PLANTED FAULT P. The scan of the bundles finds nothing, whatever they hold
+  the check's exit code: 1. triage-check.txt: RESULT: 6 OF 49 CHECKS FAILED.
+  checks that failed (6):
+    failure-01: it holds no cookie, token or password, and none of this computer's names
+    failure-02: it holds no cookie, token or password, and none of this computer's names
+    failure-03: it holds no cookie, token or password, and none of this computer's names
+    failure-04: it holds no cookie, token or password, and none of this computer's names
+    failure-05: it holds no cookie, token or password, and none of this computer's names
+    failure-06: it holds no cookie, token or password, and none of this computer's names
+  noticed, by the check it should trip
+
+After the last fault was taken out: the 1 files are byte for byte what they were at the start.
+
+RESULT: all 16 planted faults were noticed by the check, and the files were restored.

@@ -1,0 +1,23 @@
+Test: order ord-2001 shows its total
+Test declared at: participant/tests/playwright/triage.spec.ts:35
+Result: failed. Expected: passed
+Started 2026-11-24T01:43:03.499Z, ended 2026-11-24T01:43:05.870Z
+
+Error 1 of 1
+Error: expect(locator).toHaveText(expected) failed
+
+Locator:  getByTestId('total')
+Expected: "Order total: 120.00"
+Received: "Order total: 100.00"
+Timeout:  2000ms
+
+Call log:
+  - Expect "toHaveText" getByTestId('total') with timeout 2000ms
+  - waiting for getByTestId('total')
+    3 × locator resolved to <p data-testid="total">Order total: loading…</p>
+      - unexpected value "Order total: loading…"
+    18 × locator resolved to <p data-testid="total">Order total: 100.00</p>
+       - unexpected value "Order total: 100.00"
+
+
+    at REPO/participant/tests/playwright/triage.spec.ts:39:43

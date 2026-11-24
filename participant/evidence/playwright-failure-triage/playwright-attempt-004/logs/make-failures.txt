@@ -1,0 +1,51 @@
+Making the six failures. playwright-failure-triage, attempt playwright-attempt-004
+Recorded by tools/failure-triage-check.ts. The application is a made-up order desk on this computer. Nothing in it is real.
+This log says what was arranged for each failure. It is NOT part of any bundle and was not given to whoever classified them.
+
+==============================================================================
+failure-01: the test for order ord-2004
+Arranged: nothing. The fault is in the application, the test or the data as they stand.
+Attempts in the run kept: attempt 1 failed, attempt 2 failed
+  ok   failure-01: the first attempt failed and left a bundle
+Run again 10 times straight afterwards, each with no retry: failed 10 of 10.
+
+==============================================================================
+failure-02: the test for order ord-2005
+Arranged: nothing. The test was run until a run failed and then passed on its retry. That took 2 runs.
+Attempts in the run kept: attempt 1 failed, attempt 2 passed
+  ok   failure-02: the first attempt failed and left a bundle
+Run again 10 times straight afterwards, each with no retry: failed 3 of 10.
+
+==============================================================================
+failure-03: the test for order ord-2002
+Arranged: nothing. The fault is in the application, the test or the data as they stand.
+Attempts in the run kept: attempt 1 failed, attempt 2 failed
+  ok   failure-03: the first attempt failed and left a bundle
+Run again 10 times straight afterwards, each with no retry: failed 10 of 10.
+
+==============================================================================
+failure-04: the test for order ord-2006
+Arranged: the server process is frozen once, for 3.2 seconds, while it answers the request for the order's lines. Not during the repeats.
+Attempts in the run kept: attempt 1 failed, attempt 2 passed
+  ok   failure-04: the first attempt failed and left a bundle
+Run again 10 times straight afterwards, each with no retry: failed 0 of 10.
+
+==============================================================================
+failure-05: the test for order ord-2001
+Arranged: nothing. The fault is in the application, the test or the data as they stand.
+Attempts in the run kept: attempt 1 failed, attempt 2 failed
+  ok   failure-05: the first attempt failed and left a bundle
+Run again 10 times straight afterwards, each with no retry: failed 10 of 10.
+
+==============================================================================
+failure-06: the test for order ord-2003
+Arranged: the pricing service is stopped before the run, and stays stopped for the repeats.
+Attempts in the run kept: attempt 1 failed, attempt 2 failed
+  ok   failure-06: the first attempt failed and left a bundle
+Run again 10 times straight afterwards, each with no retry: failed 10 of 10.
+
+==============================================================================
+In all
+  ok   six bundles were saved: failure-01, failure-02, failure-03, failure-04, failure-05, failure-06
+
+RESULT: ALL CHECKS PASSED. 7 checks.

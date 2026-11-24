@@ -1,0 +1,22 @@
+[
+  {
+    "started": "2026-11-24T01:42:19.304Z",
+    "method": "GET",
+    "path": "/api/orders/ord-2005",
+    "status": 200,
+    "failure": null,
+    "durationMs": 151,
+    "answeredAfterTheTestGaveUp": false,
+    "body": "{\"id\":\"ord-2005\",\"customer\":\"Specimen Shipping Co\",\"lineCount\":12}"
+  },
+  {
+    "started": "2026-11-24T01:42:19.304Z",
+    "method": "GET",
+    "path": "/api/orders/ord-2005/lines",
+    "status": 200,
+    "failure": null,
+    "durationMs": 206,
+    "answeredAfterTheTestGaveUp": false,
+    "body": "{\"id\":\"ord-2005\",\"lines\":[{\"item\":\"bracket\",\"quantity\":2,\"amount\":6.4},{\"item\":\"gasket\",\"quantity\":3,\"amount\":2.4},{\"item\":\"hose\",\"quantity\":4,\"amount\":18},{\"item\":\"bracket\",\"quantity\":5,\"amount\":16},{\"item\":\"gasket\",\"quantity\":2,\"amount\":1.6},{\"item\":\"hose\",\"quantity\":3,\"amount\":13.5},{\"item\":\"bracket\",\"quantity\":4,\"amount\":12.8},{\"item\":\"gasket\",\"quantity\":5,\"amount\":4},{\"item\":\"hose\",\"quantity\":2,\"amount\":9},{\"item\":\"bracket\",\"quantity\":3,\"amount\":9.6},{\"item\":\"gasket\",\"quantity\":4,\"amount\":3.2},{\"item\":\"hose\",\"quantity\":5,\"amount\":22.5}],\"total\":119}"
+  }
+]

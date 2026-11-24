@@ -1,0 +1,19 @@
+schema_version: 1
+submission_id: submission-20261124023300-5e7b89
+quest_id: playwright-failure-triage
+quest_version: 1
+attempt_id: playwright-attempt-004
+content_hash: sha256:65e01068fb063db2895ed559dbb517d2c447a4fce55286cfa68a474f863e3bd6
+evidence_hash: sha256:04df651e1bc41684535b2ef2afbf1d4317c1977466238d72e6c92b760e872ace
+submitted_at: '2026-11-24T02:33:00Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/playwright/ground-truth.md
+  digest: sha256:633f7dbecef826f9703a4cd378fcc3ebc572013bffe73221cd9ac4e9891d24ce
+- path: participant/context/playwright/triage-report.md
+  digest: sha256:ef12487e26539a228f16498491eea7cce47ba1481559ef39434205d7e57703dc
+- path: participant/context/playwright/triage-rules.md
+  digest: sha256:a7fa1b6bf8b6113c62c89df0d1f784d15832458ceb32addf41c4e187c245fe98
+- path: participant/tests/playwright/tools/failure-triage-check.ts
+  digest: sha256:e465c51e0f0b793c142726838bda7023240309a7b70bfebd71880847847b132d

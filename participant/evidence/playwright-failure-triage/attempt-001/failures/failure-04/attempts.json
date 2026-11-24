@@ -1,0 +1,47 @@
+{
+  "note": "Every attempt of this test in the run that made this bundle. The bundle's other files are from attempt 1. `repeated` is filled in afterwards, when the test is run again several times.",
+  "attempts": [
+    {
+      "attempt": 1,
+      "result": "failed",
+      "startedAt": "2026-11-24T01:42:50.217Z",
+      "durationMs": 2158,
+      "error": "Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('total') | Expected: \"Order total: 34.00\" | Received: \"Order total: loading…\" | Timeout:  2000ms | Call log:",
+      "requests": [
+        "2026-11-24T01:42:50.227Z GET / -> 200 2ms (document)",
+        "2026-11-24T01:42:50.232Z GET /static/promo.png -> 404 0ms (image)",
+        "2026-11-24T01:42:50.316Z POST /session -> 303 1ms (document)",
+        "2026-11-24T01:42:50.317Z GET /orders -> 200 1ms (document)",
+        "2026-11-24T01:42:50.323Z GET /static/promo.png -> 404 0ms (image)",
+        "2026-11-24T01:42:50.357Z GET /orders/ord-2006 -> 200 1ms (document)",
+        "2026-11-24T01:42:50.360Z GET /static/promo.png -> 404 0ms (image)",
+        "2026-11-24T01:42:50.362Z GET /api/orders/ord-2006 -> 200 3199ms (fetch)  [answered after the test gave up]",
+        "2026-11-24T01:42:50.362Z GET /api/orders/ord-2006/lines -> 200 3211ms (fetch)  [answered after the test gave up]"
+      ]
+    },
+    {
+      "attempt": 2,
+      "result": "passed",
+      "startedAt": "2026-11-24T01:42:54.126Z",
+      "durationMs": 351,
+      "error": null,
+      "requests": [
+        "2026-11-24T01:42:54.135Z GET / -> 200 1ms (document)",
+        "2026-11-24T01:42:54.138Z GET /static/promo.png -> 404 0ms (image)",
+        "2026-11-24T01:42:54.224Z POST /session -> 303 0ms (document)",
+        "2026-11-24T01:42:54.225Z GET /orders -> 200 0ms (document)",
+        "2026-11-24T01:42:54.231Z GET /static/promo.png -> 404 0ms (image)",
+        "2026-11-24T01:42:54.280Z GET /orders/ord-2006 -> 200 1ms (document)",
+        "2026-11-24T01:42:54.283Z GET /static/promo.png -> 404 0ms (image)",
+        "2026-11-24T01:42:54.285Z GET /api/orders/ord-2006 -> 200 152ms (fetch)",
+        "2026-11-24T01:42:54.285Z GET /api/orders/ord-2006/lines -> 200 11ms (fetch)"
+      ]
+    }
+  ],
+  "repeated": {
+    "runs": 10,
+    "failed": 0,
+    "passed": 10,
+    "how": "The same test was run 10 more times straight after the run above, each time once, with no retry."
+  }
+}

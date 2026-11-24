@@ -1,0 +1,111 @@
+[
+  {
+    "started": "2026-11-24T01:43:38.340Z",
+    "ended": "2026-11-24T01:43:38.340Z",
+    "method": "GET",
+    "url": "http://127.0.0.1:4797/static/promo.png",
+    "resourceType": "image",
+    "status": 404,
+    "failure": null,
+    "durationMs": 0,
+    "requestHeaders": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "http://127.0.0.1:4797/",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+      "sec-ch-ua": "\"HeadlessChrome\";v=\"153\", \"Not_A Brand\";v=\"8\", \"Chromium\";v=\"153\"",
+      "accept-language": "en-US",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "responseHeaders": {
+      "connection": "keep-alive",
+      "date": "Tue, 24 Nov 2026 01:43:38 GMT",
+      "keep-alive": "timeout=5",
+      "transfer-encoding": "chunked",
+      "cache-control": "no-store",
+      "content-type": "text/plain"
+    },
+    "responseBody": "not found"
+  },
+  {
+    "started": "2026-11-24T01:43:38.432Z",
+    "ended": "2026-11-24T01:43:38.432Z",
+    "method": "GET",
+    "url": "http://127.0.0.1:4797/static/promo.png",
+    "resourceType": "image",
+    "status": 404,
+    "failure": null,
+    "durationMs": 0,
+    "requestHeaders": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "http://127.0.0.1:4797/orders",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+      "sec-ch-ua": "\"HeadlessChrome\";v=\"153\", \"Not_A Brand\";v=\"8\", \"Chromium\";v=\"153\"",
+      "accept-language": "en-US",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "responseHeaders": {
+      "connection": "keep-alive",
+      "date": "Tue, 24 Nov 2026 01:43:38 GMT",
+      "keep-alive": "timeout=5",
+      "transfer-encoding": "chunked",
+      "cache-control": "no-store",
+      "content-type": "text/plain"
+    },
+    "responseBody": "not found"
+  },
+  {
+    "started": "2026-11-24T01:43:38.466Z",
+    "ended": "2026-11-24T01:43:38.467Z",
+    "method": "GET",
+    "url": "http://127.0.0.1:4797/static/promo.png",
+    "resourceType": "image",
+    "status": 404,
+    "failure": null,
+    "durationMs": 1,
+    "requestHeaders": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "http://127.0.0.1:4797/orders/ord-2003",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+      "sec-ch-ua": "\"HeadlessChrome\";v=\"153\", \"Not_A Brand\";v=\"8\", \"Chromium\";v=\"153\"",
+      "accept-language": "en-US",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "responseHeaders": {
+      "connection": "keep-alive",
+      "date": "Tue, 24 Nov 2026 01:43:38 GMT",
+      "keep-alive": "timeout=5",
+      "transfer-encoding": "chunked",
+      "cache-control": "no-store",
+      "content-type": "text/plain"
+    },
+    "responseBody": "not found"
+  },
+  {
+    "started": "2026-11-24T01:43:38.469Z",
+    "ended": "2026-11-24T01:43:38.472Z",
+    "method": "GET",
+    "url": "http://127.0.0.1:4797/api/orders/ord-2003/lines",
+    "resourceType": "fetch",
+    "status": 503,
+    "failure": null,
+    "durationMs": 3,
+    "requestHeaders": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "authorization": "[REDACTED header]",
+      "referer": "http://127.0.0.1:4797/orders/ord-2003",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+      "sec-ch-ua": "\"HeadlessChrome\";v=\"153\", \"Not_A Brand\";v=\"8\", \"Chromium\";v=\"153\"",
+      "accept-language": "en-US",
+      "sec-ch-ua-mobile": "?0"
+    },
+    "responseHeaders": {
+      "connection": "keep-alive",
+      "date": "Tue, 24 Nov 2026 01:43:38 GMT",
+      "keep-alive": "timeout=5",
+      "transfer-encoding": "chunked",
+      "cache-control": "no-store",
+      "content-type": "application/json"
+    },
+    "responseBody": "{\"error\":\"pricing_unavailable\",\"message\":\"Prices are unavailable right now. Try again later.\",\"detail\":\"could not reach the pricing service at 127.0.0.1:4798: connect ECONNREFUSED 127.0.0.1:4798\"}"
+  }
+]

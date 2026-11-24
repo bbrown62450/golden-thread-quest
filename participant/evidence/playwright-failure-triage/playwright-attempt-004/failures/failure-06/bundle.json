@@ -1,0 +1,132 @@
+{
+  "format": "gtq-triage-bundle/1",
+  "test": {
+    "title": "order ord-2003 shows its total",
+    "file": "participant/tests/playwright/triage.spec.ts",
+    "line": 50,
+    "retry": 0
+  },
+  "result": {
+    "status": "failed",
+    "expected": "passed"
+  },
+  "startedAt": "2026-11-24T01:43:38.326Z",
+  "endedAt": "2026-11-24T01:43:40.697Z",
+  "durationMs": 2371,
+  "browser": {
+    "name": "chromium",
+    "version": "153.0.8010.12"
+  },
+  "baseURL": "http://127.0.0.1:4797",
+  "commit": {
+    "sha": "f47152fbc984eeef2892bcae4850e24de780613d",
+    "uncommittedChanges": true,
+    "note": "The tests folder had changes that were not committed. The commit alone does not say what code ran: see underTest for a checksum of each file."
+  },
+  "underTest": [
+    {
+      "file": "participant/tests/playwright/triage.spec.ts",
+      "sha256": "5131b1c4a7c99d0d6bb75ebf3e1d729fcc33f0a21c2b17279859989c20ebb431"
+    },
+    {
+      "file": "participant/tests/playwright/support/triage-evidence.ts",
+      "sha256": "c6f522c70b73c863964ecec34640e4122ee81a1fa26f3a2623fb42f2ea9414a8"
+    },
+    {
+      "file": "participant/tests/playwright/demo-app/triage-server.mjs",
+      "sha256": "730770d24974bfa11d0acb43c7beeea47663eab5c689ae02c19a59b521f40c8f"
+    }
+  ],
+  "kept": {
+    "days": 14,
+    "deleteAfter": "2026-12-08T01:43:40.697Z"
+  },
+  "counts": {
+    "consoleLines": 5,
+    "requests": 9,
+    "failedRequests": 4,
+    "serverLogLines": 9
+  },
+  "trace": {
+    "entries": 10,
+    "textEntriesRedacted": 10,
+    "binaryEntriesKeptAsTheyWere": 0
+  },
+  "redaction": {
+    "on": true,
+    "replacements": {
+      "by value: REPO": 7,
+      "by value: cookie": 15,
+      "by value: password": 6,
+      "by value: token": 3,
+      "by place: header": 1
+    },
+    "valuesTooShortToReplaceByValue": 0,
+    "notSearched": [
+      "screenshot.png and screenshot-after-wait.png: pictures"
+    ]
+  },
+  "problems": [],
+  "files": [
+    {
+      "name": "screenshot.png",
+      "bytes": 30014,
+      "sha256": "6b622765a0d2995e4e39f81f187441972d34c95192258f96fd5ddd5b96ada38d"
+    },
+    {
+      "name": "screenshot-after-wait.png",
+      "bytes": 30014,
+      "sha256": "6b622765a0d2995e4e39f81f187441972d34c95192258f96fd5ddd5b96ada38d"
+    },
+    {
+      "name": "page-text.txt",
+      "bytes": 470,
+      "sha256": "d0473b1eba1792be6b406efcf2e85c2f90a66e1bd88b3b5ced62c942edec2ee7"
+    },
+    {
+      "name": "trace.zip",
+      "bytes": 13419,
+      "sha256": "72e135536be9757f0062a8b4b0c1ce9e35422131e452f483cb9363a9f4b4534c"
+    },
+    {
+      "name": "error.txt",
+      "bytes": 694,
+      "sha256": "ab3ffbdddd5317079dfc209c9e8057f37cc7a64af3bc8f9251dc38a4e9667c3b"
+    },
+    {
+      "name": "console.log",
+      "bytes": 792,
+      "sha256": "5c68ff7caceecb6c5e706d24e72ff6e2853e6733b55007a20bb7713754841872"
+    },
+    {
+      "name": "requests.txt",
+      "bytes": 585,
+      "sha256": "d915edfc1d802925a4df7ab0cfbaf2dcbaafaf065b087e8b8535997fabb5a03e"
+    },
+    {
+      "name": "failed-requests.json",
+      "bytes": 4201,
+      "sha256": "116647e879d6b20da35b0e990a8eb2c0509b79831fb6b5fe62a9cfdc62fc5191"
+    },
+    {
+      "name": "api-responses.json",
+      "bytes": 745,
+      "sha256": "14c71dc8832157ca3d089f2ba622f05c6895cfc05d28cbd74adf9e25f5512efb"
+    },
+    {
+      "name": "test-source.txt",
+      "bytes": 1194,
+      "sha256": "7ecf60e1937ed2aa8303ef5c8e5f8ef0a12f50fedfec45a5ddd448abea7a5ae2"
+    },
+    {
+      "name": "server.log",
+      "bytes": 612,
+      "sha256": "a09118b7405293bf9406582e77be4a257a9cd0eed3420488699d992511ffbfe6"
+    },
+    {
+      "name": "READ-ME-FIRST.md",
+      "bytes": 2138,
+      "sha256": "0351a43c99ff7332cb9e181d8b3a6e5d456d54d40767dfbf0f70bc894d256381"
+    }
+  ]
+}

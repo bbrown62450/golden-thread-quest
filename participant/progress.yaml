@@ -454,4 +454,13 @@ attempts:
   evidence_path: participant/evidence/context-decision-log/context-attempt-003
   submission_id: submission-20261124011504-0fd74d
   review_id: review-20261124011752-453bdc
-updated_at: '2026-11-24T01:17:52Z'
+- attempt_id: playwright-attempt-004
+  quest_id: playwright-failure-triage
+  quest_version: 1
+  content_hash: sha256:65e01068fb063db2895ed559dbb517d2c447a4fce55286cfa68a474f863e3bd6
+  state: submitted
+  started_at: '2026-11-24T01:28:57Z'
+  updated_at: '2026-11-24T02:33:00Z'
+  evidence_path: participant/evidence/playwright-failure-triage/playwright-attempt-004
+  submission_id: submission-20261124023300-5e7b89
+updated_at: '2026-11-24T02:33:00Z'

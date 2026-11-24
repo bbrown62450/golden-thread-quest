@@ -1,0 +1,9 @@
+2026-11-24T01:42:50.227Z GET / -> 200 2ms (document)
+2026-11-24T01:42:50.232Z GET /static/promo.png -> 404 0ms (image)
+2026-11-24T01:42:50.316Z POST /session -> 303 1ms (document)
+2026-11-24T01:42:50.317Z GET /orders -> 200 1ms (document)
+2026-11-24T01:42:50.323Z GET /static/promo.png -> 404 0ms (image)
+2026-11-24T01:42:50.357Z GET /orders/ord-2006 -> 200 1ms (document)
+2026-11-24T01:42:50.360Z GET /static/promo.png -> 404 0ms (image)
+2026-11-24T01:42:50.362Z GET /api/orders/ord-2006 -> 200 3199ms (fetch)  [answered after the test gave up]
+2026-11-24T01:42:50.362Z GET /api/orders/ord-2006/lines -> 200 3211ms (fetch)  [answered after the test gave up]

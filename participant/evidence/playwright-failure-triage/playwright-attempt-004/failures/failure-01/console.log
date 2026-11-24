@@ -1,0 +1,5 @@
+2026-11-24T01:41:38.636Z [error] Failed to load resource: the server responded with a status of 404 (Not Found)  (http://127.0.0.1:4797/static/promo.png:0)
+2026-11-24T01:41:38.728Z [error] Failed to load resource: the server responded with a status of 404 (Not Found)  (http://127.0.0.1:4797/static/promo.png:0)
+2026-11-24T01:41:38.764Z [error] Failed to load resource: the server responded with a status of 404 (Not Found)  (http://127.0.0.1:4797/static/promo.png:0)
+2026-11-24T01:41:38.767Z [error] Failed to load resource: the server responded with a status of 422 (Unprocessable Entity)  (http://127.0.0.1:4797/api/orders/ord-2004/lines:0)
+2026-11-24T01:41:38.768Z [error] order page: /api/orders/ord-2004/lines answered 422 invalid_order_data  (http://127.0.0.1:4797/orders/ord-2004:56)

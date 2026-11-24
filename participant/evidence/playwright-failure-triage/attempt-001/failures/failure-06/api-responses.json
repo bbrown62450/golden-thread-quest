@@ -1,0 +1,22 @@
+[
+  {
+    "started": "2026-11-24T01:43:38.469Z",
+    "method": "GET",
+    "path": "/api/orders/ord-2003",
+    "status": 200,
+    "failure": null,
+    "durationMs": 150,
+    "answeredAfterTheTestGaveUp": false,
+    "body": "{\"id\":\"ord-2003\",\"customer\":\"Example Engines Inc\",\"lineCount\":2}"
+  },
+  {
+    "started": "2026-11-24T01:43:38.469Z",
+    "method": "GET",
+    "path": "/api/orders/ord-2003/lines",
+    "status": 503,
+    "failure": null,
+    "durationMs": 3,
+    "answeredAfterTheTestGaveUp": false,
+    "body": "{\"error\":\"pricing_unavailable\",\"message\":\"Prices are unavailable right now. Try again later.\",\"detail\":\"could not reach the pricing service at 127.0.0.1:4798: connect ECONNREFUSED 127.0.0.1:4798\"}"
+  }
+]

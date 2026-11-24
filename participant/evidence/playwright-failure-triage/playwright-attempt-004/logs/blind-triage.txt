@@ -1,0 +1,119 @@
+The blind classification of the six failures. playwright-failure-triage, attempt playwright-attempt-004
+Written by the assistant (Claude) from the reports of three blind classifiers. No script made this file.
+
+WHAT WAS DONE
+  Three fresh AI assistants were started. None had any memory of this work. None was given the ground truth, the tests'
+  file, the application, or the log of how the failures were made. Each was told to read only its own folder, to run
+  nothing, and not to guess.
+
+    Reader A and Reader B   each got its own copy of the six bundles, failure-01 to failure-06, and triage-rules.md.
+                            They worked separately and did not see each other's answers.
+    The first-look reader   got triage-rules.md and, for each failure, ONLY error.txt and screenshot.png. This is the
+                            stretch goal: how often a classification changes after more evidence.
+
+  The rules they used are the rules as they stood at step 5 of logs/sequence.txt. One paragraph was added afterwards.
+
+WHAT THIS IS NOT
+  The classifiers were AI assistants of the same kind as the one that planted the faults and wrote the rules. No person
+  classified anything. The limits on what they read were given in words and nothing enforced them: each said it kept them,
+  and listed the files it read. The bundles sit beside each other, so a reader could compare one failure with another,
+  and both full-bundle readers did (for example, to see that a 404 for an image is in every bundle).
+
+THE RESULT
+                true cause     a correct triage   Reader A        Reader B        first look        first look's forced bet
+  failure-01    data           data               data            data            data
+  failure-02    product-bug    product-bug        product-bug     product-bug     product-bug
+  failure-03    test-defect    test-defect        test-defect     test-defect     inconclusive      test-defect, about 75%
+  failure-04    environment    inconclusive       inconclusive    inconclusive    inconclusive      product-bug, about 40%
+  failure-05    product-bug    product-bug        product-bug     product-bug     product-bug
+  failure-06    environment    environment        environment     environment     inconclusive      environment, about 70%
+
+  "True cause" and "a correct triage" are from participant/context/playwright/ground-truth.md, written before any bundle
+  existed. They differ for failure-04 on purpose: its true cause cannot be seen in its bundle.
+
+  Readers A and B agreed with each other on 6 of 6, and with the correct triage on 6 of 6.
+  Both gave high confidence for five, and medium for failure-04.
+  The first-look reader gave a class to 3 of 6, all three right, and said inconclusive for the other 3.
+
+HOW OFTEN A CLASSIFICATION CHANGED AFTER MORE EVIDENCE (stretch goal)
+  From the first look to the full bundle: 2 of 6 changed.
+    failure-03   inconclusive -> test-defect    test-source.txt showed the read with no wait, and page-text.txt showed the page end up right
+    failure-06   inconclusive -> environment    server.log and failed-requests.json named the refused connection
+  4 of 6 did not change. For failure-04 more evidence did not help: it was inconclusive from two files and from fourteen.
+  No classification changed from one class with a cause to another. More evidence turned "cannot tell" into an answer. It
+  never overturned an answer. That is six failures and one reader, and is not a rate anyone should rely on.
+
+WHAT WAS WRONG, AND WHO WAS WRONG
+  No full-bundle classification was wrong. The quest asks for a failure first classified wrongly. These are the ones there are:
+
+  1. failure-04, the first-look reader's forced bet: product-bug, about 40%, with environment at about 35%.
+     The true cause is environment. Made to guess from an error and a screenshot, the reader guessed the wrong class. It
+     had already put down inconclusive, correctly, and called the bet weak.
+
+  2. failure-04, the assistant who planted it. The ground truth, written first, expected the bundle to show one thing: a
+     slow answer with no cause. The bundle shows two. When the frozen server recovered, its two answers arrived in the
+     order that sets off the page's race, and the page ended on "Order total: 0.00" above its lines. So the bundle holds a
+     certain product bug as well, which the assistant had not planned and did not foresee. Both full-bundle readers found it,
+     both said it was not why the test failed, and both said a reader could defend product-bug.
+     The ground truth's sentence "a slow piece of application code would leave exactly the same evidence" is still true of
+     the slowness. Its picture of the bundle as holding nothing else was wrong.
+
+  3. Written down in advance in the ground truth as likely mistakes, and NOT made by anyone:
+     failure-03 as product-bug, failure-02 as test-defect or flaky, failure-04 as environment, failure-01 as product-bug.
+
+WHAT THE READERS SAID WAS MISSING OR MISLEADING (both, unless marked)
+  - Nothing in any bundle can explain slowness: no timing of the server's steps, no record of its calls to the pricing
+    service when they succeed, no machine load. That is the one gap that stopped a classification.
+  - The rules did not say what to do when the product-bug list is met by a fault other than the one that failed the test.
+    A paragraph was added for it afterwards.
+  - A bundle's evidence is from the first attempt only. For a retry that passed there is a list of requests and no page.
+  - The page's own script, which confirmed the race, is only inside trace.zip, and the rules' table did not say so.
+  - "Customer: loading…" staying on the page in failure-01 and failure-06 looks like an unanswered request and is not. It is
+    a small real fault of the page, which the assistant had not planted on purpose either.
+  - failed-requests.json is mostly the harmless 404, three times in every bundle.
+  - requests.txt is ordered by start and server.log by finish, so the same two requests are listed in opposite orders.
+  - The second screenshot is identical to the first in four bundles and adds nothing there.
+  - failure-04's later screenshot shows a wrong page the test never saw, and is easy to take for the reason it failed.
+  None of these was changed in the bundles after the readers had read them.
+
+==============================================================================
+READER A ON failure-04, WHOLE. The folder's path is left out. Nothing else was changed.
+------------------------------------------------------------------------------
+- class: inconclusive
+- cites: failure-04/error.txt, test-source.txt, requests.txt, server.log, failed-requests.json, api-responses.json,
+  page-text.txt, screenshot.png, screenshot-after-wait.png, attempts.json, trace.zip (trace.network, the page script)
+- reason: error.txt shows the test waited the full 2 s and the total was still "Order total: loading…". requests.txt and
+  server.log show why: both data requests took about 3.2 s (3199 ms and 3211 ms) and were answered after the test gave up,
+  both with 200. Nothing names a cause for the slowness. server.log has only the two plain 200 lines, failed-requests.json
+  has only the promo.png 404s, console.log has nothing, and the response headers in the trace say nothing. By section 2 and
+  the traps, slowness with no stated cause cannot be called environment. It is not a test-defect: test-source.txt shows a
+  proper toHaveText wait and no faulty step, and the application did not end up right. So for the fault that made the test
+  fail, no class's "must show" list is met.
+- second fault, confirmed and separate: page-text.txt (moment 2) and screenshot-after-wait.png show that when the answers
+  did arrive the page displayed "Order total: 0.00" above lines of 16.00 and 18.00, while api-responses.json says
+  "total":34. This is the same race as failure-02: the summary answered 12 ms before the lines. It is a product bug in its
+  own right, but it happened after the test had already failed, so it is not what failed the test (the "later screenshot"
+  trap).
+- still possible:
+  - product-bug: the application itself stalled for 3.2 s. Both requests stalled together and finished 12 ms apart, and
+    the server logged them as ordinary 200s.
+  - environment: the machine or something the application depends on stalled. Nothing names it.
+- what would settle it: evidence of what the server was doing during 01:42:50.36 to 01:42:53.56. That means server-side
+  timing per handler step, any dependency call timing (for example the pricing service that failure-06's server.log shows
+  the lines endpoint uses), and machine load (CPU, event-loop delay) for those seconds. If the stall can be reproduced with
+  that logging on, the log line naming where the time went decides between product-bug and environment.
+- confidence: medium. I am confident that no file states a cause for the slowness. I am less sure the rules intend
+  inconclusive rather than product-bug here, because the bundle does prove a product bug, only not at the moment of failure.
+
+READER B ON failure-04, ITS LAST LINE
+- confidence: medium (confident the cause of the slowness is not in the bundle; a reviewer could argue product-bug on the
+  strength of the 0.00 end state)
+
+==============================================================================
+WHAT EACH READER SAID ABOUT KEEPING TO THE LIMITS
+  Reader A: kept them. Read only its folder. Wrote only the unzipped traces. Disclosed that one command printed too much
+            and the tool saved the overflow to a file outside the folder, which it did not open, and that the project's
+            instructions file was put in its context automatically, which it did not open.
+  Reader B: kept them. Read only its folder. Wrote only the unzipped traces. Said it did not read every file line by line:
+            it compared some bundle.json files by difference, and of the traces read the order page and one network file.
+  First-look reader: kept them. Read triage-rules.md and the twelve files. Opened nothing outside. Wrote nothing.

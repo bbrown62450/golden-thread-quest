@@ -1,0 +1,47 @@
+{
+  "note": "Every attempt of this test in the run that made this bundle. The bundle's other files are from attempt 1. `repeated` is filled in afterwards, when the test is run again several times.",
+  "attempts": [
+    {
+      "attempt": 1,
+      "result": "failed",
+      "startedAt": "2026-11-24T01:41:38.621Z",
+      "durationMs": 2162,
+      "error": "Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('total') | Expected: \"Order total: 34.60\" | Received: \"Order total: unavailable\" | Timeout:  2000ms | Call log:",
+      "requests": [
+        "2026-11-24T01:41:38.631Z GET / -> 200 2ms (document)",
+        "2026-11-24T01:41:38.636Z GET /static/promo.png -> 404 0ms (image)",
+        "2026-11-24T01:41:38.720Z POST /session -> 303 2ms (document)",
+        "2026-11-24T01:41:38.722Z GET /orders -> 200 1ms (document)",
+        "2026-11-24T01:41:38.728Z GET /static/promo.png -> 404 0ms (image)",
+        "2026-11-24T01:41:38.761Z GET /orders/ord-2004 -> 200 1ms (document)",
+        "2026-11-24T01:41:38.764Z GET /static/promo.png -> 404 0ms (image)",
+        "2026-11-24T01:41:38.766Z GET /api/orders/ord-2004 -> 200 151ms (fetch)",
+        "2026-11-24T01:41:38.766Z GET /api/orders/ord-2004/lines -> 422 1ms (fetch)"
+      ]
+    },
+    {
+      "attempt": 2,
+      "result": "failed",
+      "startedAt": "2026-11-24T01:41:41.305Z",
+      "durationMs": 2163,
+      "error": "Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('total') | Expected: \"Order total: 34.60\" | Received: \"Order total: unavailable\" | Timeout:  2000ms | Call log:",
+      "requests": [
+        "2026-11-24T01:41:41.316Z GET / -> 200 2ms (document)",
+        "2026-11-24T01:41:41.321Z GET /static/promo.png -> 404 0ms (image)",
+        "2026-11-24T01:41:41.404Z POST /session -> 303 3ms (document)",
+        "2026-11-24T01:41:41.407Z GET /orders -> 200 1ms (document)",
+        "2026-11-24T01:41:41.410Z GET /static/promo.png -> 404 0ms (image)",
+        "2026-11-24T01:41:41.444Z GET /orders/ord-2004 -> 200 1ms (document)",
+        "2026-11-24T01:41:41.447Z GET /static/promo.png -> 404 0ms (image)",
+        "2026-11-24T01:41:41.449Z GET /api/orders/ord-2004 -> 200 152ms (fetch)",
+        "2026-11-24T01:41:41.449Z GET /api/orders/ord-2004/lines -> 422 1ms (fetch)"
+      ]
+    }
+  ],
+  "repeated": {
+    "runs": 10,
+    "failed": 10,
+    "passed": 0,
+    "how": "The same test was run 10 more times straight after the run above, each time once, with no retry."
+  }
+}

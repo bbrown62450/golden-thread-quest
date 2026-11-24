@@ -1,0 +1,27 @@
+The test that failed, from participant/tests/playwright/triage.spec.ts. Line numbers are those of the file.
+
+The helpers it calls:
+
+  19  async function signIn(page: Page, evidence: Evidence): Promise<void> {
+  20    const typed = process.env.GTQ_CANARY_PASSWORD ?? `pw-${randomBytes(12).toString("hex")}`;
+  21    evidence.secret(typed, "password");
+  22    await page.goto("/");
+  23    await page.getByLabel("Name").fill("Fixture Clerk");
+  24    await page.getByLabel("Password").fill(typed);
+  25    await page.getByRole("button", { name: "Sign in" }).click();
+  26    await expect(page.getByTestId("who")).toHaveText("Fixture Clerk");
+  27  }
+  28  
+  29  async function openOrder(page: Page, id: string): Promise<void> {
+  30    await page.getByRole("link", { name: id }).click();
+  31    await expect(page.getByRole("heading", { name: `Order ${id}` })).toBeVisible();
+  32  }
+
+The test:
+
+  71  test("order ord-2006 shows its total", async ({ page, evidence }) => {
+  72    await signIn(page, evidence);
+  73    await openOrder(page, "ord-2006");
+  74    // 20 gaskets at 0.80 and 4 hoses at 4.50
+  75    await expect(page.getByTestId("total")).toHaveText("Order total: 34.00");
+  76  });

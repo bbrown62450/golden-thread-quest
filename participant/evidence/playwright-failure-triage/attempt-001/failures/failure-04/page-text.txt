@@ -1,0 +1,25 @@
+The text a person could read on the page, at two moments.
+
+=== 1. When the test gave up, 2026-11-24T01:42:52.375Z
+Order ord-2006
+
+All orders
+
+Customer: loading…
+
+Order total: loading…
+
+Loading lines…
+
+=== 2. 1415 ms later, after waiting for requests that were still unanswered. 2026-11-24T01:42:53.790Z
+Order ord-2006
+
+All orders
+
+Customer: Mock Motors Inc
+
+Order total: 0.00
+
+Item	Quantity	Amount
+gasket	20	16.00
+hose	4	18.00

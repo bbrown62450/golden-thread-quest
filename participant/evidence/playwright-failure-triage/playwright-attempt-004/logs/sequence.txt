@@ -1,0 +1,29 @@
+The order things were done in. playwright-failure-triage, attempt playwright-attempt-004
+Written by the assistant as each step was finished. Times are this computer's clock, in UTC. A checksum fixes what a file held at that moment.
+
+2026-11-24T01:32:23Z  1. The triage rules were written, before any failure existed
+    participant/context/playwright/triage-rules.md  SHA-256 e4b0c17e4978ea901d302a2556d6ebba12eb002c7f8f704cb6dcd0f2a139ad7d
+    failure bundles in the attempt folder at this moment: 0
+2026-11-24T01:32:23Z  2. The ground truth was written, before any failure bundle existed and before anything was classified
+    participant/context/playwright/ground-truth.md  SHA-256 d771fdbd57a929187bd03187dc3cc093932a3e87cd0afb01e26b49a3e4a164b9
+    failure bundles in the attempt folder at this moment: 0
+2026-11-24T01:36:56Z  3. The triage rules were corrected in their table of bundle files, after a first trial run of the tests showed what a bundle holds
+    Added to the bundle and so to the table: page-text.txt and screenshot-after-wait.png. The screenshot's description was corrected: it is taken when the test gives up, not afterwards.
+    Three other sentences that named the screenshot or the trace as the place to see the finished page now name the new files.
+    No class, no "must show" list and no rule about retries or inconclusive was changed. Nothing had been classified.
+    participant/context/playwright/triage-rules.md  SHA-256 0525e62f38d9933ad1bf6d6ed5acbfbc0730339aa8a2b00524679b90134e04a5
+    failure bundles in the attempt folder at this moment: 0
+2026-11-24T01:44:37Z  4. The six failure bundles were made, by tools/failure-triage-check.ts --make-failures (logs/make-failures.txt)
+    failure bundles in the attempt folder at this moment: 6
+    A first run of that command had stopped after three bundles, on a connection error to the demo application. Its bundles were replaced. Nothing had been classified.
+2026-11-24T01:44:37Z  5. Copies of the bundles and of the rules were given to three fresh assistants to classify. The ground truth was not given to any of them
+    participant/context/playwright/triage-rules.md  SHA-256 0525e62f38d9933ad1bf6d6ed5acbfbc0730339aa8a2b00524679b90134e04a5
+    participant/context/playwright/ground-truth.md  SHA-256 d771fdbd57a929187bd03187dc3cc093932a3e87cd0afb01e26b49a3e4a164b9  (unchanged since step 2)
+2026-11-24T01:48:29Z  6. All three assistants had answered. Only then were their classes compared with the ground truth
+    participant/context/playwright/ground-truth.md  SHA-256 d771fdbd57a929187bd03187dc3cc093932a3e87cd0afb01e26b49a3e4a164b9  (unchanged since step 2)
+2026-11-24T01:48:29Z  7. The triage report was written from the two full-bundle classifications, which agreed on all six
+    participant/context/playwright/triage-report.md  SHA-256 37104c06c72202cf491f629202341006c1dd8fdc2e063f771798596bddc1502b
+2026-11-24T01:48:29Z  8. One paragraph was added to the triage rules, AFTER the classification and because of it: what to do with a fault that shows only after the test gave up
+    Both full-bundle classifiers had said the rules did not cover that case. They classified with the rules as they stood at step 5. No class was changed by the addition.
+    participant/context/playwright/triage-rules.md  SHA-256 7e988430d0d8a29cc412f1144e230a3058e9a80888611685f858b0bff68a7e81
+    (Steps 6, 7 and 8 were written into this file together, at the time shown. Steps 6 and 7 happened in that order a few minutes before it.)

@@ -1,0 +1,22 @@
+[
+  {
+    "started": "2026-11-24T01:42:37.739Z",
+    "method": "GET",
+    "path": "/api/orders/ord-2002",
+    "status": 200,
+    "failure": null,
+    "durationMs": 152,
+    "answeredAfterTheTestGaveUp": true,
+    "body": "{\"id\":\"ord-2002\",\"customer\":\"Sample Supplies Co\",\"lineCount\":1}"
+  },
+  {
+    "started": "2026-11-24T01:42:37.739Z",
+    "method": "GET",
+    "path": "/api/orders/ord-2002/lines",
+    "status": 200,
+    "failure": null,
+    "durationMs": 9,
+    "answeredAfterTheTestGaveUp": false,
+    "body": "{\"id\":\"ord-2002\",\"lines\":[{\"item\":\"widget\",\"quantity\":3,\"amount\":37.5}],\"total\":37.5}"
+  }
+]

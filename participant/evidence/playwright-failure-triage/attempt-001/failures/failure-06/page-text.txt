@@ -1,0 +1,23 @@
+The text a person could read on the page, at two moments.
+
+=== 1. When the test gave up, 2026-11-24T01:43:40.491Z
+Order ord-2003
+
+All orders
+
+Customer: loading…
+
+Order total: unavailable
+
+Prices are unavailable right now. Try again later.
+
+=== 2. 206 ms later, after waiting for requests that were still unanswered. 2026-11-24T01:43:40.697Z
+Order ord-2003
+
+All orders
+
+Customer: loading…
+
+Order total: unavailable
+
+Prices are unavailable right now. Try again later.

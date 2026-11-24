@@ -1,0 +1,22 @@
+[
+  {
+    "started": "2026-11-24T01:41:38.766Z",
+    "method": "GET",
+    "path": "/api/orders/ord-2004",
+    "status": 200,
+    "failure": null,
+    "durationMs": 151,
+    "answeredAfterTheTestGaveUp": false,
+    "body": "{\"id\":\"ord-2004\",\"customer\":\"Placeholder Pumps Ltd\",\"lineCount\":2}"
+  },
+  {
+    "started": "2026-11-24T01:41:38.766Z",
+    "method": "GET",
+    "path": "/api/orders/ord-2004/lines",
+    "status": 422,
+    "failure": null,
+    "durationMs": 1,
+    "answeredAfterTheTestGaveUp": false,
+    "body": "{\"error\":\"invalid_order_data\",\"order\":\"ord-2004\",\"line\":2,\"quantity\":-3,\"message\":\"This order cannot be priced: line 2 has a quantity of -3. A quantity must be 1 or more.\",\"source\":\"seed data, record 4\"}"
+  }
+]

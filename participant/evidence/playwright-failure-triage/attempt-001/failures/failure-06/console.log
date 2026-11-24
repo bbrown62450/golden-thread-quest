@@ -1,0 +1,5 @@
+2026-11-24T01:43:38.340Z [error] Failed to load resource: the server responded with a status of 404 (Not Found)  (http://127.0.0.1:4797/static/promo.png:0)
+2026-11-24T01:43:38.432Z [error] Failed to load resource: the server responded with a status of 404 (Not Found)  (http://127.0.0.1:4797/static/promo.png:0)
+2026-11-24T01:43:38.467Z [error] Failed to load resource: the server responded with a status of 404 (Not Found)  (http://127.0.0.1:4797/static/promo.png:0)
+2026-11-24T01:43:38.472Z [error] Failed to load resource: the server responded with a status of 503 (Service Unavailable)  (http://127.0.0.1:4797/api/orders/ord-2003/lines:0)
+2026-11-24T01:43:38.472Z [error] order page: /api/orders/ord-2003/lines answered 503 pricing_unavailable  (http://127.0.0.1:4797/orders/ord-2003:56)

@@ -1,0 +1,9 @@
+2026-11-24T01:42:19.172Z GET / 200 0ms
+2026-11-24T01:42:19.174Z GET /static/promo.png 404 0ms no such file
+2026-11-24T01:42:19.260Z POST /session 303 0ms signed in
+2026-11-24T01:42:19.261Z GET /orders 200 1ms
+2026-11-24T01:42:19.263Z GET /static/promo.png 404 0ms no such file
+2026-11-24T01:42:19.299Z GET /orders/ord-2005 200 0ms
+2026-11-24T01:42:19.301Z GET /static/promo.png 404 0ms no such file
+2026-11-24T01:42:19.454Z GET /api/orders/ord-2005 200 151ms
+2026-11-24T01:42:19.508Z GET /api/orders/ord-2005/lines 200 205ms priced 12 lines

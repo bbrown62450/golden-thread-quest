@@ -1,0 +1,22 @@
+[
+  {
+    "started": "2026-11-24T01:43:03.643Z",
+    "method": "GET",
+    "path": "/api/orders/ord-2001",
+    "status": 200,
+    "failure": null,
+    "durationMs": 150,
+    "answeredAfterTheTestGaveUp": false,
+    "body": "{\"id\":\"ord-2001\",\"customer\":\"Fixture Freight Ltd\",\"lineCount\":2}"
+  },
+  {
+    "started": "2026-11-24T01:43:03.643Z",
+    "method": "GET",
+    "path": "/api/orders/ord-2001/lines",
+    "status": 200,
+    "failure": null,
+    "durationMs": 11,
+    "answeredAfterTheTestGaveUp": false,
+    "body": "{\"id\":\"ord-2001\",\"lines\":[{\"item\":\"widget\",\"quantity\":8,\"amount\":100},{\"item\":\"toolkit\",\"quantity\":1,\"amount\":20}],\"total\":100}"
+  }
+]

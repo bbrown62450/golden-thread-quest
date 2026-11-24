@@ -1,0 +1,9 @@
+2026-11-24T01:43:38.335Z GET / 200 0ms
+2026-11-24T01:43:38.338Z GET /static/promo.png 404 0ms no such file
+2026-11-24T01:43:38.423Z POST /session 303 0ms signed in
+2026-11-24T01:43:38.424Z GET /orders 200 0ms
+2026-11-24T01:43:38.427Z GET /static/promo.png 404 1ms no such file
+2026-11-24T01:43:38.464Z GET /orders/ord-2003 200 0ms
+2026-11-24T01:43:38.466Z GET /static/promo.png 404 1ms no such file
+2026-11-24T01:43:38.468Z GET /api/orders/ord-2003/lines 503 1ms ERROR pricing service unreachable at 127.0.0.1:4798: connect ECONNREFUSED 127.0.0.1:4798
+2026-11-24T01:43:38.618Z GET /api/orders/ord-2003 200 151ms

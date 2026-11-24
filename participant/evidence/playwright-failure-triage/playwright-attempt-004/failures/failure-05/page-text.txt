@@ -1,0 +1,27 @@
+The text a person could read on the page, at two moments.
+
+=== 1. When the test gave up, 2026-11-24T01:43:05.664Z
+Order ord-2001
+
+All orders
+
+Customer: Fixture Freight Ltd
+
+Order total: 100.00
+
+Item	Quantity	Amount
+widget	8	100.00
+toolkit	1	20.00
+
+=== 2. 206 ms later, after waiting for requests that were still unanswered. 2026-11-24T01:43:05.870Z
+Order ord-2001
+
+All orders
+
+Customer: Fixture Freight Ltd
+
+Order total: 100.00
+
+Item	Quantity	Amount
+widget	8	100.00
+toolkit	1	20.00

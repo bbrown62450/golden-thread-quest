@@ -1,0 +1,12 @@
+Test: order ord-2002 shows its total
+Test declared at: participant/tests/playwright/triage.spec.ts:42
+Result: failed. Expected: passed
+Started 2026-11-24T01:42:37.599Z, ended 2026-11-24T01:42:38.110Z
+
+Error 1 of 1
+Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: "Order total: 37.50"
+Received: "Order total: loading…"
+
+    at REPO/participant/tests/playwright/triage.spec.ts:47:17

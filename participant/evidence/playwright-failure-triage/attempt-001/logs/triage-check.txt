@@ -1,0 +1,151 @@
+The check of the triage report. playwright-failure-triage, attempt playwright-attempt-004
+Recorded by tools/failure-triage-check.ts. The application is a made-up order desk on this computer. Nothing in it is real.
+It reads the six failure bundles and the triage report. It runs no test. It does not know the causes of the failures.
+
+==============================================================================
+PART 1. The bundles, in the attempt folder's failures/
+  ok   there are six bundles, as the quest asks: failure-01, failure-02, failure-03, failure-04, failure-05, failure-06
+  ok   no bundle's name says what kind of failure it is: each is failure-NN and nothing more
+failure-01: 14 files. Attempts: failed, then failed. Run again 10 times: failed 10. Scanned 21 text files and trace entries: 0 findings.
+  ok   failure-01: it holds every file a triage needs, and each file is the one its bundle.json describes, by checksum
+  ok   failure-01: its first attempt failed, and it says how often the test failed when run again
+  ok   failure-01: it holds no cookie, token or password, and none of this computer's names
+failure-02: 14 files. Attempts: failed, then passed. Run again 10 times: failed 3. Scanned 21 text files and trace entries: 0 findings.
+  ok   failure-02: it holds every file a triage needs, and each file is the one its bundle.json describes, by checksum
+  ok   failure-02: its first attempt failed, and it says how often the test failed when run again
+  ok   failure-02: it holds no cookie, token or password, and none of this computer's names
+failure-03: 14 files. Attempts: failed, then failed. Run again 10 times: failed 10. Scanned 21 text files and trace entries: 0 findings.
+  ok   failure-03: it holds every file a triage needs, and each file is the one its bundle.json describes, by checksum
+  ok   failure-03: its first attempt failed, and it says how often the test failed when run again
+  ok   failure-03: it holds no cookie, token or password, and none of this computer's names
+failure-04: 14 files. Attempts: failed, then passed. Run again 10 times: failed 0. Scanned 21 text files and trace entries: 0 findings.
+  ok   failure-04: it holds every file a triage needs, and each file is the one its bundle.json describes, by checksum
+  ok   failure-04: its first attempt failed, and it says how often the test failed when run again
+  ok   failure-04: it holds no cookie, token or password, and none of this computer's names
+failure-05: 14 files. Attempts: failed, then failed. Run again 10 times: failed 10. Scanned 21 text files and trace entries: 0 findings.
+  ok   failure-05: it holds every file a triage needs, and each file is the one its bundle.json describes, by checksum
+  ok   failure-05: its first attempt failed, and it says how often the test failed when run again
+  ok   failure-05: it holds no cookie, token or password, and none of this computer's names
+failure-06: 14 files. Attempts: failed, then failed. Run again 10 times: failed 10. Scanned 21 text files and trace entries: 0 findings.
+  ok   failure-06: it holds every file a triage needs, and each file is the one its bundle.json describes, by checksum
+  ok   failure-06: its first attempt failed, and it says how often the test failed when run again
+  ok   failure-06: it holds no cookie, token or password, and none of this computer's names
+Bundles that show a retry that PASSED after a failed first attempt: failure-02, failure-04
+  ok   at least one bundle shows a failure that passed on its retry, as the quest asks
+
+==============================================================================
+PART 2. The report, participant/context/playwright/triage-report.md
+What the report says:
+
+  failure-01: data
+      cites: error.txt, test-source.txt, failed-requests.json, server.log, page-text.txt, attempts.json
+      next action: Correct record 4 of the seed data, where line 2 of order ord-2004 has a quantity of -3, then run the test again.
+      who: the owner of the test data
+  failure-02: product-bug
+      cites: error.txt, test-source.txt, api-responses.json, page-text.txt, requests.txt, attempts.json
+      next action: Change the order page so that the total is drawn again when the lines arrive, whichever of the two requests answers first. Add a test that makes the lines answer after the summary.
+      who: the application's developers
+  failure-03: test-defect
+      cites: test-source.txt, error.txt, requests.txt, api-responses.json, page-text.txt, attempts.json
+      next action: Replace lines 46 and 47 of the test with a waiting assertion: expect the total to have the text "Order total: 37.50".
+      who: the owner of the test
+  failure-04: inconclusive
+      cites: error.txt, test-source.txt, requests.txt, server.log, page-text.txt, attempts.json
+      next action: Add step-by-step timing to the server's log for the two order requests, and record the machine's load in the bundle. Run the test repeatedly until a slow answer comes again.
+      who: the platform team and the application's developers, together
+      would settle it: What the server was doing in those three seconds: the time each step of the two request handlers took, the time of its call to the pricing service, and the machine's load and any pause of the process. None of that is in the bundle.
+  failure-05: product-bug
+      cites: error.txt, test-source.txt, api-responses.json, page-text.txt, server.log, attempts.json
+      next action: Correct how the server totals an order's lines: for ord-2001 it leaves the second line, 20.00, out of the sum. Find out whether it drops the last line of every order or only some.
+      who: the application's developers
+  failure-06: environment
+      cites: error.txt, test-source.txt, server.log, failed-requests.json, page-text.txt, attempts.json
+      next action: Find out why nothing is listening on 127.0.0.1:4798, where the pricing service should be, restore it, and run the test again.
+      who: the platform team
+
+Rules broken (0):
+  none
+
+  ok   every bundle is classified, and nothing is classified that has no bundle
+  ok   each failure has exactly one class, and it is one of the five (criterion 1)
+  ok   no failure is classed as "flaky"
+  ok   every classification cites at least one file, and every file it cites is in that failure's own bundle (criterion 2)
+  ok   each of the 36 citations is used: the written reason names the file it cites
+  ok   no failure is classified without a cited file
+  ok   the failure that passed on its retry has a class of its own, cites attempts.json, and explains what differed between the attempts (criterion 3)
+  ok   inconclusive is used (1 time), and each use names the classes still possible and what would settle it (criterion 4)
+  ok   every classification states a next action and who takes it, and the "who" is the role the rules give that class (criterion 5)
+  ok   the report breaks none of the rules this check knows
+  ok   the rules document has, for each of the four classes with a cause, a list headed "The evidence must show" (criterion 6)
+
+==============================================================================
+PART 3. Can the check fail? The report is broken in one way at a time, in memory, and checked again
+Each case starts from the report as it is. "Reported" is every rule the check then says is broken.
+  CASE: a failure classed as "flaky" (criteria 1 and 3)
+    reported: failure-02: its class is "flaky", which is not one of the five: product-bug, test-defect, environment, data, inconclusive
+    reported: failure-02: it uses "flaky" as a class or as the action. Flaky is not a cause
+  ok   a failure classed as "flaky" (criteria 1 and 3): reported
+  CASE: a failure given two classes (criterion 1)
+    reported: failure-01: it is given more than one class
+  ok   a failure given two classes (criterion 1): reported
+  CASE: a failure with no class (criterion 1)
+    reported: failure-01: it has no class
+  ok   a failure with no class (criterion 1): reported
+  CASE: a classification that cites no file (criterion 2)
+    reported: failure-01: it cites no file. A classification must cite at least one file in its bundle
+  ok   a classification that cites no file (criterion 2): reported
+  CASE: a classification that cites a file that does not exist in the bundle (criterion 2)
+    reported: failure-01: it cites stack-trace.txt, which is not in its bundle
+  ok   a classification that cites a file that does not exist in the bundle (criterion 2): reported
+  CASE: a classification that cites a real file its reason never uses (criterion 2)
+    reported: failure-01: it cites READ-ME-FIRST.md and its reason never mentions that file, so the citation supports nothing
+  ok   a classification that cites a real file its reason never uses (criterion 2): reported
+  CASE: a classification with no next action (criterion 5)
+    reported: failure-01: it states no next action
+  ok   a classification with no next action (criterion 5): reported
+  CASE: a classification that names nobody to act (criterion 5)
+    reported: failure-01: it does not say who takes the next action
+  ok   a classification that names nobody to act (criterion 5): reported
+  CASE: a classification sent to the wrong role (criterion 5)
+    reported: failure-01: a data goes to the owner of the test data, and it names whoever is on call
+  ok   a classification sent to the wrong role (criterion 5): reported
+  CASE: the retry-passing failure without its explanation of the retry (criterion 3)
+    reported: failure-02: its bundle shows a retry that passed, and it does not explain what differed between the attempts
+  ok   the retry-passing failure without its explanation of the retry (criterion 3): reported
+  CASE: the retry-passing failure that does not cite attempts.json (criterion 3)
+    reported: failure-02: its bundle shows a retry that passed, and it does not cite attempts.json
+  ok   the retry-passing failure that does not cite attempts.json (criterion 3): reported
+  CASE: an inconclusive failure that does not say what would settle it (criterion 4)
+    reported: failure-04: it is inconclusive and does not say what would settle it
+  ok   an inconclusive failure that does not say what would settle it (criterion 4): reported
+  CASE: an inconclusive failure that names only one possible class (criterion 4)
+    reported: failure-04: it is inconclusive and does not name at least two classes that are still possible
+  ok   an inconclusive failure that names only one possible class (criterion 4): reported
+  CASE: a failure left out of the report
+    reported: failure-01: it has a bundle and the report does not classify it
+  ok   a failure left out of the report: reported
+  CASE: a classification of a failure that has no bundle
+    reported: failure-99: it is classified, and there is no bundle of that name. A failure is not classified without its evidence
+  ok   a classification of a failure that has no bundle: reported
+  CASE: a failure classified twice
+    reported: failure-01: it is classified more than once in the report
+  ok   a failure classified twice: reported
+
+==============================================================================
+PART 4. For the reader: the report beside the ground truth
+This part is not a check of the report. The check does not use the ground truth to decide anything. It is here so that a reader can see how the classification, which
+was made from the bundles alone, compares with what was really planted. The ground truth, participant/context/playwright/ground-truth.md, was written first.
+
+  failure      true cause     a correct triage says   the report says   agree?
+  failure-01   data           data                    data              yes
+  failure-02   product-bug    product-bug             product-bug       yes
+  failure-03   test-defect    test-defect             test-defect       yes
+  failure-04   environment    inconclusive            inconclusive      yes
+  failure-05   product-bug    product-bug             product-bug       yes
+  failure-06   environment    environment             environment       yes
+
+  The report agrees with what a correct triage should say for 6 of 6.
+  Classes in the report: product-bug 2, test-defect 1, environment 1, data 1, inconclusive 1.
+  ok   the ground truth names a true cause and a correct class for each of the six bundles, so the comparison above is complete
+
+RESULT: ALL CHECKS PASSED. 49 checks.

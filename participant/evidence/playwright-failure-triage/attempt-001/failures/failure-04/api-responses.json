@@ -1,0 +1,22 @@
+[
+  {
+    "started": "2026-11-24T01:42:50.362Z",
+    "method": "GET",
+    "path": "/api/orders/ord-2006",
+    "status": 200,
+    "failure": null,
+    "durationMs": 3199,
+    "answeredAfterTheTestGaveUp": true,
+    "body": "{\"id\":\"ord-2006\",\"customer\":\"Mock Motors Inc\",\"lineCount\":2}"
+  },
+  {
+    "started": "2026-11-24T01:42:50.362Z",
+    "method": "GET",
+    "path": "/api/orders/ord-2006/lines",
+    "status": 200,
+    "failure": null,
+    "durationMs": 3211,
+    "answeredAfterTheTestGaveUp": true,
+    "body": "{\"id\":\"ord-2006\",\"lines\":[{\"item\":\"gasket\",\"quantity\":20,\"amount\":16},{\"item\":\"hose\",\"quantity\":4,\"amount\":18}],\"total\":34}"
+  }
+]
