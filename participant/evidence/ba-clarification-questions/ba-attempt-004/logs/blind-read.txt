@@ -1,0 +1,88 @@
+Three independent reads of the questions. ba-clarification-questions, attempt ba-attempt-004
+Written by scripts/blind_read.py from verdicts copied by hand out of the readers' replies.
+
+Who the readers were: three separate AI assistants (Claude), each started fresh, each told to read only the made-up
+requirements and a sheet of questions with their answers. No person read the questions. The readers were not shown
+the pieces of work, the work each answer leads to, which questions were dropped, or each other's replies. The
+instruction to read nothing else was given in words and was not enforced.
+
+Each was asked, for every item: would different answers make a developer build different things, or the same thing
+with at most a different number in a setting? And could the owner answer by naming one of the answers, without a meeting?
+The sheets were put together before any reply was read, and the replies were compared with the files only after all
+of a round's readers had answered.
+
+ROUND 1. The 16 candidates as first written (review/blind-sheet-1.md)
+  item  candidate  the files say  reader 1 work / no meeting  reader 2 work / no meeting
+  1     C-05       asked          different / no           different / no   
+  2     C-12       asked          different / yes          different / yes  
+  3     C-13       asked          different / yes          different / yes  
+  4     C-07       dropped        same      / yes          same      / yes  
+  5     C-16       dropped        same      / yes          same      / yes  
+  6     C-04       asked          different / no           different / no   
+  7     C-02       dropped        same      / yes          same      / yes  
+  8     C-09       dropped        same      / no           same      / no   
+  9     C-08       dropped        different / yes *        same      / yes  
+  10    C-10       asked          same      / yes *        same      / yes *
+  11    C-03       dropped        same      / yes          same      / yes  
+  12    C-15       asked          different / yes          different / yes  
+  13    C-14       asked          different / yes          different / yes  
+  14    C-01       asked          different / yes          different / yes  
+  15    C-11       asked          different / yes          different / yes  
+  16    C-06       asked          different / yes          different / yes  
+  * the reader's verdict on the work differs from the files.
+  Reader 1 agreed on the work for 14 of 16. Said "needs a meeting" for: C-05, C-04, C-09.
+  Reader 2 agreed on the work for 15 of 16. Said "needs a meeting" for: C-05, C-04, C-09.
+
+What they said where they differed from the files, or found a question hard to answer:
+  C-08 (reminder time, then dropped). Reader 1: different. "The evening before" is a fixed hour and needs a rule for bookings made after it,
+    so it is not only another number. Reader 2: the same, borderline, for the reason reader 1 gave.
+  C-10 (staff functions in mobile browsers, asked). Both readers: the same, borderline. The same screens, rules and data, with more layout work.
+  C-05. Both: cannot be answered alone, because "that behaviour" points at nothing in the question itself.
+  C-04. Both: cannot be answered without a meeting. It is open-ended, and two of its answers could both be wanted.
+  C-09 (dropped). Both: the answers speak of versions and name no browsers.
+  C-12. Both: answerable, though "both B and C" is a likely answer that is not listed.
+
+What was changed after round 1, and what was not:
+  C-08 rewritten. It now asks which kind of timing is wanted, and is asked. The number of minutes became a new
+    candidate, C-17, which is dropped.
+  C-05 reworded so that it can be read alone.
+  C-04 reworded to "which of these", with a fourth answer, "Both of these".
+  C-12 given a fourth answer, for a suspension that ends by itself or sooner if staff lift it.
+  C-09's answers reworded. It stays dropped.
+  C-10 NOT changed. It stays in the question list, against both readers. PROOF.md says why.
+
+ROUND 2. The 17 candidates as handed in (review/blind-sheet-2.md), read by a third reader who had seen nothing before
+  item  candidate  the files say  reader 3 work / no meeting
+  1     C-12       asked          different / yes  
+  2     C-16       dropped        same      / yes  
+  3     C-09       dropped        same      / no   
+  4     C-01       asked          different / yes  
+  5     C-10       asked          different / yes  
+  6     C-14       asked          different / yes  
+  7     C-04       asked          different / yes  
+  8     C-06       asked          different / yes  
+  9     C-15       asked          different / yes  
+  10    C-11       asked          different / yes  
+  11    C-17       dropped        same      / yes  
+  12    C-02       dropped        same      / yes  
+  13    C-07       dropped        same      / yes  
+  14    C-08       asked          different / yes  
+  15    C-03       dropped        same      / yes  
+  16    C-05       asked          different / yes  
+  17    C-13       asked          different / yes  
+  * the reader's verdict on the work differs from the files.
+  Reader 3 agreed on the work for 17 of 17. Said "needs a meeting" for: C-09.
+
+What the third reader said beyond the verdicts:
+  C-09 (dropped). The answers give sizes of list and name no browsers. It is a dropped question, and dropped.md says a named list is still needed.
+  C-10 (asked). Different, "the mildest different on the sheet".
+  C-17 (dropped). It applies only if C-08 is answered A, and the sheet did not say so. dropped.md does.
+
+SUMMARY
+  Round 1: readers agreed with the files on the work for 14 and 15 of 16. Three questions asked were said to need a meeting
+  or a missing answer (C-04, C-05, C-12), and one dropped question was judged different by one reader (C-08).
+  Round 2: the third reader agreed on the work for all 17, and said all 11 questions asked could be answered without a meeting.
+  One reader in round 2 is one reader. The questions were changed to meet the first two readers' points, so agreement in
+  round 2 was the likely result, and it does not show that a person would agree.
+
+RESULT: the counts above match the verdicts recorded in this script, and sheet 2 lists the 17 handed-in candidates.

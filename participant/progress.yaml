@@ -494,4 +494,13 @@ attempts:
   evidence_path: participant/evidence/context-cross-system-conflicts/context-attempt-006
   submission_id: submission-20261124150834-247222
   review_id: review-20261124151753-5b95b6
-updated_at: '2026-11-24T15:17:53Z'
+- attempt_id: ba-attempt-004
+  quest_id: ba-clarification-questions
+  quest_version: 1
+  content_hash: sha256:541fa97473fa6f1591b1ee3572151855ee8feca81284dc085fbcd738dfee605e
+  state: submitted
+  started_at: '2026-11-24T15:30:08Z'
+  updated_at: '2026-11-24T15:47:42Z'
+  evidence_path: participant/evidence/ba-clarification-questions/ba-attempt-004
+  submission_id: submission-20261124154742-3eb70e
+updated_at: '2026-11-24T15:47:42Z'

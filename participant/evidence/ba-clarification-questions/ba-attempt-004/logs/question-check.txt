@@ -1,0 +1,278 @@
+The question check. ba-clarification-questions, attempt ba-attempt-004
+Recorded by scripts/record_evidence.py. Nothing was sent anywhere. The product and its requirements are made up.
+
+==============================================================================
+PART 1. The check, on the handed-in files (the record the quest asks for)
+$ python3 participant/skills/ba-clarification-questions/questions.py check
+------------------------------------------------------------------------------
+Findings in the ambiguity review: 9 (F-01, F-02, F-03, F-04, F-05, F-06, F-07, F-08, F-09)
+Candidates: 17. Questions to ask: 11. Dropped: 6.
+
+Questions, in the order of the file:
+  place  id    finding  answers  pieces that depend  words  only if
+  1      C-13  F-08     3        5                   18     -
+  2      C-04  F-03     4        4                   17     -
+  3      C-01  F-01     2        2                   14     -
+  4      C-05  F-03     2        2                   19     C-04 is B or C or D
+  5      C-06  F-04     2        2                   10     -
+  6      C-11  F-07     2        2                   15     -
+  7      C-12  F-07     4        2                   14     -
+  8      C-14  F-08     2        2                   16     C-13 is A or C
+  9      C-08  F-05     2        2                   18     -
+  10     C-10  F-06     2        1                   13     -
+  11     C-15  F-09     2        1                   14     -
+
+Dropped, each with the one set of pieces every answer leads to:
+  C-02  F-02     2 answers  B-01, B-02
+  C-03  F-02     2 answers  B-02
+  C-07  F-04     2 answers  none
+  C-09  F-06     2 answers  B-04
+  C-17  F-05     2 answers  B-03
+  C-16  F-09     2 answers  W-20
+
+Findings and what became of them:
+  F-01  asked: C-01             dropped: none
+  F-02  asked: none             dropped: C-02, C-03
+  F-03  asked: C-04, C-05       dropped: none
+  F-04  asked: C-06             dropped: C-07
+  F-05  asked: C-08             dropped: C-17
+  F-06  asked: C-10             dropped: C-09
+  F-07  asked: C-11, C-12       dropped: none
+  F-08  asked: C-13, C-14       dropped: none
+  F-09  asked: C-15             dropped: C-16
+
+CHECK PASSED. Every question links to a finding that exists and lists at least two answers that lead to different work.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the check passed: exit code 0
+  ok   no problem at all was reported
+  ok   the check changed no file: every file in participant/context/clarification, and the review's findings.md, has the same SHA-256 as before
+  ok   the approved ambiguity review is as it was committed: git reports no change under participant/context/ambiguity
+$ python3 participant/skills/ba-clarification-questions/questions.py build --folder SCRATCH
+  ok   the three handed-in files are byte for byte what build writes from the candidates, so none was adjusted by hand
+
+==============================================================================
+PART 2. Criterion 1: each question links to a finding from the ambiguity review
+The link is the finding's number and some of the finding's own question, quoted. Both are looked up in findings.md.
+
+  C-13 -> F-08  "what is to happen to those bookings"
+  C-04 -> F-03  "What that the system can observe would count as a member not intending to use a room"
+  C-01 -> F-01  "In the two hours before a booking starts, may the member cancel it or not?"
+  C-05 -> F-03  "what is the system to do when it sees it?"
+  C-06 -> F-04  "Which faults must a confirmed booking survive"
+  C-11 -> F-07  "Over what period are no-shows counted"
+  C-12 -> F-07  "how does a member who has been prevented from booking become able to book again?"
+  C-14 -> F-08  "and to the members who hold them?"
+  C-08 -> F-05  "How long before a booking's start time is the reminder email to be sent?"
+  C-10 -> F-06  "which of its functions must work in each?"
+  C-15 -> F-09  "Is an out-of-service slot shown with a marking of its own, or as "booked""
+  C-02 -> F-02  "For how long are booking records kept"
+  C-03 -> F-02  "is that the period a staff user's history must cover?"
+  C-07 -> F-04  "how is its survival to be checked after each?"
+  C-09 -> F-06  "Which browsers and which versions must the website support"
+  C-17 -> F-05  "How long before a booking's start time"
+  C-16 -> F-09  "is that a third marking beside the two in REQ-02?"
+  ok   all 11 questions asked link to one of the review's 9 findings
+  ok   each quotes words that are found in that finding's question, and in no other finding's question
+  ok   the same holds for all 6 dropped questions
+Spoiled: C-13 linked to F-18, which does not exist
+    PROBLEM: C-13 links to F-18, which is not a finding in the ambiguity review.
+  ok   reported: "C-13 links to F-18, which is not a finding"
+Spoiled: C-13 linked to F-11, which the review raised and withdrew
+    PROBLEM: C-13 links to F-11, which is not a finding in the ambiguity review.
+  ok   reported: "C-13 links to F-11, which is not a finding"
+Spoiled: C-01 with its finding line removed
+    PROBLEM: C-01 links to no finding, which is not a finding in the ambiguity review.
+    PROBLEM: The questions are not in order of how much work depends on them. They are C-13, C-04, C-01, C-05, C-06, C-11, C-12, C-14, C-08, C-10, C-15 and should be C-13, C-04, C-05, C-06, C-11, C-12, C-14, C-08, C-01, C-10, C-15.
+  ok   reported: "C-01 links to no finding"
+Spoiled: C-13 quoting words the finding does not say
+    PROBLEM: C-13 quotes words that are not in the question of F-08.
+  ok   reported: "C-13 quotes words that are not in the question of F-08"
+Spoiled: C-13 quoting another finding's words
+    PROBLEM: C-13 quotes words that are not in the question of F-08.
+  ok   reported: "C-13 quotes words that are not in the question of F-08"
+Spoiled: finding F-09 taken out of the review, the question files left alone
+    PROBLEM: C-15 links to F-09, which is not a finding in the ambiguity review.
+    PROBLEM: C-16 links to F-09, which is not a finding in the ambiguity review.
+  ok   reported: "C-15 links to F-09, which is not a finding"
+
+==============================================================================
+PART 3. Criteria 2 and 3: at least two answers, and each answer leads to different work
+Each answer names its work in a sentence and as pieces from work-pieces.md. A question may be asked only if no
+two of its answers name the same set of pieces.
+
+  C-13  A: W-15   B: W-16   C: W-15, W-17
+  C-04  A: none   B: W-03   C: W-04   D: W-03, W-04
+  C-01  A: none   B: W-01, W-02
+  C-05  A: W-05   B: W-06
+  C-06  A: W-07   B: W-07, W-08, W-09
+  C-11  A: W-11   B: W-12
+  C-12  A: none   B: W-13   C: W-14   D: W-13, W-14
+  C-14  A: W-18   B: W-19
+  C-08  A: B-03   B: W-21
+  C-10  A: W-10   B: none
+  C-15  A: none   B: W-20
+  ok   every question asked has between 2 and 4 answers
+  ok   in every question asked, no two answers name the same set of pieces
+  ok   every answer states its work in a sentence, and no two answers to one question share a sentence
+  ok   every piece an answer names is in work-pieces.md, and every piece in work-pieces.md is named by some answer
+Spoiled: C-15 left with one answer
+    PROBLEM: C-15 lists 1 possible answer, fewer than two.
+    PROBLEM: C-15 does not letter its answers A, B, C in order.
+    PROBLEM: C-15 says "1 piece (W-20)" depends on the answer, and the answers give 0.
+  ok   reported: "C-15 lists 1 possible answer, fewer than two"
+Spoiled: C-11 with both answers leading to the same piece
+    PROBLEM: C-11 is in the question list, and every answer leads to the same pieces of work. It belongs in the dropped list.
+    PROBLEM: C-11 says "2 pieces (W-11, W-12)" depends on the answer, and the answers give 0.
+    PROBLEM: The questions are not in order of how much work depends on them. They are C-13, C-04, C-01, C-05, C-06, C-11, C-12, C-14, C-08, C-10, C-15 and should be C-13, C-04, C-01, C-05, C-06, C-12, C-14, C-08, C-10, C-15, C-11.
+    PROBLEM: W-12 is in the list of work pieces and no answer names it.
+  ok   reported: "C-11 is in the question list, and every answer leads to the same pieces of work"
+Spoiled: C-12 with two of its four answers leading to the same piece
+    PROBLEM: C-12 has answers that lead to the same pieces of work: B and D.
+  ok   reported: "C-12 has answers that lead to the same pieces of work: B and D"
+Spoiled: C-05 with an answer that states no work
+    PROBLEM: C-05 answer A does not state the work it leads to.
+  ok   reported: "C-05 answer A does not state the work it leads to"
+Spoiled: C-05 with one sentence used for both answers
+    PROBLEM: C-05 states the same work, word for word, for two answers.
+  ok   reported: "C-05 states the same work, word for word, for two answers"
+Spoiled: C-05 naming a piece that is not in the list
+    PROBLEM: C-05 answer A names W-55, which is not in the list of work pieces.
+    PROBLEM: W-05 is in the list of work pieces and no answer names it.
+  ok   reported: "C-05 answer A names W-55, which is not in the list of work pieces"
+
+==============================================================================
+PART 4. Criterion 4: a question whose answers lead to the same work is dropped, and listed as dropped
+  C-02  F-02  every answer: B-01, B-02
+  C-03  F-02  every answer: B-02
+  C-07  F-04  every answer: none
+  C-09  F-06  every answer: B-04
+  C-17  F-05  every answer: B-03
+  C-16  F-09  every answer: W-20
+  ok   every dropped question has at least two answers, and all of them name the same set of pieces
+  ok   every dropped question gives a reason and says what is still needed
+  ok   the 17 candidates C-01 to C-17 are each in exactly one of the two lists
+  ok   candidates.py does not say which candidates are kept: no candidate carries a field for it, and build decides from the pieces
+Spoiled: dropped question C-17 moved into the question list
+    PROBLEM: C-17 is in the question list, and every answer leads to the same pieces of work. It belongs in the dropped list.
+    PROBLEM: C-17 suggests no default with what it assumes.
+    PROBLEM: C-17 names nobody best placed to answer.
+    PROBLEM: C-17 says "" depends on the answer, and the answers give 0.
+  ok   reported: "C-17 is in the question list, and every answer leads to the same pieces of work. It belongs in the dropped list"
+Spoiled: dropped question C-17 given answers that differ
+    PROBLEM: C-17 is in the dropped list, and its answers lead to different pieces of work. It is a question to ask.
+  ok   reported: "C-17 is in the dropped list, and its answers lead to different pieces of work. It is a question to ask"
+Spoiled: dropped question C-17 with its reason cut to two words
+    PROBLEM: C-17 gives no reason why its answers would not change the work.
+  ok   reported: "C-17 gives no reason why its answers would not change the work"
+Spoiled: C-09 taken out of the dropped list and put nowhere
+    PROBLEM: Candidates are missing from both lists: C-09.
+    PROBLEM: B-04 is in the list of work pieces and no answer names it.
+  ok   reported: "Candidates are missing from both lists: C-09."
+
+==============================================================================
+PART 5. Criterion 5: short enough to answer without a meeting
+The rule used: one sentence, one question mark, at most 25 words, at most 4 answers of at most 15 words each,
+so that the question can be answered by naming one letter. Whether a person could in fact answer without a
+meeting is a judgment. logs/blind-read.txt records what three independent readers said.
+
+  C-13  18 words  3 answers  longest answer 13 words
+  C-04  17 words  4 answers  longest answer 10 words
+  C-01  14 words  2 answers  longest answer  6 words
+  C-05  19 words  2 answers  longest answer  7 words
+  C-06  10 words  2 answers  longest answer  9 words
+  C-11  15 words  2 answers  longest answer  4 words
+  C-12  14 words  4 answers  longest answer 10 words
+  C-14  16 words  2 answers  longest answer  4 words
+  C-08  18 words  2 answers  longest answer  7 words
+  C-10  13 words  2 answers  longest answer  4 words
+  C-15  14 words  2 answers  longest answer  6 words
+  ok   all 11 questions asked are inside every limit
+  ok   the longest is 19 words
+
+The findings' own questions, measured by the same rule, with two answers supposed for each:
+  F-01  15 words  inside the limits
+  F-02  18 words  inside the limits
+  F-03  28 words  has 28 words, more than 25
+  F-04  17 words  inside the limits
+  F-05  14 words  inside the limits
+  F-06  18 words  inside the limits
+  F-07  22 words  inside the limits
+  F-08  30 words  has 30 words, more than 25
+  F-09  30 words  has 30 words, more than 25
+  ok   the rule is not one that everything passes: 3 of the 9 findings' own questions fall outside it (F-03, F-08, F-09)
+Spoiled: C-06 padded to 29 words
+    PROBLEM: C-06 has 29 words, more than 25.
+  ok   reported: "C-06 has 29 words, more than 25"
+Spoiled: C-01 turned into two questions
+    PROBLEM: C-01 is not one question ending in one question mark.
+  ok   reported: "C-01 is not one question ending in one question mark"
+
+==============================================================================
+PART 6. Criterion 6: ordered by how much of the work depends on them
+The work that depends on a question: the pieces one of its answers needs and another does not, with the same
+for any question asked only because of an answer to it. Equal counts: the finding's effort, then its number.
+
+   1. C-13  5  own: W-15, W-16, W-17       through another: W-18, W-19   effort of F-08: medium
+   2. C-04  4  own: W-03, W-04             through another: W-05, W-06   effort of F-03: large
+   3. C-01  2  own: W-01, W-02             through another: -            effort of F-01: large
+   4. C-05  2  own: W-05, W-06             through another: -            effort of F-03: large
+   5. C-06  2  own: W-08, W-09             through another: -            effort of F-04: medium
+   6. C-11  2  own: W-11, W-12             through another: -            effort of F-07: medium
+   7. C-12  2  own: W-13, W-14             through another: -            effort of F-07: medium
+   8. C-14  2  own: W-18, W-19             through another: -            effort of F-08: medium
+   9. C-08  2  own: B-03, W-21             through another: -            effort of F-05: small
+  10. C-10  1  own: W-10                   through another: -            effort of F-06: medium
+  11. C-15  1  own: W-20                   through another: -            effort of F-09: small
+  ok   the counts never rise down the list: 5, 4, 2, 2, 2, 2, 2, 2, 2, 1, 1
+  ok   the order in the file is the order the check works out for itself from the answers
+  ok   where counts are equal, a finding of larger effort is never below one of smaller effort
+  ok   no question comes before the question it waits for
+
+The scenario's product owner answers four questions. Here the first four carry 11 of the 21 pieces that depend on any answer.
+  ok   the first four questions carry more than half of the work that depends on any answer
+Spoiled: the first two questions swapped
+    PROBLEM: The questions are not in order of how much work depends on them. They are C-04, C-13, C-01, C-05, C-06, C-11, C-12, C-14, C-08, C-10, C-15 and should be C-13, C-04, C-01, C-05, C-06, C-11, C-12, C-14, C-08, C-10, C-15.
+  ok   reported: "The questions are not in order of how much work depends on them"
+Spoiled: C-13 claiming 7 pieces
+    PROBLEM: C-13 says "7 pieces (W-15, W-16, W-17; and W-18, W-19 through C-14)" depends on the answer, and the answers give 5.
+  ok   reported: "the answers give 5"
+Spoiled: C-14 no longer waiting for C-13, so C-13's count should fall
+    PROBLEM: C-13 says "5 pieces (W-15, W-16, W-17; and W-18, W-19 through C-14)" depends on the answer, and the answers give 3.
+    PROBLEM: The questions are not in order of how much work depends on them. They are C-13, C-04, C-01, C-05, C-06, C-11, C-12, C-14, C-08, C-10, C-15 and should be C-04, C-13, C-01, C-05, C-06, C-11, C-12, C-14, C-08, C-10, C-15.
+  ok   reported: "the answers give 3"
+
+==============================================================================
+PART 7. Criterion 7: nothing is sent to anyone
+  ok   with every network connection made to fail, build and check both still finish with exit code 0
+
+Modules for connecting, mailing or running other programs that Python had loaded after a run of the check: []
+  ok   none was loaded
+  ok   the three files hold no email address and no web address
+  ok   the people best placed to answer are roles from a list of 5, and no person is named
+
+==============================================================================
+PART 8. Stretch goals: a default for each question, and questions grouped by who can answer
+  C-13  default B. Assumes that such clashes are rare, and that nothing should happen to a member's booking without a person deciding it.
+  C-04  default A. Assumes that REQ-11 states the purpose of the no-show rules and asks for no behaviour of its own.
+  C-01  default B. Assumes that REQ-12, the more specific of the two requirements, is the one that was meant.
+  C-05  default A. Assumes that staff have no time set aside to follow up a list.
+  C-06  default A. Assumes that the daily backup in NFR-06 is the accepted protection against losing the machine, so up to a day of bookings may be lost then.
+  C-11  default B. Assumes that the period is no longer than the time booking records are kept.
+  C-12  default C. Assumes that the library wants a person to decide each case, and that staff have the time.
+  C-14  default A. Assumes that an email address is held for every member, as the reminder in REQ-06 already assumes.
+  C-08  default A. Assumes that the reminder is there to stop a no-show on the day, and that REQ-06's "shortly before" means minutes or hours.
+  C-10  default B. Assumes that staff work at a desk with a desktop browser.
+  C-15  default B. Assumes that REQ-02 may be reworded, and that a closed room should not look like a room in demand.
+  ok   every question asked suggests one of its own answers as the default, and states what that assumes
+Spoiled: C-10 with a default that is not one of its answers
+    PROBLEM: C-10 suggests default C, which is not one of its answers.
+  ok   reported: "C-10 suggests default C, which is not one of its answers"
+
+  Library service manager: C-13, C-04, C-01, C-11, C-12, C-08, C-15
+  Front-desk supervisor: C-05, C-14
+  Technical lead: C-06, C-10
+  ok   the grouping lists every question asked once, under the role its own entry names
+  ok   at the end, every handed-in file and the review's findings.md are still what they were at the start
+
+RESULT: ALL CHECKS PASSED. 53 checks.
