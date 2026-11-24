@@ -1,0 +1,246 @@
+The coverage check. ba-slice-story, attempt ba-attempt-008
+Recorded by scripts/record_evidence.py. Nothing was sent anywhere, and nothing was created in any tracker.
+The story is made up: there is no meeting, no shop and no team behind it.
+
+==============================================================================
+PART 1. The check, run on the handed-in files (the record the quest asks for)
+$ python3 participant/skills/ba-slice-story/slice.py check
+    OC-01  Slice 1
+    OC-02  Slice 1
+    OC-03  Slice 1
+    OC-04  Slice 1
+    OC-05  Slice 2
+    OC-06  Slice 5
+    OC-07  Slice 1
+    OC-08  Slice 1
+    OC-09  Slice 1
+    OC-10  Slice 1
+    OC-11  Slice 4
+    OC-12  Slice 4
+    OC-13  Slice 3
+    OC-14  Slice 6
+    OC-15  Slice 6
+    OC-16  Slice 6
+    OC-17  Slice 6
+    OC-18  Slice 7
+    OC-19  Slice 7
+    OC-20  Slice 2
+  
+  CHECK PASSED. 20 original criteria, each covered by exactly one of 7 slices, and no slice depends on a later one.
+  exit code 0
+
+  participant/context/slicing/original-story.md      sha256 aee4616d6244b9e12dabe41e6521322319a437c4f545fcb0e6df2983bb1b09e8
+  participant/context/slicing/rejected-slicing.md    sha256 ee5ae7a9c7669b175f926ea9f2a21d9436e61bf150fdd5794f8da9375aad9f07
+  participant/context/slicing/slices.md              sha256 e7377c477b4a9a6759254688849ca00dca165c36cb360496c209173802038209
+  ok   the check reports no problem, and its exit code is 0
+  ok   the three files are exactly what the skill writes from its tables. None was adjusted by hand
+  ok   the slices state the checksum of the original story they were cut from, and it is this one
+
+==============================================================================
+PART 2. Coverage: every original criterion is covered by exactly one slice (criteria 3 and 7)
+Worked out from the "Covers" line of each slice in slices.md. An x marks the slice that covers the criterion.
+
+  criterion  S1 S2 S3 S4 S5 S6 S7   covered by
+  OC-01       x  .  .  .  .  .  .   1 slice
+  OC-02       x  .  .  .  .  .  .   1 slice
+  OC-03       x  .  .  .  .  .  .   1 slice
+  OC-04       x  .  .  .  .  .  .   1 slice
+  OC-05       .  x  .  .  .  .  .   1 slice
+  OC-06       .  .  .  .  x  .  .   1 slice
+  OC-07       x  .  .  .  .  .  .   1 slice
+  OC-08       x  .  .  .  .  .  .   1 slice
+  OC-09       x  .  .  .  .  .  .   1 slice
+  OC-10       x  .  .  .  .  .  .   1 slice
+  OC-11       .  .  .  x  .  .  .   1 slice
+  OC-12       .  .  .  x  .  .  .   1 slice
+  OC-13       .  .  x  .  .  .  .   1 slice
+  OC-14       .  .  .  .  .  x  .   1 slice
+  OC-15       .  .  .  .  .  x  .   1 slice
+  OC-16       .  .  .  .  .  x  .   1 slice
+  OC-17       .  .  .  .  .  x  .   1 slice
+  OC-18       .  .  .  .  .  .  x   1 slice
+  OC-19       .  .  .  .  .  .  x   1 slice
+  OC-20       .  x  .  .  .  .  .   1 slice
+  --------------------------------
+  in slice    8  2  1  2  1  4  2   = 20
+
+Original criteria: 20. Covered by exactly one slice: 20. By none: 0. By more than one: 0.
+  ok   every one of the 20 original criteria is covered by exactly one slice
+  ok   the slices cover 20 criteria between them, which is the number the original has: none is counted twice and none is invented
+  ok   the coverage table and the counts written in slices.md are these
+
+To recount by hand: in original-story.md count the headings that begin "### OC-". In slices.md read the "Covers" line of
+each slice and tick each criterion off once. Or run: python3 participant/skills/ba-slice-story/slice.py coverage
+
+==============================================================================
+PART 3. Nothing is added (criterion 6)
+Criteria written out under the slices: 20. Identical, character for character, to the original criterion of the same number: 20.
+  ok   every criterion written under a slice is an original criterion, word for word
+  ok   every slice's criteria are exactly the ones its "Covers" line names, in the same order
+What this does not show: whether the lines of a slice that are not criteria, its value, what a user would notice and what holds if it is
+released early, promise something the original does not. A program cannot tell. logs/independent-read.txt records what a reader found.
+
+==============================================================================
+PART 4. Order: no slice depends on a slice that comes after it (criterion 4)
+"Says" is the slice's own "Depends on" line. "Needs" is worked out from the "Needs" lines of the original criteria: the slices that hold
+a criterion that one of this slice's criteria needs. The "Needs" lines are the writer's judgement, and the check is only as good as they are.
+
+  Slice 1  says: none               needs, by its criteria: none
+  Slice 2  says: Slice 1            needs, by its criteria: Slice 1
+  Slice 3  says: Slice 1            needs, by its criteria: Slice 1
+  Slice 4  says: Slice 1            needs, by its criteria: Slice 1
+  Slice 5  says: Slice 2            needs, by its criteria: Slice 1, Slice 2
+  Slice 6  says: Slice 2, Slice 5   needs, by its criteria: Slice 2, Slice 5
+  Slice 7  says: Slice 3, Slice 6   needs, by its criteria: Slice 3, Slice 6
+  ok   every slice a slice says it depends on has a lower number
+  ok   every criterion that a slice's criterion needs is in that slice or an earlier one
+  ok   every earlier slice that a slice needs by its criteria is one it says it depends on, directly or through another
+  ok   the needs of the original criteria do not go round in a circle
+
+==============================================================================
+PART 5. The first slice can be released alone (criterion 5)
+Slice 1: See the last 7 days' orders and what they come to
+  covers:    OC-01, OC-02, OC-03, OC-04, OC-07, OC-08, OC-09, OC-10
+  depends on: none
+  relies on: G1, G2 and G3, which the original story takes as given. It relies on no other slice.
+  if released without the later slices: It works as it is, for the last 7 days and no other period. Three things it does not do, because the original story does not ask: the page does not say which days it is showing; an order refunded in part is not mentioned by the original, so nothing marks it or takes any of it out of the sum; and an order refunded in full is left out of the sum but is still one of the orders counted.
+
+  OC-01 needs nothing
+  OC-02 needs OC-01 (Slice 1)
+  OC-03 needs OC-01 (Slice 1)
+  OC-04 needs OC-03 (Slice 1)
+  OC-07 needs OC-03 (Slice 1)
+  OC-08 needs OC-03 (Slice 1)
+  OC-09 needs OC-03 (Slice 1)
+  OC-10 needs OC-08 (Slice 1)
+  ok   Slice 1 says it depends on no slice
+  ok   every criterion that a criterion of Slice 1 needs is itself in Slice 1
+  ok   Slice 1 says what it relies on, and names nothing but what the original story takes as given
+What this does not show: that Slice 1 could in fact be released. That needs a team and a product, and there is neither.
+
+==============================================================================
+PART 6. Each slice states its value, and none is named for a layer (criteria 1 and 2)
+  Slice 1  See the last 7 days' orders and what they come to
+           value: A manager can answer "what did we sell in the last 7 days, and what did it come to?" by opening one page, without asking anyone.
+  Slice 2  Look at any period, a busy month included
+           value: A manager can ask about last month, or any dates. In a busy shop, a month of 10,000 orders is listed within 5 seconds.
+  Slice 3  Take the list away as a file
+           value: A manager can put the orders listed into a spreadsheet of their own, which is the thing the story says they ask a developer for.
+  Slice 4  See sales day by day
+           value: A manager can see how sales moved from day to day, and not only the total.
+  Slice 5  See only the orders that had one product in them
+           value: A manager can pick a product and see the orders that included it, with their count and the sum of their totals.
+  Slice 6  Save a report and come back to it
+           value: A manager who looks at the same period and product often can keep it under a name and open it again.
+  Slice 7  Have it sent every Monday
+           value: A manager who has saved a report has its file sent every Monday to the address they give, without opening the staff site each week.
+  ok   every slice states a value, what a user would notice, what it relies on, what holds if it is released early, and why it is where it is
+  ok   no slice's title or value uses a word for a technical layer, from the list of 24 in slice.py
+What this does not show: that a stated value is real, or that a slice is not a layer under a friendly name. A list of words cannot tell.
+logs/independent-read.txt records what a reader said of each slice.
+
+==============================================================================
+PART 7. The two slicings that were rejected, counted the same way
+FIRST, BY TECHNICAL LAYER. rejected-slicing.md cuts the same story by layer. For each layer, in the order built: the criteria that belong to it alone, and
+the criteria that hold once it and the layers before it are finished.
+
+  L1  The data layer       criteria that are this layer's alone: 0    criteria that hold once it is finished:  0 of 20
+  L2  The server layer     criteria that are this layer's alone: 0    criteria that hold once it is finished:  0 of 20
+  L3  The screens          criteria that are this layer's alone: 0    criteria that hold once it is finished: 18 of 20
+  L4  The background job   criteria that are this layer's alone: 0    criteria that hold once it is finished: 20 of 20
+  ok   every original criterion is in the rejected slicing's table
+  ok   under the rejected slicing no criterion is covered by exactly one layer: 0 of 20, against 20 of 20 for the slices
+  ok   under the rejected slicing nothing a manager could use exists until the third layer of four is finished
+
+The same count for the slices: criteria that hold once each slice and those before it are released.
+  after Slice 1:  8 of 20
+  after Slice 2: 10 of 20
+  after Slice 3: 11 of 20
+  after Slice 4: 13 of 20
+  after Slice 5: 14 of 20
+  after Slice 6: 18 of 20
+  after Slice 7: 20 of 20
+  ok   under the slices, criteria hold from the first release on
+
+SECOND, BY THE STORY'S OWN SEVEN AREAS, read from the heading of each original criterion.
+
+  area 1  The page          OC-01, OC-02
+  area 2  The list          OC-03, OC-04, OC-05, OC-06
+  area 3  The figures       OC-07, OC-08, OC-09, OC-10, OC-11, OC-12
+  area 4  The export        OC-13
+  area 5  Saved reports     OC-14, OC-15, OC-16, OC-17
+  area 6  The weekly email  OC-18, OC-19
+  area 7  Speed             OC-20
+  criteria in exactly one area: 20 of 20. Criteria that need one in a later area: 0.
+  ok   the slicing by area passes both counts: every criterion is in exactly one area, and none needs a later area
+  ok   its first area holds only OC-01 and OC-02: a page that opens and a refusal, with no order on it
+SO THE COUNTS DO NOT TELL A GOOD SLICING FROM THIS ONE. It is rejected on judgement, area by area, in rejected-slicing.md: its first
+release is a page with nothing on it. Coverage and order are necessary. They are not what makes a slice a slice.
+
+==============================================================================
+PART 8. That this check can fail
+Each trial spoils one thing in a copy held in memory, and the named problem must be reported.
+Spoiled: a criterion taken out of its slice, so that no slice covers it
+    PROBLEM: Slice 3 covers nothing.
+    PROBLEM: Slice 3 says it covers nothing, and the criteria written out under it are OC-13.
+    PROBLEM: OC-13 is covered by no slice.
+    ... and 2 more
+  ok   reported: "OC-13 is covered by no slice"
+Spoiled: a criterion given to a second slice as well, on its "Covers" line
+    PROBLEM: Slice 2 says it covers OC-05, OC-20, OC-13, and the criteria written out under it are OC-05, OC-20.
+    PROBLEM: OC-13 is covered by more than one slice: 2, 3.
+    PROBLEM: The counts at the head of the slices are not the counts of the slices: there are 7 slices and 20 original criteria, and 19 are covered by exactly one slice.
+    ... and 1 more
+  ok   reported: "OC-13 is covered by more than one slice"
+Spoiled: a criterion reworded inside a slice: one word added
+    PROBLEM: Slice 3 words OC-13 differently from the original story.
+  ok   reported: "words OC-13 differently from the original"
+Spoiled: a new criterion written into a slice, with no number
+    PROBLEM: Slice 3 has a criterion that is not from the original story: "The page also remembers the manager's last choice."
+  ok   reported: "has a criterion that is not from the original story"
+Spoiled: a slice that says it covers a criterion the original does not have
+    PROBLEM: Slice 3 covers OC-21, which is not a criterion of the original story.
+    PROBLEM: Slice 3 says it covers OC-13, OC-21, and the criteria written out under it are OC-13.
+  ok   reported: "which is not a criterion of the original story"
+Spoiled: the original story changed after the slices were cut: one criterion reworded
+    PROBLEM: The slices were cut from a different version of the original story: the checksum they state is not the original's.
+    PROBLEM: Slice 3 words OC-13 differently from the original story.
+  ok   reported: "cut from a different version of the original"
+Spoiled: a slice made to depend on the last slice
+    PROBLEM: Slice 2 depends on Slice 7, which does not come before it.
+    PROBLEM: Slice 2 covers OC-05, which needs OC-03 in Slice 1, and Slice 2 does not say that it depends on Slice 1.
+    PROBLEM: Slice 5 covers OC-06, which needs OC-03 in Slice 1, and Slice 5 does not say that it depends on Slice 1.
+  ok   reported: "which does not come before it"
+Spoiled: an original criterion of Slice 1 made to need a criterion of the last slice
+    PROBLEM: Slice 1 covers OC-02, which needs OC-18. That is in Slice 7, which comes after it.
+  ok   reported: "which comes after it"
+Spoiled: the last slice's "Depends on" line emptied, though its criteria need earlier slices
+    PROBLEM: Slice 7 covers OC-18, which needs OC-15 in Slice 6, and Slice 7 does not say that it depends on Slice 6.
+    PROBLEM: Slice 7 covers OC-19, which needs OC-13 in Slice 3, and Slice 7 does not say that it depends on Slice 3.
+  ok   reported: "does not say that it depends on"
+Spoiled: Slice 1 made to depend on Slice 2
+    PROBLEM: Slice 1 depends on Slice 2, which does not come before it.
+    PROBLEM: Slice 1 depends on another slice, so it cannot be released alone.
+  ok   reported: "Slice 1 depends on another slice"
+Spoiled: a slice with its value taken out
+    PROBLEM: Slice 3 does not state the value it delivers on its own.
+  ok   reported: "does not state the value it delivers"
+Spoiled: a slice with what it relies on taken out
+    PROBLEM: Slice 3 does not say what it relies on.
+  ok   reported: "does not say what it relies on"
+Spoiled: a slice renamed for a layer
+    PROBLEM: Slice 3 is named for a technical layer and not for something a user gets: it uses the word "database".
+    PROBLEM: Slice 3 is named for a technical layer and not for something a user gets: it uses the word "queries".
+  ok   reported: "is named for a technical layer"
+Spoiled: the count of slices at the head changed
+    PROBLEM: The counts at the head of the slices are not the counts of the slices: there are 7 slices and 20 original criteria, and 20 are covered by exactly one slice.
+  ok   reported: "The counts at the head"
+Spoiled: one row of the coverage table changed
+    PROBLEM: The coverage table in the slices is not what the slices themselves say.
+  ok   reported: "The coverage table in the slices is not what the slices themselves say"
+
+==============================================================================
+AT THE END
+  ok   the three handed-in files are byte for byte what they were at the start
+
+RESULT: ALL CHECKS PASSED. 39 checks.

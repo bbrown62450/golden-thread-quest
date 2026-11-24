@@ -1,0 +1,101 @@
+Independent reads of the slicing. ba-slice-story, attempt ba-attempt-008
+Copied by hand, and shortened, from the readers' replies by the assistant that built this quest. No program wrote this file.
+
+Who the readers were: four separate AI assistants (Claude), each started fresh. No person read the slicing. Each was told
+to read only the files named to it, to run nothing and to write nothing. Those limits were given in words and not
+enforced. None saw another's reply, and none after the first round saw an earlier version.
+
+  Recounter   given the original and the first version of the slices, with the coverage table, the counts and the order
+              table taken out of its copy. Asked to work the coverage and the order out by hand, with no program.
+  Critic 1    given the three files of the first version. Asked, as a product owner, whether each slice is a slice.
+  Critic 2    the same task, on the second version.
+  Critic 3    given the third version. Asked for a verdict on each of the quest's first six criteria, and for every
+              sentence that is false given the original's criteria.
+
+The first version, as the recounter and critic 1 read it, is in review/.
+
+==============================================================================
+ROUND 1. The first version: 9 slices
+
+THE RECOUNT, BY HAND. 20 criteria, 9 slices. Every criterion in exactly one slice: 20, none in none, none in two. Per
+slice 6, 2, 1, 1, 2, 1, 1, 4, 2, which is 20. All 20 written-out criteria read identical to the original. Every "Depends
+on" points backwards. No need in a later slice. Slice 1 needs nothing outside itself.
+THE PROGRAM'S COUNT WAS THE SAME ON EVERY ONE OF THESE.
+What it could not do by eye: rule out a difference that does not show, such as a different kind of space, or check the
+checksum. What it noticed that the program does not look for: a sentence in the original that said "the first six
+criteria" where the first slice was not the first six; and two "would notice" lines that claimed more than their criteria.
+
+CRITIC 1. Its verdict: coverage and nothing-added hold. Value, not-a-layer and first-slice-alone "each fail in one place".
+  - Slice 4, "a busy month in five seconds": "a quality attribute under a friendly name". A small shop notices nothing.
+  - Slice 1 "ships a known-wrong sum". Its remedy was "a manager must be told", and "the telling has no channel": no
+    criterion puts a warning on the page, and none may be added. It said to merge the refunds into Slice 1.
+  - Slice 6's value, "what one product sold", is not delivered: the sum is of whole orders.
+  - Titles and values said "this week" for "the last 7 days", and "only a manager can see" for what OC-02 refuses.
+  - The order: the CSV file was seventh because "nothing before Slice 9 needs it", which "is a dependency argument, not
+    a value one". The story's own stated want is a spreadsheet.
+  - "Needs" lines: OC-11 named OC-04 where it needs OC-03. OC-14 cannot be tested without OC-15. OC-20 is "literally
+    right, practically wrong": the same press of "Show" later does more.
+  - The rejected slicing by layer is "a straw man". The tempting one is by the story's own seven area headings, and
+    "the analyst's result still carries that residue".
+
+WHAT WAS CHANGED AFTER ROUND 1
+  Nine slices became seven. The refunds went into Slice 1. The speed criterion went into the slice that lets a manager
+  choose dates. The CSV file moved from seventh to third. Titles and values were reworded. OC-11's "Needs" was corrected.
+  A second rejected slicing, by area, was added, and the program now counts it: it passes coverage and order.
+  A section was added listing what the original story does not say.
+
+==============================================================================
+ROUND 2. The second version: 7 slices
+
+CRITIC 2. "A competent slicing with honest dependencies, but its claim that commentary promises nothing is false in
+three places, and Slice 1 is not the thinnest honest first release." The counts were right: 8, 2, 1, 2, 1, 4, 2.
+  - Slice 1's title said "truly", which the criteria do not earn: an order refunded in part is not handled, and the
+    count includes refunded orders that the sum leaves out.
+  - Slice 2's value said "any dates within 5 seconds". OC-20 covers one case, and the list only.
+  - Slice 3 said the file "holds what the list shows". It does not carry "Refunded". It said a manager could work out
+    "per-product figures" from it. The file has no product. "That false claim is the stated reason S3 precedes S4 and S5."
+  - "Has to be shown to hold again", of OC-20, is an obligation no criterion contains.
+  - OC-06 presses "Show", which only OC-05 introduces. Slice 5 therefore depends on Slice 2, and said Slice 1.
+  - The rebuttal of the area slicing was stale: it still said the first release does not need refunds.
+  - A thinner first slice exists: the list with refunds marked, OC-01 to 04 and 09, with the count and sum to follow.
+  - It agreed with all three merges.
+
+WHAT WAS CHANGED AFTER ROUND 2
+  The false and overstated lines were reworded. OC-06 now needs OC-05, and Slice 5 depends on Slice 2. Six more gaps in
+  the original were listed. The area rebuttal was corrected. The sentence saying the commentary promises nothing now
+  says readers found lines that did.
+  NOT CHANGED: the first slice. The thinner one is recorded in Slice 1 as an alternative that would be honest to release.
+  It was not taken because it does not answer "what did it come to".
+
+==============================================================================
+ROUND 3. The third version
+
+CRITIC 3. "The slicing is sound. No structural failure; one commentary line overstates what a slice gives."
+  1. Each slice states its value          HOLDS WITH A RESERVATION: Slice 6 is thin by its own admission
+  2. Cut by value, not layer              HOLDS
+  3. Every criterion in exactly one slice HOLDS. Its own count: 8, 2, 1, 2, 1, 4, 2 = 20
+  4. No slice depends on a later one      HOLDS WITH A RESERVATION: Slice 5 names Slice 2 and reaches Slice 1 through it
+  5. The first slice can ship alone       HOLDS
+  6. Nothing is added                     HOLDS WITH A RESERVATION: the criteria match word for word. The commentary
+                                          invents detail, such as "two date boxes", and guesses at how often things are
+                                          asked for
+  Sentences it called false or unsupported: five. Slice 7's value said the email holds "the last 7 days' orders"; it
+  holds the saved report's. Slice 4's reason said it was the first thing to tell a manager something new. Slice 1 said an
+  order refunded in part "is counted in full", which the original does not say. A note said OC-18 alone sends an email
+  "with nothing in it". Slice 1 said "a refunded order" where it meant one refunded in full.
+  "Needs" lines it would argue with: five, and "none of these corrections would make a slice depend on a later one".
+
+WHAT WAS CHANGED AFTER ROUND 3, AND NOT READ AGAIN
+  Those five sentences were reworded. Nothing else: no criterion, no "Covers" line, no "Depends on" line and no "Needs"
+  line. The program's counts are the same before and after.
+  So the handed-in slices differ from the version critic 3 read by five sentences of commentary, which nobody has read
+  since. Still standing from its report: the invented detail in the "would notice" lines, the guesses about how often a
+  manager asks for what, Slice 6 being thin, and its five arguments about "Needs" lines.
+
+==============================================================================
+SUMMARY
+  Coverage and order: counted by the program, by a reader by hand, and by two critics. All agree.
+  Whether a slice is a slice: the first version was wrong in two places, a slice that was a quality attribute and a first
+  slice that shipped a wrong sum. Both were found by a reader and not by the program, which passed that version.
+  Commentary: each round of reading found lines that claimed more than the criteria give. Three rounds, and each found
+  some. There is no reason to think the third found the last.
