@@ -296,3 +296,8 @@ Every change this application made to your files, newest last.
 - `2026-11-24T00:45:22Z` context-canonical-work-item: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-24T00:45:22Z` Submitted context-canonical-work-item for review as submission-20261124004522-010d72.
 - `2026-11-24T00:56:00Z` Review of context-canonical-work-item: approved by Claude (automated reviewer).
+- `2026-11-24T01:00:34Z` Started context-decision-log as attempt context-attempt-003.
+- `2026-11-24T01:12:24Z` context-decision-log: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-24T01:14:24Z` context-decision-log: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-24T01:15:04Z` context-decision-log: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-24T01:15:04Z` Submitted context-decision-log for review as submission-20261124011504-0fd74d.

@@ -444,4 +444,13 @@ attempts:
   evidence_path: participant/evidence/context-canonical-work-item/context-attempt-002
   submission_id: submission-20261124004522-010d72
   review_id: review-20261124005600-35ea87
-updated_at: '2026-11-24T00:56:00Z'
+- attempt_id: context-attempt-003
+  quest_id: context-decision-log
+  quest_version: 1
+  content_hash: sha256:d6ef25069e04f61b32b5fe51a03957b368959420163547b7d7f59b8f7e20ec52
+  state: submitted
+  started_at: '2026-11-24T01:00:34Z'
+  updated_at: '2026-11-24T01:15:04Z'
+  evidence_path: participant/evidence/context-decision-log/context-attempt-003
+  submission_id: submission-20261124011504-0fd74d
+updated_at: '2026-11-24T01:15:04Z'

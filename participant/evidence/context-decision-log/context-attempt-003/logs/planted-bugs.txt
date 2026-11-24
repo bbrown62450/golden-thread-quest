@@ -1,0 +1,160 @@
+Do the tests notice a broken check? context-decision-log, attempt context-attempt-003
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/context-decision-log/decisions.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. A decision does not need an approver (criterion 2)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Approval.test_a_decision_with_no_approver_no_place_or_no_words
+    TheLogAsWritten.test_the_rules_document_is_what_the_code_writes
+
+PLANTED BUG B. A decision does not need the place it was approved (criterion 2)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Approval.test_a_decision_with_no_approver_no_place_or_no_words
+    TheLogAsWritten.test_the_rules_document_is_what_the_code_writes
+
+PLANTED BUG C. "Sounds good" and "no objections" count as approval (the quest's hint)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Approval.test_agreement_in_conversation_is_not_approval
+    TheLogAsWritten.test_the_rules_document_is_what_the_code_writes
+    Approval.test_words_that_only_contain_an_approval_word_inside_another_word_do_not_count
+
+PLANTED BUG D. Any quoted words count as approval
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Approval.test_agreement_in_conversation_is_not_approval
+    Approval.test_words_that_only_contain_an_approval_word_inside_another_word_do_not_count
+
+PLANTED BUG E. An approval word inside another word counts: "unapproved" is read as approved
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Approval.test_words_that_only_contain_an_approval_word_inside_another_word_do_not_count
+
+PLANTED BUG F. A reported approval, with no quoted words, is accepted
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Approval.test_a_report_of_approval_with_no_quoted_words
+
+PLANTED BUG G. Any role may approve any kind of decision
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Approval.test_the_approver_must_be_the_role_for_that_kind
+
+PLANTED BUG H. A proposal may carry an approver (criterion 3)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    ProposalIsNotADecision.test_a_proposal_may_not_carry_approval_fields
+    ProposalIsNotADecision.test_a_question_may_not_carry_approval_fields
+
+PLANTED BUG I. A proposal worded "we will" or "decided" is not noticed (criterion 3)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    ProposalIsNotADecision.test_a_proposal_s_title_worded_as_settled
+    ProposalIsNotADecision.test_a_proposal_worded_as_settled
+
+PLANTED BUG J. A statement need not say what it is (criteria 1 and 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OneStatus.test_the_statement_says_what_it_is
+
+PLANTED BUG K. The heading and the status field may disagree (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OneStatus.test_a_heading_and_a_field_that_disagree
+
+PLANTED BUG L. A field given twice is not noticed, so an entry can have two statuses (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    OneStatus.test_two_statuses_in_one_entry
+
+PLANTED BUG M. An open proposal is listed among the current decisions (criteria 3 and 7)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    ProposalIsNotADecision.test_an_open_proposal_is_never_in_the_list_of_current_decisions
+    TheLogAsWritten.test_the_handed_in_log_keeps_every_rule_and_is_sealed
+    CurrentView.test_the_view_lists_exactly_the_decisions_not_superseded
+
+PLANTED BUG N. A superseded decision stays in the list of current decisions (criteria 5 and 7)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Superseded.test_a_superseded_decision_is_linked_to_its_replacement_both_ways_in_the_view
+    Stretch.test_a_superseded_decision_with_no_work_item_is_not_reported
+    TheLogAsWritten.test_the_handed_in_log_keeps_every_rule_and_is_sealed
+    CurrentView.test_the_view_lists_exactly_the_decisions_not_superseded
+
+PLANTED BUG O. A proposal that only offers an answer closes the question
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheLogAsWritten.test_the_handed_in_log_keeps_every_rule_and_is_sealed
+
+PLANTED BUG P. A view that is stale or edited by hand is not noticed (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    CurrentView.test_a_view_edited_by_hand_or_gone_stale_is_caught
+
+PLANTED BUG Q. An entry edited after it was sealed is not noticed (criterion 4)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    PromotionKeepsHistory.test_an_entry_not_yet_sealed_is_reported_and_seal_never_reseals
+    PromotionKeepsHistory.test_any_edit_to_a_sealed_entry_is_caught_even_one_that_keeps_every_other_rule
+    PromotionKeepsHistory.test_editing_a_proposal_into_a_decision_in_place_is_caught
+
+PLANTED BUG R. An entry removed from the log is not noticed (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    PromotionKeepsHistory.test_a_removed_entry_is_caught
+
+PLANTED BUG S. Sealing again replaces the checksum of an entry already sealed, so an edit can be sealed over (criterion 4)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    PromotionKeepsHistory.test_an_entry_not_yet_sealed_is_reported_and_seal_never_reseals
+    PromotionKeepsHistory.test_promoting_adds_an_entry_and_leaves_the_proposal_as_it_was
+
+PLANTED BUG T. supersedes may point at a proposal (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Superseded.test_supersedes_must_point_at_an_earlier_decision
+
+PLANTED BUG U. A decision can be superseded twice, leaving two replacements (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Superseded.test_a_decision_is_superseded_once
+
+PLANTED BUG V. A source need not name anything a reader can look up (criterion 6)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Sources.test_an_entry_with_no_source_or_a_vague_one
+    Approval.test_the_place_of_approval_needs_a_reference
+
+PLANTED BUG W. An entry need not have a source (criterion 6)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Sources.test_an_entry_with_no_source_or_a_vague_one
+    TheLogAsWritten.test_the_rules_document_is_what_the_code_writes
+
+PLANTED BUG X. A reference may point at a later entry, or at itself
+  unittest result: FAILED (errors=2)
+  tests that failed (2):
+    PromotionKeepsHistory.test_promotes_must_point_at_an_earlier_proposal
+    Superseded.test_supersedes_must_point_at_an_earlier_decision
+
+PLANTED BUG Y. The check quietly rewrites the view, so a check changes the log
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSkillItself.test_check_changes_no_file
+
+PLANTED BUG Z. A current decision with no work item is not reported (stretch goal)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Stretch.test_decisions_name_the_work_items_they_affect_and_those_with_none_are_reported
+    TheLogAsWritten.test_the_handed_in_log_keeps_every_rule_and_is_sealed
+
+After the last bug was taken out: decisions.py is byte for byte what it was at the start. OK
+
+RESULT: all 26 planted bugs were caught by at least one test, and the file was restored.

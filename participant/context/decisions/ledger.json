@@ -1,0 +1,19 @@
+{
+ "entries": {
+  "E-001": "299cf0f4d26aedd41689da99122bc08b5bd3154e3fafeb60e78da659bf0cf024",
+  "E-002": "7c306e2353b528fbd915fc3a4041bae7de455b7da1bf636ce5a56f846900de4f",
+  "E-003": "ab3a7180ac66e509d391cd69c91cac90e62111a1ebbefb8aef984751ce34e241",
+  "E-004": "972fcf9b5baa7993fd49b6cc56db92fc3598a5498c2e1a3aea662bafe0f219ce",
+  "E-005": "a1fa07a82fa04a6bc8da2cfb4a649bdeadb9ab4517db39b6d563488472624607",
+  "E-006": "8cdb4351d1588f4c4bc8a68fdd07000794dc00c293893be874afe9f0f04b6568",
+  "E-007": "7ddfadc45d80f5e16fea86ed5f72f7e4bcbab974c734cf0e0f17b471835d4d71",
+  "E-008": "550cf2b92a426ffb80571ad732217c0699833b0d2f5e5befb90f1a9280ec06b6",
+  "E-009": "45ac27c7680914d9a744c8bf34a7f7a26b13be2869d33d552d6f7260c560b538",
+  "E-010": "e3bedb0c3bdb0917c949dabec3e6fe7a763f43ec9a1de7eb35f3836e1eff3747",
+  "E-011": "23e75fa7657451bda02a9678bc65fc0e933155fff503b75a20ca9c67472c4197",
+  "E-012": "58eb5c15132657806aec1f1d749dd97a2f08d02be9efdd93750804b2fa2bf302",
+  "E-013": "07a66ee3e33f7ed1ee2ef51b8fbb8d4193950cf0c3fcd10da35c5258052c8b55",
+  "E-014": "06fdfcaf50150dd26e2528102eb332a53fb93a04ce2468324d73c84fdd7011f7"
+ },
+ "note": "The SHA-256 of each entry of log.md, taken when the entry was sealed. decisions.py seal adds to this file and never changes a line already in it."
+}

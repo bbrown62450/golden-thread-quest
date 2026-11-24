@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261124011504-0fd74d
+quest_id: context-decision-log
+quest_version: 1
+attempt_id: context-attempt-003
+content_hash: sha256:d6ef25069e04f61b32b5fe51a03957b368959420163547b7d7f59b8f7e20ec52
+evidence_hash: sha256:ed0c91ad491225c7efaa33c4a378ccaae76c849c7a7064e8f5e13a3e7dc02df5
+submitted_at: '2026-11-24T01:15:04Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/decisions/log.md
+  digest: sha256:1f1f53ab4c86c51a14fcc56ec43caa7811e42ddd25e553274e8f2881caed6fdd
+- path: participant/context/decisions/rules.md
+  digest: sha256:c8e63b2add9e8474dbea68cdf6463994926ff9ab511fd9b9da2093305cbdc9e3

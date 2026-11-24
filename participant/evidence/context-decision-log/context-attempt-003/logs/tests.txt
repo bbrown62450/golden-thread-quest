@@ -1,0 +1,55 @@
+test_a_decision_with_no_approver_no_place_or_no_words (test_decisions.Approval) ... ok
+test_a_report_of_approval_with_no_quoted_words (test_decisions.Approval) ... ok
+test_agreement_in_conversation_is_not_approval (test_decisions.Approval) ... ok
+test_explicit_words_of_approval_or_of_declining_count (test_decisions.Approval) ... ok
+test_the_approver_must_be_the_role_for_that_kind (test_decisions.Approval) ... ok
+test_the_place_of_approval_needs_a_reference (test_decisions.Approval) ... ok
+test_words_that_only_contain_an_approval_word_inside_another_word_do_not_count (test_decisions.Approval) ... ok
+test_a_missing_generated_part_is_caught (test_decisions.CurrentView) ... ok
+test_a_view_edited_by_hand_or_gone_stale_is_caught (test_decisions.CurrentView) ... ok
+test_the_view_comes_before_the_first_entry (test_decisions.CurrentView) ... ok
+test_the_view_lists_exactly_the_decisions_not_superseded (test_decisions.CurrentView) ... ok
+test_view_rewrites_only_the_generated_part_and_twice_changes_nothing (test_decisions.CurrentView) ... ok
+test_a_heading_and_a_field_that_disagree (test_decisions.OneStatus) ... ok
+test_a_status_outside_the_three (test_decisions.OneStatus) ... ok
+test_an_entry_with_no_status (test_decisions.OneStatus) ... ok
+test_the_statement_says_what_it_is (test_decisions.OneStatus) ... ok
+test_two_statuses_in_one_entry (test_decisions.OneStatus) ... ok
+test_a_field_the_rules_do_not_define_and_a_question_with_no_question_mark (test_decisions.OrderAndShape) ... ok
+test_a_work_item_that_is_not_an_identifier (test_decisions.OrderAndShape) ... ok
+test_ids_in_order_with_no_gaps_and_dates_never_backwards (test_decisions.OrderAndShape) ... ok
+test_a_proposal_is_approved_or_declined_once (test_decisions.PromotionKeepsHistory) ... ok
+test_a_removed_entry_is_caught (test_decisions.PromotionKeepsHistory) ... ok
+test_an_entry_not_yet_sealed_is_reported_and_seal_never_reseals (test_decisions.PromotionKeepsHistory) ... ok
+test_any_edit_to_a_sealed_entry_is_caught_even_one_that_keeps_every_other_rule (test_decisions.PromotionKeepsHistory) ... ok
+test_editing_a_proposal_into_a_decision_in_place_is_caught (test_decisions.PromotionKeepsHistory) ... ok
+test_promotes_must_point_at_an_earlier_proposal (test_decisions.PromotionKeepsHistory) ... ok
+test_promoting_adds_an_entry_and_leaves_the_proposal_as_it_was (test_decisions.PromotionKeepsHistory) ... ok
+test_the_earlier_entries_checksums_in_the_ledger_do_not_change (test_decisions.PromotionKeepsHistory) ... ok
+test_a_proposal_may_not_carry_approval_fields (test_decisions.ProposalIsNotADecision) ... ok
+test_a_proposal_may_quote_someone_else_s_wrong_wording_to_report_it (test_decisions.ProposalIsNotADecision) ... ok
+test_a_proposal_s_title_worded_as_settled (test_decisions.ProposalIsNotADecision) ... ok
+test_a_proposal_treated_as_decided_elsewhere_is_reported_and_stays_a_proposal (test_decisions.ProposalIsNotADecision) ... ok
+test_a_proposal_worded_as_settled (test_decisions.ProposalIsNotADecision) ... ok
+test_a_question_may_not_carry_approval_fields (test_decisions.ProposalIsNotADecision) ... ok
+test_an_open_proposal_is_never_in_the_list_of_current_decisions (test_decisions.ProposalIsNotADecision) ... ok
+test_an_entry_with_no_source_or_a_vague_one (test_decisions.Sources) ... ok
+test_every_entry_has_a_source_with_a_reference (test_decisions.Sources) ... ok
+test_a_superseded_decision_with_no_work_item_is_not_reported (test_decisions.Stretch) ... ok
+test_decisions_name_the_work_items_they_affect_and_those_with_none_are_reported (test_decisions.Stretch) ... ok
+test_a_decision_is_superseded_once (test_decisions.Superseded) ... ok
+test_a_proposal_cannot_supersede_a_decision (test_decisions.Superseded) ... ok
+test_a_superseded_decision_is_linked_to_its_replacement_both_ways_in_the_view (test_decisions.Superseded) ... ok
+test_supersedes_must_point_at_an_earlier_decision (test_decisions.Superseded) ... ok
+test_without_the_link_the_old_decision_would_still_be_current (test_decisions.Superseded) ... ok
+test_it_has_at_least_ten_entries_across_the_three_statuses (test_decisions.TheLogAsWritten) ... ok
+test_the_handed_in_log_keeps_every_rule_and_is_sealed (test_decisions.TheLogAsWritten) ... ok
+test_the_rules_document_is_what_the_code_writes (test_decisions.TheLogAsWritten) ... ok
+test_a_log_that_cannot_be_read_stops_with_a_message (test_decisions.TheSkillItself) ... ok
+test_check_changes_no_file (test_decisions.TheSkillItself) ... ok
+test_it_adds_no_entry_and_approves_nothing (test_decisions.TheSkillItself) ... ok
+
+----------------------------------------------------------------------
+Ran 50 tests in 0.072s
+
+OK

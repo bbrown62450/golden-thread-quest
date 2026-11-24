@@ -1,0 +1,198 @@
+The check of the decision log. context-decision-log, attempt context-attempt-003
+Recorded by scripts/record_evidence.py. No request was sent anywhere. The log's project, documents, work items and roles are all made up.
+
+==============================================================================
+PART 1. The handed-in log is checked. participant/context/decisions/log.md
+$ python3 participant/skills/context-decision-log/decisions.py check
+------------------------------------------------------------------------------
+decision-log: 14 entries: 7 decisions, 4 proposals, 3 questions
+decision-log: decisions current: 5 (E-002, E-009, E-010, E-013, E-014). Superseded: 2 (E-004 by E-014, E-007 by E-009)
+decision-log: proposals: E-003 approved by E-004, E-005 open, E-008 declined by E-010, E-012 open
+decision-log: questions: E-001 answered by E-002, E-006 open, E-011 open, with a proposed answer
+decision-log: WARNING: E-005 is a proposal that something else treats as decided: ticket WX-31, whose description says "per the decision in DOC-4, files are kept for 90 days". Work started on it: WX-31, WX-32, WX-33. It is not approved
+decision-log: NOTE: the current decision E-010 names no work item it affects
+decision-log: NOTE: the current decision E-013 names no work item it affects
+decision-log: RESULT: the log keeps every rule
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the check passes: exit code 0, and it says the log keeps every rule
+  ok   the log has 14 entries, at least ten, in all three statuses: 7 decisions, 4 proposals, 3 questions
+  ok   every entry has exactly one status, the same in its heading and its field, and its statement opens by saying what it is (criterion 1)
+Every decision, with who approved it, where, and in what words:
+  E-002  product   approved by the product owner in decision record DR-1, comment 3
+        words: "Approved: account administrators only, not every user."
+        source: decision record DR-1
+  E-004  product   approved by the product owner in decision record DR-2, comment 1
+        words: "Approved as proposed in DOC-4 section 2: Fridays, 06:00 UTC."
+        source: design document DOC-4, section 2
+  E-007  technical approved by the tech lead     in decision record DR-3, comment 2
+        words: "Approved. Go ahead with the nightly batch runner for the first release."
+        source: design document DOC-4, section 3
+  E-009  technical approved by the tech lead     in decision record DR-5, comment 1
+        words: "Approved. This replaces DR-3: move the export to a queue worker."
+        source: incident review DOC-7, section 4
+  E-010  product   approved by the product owner in decision record DR-6, comment 2
+        words: "Declined for the first release. CSV only. Raise it again after launch."
+        source: customer call notes CN-2026-09-18, item 2
+  E-013  security  approved by the security lead in decision record DR-7, comment 1
+        words: "Approved: no email address in any export file. User ids only."
+        source: security review DOC-11, finding 2
+  E-014  product   approved by the product owner in decision record DR-8, comment 4
+        words: "Approved. This replaces DR-2: Mondays at 06:00 UTC, from the first release."
+        source: customer call notes CN-2026-09-29, item 1
+  ok   every one of the 7 decisions has an approver, the place it was approved, the approver's quoted words, and a source (criteria 2 and 6)
+  ok   every approver is the role the rules allow for that kind of decision
+  ok   every decision's quoted words are words of approval or of declining, and none is only agreement
+  ok   every one of the 14 entries cites a source with a reference a reader can look up (criterion 6)
+  ok   no proposal and no question carries an approver, a place of approval or approval words (criterion 3)
+The list of current decisions at the top of the log holds: E-002, E-009, E-010, E-013, E-014
+  ok   that list holds only decisions, and no proposal or question is in it (criterion 3)
+  ok   it holds exactly the decisions that are not superseded: 5 of the 7 (criterion 7)
+  ok   it is at the top of the file, before the first entry, so a reader does not need the history to find it (criterion 7)
+  ok   it is exactly what the entries say: the part on the page is byte for byte what the script writes from them
+Superseded decisions and what replaced them: E-004 by E-014, E-007 by E-009
+  ok   each superseded decision is linked to its replacement: the newer entry names it in `supersedes`, and the index shows the older one as SUPERSEDED by the newer (criterion 5)
+  ok   the proposal E-005, which a ticket quotes as "the decision" and three stories were built on, is still a proposal, and the check warns about it (criterion 3)
+  ok   the ledger holds a checksum for each of the 14 entries, and each entry's text matches its checksum: none was edited since it was sealed
+  ok   the rules document is exactly what the checking code writes, so the rules and the check cannot disagree
+
+==============================================================================
+PART 2. A status change, in the handed-in log: the proposal E-003 became the decision E-004, and E-004 was later superseded by E-014 (criteria 4 and 5)
+The three entries as they stand in the log, with the checksum the ledger holds for each:
+  E-003  proposal  now: approved by E-004
+        title: Send the export every Friday at 06:00 UTC
+        ledger SHA-256: ab3a7180ac66e509d391cd69c91cac90e62111a1ebbefb8aef984751ce34e241
+  E-004  decision  now: superseded by E-014
+        title: The export is sent every Friday at 06:00 UTC
+        ledger SHA-256: 972fcf9b5baa7993fd49b6cc56db92fc3598a5498c2e1a3aea662bafe0f219ce
+  E-014  decision  now: current
+        title: The export is sent every Monday at 06:00 UTC
+        ledger SHA-256: 06fdfcaf50150dd26e2528102eb332a53fb93a04ce2468324d73c84fdd7011f7
+  ok   the proposal E-003 is still in the log as a proposal, with its own text: no approver, and its statement still opens "Proposal, not decided."
+  ok   the decision E-004 is a separate, later entry that names it: `promotes: E-003`
+  ok   the superseded decision E-004 is still in the log with its own text, and still says Friday
+  ok   what became of each is not written into the old entry. It is in the index: E-003 approved by E-004, E-004 SUPERSEDED by E-014
+
+==============================================================================
+PART 3. A status change made now, on a copy of the log in SCRATCH: the open proposal E-012 is approved (criterion 4)
+A new entry, E-015, is added at the end of the copy. It is a decision by the tech lead that names `promotes: E-012` and `answers: E-011`. Nothing else is touched.
+$ python3 participant/skills/context-decision-log/decisions.py check --log SCRATCH/log.md
+------------------------------------------------------------------------------
+decision-log: 15 entries: 8 decisions, 4 proposals, 3 questions
+decision-log: decisions current: 6 (E-002, E-009, E-010, E-013, E-014, E-015). Superseded: 2 (E-004 by E-014, E-007 by E-009)
+decision-log: proposals: E-003 approved by E-004, E-005 open, E-008 declined by E-010, E-012 approved by E-015
+decision-log: questions: E-001 answered by E-002, E-006 open, E-011 answered by E-015
+decision-log: WARNING: E-005 is a proposal that something else treats as decided: ticket WX-31, whose description says "per the decision in DOC-4, files are kept for 90 days". Work started on it: WX-31, WX-32, WX-33. It is not approved
+decision-log: NOTE: the current decision E-010 names no work item it affects
+decision-log: NOTE: the current decision E-013 names no work item it affects
+decision-log: RULE BROKEN: log: the view of current decisions at the top is not what the entries say. It is stale or was edited by hand. Run: decisions.py view
+decision-log: RULE BROKEN: E-015: the entry is not sealed yet, so a later edit to it would not be noticed. Run: decisions.py seal
+decision-log: RESULT: the log breaks the rules in 2 places
+------------------------------------------------------------------------------
+exit code: 2
+  ok   before the view is rewritten and the entry sealed, the check fails, and says exactly those two things
+$ python3 participant/skills/context-decision-log/decisions.py view --log SCRATCH/log.md
+------------------------------------------------------------------------------
+decision-log: the generated part of the log was rewritten from the entries
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/context-decision-log/decisions.py seal --log SCRATCH/log.md
+------------------------------------------------------------------------------
+decision-log: sealed 1 new entry: E-015. 15 sealed in all
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/context-decision-log/decisions.py check --log SCRATCH/log.md
+------------------------------------------------------------------------------
+decision-log: 15 entries: 8 decisions, 4 proposals, 3 questions
+decision-log: decisions current: 6 (E-002, E-009, E-010, E-013, E-014, E-015). Superseded: 2 (E-004 by E-014, E-007 by E-009)
+decision-log: proposals: E-003 approved by E-004, E-005 open, E-008 declined by E-010, E-012 approved by E-015
+decision-log: questions: E-001 answered by E-002, E-006 open, E-011 answered by E-015
+decision-log: WARNING: E-005 is a proposal that something else treats as decided: ticket WX-31, whose description says "per the decision in DOC-4, files are kept for 90 days". Work started on it: WX-31, WX-32, WX-33. It is not approved
+decision-log: NOTE: the current decision E-010 names no work item it affects
+decision-log: NOTE: the current decision E-013 names no work item it affects
+decision-log: RESULT: the log keeps every rule
+------------------------------------------------------------------------------
+exit code: 0
+SHA-256 of the proposal E-012 before the change: 58eb5c15132657806aec1f1d749dd97a2f08d02be9efdd93750804b2fa2bf302
+SHA-256 of the proposal E-012 after the change:  58eb5c15132657806aec1f1d749dd97a2f08d02be9efdd93750804b2fa2bf302
+  ok   the check passes again
+  ok   an entry was added: 15 entries where there were 14
+  ok   the earlier entry was kept: the proposal E-012 is byte for byte what it was, and so is every one of the other 13
+  ok   the ledger's 14 earlier checksums are unchanged, and one was added for E-015
+  ok   the proposal now shows as approved by E-015, the question E-011 as answered by E-015, and E-015 is in the list of current decisions
+  ok   the handed-in log was not touched by any of this
+
+==============================================================================
+PART 4. Can the check fail? The log is broken in one way at a time, on a copy, and checked
+Each case changes the handed-in log's text in one place, brings the view up to date so that only the planted fault is at issue, and checks it against the real ledger
+where the case is about editing. "Reported" is every rule the check says is broken.
+  CASE: a decision with no approver (criterion 2)
+    reported: E-013: a decision must have approver, and this one has none
+  ok   a decision with no approver (criterion 2): reported
+  CASE: a decision with no place of approval (criterion 2)
+    reported: E-013: a decision must have approved_in, and this one has none
+  ok   a decision with no place of approval (criterion 2): reported
+  CASE: a decision with no source (criterion 6)
+    reported: E-013: a decision must have source, and this one has none
+  ok   a decision with no source (criterion 6): reported
+  CASE: a proposal with no source (criterion 6)
+    reported: E-008: a proposal must have source, and this one has none
+  ok   a proposal with no source (criterion 6): reported
+  CASE: a decision whose approval is "sounds good" in a meeting
+    reported: E-013: the approval words are agreement, not approval: they say "sounds good". An approval says so in words such as "approved" or "go ahead with"
+  ok   a decision whose approval is "sounds good" in a meeting: reported
+  CASE: a decision whose approval is that nobody objected
+    reported: E-013: the approval words are agreement, not approval: they say "no objections". An approval says so in words such as "approved" or "go ahead with"
+  ok   a decision whose approval is that nobody objected: reported
+  CASE: a decision approved by a role that may not approve that kind
+    reported: E-013: a security decision is approved by the security lead, and this one names the tech lead
+  ok   a decision approved by a role that may not approve that kind: reported
+  CASE: a decision whose approval is reported, not quoted
+    reported: E-013: approval_words must be the approver's own words, inside double quotes
+  ok   a decision whose approval is reported, not quoted: reported
+  CASE: a proposal given an approver, as if it were decided (criterion 3)
+    reported: E-008: a proposal may not have the field approver. Only a decision has it
+  ok   a proposal given an approver, as if it were decided (criterion 3): reported
+  CASE: a proposal labelled as a decision in its heading (criterion 1)
+    reported: E-008: the heading says decision and the status field says proposal. An entry has one status
+  ok   a proposal labelled as a decision in its heading (criterion 1): reported
+  CASE: a proposal worded "we will" (criterion 3, the scenario)
+    reported: E-008: a proposal is worded as if it were settled: it says "We will" outside a quotation
+  ok   a proposal worded "we will" (criterion 3, the scenario): reported
+  CASE: a proposal whose statement opens "Decision." (criterion 3)
+    reported: E-008: the statement must begin with **Proposal, not decided.** so that it says what it is when quoted on its own
+  ok   a proposal whose statement opens "Decision." (criterion 3): reported
+  CASE: an entry with two statuses (criterion 1)
+    reported: E-008: the field status is given more than once
+  ok   an entry with two statuses (criterion 1): reported
+  CASE: a proposal edited in place into a decision, where a new entry was called for (criterion 4)
+    reported: E-012: a decision must have approver, and this one has none
+    reported: E-012: a decision must have approved_in, and this one has none
+    reported: E-012: a decision must have approval_words, and this one has none
+    reported: E-012: a decision may not have the field support. Only a proposal or a question has it
+    reported: E-012: the statement must begin with **Decision.** so that it says what it is when quoted on its own
+    reported: E-012: the entry was changed after it was sealed. An entry is never edited: write a new entry that points at it
+  ok   a proposal edited in place into a decision, where a new entry was called for (criterion 4): reported
+  CASE: an old entry quietly reworded, keeping every other rule (criterion 4)
+    reported: E-012: the entry was changed after it was sealed. An entry is never edited: write a new entry that points at it
+  ok   an old entry quietly reworded, keeping every other rule (criterion 4): reported
+  CASE: a superseded decision edited to match its replacement
+    reported: E-004: the entry was changed after it was sealed. An entry is never edited: write a new entry that points at it
+  ok   a superseded decision edited to match its replacement: reported
+  CASE: a decision that supersedes a proposal (criterion 5)
+    reported: E-014: supersedes points at E-003, which is a proposal. It must point at a decision
+  ok   a decision that supersedes a proposal (criterion 5): reported
+  CASE: a decision that supersedes one already superseded (criterion 5)
+    reported: E-014: E-007 was already superseded by E-009. A new entry must point at the entry that stands now
+  ok   a decision that supersedes one already superseded (criterion 5): reported
+  CASE: the newest entry is removed from the log
+    reported: E-014: the entry was sealed and is no longer in the log. An entry is never removed
+  ok   an entry removed from the log: reported
+  CASE: the list of current decisions is edited by hand, to put the proposal E-005 in it (criteria 3 and 7)
+    reported: log: the view of current decisions at the top is not what the entries say. It is stale or was edited by hand. Run: decisions.py view
+  ok   a proposal written into the list of current decisions by hand: reported
+  CASE: the newer decision E-014 is written without its `supersedes` link (criterion 5)
+    the list of current decisions would then hold both the Friday decision E-004 and the Monday decision E-014: yes
+  ok   without the link, two decisions that contradict each other would both be current. The link is what removes the older one, and the check cannot know one is missing
+
+RESULT: ALL CHECKS PASSED. 48 checks.
