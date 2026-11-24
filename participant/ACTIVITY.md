@@ -367,3 +367,4 @@ Every change this application made to your files, newest last.
 - `2026-11-24T20:07:17Z` ba-write-story: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
 - `2026-11-24T20:07:56Z` ba-write-story: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-24T20:07:56Z` Submitted ba-write-story for review as submission-20261124200756-ee8357.
+- `2026-11-24T20:10:56Z` Review of ba-write-story: needs_changes by Claude (automated reviewer).
