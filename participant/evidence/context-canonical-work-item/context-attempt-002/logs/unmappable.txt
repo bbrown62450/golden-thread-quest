@@ -1,0 +1,112 @@
+Items the model cannot represent. context-canonical-work-item, attempt context-attempt-002
+Recorded by scripts/record_evidence.py. No request was sent anywhere.
+Part 1 uses the work saved in this repository by the earlier quests. Parts 2 and 3 use made-up saved work in a scratch folder, SCRATCH.
+
+==============================================================================
+PART 1. The work saved in this repository (criterion 11)
+$ python3 participant/skills/context-work-item-model/normalize.py
+------------------------------------------------------------------------------
+work-item-model: model work-item/1. Read 242 saved records from 17 files. No request was sent anywhere
+work-item-model: canonical records: 225 held before this run. This run: 0 new, 0 updated, 225 unchanged. Held now: 225
+work-item-model: could not be mapped: 17. No record was written for any of them
+work-item-model:   UNMAPPABLE: jira story file 20001.md, from participant/context/jira/stories/20001.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
+work-item-model:   UNMAPPABLE: jira story file 20002.md, from participant/context/jira/stories/20002.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
+work-item-model:   UNMAPPABLE: jira story file 20003.md, from participant/context/jira/stories/20003.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
+work-item-model:   UNMAPPABLE: jira story file 20004.md, from participant/context/jira/stories/20004.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
+work-item-model:   UNMAPPABLE: jira story file 20005.md, from participant/context/jira/stories/20005.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
+work-item-model:   UNMAPPABLE: jira story file 20006.md, from participant/context/jira/stories/20006.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
+work-item-model:   UNMAPPABLE: jira story file 20007.md, from participant/context/jira/stories/20007.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
+work-item-model:   UNMAPPABLE: jira story file 20008.md, from participant/context/jira/stories/20008.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
+work-item-model:   UNMAPPABLE: jira story file 20009.md, from participant/context/jira/stories/20009.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
+work-item-model:   UNMAPPABLE: jira story file 20010.md, from participant/context/jira/stories/20010.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
+work-item-model:   UNMAPPABLE: jira story file 20011.md, from participant/context/jira/stories/20011.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
+work-item-model:   UNMAPPABLE: jira story file 20012.md, from participant/context/jira/stories/20012.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
+work-item-model:   UNMAPPABLE: jira story file story-sample.md, from participant/context/jira/stories/story-sample.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
+work-item-model:   UNMAPPABLE: jira assigned story "GTQ-101", from participant/context/jira/assigned/stories.json: the saved record has no issue id. It has only the key "GTQ-101", which changes when a story moves to another project, so it cannot be the identity
+work-item-model:   UNMAPPABLE: jira assigned story "GTQ-102", from participant/context/jira/assigned/stories.json: the saved record has no issue id. It has only the key "GTQ-102", which changes when a story moves to another project, so it cannot be the identity
+work-item-model:   UNMAPPABLE: jira assigned story "GTQ-103", from participant/context/jira/assigned/stories.json: the saved record has no issue id. It has only the key "GTQ-103", which changes when a story moves to another project, so it cannot be the identity
+work-item-model:   UNMAPPABLE: trello card 6afdf65aa3a5b8d67f9c9a21, from participant/context/trello/board.json: Trello no longer returns this card, so whether it is open, archived or deleted is not known. A status would be a guess
+work-item-model: files written: 0 records
+work-item-model: notes: 1 file, opened for reading only. SHA-256 before and after this run:
+work-item-model:   notes/trello-6afdf65638df50999c980d80.md  before 79ac71ecd6923b6839a8d35431a56286aac510644bf9f0ff768bb65e02c65677  after 79ac71ecd6923b6839a8d35431a56286aac510644bf9f0ff768bb65e02c65677  same
+------------------------------------------------------------------------------
+The 17 refused items, by reason:
+   1  Trello no longer returns this card, so whether it is open, archived or deleted is not known
+   3  the saved record has no issue id
+  13  the saved record has no retrieval time
+  ok   17 saved items could not be mapped, and each is reported with its reason
+  ok   the 13 saved Jira story files are refused because none records when it was retrieved, which provenance requires (criterion 8)
+  ok   the 3 Jira stories in the assigned list are refused because they were saved with a key and no issue id, and a key is not an identity (criterion 2)
+  ok   1 real Trello card is refused because Trello no longer returns it, so its status would be a guess
+  ok   no record file was written for any of them: the items folder holds no Jira file, no file for that card, and no half-written file
+  ok   none of them is in the index, which holds 225 identities, all Trello or GitHub
+  ok   report.md lists all 17 under "Could not be mapped (17)", each with its saved file and its reason
+  ok   the other 225 items were not held up: each has a record, and the model's own check accepts every one
+
+==============================================================================
+PART 2. Made-up items, each broken in one way. What is reported, and whether anything is written
+Each case starts from the same made-up saved work, changes one item, and normalizes into an empty folder.
+  CASE: a GitHub issue saved with no node ID
+    reported: the saved record has no node ID, the stable identifier
+    record files written for it: 0. Other records written: 13
+  ok   a GitHub issue saved with no node ID: refused with a reason that names the fault, and no file was written for it
+  CASE: a GitHub issue with an empty title
+    reported: the saved record has no title
+    record files written for it: 0. Other records written: 13
+  ok   a GitHub issue with an empty title: refused with a reason that names the fault, and no file was written for it
+  CASE: a GitHub issue in a state the model has no status for
+    reported: GitHub gives the state "merged" with the reason "completed", which the model has no status for
+    record files written for it: 0. Other records written: 13
+  ok   a GitHub issue in a state the model has no status for: refused with a reason that names the fault, and no file was written for it
+  CASE: a GitHub issue with no time of last update
+    reported: the saved record has no time of last update
+    record files written for it: 0. Other records written: 13
+  ok   a GitHub issue with no time of last update: refused with a reason that names the fault, and no file was written for it
+  CASE: a Trello card whose time has no time zone
+    reported: time of last activity has no time zone: "2026-11-18 10:00"
+    record files written for it: 0. Other records written: 13
+  ok   a Trello card whose time has no time zone: refused with a reason that names the fault, and no file was written for it
+  CASE: a Trello card with no short link to build its address from
+    reported: the saved record has no short link, which the card's address is built from
+    record files written for it: 0. Other records written: 13
+  ok   a Trello card with no short link to build its address from: refused with a reason that names the fault, and no file was written for it
+  CASE: a Trello card that Trello no longer returns
+    reported: Trello no longer returns this card, so whether it is open, archived or deleted is not known. A status would be a guess
+    record files written for it: 0. Other records written: 14
+  ok   a Trello card that Trello no longer returns: refused with a reason that names the fault, and no file was written for it
+  CASE: a Jira story saved without its retrieval time
+    reported: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
+    record files written for it: 0. Other records written: 13
+  ok   a Jira story saved without its retrieval time: refused with a reason that names the fault, and no file was written for it
+  CASE: a Jira story saved with a key and no id
+    reported: the saved record has no issue id. It has only the key "DEMO-1", which changes when a story moves to another project, so it cannot be the identity
+    record files written for it: 0. Other records written: 13
+  ok   a Jira story saved with a key and no id: refused with a reason that names the fault, and no file was written for it
+  CASE: a Jira story whose status is a word, with no id and no category
+    reported: the saved record gives the status as words only ("Done"), with no status id and no category
+    record files written for it: 0. Other records written: 13
+  ok   a Jira story whose status is a word, with no id and no category: refused with a reason that names the fault, and no file was written for it
+  CASE: a Jira story whose status has no category, and an id the status map does not name
+    reported: Jira's status "Done" (id "99999") was saved without its category, and the status map does not name that id. Whether the work is open or done is not known
+    record files written for it: 0. Other records written: 13
+  ok   a Jira story whose status has no category, and an id the status map does not name: refused with a reason that names the fault, and no file was written for it
+
+==============================================================================
+PART 3. An item that had a record, and can no longer be mapped
+The made-up Jira story 30001 is normalized. Then a later sync saves it again with a new title and WITHOUT its retrieval time.
+$ python3 participant/skills/context-work-item-model/normalize.py --root SCRATCH/later-context --out SCRATCH/later-model
+------------------------------------------------------------------------------
+work-item-model: model work-item/1. Read 15 saved records from 7 files. No request was sent anywhere
+work-item-model: canonical records: 14 held before this run. This run: 0 new, 0 updated, 13 unchanged. Held now: 14
+work-item-model:   NOT IN THE SAVED WORK NOW: jira:30001. Its record is kept as it was, and not updated
+work-item-model: could not be mapped: 2. No record was written for any of them
+work-item-model:   UNMAPPABLE: jira story file 30001.md, from later-context/jira/stories/30001.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
+work-item-model:   UNMAPPABLE: trello card 62cfix000000000000000c05, from later-context/trello/board.json: Trello no longer returns this card, so whether it is open, archived or deleted is not known. A status would be a guess
+work-item-model: files written: 0 records
+work-item-model: notes: 0 files, opened for reading only. SHA-256 before and after this run:
+------------------------------------------------------------------------------
+  ok   the item is reported as unmappable, with the reason
+  ok   its earlier record is byte for byte what it was: the new title was not written into it
+  ok   the run says that the record is from an earlier run and was not updated, so that it does not pass for current
+
+RESULT: ALL CHECKS PASSED. 22 checks.

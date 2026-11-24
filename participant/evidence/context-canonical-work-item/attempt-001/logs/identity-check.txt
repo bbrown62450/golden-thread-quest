@@ -1,0 +1,149 @@
+Does an item keep its identity when it is renamed and moved? context-canonical-work-item, attempt context-attempt-002
+Recorded by scripts/record_evidence.py. No request was sent anywhere.
+The saved work here is made up, by fixtures.py: 5 Jira stories, 5 Trello cards and 5 GitHub issues, with every field the model requires. SCRATCH is a scratch folder.
+
+==============================================================================
+PART 1. The saved work is normalized for the first time
+$ python3 participant/skills/context-work-item-model/normalize.py --root SCRATCH/context --out SCRATCH/model
+------------------------------------------------------------------------------
+work-item-model: model work-item/1. Read 15 saved records from 7 files. No request was sent anywhere
+work-item-model: canonical records: 0 held before this run. This run: 14 new, 0 updated, 0 unchanged. Held now: 14
+work-item-model:   NEW: github:I_kwFIX0101 -> items/github-I_kwFIX0101.md
+work-item-model:   NEW: github:I_kwFIX0102 -> items/github-I_kwFIX0102.md
+work-item-model:   NEW: github:I_kwFIX0103 -> items/github-I_kwFIX0103.md
+work-item-model:   NEW: github:I_kwFIX0104 -> items/github-I_kwFIX0104.md
+work-item-model:   NEW: github:I_kwFIX0105 -> items/github-I_kwFIX0105.md
+work-item-model:   NEW: jira:30001 -> items/jira-30001.md
+work-item-model:   NEW: jira:30002 -> items/jira-30002.md
+work-item-model:   NEW: jira:30003 -> items/jira-30003.md
+work-item-model:   NEW: jira:30004 -> items/jira-30004.md
+work-item-model:   NEW: jira:30005 -> items/jira-30005.md
+work-item-model:   NEW: trello:62cfix000000000000000c01 -> items/trello-62cfix000000000000000c01.md
+work-item-model:   NEW: trello:62cfix000000000000000c02 -> items/trello-62cfix000000000000000c02.md
+work-item-model:   NEW: trello:62cfix000000000000000c03 -> items/trello-62cfix000000000000000c03.md
+work-item-model:   NEW: trello:62cfix000000000000000c04 -> items/trello-62cfix000000000000000c04.md
+work-item-model: could not be mapped: 1. No record was written for any of them
+work-item-model:   UNMAPPABLE: trello card 62cfix000000000000000c05, from context/trello/board.json: Trello no longer returns this card, so whether it is open, archived or deleted is not known. A status would be a guess
+work-item-model: files written: 14 records
+work-item-model: notes: 0 files, opened for reading only. SHA-256 before and after this run:
+------------------------------------------------------------------------------
+  ok   14 canonical records were written, one for each item that can be mapped
+The three items that are about to change, as they are now:
+  jira:30003                         file items/jira-30003.md
+      title "Export intake records as CSV"
+      reference DEMO-3, in the project "Made-up project DEMO", status in_progress
+  trello:62cfix000000000000000c02    file items/trello-62cfix000000000000000c02.md
+      title "Export report as PDF"
+      reference fixc02, in the board "Fixture Board", status in_progress
+  github:I_kwFIX0102                 file items/github-I_kwFIX0102.md
+      title "Add retry to the webhook sender"
+      reference acme-fixture/platform#2, in the repository "acme-fixture/platform", status open
+
+==============================================================================
+PART 2. A person writes a note on each of the three items
+Notes go in SCRATCH/model/notes, in a file with the same name as the item's record.
+  notes/jira-30003.md  SHA-256 412fde43849adee5887a0154c60d0dafe7192df1f64c284169bd2639afb6f23e
+  notes/trello-62cfix000000000000000c02.md  SHA-256 d3793f14c196910fea35b3b4f5051b1185d943ee245469adcd7eaa9a053aeb33
+  notes/github-I_kwFIX0102.md  SHA-256 49c8732f126ce09dbbd2940f696b542ce1b6f315cfb53fa2b88fd4e392ffc5e3
+
+==============================================================================
+PART 3. At the source, each of the three is RENAMED and MOVED. The saved work is synced again, and normalized again (criterion 10)
+  the Jira story    renamed, moved from project DEMO to project OPS (so its key changes from DEMO-3 to OPS-17), and its status goes to Done
+  the Trello card   renamed, moved from the list Doing on Fixture Board to the list Done on Other Board
+  the GitHub issue  renamed, transferred from acme-fixture/platform (#2) to acme-fixture/support (#41)
+The later sync also re-read everything else, so the other items have a later retrieval time and nothing else new.
+$ python3 participant/skills/context-work-item-model/normalize.py --root SCRATCH/context --out SCRATCH/model
+------------------------------------------------------------------------------
+work-item-model: model work-item/1. Read 15 saved records from 8 files. No request was sent anywhere
+work-item-model: canonical records: 14 held before this run. This run: 0 new, 10 updated, 4 unchanged. Held now: 14
+work-item-model:   UPDATED in place: github:I_kwFIX0101, in items/github-I_kwFIX0101.md. Changed: provenance.retrieved_at, provenance.sync_run
+work-item-model:   UPDATED in place: github:I_kwFIX0102, in items/github-I_kwFIX0102.md. Changed: title, container, source_updated_at, provenance.source_reference, provenance.source_url, provenance.retrieved_at, provenance.sync_run, github.repository, github.number, github.earlier_references
+work-item-model:   UPDATED in place: github:I_kwFIX0103, in items/github-I_kwFIX0103.md. Changed: provenance.retrieved_at, provenance.sync_run
+work-item-model:   UPDATED in place: github:I_kwFIX0104, in items/github-I_kwFIX0104.md. Changed: provenance.retrieved_at, provenance.sync_run
+work-item-model:   UPDATED in place: github:I_kwFIX0105, in items/github-I_kwFIX0105.md. Changed: provenance.retrieved_at, provenance.sync_run
+work-item-model:   UPDATED in place: jira:30003, in items/jira-30003.md. Changed: title, status, status_source, container, source_updated_at, provenance.source_reference, provenance.source_url, provenance.retrieved_at, provenance.sync_run, jira.key, jira.project, jira.status, jira.resolution
+work-item-model:   UPDATED in place: trello:62cfix000000000000000c01, in items/trello-62cfix000000000000000c01.md. Changed: provenance.retrieved_at, provenance.sync_run
+work-item-model:   UPDATED in place: trello:62cfix000000000000000c02, in items/trello-62cfix000000000000000c02.md. Changed: title, status, status_source, container, labels, source_updated_at, provenance.retrieved_at, provenance.sync_run, provenance.source_record, trello.board, trello.list, trello.position, trello.due_complete, trello.checklists, trello.comment_count
+work-item-model:   UPDATED in place: trello:62cfix000000000000000c03, in items/trello-62cfix000000000000000c03.md. Changed: provenance.retrieved_at, provenance.sync_run
+work-item-model:   UPDATED in place: trello:62cfix000000000000000c04, in items/trello-62cfix000000000000000c04.md. Changed: provenance.retrieved_at, provenance.sync_run
+work-item-model: could not be mapped: 1. No record was written for any of them
+work-item-model:   UNMAPPABLE: trello card 62cfix000000000000000c05, from context/trello/board.json: Trello no longer returns this card, so whether it is open, archived or deleted is not known. A status would be a guess
+work-item-model: files written: 10 records
+work-item-model: notes: 3 files, opened for reading only. SHA-256 before and after this run:
+work-item-model:   notes/github-I_kwFIX0102.md  before 49c8732f126ce09dbbd2940f696b542ce1b6f315cfb53fa2b88fd4e392ffc5e3  after 49c8732f126ce09dbbd2940f696b542ce1b6f315cfb53fa2b88fd4e392ffc5e3  same
+work-item-model:   notes/jira-30003.md  before 412fde43849adee5887a0154c60d0dafe7192df1f64c284169bd2639afb6f23e  after 412fde43849adee5887a0154c60d0dafe7192df1f64c284169bd2639afb6f23e  same
+work-item-model:   notes/trello-62cfix000000000000000c02.md  before d3793f14c196910fea35b3b4f5051b1185d943ee245469adcd7eaa9a053aeb33  after d3793f14c196910fea35b3b4f5051b1185d943ee245469adcd7eaa9a053aeb33  same
+------------------------------------------------------------------------------
+The three items, as they are now:
+  jira:30003                         file items/jira-30003.md
+      title "Export intake records as CSV, weekly"
+      reference OPS-17, in the project "Made-up project OPS", status done
+  trello:62cfix000000000000000c02    file items/trello-62cfix000000000000000c02.md
+      title "Export report as PDF and CSV"
+      reference fixc02, in the board "Other Board", status done
+  github:I_kwFIX0102                 file items/github-I_kwFIX0102.md
+      title "Add retry and backoff to the webhook sender"
+      reference acme-fixture/support#41, in the repository "acme-fixture/support", status open
+  ok   no new record was made: 0 new, and still 14 record files
+  ok   the set of identities is exactly what it was
+  ok   the Jira story kept its identity, jira:30003, and its record was updated in place, in the same file
+  ok     its title, its container and its reference all changed in that one record
+  ok   the Trello card kept its identity, trello:62cfix000000000000000c02, and its record was updated in place, in the same file
+  ok     its title, its container and its reference all changed in that one record
+  ok   the GitHub issue kept its identity, github:I_kwFIX0102, and its record was updated in place, in the same file
+  ok     its title, its container and its reference all changed in that one record
+  ok   the Jira story's key changed, DEMO-3 to OPS-17, and the GitHub issue's number and repository changed, and neither is part of an identity
+  ok   the moves changed status where the source or the status map says so: the story and the card are now done, and the issue is still open
+For comparison, what other choices of identity would have done with this same change:
+  identity from the key or number:  jira:DEMO-3  ->  jira:OPS-17      and  github:acme-fixture/platform#2  ->  github:acme-fixture/support#41
+  identity from the title:          all three titles changed
+  ok   an identity made from the key or number would have made 2 second records, and one made from the title 3. The stable identifier made none
+
+==============================================================================
+PART 4. Nothing changes at the source. Normalized a third time
+$ python3 participant/skills/context-work-item-model/normalize.py --root SCRATCH/context --out SCRATCH/model
+------------------------------------------------------------------------------
+work-item-model: model work-item/1. Read 15 saved records from 8 files. No request was sent anywhere
+work-item-model: canonical records: 14 held before this run. This run: 0 new, 0 updated, 14 unchanged. Held now: 14
+work-item-model: could not be mapped: 1. No record was written for any of them
+work-item-model:   UNMAPPABLE: trello card 62cfix000000000000000c05, from context/trello/board.json: Trello no longer returns this card, so whether it is open, archived or deleted is not known. A status would be a guess
+work-item-model: files written: 0 records
+work-item-model: notes: 3 files, opened for reading only. SHA-256 before and after this run:
+work-item-model:   notes/github-I_kwFIX0102.md  before 49c8732f126ce09dbbd2940f696b542ce1b6f315cfb53fa2b88fd4e392ffc5e3  after 49c8732f126ce09dbbd2940f696b542ce1b6f315cfb53fa2b88fd4e392ffc5e3  same
+work-item-model:   notes/jira-30003.md  before 412fde43849adee5887a0154c60d0dafe7192df1f64c284169bd2639afb6f23e  after 412fde43849adee5887a0154c60d0dafe7192df1f64c284169bd2639afb6f23e  same
+work-item-model:   notes/trello-62cfix000000000000000c02.md  before d3793f14c196910fea35b3b4f5051b1185d943ee245469adcd7eaa9a053aeb33  after d3793f14c196910fea35b3b4f5051b1185d943ee245469adcd7eaa9a053aeb33  same
+------------------------------------------------------------------------------
+  ok   nothing was written: 0 new, 0 updated, 14 unchanged
+  ok   every file in the model folder is byte for byte what it was before this run
+
+==============================================================================
+PART 5. The notes (criterion 7)
+  notes/jira-30003.md  SHA-256 412fde43849adee5887a0154c60d0dafe7192df1f64c284169bd2639afb6f23e
+  ok   the note on jira:30003 is unchanged after three runs and a rename and move, and still has the name of the item's record
+  notes/trello-62cfix000000000000000c02.md  SHA-256 d3793f14c196910fea35b3b4f5051b1185d943ee245469adcd7eaa9a053aeb33
+  ok   the note on trello:62cfix000000000000000c02 is unchanged after three runs and a rename and move, and still has the name of the item's record
+  notes/github-I_kwFIX0102.md  SHA-256 49c8732f126ce09dbbd2940f696b542ce1b6f315cfb53fa2b88fd4e392ffc5e3
+  ok   the note on github:I_kwFIX0102 is unchanged after three runs and a rename and move, and still has the name of the item's record
+  ok   the notes folder holds those three files and nothing normalization put there
+
+==============================================================================
+PART 6. A record is found by the identity written inside it, not by its file's name (criterion 2)
+A person renames the card's record file to my-favourite-card.md. The card is then renamed once more at the source, and normalized.
+$ python3 participant/skills/context-work-item-model/normalize.py --root SCRATCH/context --out SCRATCH/model
+------------------------------------------------------------------------------
+work-item-model: model work-item/1. Read 15 saved records from 8 files. No request was sent anywhere
+work-item-model: canonical records: 14 held before this run. This run: 0 new, 1 updated, 13 unchanged. Held now: 14
+work-item-model:   UPDATED in place: trello:62cfix000000000000000c02, in items/my-favourite-card.md. Changed: title
+work-item-model: could not be mapped: 1. No record was written for any of them
+work-item-model:   UNMAPPABLE: trello card 62cfix000000000000000c05, from context/trello/board.json: Trello no longer returns this card, so whether it is open, archived or deleted is not known. A status would be a guess
+work-item-model: files written: 1 record
+work-item-model: notes: 3 files, opened for reading only. SHA-256 before and after this run:
+work-item-model:   notes/github-I_kwFIX0102.md  before 49c8732f126ce09dbbd2940f696b542ce1b6f315cfb53fa2b88fd4e392ffc5e3  after 49c8732f126ce09dbbd2940f696b542ce1b6f315cfb53fa2b88fd4e392ffc5e3  same
+work-item-model:   notes/jira-30003.md  before 412fde43849adee5887a0154c60d0dafe7192df1f64c284169bd2639afb6f23e  after 412fde43849adee5887a0154c60d0dafe7192df1f64c284169bd2639afb6f23e  same
+work-item-model:   notes/trello-62cfix000000000000000c02.md  before d3793f14c196910fea35b3b4f5051b1185d943ee245469adcd7eaa9a053aeb33  after d3793f14c196910fea35b3b4f5051b1185d943ee245469adcd7eaa9a053aeb33  same
+------------------------------------------------------------------------------
+  ok   the record was found in my-favourite-card.md and updated there. No file with the old name came back, and there are still 14 records
+  ok   the model's own check accepts all 14 records
+  work-item-model: checked 14 records against model work-item/1. All fit
+
+RESULT: ALL CHECKS PASSED. 20 checks.

@@ -284,3 +284,8 @@ Every change this application made to your files, newest last.
 - `2026-11-23T21:56:35Z` playwright-failure-evidence: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-23T21:56:35Z` Submitted playwright-failure-evidence for review as submission-20261123215635-da4eb7.
 - `2026-11-23T22:05:59Z` Review of playwright-failure-evidence: approved by Claude (automated reviewer).
+- `2026-11-24T00:06:02Z` Started context-canonical-work-item as attempt context-attempt-002.
+- `2026-11-24T00:24:03Z` context-canonical-work-item: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-24T00:25:12Z` context-canonical-work-item: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-24T00:26:03Z` context-canonical-work-item: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-24T00:26:03Z` Submitted context-canonical-work-item for review as submission-20261124002603-6b241d.

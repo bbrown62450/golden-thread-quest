@@ -1,0 +1,27 @@
+{
+ "about": "The status map. A person keeps this file; normalization reads it and never changes it. It holds the decisions that no source system makes for you: which Trello list means what, what a Jira status means when its category was not saved, and which labels mean blocked. A list or status that is not here is not guessed at.",
+ "version": 1,
+ "trello": {
+  "lists": {
+   "6afdf3911014b50669965df7": {"status": "open", "name_when_mapped": "Backlog", "board": "GTQ Sandbox"},
+   "6afdf3957e2f7562515212f7": {"status": "in_progress", "name_when_mapped": "Doing", "board": "GTQ Sandbox"},
+   "6afdf3972df276a7f6779970": {"status": "in_progress", "name_when_mapped": "Review", "board": "GTQ Sandbox"},
+   "6afdf3997e1fced74c8bfb57": {"status": "done", "name_when_mapped": "Done", "board": "GTQ Sandbox"}
+  },
+  "blocked_labels": []
+ },
+ "jira": {
+  "site_url": "https://jira.example.invalid",
+  "my_account_id": "5b10a0000000000000000ada",
+  "status_ids": {
+   "1": {"status": "open", "name_when_mapped": "To Do"},
+   "3": {"status": "in_progress", "name_when_mapped": "In Progress"},
+   "10001": {"status": "done", "name_when_mapped": "Done"}
+  },
+  "dropped_resolutions": ["Won't Do", "Won't Fix", "Duplicate", "Cannot Reproduce"],
+  "blocked_link_types_inward": ["is blocked by"]
+ },
+ "github": {
+  "blocked_labels": []
+ }
+}
