@@ -578,9 +578,10 @@ attempts:
   quest_id: ba-slice-story
   quest_version: 1
   content_hash: sha256:502fed128448104ac9fff165d7f0ca55c251ef185a5cc82bec3746d8acfc0fad
-  state: submitted
+  state: verified
   started_at: '2026-11-24T21:55:24Z'
-  updated_at: '2026-11-24T22:29:18Z'
+  updated_at: '2026-11-24T22:40:40Z'
   evidence_path: participant/evidence/ba-slice-story/ba-attempt-008
   submission_id: submission-20261124222918-7278cc
-updated_at: '2026-11-24T22:29:18Z'
+  review_id: review-20261124224040-2c406a
+updated_at: '2026-11-24T22:40:40Z'
