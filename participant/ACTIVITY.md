@@ -344,3 +344,8 @@ Every change this application made to your files, newest last.
 - `2026-11-24T17:55:33Z` ba-extract-decisions: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-24T17:55:33Z` Submitted ba-extract-decisions for review as submission-20261124175533-06603a.
 - `2026-11-24T17:58:53Z` Review of ba-extract-decisions: approved by Claude (automated reviewer).
+- `2026-11-24T18:07:34Z` Started context-next-work as attempt context-attempt-008.
+- `2026-11-24T18:24:24Z` context-next-work: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-24T18:25:14Z` context-next-work: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-24T18:26:09Z` context-next-work: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-24T18:26:09Z` Submitted context-next-work for review as submission-20261124182609-0b6c70.

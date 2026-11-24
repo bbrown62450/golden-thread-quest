@@ -1,0 +1,354 @@
+Do the tests notice a broken ranking? context-next-work, attempt context-attempt-008
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/context-next-work/rank.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. Votes decide first: the most-voted item is ranked first (the scenario's mistake, criterion 1)
+  unittest result: FAILED (failures=13, errors=7)
+  tests that failed (20):
+    Blocked.test_a_link_that_is_not_an_identity_is_warned_about_and_not_guessed
+    Command.test_a_run_writes_the_recommendation_and_leaves_the_inputs_alone
+    AfterADependencyIsCompleted.test_an_item_that_only_shifted_says_what_moved_above_it
+    Reasons.test_changing_the_cited_field_moves_the_item
+    Missing.test_confidence_falls_one_step_for_each_missing_field_and_for_a_stale_copy
+    AnotherRule.test_due_first_puts_the_low_priority_item_due_tomorrow_near_the_top
+    Stale.test_exactly_at_the_limit_is_fresh_and_one_second_over_is_stale
+    Criteria.test_identity_decides_last
+    Stale.test_no_retrieved_at_an_unreadable_one_and_a_future_one_are_stale
+    AfterADependencyIsCompleted.test_the_change_is_explained_by_the_field_that_changed
+    Reasons.test_the_deciding_criterion_really_differs_and_the_earlier_ones_do_not
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    SameEveryRun.test_the_handed_in_order
+    Stale.test_the_handed_in_pick_is_second_place_and_the_stale_first_place_is_named
+    Command.test_the_rule_can_be_chosen
+    Criteria.test_titles_never_change_the_order
+    Blocked.test_two_blockers_are_both_named
+    Criteria.test_votes_never_change_the_order
+    AfterADependencyIsCompleted.test_what_waited_on_it_enters_the_ranking_and_it_leaves
+    Reasons.test_why_an_item_is_not_first_is_stated
+
+PLANTED BUG B. A blocked item is ranked like any other (criterion 2)
+  unittest result: FAILED (failures=16, errors=1)
+  tests that failed (17):
+    Blocked.test_a_blocked_item_is_not_ranked_and_its_blocker_is_named
+    Blocked.test_a_blocker_recorded_only_on_the_other_record
+    Blocked.test_a_blocker_with_no_record_blocks_and_is_named
+    Blocked.test_a_dropped_blocker_still_blocks
+    Criteria.test_a_later_criterion_never_overrides_an_earlier_one
+    Stale.test_a_stale_blocked_item_carries_the_warning_too
+    Blocked.test_an_undecided_decision_blocks_and_a_decided_one_does_not
+    Reasons.test_changing_the_cited_field_moves_the_item
+    AnotherRule.test_due_first_puts_the_low_priority_item_due_tomorrow_near_the_top
+    AfterADependencyIsCompleted.test_the_change_is_explained_by_the_field_that_changed
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    SameEveryRun.test_the_handed_in_order
+    Blocked.test_the_six_handed_in_blocked_items_and_their_blockers
+    Stale.test_the_three_handed_in_stale_ranked_items_each_carry_the_warning_in_the_file
+    Reasons.test_the_written_file_gives_a_reason_line_for_every_criterion_of_every_ranked_item
+    Criteria.test_waiters_decide_between_equal_priority_and_due
+    AfterADependencyIsCompleted.test_what_waited_on_it_enters_the_ranking_and_it_leaves
+
+PLANTED BUG C. A blocker with no record is taken as finished, so the item is not blocked (criterion 2)
+  unittest result: FAILED (failures=8)
+  tests that failed (8):
+    Blocked.test_a_blocker_with_no_record_blocks_and_is_named
+    AnotherRule.test_due_first_puts_the_low_priority_item_due_tomorrow_near_the_top
+    AfterADependencyIsCompleted.test_the_change_is_explained_by_the_field_that_changed
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    SameEveryRun.test_the_handed_in_order
+    Blocked.test_the_six_handed_in_blocked_items_and_their_blockers
+    Reasons.test_the_written_file_gives_a_reason_line_for_every_criterion_of_every_ranked_item
+    AfterADependencyIsCompleted.test_what_waited_on_it_enters_the_ranking_and_it_leaves
+
+PLANTED BUG D. A link recorded only on the blocker's record is ignored (criterion 2)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Blocked.test_a_blocker_recorded_only_on_the_other_record
+    Criteria.test_a_waiter_that_is_done_or_dropped_does_not_count
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+
+PLANTED BUG E. A dropped blocker counts as finished (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Blocked.test_a_dropped_blocker_still_blocks
+
+PLANTED BUG F. An undecided decision does not block (criterion 2)
+  unittest result: FAILED (failures=9)
+  tests that failed (9):
+    Blocked.test_an_undecided_decision_blocks_and_a_decided_one_does_not
+    Reasons.test_changing_the_cited_field_moves_the_item
+    AnotherRule.test_due_first_puts_the_low_priority_item_due_tomorrow_near_the_top
+    AfterADependencyIsCompleted.test_the_change_is_explained_by_the_field_that_changed
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    SameEveryRun.test_the_handed_in_order
+    Blocked.test_the_six_handed_in_blocked_items_and_their_blockers
+    Reasons.test_the_written_file_gives_a_reason_line_for_every_criterion_of_every_ranked_item
+    AfterADependencyIsCompleted.test_what_waited_on_it_enters_the_ranking_and_it_leaves
+
+PLANTED BUG G. A stale item gets no warning (criterion 3)
+  unittest result: FAILED (failures=1, errors=12)
+  tests that failed (13):
+    Command.test_a_run_writes_the_recommendation_and_leaves_the_inputs_alone
+    Stale.test_a_stale_blocked_item_carries_the_warning_too
+    Stale.test_a_stale_item_keeps_its_place_and_carries_a_warning
+    Blocked.test_no_blocked_item_has_a_place_and_the_file_names_each_blocker
+    SameEveryRun.test_separate_processes_with_different_hash_seeds_write_the_same_file
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Stale.test_the_handed_in_pick_is_second_place_and_the_stale_first_place_is_named
+    SameEveryRun.test_the_order_of_the_records_does_not_matter
+    Command.test_the_rule_can_be_chosen
+    Stale.test_the_three_handed_in_stale_ranked_items_each_carry_the_warning_in_the_file
+    Reasons.test_the_written_file_gives_a_reason_line_for_every_criterion_of_every_ranked_item
+    SameEveryRun.test_two_runs_give_the_same_text
+    Reasons.test_why_an_item_is_not_first_is_stated
+
+PLANTED BUG H. Exactly the limit counts as stale, and so the boundary moves (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Stale.test_exactly_at_the_limit_is_fresh_and_one_second_over_is_stale
+
+PLANTED BUG I. A copy with no retrieved_at is taken as fresh (criterion 3)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    SameEveryRun.test_a_different_clock_value_is_a_different_input
+    Missing.test_confidence_falls_one_step_for_each_missing_field_and_for_a_stale_copy
+    Stale.test_no_retrieved_at_an_unreadable_one_and_a_future_one_are_stale
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Stale.test_the_three_handed_in_stale_ranked_items_each_carry_the_warning_in_the_file
+
+PLANTED BUG J. A copy retrieved after the clock value is taken as fresh (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Stale.test_no_retrieved_at_an_unreadable_one_and_a_future_one_are_stale
+
+PLANTED BUG K. Start here is simply the first place, stale or not (criterion 3)
+  unittest result: FAILED (failures=10)
+  tests that failed (10):
+    SameEveryRun.test_a_different_clock_value_is_a_different_input
+    Command.test_a_run_writes_the_recommendation_and_leaves_the_inputs_alone
+    AnotherRule.test_due_first_puts_the_low_priority_item_due_tomorrow_near_the_top
+    Stale.test_start_here_is_the_first_fresh_item
+    AfterADependencyIsCompleted.test_the_change_is_explained_by_the_field_that_changed
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Stale.test_the_handed_in_pick_is_second_place_and_the_stale_first_place_is_named
+    Command.test_the_rule_can_be_chosen
+    AfterADependencyIsCompleted.test_what_waited_on_it_enters_the_ranking_and_it_leaves
+    Stale.test_with_nothing_fresh_nothing_is_recommended
+
+PLANTED BUG L. The limit is fixed at 48 hours, not read from the policy (criterion 3)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Stale.test_the_limit_comes_from_the_freshness_policy
+
+PLANTED BUG M. The last tie-break is dropped, so level items keep whatever order they arrived in (criteria 4 and 6)
+  unittest result: FAILED (failures=2, errors=32)
+  tests that failed (34):
+    SameEveryRun.test_a_different_clock_value_is_a_different_input
+    Blocked.test_a_link_that_is_not_an_identity_is_warned_about_and_not_guessed
+    Command.test_a_run_writes_the_recommendation_and_leaves_the_inputs_alone
+    Stale.test_a_stale_blocked_item_carries_the_warning_too
+    AfterADependencyIsCompleted.test_an_item_that_only_shifted_says_what_moved_above_it
+    Reasons.test_changing_the_cited_field_moves_the_item
+    Missing.test_confidence_falls_one_step_for_each_missing_field_and_for_a_stale_copy
+    AnotherRule.test_due_first_puts_the_low_priority_item_due_tomorrow_near_the_top
+    Reasons.test_each_place_says_which_criterion_put_it_below_the_one_above
+    Reasons.test_each_reason_gives_the_value_the_record_holds
+    Reasons.test_every_ranked_item_has_one_reason_for_each_criterion_and_each_names_a_field
+    Stale.test_exactly_at_the_limit_is_fresh_and_one_second_over_is_stale
+    Criteria.test_identity_decides_last
+    Blocked.test_no_blocked_item_has_a_place_and_the_file_names_each_blocker
+    AfterADependencyIsCompleted.test_no_change_in_the_inputs_gives_no_change
+    Stale.test_no_retrieved_at_an_unreadable_one_and_a_future_one_are_stale
+    SameEveryRun.test_separate_processes_with_different_hash_seeds_write_the_same_file
+    AfterADependencyIsCompleted.test_the_change_is_explained_by_the_field_that_changed
+    Reasons.test_the_deciding_criterion_really_differs_and_the_earlier_ones_do_not
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Missing.test_the_handed_in_items_with_missing_data
+    SameEveryRun.test_the_handed_in_order
+    Stale.test_the_handed_in_pick_is_second_place_and_the_stale_first_place_is_named
+    SameEveryRun.test_the_order_of_the_records_does_not_matter
+    Blocked.test_the_six_handed_in_blocked_items_and_their_blockers
+    Stale.test_the_three_handed_in_stale_ranked_items_each_carry_the_warning_in_the_file
+    AnotherRule.test_the_two_rules_use_the_same_criteria_in_another_order
+    Reasons.test_the_written_file_gives_a_reason_line_for_every_criterion_of_every_ranked_item
+    Criteria.test_titles_never_change_the_order
+    Blocked.test_two_blockers_are_both_named
+    SameEveryRun.test_two_runs_give_the_same_text
+    Criteria.test_votes_never_change_the_order
+    AfterADependencyIsCompleted.test_what_waited_on_it_enters_the_ranking_and_it_leaves
+    Reasons.test_why_an_item_is_not_first_is_stated
+
+PLANTED BUG N. Fewest waiters first, where the rule says most (criterion 4)
+  unittest result: FAILED (failures=8)
+  tests that failed (8):
+    Command.test_a_run_writes_the_recommendation_and_leaves_the_inputs_alone
+    AfterADependencyIsCompleted.test_an_item_that_only_shifted_says_what_moved_above_it
+    AnotherRule.test_due_first_puts_the_low_priority_item_due_tomorrow_near_the_top
+    AfterADependencyIsCompleted.test_the_change_is_explained_by_the_field_that_changed
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    SameEveryRun.test_the_handed_in_order
+    Stale.test_the_handed_in_pick_is_second_place_and_the_stale_first_place_is_named
+    Criteria.test_waiters_decide_between_equal_priority_and_due
+
+PLANTED BUG O. Due date is looked at before priority under the rule that says priority first (the conflict between criteria)
+  unittest result: FAILED (failures=16)
+  tests that failed (16):
+    Criteria.test_a_later_criterion_never_overrides_an_earlier_one
+    Missing.test_a_missing_priority_goes_after_every_priority_and_is_reported
+    Command.test_a_run_writes_the_recommendation_and_leaves_the_inputs_alone
+    Stale.test_a_stale_blocked_item_carries_the_warning_too
+    AfterADependencyIsCompleted.test_an_item_that_only_shifted_says_what_moved_above_it
+    Reasons.test_changing_the_cited_field_moves_the_item
+    Missing.test_confidence_does_not_change_the_place
+    AnotherRule.test_due_first_puts_the_low_priority_item_due_tomorrow_near_the_top
+    Reasons.test_every_ranked_item_has_one_reason_for_each_criterion_and_each_names_a_field
+    Criteria.test_priority_decides_first
+    AfterADependencyIsCompleted.test_the_change_is_explained_by_the_field_that_changed
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    SameEveryRun.test_the_handed_in_order
+    Stale.test_the_handed_in_pick_is_second_place_and_the_stale_first_place_is_named
+    AfterADependencyIsCompleted.test_what_waited_on_it_enters_the_ranking_and_it_leaves
+    Reasons.test_why_an_item_is_not_first_is_stated
+
+PLANTED BUG P. A missing priority is filled in as medium (criterion 5)
+  unittest result: FAILED (failures=6)
+  tests that failed (6):
+    Missing.test_a_missing_priority_goes_after_every_priority_and_is_reported
+    Stale.test_a_stale_blocked_item_carries_the_warning_too
+    AnotherRule.test_due_first_puts_the_low_priority_item_due_tomorrow_near_the_top
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    SameEveryRun.test_the_handed_in_order
+    AfterADependencyIsCompleted.test_what_waited_on_it_enters_the_ranking_and_it_leaves
+
+PLANTED BUG Q. A missing due date is placed before every due date (criterion 5)
+  unittest result: FAILED (failures=12)
+  tests that failed (12):
+    Missing.test_a_missing_due_date_goes_after_every_due_date_of_the_same_priority
+    Command.test_a_run_writes_the_recommendation_and_leaves_the_inputs_alone
+    AfterADependencyIsCompleted.test_an_item_that_only_shifted_says_what_moved_above_it
+    Reasons.test_changing_the_cited_field_moves_the_item
+    AnotherRule.test_due_first_puts_the_low_priority_item_due_tomorrow_near_the_top
+    AfterADependencyIsCompleted.test_the_change_is_explained_by_the_field_that_changed
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    SameEveryRun.test_the_handed_in_order
+    Stale.test_the_handed_in_pick_is_second_place_and_the_stale_first_place_is_named
+    Command.test_the_rule_can_be_chosen
+    AfterADependencyIsCompleted.test_what_waited_on_it_enters_the_ranking_and_it_leaves
+    Reasons.test_why_an_item_is_not_first_is_stated
+
+PLANTED BUG R. Missing data does not lower confidence (criterion 5)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Missing.test_confidence_does_not_change_the_place
+    Missing.test_confidence_falls_one_step_for_each_missing_field_and_for_a_stale_copy
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Missing.test_the_handed_in_items_with_missing_data
+
+PLANTED BUG S. A stale copy does not lower confidence (criteria 3 and 5)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Missing.test_confidence_falls_one_step_for_each_missing_field_and_for_a_stale_copy
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+
+PLANTED BUG T. A missing value is not reported as missing (criterion 5)
+  unittest result: FAILED (failures=7)
+  tests that failed (7):
+    Missing.test_a_date_that_does_not_exist_is_missing
+    Missing.test_confidence_does_not_change_the_place
+    Missing.test_confidence_falls_one_step_for_each_missing_field_and_for_a_stale_copy
+    Reasons.test_each_reason_gives_the_value_the_record_holds
+    Missing.test_nothing_is_filled_in
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Missing.test_the_handed_in_items_with_missing_data
+
+PLANTED BUG U. A date that does not exist is accepted as a date (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Missing.test_a_date_that_does_not_exist_is_missing
+
+PLANTED BUG V. The ranked items are left in the order of a set, which changes from run to run (criterion 6)
+  unittest result: FAILED (failures=18)
+  tests that failed (18):
+    Missing.test_a_missing_due_date_goes_after_every_due_date_of_the_same_priority
+    Missing.test_a_missing_priority_goes_after_every_priority_and_is_reported
+    Command.test_a_run_writes_the_recommendation_and_leaves_the_inputs_alone
+    AfterADependencyIsCompleted.test_an_item_that_only_shifted_says_what_moved_above_it
+    Reasons.test_changing_the_cited_field_moves_the_item
+    Criteria.test_created_decides_next
+    Criteria.test_due_date_decides_between_equal_priorities
+    AnotherRule.test_due_first_puts_the_low_priority_item_due_tomorrow_near_the_top
+    Criteria.test_priority_decides_first
+    AfterADependencyIsCompleted.test_the_change_is_explained_by_the_field_that_changed
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    SameEveryRun.test_the_handed_in_order
+    Stale.test_the_handed_in_pick_is_second_place_and_the_stale_first_place_is_named
+    Command.test_the_rule_can_be_chosen
+    Stale.test_the_three_handed_in_stale_ranked_items_each_carry_the_warning_in_the_file
+    Criteria.test_waiters_decide_between_equal_priority_and_due
+    AfterADependencyIsCompleted.test_what_waited_on_it_enters_the_ranking_and_it_leaves
+    Reasons.test_why_an_item_is_not_first_is_stated
+
+PLANTED BUG W. With no clock value, a fixed date is quietly used (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Command.test_no_clock_value_is_refused_and_nothing_is_written
+
+PLANTED BUG X. The deciding criterion reported is always the first one, whether or not the two items differ on it (criteria 1 and 7)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    Reasons.test_changing_the_cited_field_moves_the_item
+    Criteria.test_identity_decides_last
+    Reasons.test_the_deciding_criterion_really_differs_and_the_earlier_ones_do_not
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Reasons.test_why_an_item_is_not_first_is_stated
+
+PLANTED BUG Y. An assigned item is offered (it is somebody's already)
+  unittest result: FAILED (failures=7)
+  tests that failed (7):
+    NotOffered.test_assigned_in_progress_done_and_dropped_are_not_offered_with_the_field_cited
+    AnotherRule.test_due_first_puts_the_low_priority_item_due_tomorrow_near_the_top
+    AfterADependencyIsCompleted.test_the_change_is_explained_by_the_field_that_changed
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    SameEveryRun.test_the_handed_in_order
+    Reasons.test_the_written_file_gives_a_reason_line_for_every_criterion_of_every_ranked_item
+    AfterADependencyIsCompleted.test_what_waited_on_it_enters_the_ranking_and_it_leaves
+
+PLANTED BUG Z. An item in progress is offered
+  unittest result: FAILED (failures=2, errors=1)
+  tests that failed (3):
+    NotOffered.test_assigned_in_progress_done_and_dropped_are_not_offered_with_the_field_cited
+    NotOffered.test_no_status_is_not_offered
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+
+PLANTED BUG AA. A finished waiter still counts as waiting
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Criteria.test_a_waiter_that_is_done_or_dropped_does_not_count
+
+PLANTED BUG AB. Two records with one identity are accepted
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Command.test_two_records_with_one_identity_are_refused
+
+PLANTED BUG AC. The recommendation may be written over the inputs
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Command.test_writing_over_the_inputs_is_refused
+
+PLANTED BUG AD. A link that is not an identity is silently ignored, with no warning
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Blocked.test_a_link_that_is_not_an_identity_is_warned_about_and_not_guessed
+
+PLANTED BUG AE. The change report does not say which field differs between the two inputs
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    AfterADependencyIsCompleted.test_the_change_is_explained_by_the_field_that_changed
+
+After the last bug was taken out: rank.py is byte for byte what it was at the start. OK
+
+RESULT: all 31 planted bugs were caught by at least one test, and the file was restored.

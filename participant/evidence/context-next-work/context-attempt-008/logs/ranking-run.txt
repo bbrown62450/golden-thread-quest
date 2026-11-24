@@ -1,0 +1,309 @@
+The ranking run. context-next-work, attempt context-attempt-008
+Recorded by scripts/record_evidence.py. No request was sent anywhere. Every record is made up.
+The ranking is advice. Nothing was started, assigned or changed.
+
+==============================================================================
+PART 1. The ranking run, twice, on participant/context/next-work/inputs.md (criterion 6)
+
+RUN 1
+$ python3 participant/skills/context-next-work/rank.py rank --out SCRATCH/recommendation-1.md
+------------------------------------------------------------------------------
+Clock value: 2026-12-01T09:00:00Z. Rule: priority-first. A work item's copy is stale after 24 hours.
+   1. jira:61004                       confidence medium STALE
+   2. jira:61001                       confidence high
+   3. jira:61002                       confidence high
+   4. jira:61018                       confidence medium STALE
+   5. jira:61003                       confidence high
+   6. trello:7b2e000000000000000e0001  confidence medium
+   7. jira:61006                       confidence high
+   8. jira:61007                       confidence high
+   9. jira:61016                       confidence medium STALE
+  10. jira:61019                       confidence high
+  11. jira:61015                       confidence medium
+  12. jira:61008                       confidence high
+  13. trello:7b2e000000000000000e0002  confidence low
+  blocked      jira:61010                   by decision:E-301
+  blocked      jira:61017                   by jira:61018
+  blocked      jira:61014                   by jira:61099
+  blocked      jira:61005                   by jira:61001
+  blocked      github:I_kwFIXnw00001        by jira:61012
+  blocked      jira:61009                   by jira:61001
+  not offered  jira:61011                   `assigned_to` is `Developer B`
+  not offered  jira:61012                   `status` is `in_progress`
+  not offered  jira:61013                   `status` is `done`
+Start here: jira:61001, place 2
+Wrote recommendation-1.md. Nothing was started, assigned or changed.
+------------------------------------------------------------------------------
+exit code: 0
+SHA-256 of the recommendation it wrote: e2048fcb2e5df6327449fa4545a567224f72bcf33182a59bfca0dc6dbeb45c97
+
+RUN 2
+$ python3 participant/skills/context-next-work/rank.py rank --out SCRATCH/recommendation-2.md
+------------------------------------------------------------------------------
+Clock value: 2026-12-01T09:00:00Z. Rule: priority-first. A work item's copy is stale after 24 hours.
+   1. jira:61004                       confidence medium STALE
+   2. jira:61001                       confidence high
+   3. jira:61002                       confidence high
+   4. jira:61018                       confidence medium STALE
+   5. jira:61003                       confidence high
+   6. trello:7b2e000000000000000e0001  confidence medium
+   7. jira:61006                       confidence high
+   8. jira:61007                       confidence high
+   9. jira:61016                       confidence medium STALE
+  10. jira:61019                       confidence high
+  11. jira:61015                       confidence medium
+  12. jira:61008                       confidence high
+  13. trello:7b2e000000000000000e0002  confidence low
+  blocked      jira:61010                   by decision:E-301
+  blocked      jira:61017                   by jira:61018
+  blocked      jira:61014                   by jira:61099
+  blocked      jira:61005                   by jira:61001
+  blocked      github:I_kwFIXnw00001        by jira:61012
+  blocked      jira:61009                   by jira:61001
+  not offered  jira:61011                   `assigned_to` is `Developer B`
+  not offered  jira:61012                   `status` is `in_progress`
+  not offered  jira:61013                   `status` is `done`
+Start here: jira:61001, place 2
+Wrote recommendation-2.md. Nothing was started, assigned or changed.
+------------------------------------------------------------------------------
+exit code: 0
+SHA-256 of the recommendation it wrote: e2048fcb2e5df6327449fa4545a567224f72bcf33182a59bfca0dc6dbeb45c97
+  ok   both runs ended with exit code 0
+  ok   the second run printed exactly what the first printed
+  ok   the second run's recommendation is byte for byte the first run's
+  ok   it is byte for byte the handed-in recommendation.md
+  ok   the runs changed no file in participant/context/next-work: the inputs were not written to
+  ok   inputs.md is byte for byte what make_inputs.py writes, and rules.md is what the rules command writes, so neither was adjusted by hand
+  ok   five more runs, each a separate Python process with a different hash seed, wrote the same recommendation
+  ok   with the records in 20 different orders the recommendation is the same every time: 20 of 20
+
+The clock. Whether a copy is stale depends on what time it is, so the clock value is part of the input: 2026-12-01T09:00:00Z.
+With the clock line taken out of a copy of the inputs, and no --now:
+  NOT RANKED. No clock value was given. The computer's clock is not read. Put a line "- clock:" in the inputs, or give --now.
+  exit code: 2
+  ok   the ranking refuses, writes nothing, and does not fall back on the computer's clock
+  ok   rank.py has no call that reads the computer's clock
+  ok   a clock value two days later is a different input and gives a different answer: every copy is then stale, and nothing is recommended
+
+==============================================================================
+PART 2. A run after a dependency was completed: the ranking changes, and why
+A copy of the inputs was made in SCRATCH with one field changed: `status` of `jira:61001`, "Allergen labels on the menu", from
+"open" to "done". jira:61005 and jira:61009 wait on that item. Nothing else was changed, and the handed-in inputs were not touched.
+
+RUN 3
+$ python3 participant/skills/context-next-work/rank.py rank --inputs SCRATCH/inputs-after.md
+------------------------------------------------------------------------------
+Clock value: 2026-12-01T09:00:00Z. Rule: priority-first. A work item's copy is stale after 24 hours.
+   1. jira:61004                       confidence medium STALE
+   2. jira:61002                       confidence high
+   3. jira:61018                       confidence medium STALE
+   4. jira:61003                       confidence high
+   5. trello:7b2e000000000000000e0001  confidence medium
+   6. jira:61006                       confidence high
+   7. jira:61007                       confidence high
+   8. jira:61016                       confidence medium STALE
+   9. jira:61005                       confidence high
+  10. jira:61019                       confidence high
+  11. jira:61015                       confidence medium
+  12. jira:61008                       confidence high
+  13. jira:61009                       confidence medium
+  14. trello:7b2e000000000000000e0002  confidence low
+  blocked      jira:61010                   by decision:E-301
+  blocked      jira:61017                   by jira:61018
+  blocked      jira:61014                   by jira:61099
+  blocked      github:I_kwFIXnw00001        by jira:61012
+  not offered  jira:61001                   `status` is `done`
+  not offered  jira:61011                   `assigned_to` is `Developer B`
+  not offered  jira:61012                   `status` is `in_progress`
+  not offered  jira:61013                   `status` is `done`
+Start here: jira:61002, place 2
+Wrote recommendation-after.md. Nothing was started, assigned or changed.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the copy differs from the handed-in inputs in that one field and no other
+
+What changed between run 1 and run 3, and why:
+Fields that differ between the two inputs: `status` of `jira:61001`: "open" -> "done"
+  jira:61001                       place 2      -> not offered  because in the second input its `status` is `done`.
+  jira:61002                       place 3      -> place 2      because its own fields are unchanged. Above it, jira:61001 left the ranking.
+  jira:61003                       place 5      -> place 4      because its own fields are unchanged. Above it, jira:61001 left the ranking.
+  jira:61005                       blocked      -> place 9      because it was blocked by jira:61001, and that is finished in the second input.
+  jira:61006                       place 7      -> place 6      because its own fields are unchanged. Above it, jira:61001 left the ranking.
+  jira:61007                       place 8      -> place 7      because its own fields are unchanged. Above it, jira:61001 left the ranking.
+  jira:61009                       blocked      -> place 13     because it was blocked by jira:61001, and that is finished in the second input.
+  jira:61016                       place 9      -> place 8      because its own fields are unchanged. Above it, jira:61001 left the ranking.
+  jira:61018                       place 4      -> place 3      because its own fields are unchanged. Above it, jira:61001 left the ranking.
+  trello:7b2e000000000000000e0001  place 6      -> place 5      because its own fields are unchanged. Above it, jira:61001 left the ranking.
+  trello:7b2e000000000000000e0002  place 13     -> place 14     because its own fields are unchanged. Above it, jira:61001 left the ranking; jira:61005, jira:61009 entered it.
+Start here: jira:61001 -> jira:61002.
+  ok   the change report names the one field that differs: `status` of `jira:61001`
+  ok   jira:61005 and jira:61009 were blocked by jira:61001 and are now ranked, at places 9 and 13
+  ok   jira:61001 itself left the ranking: it is not offered, because its `status` is `done`
+  ok   "Start here" changed from jira:61001 to jira:61002
+  ok   the four other blocked items are still blocked, by the same blockers
+  ok   every item whose list or place differs is explained, and no line says only "its own fields changed": 11 lines
+Items whose list and place are the same in both runs: 11 of 22.
+
+==============================================================================
+PART 3. Criterion 1: every ranking reason cites a recorded field of the item
+Reasons given for the 13 ranked and 6 blocked items: 76, four for each.
+  ok   every one of the 76 names a field in backticks, and every reason about priority, due date or created date gives the value that record holds
+  1. jira:61004
+       priority: `priority` is `high`
+       due: `due` is `2026-12-02`, 1 day after the clock value
+       waiters: 0 open items wait on it. `blocks` names none, and no open item's `blocked_by` names it
+       created: `created` is `2026-11-08`
+  2. jira:61001
+       priority: `priority` is `high`
+       due: `due` is `2026-12-03`, 2 days after the clock value
+       waiters: 2 open items wait on it: `jira:61005` (`blocked_by` on `jira:61005`, `blocks` on `jira:61001`); `jira:61009` (`blocked_by` on `jira:61009`, `blocks` on `jira:61001`)
+       created: `created` is `2026-11-10`
+  3. jira:61002
+       priority: `priority` is `high`
+       due: `due` is `2026-12-03`, 2 days after the clock value
+       waiters: 0 open items wait on it. `blocks` names none, and no open item's `blocked_by` names it
+       created: `created` is `2026-11-12`
+  ok   the number of open items waiting on each item, counted again here from `blocks` and `blocked_by`, is the number the reason gives
+  ok   `votes` is not used: with every item's votes replaced by other numbers, the ranking, the blocked list and the pick are the same
+  ok   titles are not read: with every title replaced by words about urgency, the order is the same
+
+The scenario. The item with the most votes is github:I_kwFIXnw00001, "Dark mode", with 57.
+  ok   it is not recommended, and it has no place: it is blocked by jira:61012 and its copy is stale, and the recommendation says both
+
+==============================================================================
+PART 4. Criterion 2: blocked work is excluded, with the blocker named
+  jira:61010               BLOCKED BY decision:E-301, recorded in `needs_decision` on `jira:61010`
+  jira:61017               BLOCKED BY jira:61018, recorded in `blocked_by` on `jira:61017`
+  jira:61014               BLOCKED BY jira:61099, recorded in `blocked_by` on `jira:61014`
+  jira:61005               BLOCKED BY jira:61001, recorded in `blocked_by` on `jira:61005` and `blocks` on `jira:61001`
+  github:I_kwFIXnw00001    BLOCKED BY jira:61012, recorded in `blocked_by` on `github:I_kwFIXnw00001` and `blocks` on `jira:61012`
+  jira:61009               BLOCKED BY jira:61001, recorded in `blocked_by` on `jira:61009` and `blocks` on `jira:61001`
+  ok   6 items are blocked. None has a place, and none is in the ranked list
+  ok   the recommendation names each one's blocker, with the blocker's status and the field and record the link is written in
+  ok   the kinds of blocker are all there: an open item, one in progress, a decision still a question, an item with no record, and an item whose own copy is stale
+  ok   each of the 6, with its blocker finished in a copy of the inputs, is ranked. So it is the blocker, and nothing else, that keeps it out: 6 of 6
+
+==============================================================================
+PART 5. Criterion 3: items with stale context carry a warning
+  github:I_kwFIXnw00001    blocked     `retrieved_at` is `2026-11-24T08:00:00Z`, 7 days before the clock value. The limit is 24 hours
+  jira:61004               ranked      `retrieved_at` is `2026-11-24T08:00:00Z`, 7 days before the clock value. The limit is 24 hours
+  jira:61016               ranked      `retrieved_at` is not recorded, so the copy cannot be shown to be fresh
+  jira:61018               ranked      `retrieved_at` is `2026-11-20T10:00:00Z`, 10 days before the clock value. The limit is 24 hours
+  ok   4 items have stale context, and each carries a warning beginning STALE CONTEXT that gives the field, the age and the limit
+  ok   no item with fresh context carries that warning
+  ok   the 3 stale items that are ranked keep the places their recorded fields give them, 1, 4 and 9, and the file prints the warning under each
+  ok   "Start here" is jira:61001, at place 2, the first ranked item whose copy is fresh. The stale item at place 1, jira:61004, is named above it with its warning
+  ok   the limit, 24 hours, is the one in the approved freshness policy, read from that file
+  ok   a copy retrieved exactly 24 hours before the clock value is fresh, and one retrieved a second earlier is stale
+  ok   with jira:61004 fetched again, so that its copy is fresh, it becomes "Start here"
+
+==============================================================================
+PART 6. Criterion 4: ties are broken by a stated rule
+The rule: priority, then due, then waiters, then created, then identity. The first criterion on which two items differ decides between them.
+
+   2. jira:61001                       below jira:61004                       by due
+   3. jira:61002                       below jira:61001                       by waiters
+   4. jira:61018                       below jira:61002                       by due
+   5. jira:61003                       below jira:61018                       by due
+   6. trello:7b2e000000000000000e0001  below jira:61003                       by due
+   7. jira:61006                       below trello:7b2e000000000000000e0001  by priority
+   8. jira:61007                       below jira:61006                       by identity
+   9. jira:61016                       below jira:61007                       by created
+  10. jira:61019                       below jira:61016                       by due
+  11. jira:61015                       below jira:61019                       by due
+  12. jira:61008                       below jira:61015                       by priority
+  13. trello:7b2e000000000000000e0002  below jira:61008                       by priority
+  ok   for every pair of neighbours, the two are level on every criterion before the one named, and differ on the one named
+  ok   the handed-in data uses every level of the rule: created, due, identity, priority, waiters
+  ok   jira:61006 and jira:61007 are level on priority, due date, waiters and created date. Identity decides, and the file says so
+  ok   jira:61001 and jira:61002 are level on priority and due date. The number of items waiting decides: 2 against 0
+  ok   rules.md states the order, and that identity is last so that no tie is left
+
+==============================================================================
+PART 7. Criterion 5: missing data lowers confidence and is reported, not filled in
+  jira:61009                       blocked  missing: priority       confidence medium
+  jira:61015                       ranked   missing: due            confidence medium
+  trello:7b2e000000000000000e0001  ranked   missing: due            confidence medium
+  trello:7b2e000000000000000e0002  ranked   missing: priority, due  confidence low
+  ok   4 ranked or blocked items have missing data. Each says so in its reasons, in the words "not recorded" or "which is not a date"
+  ok   each has lower confidence than high, and the item missing two fields is at low
+  ok   every item with nothing missing and a fresh copy is at high
+  ok   nothing was filled in: the inputs file is unchanged, and the recommendation gives no priority and no due date for an item that has none
+  ok   an item with a missing value is placed after every item that has one: on priority, the one item without a priority is last. Among the high-priority items, the one with no due date is last of them
+  ok   when a person records the missing priority and due date, the item moves from place 13 to place 1 and its confidence goes from low to high. The ranking did not guess either value
+
+==============================================================================
+PART 8. Criterion 7: a person can disagree with a reason and see which field to change
+Each place below first names the criterion that put it under the item above. Here that field is changed, in a copy of the
+inputs, to one that beats the item above, and the ranking is run again.
+
+  jira:61001                       was below jira:61004                       by due       after changing that field: above it
+  jira:61002                       was below jira:61001                       by waiters   after changing that field: above it
+  jira:61018                       was below jira:61002                       by due       after changing that field: above it
+  jira:61003                       was below jira:61018                       by due       after changing that field: above it
+  trello:7b2e000000000000000e0001  was below jira:61003                       by due       after changing that field: above it
+  jira:61006                       was below trello:7b2e000000000000000e0001  by priority  after changing that field: above it
+  jira:61016                       was below jira:61007                       by created   after changing that field: above it
+  jira:61019                       was below jira:61016                       by due       after changing that field: above it
+  jira:61015                       was below jira:61019                       by due       after changing that field: above it
+  jira:61008                       was below jira:61015                       by priority  after changing that field: above it
+  trello:7b2e000000000000000e0002  was below jira:61008                       by priority  after changing that field: above it
+  ok   in 11 of 11 pairs, changing the one field named put the item above its neighbour
+  ok   the one pair decided by identity cannot be changed that way, since an identity is not edited: jira:61007. The file names the earlier fields to change
+  ok   the recommendation ends with a table of what to change for each kind of disagreement
+
+==============================================================================
+PART 9. Safety: the recommendation never starts, assigns or changes work
+
+Modules for connecting, mailing or running another program that Python had loaded after a ranking run: []
+  ok   none was loaded
+  ok   a run writes one file, the recommendation, and nothing else
+Told to write the recommendation over the inputs file:
+  NOT RANKED. Refused to write the recommendation over the inputs file.
+  ok   it refuses, with exit code 2, and the inputs are unchanged
+  ok   no record has a different status or assignee after the runs: the inputs file has the SHA-256 it had at the start
+
+==============================================================================
+PART 10. Stretch goals: another priority rule, and why an item was not first
+$ python3 participant/skills/context-next-work/rank.py rank --rule due-first --out SCRATCH/due-first.md
+------------------------------------------------------------------------------
+Clock value: 2026-12-01T09:00:00Z. Rule: due-first. A work item's copy is stale after 24 hours.
+   1. jira:61004                       confidence medium STALE
+   2. jira:61008                       confidence high
+   3. jira:61001                       confidence high
+   4. jira:61002                       confidence high
+   5. jira:61018                       confidence medium STALE
+   6. jira:61006                       confidence high
+   7. jira:61007                       confidence high
+   8. jira:61016                       confidence medium STALE
+   9. jira:61019                       confidence high
+  10. jira:61003                       confidence high
+  11. trello:7b2e000000000000000e0001  confidence medium
+  12. jira:61015                       confidence medium
+  13. trello:7b2e000000000000000e0002  confidence low
+  blocked      jira:61010                   by decision:E-301
+  ...
+Start here: jira:61008, place 2
+------------------------------------------------------------------------------
+Where each item is under each rule:
+  item                              priority-first  due-first
+  jira:61004                        1               1
+  jira:61001                        2               3
+  jira:61002                        3               4
+  jira:61018                        4               5
+  jira:61003                        5               10
+  trello:7b2e000000000000000e0001   6               11
+  jira:61006                        7               6
+  jira:61007                        8               7
+  jira:61016                        9               8
+  jira:61019                        10              9
+  jira:61015                        11              12
+  jira:61008                        12              2
+  trello:7b2e000000000000000e0002   13              13
+  ok   under due-first the same 13 items are ranked, the same 6 are blocked and the same 3 are not offered
+  ok   jira:61008, low priority and due the day after the clock value, moves from place 12 to place 2, and becomes "Start here" in place of jira:61001
+  ok   why an item was not first: all 12 items below first place say which criterion decides against first place, in the data and in the file
+  (11 lines "Why it is not first", and the item at place 2 gives the same fact in its "Placed below" line.)
+  ok   at the end, every file in participant/context/next-work is what it was at the start
+
+RESULT: ALL CHECKS PASSED. 56 checks.
