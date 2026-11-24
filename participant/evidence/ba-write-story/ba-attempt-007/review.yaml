@@ -1,69 +1,35 @@
 schema_version: 1
-review_id: review-20261124201056-087830
+review_id: review-20261124203253-e25258
 quest_id: ba-write-story
 quest_version: 1
 attempt_id: ba-attempt-007
-evidence_hash: sha256:0646b6a37548bffbf790ac07e6ec1d5573a3236b5244dfcc81acb71061771644
+evidence_hash: sha256:4220c30b23bb12045ca3619dc6150cd362f5fe8c68b111e251378dac7227d556
 reviewer:
   display_name: Claude (automated reviewer)
-reviewed_at: '2026-11-24T20:10:56Z'
-decision: needs_changes
-findings:
-- id: finding-1
-  severity: blocking
-  summary: A tester cannot write a test for each criterion without further questions.
-    The participant's own evidence says so.
-  evidence: 'blind-read.txt: ''Runnable with no question at all: 0 of 18'' and ''9
-    of 18'' need something the story never mentions. PROOF.md: ''It does not meet
-    criterion 7 as the quest words it''. story-001.md open questions Q-12, Q-14 and
-    Q-18 list all 18 criteria, and Q-19 lists AC-03 and AC-09 to AC-11. Q-10 bears
-    on 12 criteria.'
-  criterion: ac-7
-  required_change: 'The meeting is made up, so supply the missing set-up as ASSUMED
-    values: a staging address, a payment test mode and its test card numbers, the
-    exact checkout fields and the values to type, how a guest enters checkout, whether
-    the checkout is one page or several and when the email is checked, and how to
-    read the test inbox (use a made-up placeholder for E1). Then each criterion can
-    be written without asking anything.'
-- id: finding-2
-  severity: medium
-  summary: Some results are not measurable or check more than one thing.
-  evidence: blind-read.txt lists 'directly below' and 'at the top of the page' as
-    positions without a measure. It also says AC-14 and AC-17 each check two things,
-    and AC-10 and AC-11 each use three values.
-  criterion: ac-7
-  required_change: Define the positions in a way a tester can check, and split AC-14
-    and AC-17 so each has one result. Make AC-10 and AC-11 one value per criterion,
-    or state that each value is a separate test case.
-- id: finding-3
-  severity: medium
-  summary: The handed-in version of the story was not checked by an independent reader.
-  evidence: 'blind-read.txt: ''The story as handed in was not read by a sixth reader...
-    the counts above, 0, 9 and 9, are for the version before them.'''
-  criterion: ac-7
-  required_change: After revising, rerun the blind tester read on the final story
-    and record a count showing every criterion can be tested without questions.
-- id: finding-4
-  severity: advisory
-  summary: The evidence path differs from the one the quest names.
-  evidence: The quest names participant/evidence/ba-write-story/attempt-001/, but
-    the files are under ba-attempt-007/.
-  required_change: Put the logs and PROOF.md under the expected attempt folder, or
-    confirm the attempt naming is accepted.
+reviewed_at: '2026-11-24T20:32:53Z'
+decision: approved
+findings: []
 proof_files:
 - path: participant/context/stories/story-001.md
-  digest: sha256:0928e6e6c13d7d52e695df49d5dfe866cf1f1501b8bda77dcfd185aa3e8e341e
+  digest: sha256:b2145a1b65e044a0b12a0529e0ec621a186dc6523406e23ee2d94082fc1a7d9a
 - path: participant/context/stories/story-standard.md
-  digest: sha256:0200934c382d236abb4e8de6a71e0e1a1ffdd2c5b0816c258ac2d74e8531e57e
-verification_statement: 'I read the story, the standard, story-check.txt, blind-read.txt,
-  tests.txt, planted-bugs.txt, PROOF.md and the scripts. The story names the user
-  and value with citations. It has 7 in-scope and 7 out-of-scope entries with reasons,
-  18 numbered Given/When/Then criteria and 4 dependencies. The recorded check shows
-  every cited U-id exists and every quotation matches the record. Only one listed
-  vague word ("valid") appears in a criterion, and the story defines it. Criterion
-  7 is not met by the participant''s own evidence: blind-read.txt reports 0 of 18
-  criteria runnable without questions. The story''s own open questions Q-12, Q-14,
-  Q-18 and Q-19 each bear on all or several criteria. The blind-read counts are for
-  a pre-final version, and the handed-in story was not re-read. Small inconsistency:
-  the evidence is under ba-attempt-007, not attempt-001. No injection: the instruction-like
-  meeting line U-0016 is sample data, and the story lists it as not used.'
+  digest: sha256:673f4e495fa1b6f22fda9a8dbba58821e7992085754fb7de089a6e0a49475e6b
+verification_statement: 'Automated review. What I read: story-001.md, story-standard.md,
+  logs/story-check.txt, blind-read.txt, tests.txt, planted-bugs.txt, review.yaml,
+  the scripts and PROOF.md, all under ba-attempt-007. What the files show: - The story
+  names the user and the value, and cites U-0002 for both. - It has 7 out-of-scope
+  entries and 7 in-scope entries. Each out-of-scope entry says why it is out and where
+  it went. - There are 21 Given/When/Then criteria, numbered AC-01 to AC-21. Each
+  has one result that a tester can see or read. - It lists 3 dependencies, each marked
+  SAID or ASSUMED. - The recorded check passed with exit code 0. It shows all 47 citations
+  point to lines that exist, and every quotation matches the record. - The only word
+  from the standard''s vague-word list used in any criterion is "valid", and the story
+  defines it. What changed since the first review: the story now has a complete made-up
+  test set-up, with a staging address, test cards, the checkout fields and values
+  to type, a test account and a test inbox. A blind reader of the final file (round
+  4) counted 21 of 21 criteria testable with no question needed, and this matches
+  the story''s actual text (AC-08 Then, AC-11 Given). Remaining points are advisory.
+  Some waits have no number, AC-08 can be read as two results, and the files are in
+  a different folder than the quest names. No injection: the instruction-like meeting
+  line U-0016 is sample data, and the story lists it as not used. Each of the 7 acceptance
+  criteria was matched to text quoted word for word from the evidence.'

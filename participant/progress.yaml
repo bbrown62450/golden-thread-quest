@@ -558,10 +558,10 @@ attempts:
   quest_id: ba-write-story
   quest_version: 1
   content_hash: sha256:6a76f71a8f120cd0e2d9383fcb3cc033af38c5a908bd29ca1177532f8be12666
-  state: submitted
+  state: verified
   started_at: '2026-11-24T19:44:06Z'
-  updated_at: '2026-11-24T20:29:10Z'
+  updated_at: '2026-11-24T20:32:53Z'
   evidence_path: participant/evidence/ba-write-story/ba-attempt-007
   submission_id: submission-20261124202910-59bc5c
-  review_id: review-20261124201056-087830
-updated_at: '2026-11-24T20:29:10Z'
+  review_id: review-20261124203253-e25258
+updated_at: '2026-11-24T20:32:53Z'
