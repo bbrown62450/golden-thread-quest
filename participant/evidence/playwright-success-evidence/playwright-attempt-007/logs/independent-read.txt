@@ -1,0 +1,108 @@
+Independent reads of the evidence and of the test. playwright-success-evidence, attempt playwright-attempt-007
+Copied by hand, and shortened, from the readers' replies by the assistant that built this quest. No program wrote this file.
+
+Who the readers were: three separate AI assistants (Claude), each started fresh. No person read the work. Each was told to
+read only the files named to it, to run nothing and to write nothing. Those limits were given in words and not enforced.
+None saw another's reply. The test and its check were finished and passing before any reply was read.
+
+  Reader 1   given a copy of the validated folder as first built, AND NOTHING ELSE: no test, no application, no
+             explanation. It opened each picture as an image. Asked what the evidence shows was verified.
+  Reader 2   given the test, its helper, its settings, the application, the check program and its log. Asked whether each
+             assertion's mark is right, and where the check claims more than it tests.
+  Reader 3   given a copy of the validated folder as handed in, and nothing else. Reader 1's task, more briefly.
+
+==============================================================================
+READER 1. The evidence alone, as first built
+
+Could it tell what was verified? For each of the four rules: "partly". It gave the exact value and what it followed from
+for every one. Its reservation was the same each time: one basket shows a figure, and does not show a rule.
+The pictures: it wrote out the text it could see in each. All four matched their records exactly. "Nothing unlisted is
+visible and nothing is cut off at an edge."
+Sensitive content: "None found."
+What it would not accept:
+  - "All four show only a number on a page for a single input. A page with these four strings hard-coded passes
+    identically."
+  - R4 "is the weakest overall. 'Charged' means a text label on a confirmation page." No payment is recorded anywhere.
+  - Nothing in the folder came from the test runner itself. The list of steps was written by the test's own helper.
+  - The checksums are in the same folder as the pictures, so they show the folder agrees with itself and no more.
+  - "Nothing captured" at the other steps "is supported only weakly": a folder that is emptied and refilled cannot show
+    what was not put in it.
+  - The folder's README was headed "validated", "which overclaims".
+
+==============================================================================
+READER 2. The test, the helper and the check
+
+On the marks. It agreed with every NAVIGATION mark and every PRECONDITION mark but one.
+  - R4's precondition was half of R4's proof. The proof asserted the typed text £43.20 and not the total the test had read
+    from the page. So "equals what they were shown" rested on a precondition, which captures nothing.
+  - With the tax left out of the total, R4 as worded holds: 36.00 shown, 36.00 confirmed. The test failed all the same.
+On whether each value proves its rule. Each proves a figure for one basket. "PROOF R4 does not prove 'charged'; it proves a
+confirmation label." The expected values are typed by hand and never worked out from the figures on the page.
+On the helper.
+  - A thrown value that counts as false would be recorded as HELD and not thrown again. Playwright throws no such
+    thing, so it called this theoretical.
+  - If taking the picture failed, that error replaced the assertion's own.
+  - "Read" was read a different way from the way the assertion reads, so "exactly" was not exact about white space.
+  - The same id used twice would overwrite the first without a word.
+On a comment in the test. It said a checkout that printed the discount and ignored it "would pass R1 and fail here", at
+R3. The log showed otherwise: with the fault that was tried, it failed at R2 and R3 was never reached.
+On the check. Eleven checks claimed more than they tested, or could not fail. The plainest: "for each of the four rules at
+least one way of breaking it makes its own assertion fail" compared a table the author had typed with itself. Two checks
+on "nothing captured" tested a sentence the helper always prints.
+On the limits. The two the log named were honest and not complete. R4's was not named. The 20.01% trick works as well on
+the discount, and only the tax was tried. Four faults the application offers were not tried.
+On the scan. It listed what the patterns would miss, and said the criterion "holds vacuously: the app has no personal data
+or credential to leak."
+Its verdict on the seven criteria: six hold with a reservation. The fifth, that breaking the rule changes the evidence,
+"holds only for gross breaks".
+
+WHAT WAS CHANGED AFTER READERS 1 AND 2
+  The test. R4 now asserts the total the test read from the checkout page, and is worded as what the confirmation says.
+    Its precondition is only that a total is there to compare with. The comment was corrected, and the fault that makes
+    it true is now run.
+  The helper. A flag says whether the assertion failed. The assertion's own error is the one thrown, whatever else goes
+    wrong. A passing assertion with no picture fails. An id used twice fails. "Read" is read the way the assertion reads.
+  The records. Each now says "for the one basket this test uses" beside its result, and has a line "What this does not
+    show".
+  The folder. It now holds what Playwright itself reported, and its README is headed for what it is.
+  The check. The table check now uses what the runs did. Checks that tested the helper's own sentence were relabelled as
+    the helper's word, and the check on Playwright's own output folder carries the criterion. Duplicates were taken out.
+    Four more broken applications are run: the total ignoring the discount, a dead button, a wrong subtotal, and a
+    discount rate of 10.01%. Three limits are stated as limits. The scan has more patterns and each is shown to fire.
+
+==============================================================================
+READER 3. The evidence alone, as handed in
+
+For each rule it gave what was verified and the exact value. Could it tell from the folder alone?
+    R1  YES for the value shown. PARTLY for "10%": one basket cannot tell it from 4.00 off, "as the record admits"
+    R2  YES for the value. PARTLY for the rule
+    R3  YES
+    R4  PARTLY: the total shown before the order is not pictured, so the comparison "is the test's word"
+The pictures: all four "match exactly". "Nothing is cut off and nothing unlisted is visible in any of them."
+"The records are mostly careful, and 'HELD, for the one basket this test uses' is properly scoped."
+Personal data or credentials: "None."
+What it still found:
+  - Three sentences go further than the folder supports. runner-output.txt says it was "not written by the test or its
+    helper": it is a summary some program wrote, and the report it came from is not in the folder. The README points to
+    the contrast log, which is outside the folder. R4's heading still has the word "charged".
+  - Gaps the "does not show" lines leave out: the page could show fixed text; R2's 7.20 is also 18% of 40.00; R4's
+    earlier total is not pictured; and in a passing run "asserted" and "read" are the same by construction.
+  - The README says the folder is named validated. Its copy was not. One line of the step list gives 36.00 with no
+    pound sign. R2's heading and its test's title are worded differently.
+  - "Every item is the test's own account of a single passing run on one fixed basket ... so it shows four strings
+    appeared on screen rather than that the rules hold."
+
+NOT CHANGED AFTER READER 3
+  Nothing in the test, the helper or the evidence. Everything in its list above stands.
+  The check was run once more afterwards, because the project's secret scanner had reported the made-up credential the
+  check plants to test its own scan. Running it writes the folder again. The four pictures are byte for byte the ones
+  reader 3 saw, and the seven text files differ only in the time of the run and the milliseconds each test took.
+
+==============================================================================
+SUMMARY
+  Can a reader tell what was verified from the evidence alone? Two readers, given only the folder, each stated the rule,
+  the value and what it followed from for all four, and each read the pictures and found them to be what the records say.
+  Does the evidence show the rules hold? Both said no, and they are right. It shows each rule's figure, for one basket, on
+  a page. The records now say so themselves.
+  The marks: one was wrong, and was found by a reader.
+  The check: eleven of its checks were weaker than their labels, and were found by a reader.

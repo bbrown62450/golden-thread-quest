@@ -1,0 +1,329 @@
+The contrast run. playwright-success-evidence, attempt playwright-attempt-007
+Recorded by participant/tests/playwright/tools/success-evidence-check.ts.
+The checkout is made up and ran on this computer only, on 127.0.0.1. Every price, product and code in it is invented. It has no sign-in and holds no customer.
+Every broken application below was the corrected one with its harness switch set, or a copy in a scratch folder, deleted at the end. Paths are shown from the repository's top folder.
+
+==============================================================================
+PART 1. The passing run, and what it captured (criteria 1, 2 and 4)
+$ CHECKOUT_PORT=(a free port) GTQ_PROOF_DIR=SCRATCH/passing node ../../node_modules/@playwright/test/cli.js test --config success.config.ts --reporter json
+  (run from participant/tests/playwright. Playwright 1.63.0. The lines below are from its JSON report. The folder was then copied to validated/.)
+  passed  R1 · the discount is 10% of the subtotal
+  passed  R2 · tax is 20% of the goods after the discount
+  passed  R3 · the total is the subtotal, less the discount, plus the tax
+  passed  R4 · the confirmation says the customer was charged the total they were shown
+  exit code 0
+
+The run's own list of every step, validated/run-output.txt:
+  R1  NAVIGATION    Open the checkout. Done. Nothing captured.
+  R1  PRECONDITION  The subtotal is £40.00. Done. Nothing captured.
+  R1  PROOF         The discount is 10% of the subtotal. Asserted `-£4.00`, read `-£4.00`. HELD. Captured R1-discount.md and R1-discount.png.
+  R2  NAVIGATION    Open the checkout. Done. Nothing captured.
+  R2  PRECONDITION  The subtotal is £40.00 and the discount is -£4.00, so the goods come to 36.00. Done. Nothing captured.
+  R2  PROOF         Tax is 20% of what the customer pays for the goods, after the discount. Asserted `£7.20`, read `£7.20`. HELD. Captured R2-tax.md and R2-tax.png.
+  R3  NAVIGATION    Open the checkout. Done. Nothing captured.
+  R3  PRECONDITION  The subtotal is £40.00, the discount -£4.00 and the tax £7.20. Done. Nothing captured.
+  R3  PROOF         The total is the subtotal, less the discount, plus the tax. Asserted `£43.20`, read `£43.20`. HELD. Captured R3-total.md and R3-total.png.
+  R4  NAVIGATION    Open the checkout. Done. Nothing captured.
+  R4  PRECONDITION  A total is shown before the order, and is read. Done. Nothing captured.
+  R4  NAVIGATION    Press "Buy now" and reach the confirmation. Done. Nothing captured.
+  R4  PROOF         The confirmation says the customer was charged the total they were shown. Asserted `£43.20`, read `£43.20`. HELD. Captured R4-charge.md and R4-charge.png.
+
+  ok   the four tests ran and passed, and the exit code is 0
+Files in validated/: R1-discount.md, R1-discount.png, R2-tax.md, R2-tax.png, R3-total.md, R3-total.png, R4-charge.md, R4-charge.png, README.md, run-output.txt, runner-output.txt
+  ok   criterion 1: there is exactly one record and one picture for each of the four rules, and nothing else was captured
+
+What each record says:
+  R1-discount
+    result HELD    asserted -£4.00    read from the page -£4.00
+    given: the subtotal £40.00; the label of the discount line Discount (WELCOME10)
+    asserted at meaningful-evidence.spec.ts, line 46
+    text inside the picture: Subtotal | £40.00 | Discount (WELCOME10) | -£4.00
+  R2-tax
+    result HELD    asserted £7.20    read from the page £7.20
+    given: the subtotal £40.00; the discount -£4.00
+    asserted at meaningful-evidence.spec.ts, line 68
+    text inside the picture: Subtotal | £40.00 | Discount (WELCOME10) | -£4.00 | Tax | £7.20
+  R3-total
+    result HELD    asserted £43.20    read from the page £43.20
+    given: the subtotal £40.00; the discount -£4.00; the tax £7.20
+    asserted at meaningful-evidence.spec.ts, line 93
+    text inside the picture: Subtotal | £40.00 | Discount (WELCOME10) | -£4.00 | Tax | £7.20 | Total | £43.20
+  R4-charge
+    result HELD    asserted £43.20    read from the page £43.20
+    given: the total shown on the checkout page, read by the test before the order £43.20
+    asserted at meaningful-evidence.spec.ts, line 121
+    text inside the picture: Total charged £43.20
+
+  ok   criterion 4: every record says the rule HELD, gives the value asserted and the same value read from the page, names what that value follows from, and says what it does not show
+
+The pictures:
+  R1-discount.png  185 x 72 pixels, 4781 bytes, sha256 695f75f5c5e3c0c0de8269b4b818e7b2e177ef5d7464c542fc33f65399e20859
+  R2-tax.png  185 x 108 pixels, 5945 bytes, sha256 bee7b7b84d9ce595f264f6b81e85e6eb2fd298d0efcc2eb98074bac4b2a225ef
+  R3-total.png  185 x 144 pixels, 7062 bytes, sha256 983965ff0f1e2cb69878041186d454d13da939413c4e699e12986563ff850182
+  R4-charge.png  151 x 18 pixels, 2336 bytes, sha256 5702cff5e9b744bb2c4dce04af9d5a4330c02933a1745411349d984ce31b925e
+  ok   each picture is a PNG, and is the picture its record names: the checksum in the record is the file's
+  ok   each picture is a part of the page and not the page: under a tenth of the 1280 x 720 the browser showed
+
+Steps in the run: 13. NAVIGATION 5, PRECONDITION 4, PROOF 4.
+  ok   the run's own list has nine navigation and precondition steps and four proofs, one for each rule. That list is the helper's word. The two checks after this one are what show nothing else was captured
+Playwright's own output folder after the run: 9 files. Not a copy of an attached record or picture: none.
+  ok   criterion 2: Playwright itself kept nothing of any step, navigation or otherwise: no trace, no video, no screenshot. Its folder holds only its copies of the eight attached files
+  ok   stretch goal: the evidence is attached to the report automatically. The report lists each test's record and picture, and nothing else
+
+==============================================================================
+PART 2. The test marks which assertions prove a rule (criterion 3)
+  line  35  NAVIGATION    await expect(page.getByRole("heading", { name: "Checkout" })).toBeVisible();
+  line  42  PRECONDITION  await expect(page.getByTestId("summary-subtotal")).toHaveText("£40.00");
+  line  63  PRECONDITION  await expect(page.getByTestId("summary-subtotal")).toHaveText("£40.00");
+  line  64  PRECONDITION  await expect(page.getByTestId("summary-discount")).toHaveText("-£4.00");
+  line  85  PRECONDITION  await expect(page.getByTestId("summary-subtotal")).toHaveText("£40.00");
+  line  86  PRECONDITION  await expect(page.getByTestId("summary-discount")).toHaveText("-£4.00");
+  line  87  PRECONDITION  await expect(page.getByTestId("summary-tax")).toHaveText("£7.20");
+  line 111  PRECONDITION  await expect(page.getByTestId("summary-total")).toHaveText(/^£\d+\.\d\d$/);
+  line 117  NAVIGATION    await expect(page.getByRole("heading", { name: "Order placed" })).toBeVisible();
+  line  46  PROOF         // PROOF of R1. The assertion: the discount line reads -£4.00.
+  line  68  PROOF         // PROOF of R2. The assertion: the tax line reads £7.20.
+  line  93  PROOF         // PROOF of R3. The assertion: the total line reads £43.20.
+  line 121  PROOF         // PROOF of R4. The assertion: the confirmation's amount is the total that was read from the checkout page before the order.
+  ok   every line of the test that has an expect() on it also has a comment saying NAVIGATION or PRECONDITION
+  ok   every call of proves() has a comment directly above it beginning "PROOF of R" and the rule's number, and there are four, one for each rule
+  ok   the line each record gives as "asserted at" is the line of that rule's proves() call in the test
+What this does not show: that the marks are right. That an assertion marked NAVIGATION proves no rule is a judgement. PROOF.md argues it.
+
+==============================================================================
+PART 3. The same test with a rule deliberately broken (criterion 5)
+For each way: where each rule's test ended, what its record then said, and whether its picture is the same file, byte for byte, as in the passing run.
+"fails at PRECONDITION" means the test stopped before its rule was checked, because a figure the rule starts from was already wrong. Nothing is captured then.
+
+BROKEN: the discount is worked out at 20%, not 10%.   (discount-is-20-percent; the rule it breaks: R1)
+  one line of a copy of the application: const DISCOUNT = { code: "WELCOME10", rate: 0.1 };  became  const DISCOUNT = { code: "WELCOME10", rate: 0.2 };
+  R1  fails at PROOF         record says DID NOT HOLD, asserted -£4.00, read -£8.00. picture DIFFERENT from the passing run's
+      Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-discount') | Expected: "-£4.00" | Received: "-£8.00"
+  ok   discount-is-20-percent: R1's assertion FAILS, its record says DID NOT HOLD with the value that was there, -£8.00, and its picture is not the passing run's
+  R2  fails at PRECONDITION  no record and no picture: the rule's assertion was not reached
+      Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-discount') | Expected: "-£4.00" | Received: "-£8.00"
+  R3  fails at PRECONDITION  no record and no picture: the rule's assertion was not reached
+      Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-discount') | Expected: "-£4.00" | Received: "-£8.00"
+  R4  holds                  record says HELD, asserted £38.40, read £38.40. picture DIFFERENT from the passing run's
+  ok   discount-is-20-percent: each rule's test ended where expected: R1 fails at PROOF, R2 fails at PRECONDITION, R3 fails at PRECONDITION, R4 holds
+
+BROKEN: the tax figure shown is worked out at 25%. The total is right.   (tax-shown-wrong; the rule it breaks: R2)
+  the application's harness switch: CHECKOUT_FAULT=tax-shown-wrong
+  R1  holds                  record says HELD, asserted -£4.00, read -£4.00. picture IDENTICAL to the passing run's
+  R2  fails at PROOF         record says DID NOT HOLD, asserted £7.20, read £9.00. picture DIFFERENT from the passing run's
+      Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-tax') | Expected: "£7.20" | Received: "£9.00"
+  ok   tax-shown-wrong: R2's assertion FAILS, its record says DID NOT HOLD with the value that was there, £9.00, and its picture is not the passing run's
+  R3  fails at PRECONDITION  no record and no picture: the rule's assertion was not reached
+      Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-tax') | Expected: "£7.20" | Received: "£9.00"
+  R4  holds                  record says HELD, asserted £43.20, read £43.20. picture IDENTICAL to the passing run's
+  ok   tax-shown-wrong: each rule's test ended where expected: R1 holds, R2 fails at PROOF, R3 fails at PRECONDITION, R4 holds
+
+BROKEN: the total leaves the tax out.   (tax-left-out-of-total; the rule it breaks: R3)
+  the application's harness switch: CHECKOUT_FAULT=tax-left-out-of-total
+  R1  holds                  record says HELD, asserted -£4.00, read -£4.00. picture IDENTICAL to the passing run's
+  R2  holds                  record says HELD, asserted £7.20, read £7.20. picture IDENTICAL to the passing run's
+  R3  fails at PROOF         record says DID NOT HOLD, asserted £43.20, read £36.00. picture DIFFERENT from the passing run's
+      Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-total') | Expected: "£43.20" | Received: "£36.00"
+  ok   tax-left-out-of-total: R3's assertion FAILS, its record says DID NOT HOLD with the value that was there, £36.00, and its picture is not the passing run's
+  R4  holds                  record says HELD, asserted £36.00, read £36.00. picture DIFFERENT from the passing run's
+  ok   tax-left-out-of-total: each rule's test ended where expected: R1 holds, R2 holds, R3 fails at PROOF, R4 holds
+
+BROKEN: the discount is shown, and the total adds the tax to the full subtotal.   (total-ignores-discount; the rule it breaks: R3: the discount is not taken off)
+  the application's harness switch: CHECKOUT_FAULT=total-ignores-discount
+  R1  holds                  record says HELD, asserted -£4.00, read -£4.00. picture IDENTICAL to the passing run's
+  R2  holds                  record says HELD, asserted £7.20, read £7.20. picture IDENTICAL to the passing run's
+  R3  fails at PROOF         record says DID NOT HOLD, asserted £43.20, read £47.20. picture DIFFERENT from the passing run's
+      Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-total') | Expected: "£43.20" | Received: "£47.20"
+  ok   total-ignores-discount: R3's assertion FAILS, its record says DID NOT HOLD with the value that was there, £47.20, and its picture is not the passing run's
+  R4  holds                  record says HELD, asserted £47.20, read £47.20. picture DIFFERENT from the passing run's
+  ok   total-ignores-discount: each rule's test ended where expected: R1 holds, R2 holds, R3 fails at PROOF, R4 holds
+
+BROKEN: the confirmation shows the subtotal where the amount charged belongs.   (confirmation-wrong; the rule it breaks: R4)
+  the application's harness switch: CHECKOUT_FAULT=confirmation-wrong
+  R1  holds                  record says HELD, asserted -£4.00, read -£4.00. picture IDENTICAL to the passing run's
+  R2  holds                  record says HELD, asserted £7.20, read £7.20. picture IDENTICAL to the passing run's
+  R3  holds                  record says HELD, asserted £43.20, read £43.20. picture IDENTICAL to the passing run's
+  R4  fails at PROOF         record says DID NOT HOLD, asserted £43.20, read £40.00. picture DIFFERENT from the passing run's
+      Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('confirmation-total') | Expected: "£43.20" | Received: "£40.00"
+  ok   confirmation-wrong: R4's assertion FAILS, its record says DID NOT HOLD with the value that was there, £40.00, and its picture is not the passing run's
+  ok   confirmation-wrong: each rule's test ended where expected: R1 holds, R2 holds, R3 holds, R4 fails at PROOF
+
+BROKEN: the discount is shown and is not taken off before the tax or the total.   (discount-ignored; the rule it breaks: R2 and R3)
+  the application's harness switch: CHECKOUT_FAULT=discount-ignored
+  R1  holds                  record says HELD, asserted -£4.00, read -£4.00. picture IDENTICAL to the passing run's
+  R2  fails at PROOF         record says DID NOT HOLD, asserted £7.20, read £8.00. picture DIFFERENT from the passing run's
+      Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-tax') | Expected: "£7.20" | Received: "£8.00"
+  ok   discount-ignored: R2's assertion FAILS, its record says DID NOT HOLD with the value that was there, £8.00, and its picture is not the passing run's
+  R3  fails at PRECONDITION  no record and no picture: the rule's assertion was not reached
+      Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-tax') | Expected: "£7.20" | Received: "£8.00"
+  R4  holds                  record says HELD, asserted £48.00, read £48.00. picture DIFFERENT from the passing run's
+  ok   discount-ignored: each rule's test ended where expected: R1 holds, R2 fails at PROOF, R3 fails at PRECONDITION, R4 holds
+
+BROKEN: pressing "Buy now" shows the checkout page again.   (button-dead; the rule it breaks: no rule: the order cannot be placed)
+  the application's harness switch: CHECKOUT_FAULT=button-dead
+  R1  holds                  record says HELD, asserted -£4.00, read -£4.00. picture IDENTICAL to the passing run's
+  R2  holds                  record says HELD, asserted £7.20, read £7.20. picture IDENTICAL to the passing run's
+  R3  holds                  record says HELD, asserted £43.20, read £43.20. picture IDENTICAL to the passing run's
+  R4  fails at NAVIGATION    no record and no picture: the rule's assertion was not reached
+      Error: expect(locator).toBeVisible() failed | Locator: getByRole('heading', { name: 'Order placed' }) | Expected: visible | Error: element(s) not found
+  ok   button-dead: each rule's test ended where expected: R1 holds, R2 holds, R3 holds, R4 fails at NAVIGATION
+
+BROKEN: a quantity of 2 is counted as 1, so the subtotal is 28.00.   (subtotal-wrong; the rule it breaks: no rule of the four: the basket is wrong)
+  the application's harness switch: CHECKOUT_FAULT=subtotal-wrong
+  R1  fails at PRECONDITION  no record and no picture: the rule's assertion was not reached
+      Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-subtotal') | Expected: "£40.00" | Received: "£28.00"
+  R2  fails at PRECONDITION  no record and no picture: the rule's assertion was not reached
+      Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-subtotal') | Expected: "£40.00" | Received: "£28.00"
+  R3  fails at PRECONDITION  no record and no picture: the rule's assertion was not reached
+      Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-subtotal') | Expected: "£40.00" | Received: "£28.00"
+  R4  holds                  record says HELD, asserted £30.24, read £30.24. picture DIFFERENT from the passing run's
+  ok   subtotal-wrong: each rule's test ended where expected: R1 fails at PRECONDITION, R2 fails at PRECONDITION, R3 fails at PRECONDITION, R4 holds
+
+BROKEN: the tax rate is 20.01%, which gives the same figures for this one basket.   (tax-rate-20.01-percent; the rule it breaks: R2, unseen)
+  one line of a copy of the application: const TAX_RATE = 0.2;  became  const TAX_RATE = 0.2001;
+  R1  holds                  record says HELD, asserted -£4.00, read -£4.00. picture IDENTICAL to the passing run's
+  R2  holds                  record says HELD, asserted £7.20, read £7.20. picture IDENTICAL to the passing run's
+  R3  holds                  record says HELD, asserted £43.20, read £43.20. picture IDENTICAL to the passing run's
+  R4  holds                  record says HELD, asserted £43.20, read £43.20. picture IDENTICAL to the passing run's
+  ok   tax-rate-20.01-percent: each rule's test ended where expected: R1 holds, R2 holds, R3 holds, R4 holds
+
+BROKEN: the discount rate is 10.01%, which gives the same figures for this one basket.   (discount-rate-10.01-percent; the rule it breaks: R1, unseen)
+  one line of a copy of the application: const DISCOUNT = { code: "WELCOME10", rate: 0.1 };  became  const DISCOUNT = { code: "WELCOME10", rate: 0.1001 };
+  R1  holds                  record says HELD, asserted -£4.00, read -£4.00. picture IDENTICAL to the passing run's
+  R2  holds                  record says HELD, asserted £7.20, read £7.20. picture IDENTICAL to the passing run's
+  R3  holds                  record says HELD, asserted £43.20, read £43.20. picture IDENTICAL to the passing run's
+  R4  holds                  record says HELD, asserted £43.20, read £43.20. picture IDENTICAL to the passing run's
+  ok   discount-rate-10.01-percent: each rule's test ended where expected: R1 holds, R2 holds, R3 holds, R4 holds
+
+CAPTURES THAT WERE EXACTLY THE SAME AS IN THE PASSING RUN WHILE SOMETHING WAS BROKEN: the record held, the value read was the same, and the picture
+was byte for byte the same.
+  R1-discount when the tax figure shown is worked out at 25%. The total is right
+  R4-charge when the tax figure shown is worked out at 25%. The total is right
+  R1-discount when the total leaves the tax out
+  R2-tax when the total leaves the tax out
+  R1-discount when the discount is shown, and the total adds the tax to the full subtotal
+  R2-tax when the discount is shown, and the total adds the tax to the full subtotal
+  R1-discount when the confirmation shows the subtotal where the amount charged belongs
+  R2-tax when the confirmation shows the subtotal where the amount charged belongs
+  R3-total when the confirmation shows the subtotal where the amount charged belongs
+  R1-discount when the discount is shown and is not taken off before the tax or the total
+  R1-discount when pressing "Buy now" shows the checkout page again
+  R2-tax when pressing "Buy now" shows the checkout page again
+  R3-total when pressing "Buy now" shows the checkout page again
+  R1-discount when the tax rate is 20.01%, which gives the same figures for this one basket
+  R2-tax when the tax rate is 20.01%, which gives the same figures for this one basket
+  R3-total when the tax rate is 20.01%, which gives the same figures for this one basket
+  R4-charge when the tax rate is 20.01%, which gives the same figures for this one basket
+  R1-discount when the discount rate is 10.01%, which gives the same figures for this one basket
+  R2-tax when the discount rate is 10.01%, which gives the same figures for this one basket
+  R3-total when the discount rate is 10.01%, which gives the same figures for this one basket
+  R4-charge when the discount rate is 10.01%, which gives the same figures for this one basket
+Most of these are as they should be: the thing broken was another rule's, and this rule did hold. A capture that changed whenever anything
+went wrong would say nothing about its own rule. Three groups are LIMITS, and are checked just below.
+
+For each rule, the ways of breaking it that made ITS OWN assertion fail with its evidence changed, worked out from the runs above:
+  R1: discount-is-20-percent
+  R2: tax-shown-wrong, discount-ignored
+  R3: tax-left-out-of-total, total-ignores-discount
+  R4: confirmation-wrong
+  ok   criterion 5: for each of the four rules, at least one of the runs above made that rule's own assertion fail, with its record and its picture changed
+  ok   LIMIT OBSERVED: when the discount is shown and not taken off, in either of the two ways tried, R1's capture is identical to the passing run's. The discount line does not show that the discount was applied
+  ok   LIMIT OBSERVED: with a tax rate of 20.01%, or a discount rate of 10.01%, all four captures are identical to the passing run's and every test passes. The evidence shows each rule's figure for this basket and for no other
+  ok   LIMIT OBSERVED: when a figure a rule starts from is wrong, that rule's test stops at its precondition and leaves no record at all. With the subtotal wrong, R1, R2 and R3 leave nothing, though 10% of the wrong subtotal may still have been taken
+  ok   a failure of navigation is told apart from a failure of a rule: with the button dead, R4 fails at NAVIGATION and leaves no record, and the other three hold
+NOT TRIED: an element missing from the page altogether, a wrong sign or a wrong format of amount, and any basket but the one.
+
+==============================================================================
+PART 4. A scan of the validated folder for a credential or personal data (criterion 6)
+Every text file in validated/ is searched for: a credential by name; a bearer or basic credential; a long string of letters and digits, such as a key; an email address; a telephone number; a card-like number; a home folder; an address with a query string or a name and password in it; a network address; a person's title and name.
+The checksums of the pictures and the dates of the run are long strings of digits. They are set aside first, and are checked to be what they claim to be.
+  R1-discount.md     nothing found
+  R1-discount.png    a picture. Its chunks: IHDR, IDAT, IEND. Chunks other than the image and its colour: none. Anything after the end of the image: no.
+  R2-tax.md          nothing found
+  R2-tax.png         a picture. Its chunks: IHDR, IDAT, IEND. Chunks other than the image and its colour: none. Anything after the end of the image: no.
+  R3-total.md        nothing found
+  R3-total.png       a picture. Its chunks: IHDR, IDAT, IEND. Chunks other than the image and its colour: none. Anything after the end of the image: no.
+  R4-charge.md       nothing found
+  R4-charge.png      a picture. Its chunks: IHDR, IDAT, IEND. Chunks other than the image and its colour: none. Anything after the end of the image: no.
+  README.md          nothing found
+  run-output.txt     nothing found
+  runner-output.txt  nothing found
+  ok   the scan finds no credential and no personal data in any of the 7 text files of validated/
+  ok   no picture holds a chunk other than the image and its colour, and none has anything after the end of the image
+Text inside the four pictures, as the records give it: Subtotal | £40.00 | Discount (WELCOME10) | -£4.00 | Subtotal | £40.00 | Discount (WELCOME10) | -£4.00 | Tax | £7.20 | Subtotal | £40.00 | Discount (WELCOME10) | -£4.00 | Tax | £7.20 | Total | £43.20 | Total charged £43.20
+  ok   the text inside every picture is a label of the order summary or an amount of money, and nothing else
+What the scan cannot do: read a picture. That the pictures hold only what the records say rests on the helper reading the same elements at the same moment.
+It is a list of patterns. It would miss a name with no title, a postal address, a date of birth, a short secret with no telling word beside it, and anything encoded.
+It reads validated/ only. THIS CRITERION IS MET MOSTLY BY THERE BEING NOTHING TO LEAK: the application has no sign-in, no account and no customer.
+
+That the scan can find something. One line is added to a copy of a record, in memory, and the scan must report it.
+The planted lines are described here and not printed, so that nothing in this log reads as one to another scanner.
+  planted: a line with the word Authorization, then Bearer and 18 made-up characters
+    found: a credential by name, a bearer or basic credential
+  ok   reported: a bearer or basic credential
+  planted: a line with a made-up email address at example.test
+    found: an email address
+  ok   reported: an email address
+  planted: a line with the path of a made-up home folder
+    found: a home folder
+  ok   reported: a home folder
+  planted: a line with 40 made-up hexadecimal characters
+    found: a long string of letters and digits, such as a key
+  ok   reported: a long string of letters and digits, such as a key
+  planted: a line with a telephone number from a range kept for made-up use
+    found: a telephone number
+  ok   reported: a telephone number
+  planted: a line with the word password, an equals sign and a made-up word
+    found: a credential by name
+  ok   reported: a credential by name
+  planted: a line with client_secret in quotes, a colon and a made-up value
+    found: a credential by name
+  ok   reported: a credential by name
+  planted: a line with a 16-digit made-up card number
+    found: a telephone number, a card-like number
+  ok   reported: a card-like number
+  planted: a line with a web address that has a query string
+    found: an address with a query string or a name and password in it
+  ok   reported: an address with a query string or a name and password in it
+  planted: a line with a network address from a range kept for examples
+    found: a network address
+  ok   reported: a network address
+  planted: a line with a title and a made-up surname
+    found: a person's title and name
+  ok   reported: a person's title and name
+
+==============================================================================
+PART 5. That this check can fail
+A record is spoiled in memory and read again.
+  ok   the record as it is, read the same way, has no problem
+Spoiled: the value read changed to £8.00, with the result left as HELD
+    PROBLEM: the value read, £8.00, is not the value asserted, £7.20
+  ok   reported: "is not the value asserted"
+Spoiled: the checksum changed
+    PROBLEM: the checksum it gives is not its picture's
+  ok   reported: "the checksum it gives is not its picture's"
+Spoiled: the result changed to DID NOT HOLD
+    PROBLEM: the result is "DID NOT HOLD" and not HELD
+  ok   reported: "and not HELD"
+Spoiled: the lines saying what the value follows from taken out
+    PROBLEM: it does not say what the value follows from
+  ok   reported: "does not say what the value follows from"
+Spoiled: the line saying what it does not show taken out
+    PROBLEM: it does not say what it does not show
+  ok   reported: "does not say what it does not show"
+Spoiled: the place it was asserted taken out
+    PROBLEM: it does not say where in the test the value was asserted
+  ok   reported: "does not say where in the test"
+Spoiled: the value asserted taken out of the text inside the picture
+    PROBLEM: the text inside its picture does not include the value asserted
+  ok   reported: "does not include the value asserted"
+
+==============================================================================
+AT THE END
+sha256 of the test:        f9abb5d805e5cd3f54d2c4a6bbe944d6b3ddcf824adfdc5c58fb98b349fbb610
+sha256 of the helper:      27dc12579351f1e69f9ee2d130da49c913f1406921566ebf1d74492486853138
+sha256 of the settings:    7d026a25414631ff97b283755cd6b4e68883c70aa594c33b6f6cb28211fcaa67
+sha256 of the application: 6bdc9bb3839b1c45700e1ab451816915eba7270de6ac64b7fac7fad0284ed5b3
+  ok   the test, the helper, the settings and the application are byte for byte what they were at the start, and the scratch folder is gone
+
+RESULT: ALL CHECKS PASSED. 55 checks.

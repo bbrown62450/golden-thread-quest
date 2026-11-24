@@ -1,0 +1,15 @@
+What Playwright itself reported for the run, taken from its JSON report. Not written by the test or its helper.
+
+Playwright 1.63.0. Command, run from participant/tests/playwright with CHECKOUT_PORT and GTQ_PROOF_DIR set:
+  node ../../node_modules/@playwright/test/cli.js test --config success.config.ts --reporter json
+
+  passed   244 ms   R1 · the discount is 10% of the subtotal
+          attached: R1-discount.md, R1-discount.png
+  passed   103 ms   R2 · tax is 20% of the goods after the discount
+          attached: R2-tax.md, R2-tax.png
+  passed   103 ms   R3 · the total is the subtotal, less the discount, plus the tax
+          attached: R3-total.md, R3-total.png
+  passed   123 ms   R4 · the confirmation says the customer was charged the total they were shown
+          attached: R4-charge.md, R4-charge.png
+
+exit code 0

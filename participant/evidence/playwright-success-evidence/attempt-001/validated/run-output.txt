@@ -1,0 +1,13 @@
+R1  NAVIGATION    Open the checkout. Done. Nothing captured.
+R1  PRECONDITION  The subtotal is £40.00. Done. Nothing captured.
+R1  PROOF         The discount is 10% of the subtotal. Asserted `-£4.00`, read `-£4.00`. HELD. Captured R1-discount.md and R1-discount.png.
+R2  NAVIGATION    Open the checkout. Done. Nothing captured.
+R2  PRECONDITION  The subtotal is £40.00 and the discount is -£4.00, so the goods come to 36.00. Done. Nothing captured.
+R2  PROOF         Tax is 20% of what the customer pays for the goods, after the discount. Asserted `£7.20`, read `£7.20`. HELD. Captured R2-tax.md and R2-tax.png.
+R3  NAVIGATION    Open the checkout. Done. Nothing captured.
+R3  PRECONDITION  The subtotal is £40.00, the discount -£4.00 and the tax £7.20. Done. Nothing captured.
+R3  PROOF         The total is the subtotal, less the discount, plus the tax. Asserted `£43.20`, read `£43.20`. HELD. Captured R3-total.md and R3-total.png.
+R4  NAVIGATION    Open the checkout. Done. Nothing captured.
+R4  PRECONDITION  A total is shown before the order, and is read. Done. Nothing captured.
+R4  NAVIGATION    Press "Buy now" and reach the confirmation. Done. Nothing captured.
+R4  PROOF         The confirmation says the customer was charged the total they were shown. Asserted `£43.20`, read `£43.20`. HELD. Captured R4-charge.md and R4-charge.png.
