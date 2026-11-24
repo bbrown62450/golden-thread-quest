@@ -1,0 +1,37 @@
+test_a_status_is_one_of_four_values (test_fidelity.Canonical) ... ok
+test_every_record_has_the_same_canonical_names (test_fidelity.Canonical) ... ok
+test_the_canonical_values (test_fidelity.Canonical) ... ok
+test_normalize_check_and_a_stop (test_fidelity.CommandLine) ... ok
+test_the_skill_reaches_no_network_and_check_writes_nothing (test_fidelity.CommandLine) ... ok
+test_a_copied_field_is_not_stored_twice_unless_copying_would_lose_a_character (test_fidelity.Preserved) ... ok
+test_a_field_the_mapping_has_never_heard_of_is_preserved_and_reported (test_fidelity.Preserved) ... ok
+test_a_preserved_value_is_the_source_s_own_characters (test_fidelity.Preserved) ... ok
+test_a_translated_field_is_preserved_as_well_as_mapped (test_fidelity.Preserved) ... ok
+test_an_empty_string_null_and_a_missing_field_stay_three_different_things (test_fidelity.Preserved) ... ok
+test_every_source_field_is_preserved_or_given_back_by_a_canonical_field (test_fidelity.Preserved) ... ok
+test_the_awkward_values_arrive_untouched (test_fidelity.Preserved) ... ok
+test_the_scenario_s_custom_field_is_preserved_whole (test_fidelity.Preserved) ... ok
+test_every_field_in_the_source_records_is_in_the_list_of_fields_considered_with_a_reason (test_fidelity.Rationale) ... ok
+test_every_listed_field_has_one_of_three_outcomes_and_a_canonical_field_only_if_mapped (test_fidelity.Rationale) ... ok
+test_the_document_lists_every_field_and_says_how_a_field_is_decided (test_fidelity.Rationale) ... ok
+test_a_changed_canonical_value_that_a_field_is_rebuilt_from_is_reported (test_fidelity.RoundTrip) ... ok
+test_a_changed_field_order_and_an_extra_field_are_reported (test_fidelity.RoundTrip) ... ok
+test_a_changed_source_record_is_reported_too (test_fidelity.RoundTrip) ... ok
+test_a_check_with_nothing_to_check_does_not_pass (test_fidelity.RoundTrip) ... ok
+test_a_dropped_field_of_each_kind_is_reported (test_fidelity.RoundTrip) ... ok
+test_a_dropped_preserved_field_is_reported_by_name (test_fidelity.RoundTrip) ... ok
+test_a_missing_or_an_extra_record_is_reported (test_fidelity.RoundTrip) ... ok
+test_a_reformatted_value_is_reported (test_fidelity.RoundTrip) ... ok
+test_a_reordered_list_or_a_summarised_value_is_reported (test_fidelity.RoundTrip) ... ok
+test_every_record_rebuilds_to_the_original_character_for_character (test_fidelity.RoundTrip) ... ok
+test_the_rebuild_uses_only_the_normalized_file (test_fidelity.RoundTrip) ... ok
+test_both_versions_of_the_mapping_rebuild_the_same_originals (test_fidelity.Stretch) ... ok
+test_preserved_fields_that_more_than_one_system_has_are_reported (test_fidelity.Stretch) ... ok
+test_the_normalized_file_is_what_the_code_writes_from_the_sources (test_fidelity.TheFilesAsHandedIn) ... ok
+test_the_rationale_is_what_the_code_writes (test_fidelity.TheFilesAsHandedIn) ... ok
+test_three_systems_two_records_each_and_each_system_has_fields_the_others_lack (test_fidelity.TheFilesAsHandedIn) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 0.102s
+
+OK

@@ -1,0 +1,195 @@
+Do the tests notice a broken normalizer or a broken check? context-preserve-source-fields, attempt context-attempt-004
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/context-preserve-source-fields/fidelity.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. A field no canonical field uses is dropped. This is the quest's scenario (criterion 2)
+  unittest result: FAILED (failures=12, errors=3)
+  tests that failed (15):
+    RoundTrip.test_a_changed_field_order_and_an_extra_field_are_reported
+    RoundTrip.test_a_changed_source_record_is_reported_too
+    RoundTrip.test_a_dropped_preserved_field_is_reported_by_name
+    Preserved.test_a_field_the_mapping_has_never_heard_of_is_preserved_and_reported
+    RoundTrip.test_a_reformatted_value_is_reported
+    RoundTrip.test_a_reordered_list_or_a_summarised_value_is_reported
+    Preserved.test_an_empty_string_null_and_a_missing_field_stay_three_different_things
+    Stretch.test_both_versions_of_the_mapping_rebuild_the_same_originals
+    RoundTrip.test_every_record_rebuilds_to_the_original_character_for_character
+    Preserved.test_every_source_field_is_preserved_or_given_back_by_a_canonical_field
+    CommandLine.test_normalize_check_and_a_stop
+    Preserved.test_the_awkward_values_arrive_untouched
+    TheFilesAsHandedIn.test_the_normalized_file_is_what_the_code_writes_from_the_sources
+    RoundTrip.test_the_rebuild_uses_only_the_normalized_file
+    Preserved.test_the_scenario_s_custom_field_is_preserved_whole
+
+PLANTED BUG B. A translated field's original is not preserved, because a canonical field "has it" (criterion 6)
+  unittest result: FAILED (failures=13, errors=2)
+  tests that failed (15):
+    RoundTrip.test_a_changed_field_order_and_an_extra_field_are_reported
+    Preserved.test_a_copied_field_is_not_stored_twice_unless_copying_would_lose_a_character
+    RoundTrip.test_a_dropped_field_of_each_kind_is_reported
+    RoundTrip.test_a_dropped_preserved_field_is_reported_by_name
+    Preserved.test_a_field_the_mapping_has_never_heard_of_is_preserved_and_reported
+    RoundTrip.test_a_reformatted_value_is_reported
+    Preserved.test_a_translated_field_is_preserved_as_well_as_mapped
+    Preserved.test_an_empty_string_null_and_a_missing_field_stay_three_different_things
+    Stretch.test_both_versions_of_the_mapping_rebuild_the_same_originals
+    RoundTrip.test_every_record_rebuilds_to_the_original_character_for_character
+    Preserved.test_every_source_field_is_preserved_or_given_back_by_a_canonical_field
+    CommandLine.test_normalize_check_and_a_stop
+    Preserved.test_the_awkward_values_arrive_untouched
+    TheFilesAsHandedIn.test_the_normalized_file_is_what_the_code_writes_from_the_sources
+    RoundTrip.test_the_rebuild_uses_only_the_normalized_file
+
+PLANTED BUG C. A copied field is never preserved, even when the canonical value would not write back the same characters (criterion 6)
+  unittest result: FAILED (failures=10)
+  tests that failed (10):
+    Preserved.test_a_copied_field_is_not_stored_twice_unless_copying_would_lose_a_character
+    RoundTrip.test_a_dropped_preserved_field_is_reported_by_name
+    Preserved.test_a_field_the_mapping_has_never_heard_of_is_preserved_and_reported
+    RoundTrip.test_a_reformatted_value_is_reported
+    Stretch.test_both_versions_of_the_mapping_rebuild_the_same_originals
+    RoundTrip.test_every_record_rebuilds_to_the_original_character_for_character
+    CommandLine.test_normalize_check_and_a_stop
+    Preserved.test_the_awkward_values_arrive_untouched
+    TheFilesAsHandedIn.test_the_normalized_file_is_what_the_code_writes_from_the_sources
+    RoundTrip.test_the_rebuild_uses_only_the_normalized_file
+
+PLANTED BUG D. A preserved value is parsed and written out again (criterion 3)
+  unittest result: FAILED (failures=11)
+  tests that failed (11):
+    RoundTrip.test_a_changed_field_order_and_an_extra_field_are_reported
+    RoundTrip.test_a_dropped_preserved_field_is_reported_by_name
+    Preserved.test_a_field_the_mapping_has_never_heard_of_is_preserved_and_reported
+    Preserved.test_a_preserved_value_is_the_source_s_own_characters
+    RoundTrip.test_a_reformatted_value_is_reported
+    Stretch.test_both_versions_of_the_mapping_rebuild_the_same_originals
+    RoundTrip.test_every_record_rebuilds_to_the_original_character_for_character
+    CommandLine.test_normalize_check_and_a_stop
+    Preserved.test_the_awkward_values_arrive_untouched
+    TheFilesAsHandedIn.test_the_normalized_file_is_what_the_code_writes_from_the_sources
+    RoundTrip.test_the_rebuild_uses_only_the_normalized_file
+
+PLANTED BUG E. A preserved value is written out compactly, with no spaces (criterion 3)
+  unittest result: FAILED (failures=15)
+  tests that failed (15):
+    RoundTrip.test_a_changed_field_order_and_an_extra_field_are_reported
+    RoundTrip.test_a_dropped_field_of_each_kind_is_reported
+    RoundTrip.test_a_dropped_preserved_field_is_reported_by_name
+    Preserved.test_a_field_the_mapping_has_never_heard_of_is_preserved_and_reported
+    Preserved.test_a_preserved_value_is_the_source_s_own_characters
+    RoundTrip.test_a_reformatted_value_is_reported
+    RoundTrip.test_a_reordered_list_or_a_summarised_value_is_reported
+    Preserved.test_a_translated_field_is_preserved_as_well_as_mapped
+    Stretch.test_both_versions_of_the_mapping_rebuild_the_same_originals
+    RoundTrip.test_every_record_rebuilds_to_the_original_character_for_character
+    CommandLine.test_normalize_check_and_a_stop
+    Preserved.test_the_awkward_values_arrive_untouched
+    TheFilesAsHandedIn.test_the_normalized_file_is_what_the_code_writes_from_the_sources
+    RoundTrip.test_the_rebuild_uses_only_the_normalized_file
+    Preserved.test_the_scenario_s_custom_field_is_preserved_whole
+
+PLANTED BUG F. A field the mapping has never heard of is dropped (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Preserved.test_a_field_the_mapping_has_never_heard_of_is_preserved_and_reported
+
+PLANTED BUG G. The order of the fields is not kept (criterion 6)
+  unittest result: FAILED (failures=8)
+  tests that failed (8):
+    RoundTrip.test_a_changed_field_order_and_an_extra_field_are_reported
+    RoundTrip.test_a_dropped_preserved_field_is_reported_by_name
+    Preserved.test_a_field_the_mapping_has_never_heard_of_is_preserved_and_reported
+    Stretch.test_both_versions_of_the_mapping_rebuild_the_same_originals
+    RoundTrip.test_every_record_rebuilds_to_the_original_character_for_character
+    CommandLine.test_normalize_check_and_a_stop
+    TheFilesAsHandedIn.test_the_normalized_file_is_what_the_code_writes_from_the_sources
+    RoundTrip.test_the_rebuild_uses_only_the_normalized_file
+
+PLANTED BUG H. The check does not report a field that cannot be rebuilt (criteria 4 and 5)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    RoundTrip.test_a_dropped_field_of_each_kind_is_reported
+    RoundTrip.test_a_dropped_preserved_field_is_reported_by_name
+
+PLANTED BUG I. The check does not look at what a preserved value holds (criterion 4)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    RoundTrip.test_a_changed_source_record_is_reported_too
+    RoundTrip.test_a_reformatted_value_is_reported
+    RoundTrip.test_a_reordered_list_or_a_summarised_value_is_reported
+
+PLANTED BUG J. The check compares values as data, not as characters, so 3.0 and 3.00 are the same to it (criterion 3)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    RoundTrip.test_a_changed_source_record_is_reported_too
+    RoundTrip.test_a_reformatted_value_is_reported
+
+PLANTED BUG K. The check does not look at a field that is rebuilt from a canonical value (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    RoundTrip.test_a_changed_canonical_value_that_a_field_is_rebuilt_from_is_reported
+
+PLANTED BUG L. The check passes when there is nothing to check
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    RoundTrip.test_a_check_with_nothing_to_check_does_not_pass
+
+PLANTED BUG M. A source record with no normalized record is not reported (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    RoundTrip.test_a_missing_or_an_extra_record_is_reported
+
+PLANTED BUG N. A normalized record with no source record is not reported
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    RoundTrip.test_a_missing_or_an_extra_record_is_reported
+
+PLANTED BUG O. A preserved field the source never had is not reported
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    RoundTrip.test_a_changed_field_order_and_an_extra_field_are_reported
+
+PLANTED BUG P. Trailing spaces are trimmed from a Trello card's canonical title (criterion 1)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    RoundTrip.test_a_changed_canonical_value_that_a_field_is_rebuilt_from_is_reported
+    Canonical.test_the_canonical_values
+    TheFilesAsHandedIn.test_the_normalized_file_is_what_the_code_writes_from_the_sources
+
+PLANTED BUG Q. A Trello label with an empty name is left out of the canonical labels (criterion 1)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Canonical.test_the_canonical_values
+    TheFilesAsHandedIn.test_the_normalized_file_is_what_the_code_writes_from_the_sources
+
+PLANTED BUG R. A Jira issue closed as "Won't Do" is counted as done (criterion 1)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Canonical.test_the_canonical_values
+    TheFilesAsHandedIn.test_the_normalized_file_is_what_the_code_writes_from_the_sources
+
+PLANTED BUG S. Mapping version 1 has the canonical due date too, so the two versions do not differ (stretch goal)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Stretch.test_both_versions_of_the_mapping_rebuild_the_same_originals
+
+PLANTED BUG T. A preserved field that only one system has is reported as shared (stretch goal)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Stretch.test_preserved_fields_that_more_than_one_system_has_are_reported
+
+PLANTED BUG U. A time is copied without being put in UTC (criterion 1)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    RoundTrip.test_a_reformatted_value_is_reported
+    Stretch.test_both_versions_of_the_mapping_rebuild_the_same_originals
+    Canonical.test_the_canonical_values
+    TheFilesAsHandedIn.test_the_normalized_file_is_what_the_code_writes_from_the_sources
+
+After the last bug was taken out: fidelity.py is byte for byte what it was at the start. OK
+
+RESULT: all 21 planted bugs were caught by at least one test, and the file was restored.

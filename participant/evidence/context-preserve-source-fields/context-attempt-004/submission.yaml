@@ -1,0 +1,17 @@
+schema_version: 1
+submission_id: submission-20261124123543-695445
+quest_id: context-preserve-source-fields
+quest_version: 1
+attempt_id: context-attempt-004
+content_hash: sha256:cc1b3f3e784dbe1b05ccca0d7e686bb4af914ab34f9c4883dff69c5d300b8a44
+evidence_hash: sha256:81e2b667c05a1b3096aed56b2537b0298a4e3e5c5789fb53b0fb199b21e28fc9
+submitted_at: '2026-11-24T12:35:43Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/fidelity/mapping-rationale.md
+  digest: sha256:509734bf1b3faf665750cf25e57e1a161d591315c6fe90822a48f1fa3e1d4184
+- path: participant/context/fidelity/normalized.md
+  digest: sha256:8c2a2657f5cb1553dc631d275c6beadfdc15e1d400d26f22e8aae509259219b0
+- path: participant/context/fidelity/source-records.md
+  digest: sha256:67d8a1ec675a1821144337f9bd3d0631369f421ab5dbcfd7789695f0a1470376

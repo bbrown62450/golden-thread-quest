@@ -1,0 +1,218 @@
+The round-trip check. context-preserve-source-fields, attempt context-attempt-004
+Recorded by scripts/record_evidence.py. No request was sent anywhere. Every record is made up.
+
+==============================================================================
+PART 1. The handed-in files: participant/context/fidelity/source-records.md and normalized.md (criteria 4 and 6)
+Each source record is rebuilt from its normalized record alone, and the rebuilt text is compared with the original, character for character.
+$ python3 participant/skills/context-preserve-source-fields/fidelity.py check
+------------------------------------------------------------------------------
+fidelity: jira 10042: rebuilt, and identical to the original, character for character. 19 fields: 16 preserved as sent, 3 given back by canonical fields
+fidelity: jira 10043: rebuilt, and identical to the original, character for character. 17 fields: 13 preserved as sent, 4 given back by canonical fields
+fidelity: trello 62c0000000000000000000a1: rebuilt, and identical to the original, character for character. 18 fields: 15 preserved as sent, 3 given back by canonical fields
+fidelity: trello 62c0000000000000000000a2: rebuilt, and identical to the original, character for character. 18 fields: 15 preserved as sent, 3 given back by canonical fields
+fidelity: github I_kwFIX0201: rebuilt, and identical to the original, character for character. 20 fields: 16 preserved as sent, 4 given back by canonical fields
+fidelity: github I_kwFIX0202: rebuilt, and identical to the original, character for character. 20 fields: 16 preserved as sent, 4 given back by canonical fields
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: api address: jira `self`, github `url`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: container: trello `idBoard`, github `repository_url`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: created: jira `fields.created`, github `created_at`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: description: jira `fields.description`, trello `desc`, github `body`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: parent: jira `fields.parent`, github `sub_issues_summary`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: priority or order: jira `fields.priority`, trello `pos`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: type: jira `fields.issuetype`, github `type`
+fidelity: RESULT: 6 source records. Every one was rebuilt from its normalized record and is identical to the original
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the check passes: exit code 0
+  ok   there are 6 source records, 2 each for jira, trello and github, and each has a normalized record
+  ok   every one of the 6 was rebuilt and is identical to its original, character for character (criterion 6)
+  ok   normalized.md is exactly what the normalizer writes from source-records.md, so it was not adjusted by hand to pass
+Across the 6 records: 112 source fields. 91 are preserved as sent. 21 are given back by a canonical field.
+  ok   every source field is accounted for: preserved, or given back by a canonical field, and never both or neither (criterion 2)
+  ok   every record has the same canonical field names, in the same order (criterion 1)
+  ok   every preserved value is the source's own characters: each one is found, as it stands, in its source record (criterion 3)
+  ok   every field in the source records is in the mapping's list of fields considered, with its outcome and a reason (criterion 7)
+
+==============================================================================
+PART 2. Would a careless normalizer have changed anything? (criterion 3)
+For each preserved value: what parsing it as JSON and writing it out again would give, in three common ways of writing. Nothing in the skill does this.
+It is here to show what "untouched" protects, by measuring it on these records.
+  written out with the defaults of the language's JSON library: 1 of the 91 preserved values would come out different. For example:
+      trello 62c0000000000000000000a2  pos
+          as sent:   1e3
+          rewritten: 1000.0
+  written out without turning other alphabets into escapes: 3 of the 91 preserved values would come out different. For example:
+      jira 10042  fields.summary
+          as sent:   "Fix the caf\u00e9 export"
+          rewritten: "Fix the café export"
+      trello 62c0000000000000000000a2  pos
+          as sent:   1e3
+          rewritten: 1000.0
+      github I_kwFIX0202  body
+          as sent:   "Not worth it. \ud83d\udeab"
+          rewritten: "Not worth it. 🚫"
+  written out compactly, with no spaces: 29 of the 91 preserved values would come out different. For example:
+      jira 10042  fields.status
+          as sent:   {"id": "10003", "name": "In Review", "statusCategory": {"id"... (112 characters)
+          rewritten: {"id":"10003","name":"In Review","statusCategory":{"id":4,"k... (102 characters)
+      jira 10042  fields.assignee
+          as sent:   {"accountId": "5b10fixture0000000000ada", "displayName": "Fi... (94 characters)
+          rewritten: {"accountId":"5b10fixture0000000000ada","displayName":"Fixtu... (89 characters)
+      jira 10042  fields.issuetype
+          as sent:   {"id": "10001", "name": "Story", "subtask": false, "hierarch... (71 characters)
+          rewritten: {"id":"10001","name":"Story","subtask":false,"hierarchyLevel":0}
+  ok   each of the three ways of rewriting would change at least one preserved value: 1, 3 and 29 of 91
+  ok   the number sent as 1e3 would be changed by all three, and the escape in the Jira summary by the second
+  ok   3.0 and 65535.5 would survive all three in this language, and are preserved as sent all the same
+
+==============================================================================
+PART 3. A field is dropped on purpose (criterion 5)
+The scenario's field: the Trello board's custom field for customer impact. Its line is deleted from a copy of normalized.md, in SCRATCH, and the check is run on the copy.
+The line deleted:
+  customFieldItems: [{"idCustomField": "64e0000000000000000000... (202 characters)
+$ python3 participant/skills/context-preserve-source-fields/fidelity.py check --normalized SCRATCH/normalized.md
+------------------------------------------------------------------------------
+fidelity: jira 10042: rebuilt, and identical to the original, character for character. 19 fields: 16 preserved as sent, 3 given back by canonical fields
+fidelity: jira 10043: rebuilt, and identical to the original, character for character. 17 fields: 13 preserved as sent, 4 given back by canonical fields
+fidelity: trello 62c0000000000000000000a1: NOT IDENTICAL. 1 difference:
+fidelity:     MISSING FIELD: customFieldItems is in the source record and cannot be rebuilt: it is neither preserved nor given back by a canonical field
+fidelity: trello 62c0000000000000000000a2: rebuilt, and identical to the original, character for character. 18 fields: 15 preserved as sent, 3 given back by canonical fields
+fidelity: github I_kwFIX0201: rebuilt, and identical to the original, character for character. 20 fields: 16 preserved as sent, 4 given back by canonical fields
+fidelity: github I_kwFIX0202: rebuilt, and identical to the original, character for character. 20 fields: 16 preserved as sent, 4 given back by canonical fields
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: api address: jira `self`, github `url`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: container: trello `idBoard`, github `repository_url`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: created: jira `fields.created`, github `created_at`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: description: jira `fields.description`, trello `desc`, github `body`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: parent: jira `fields.parent`, github `sub_issues_summary`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: priority or order: jira `fields.priority`, trello `pos`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: type: jira `fields.issuetype`, github `type`
+fidelity: RESULT: 6 source records. 1 could not be rebuilt identically
+------------------------------------------------------------------------------
+exit code: 2
+  ok   the check fails: exit code 2
+  ok   it names the dropped field: customFieldItems, in the Trello card's record
+  ok   it reports that one record and no other: the other 5 are still identical
+  ok   the handed-in normalized.md was not touched
+
+==============================================================================
+PART 4. Other ways of losing something, one at a time
+Each case changes the text of normalized.md in one place, in memory, and checks it. "Reported" is what the check then says about that record.
+  CASE: a translated field's original is dropped: Jira's status object, though the canonical status is still there (criterion 6)
+    reported: MISSING FIELD: fields.status is in the source record and can... (135 characters)
+  ok   a translated field's original is dropped: reported
+  CASE: a copied field's canonical value is dropped: the Jira key
+    reported: MISSING FIELD: key is in the source record and cannot be reb... (125 characters)
+  ok   a copied field's canonical value is dropped: reported
+  CASE: a number is tidied: 3.0 becomes 3 (criterion 3)
+    reported: CHANGED FIELD: fields.customfield_10016 was preserved as 3 a... (82 characters)
+  ok   a number is tidied: reported
+  CASE: a number is tidied: 1e3 becomes 1000.0 (criterion 3)
+    reported: CHANGED FIELD: pos was preserved as 1000.0 and the source sent 1e3
+  ok   a number is tidied: reported
+  CASE: a time is tidied to UTC seconds (criterion 3)
+    reported: CHANGED FIELD: fields.updated was preserved as "2026-11-17T0... (120 characters)
+  ok   a time is tidied to UTC seconds (criterion 3): reported
+  CASE: trailing spaces are trimmed from a description (criterion 3)
+    reported: CHANGED FIELD: fields.description was preserved as "The weekly export fails for any team with zero rows.\n\nSee... (74 characters) and the source sent "The weekly export fails for any team with zero r
+  ok   trailing spaces are trimmed from a description (criterion 3): reported
+  CASE: spaces inside an object are removed, leaving the same data (criterion 3)
+    reported: CHANGED FIELD: fields.status was preserved as {"id": "10003", "name": "In Review", "statusCategory": {"id"... (109 characters) and the source sent {"id": "10003", "name": "In Review", "statusCategory"
+  ok   spaces inside an object are removed, leaving the same data (criterion 3): reported
+  CASE: a list is sorted (criterion 3)
+    reported: CHANGED FIELD: idChecklists was preserved as ["65f0000000000... (178 characters)
+  ok   a list is sorted (criterion 3): reported
+  CASE: a long value is summarised: the customer-impact text is cut to one word (criterion 3)
+    reported: CHANGED FIELD: customFieldItems was preserved as [{"idCustomField": "64e0000000000000000000f1", "value": {"te... (149 characters) and the source sent [{"idCustomField": "64e0000000000000000000f1", "va
+  ok   a long value is summarised: reported
+  CASE: an empty string becomes null (criterion 3)
+    reported: CHANGED FIELD: fields.description was preserved as null and ... (78 characters)
+  ok   an empty string becomes null (criterion 3): reported
+  CASE: trailing spaces are trimmed from a canonical title that a field is rebuilt from
+    reported: CHANGED FIELD: name is rebuilt from the canonical field titl... (132 characters)
+  ok   trailing spaces are trimmed from a canonical title that a field is rebuilt from: reported
+  CASE: the order of the fields is lost
+    reported: ORDER: the fields are all there and the order they came in w... (71 characters)
+  ok   the order of the fields is lost: reported
+  CASE: a field is invented that the source never had
+    reported: EXTRA FIELD: invented is preserved and not in the source record
+  ok   a field is invented that the source never had: reported
+  CASE: a whole normalized record is missing
+    reported: github I_kwFIX0202: NOT IDENTICAL. 1 difference:
+    reported: MISSING RECORD: the source record has no normalized record
+  ok   a whole normalized record missing: reported
+  ok   a check given two files with no records in them does not pass. It says there is nothing to check
+
+==============================================================================
+PART 5. A field the mapping has never heard of
+A new field, customerTier, is added to the Trello card's source record in memory. The mapping does not list it. The record is normalized and checked.
+fidelity: trello 62c0000000000000000000a1: rebuilt, and identical to the original, character for character. 19 fields: 16 preserved as sent, 3 given back by canonical fields
+fidelity: NOTE: the field trello customerTier is not in the mapping's list of fields considered. It is preserved all the same
+  ok   it is preserved as sent, the record still rebuilds identically, and the check names it as not yet considered (criterion 2)
+
+==============================================================================
+PART 6. The mapping's two versions (stretch goal)
+Version 1 had no canonical due date: every due date was preserved only. Version 2 made due_at canonical. The same sources are normalized under each.
+$ python3 participant/skills/context-preserve-source-fields/fidelity.py normalize --out SCRATCH/normalized-v1.md --mapping-version 1
+------------------------------------------------------------------------------
+fidelity: normalized 6 source records with mapping version 1: 112 fields in all, 91 preserved as sent, 21 given back by canonical fields
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/context-preserve-source-fields/fidelity.py check --normalized SCRATCH/normalized-v1.md
+------------------------------------------------------------------------------
+fidelity: jira 10042: rebuilt, and identical to the original, character for character. 19 fields: 16 preserved as sent, 3 given back by canonical fields
+fidelity: jira 10043: rebuilt, and identical to the original, character for character. 17 fields: 13 preserved as sent, 4 given back by canonical fields
+fidelity: trello 62c0000000000000000000a1: rebuilt, and identical to the original, character for character. 18 fields: 15 preserved as sent, 3 given back by canonical fields
+fidelity: trello 62c0000000000000000000a2: rebuilt, and identical to the original, character for character. 18 fields: 15 preserved as sent, 3 given back by canonical fields
+fidelity: github I_kwFIX0201: rebuilt, and identical to the original, character for character. 20 fields: 16 preserved as sent, 4 given back by canonical fields
+fidelity: github I_kwFIX0202: rebuilt, and identical to the original, character for character. 20 fields: 16 preserved as sent, 4 given back by canonical fields
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: api address: jira `self`, github `url`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: container: trello `idBoard`, github `repository_url`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: created: jira `fields.created`, github `created_at`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: description: jira `fields.description`, trello `desc`, github `body`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: parent: jira `fields.parent`, github `sub_issues_summary`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: priority or order: jira `fields.priority`, trello `pos`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: type: jira `fields.issuetype`, github `type`
+fidelity: RESULT: 6 source records. Every one was rebuilt from its normalized record and is identical to the original
+------------------------------------------------------------------------------
+exit code: 0
+  ok   under version 1 every record rebuilds identically
+$ python3 participant/skills/context-preserve-source-fields/fidelity.py normalize --out SCRATCH/normalized-v2.md --mapping-version 2
+------------------------------------------------------------------------------
+fidelity: normalized 6 source records with mapping version 2: 112 fields in all, 91 preserved as sent, 21 given back by canonical fields
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/context-preserve-source-fields/fidelity.py check --normalized SCRATCH/normalized-v2.md
+------------------------------------------------------------------------------
+fidelity: jira 10042: rebuilt, and identical to the original, character for character. 19 fields: 16 preserved as sent, 3 given back by canonical fields
+fidelity: jira 10043: rebuilt, and identical to the original, character for character. 17 fields: 13 preserved as sent, 4 given back by canonical fields
+fidelity: trello 62c0000000000000000000a1: rebuilt, and identical to the original, character for character. 18 fields: 15 preserved as sent, 3 given back by canonical fields
+fidelity: trello 62c0000000000000000000a2: rebuilt, and identical to the original, character for character. 18 fields: 15 preserved as sent, 3 given back by canonical fields
+fidelity: github I_kwFIX0201: rebuilt, and identical to the original, character for character. 20 fields: 16 preserved as sent, 4 given back by canonical fields
+fidelity: github I_kwFIX0202: rebuilt, and identical to the original, character for character. 20 fields: 16 preserved as sent, 4 given back by canonical fields
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: api address: jira `self`, github `url`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: container: trello `idBoard`, github `repository_url`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: created: jira `fields.created`, github `created_at`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: description: jira `fields.description`, trello `desc`, github `body`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: parent: jira `fields.parent`, github `sub_issues_summary`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: priority or order: jira `fields.priority`, trello `pos`
+fidelity: PRESERVED IN MORE THAN ONE SYSTEM: type: jira `fields.issuetype`, github `type`
+fidelity: RESULT: 6 source records. Every one was rebuilt from its normalized record and is identical to the original
+------------------------------------------------------------------------------
+exit code: 0
+  ok   under version 2 every record rebuilds identically
+  ok   version 1 has no canonical due_at, and version 2 has one for the Jira story and the Trello card
+  ok   promoting the field changed nothing that is preserved: the preserved sections of the two versions are the same, line for line
+
+==============================================================================
+PART 7. Preserved fields that more than one system has (stretch goal)
+From the check's output in part 1:
+  api address: jira `self`, github `url`
+  container: trello `idBoard`, github `repository_url`
+  created: jira `fields.created`, github `created_at`
+  description: jira `fields.description`, trello `desc`, github `body`
+  parent: jira `fields.parent`, github `sub_issues_summary`
+  priority or order: jira `fields.priority`, trello `pos`
+  type: jira `fields.issuetype`, github `type`
+  ok   the check reports them, and the one preserved in all three systems is the description
+  ok   the scenario's custom field is not among them: only Trello has it
+
+RESULT: ALL CHECKS PASSED. 37 checks.
