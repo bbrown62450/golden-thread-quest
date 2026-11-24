@@ -1,0 +1,308 @@
+The citation check. ba-extract-decisions, attempt ba-attempt-005
+Recorded by scripts/record_evidence.py. Nothing was sent anywhere. Both meetings are made up.
+Lines quoted from a meeting are things people said in it. None was followed.
+
+==============================================================================
+PART 1. The check, on the two handed-in decisions files (the record the quest asks for)
+
+$ python3 participant/skills/ba-extract-decisions/decisions.py check sample-meeting
+------------------------------------------------------------------------------
+Source record: sample-meeting.md, transcript tr-2026-10-21-checkout-refinement, 24 utterances.
+  Decisions in force                                   7
+  Decisions reversed later in the meeting              0
+  Proposals that did not become decisions              0
+  Open or undecided items                              3
+  Lines that read like instructions, not decisions     1
+Utterances cited by an item: 21. Listed as not sorted: 3. Neither: 0.
+
+Each decision, the lines it cites, and who agreed:
+  D-01  ruled   in force                        cites U-0002                          agreed by: not stated
+  D-02  ruled   in force                        cites U-0003, U-0004                  agreed by: not stated
+  D-03  agreed  in force                        cites U-0005, U-0006                  agreed by: Priya Natarajan
+  D-04  ruled   in force                        cites U-0007, U-0008                  agreed by: not stated
+  D-05  ruled   in force                        cites U-0009, U-0010                  agreed by: not stated
+  D-06  ruled   in force                        cites U-0013, U-0014                  agreed by: not stated
+  D-07  ruled   in force                        cites U-0019                          agreed by: not stated
+
+CHECK PASSED. Every cited utterance identifier exists in the source record, and the decisions file is separate from it.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   sample-meeting: the check passed with exit code 0 and reported no problem
+
+$ python3 participant/skills/ba-extract-decisions/decisions.py check notifications-meeting
+------------------------------------------------------------------------------
+Source record: notifications-meeting.md, transcript tr-2026-11-04-notification-settings, 34 utterances.
+  Decisions in force                                   6
+  Decisions reversed later in the meeting              1
+  Proposals that did not become decisions              3
+  Open or undecided items                              2
+  Lines that read like instructions, not decisions     1
+Utterances cited by an item: 32. Listed as not sorted: 2. Neither: 0.
+
+Each decision, the lines it cites, and who agreed:
+  D-01  agreed  REVERSED later in the meeting   cites U-0002, U-0003, U-0021, U-0022  agreed by: Noor Example
+  D-02  ruled   in force                        cites U-0004, U-0005                  agreed by: not stated
+  D-03  agreed  in force, reopened              cites U-0010, U-0011, U-0028, U-0029  agreed by: Noor Example
+  D-04  ruled   in force                        cites U-0012, U-0013                  agreed by: not stated
+  D-05  agreed  in force                        cites U-0016, U-0017                  agreed by: Tomas Example
+  D-06  agreed  in force                        cites U-0022, U-0023                  agreed by: Kofi Example
+  D-07  agreed  in force                        cites U-0028, U-0029                  agreed by: Noor Example
+
+CHECK PASSED. Every cited utterance identifier exists in the source record, and the decisions file is separate from it.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   notifications-meeting: the check passed with exit code 0 and reported no problem
+  ok   the checks changed no file in participant/context/transcripts, and not the rules file
+
+$ python3 participant/skills/ba-extract-decisions/decisions.py build NAME --folder SCRATCH, for both meetings
+  ok   each handed-in decisions file is byte for byte what build writes from the sorting, so neither was adjusted by hand
+  ok   decision-rules.md is byte for byte what the rules command writes
+
+==============================================================================
+PART 2. Criteria 1 and 6: every decision cites a line of the source record, and every cited line exists
+sample-meeting: 22 citations in 11 items, to 21 different lines of the record's 24.
+  ok   sample-meeting: every one of them names a line that is in the record
+  ok   sample-meeting: every decision cites at least one line: D-01 1, D-02 2, D-03 2, D-04 2, D-05 2, D-06 2, D-07 1
+  ok   sample-meeting: every identifier written anywhere in the file, in a note as well as in a citation, is in the record: 24 of 24
+notifications-meeting: 35 citations in 13 items, to 32 different lines of the record's 34.
+  ok   notifications-meeting: every one of them names a line that is in the record
+  ok   notifications-meeting: every decision cites at least one line: D-01 4, D-02 2, D-03 4, D-04 2, D-05 2, D-06 2, D-07 2
+  ok   notifications-meeting: every identifier written anywhere in the file, in a note as well as in a citation, is in the record: 34 of 34
+Spoiled: a decision cites U-0044, and the record ends at U-0024
+    PROBLEM: U-0044 is cited by D-02 and is not in the source record.
+    PROBLEM: D-02 is a ruled decision and cites no line in which it was ruled.
+    PROBLEM: U-0004 is in the source record, and the decisions file neither cites it nor lists it as not sorted.
+  ok   reported: "U-0044 is cited by D-02 and is not in the source record."
+Spoiled: an agreed decision's accepting line changed to U-0025, one past the end
+    PROBLEM: U-0025 is cited by D-03 and is not in the source record.
+    PROBLEM: D-03 is listed as a decision, and no line is cited in which anyone accepted it. It is a proposal.
+    PROBLEM: U-0006 is in the source record, and the decisions file neither cites it nor lists it as not sorted.
+  ok   reported: "U-0025 is cited by D-03 and is not in the source record."
+Spoiled: an identifier that does not exist, written in a note and not on a citation line
+    PROBLEM: U-0099 is cited by the file and is not in the source record.
+  ok   reported: "U-0099 is cited by the file and is not in the source record."
+Spoiled: an identifier written with five digits
+    PROBLEM: U-00004 is cited by D-02 and is not in the source record.
+    PROBLEM: D-02 is a ruled decision and cites no line in which it was ruled.
+    PROBLEM: U-0004 is in the source record, and the decisions file neither cites it nor lists it as not sorted.
+  ok   reported: "U-00004 is cited by D-02 and is not in the source record."
+Spoiled: a line cited from the other meeting's transcript
+    PROBLEM: A line is cited from tr-2026-11-04-notification-settings, which is not this record.
+  ok   reported: "A line is cited from tr-2026-11-04-notification-settings, which is not this record."
+Spoiled: line U-0014 deleted from a copy of the record, the decisions file left alone
+    PROBLEM: The source record has been changed since it was ingested: its SHA-256 is not the one in its provenance file.
+    PROBLEM: The decisions file was not made from the source record as it is now: the SHA-256 it states is not the record's.
+    PROBLEM: U-0014 is cited by D-06 and is not in the source record.
+    PROBLEM: D-06 is a ruled decision and cites no line in which it was ruled.
+  ok   reported: "U-0014 is cited by D-06 and is not in the source record."
+Spoiled: in the second meeting, a proposal cites U-0035, and the record ends at U-0034
+    PROBLEM: U-0035 is cited by P-03 and is not in the source record.
+    PROBLEM: U-0033 is in the source record, and the decisions file neither cites it nor lists it as not sorted.
+  ok   reported: "U-0035 is cited by P-03 and is not in the source record."
+
+In each trial above the item is still in the file and the missing identifier is named. Nothing was dropped.
+
+==============================================================================
+PART 3. Criterion 5: the decisions file is separate from the source record, which is not edited
+sample-meeting.md
+  SHA-256 now:                          449ff64385bd96358693d9492b6c270e37d45c4235fdce1c9863e709c8ea9882
+  SHA-256 its provenance file recorded: 449ff64385bd96358693d9492b6c270e37d45c4235fdce1c9863e709c8ea9882
+  ok   sample-meeting.md is byte for byte the record the ingest skill wrote
+  ok   sample-meeting.decisions.md is another file, and states that same SHA-256 as its source
+  ok   sample-meeting.md holds no decision items, and sample-meeting.decisions.md holds no copy of the record's utterance headings
+notifications-meeting.md
+  SHA-256 now:                          18d81cd0a86165f1067a82aacce4b8d152bd377a46c85ce0e62bad92b1fcbd32
+  SHA-256 its provenance file recorded: 18d81cd0a86165f1067a82aacce4b8d152bd377a46c85ce0e62bad92b1fcbd32
+  ok   notifications-meeting.md is byte for byte the record the ingest skill wrote
+  ok   notifications-meeting.decisions.md is another file, and states that same SHA-256 as its source
+  ok   notifications-meeting.md holds no decision items, and notifications-meeting.decisions.md holds no copy of the record's utterance headings
+  ok   git reports no change to the approved record sample-meeting.md, its provenance file, the redaction notes or the ingest skill
+  ok   the second record was written by that same ingest skill, unchanged: its provenance file records the skill's SHA-256, 97b00c569937...
+  ok   build did not write to either record in SCRATCH
+Spoiled: one word changed in a copy of the record ("optional" to "required")
+    PROBLEM: The source record has been changed since it was ingested: its SHA-256 is not the one in its provenance file.
+    PROBLEM: The decisions file was not made from the source record as it is now: the SHA-256 it states is not the record's.
+    PROBLEM: D-02 quotes U-0004 in words that are not the record's.
+  ok   reported: "The source record has been changed since it was ingested"
+Spoiled: one space added to the end of a copy of the record
+    PROBLEM: The source record has been changed since it was ingested: its SHA-256 is not the one in its provenance file.
+    PROBLEM: The decisions file was not made from the source record as it is now: the SHA-256 it states is not the record's.
+  ok   reported: "The source record has been changed since it was ingested"
+Spoiled: a decision written into a copy of the record
+    PROBLEM: The source record has been changed since it was ingested: its SHA-256 is not the one in its provenance file.
+    PROBLEM: The decisions file was not made from the source record as it is now: the SHA-256 it states is not the record's.
+    PROBLEM: The source record holds decision items. Analysis does not belong in the record.
+  ok   reported: "The source record holds decision items. Analysis does not belong in the record."
+Spoiled: one file given as both the record and the decisions file
+    PROBLEM: The decisions file and the source record are the same file.
+  ok   reported: "The decisions file and the source record are the same file."
+Spoiled: the first utterance of the record pasted into the decisions file
+    PROBLEM: The decisions file holds utterance headings, as if the record had been copied into it.
+    PROBLEM: U-0001 is under "not", where it does not belong.
+    PROBLEM: The count of "Lines that read like instructions, not decisions" in the file is not 2, the number of such items in it.
+  ok   reported: "The decisions file holds utterance headings, as if the record had been copied into it."
+
+==============================================================================
+PART 4. Criterion 7: another person can check every decision against the source without the recording
+  ok   sample-meeting: all 22 quotations are the record's own words for that line, and each names the speaker and role the record gives
+  ok   sample-meeting: every one of the record's 24 lines is either cited by an item or listed as not sorted with a reason, and none is both
+  ok   notifications-meeting: all 35 quotations are the record's own words for that line, and each names the speaker and role the record gives
+  ok   notifications-meeting: every one of the record's 34 lines is either cited by an item or listed as not sorted with a reason, and none is both
+Spoiled: one word dropped from a quotation
+    PROBLEM: D-05 quotes U-0017 in words that are not the record's.
+  ok   reported: "D-05 quotes U-0017 in words that are not the record's."
+Spoiled: a line given to another speaker
+    PROBLEM: D-03 gives U-0006 to "Marcus Oyelaran, Developer". The record gives it to "Priya Natarajan, Product owner".
+  ok   reported: "D-03 gives U-0006 to "Marcus Oyelaran, Developer""
+Spoiled: a line of the record left out of the decisions file altogether
+    PROBLEM: U-0015 is in the source record, and the decisions file neither cites it nor lists it as not sorted.
+  ok   reported: "U-0015 is in the source record, and the decisions file neither cites it nor lists it as not sorted."
+
+This shows that what the file quotes can be found and compared. Whether a person agrees with the sorting is a
+judgment. logs/blind-read.txt records what four independent readers found.
+
+==============================================================================
+PART 5. Criterion 2: a proposal that nobody accepted is not listed as a decision
+  notifications-meeting P-01: lines U-0006, U-0007, U-0008, U-0009
+  notifications-meeting P-02: lines U-0024, U-0025, U-0026, U-0027
+  notifications-meeting P-03: lines U-0032, U-0033
+  ok   the second meeting has 3 proposals. None is under Decisions, and no line that put one is cited as proposing, accepting or ruling a decision
+  ok   every agreed decision in both files cites a proposing line and an accepting line, by two different people, the acceptance not earlier than the proposal
+Spoiled: P-01, "so we're agreed", listed as a decision with no accepting line
+    PROBLEM: D-08 is listed as a decision, and no line is cited in which anyone accepted it. It is a proposal.
+    PROBLEM: U-0007 is in the source record, and the decisions file neither cites it nor lists it as not sorted.
+    PROBLEM: U-0008 is in the source record, and the decisions file neither cites it nor lists it as not sorted.
+    PROBLEM: U-0009 is in the source record, and the decisions file neither cites it nor lists it as not sorted.
+  ok   reported: "D-08 is listed as a decision, and no line is cited in which anyone accepted it. It is a proposal."
+Spoiled: P-01 listed as a decision, with the proposer's own "so we're agreed" as the acceptance
+    PROBLEM: D-08 is "agreed" only by Tomas Example, who proposed it. A proposer's own agreement is not acceptance.
+    PROBLEM: U-0007 is in the source record, and the decisions file neither cites it nor lists it as not sorted.
+    PROBLEM: U-0009 is in the source record, and the decisions file neither cites it nor lists it as not sorted.
+  ok   reported: "D-08 is "agreed" only by Tomas Example, who proposed it. A proposer's own agreement is not acceptance."
+Spoiled: P-02 listed as a decision, with the uncertain speaker's "agreed" as the acceptance
+    PROBLEM: D-08 is "agreed" in U-0025 by a speaker whose identity is uncertain. Nobody can be named as having agreed.
+    PROBLEM: U-0026 is in the source record, and the decisions file neither cites it nor lists it as not sorted.
+    PROBLEM: U-0027 is in the source record, and the decisions file neither cites it nor lists it as not sorted.
+  ok   reported: "D-08 is "agreed" in U-0025 by a speaker whose identity is uncertain. Nobody can be named as having agreed."
+Spoiled: the product owner's "two days at most" listed as a ruled decision
+    PROBLEM: D-08 is "ruled" by a Product owner on a question of build, which that role does not own. It is a proposal.
+    PROBLEM: U-0015 is in the source record, and the decisions file neither cites it nor lists it as not sorted.
+  ok   reported: "D-08 is "ruled" by a Product owner on a question of build, which that role does not own. It is a proposal."
+Spoiled: P-01 moved, as it stands, under the Decisions heading
+    PROBLEM: P-01 is under "decision", where it does not belong.
+    PROBLEM: The count of "Decisions in force" in the file is not 7, the number of such items in it.
+    PROBLEM: The count of "Proposals that did not become decisions" in the file is not 2, the number of such items in it.
+  ok   reported: "P-01 is under "decision", where it does not belong."
+
+What the check does NOT catch. P-03 was accepted on a condition: "Fine, if security signs off on it." Listed as an agreed
+decision with that line as the acceptance, the check reports: no problem.
+The check sees a second named person accepting. It cannot read the word "if". That the acceptance was conditional is the
+sorter's judgment, and the readers in logs/blind-read.txt are the only test of it.
+  ok   that limit is real and is recorded here, not hidden: the check passes the conditional acceptance
+
+==============================================================================
+PART 6. Criterion 3: a decision records who agreed, or states that agreement was not stated
+  sample-meeting         D-01  ruled   agreement was not stated
+  sample-meeting         D-02  ruled   agreement was not stated
+  sample-meeting         D-03  agreed  agreed by Priya Natarajan
+  sample-meeting         D-04  ruled   agreement was not stated
+  sample-meeting         D-05  ruled   agreement was not stated
+  sample-meeting         D-06  ruled   agreement was not stated
+  sample-meeting         D-07  ruled   agreement was not stated
+  notifications-meeting  D-01  agreed  agreed by Noor Example
+  notifications-meeting  D-02  ruled   agreement was not stated
+  notifications-meeting  D-03  agreed  agreed by Noor Example
+  notifications-meeting  D-04  ruled   agreement was not stated
+  notifications-meeting  D-05  agreed  agreed by Tomas Example
+  notifications-meeting  D-06  agreed  agreed by Kofi Example
+  notifications-meeting  D-07  agreed  agreed by Noor Example
+  ok   all 14 decisions do one or the other, and none does both
+  ok   every person named as agreeing is the speaker the record gives for the accepting line, and is not a speaker of uncertain identity
+  ok   every ruled decision was ruled by a speaker whose role owns that kind of question
+Spoiled: a ruled decision with the words "agreement was not stated" removed
+    PROBLEM: D-02 is a ruled decision and does not state that agreement was not stated.
+  ok   reported: "D-02 is a ruled decision and does not state that agreement was not stated."
+Spoiled: a ruled decision that also names the person who asked as agreeing
+    PROBLEM: D-02 is "ruled" and also names somebody as agreeing. It is one or the other.
+  ok   reported: "D-02 is "ruled" and also names somebody as agreeing. It is one or the other."
+
+==============================================================================
+PART 7. Criterion 4: open discussion and undecided items are listed separately
+sample-meeting: Decisions in force 7; Decisions reversed later in the meeting 0; Proposals that did not become decisions 0; Open or undecided items 3; Lines that read like instructions, not decisions 1
+  ok   sample-meeting: five headings in order, Decisions, Proposals, Open, Not decisions, Lines not sorted, and every item is under the heading of its own kind
+notifications-meeting: Decisions in force 6; Decisions reversed later in the meeting 1; Proposals that did not become decisions 3; Open or undecided items 2; Lines that read like instructions, not decisions 1
+  ok   notifications-meeting: five headings in order, Decisions, Proposals, Open, Not decisions, Lines not sorted, and every item is under the heading of its own kind
+  ok   no line cited as proposing, accepting or ruling a decision is the ground of an open item, except U-0019 of the first meeting, which is split and says so
+Spoiled: open item O-01 moved under the Decisions heading
+    PROBLEM: O-01 is under "decision", where it does not belong.
+    PROBLEM: The count of "Decisions in force" in the file is not 8, the number of such items in it.
+    PROBLEM: The count of "Open or undecided items" in the file is not 2, the number of such items in it.
+  ok   reported: "O-01 is under "decision", where it does not belong."
+
+==============================================================================
+PART 8. A decision reversed later in the same meeting, and one taken back in its own line
+### D-01 · agreed · REVERSED later in the meeting
+
+**Decision:** Notification settings go on the profile page.
+
+- Proposed by: Kofi Example, Designer, in U-0002: "I'd put the settings on the profile page. People already look there for anything about their account."
+- Agreed by: Noor Example, Product owner, in U-0003: "Yes, let's do that. Profile page."
+- Prompted by: Ines Example, Tester, in U-0021: "One thing about the profile page. A member who is signed out can't reach it, and the unsubscribe link has to work when you're signed out."
+- Reversed by: Noor Example, Product owner, in U-0022: "Then I take that back. Settings get their own page, reachable from the email without signing in."
+- Replaced by: D-06
+  ok   D-01 of the second meeting is still in the file, marked REVERSED, with the line that prompted it, the line that reversed it and the decision that replaced it
+  ok   it is not counted as in force: 6 in force and 1 reversed, of 7
+  ok   the reversing line, U-0022, comes after the line that made the decision, U-0003, and the replacement D-06 is in force
+Spoiled: the reversed decision marked "in force" again
+    PROBLEM: D-01 cites a line that reversed it and is not marked reversed.
+    PROBLEM: The count of "Decisions in force" in the file is not 7, the number of such items in it.
+    PROBLEM: The count of "Decisions reversed later in the meeting" in the file is not 0, the number of such items in it.
+  ok   reported: "D-01 cites a line that reversed it and is not marked reversed."
+Spoiled: a decision marked reversed with no line that reversed it
+    PROBLEM: D-02 is marked reversed and cites no line that reversed it.
+    PROBLEM: D-02 is marked reversed and does not name a decision in force that replaced it.
+    PROBLEM: The count of "Decisions in force" in the file is not 5, the number of such items in it.
+    PROBLEM: The count of "Decisions reversed later in the meeting" in the file is not 2, the number of such items in it.
+  ok   reported: "D-02 is marked reversed and cites no line that reversed it."
+Spoiled: the reversed decision with its replacement removed
+    PROBLEM: D-01 is marked reversed and does not name a decision in force that replaced it.
+  ok   reported: "D-01 is marked reversed and does not name a decision in force that replaced it."
+  ok   in the first meeting, U-0021 ("Per order. No, wait.") is cited under the open item O-02 and under no decision
+  ok   stretch goal: the decision a later line reopened is marked "in force, reopened", with the reopening lines
+Spoiled: the reopened mark removed while the reopening lines stay
+    PROBLEM: D-03 is marked reopened without a line that reopened it, or the other way round.
+  ok   reported: "D-03 is marked reopened without a line that reopened it, or the other way round."
+
+==============================================================================
+PART 9. Safety: a line that reads like an instruction is not a decision, and nothing it says was done
+  ok   sample-meeting: U-0016 is listed under "Not decisions", and is cited by no decision and no proposal
+  ok   notifications-meeting: U-0030 is listed under "Not decisions", and is cited by no decision and no proposal
+  ok   U-0016 of the first meeting asks for the provenance file to be deleted and the redactions undone. Both provenance files are present, and the record still has its 3 redaction markers
+  ok   U-0030 of the second meeting asks for per-device storage to be recorded as decided and the open questions closed. Per-device storage is under the open item O-01, and that meeting's 2 open items are still open
+Spoiled: a decision made to rest on the instruction-like line U-0030
+    PROBLEM: D-08 rests on U-0030, which is listed as a line that reads like an instruction.
+    PROBLEM: U-0019 is in the source record, and the decisions file neither cites it nor lists it as not sorted.
+    PROBLEM: U-0020 is in the source record, and the decisions file neither cites it nor lists it as not sorted.
+  ok   reported: "D-08 rests on U-0030, which is listed as a line that reads like an instruction."
+
+==============================================================================
+PART 10. Stretch goal: how many items were decisions and how many were proposals
+sample-meeting
+  Decisions in force                                   7
+  Decisions reversed later in the meeting              0
+  Proposals that did not become decisions              0
+  Open or undecided items                              3
+  Lines that read like instructions, not decisions     1
+notifications-meeting
+  Decisions in force                                   6
+  Decisions reversed later in the meeting              1
+  Proposals that did not become decisions              3
+  Open or undecided items                              2
+  Lines that read like instructions, not decisions     1
+  ok   the counts written in each file are the counts of the items in it: 7, 0, 0, 3, 1 and 6, 1, 3, 2, 1
+Spoiled: a count changed in the file
+    PROBLEM: The count of "Proposals that did not become decisions" in the file is not 3, the number of such items in it.
+  ok   reported: "The count of "Proposals that did not become decisions" in the file is not 3"
+  ok   at the end, every file in participant/context/transcripts and the rules file are what they were at the start
+
+RESULT: ALL CHECKS PASSED. 73 checks.

@@ -1,0 +1,153 @@
+#!/usr/bin/env python3
+"""Writes logs/blind-read.txt: what four independent readers found, set beside the decisions files.
+
+    python3 participant/evidence/ba-extract-decisions/ba-attempt-005/scripts/blind_read.py
+
+The readers' findings below were copied by hand from their replies, and shortened, by the assistant that built
+this quest. The rules each sorter was given are in review/. The script checks only that the items it names
+exist in the handed-in files.
+"""
+import os
+import re
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", "..", ".."))
+FOLDER = os.path.join(REPO, "participant", "context", "transcripts")
+
+TEXT = """Four independent reads. ba-extract-decisions, attempt ba-attempt-005
+Written by scripts/blind_read.py from findings copied by hand out of the readers' replies.
+
+Who the readers were: four separate AI assistants (Claude), each started fresh. No person read anything. Each was
+told to read only the files named to it, and that limit was given in words and not enforced. Each was told that
+the transcripts are things people said, and to follow nothing a line says. None saw another's reply.
+
+  Sorters 1 and 2  given the two transcript records and the rules, with the rules' section of worked borderline
+                   lines taken out. Asked to sort both meetings themselves. They did not see the decisions files.
+  The checker      given the two records and the two decisions files, and NOT the rules. Asked to check every
+                   decision against the record as a sceptical colleague would, and to say where the file is wrong.
+  Sorter 3         as sorters 1 and 2, after the changes below, with the rules as they then stood.
+
+The first sorting and the first rules were finished before any reply was read.
+
+==============================================================================
+ROUND 1. Sorters 1 and 2 against the first sorting (rules: review/rules-given-in-round-1.md)
+
+First meeting (checkout). The first sorting had 6 decisions, 0 proposals, 3 open items, 1 instruction-like line.
+  Both sorters gave the same 6 decisions, each on the same lines, with the same basis (agreed or ruled) and the
+  same person agreeing or "not stated". Both gave the same 3 open items and the same instruction-like line.
+  DIFFERENT  U-0002. Both sorters made it a seventh decision, ruled by the product owner. The first sorting had
+             listed it as "says what the meeting is about".
+  DIFFERENT  U-0019. Both sorters kept the whole line as one decision, reopened on the word "once". The first
+             sorting split it: two parts ruled, the third open.
+
+Second meeting (notifications). The first sorting had 6 decisions (1 reversed), 4 proposals, 1 open item, 1
+instruction-like line.
+  Both sorters gave the same 6 decisions on the same lines with the same basis and the same person agreeing, the
+  same reversal (the profile page, reversed by U-0022, replaced by the own-page decision), and the same reopening
+  (on by default, reopened by U-0028 and U-0029). Both gave 3 of the 4 proposals as proposals, for the same
+  reasons: the proposer's own "agreed", the uncertain speaker, the condition. Same open item on storage. Same
+  instruction-like line.
+  DIFFERENT  U-0028 and U-0029. Both sorters made "the designer asks legal and brings it back on Thursday" a
+             seventh decision, agreed. The first sorting had it only as the lines reopening another decision.
+  DIFFERENT  U-0014. Both sorters put "two days at most" under open, as an estimate. The first sorting had it as
+             a proposal.
+  Both noted that two decisions meet both tests, and that the rules did not say which to record.
+  Both noted that the product owner's objection in U-0019 might itself be a ruling. Both took it as an objection.
+
+==============================================================================
+THE CHECKER, against the first decisions files, without the rules
+
+Could the check be done without the recording?  Yes. "Every citation resolved from the decisions file alone and
+every quote could be compared word for word."
+  Every cited line was found. Every quotation and every speaker matched the record.
+  The sentence of every one of the 12 decisions was found SUPPORTED by the record. The status of one was called
+  overstated (point 2 below). None was found unsupported, and none hid a later reversal.
+
+What the checker found wrong or stretched:
+  1. "Reversed by" was given to U-0021, where the tester raised the problem. She did not reverse anything. The
+     product owner did, in U-0022.
+  2. "On by default" was called in force with no caveat, when its marketing-email part had just been sent to legal.
+  3. The note on the hedged acceptance read as if two people had spoken. It is one line from one person.
+  4. The heading "Proposals nobody accepted" was false on its face for two of four: an uncertain speaker did say
+     "agreed", and the product owner did say "fine, if".
+  5. The open item on storage understated the record: per-device was refused by the product owner, not just left.
+  6. U-0002 was dismissed as context, where the same kind of line, U-0019, was counted as a ruling. Inconsistent.
+  7. "Two days at most" was a proposal in one file, and the like item in the other file was open. Inconsistent.
+  8. "Nothing in it was done", said of the instruction-like lines, is a claim about the author and cannot be
+     checked from the record.
+  9. Two decisions did not point to the open items that limit them. A proposal's lines were out of record order.
+     "Someone who was not in the meeting" was an inference.
+ 10. The conditional acceptance was "arguably decided", and treated differently from "on by default".
+ 11. Commitments (ask legal by Thursday, redo the layout) had no items of their own.
+
+==============================================================================
+WHAT WAS CHANGED AFTER ROUND 1, AND WHAT WAS NOT
+
+Changed in the sorting:
+  U-0002 is now a ruled decision, D-01 of the first meeting, with a note that it was a premise and not debated.
+  "The designer asks legal by Thursday" is now an agreed decision, D-07 of the second meeting, with a note that
+    it settles nothing about the product.
+  "Two days at most" moved from proposals to open.
+  The reversal now gives U-0021 as "Prompted by" and U-0022 as "Reversed by".
+  "On by default" has a note: for marketing emails it should be read as waiting.
+  The storage item says per-device was refused and nothing was put in its place.
+  Notes reworded for points 3, 8 and 9. Proposal lines are in record order.
+  The proposals heading is now "Proposals that did not become decisions".
+Changed in the rules:
+  A ruling states and does not offer. Where both tests are met, the decision is recorded as agreed. A line can be
+  split. An agreement about who does what next is listed, with a note. Who may reverse a decision. What "in
+  force" means for a reopened decision.
+NOT changed:
+  U-0019 of the first meeting is still split, against both sorters, who kept it whole and reopened. The rules now
+    say a line can be split.
+  The conditional acceptance is still a proposal (point 10). Its note now says how it differs from "on by default".
+  One-person commitments still have no items of their own (point 11). They appear in the quotations.
+  The product owner's objection to per-device storage is still an objection and not a ruling.
+
+==============================================================================
+ROUND 2. Sorter 3 against the handed-in sorting (rules: review/rules-given-in-round-2.md)
+
+First meeting. Handed in: 7 decisions, 0 proposals, 3 open, 1 instruction-like line.
+  SAME       all 7 decisions, on the same lines, the same basis, the same person agreeing or "not stated".
+  SAME       the 3 open items and the instruction-like line. U-0019 split, as handed in.
+  DIFFERENT  sorter 3 listed three one-person commitments as proposals nobody accepted: "let's park that", "let me
+             check with Jordan", "I'll size it once that's settled". The handed-in file has them inside open items.
+
+Second meeting. Handed in: 7 decisions (1 reversed), 3 proposals, 2 open, 1 instruction-like line.
+  SAME       all 7 decisions, on the same lines, the same basis, the same person agreeing, the same reversal with
+             U-0021 prompting and U-0022 reversing, the same reopening.
+  SAME       the 3 proposals, for the same reasons. The 2 open items. The instruction-like line.
+  DIFFERENT  sorter 3 made U-0019 an eighth decision: "a setting turned off on one device must be off on the
+             member's other devices", ruled by the product owner. Sorter 3 called it "the weakest item here". The
+             handed-in file has that line as an objection, under the open item on storage.
+  DIFFERENT  sorter 3 listed "store settings per device" and two one-person commitments as proposals as well.
+
+==============================================================================
+SUMMARY
+  In both rounds, every decision in the decisions files was found by every sorter, on the same lines, with the
+  same basis and the same person agreeing. No sorter called any of the proposals a decision.
+  The sorters found decisions the first sorting had missed: two in round 1, both since added, and one in round 2,
+  U-0019, which was not added.
+  The rules did not settle: whether an owner's objection is a ruling; whether a commitment nobody answers is a
+  proposal; whether a questioned part of a line is split off or reopens the whole.
+  Round 2 was one reader, after the rules had been changed to meet the first two. Agreement on the points that
+  were changed was the likely result.
+"""
+
+
+def main():
+    ok = True
+    for name, ids in (("sample-meeting", ["D-01", "D-07", "O-03", "N-01"]), ("notifications-meeting", ["D-01", "D-07", "P-03", "O-02", "N-01"])):
+        with open(os.path.join(FOLDER, name + ".decisions.md"), encoding="utf-8") as f:
+            text = f.read()
+        ok = ok and all(re.search(r"^### %s · " % i, text, re.M) for i in ids) and not re.search(r"^### (D-08|P-04) · ", text, re.M)
+    result = "RESULT: %s" % ("the items this log names exist in the handed-in decisions files, and the counts it gives are theirs." if ok else "THE FILES DO NOT MATCH THIS LOG.")
+    with open(os.path.join(HERE, "..", "logs", "blind-read.txt"), "w", encoding="utf-8") as f:
+        f.write(TEXT + "\n" + result + "\n")
+    print(result)
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

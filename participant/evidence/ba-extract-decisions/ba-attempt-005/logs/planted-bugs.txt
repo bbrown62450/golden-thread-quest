@@ -1,0 +1,187 @@
+Do the tests notice a broken citation check? ba-extract-decisions, attempt ba-attempt-005
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/ba-extract-decisions/decisions.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. A cited identifier that is not in the record is not reported (criterion 6)
+  unittest result: FAILED (failures=6)
+  tests that failed (6):
+    CitedLinesExist.test_a_decision_citing_a_line_that_does_not_exist
+    CitedLinesExist.test_a_line_number_past_the_end_of_the_record
+    CitedLinesExist.test_a_line_removed_from_the_record_is_reported_where_it_is_cited
+    CitedLinesExist.test_an_identifier_with_five_digits
+    CitedLinesExist.test_an_identifier_written_in_a_note_is_checked_too
+    Command.test_check_fails_with_exit_code_1_and_names_the_identifier
+
+PLANTED BUG B. Only identifiers on citation lines are looked up, so one written in a note is never checked (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    CitedLinesExist.test_an_identifier_written_in_a_note_is_checked_too
+
+PLANTED BUG C. A citation into a different transcript is accepted (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    CitedLinesExist.test_a_citation_into_another_transcript
+
+PLANTED BUG D. Quoted words are not compared with the record (criterion 7)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Separate.test_a_decisions_file_checked_against_the_other_meeting
+    CitedLinesExist.test_one_word_dropped_from_a_quotation
+    Separate.test_the_record_changed_after_ingestion_is_reported
+    CitedLinesExist.test_words_that_are_not_the_records
+
+PLANTED BUG E. The speaker given for a line is not compared with the record (criteria 3 and 7)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    CitedLinesExist.test_a_line_given_to_the_wrong_speaker
+    CitedLinesExist.test_a_right_speaker_with_the_wrong_role
+
+PLANTED BUG F. A record changed since it was ingested is not noticed (criterion 5)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Separate.test_one_space_added_to_the_record_is_reported
+    Separate.test_the_record_changed_after_ingestion_is_reported
+
+PLANTED BUG G. A decisions file made from another version of the record is accepted (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Separate.test_a_decisions_file_made_from_another_version_of_the_record
+
+PLANTED BUG H. One file serving as both record and decisions file is accepted (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Separate.test_one_file_for_both_is_reported
+
+PLANTED BUG I. Decision items written into the record are not noticed (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Separate.test_decisions_written_into_the_record_are_reported
+
+PLANTED BUG J. The record copied into the decisions file is not noticed (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Separate.test_the_record_copied_into_the_decisions_file_is_reported
+
+PLANTED BUG K. A decision with nobody accepting it passes (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ProposalsAreNotDecisions.test_a_proposal_relabelled_as_an_agreed_decision_has_nobody_who_accepted
+
+PLANTED BUG L. The proposer's own "agreed" counts as acceptance (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ProposalsAreNotDecisions.test_the_proposers_own_agreed_is_not_acceptance
+
+PLANTED BUG M. Agreement from a speaker of uncertain identity counts (criteria 2 and 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ProposalsAreNotDecisions.test_agreement_from_an_uncertain_speaker_is_not_acceptance
+
+PLANTED BUG N. A ruling outside the speaker's role counts as a decision (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ProposalsAreNotDecisions.test_a_ruling_outside_the_speakers_role_is_a_proposal
+
+PLANTED BUG O. A ruled decision need not say that agreement was not stated (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhoAgreed.test_a_ruled_decision_without_the_words_agreement_was_not_stated
+
+PLANTED BUG P. An item under the wrong heading is accepted, so a proposal can sit among the decisions (criteria 2 and 4)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Separate.test_a_decision_moved_under_open_is_reported
+    ProposalsAreNotDecisions.test_a_proposal_moved_under_decisions_is_reported
+    Separate.test_an_open_item_moved_under_decisions_is_reported
+
+PLANTED BUG Q. An item that is not a decision may carry an "Agreed by" line (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ProposalsAreNotDecisions.test_a_proposal_with_an_agreed_by_line
+
+PLANTED BUG R. Acceptance in a line before the proposal passes
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ProposalsAreNotDecisions.test_acceptance_before_the_proposal
+
+PLANTED BUG S. A decision with a reversing line may still be marked in force (the reversed decision)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Reversed.test_a_reversing_line_on_a_decision_still_marked_in_force
+
+PLANTED BUG T. A reversed decision need not name a decision in force that replaced it
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Reversed.test_replaced_by_something_that_is_not_a_decision
+    Reversed.test_reversed_with_no_replacement_named
+
+PLANTED BUG U. A reversal by a line before the decision passes
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Reversed.test_reversed_by_a_line_before_the_decision_was_made
+
+PLANTED BUG V. The reopened mark and the reopening line need not match (stretch goal)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Reversed.test_a_reopening_line_without_the_mark
+    Reversed.test_marked_reopened_with_no_line
+
+PLANTED BUG W. A decision may rest on a line listed as reading like an instruction (safety rule)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    InstructionLikeLines.test_a_decision_resting_on_an_instruction_like_line_is_reported
+
+PLANTED BUG X. A line of the record that is neither cited nor listed is not noticed (criterion 7)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Coverage.test_a_line_neither_cited_nor_listed_is_reported
+    Command.test_an_empty_decisions_file_does_not_pass
+
+PLANTED BUG Y. The counts in the file are not compared with its items (stretch goal)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Coverage.test_a_wrong_count_is_reported
+
+PLANTED BUG Z. The check ends with exit code 0 when it found problems
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Command.test_an_empty_decisions_file_does_not_pass
+    Command.test_check_fails_with_exit_code_1_and_names_the_identifier
+
+PLANTED BUG AA. build counts a reversed decision as in force
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Sound.test_both_meetings_as_sorted_pass
+    Command.test_check_passes_with_exit_code_0
+    Sound.test_the_handed_in_files_are_what_the_code_writes
+    Reversed.test_the_reversed_decision_is_kept_marked_and_not_counted_in_force
+
+PLANTED BUG AB. The record's mark for an uncertain speaker is not read
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    ProposalsAreNotDecisions.test_agreement_from_an_uncertain_speaker_is_not_acceptance
+    Sound.test_the_record_is_read_as_it_is_written
+
+PLANTED BUG AC. Only the first line of an utterance written on two lines is read, so its quotation is cut short (criterion 7)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Sound.test_an_utterance_on_two_lines_is_read_whole
+    Sound.test_the_handed_in_files_are_what_the_code_writes
+
+PLANTED BUG AD. The same item twice is accepted
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Coverage.test_the_same_item_twice
+
+PLANTED BUG AE. A line both cited and listed as not sorted is accepted
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Coverage.test_a_line_both_cited_and_listed_is_reported
+
+After the last bug was taken out: decisions.py is byte for byte what it was at the start. OK
+
+RESULT: all 31 planted bugs were caught by at least one test, and the file was restored.

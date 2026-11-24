@@ -338,3 +338,8 @@ Every change this application made to your files, newest last.
 - `2026-11-24T17:20:38Z` context-dependency-map: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-24T17:20:38Z` Submitted context-dependency-map for review as submission-20261124172038-b1d0fa.
 - `2026-11-24T17:26:18Z` Review of context-dependency-map: approved by Claude (automated reviewer).
+- `2026-11-24T17:28:18Z` Started ba-extract-decisions as attempt ba-attempt-005.
+- `2026-11-24T17:53:31Z` ba-extract-decisions: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-24T17:54:14Z` ba-extract-decisions: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-24T17:55:33Z` ba-extract-decisions: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-24T17:55:33Z` Submitted ba-extract-decisions for review as submission-20261124175533-06603a.

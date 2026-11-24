@@ -514,4 +514,13 @@ attempts:
   evidence_path: participant/evidence/context-dependency-map/context-attempt-007
   submission_id: submission-20261124172038-b1d0fa
   review_id: review-20261124172618-e399f0
-updated_at: '2026-11-24T17:26:18Z'
+- attempt_id: ba-attempt-005
+  quest_id: ba-extract-decisions
+  quest_version: 1
+  content_hash: sha256:df3f835c09e57dee712d5cefbe1b13863ee8a31d722721d793c5bb6e55f374bd
+  state: submitted
+  started_at: '2026-11-24T17:28:18Z'
+  updated_at: '2026-11-24T17:55:33Z'
+  evidence_path: participant/evidence/ba-extract-decisions/ba-attempt-005
+  submission_id: submission-20261124175533-06603a
+updated_at: '2026-11-24T17:55:33Z'
