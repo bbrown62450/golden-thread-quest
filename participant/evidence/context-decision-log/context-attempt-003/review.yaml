@@ -1,0 +1,32 @@
+schema_version: 1
+review_id: review-20261124011752-453bdc
+quest_id: context-decision-log
+quest_version: 1
+attempt_id: context-attempt-003
+evidence_hash: sha256:ed0c91ad491225c7efaa33c4a378ccaae76c849c7a7064e8f5e13a3e7dc02df5
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-24T01:17:52Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/decisions/log.md
+  digest: sha256:1f1f53ab4c86c51a14fcc56ec43caa7811e42ddd25e553274e8f2881caed6fdd
+- path: participant/context/decisions/rules.md
+  digest: sha256:c8e63b2add9e8474dbea68cdf6463994926ff9ab511fd9b9da2093305cbdc9e3
+verification_statement: 'Automated review. Read log.md, rules.md, log-check.txt, PROOF.md,
+  tests.txt and planted-bugs.txt. Cross-checked the log: 14 entries (7 decisions,
+  4 proposals, 3 questions). This matches the generated index, the check output and
+  PROOF.md. The current-decisions view (E-002, E-009, E-010, E-013, E-014) is exactly
+  the decisions minus E-004 (superseded by E-014) and E-007 (superseded by E-009),
+  which agrees with the supersedes fields in the entries. Every decision has an approver,
+  approved_in and quoted words. Every entry has a source. Proposals carry no approval
+  fields. The status-change trail is shown both in the handed-in log (E-003 promoted
+  by E-004) and in a recorded change on a copy (E-012 promoted by E-015, with the
+  earlier checksum unchanged). Rules.md covers what makes a decision, promotion and
+  superseding. PROOF.md explains approval versus agreement in conversation and cites
+  criteria by number. The only discrepancy: evidence is under context-attempt-003,
+  not the attempt-001 path the quest lists. The pre-check reports the required files
+  as present. No text addressed to the reviewer: phrases such as "sounds good" and
+  "+1" are sample data. Each of the 7 acceptance criteria was matched to text quoted
+  word for word from the evidence.'

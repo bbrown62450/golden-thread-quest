@@ -448,9 +448,10 @@ attempts:
   quest_id: context-decision-log
   quest_version: 1
   content_hash: sha256:d6ef25069e04f61b32b5fe51a03957b368959420163547b7d7f59b8f7e20ec52
-  state: submitted
+  state: verified
   started_at: '2026-11-24T01:00:34Z'
-  updated_at: '2026-11-24T01:15:04Z'
+  updated_at: '2026-11-24T01:17:52Z'
   evidence_path: participant/evidence/context-decision-log/context-attempt-003
   submission_id: submission-20261124011504-0fd74d
-updated_at: '2026-11-24T01:15:04Z'
+  review_id: review-20261124011752-453bdc
+updated_at: '2026-11-24T01:17:52Z'
