@@ -1,0 +1,32 @@
+schema_version: 1
+review_id: review-20261124214658-154867
+quest_id: playwright-repair-test
+quest_version: 1
+attempt_id: playwright-attempt-006
+evidence_hash: sha256:2642281e08a3a449016ad6e23d9bc98f6a7e7749d3134c00a19775f908826edf
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-24T21:46:58Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/playwright/assertion-comparison.md
+  digest: sha256:f7e5d3ed7c1a3dc9b3eff5a6df97ddbae1f67d93134a13b31357cb357cb813ca
+- path: participant/tests/playwright/tools/repair-test-check.ts
+  digest: sha256:5458106ffc7790ea800684510ad388080b92d97a5f49f901624385b5e538d90d
+verification_statement: 'Automated review. I read the evidence as text: PROOF.md,
+  independent-read.txt, mutation-run.txt, weakening-check.txt, repair.diff, assertion-comparison.md
+  and repair-test-check.ts. The checksums of the test before and after the repair
+  are the same in every log and in the comparison. The six hunks in the diff (lines
+  8, 9, 11, 12, 13, 15) match the comparison''s before and after lines and the weakening
+  check''s list of lines that differ. The mutation log records a pass against the
+  corrected app (1 test ran, exit code 0). It records failures at named lines, with
+  expected and received amounts, for three deliberate rule breaks. A control change
+  that keeps the rule still passes. The weakening check records 22 of 22 weakened
+  versions reported, plus a `patch` round trip. The evidence also records known gaps:
+  five faults that suit the single basket get past the test both before and after
+  the repair. Nothing in the evidence addresses the reviewer, so I found no injection.
+  Evidence is in the folder playwright-attempt-006, not the attempt-001 folder the
+  quest names. PROOF.md explains that copies are in attempt-001, but the copies themselves
+  were not shown. Each of the 7 acceptance criteria was matched to text quoted word
+  for word from the evidence.'
