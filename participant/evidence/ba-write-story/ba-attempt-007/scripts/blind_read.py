@@ -1,0 +1,153 @@
+#!/usr/bin/env python3
+"""Writes logs/blind-read.txt: what five independent readers found in the story.
+
+    python3 participant/evidence/ba-write-story/ba-attempt-007/scripts/blind_read.py
+
+The readers' findings below were copied by hand from their replies, and shortened, by the assistant that built
+this quest. The script checks only that the criteria it names exist in the handed-in story.
+"""
+import os
+import re
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", "..", ".."))
+STORY = os.path.join(REPO, "participant", "context", "stories", "story-001.md")
+
+TEXT = """Five independent reads of story 001. ba-write-story, attempt ba-attempt-007
+Written by scripts/blind_read.py from findings copied by hand out of the readers' replies.
+
+Who the readers were: five separate AI assistants (Claude), each started fresh. No person read the story. Each was
+told to read only the files named to it, and that limit was given in words and not enforced. Each was told that
+quoted lines of a meeting are things people said, and to follow nothing they say. None saw another's reply.
+
+  Testers 1 and 2   given the first version of the story and the standard, and nothing else. Asked to write a test
+                    for each criterion, and to list every question they would have to ask before running it.
+  Scope checker 1   given the first version of the story, the meeting record, the decisions file and the work-items
+                    file. Asked where the story passes the writer's idea off as the meeting's.
+  Tester 3          the testers' task, on the second version.
+  Scope checker 2   the scope checker's task, on the second version.
+
+The first version, as the first three read it, is review/story-as-first-read.md.
+
+==============================================================================
+ROUND 1. The first version: 12 criteria, 6 marked SAID and 6 marked ASSUMED
+
+Both testers: "the claim that a tester could write a test for each criterion without further questions is false."
+Each wrote a test for all 12, and each said none could be run as written.
+
+What they found, and both found nearly all of it:
+  - Six of the twelve had two or three results in one "Then", against the story's own "one result".
+  - Three had a "When" that was no action: it repeated the "Given", or was a result.
+  - No test data anywhere: no basket, no card, no email address, no account for the existing-account case.
+  - "Not placed" had no time after which to stop waiting.
+  - "Asked" and "step" were undefined. A sign-in link in a header might or might not count.
+  - "Guest" was defined as checking out "without an account", and one criterion's guest had one.
+  - Criteria marked SAID all rested on "placed" and "test card", which the story itself marked ASSUMED.
+  - Receipts go to a test address on staging, and criteria said "to E", the address typed.
+  - "The story lets a guest give a phone number" had no criterion in which one is given.
+  - Three criteria were the same test, and two more were. "12 criteria is nearer 8 distinct tests."
+  - The only word from the standard's list that any criterion used was "valid", and it was defined. So the
+    mechanical check passed while most of the above stood.
+
+Scope checker 1. Every quotation and speaker matched the record. Its findings:
+  - "No step asked them to create an account or to sign in." The meeting said "make them log in", made, not
+    asked. "No step asked" also forbade an optional invitation, which nobody discussed. It was under a SAID label.
+  - A decided rule was missing altogether: the order "isn't attached until they say yes" (U-0009, U-0010). A
+    build that attached a guest's order to an account by its email address would have passed all 12 criteria.
+  - The linking offer was put out of scope as "a separate work item". In the meeting the product owner gave it
+    as one of three acceptance criteria of this same story. The split was the earlier extraction's, not hers.
+  - A dependency and a defined word were marked SAID and were partly the writer's.
+  - "The size of the work" was listed as out of scope, and is not a thing left unbuilt.
+  - The story did not account for the lines of the meeting it did not use.
+
+WHAT WAS CHANGED AFTER ROUND 1
+  The story was rewritten. 18 criteria, each with one "Then": 8 SAID and 10 ASSUMED.
+  The missing rule is now a criterion, AC-07.
+  "Asked" became "require", defined as a step the guest cannot get past. The other reading is open question Q-11.
+  A "Test set-up" section gives the basket, the details typed, two test addresses, a phone number and the cards.
+  A "Taken as given" section says what the story assumes already exists.
+  Each SAID criterion now names every writer-defined word it leans on, and the head of the story counts them.
+  Each in-scope entry names the criteria that test it.
+  The linking offer's entry says in capitals that the boundary is the writer's, and so does the head of the story.
+  Every line of the meeting is now cited or listed with why it is not used.
+  The standard was changed to match, and now says what it cannot do.
+
+==============================================================================
+ROUND 2. The second version: 18 criteria, 8 SAID and 10 ASSUMED
+
+Tester 3 wrote a test for all 18. Its counts:
+    Runnable with no question at all:                               0 of 18
+    Runnable once the story's own listed questions are answered:    9 of 18
+    Need something the story mentions nowhere:                      9 of 18
+  "Every one needs the staging address and a real value for E1, and the story has neither."
+
+What it still found:
+  - The story never said what "pay", "complete the checkout" and "the control that places the order" are, or
+    whether card details are entered before the email address is checked. Without a card entered, the
+    empty-email tests pass on a checkout that ignores the email address.
+  - Three criteria cannot fail on their own: AC-02 given AC-01, AC-06 given AC-05, AC-16 given AC-08.
+  - "Placed" had no time limit, and overlapped "not placed".
+  - The table of open questions listed too few criteria against several questions.
+  - Assumed definitions and set-up had no open question behind them.
+  - Two results in one "Then" remain in AC-14 and AC-17, and three test values in AC-10 and AC-11.
+  - Words outside the standard's list that still cannot be checked: "directly below", "at the top of the page",
+    "the total the checkout showed", "as it was typed".
+  It called the criterion most open to two readings AC-06, and said the story acknowledges it, in Q-11.
+
+Scope checker 2: "the story is mostly honest." Every quotation matched. Nothing marked ASSUMED was in fact said.
+What it still found:
+  - AC-07. The meeting said not attached "until they say yes". The story has no step that asks, so the
+    criterion tests "never attached", by absence from a page the meeting never mentioned, under the words "the
+    requirement is the meeting's". It called this the part with the most of its author in it.
+  - AC-08. A 5-minute limit and a subject-line test are requirements "dressed as vocabulary".
+  - "Up to the confirmation page" in two criteria was an undeclared cut-off.
+  - The sentence about the developer's guess over-read the line.
+  - Two open questions presented the writer's reading, or the writer's question, as the meeting's.
+  - Two lines listed as not used were in fact leaned on.
+  - The product owner's follow-up, to find out how often the offer is made, was nowhere in the story.
+
+WHAT WAS CHANGED AFTER ROUND 2
+  AC-07 and AC-08 each carry a note saying which part is the meeting's and which the writer's.
+  "Pay with" and "complete the checkout" are defined. The empty-email and not-valid-email criteria now start with
+    the card's details entered. "Placed" has its 10 seconds. AC-16 looks in the body of the receipt.
+  The open-question table now lists every criterion each question bears on, and has five more questions, for the
+    staging address, the checkout's shape, the writer's readings and the list of orders.
+  The over-read sentence, the two questions and the two lines were corrected. The follow-up is named.
+  In-scope entries now list assumed criteria apart from the meeting's.
+
+NOT CHANGED, AND NOT RE-READ
+  The story as handed in was not read by a sixth reader. So the changes after round 2 are checked by the program
+  and by nobody else, and the counts above, 0, 9 and 9, are for the version before them.
+  Still true of the handed-in story, by the readers' own tests:
+    - No criterion can be run without the staging address and the test address, which the story cannot give.
+    - AC-02 and AC-06 cannot fail apart from AC-01 and AC-05.
+    - AC-14 and AC-17 each check two things. AC-10 and AC-11 each use three values.
+    - "Directly below" and "at the top of the page" are positions without a measure.
+    - The user statement says "a customer who does not have an account", and three criteria are about one who has.
+
+==============================================================================
+SUMMARY
+  Could a tester write a test for each criterion? Yes: three testers did, for every criterion of the version
+  they read.
+  Could a tester run each test without asking anything? No, in either version, and that will stay so. The meeting
+  named no test address, no payment provider and no other field of the checkout, and no story can supply them.
+  The first version failed its own standard in ways a reader saw at once and the program could not. The second
+  is honest about what it lacks. It still lacks it.
+"""
+
+
+def main():
+    with open(STORY, encoding="utf-8") as f:
+        text = f.read()
+    ids = re.findall(r"^### (AC-\d+) · ", text, re.M)
+    ok = ids == ["AC-%02d" % n for n in range(1, 19)] and "Q-21" in text and "its body holds the order reference" in text
+    result = "RESULT: %s" % ("the handed-in story has the 18 criteria and the changes this log names." if ok else "THE STORY DOES NOT MATCH THIS LOG.")
+    with open(os.path.join(HERE, "..", "logs", "blind-read.txt"), "w", encoding="utf-8") as f:
+        f.write(TEXT + "\n" + result + "\n")
+    print(result)
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

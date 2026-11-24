@@ -554,4 +554,13 @@ attempts:
   evidence_path: participant/evidence/playwright-maintenance-report/playwright-attempt-005
   submission_id: submission-20261124193025-9e8329
   review_id: review-20261124193739-abf460
-updated_at: '2026-11-24T19:37:39Z'
+- attempt_id: ba-attempt-007
+  quest_id: ba-write-story
+  quest_version: 1
+  content_hash: sha256:6a76f71a8f120cd0e2d9383fcb3cc033af38c5a908bd29ca1177532f8be12666
+  state: submitted
+  started_at: '2026-11-24T19:44:06Z'
+  updated_at: '2026-11-24T20:07:56Z'
+  evidence_path: participant/evidence/ba-write-story/ba-attempt-007
+  submission_id: submission-20261124200756-ee8357
+updated_at: '2026-11-24T20:07:56Z'

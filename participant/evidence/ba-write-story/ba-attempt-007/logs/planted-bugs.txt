@@ -1,0 +1,193 @@
+Do the tests notice a broken story check? ba-write-story, attempt ba-attempt-007
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/ba-write-story/story.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. A missing section is not reported (the check's first job)
+  unittest result: FAILED (errors=3)
+  tests that failed (3):
+    Sections.test_an_empty_section_is_reported
+    Command.test_an_empty_story_does_not_pass
+    Sections.test_each_missing_section_is_reported
+
+PLANTED BUG B. Sections may be in any order
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Sections.test_sections_out_of_order_are_reported
+
+PLANTED BUG C. A user who is only "a user" passes (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    UserAndValue.test_a_user_who_is_only_a_user_is_reported
+
+PLANTED BUG D. A vague word in the value passes (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    UserAndValue.test_a_vague_value_is_reported
+
+PLANTED BUG E. An empty in-scope or out-of-scope list passes (criterion 2)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Scope.test_an_in_scope_list_with_nothing_in_it_is_reported
+    Scope.test_an_out_of_scope_list_with_nothing_in_it_is_reported
+
+PLANTED BUG F. An out-of-scope entry need not say why (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Scope.test_an_out_of_scope_entry_with_no_reason_is_reported
+
+PLANTED BUG G. An out-of-scope entry may go to an item that does not exist (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Scope.test_an_out_of_scope_entry_that_went_nowhere_known_is_reported
+
+PLANTED BUG H. Criteria need not be numbered in order (criterion 3)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Criteria.test_a_criterion_with_no_number_is_reported
+    Criteria.test_a_gap_in_the_numbering_is_reported
+    Criteria.test_two_criteria_with_one_number_are_reported
+
+PLANTED BUG I. A criterion may have no Then, or two (criterion 3)
+  unittest result: FAILED (failures=1, errors=1)
+  tests that failed (2):
+    Criteria.test_a_criterion_with_no_then_is_reported
+    Criteria.test_a_criterion_with_two_thens_is_reported
+
+PLANTED BUG J. A Then of two sentences passes (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Criteria.test_a_then_of_two_sentences_is_reported
+
+PLANTED BUG K. Vague words in a criterion are not looked for (criterion 6)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    VagueWords.test_each_of_the_quests_three_words_is_reported
+    VagueWords.test_valid_is_allowed_only_because_the_story_defines_it
+
+PLANTED BUG L. A vague word is allowed whether or not the story defines it (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    VagueWords.test_valid_is_allowed_only_because_the_story_defines_it
+
+PLANTED BUG M. The list of vague words has lost the three the quest names (criterion 6)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    VagueWords.test_a_word_is_matched_whole_and_in_any_case
+    VagueWords.test_each_of_the_quests_three_words_is_reported
+    Sound.test_the_handed_in_files_are_what_the_code_writes
+    Standard.test_the_standard_says_what_makes_a_criterion_testable_and_lists_the_words
+
+PLANTED BUG N. Words are matched inside other words, so "breakfast" is "fast" (criterion 6)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    UserAndValue.test_a_vague_value_is_reported
+    VagueWords.test_a_word_is_matched_whole_and_in_any_case
+
+PLANTED BUG O. A SAID criterion with no citation passes (criterion 5)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Basis.test_a_said_criterion_with_no_citation_is_reported
+    Basis.test_an_assumption_relabelled_as_said_is_reported
+
+PLANTED BUG P. An ASSUMED criterion may cite the meeting as its source (the two are never mixed)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Basis.test_an_assumption_given_a_source_line_is_reported
+
+PLANTED BUG Q. An ASSUMED criterion need not name the question it answers
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Basis.test_an_assumption_with_no_question_is_reported
+
+PLANTED BUG R. A criterion with neither basis passes
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Basis.test_a_criterion_with_no_basis_is_reported
+
+PLANTED BUG S. A SAID criterion need not name the writer-defined words it leans on
+  unittest result: FAILED (errors=2)
+  tests that failed (2):
+    LeaningOnDefinedWords.test_a_said_criterion_without_that_line_is_reported
+    Basis.test_an_assumption_relabelled_as_said_is_reported
+
+PLANTED BUG T. The list of writer-defined words on a SAID criterion is not checked against the story's own definitions
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    LeaningOnDefinedWords.test_a_word_left_off_that_list_is_reported
+
+PLANTED BUG U. An in-scope entry need not name a criterion that tests it (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    InScopeIsTested.test_an_entry_that_names_no_criterion_is_reported
+
+PLANTED BUG V. Dependencies may be neither listed nor stated as none (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Dependencies.test_neither_a_list_nor_none_is_reported
+
+PLANTED BUG W. A cited identifier that is not in the record is not reported (criterion 5)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Source.test_a_line_removed_from_the_record_is_reported
+    Source.test_an_identifier_that_does_not_exist_is_reported
+    Source.test_an_identifier_written_in_plain_text_is_checked_too
+    Command.test_check_fails_with_exit_code_1_and_names_the_problem
+
+PLANTED BUG X. Only identifiers on citation lines are looked up (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Source.test_an_identifier_written_in_plain_text_is_checked_too
+
+PLANTED BUG Y. Quoted words are not compared with the record (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Source.test_words_that_are_not_the_records_are_reported
+
+PLANTED BUG Z. The speaker given for a line is not compared with the record
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Source.test_a_line_given_to_the_wrong_speaker_is_reported
+
+PLANTED BUG AA. A record changed since it was ingested is not noticed
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Source.test_the_record_changed_after_ingestion_is_reported
+
+PLANTED BUG AB. The count at the head is not compared with the criteria
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Basis.test_a_wrong_count_at_the_head_is_reported
+
+PLANTED BUG AC. A line of the record that is neither cited nor listed as not used is not noticed
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Source.test_a_line_neither_cited_nor_listed_is_reported
+
+PLANTED BUG AD. The definition of done may hold acceptance criteria (stretch goal)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Stretch.test_a_criterion_put_in_the_definition_of_done_is_reported
+
+PLANTED BUG AE. An assumption may answer a question that does not list it back (stretch goal)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Basis.test_a_question_that_does_not_list_the_criterion_back_is_reported
+
+PLANTED BUG AF. The check ends with exit code 0 when it found problems
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Command.test_an_empty_story_does_not_pass
+    Command.test_check_fails_with_exit_code_1_and_names_the_problem
+
+PLANTED BUG AG. A story with no test data passes
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    InScopeIsTested.test_no_test_data_is_reported
+
+After the last bug was taken out: story.py is byte for byte what it was at the start. OK
+
+RESULT: all 33 planted bugs were caught by at least one test, and the file was restored.
