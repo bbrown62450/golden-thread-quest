@@ -7,6 +7,7 @@ the saved work or the model does.
 
 | Saved file | Records |
 |---|---|
+| `participant/context/github/assigned-live-masked/assigned.json` | 3 |
 | `participant/context/github/assigned/assigned.json` | 128 |
 | `participant/context/jira/assigned/stories.json` | 3 |
 | `participant/context/jira/stories/20001.md` | 1 |
@@ -31,9 +32,9 @@ the saved work or the model does.
 |---|---|---|---|---|---|---|---|---|
 | jira | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | trello | 97 | 81 | 1 | 2 | 13 | 13 | 5 | 79 |
-| github | 128 | 124 | 0 | 3 | 1 | 128 | 0 | 0 |
+| github | 131 | 126 | 0 | 4 | 1 | 131 | 0 | 0 |
 
-Assigned to me: yes 220, no 5, unknown 0. Blocked: yes 0, no 0, unknown 225.
+Assigned to me: yes 223, no 5, unknown 0. Blocked: yes 0, no 0, unknown 228.
 
 ## Records held from an earlier run that the saved work no longer has (0)
 

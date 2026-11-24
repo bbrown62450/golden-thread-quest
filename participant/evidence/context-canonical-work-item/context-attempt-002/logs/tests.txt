@@ -5,6 +5,7 @@ test_blocked_is_yes_only_where_the_source_states_it (test_normalize.BlockedAndAs
 test_nobody_s_identifier_is_written_to_a_record (test_normalize.BlockedAndAssigned) ... ok
 test_words_in_a_title_or_label_never_decide_blocked_or_status (test_normalize.BlockedAndAssigned) ... ok
 test_a_run_a_check_and_the_documents (test_normalize.CommandLine) ... ok
+test_a_masked_copy_of_a_real_sync_is_read_as_a_second_saved_file (test_normalize.Identity) ... ok
 test_a_record_is_found_by_the_identity_inside_it_not_by_its_file_s_name (test_normalize.Identity) ... ok
 test_a_renamed_and_moved_item_updates_its_record_and_makes_no_second_one (test_normalize.Identity) ... ok
 test_an_item_saved_twice_is_one_record_from_the_copy_retrieved_later (test_normalize.Identity) ... ok
@@ -60,6 +61,6 @@ test_an_item_with_no_stable_identifier_or_no_title (test_normalize.Unmappable) .
 test_one_unmappable_item_does_not_stop_the_others_and_leaves_no_file_of_any_kind (test_normalize.Unmappable) ... ok
 
 ----------------------------------------------------------------------
-Ran 60 tests in 0.453s
+Ran 61 tests in 0.507s
 
 OK

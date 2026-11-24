@@ -7,11 +7,12 @@ bug was taken out again. Only local files are used.
 Before any bug: OK
 
 PLANTED BUG A. Identity is made from the Jira key, which changes when a story moves project (criterion 2)
-  unittest result: FAILED (failures=10, errors=12)
-  tests that failed (22):
+  unittest result: FAILED (failures=11, errors=12)
+  tests that failed (23):
     Provenance.test_a_built_address_is_marked_built_and_a_saved_one_saved
     Status.test_a_jira_status_name_is_never_read_for_its_meaning
     BlockedAndAssigned.test_a_link_that_says_this_story_blocks_another_does_not_make_it_blocked
+    Identity.test_a_masked_copy_of_a_real_sync_is_read_as_a_second_saved_file
     Identity.test_a_renamed_and_moved_item_updates_its_record_and_makes_no_second_one
     CommandLine.test_a_run_a_check_and_the_documents
     TheCheck.test_all_records_fit_after_a_run
@@ -33,8 +34,9 @@ PLANTED BUG A. Identity is made from the Jira key, which changes when a story mo
     Identity.test_two_items_with_the_same_title_stay_two
 
 PLANTED BUG B. Identity is made from the GitHub repository and number, which change on transfer (criteria 2 and 10)
-  unittest result: FAILED (failures=8, errors=8)
-  tests that failed (16):
+  unittest result: FAILED (failures=9, errors=8)
+  tests that failed (17):
+    Identity.test_a_masked_copy_of_a_real_sync_is_read_as_a_second_saved_file
     Identity.test_a_renamed_and_moved_item_updates_its_record_and_makes_no_second_one
     CommandLine.test_a_run_a_check_and_the_documents
     OtherPeoplesText.test_a_title_made_to_break_the_record_is_carried_whole_and_breaks_nothing
@@ -53,8 +55,9 @@ PLANTED BUG B. Identity is made from the GitHub repository and number, which cha
     BlockedAndAssigned.test_words_in_a_title_or_label_never_decide_blocked_or_status
 
 PLANTED BUG C. Identity is made from the Trello short link and title (criterion 2)
-  unittest result: FAILED (failures=9, errors=15)
-  tests that failed (24):
+  unittest result: FAILED (failures=10, errors=15)
+  tests that failed (25):
+    Identity.test_a_masked_copy_of_a_real_sync_is_read_as_a_second_saved_file
     Identity.test_a_record_is_found_by_the_identity_inside_it_not_by_its_file_s_name
     TheCheck.test_a_record_missing_a_required_field_or_of_another_version_is_reported
     Identity.test_a_renamed_and_moved_item_updates_its_record_and_makes_no_second_one
@@ -125,9 +128,10 @@ PLANTED BUG K. A Trello card in a list the status map does not name is said to b
     Status.test_trello_list_not_in_the_map_is_open_and_assumed
 
 PLANTED BUG L. A card Trello no longer returns is written as an open card (criterion 11)
-  unittest result: FAILED (failures=8)
-  tests that failed (8):
+  unittest result: FAILED (failures=9)
+  tests that failed (9):
     Unmappable.test_a_card_trello_no_longer_returns
+    Identity.test_a_masked_copy_of_a_real_sync_is_read_as_a_second_saved_file
     CommandLine.test_a_run_a_check_and_the_documents
     TheCheck.test_all_records_fit_after_a_run
     Identity.test_an_item_saved_twice_is_one_record_from_the_copy_retrieved_later
@@ -137,8 +141,9 @@ PLANTED BUG L. A card Trello no longer returns is written as an open card (crite
     Identity.test_two_items_with_the_same_title_stay_two
 
 PLANTED BUG M. A GitHub issue closed as not planned is counted as done (criterion 4)
-  unittest result: FAILED (failures=6, errors=3)
-  tests that failed (9):
+  unittest result: FAILED (failures=7, errors=3)
+  tests that failed (10):
+    Identity.test_a_masked_copy_of_a_real_sync_is_read_as_a_second_saved_file
     CommandLine.test_a_run_a_check_and_the_documents
     TheCheck.test_all_records_fit_after_a_run
     Identity.test_an_item_saved_twice_is_one_record_from_the_copy_retrieved_later
@@ -160,8 +165,8 @@ PLANTED BUG O. Blocked is worked out from the words of the title (the safety rul
     BlockedAndAssigned.test_words_in_a_title_or_label_never_decide_blocked_or_status
 
 PLANTED BUG P. A Jira link saying this story blocks another makes this story blocked
-  unittest result: FAILED (errors=55)
-  tests that failed (55):
+  unittest result: FAILED (errors=56)
+  tests that failed (56):
     Provenance.test_a_built_address_is_marked_built_and_a_saved_one_saved
     Unmappable.test_a_card_trello_no_longer_returns
     Unmappable.test_a_github_state_the_model_has_no_status_for
@@ -170,6 +175,7 @@ PLANTED BUG P. A Jira link saying this story blocks another makes this story blo
     Unmappable.test_a_jira_record_with_no_retrieval_time
     Status.test_a_jira_status_name_is_never_read_for_its_meaning
     BlockedAndAssigned.test_a_link_that_says_this_story_blocks_another_does_not_make_it_blocked
+    Identity.test_a_masked_copy_of_a_real_sync_is_read_as_a_second_saved_file
     NotesAndWrites.test_a_missing_status_map_or_a_broken_saved_file_stops_the_run_with_nothing_written
     NotesAndWrites.test_a_note_is_unchanged_by_normalizing_and_by_a_rename_and_move
     Identity.test_a_record_is_found_by_the_identity_inside_it_not_by_its_file_s_name
@@ -224,8 +230,9 @@ PLANTED BUG Q. A Jira story with no saved links is said to be not blocked, where
     BlockedAndAssigned.test_blocked_is_no_only_for_jira_with_its_links_saved
 
 PLANTED BUG R. The people's identifiers are written into the record (non-goal 2, and the rule on personal data)
-  unittest result: FAILED (failures=8, errors=8)
-  tests that failed (16):
+  unittest result: FAILED (failures=9, errors=8)
+  tests that failed (17):
+    Identity.test_a_masked_copy_of_a_real_sync_is_read_as_a_second_saved_file
     Identity.test_a_renamed_and_moved_item_updates_its_record_and_makes_no_second_one
     CommandLine.test_a_run_a_check_and_the_documents
     OtherPeoplesText.test_a_title_made_to_break_the_record_is_carried_whole_and_breaks_nothing
@@ -244,8 +251,9 @@ PLANTED BUG R. The people's identifiers are written into the record (non-goal 2,
     BlockedAndAssigned.test_words_in_a_title_or_label_never_decide_blocked_or_status
 
 PLANTED BUG S. Trello's place in the list is merged into a canonical-looking field name, outside the trello. prefix (criterion 5)
-  unittest result: FAILED (failures=9, errors=15)
-  tests that failed (24):
+  unittest result: FAILED (failures=10, errors=15)
+  tests that failed (25):
+    Identity.test_a_masked_copy_of_a_real_sync_is_read_as_a_second_saved_file
     Identity.test_a_record_is_found_by_the_identity_inside_it_not_by_its_file_s_name
     TheCheck.test_a_record_missing_a_required_field_or_of_another_version_is_reported
     Identity.test_a_renamed_and_moved_item_updates_its_record_and_makes_no_second_one
@@ -287,8 +295,9 @@ PLANTED BUG V. Labels that were not saved are written as an empty list, as if th
     SourceFields.test_labels_not_saved_are_null_not_an_empty_list
 
 PLANTED BUG W. The record holds the time it was normalized, so every run rewrites every file (criterion 7's quiet re-run)
-  unittest result: FAILED (failures=2)
-  tests that failed (2):
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Identity.test_a_masked_copy_of_a_real_sync_is_read_as_a_second_saved_file
     Provenance.test_every_record_says_where_it_came_from
     Provenance.test_the_normalization_run_leaves_no_time_of_its_own_in_any_file
 
@@ -325,11 +334,12 @@ PLANTED BUG AC. The same item saved twice keeps the older copy
     Identity.test_an_item_saved_twice_is_one_record_from_the_copy_retrieved_later
 
 PLANTED BUG AD. A time is copied as the source wrote it, in its own zone and format (criterion 1: the type of a time)
-  unittest result: FAILED (failures=11, errors=22)
-  tests that failed (33):
+  unittest result: FAILED (failures=12, errors=22)
+  tests that failed (34):
     Provenance.test_a_built_address_is_marked_built_and_a_saved_one_saved
     Status.test_a_jira_status_name_is_never_read_for_its_meaning
     BlockedAndAssigned.test_a_link_that_says_this_story_blocks_another_does_not_make_it_blocked
+    Identity.test_a_masked_copy_of_a_real_sync_is_read_as_a_second_saved_file
     Identity.test_a_record_is_found_by_the_identity_inside_it_not_by_its_file_s_name
     TheCheck.test_a_record_missing_a_required_field_or_of_another_version_is_reported
     Identity.test_a_renamed_and_moved_item_updates_its_record_and_makes_no_second_one

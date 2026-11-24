@@ -5,6 +5,7 @@ Written out from `participant/skills/context-work-item-model/normalize.py` by it
 ## What is read
 
 - `github/assigned/assigned.json`, written by github-read-assigned
+- `github/assigned-live-masked/assigned.json`, a masked copy of a real run of the same skill, in the same format
 
 ## The stable identifier
 

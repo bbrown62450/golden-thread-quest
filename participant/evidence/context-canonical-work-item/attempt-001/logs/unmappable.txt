@@ -6,8 +6,8 @@ Part 1 uses the work saved in this repository by the earlier quests. Parts 2 and
 PART 1. The work saved in this repository (criterion 11)
 $ python3 participant/skills/context-work-item-model/normalize.py
 ------------------------------------------------------------------------------
-work-item-model: model work-item/1. Read 242 saved records from 17 files. No request was sent anywhere
-work-item-model: canonical records: 225 held before this run. This run: 0 new, 0 updated, 225 unchanged. Held now: 225
+work-item-model: model work-item/1. Read 245 saved records from 18 files. No request was sent anywhere
+work-item-model: canonical records: 228 held before this run. This run: 0 new, 0 updated, 228 unchanged. Held now: 228
 work-item-model: could not be mapped: 17. No record was written for any of them
 work-item-model:   UNMAPPABLE: jira story file 20001.md, from participant/context/jira/stories/20001.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
 work-item-model:   UNMAPPABLE: jira story file 20002.md, from participant/context/jira/stories/20002.md: the saved record has no retrieval time: the skill that saved it did not record when it read Jira
@@ -39,9 +39,9 @@ The 17 refused items, by reason:
   ok   the 3 Jira stories in the assigned list are refused because they were saved with a key and no issue id, and a key is not an identity (criterion 2)
   ok   1 real Trello card is refused because Trello no longer returns it, so its status would be a guess
   ok   no record file was written for any of them: the items folder holds no Jira file, no file for that card, and no half-written file
-  ok   none of them is in the index, which holds 225 identities, all Trello or GitHub
+  ok   none of them is in the index, which holds 228 identities, all Trello or GitHub
   ok   report.md lists all 17 under "Could not be mapped (17)", each with its saved file and its reason
-  ok   the other 225 items were not held up: each has a record, and the model's own check accepts every one
+  ok   the other 228 items were not held up: each has a record, and the model's own check accepts every one
 
 ==============================================================================
 PART 2. Made-up items, each broken in one way. What is reported, and whether anything is written

@@ -224,7 +224,7 @@ def unmappable(scratch):
     log.check("report.md lists all 17 under \"Could not be mapped (17)\", each with its saved file and its reason",
               "## Could not be mapped (17)" in report and all(reference.replace("|", "\\|") in report for reference, _, _ in refused))
     log.check("the other %d items were not held up: each has a record, and the model's own check accepts every one" % len(result["good"]),
-              len(result["good"]) == 225 and normalize.check(MODEL, say=lambda line: None) == 0)
+              len(result["good"]) == 228 and normalize.check(MODEL, say=lambda line: None) == 0)
 
     log.part("PART 2. Made-up items, each broken in one way. What is reported, and whether anything is written",
              "Each case starts from the same made-up saved work, changes one item, and normalizes into an empty folder.")
@@ -297,7 +297,7 @@ def unmappable(scratch):
 
 def apply_run():
     log = Log("The model applied to the work saved in this repository. context-canonical-work-item, attempt context-attempt-002",
-              "The saved work is what the earlier quests wrote under participant/context. Most of it is made up. The 8 cards of the participant's own sandbox Trello board are real.")
+              "The saved work is what the earlier quests wrote under participant/context. Most of it is made up. Real: the 8 cards of the participant's own sandbox Trello board, and 3 issues of their sandbox GitHub repository, in a masked copy.")
     command = "python3 participant/skills/context-work-item-model/normalize.py"
     log.part("PART 1. Applied once")
     note = os.path.join(MODEL, "notes", "trello-6afdf65638df50999c980d80.md")
@@ -307,24 +307,28 @@ def apply_run():
     by = lambda field, value: sum(1 for canonical, _, _ in good.values() if canonical[field] == value)
     live = sorted(identity for identity, (_, provenance, _) in good.items() if provenance["sync_source"] == "live")
     log.out(*read(os.path.join(MODEL, "report.md")).split("## Canonical records\n\n")[1].split("\n## ")[0].rstrip().split("\n"))
-    log.check("225 canonical records are held: 97 Trello and 128 GitHub, and none from Jira", len(good) == 225 and len(records(MODEL)) == 225
-              and [sum(1 for c, _, _ in good.values() if c["system"] == s) for s in normalize.SYSTEMS] == [0, 97, 128])
-    log.check("7 of them come from a real sync, of the participant's sandbox Trello board. The other 218 come from made-up syncs, and each record says which",
-              len(live) == 7 and all(identity.startswith("trello:6afdf") for identity in live))
+    log.check("228 canonical records are held: 97 Trello and 131 GitHub, and none from Jira", len(good) == 228 and len(records(MODEL)) == 228
+              and [sum(1 for c, _, _ in good.values() if c["system"] == s) for s in normalize.SYSTEMS] == [0, 97, 131])
+    log.out("The records that come from a real sync:", *["  %s  %s  status %s (%s)" % (identity, json.dumps(good[identity][0]["title"]), good[identity][0]["status"], good[identity][0]["status_basis"]) for identity in live])
+    log.check("10 of them come from a real sync: 7 cards of the participant's sandbox Trello board and 3 issues of their sandbox GitHub repository. The other 218 come from made-up syncs, and each record says which",
+              len(live) == 10 and sum(1 for identity in live if identity.startswith("trello:6afdf")) == 7 and sum(1 for identity in live if identity.startswith("github:[issue node id")) == 3)
+    log.check("the 3 real GitHub records were read from the masked copy, and hold no login, node ID or repository id of the real ones",
+              all(good[identity][1]["source_record"] == "participant/context/github/assigned-live-masked/assigned.json" and good[identity][0]["container"]["name"].startswith("[owner]/")
+                  for identity in live if identity.startswith("github:")))
     log.check("every record has the five things criterion 8 names: the system, the identifier, the address, the retrieval time and the sync run",
               all(p["source_system"] and p["source_id"] and p["source_url"].startswith("https://") and p["retrieved_at"] and p["sync_run"] for _, p, _ in good.values()))
     log.check("status is one of the four values in every record, and every record says how sure it is",
               all(c["status"] in normalize.STATUSES and c["status_basis"] in normalize.BASES for c, _, _ in good.values()))
     log.check("no GitHub item is in_progress, because GitHub cannot say so. The only in_progress items are Trello cards in lists the status map names",
               all(c["system"] == "trello" and c["status_basis"] == "inferred" for c, _, _ in good.values() if c["status"] == "in_progress") and by("status", "in_progress") >= 1)
-    log.check("blocked is unknown for all 225: the saved work states it for none of them. The model does not guess", by("blocked", "unknown") == 225)
+    log.check("blocked is unknown for all 228: the saved work states it for none of them. The model does not guess", by("blocked", "unknown") == 228)
     log.check("nobody's identifier is in any record: not the sync's own member id, login or account id",
               not any(person in read(os.path.join(MODEL, "items", name)) for name in records(MODEL)
                       for person in [json.loads(read(os.path.join(CONTEXT, "trello", "board.json")))["member_id"], "robin-fixture", "casey-fixture"]))
     log.part("PART 2. Applied again, with nothing changed")
     snapshot = tree(MODEL)
     second, _ = run(log, CONTEXT, MODEL, command, hide=("  UNMAPPABLE",))
-    log.check("nothing was written: 0 new, 0 updated, 225 unchanged", second["writes"] == [] and len(second["changes"]["unchanged"]) == 225)
+    log.check("nothing was written: 0 new, 0 updated, 228 unchanged", second["writes"] == [] and len(second["changes"]["unchanged"]) == 228)
     log.check("every file in participant/context/model is byte for byte what it was", tree(MODEL) == snapshot)
     log.check("the note on the real card has the same checksum before and after both runs (criterion 7)", hashlib.sha256(read(note, "rb")).hexdigest() == digest
               and any(digest in line and line.endswith("same") for line in said))

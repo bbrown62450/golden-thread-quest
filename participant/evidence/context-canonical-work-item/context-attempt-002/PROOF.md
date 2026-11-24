@@ -47,8 +47,9 @@ What it costs:
   assumption, 5 are inferred, and 13 are stated, all of those being archived cards (`logs/apply-run.txt`).
 - **A person has to keep the map.** A new list is not an error. Its cards are quietly `open` until someone
   reads the `assumed` count in `report.md`.
-- **"What is in progress?" has no cross-system answer.** GitHub cannot say in progress, so all 128 GitHub
-  items are left out of that count. The one in-progress item in the saved work is a Trello card.
+- **"What is in progress?" has no cross-system answer.** GitHub cannot say in progress, so all 131 GitHub
+  items are left out of that count. One of the real ones has an open pull request pointing at it, and is
+  still `open` (`examples.md`). The one in-progress item in the saved work is a Trello card.
 - **An archived Trello card is `dropped`, finished or not.** A team that archives its finished cards will see
   its done work reported as dropped.
 - **A recommendation may rely on status only when it is stated** (criterion 12). So for Trello, status can
@@ -69,8 +70,8 @@ reviewing, needs fix".
 | 5 | Source-specific fields are kept in a namespaced area | recorded, tested | Every record's third block. `examples.md`, "The source fields". Tests `SourceFields`. Planted bugs S, T, U |
 | 6 | Each system has a mapping document naming unmapped source fields and what it cannot supply | recorded, tested | `participant/context/model/mappings/jira.md`, `trello.md`, `github.md` |
 | 7 | Participant analysis is stored apart, and re-normalization leaves it unchanged | recorded, tested | `logs/identity-check.txt` parts 2 and 5: three notes, the same checksums after three runs and a rename and move. `logs/apply-run.txt` part 2, on a note about a real card. Planted bug Z |
-| 8 | Provenance for every item: system, identifier, URL, retrieval time, sync run | recorded, tested, with a stated limit | `logs/apply-run.txt` part 1: all 225 records. **Limit:** every address is built from the saved reference, not saved by the sync. See below |
-| 9 | At least two real items from different systems, differences visible | **partly met** | `participant/context/model/examples.md`. Two real Trello cards and one made-up GitHub issue. See below |
+| 8 | Provenance for every item: system, identifier, URL, retrieval time, sync run | recorded, tested, with a stated limit | `logs/apply-run.txt` part 1: all 228 records. **Limit:** every address is built from the saved reference, not saved by the sync. See below |
+| 9 | At least two real items from different systems, differences visible | recorded, since review round 1 | `participant/context/model/examples.md`: two real Trello cards and two real GitHub issues, side by side. `logs/apply-run.txt` part 1 lists the 10 real records. See below |
 | 10 | Renaming and moving an item updates its record, and makes no second one | recorded, tested | `logs/identity-check.txt` part 3: a Jira story, a Trello card and a GitHub issue. 0 new, 14 records before and after. Planted bugs B, E |
 | 11 | An unmappable item is reported with the reason and not written as a partial record | recorded, tested | `logs/unmappable.txt`: 17 real cases, 11 made-up ones, and an item that had a record. Planted bugs F, G, H, L, X, Y |
 | 12 | The model says which fields a next-work recommendation may rely on | recorded | `work-item.md`, "What a next-work recommendation may rely on": every field, with the reason |
@@ -78,18 +79,26 @@ reviewing, needs fix".
 ### Criterion 9: which items are real
 
 The saved work in this repository is mostly made up, because the earlier quests kept their real output outside
-it. What is real is the participant's own sandbox Trello board: 8 cards, of which 7 could be normalized.
+it. Two things are real:
 
-So the worked examples show two **real** Trello cards beside one **made-up** GitHub issue. That is two systems,
-and only one of them real. The criterion asks for two real items from different systems, and that is not met
-in full. A real GitHub item was not fetched, because the quest says it performs no external reads of its own.
+- the participant's own sandbox Trello board: 8 cards, of which 7 could be normalized;
+- 3 issues in the participant's own private sandbox GitHub repository. These were added after the first
+  review. The participant ran the approved `github-read-assigned` skill against that one repository, in
+  their own terminal, with a read-only token: 9 requests, every one a GET. The real files are kept outside
+  this repository. A masked copy is in `participant/context/github/assigned-live-masked/`, made by
+  `scripts/mask_real_github.py`, and the model was applied to that.
+
+The worked examples show two real Trello cards beside two real GitHub issues. In the GitHub records the
+owner's login, the node IDs and the repository's id are masked, so a GitHub identity reads
+`github:[issue node id 1]`. The unmasked identity exists only on the participant's computer. The bodies and
+comments of the real issues were not copied at all.
 
 ### Criterion 8: built addresses
 
 No saved Trello or GitHub record holds the item's address. Each is built from the saved reference:
 `https://trello.com/c/` plus the short link, and `https://github.com/` plus the repository and number. Every
 record marks this with `source_url_basis: "built"`. The addresses of the 218 made-up items point at made-up
-things on real sites.
+things on real sites, and the 3 real GitHub addresses hold `[owner]` in place of the login.
 
 ### Jira: none of the saved Jira work is in the model
 
@@ -118,10 +127,11 @@ with each assigned story. Those skills are approved work and were not changed.
 | The unmappable record | `logs/unmappable.txt`, 22 checks |
 | This narrative | `PROOF.md` |
 
-Also here: `logs/apply-run.txt` (12 checks), `logs/tests.txt` (60 tests), `logs/planted-bugs.txt` (30 planted
-bugs), and `scripts/record_evidence.py`, `scripts/make_examples.py` and `scripts/planted_bugs.py`. The skill is
+Also here: `logs/apply-run.txt` (13 checks), `logs/tests.txt` (61 tests), `logs/planted-bugs.txt` (30 planted
+bugs), and `scripts/record_evidence.py`, `scripts/make_examples.py`, `scripts/mask_real_github.py` and
+`scripts/planted_bugs.py`. The skill is
 `participant/skills/context-work-item-model/`: `SKILL.md`, `normalize.py`, `fixtures.py`,
-`tests/test_normalize.py`. The 225 canonical records are in `participant/context/model/items/`, with
+`tests/test_normalize.py`. The 228 canonical records are in `participant/context/model/items/`, with
 `report.md` beside them and one example note in `participant/context/model/notes/`.
 
 The identity log and parts 2 and 3 of the unmappable log use made-up saved work from `fixtures.py`, because
@@ -151,14 +161,14 @@ logs again. The fourth changes `normalize.py` while it runs and restores it.
 
 | What | Result |
 |---|---|
-| Automated tests | 60, all pass (`logs/tests.txt`) |
+| Automated tests | 61, all pass (`logs/tests.txt`) |
 | Planted bugs | 30 put into `normalize.py` one at a time. Every one made at least one test fail, 16 of them exactly one (`logs/planted-bugs.txt`) |
-| Recorded checks | 12, 20 and 22, all pass |
-| The model on saved work | 242 saved records read. 225 canonical records written, 17 refused. A second run wrote nothing |
+| Recorded checks | 13, 20 and 22, all pass |
+| The model on saved work | 245 saved records read. 228 canonical records written, 17 refused. A second run wrote nothing |
 
 Faults found while building:
 
-- The first run refused all 242 items. The field table marked `blocked_basis` as required, and it is empty
+- The first run refused all 242 items it then had. The field table marked `blocked_basis` as required, and it is empty
   whenever blocked is unknown. The model's own check caught it and wrote nothing.
 - The assigned-cards list does not save a card's labels, and the first version wrote an empty list, as if the
   card had none. It now writes `null`. Planted bug V.
@@ -169,15 +179,17 @@ Faults found while building:
 ## What could not be done, and limitations
 
 - **Saved Jira work is not in the model.** See above.
-- **Only one real system.** See criterion 9.
-- **Blocked is `unknown` for all 225 items.** The earlier syncs did not save Jira's links for most stories or
+- **Two real systems, and a small amount of real work.** 10 real items, all the participant's own made-up
+  sandbox work. No real team's work has been through the model.
+- **Blocked is `unknown` for all 228 items.** The earlier syncs did not save Jira's links for most stories or
   GitHub's dependencies, and the status map names no blocked label. So the scenario's question, "which of my
-  open work is blocked", gets this answer today: 220 items are assigned to me, and the model cannot say that
+  open work is blocked", gets this answer today: 223 items are assigned to me, and the model cannot say that
   any of them is or is not blocked. `yes` and `no` are shown on made-up records only.
 - **A record whose item has left the saved work is kept.** It is named in `report.md` and in the run's
   output, and the record itself is not marked. Someone reading only that record would not know.
 - **"Assigned to me" depends on who the sync ran for.** The made-up GitHub and Trello syncs ran for made-up
-  people, so 218 of the 220 "yes" answers are about someone invented. The other 2 are the participant's own cards.
+  people, so 218 of the 223 "yes" answers are about someone invented. The other 5 are the participant's own: 2
+  cards and 3 issues.
 - **The same item saved by two syncs** is one record, from the copy retrieved later. The two saved shapes
   differ: a card read from the assigned-cards list loses its labels, checklists and place in its list.
 - **Time is cut to whole seconds, and a Jira due date becomes midnight UTC.** Named in the mapping.
@@ -185,6 +197,22 @@ Faults found while building:
   carry them. A newer sync could, and the model would need a new version.
 - The model, the skill, the made-up data and the tests were written by the same assistant and can share a
   blind spot. The planted bugs are the check on the tests. Nobody outside tried to break the model.
+
+## Review, round 1
+
+The first review asked for changes.
+
+- **Criterion 9: the examples had real items from only one system.** Fixed as the review suggested: a real
+  GitHub sync was made with the approved GitHub skill, a masked copy saved, the model applied to it, and
+  `examples.md` regenerated with real items from Trello and GitHub side by side. The normalizer gained one
+  thing: it reads the masked copy as a second saved GitHub file. A test was added for that. Every log was
+  recorded again.
+- **The logs' path (advisory).** The quest names `attempt-001/logs/`. Copies of `identity-check.txt`,
+  `unmappable.txt` and this file are at
+  `participant/evidence/context-canonical-work-item/attempt-001/`, and were handed in the first time as well.
+  The originals are in `context-attempt-002/`, the folder the application's Start button made.
+
+Not changed: the model's fields, the mappings' rules, and the decision to refuse the saved Jira records.
 
 ## Sample data that reads like an instruction
 
@@ -224,12 +252,16 @@ thinner than I thought, and I only found out by asking it to prove where each it
 
 ## Sensitive values
 
-- No token or credential was used. The quest reads only saved files.
+- The skill of this quest uses no token and reads only saved files. For the real GitHub sync, the participant
+  typed a token into their own terminal. It was never shown to the assistant and is in no file. It is limited
+  to one private sandbox repository, read-only, and expires in 7 days.
 - No raw response from any system was copied. The records are built from the files the earlier quests saved.
 - **Nobody's identifier is in any record**: no member id, login or account id. The model leaves out who people
-  are, and a log check looks for the sync's own identifiers in all 225 records. The status map holds one
+  are, and a log check looks for the sync's own identifiers in all 228 records. The status map holds one
   made-up Jira account id, from the made-up Jira.
-- The 7 real records are of cards on the participant's own sandbox board. Their titles are made-up work. Their
-  card ids, short links and the board's id were already in this repository from the Trello quests.
+- The 7 real Trello records are of cards on the participant's own sandbox board. Their titles are made-up work.
+  Their card ids, short links and the board's id were already in this repository from the Trello quests.
+- The 3 real GitHub records come from a masked copy. The login, user id, node IDs, repository id and numeric
+  ids are replaced, and the masking script stops if one is left. Bodies and comments were not copied.
 - Descriptions and comments are not copied into any record.
 - Everything else comes from made-up systems. Their people, repositories and projects are invented.

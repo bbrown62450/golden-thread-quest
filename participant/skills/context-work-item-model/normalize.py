@@ -180,7 +180,8 @@ MAPPINGS = {
         ],
     },
     "github": {
-        "reads": ["`github/assigned/assigned.json`, written by github-read-assigned"],
+        "reads": ["`github/assigned/assigned.json`, written by github-read-assigned",
+                  "`github/assigned-live-masked/assigned.json`, a masked copy of a real run of the same skill, in the same format"],
         "id": "the issue's `node_id`. Not `owner/name#number`: the number and the repository both change when an issue is transferred.",
         "fields": [
             ("identity", "`github:` + `node_id`"), ("title", "`title`"),
@@ -383,7 +384,7 @@ def from_github(issue, me, file_time, sync_source, record, cfg):
         "status": status, "status_basis": basis, "status_source": source,
         "assigned_to_me": ("yes" if me in assignees else "no") if me else "unknown", "assignee_count": len(assignees),
         "blocked": "yes" if hit else "unknown", "blocked_basis": "the label %s, which the status map lists as meaning blocked" % json.dumps(hit[0]) if hit else None,
-        "container": {"kind": "repository", "id": str(need(issue.get("repo_id"), "repository id", int)), "name": full_name},
+        "container": {"kind": "repository", "id": str(need(issue.get("repo_id"), "repository id", (int, str))), "name": full_name},
         "parent": None, "labels": names, "due_at": None, "created_at": utc(issue.get("created_at"), "creation time"),
         "source_updated_at": utc(issue.get("updated_at"), "time of last update", required=True),
     }
@@ -404,14 +405,17 @@ def from_github(issue, me, file_time, sync_source, record, cfg):
 
 
 def read_github(root, cfg):
-    path = os.path.join(root, "github", "assigned", "assigned.json")
-    if os.path.exists(path):
+    for folder in ("assigned", "assigned-live-masked"):
+        path = os.path.join(root, "github", folder, "assigned.json")
+        if not os.path.exists(path):
+            continue
         data = load_json(path)
         me = (data.get("identity") or {}).get("login")
         source = "live" if data.get("source") == "live" else "made-up"
         for node in sorted(data.get("issues", {})):
             issue = data["issues"][node]
-            yield "github issue %s" % node, relative(path), lambda issue=issue: from_github(issue, me, data.get("last_successful_sync"), source, relative(path), cfg)
+            yield "github issue %s" % node, relative(path), lambda issue=issue, data=data, me=me, source=source, path=path: from_github(
+                issue, me, data.get("last_successful_sync"), source, relative(path), cfg)
 
 
 def front_matter(path):

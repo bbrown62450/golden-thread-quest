@@ -210,6 +210,23 @@ class Identity(Base):
         self.assertEqual(len(result["good"]), 14)
         self.assertEqual(self.item(CARD2)[0]["title"], "The later copy")
 
+    def test_a_masked_copy_of_a_real_sync_is_read_as_a_second_saved_file(self):
+        masked = {"schema": 1, "source": "live", "identity": {"id": "[user id]", "login": "[owner]"}, "last_successful_sync": "2026-11-24T00:39:47Z",
+                  "issues": {"[issue node id 1]": {"node_id": "[issue node id 1]", "full_name": "[owner]/sandbox", "repo_id": "[repository id]", "number": 1,
+                                                   "title": "Made-up task one", "state": "open", "state_reason": None, "assignees": ["[owner]"], "labels": ["bug"],
+                                                   "updated_at": "2026-11-23T20:38:49Z", "created_at": "2026-11-21T17:13:09Z", "last_synced": "2026-11-24T00:39:47Z",
+                                                   "comments": [{}], "events": [], "previously": [], "private": True}}}
+        os.makedirs(os.path.join(self.root, "github", "assigned-live-masked"))
+        with open(os.path.join(self.root, "github", "assigned-live-masked", "assigned.json"), "w", encoding="utf-8") as f:
+            json.dump(masked, f)
+        result = self.run_it()
+        self.assertEqual(len(result["good"]), 15)
+        canonical, provenance, _ = self.item("github:[issue node id 1]")
+        self.assertEqual((canonical["assigned_to_me"], canonical["container"]["id"], provenance["sync_source"]), ("yes", "[repository id]", "live"))
+        self.assertEqual(provenance["source_record"], "context/github/assigned-live-masked/assigned.json")
+        self.assertEqual(self.item(ISSUE2)[1]["sync_source"], "made-up")
+        self.assertEqual(normalize.check(self.out, say=lambda line: None), 0)
+
     def test_two_files_holding_one_identity_stop_the_run(self):
         self.run_it()
         items = os.path.join(self.out, "items")

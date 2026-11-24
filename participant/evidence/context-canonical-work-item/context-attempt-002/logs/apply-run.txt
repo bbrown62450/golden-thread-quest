@@ -1,13 +1,13 @@
 The model applied to the work saved in this repository. context-canonical-work-item, attempt context-attempt-002
 Recorded by scripts/record_evidence.py. No request was sent anywhere.
-The saved work is what the earlier quests wrote under participant/context. Most of it is made up. The 8 cards of the participant's own sandbox Trello board are real.
+The saved work is what the earlier quests wrote under participant/context. Most of it is made up. Real: the 8 cards of the participant's own sandbox Trello board, and 3 issues of their sandbox GitHub repository, in a masked copy.
 
 ==============================================================================
 PART 1. Applied once
 $ python3 participant/skills/context-work-item-model/normalize.py
 ------------------------------------------------------------------------------
-work-item-model: model work-item/1. Read 242 saved records from 17 files. No request was sent anywhere
-work-item-model: canonical records: 225 held before this run. This run: 0 new, 0 updated, 225 unchanged. Held now: 225
+work-item-model: model work-item/1. Read 245 saved records from 18 files. No request was sent anywhere
+work-item-model: canonical records: 228 held before this run. This run: 0 new, 0 updated, 228 unchanged. Held now: 228
 work-item-model: could not be mapped: 17. No record was written for any of them
 work-item-model: files written: 0 records
 work-item-model: notes: 1 file, opened for reading only. SHA-256 before and after this run:
@@ -18,30 +18,42 @@ work-item-model:   notes/trello-6afdf65638df50999c980d80.md  before 79ac71ecd692
 |---|---|---|---|---|---|---|---|---|
 | jira | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | trello | 97 | 81 | 1 | 2 | 13 | 13 | 5 | 79 |
-| github | 128 | 124 | 0 | 3 | 1 | 128 | 0 | 0 |
+| github | 131 | 126 | 0 | 4 | 1 | 131 | 0 | 0 |
 
-Assigned to me: yes 220, no 5, unknown 0. Blocked: yes 0, no 0, unknown 225.
-  ok   225 canonical records are held: 97 Trello and 128 GitHub, and none from Jira
-  ok   7 of them come from a real sync, of the participant's sandbox Trello board. The other 218 come from made-up syncs, and each record says which
+Assigned to me: yes 223, no 5, unknown 0. Blocked: yes 0, no 0, unknown 228.
+  ok   228 canonical records are held: 97 Trello and 131 GitHub, and none from Jira
+The records that come from a real sync:
+  github:[issue node id 1]  "Made-up task one"  status open (stated)
+  github:[issue node id 2]  "Made-up task two"  status done (stated)
+  github:[issue node id 3]  "Made-up bug: the export leaves the last row out"  status open (stated)
+  trello:6afdf6548fe01fabfda31f8c  "Add dark mode"  status open (inferred)
+  trello:6afdf6556fec70bd2959905f  "Fix sign-in timeout"  status open (inferred)
+  trello:6afdf655971ad373884d985b  "Write onboarding guide"  status dropped (stated)
+  trello:6afdf656247d17022a5c57a8  "Spike: try a calendar view"  status dropped (stated)
+  trello:6afdf65638df50999c980d80  "Export report as PDF"  status in_progress (inferred)
+  trello:6afdf6592253e548ed311415  "Search by title"  status done (inferred)
+  trello:6afdf65a3f4459240c50778b  "Set up project board"  status done (inferred)
+  ok   10 of them come from a real sync: 7 cards of the participant's sandbox Trello board and 3 issues of their sandbox GitHub repository. The other 218 come from made-up syncs, and each record says which
+  ok   the 3 real GitHub records were read from the masked copy, and hold no login, node ID or repository id of the real ones
   ok   every record has the five things criterion 8 names: the system, the identifier, the address, the retrieval time and the sync run
   ok   status is one of the four values in every record, and every record says how sure it is
   ok   no GitHub item is in_progress, because GitHub cannot say so. The only in_progress items are Trello cards in lists the status map names
-  ok   blocked is unknown for all 225: the saved work states it for none of them. The model does not guess
+  ok   blocked is unknown for all 228: the saved work states it for none of them. The model does not guess
   ok   nobody's identifier is in any record: not the sync's own member id, login or account id
 
 ==============================================================================
 PART 2. Applied again, with nothing changed
 $ python3 participant/skills/context-work-item-model/normalize.py
 ------------------------------------------------------------------------------
-work-item-model: model work-item/1. Read 242 saved records from 17 files. No request was sent anywhere
-work-item-model: canonical records: 225 held before this run. This run: 0 new, 0 updated, 225 unchanged. Held now: 225
+work-item-model: model work-item/1. Read 245 saved records from 18 files. No request was sent anywhere
+work-item-model: canonical records: 228 held before this run. This run: 0 new, 0 updated, 228 unchanged. Held now: 228
 work-item-model: could not be mapped: 17. No record was written for any of them
 work-item-model: files written: 0 records
 work-item-model: notes: 1 file, opened for reading only. SHA-256 before and after this run:
 work-item-model:   notes/trello-6afdf65638df50999c980d80.md  before 79ac71ecd6923b6839a8d35431a56286aac510644bf9f0ff768bb65e02c65677  after 79ac71ecd6923b6839a8d35431a56286aac510644bf9f0ff768bb65e02c65677  same
 (17 lines of this output are left out here: those with UNMAPPABLE)
 ------------------------------------------------------------------------------
-  ok   nothing was written: 0 new, 0 updated, 225 unchanged
+  ok   nothing was written: 0 new, 0 updated, 228 unchanged
   ok   every file in participant/context/model is byte for byte what it was
   ok   the note on the real card has the same checksum before and after both runs (criterion 7)
 
@@ -49,7 +61,7 @@ work-item-model:   notes/trello-6afdf65638df50999c980d80.md  before 79ac71ecd692
 PART 3. The model's own check (stretch goal)
   ok   every record fits the model
 $ python3 participant/skills/context-work-item-model/normalize.py --check
-  work-item-model: checked 225 records against model work-item/1. All fit
+  work-item-model: checked 228 records against model work-item/1. All fit
   ok   the model document and the three mapping documents are exactly what the code writes, so they cannot have drifted from it
 
-RESULT: ALL CHECKS PASSED. 12 checks.
+RESULT: ALL CHECKS PASSED. 13 checks.

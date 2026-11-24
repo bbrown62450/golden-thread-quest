@@ -290,3 +290,8 @@ Every change this application made to your files, newest last.
 - `2026-11-24T00:26:03Z` context-canonical-work-item: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-24T00:26:03Z` Submitted context-canonical-work-item for review as submission-20261124002603-6b241d.
 - `2026-11-24T00:33:43Z` Review of context-canonical-work-item: needs_changes by Claude (automated reviewer).
+- `2026-11-24T00:43:35Z` context-canonical-work-item: needs_changes → in_progress (Resume after a reviewer asked for changes.)
+- `2026-11-24T00:44:04Z` context-canonical-work-item: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-24T00:44:40Z` context-canonical-work-item: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-24T00:45:22Z` context-canonical-work-item: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-24T00:45:22Z` Submitted context-canonical-work-item for review as submission-20261124004522-010d72.
