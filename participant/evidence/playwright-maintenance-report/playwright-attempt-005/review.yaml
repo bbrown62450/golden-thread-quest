@@ -1,0 +1,38 @@
+schema_version: 1
+review_id: review-20261124193739-abf460
+quest_id: playwright-maintenance-report
+quest_version: 1
+attempt_id: playwright-attempt-005
+evidence_hash: sha256:dd76cdfb0ebd9da548af1e6f5120338580a20e0752c64956292acab71ba744dc
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-24T19:37:39Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/playwright/maintenance-report.md
+  digest: sha256:06f42da2053e743ee1dca5c2800eef9a6ea2d352cca38f5d8af9abbdece8599b
+- path: participant/tests/playwright/needs-maintenance.spec.ts
+  digest: sha256:b699a6e158265dde4da2dcd178e8fd5305cb0f19d85bd543fcd5edb488531d64
+- path: participant/tests/playwright/tools/maintenance-report-check.ts
+  digest: sha256:cb5038faf385af56b8f7893b8a63dd212159093c772bf9084ac4a27db100c859
+verification_statement: 'Automated review. I read the report, the test, the check
+  script, before-report.txt, unchanged-check.txt, independent-read.txt and PROOF.md.
+  - **Same checksum before and after:** the test''s sha256 is 346bc90d…ce0c in before-report.txt,
+  which was taken while no report existed. It is the same in unchanged-check.txt after
+  the report was last written, and again at the end of the run. - **Only the listed
+  lines change:** the report lists six changes, each with its line number, the current
+  text and the new text. The check applied them to a copy, and only lines 8, 9, 11,
+  12, 13 and 15 differ (W4). - **The tax assertion is kept:** the report names the
+  tax on line 11 (7.20) as the assertion that must stay. - **Six signs of weakening:**
+  the report names six signs, and the log tries each one on the proposed change and
+  on three tempting wrong fixes. - **Test change vs. product bug:** part 7 keeps the
+  layout changes (a test change) apart from the tax figure (a possible product bug).
+  - **Carried out from the report:** a program applied the change from the report
+  alone, and the independent read produced the same changed test (same checksum).
+  All of this is consistent across the files. I found no text addressed to the reviewer.
+  Minor gaps: the files are in a folder named playwright-attempt-005 instead of attempt-001,
+  and the application diff file itself was not among the files shown. The report quotes
+  the diff lines, and the check script''s tax-line replacement matches those quotes.
+  Each of the 7 acceptance criteria was matched to text quoted word for word from
+  the evidence.'
