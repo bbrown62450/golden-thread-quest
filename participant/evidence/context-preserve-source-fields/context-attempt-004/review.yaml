@@ -1,0 +1,33 @@
+schema_version: 1
+review_id: review-20261124123844-0a42fa
+quest_id: context-preserve-source-fields
+quest_version: 1
+attempt_id: context-attempt-004
+evidence_hash: sha256:81e2b667c05a1b3096aed56b2537b0298a4e3e5c5789fb53b0fb199b21e28fc9
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-24T12:38:44Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/fidelity/mapping-rationale.md
+  digest: sha256:509734bf1b3faf665750cf25e57e1a161d591315c6fe90822a48f1fa3e1d4184
+- path: participant/context/fidelity/normalized.md
+  digest: sha256:8c2a2657f5cb1553dc631d275c6beadfdc15e1d400d26f22e8aae509259219b0
+- path: participant/context/fidelity/source-records.md
+  digest: sha256:67d8a1ec675a1821144337f9bd3d0631369f421ab5dbcfd7789695f0a1470376
+verification_statement: 'Automated review. I read all eight evidence files. Six synthetic
+  records came from three systems: Jira, Trello and GitHub. Each system has fields
+  the others lack. I compared the normalized records with the source records field
+  by field. The preserved values match the source characters exactly, including 3.0,
+  1e3, the é escape, the trailing spaces and the empty string beside null. I checked
+  the field counts in the check log against field_order and rebuilt_from_canonical,
+  for example jira 10042 with 16 preserved and 3 rebuilt. I also checked the rationale
+  totals: 11 copied, 15 translated and 31 preserved only, for 57 fields. These all
+  agree. The roundtrip log shows all 6 records rebuilt identically with exit code
+  0. In part 3, the deliberately dropped customFieldItems line is named and the check
+  exits with code 2. The planted-bugs and tests logs back this up. One small difference:
+  the evidence folder is named context-attempt-004, not attempt-001 as the required-proof
+  paths say. The automatic pre-check still reported the required files as present.
+  No text in the evidence is addressed to the reviewer. Each of the 7 acceptance criteria
+  was matched to text quoted word for word from the evidence.'
