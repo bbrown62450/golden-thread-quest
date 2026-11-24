@@ -1,0 +1,61 @@
+One independent read of the maintenance report. playwright-maintenance-report, attempt playwright-attempt-005
+Written by hand by the assistant that built this quest, from the reader's reply. The reply is shortened.
+
+Who the reader was: a separate AI assistant (Claude), started fresh. No person read the report. It was told to read
+only the report and the test, to run nothing and to write nothing. That limit was given in words and not enforced.
+It did not see the application, its change, the check script or any log.
+
+It was given the report as first written, before the changes listed at the end of this file.
+
+==============================================================================
+1. COULD IT CARRY OUT THE CHANGE FROM THE REPORT ALONE? (criterion 7)
+
+Asked to give the whole test as it should read after the proposed change, it gave 16 lines.
+  sha256 of the reader's version:   7ee32b00fb1c28cb0d203dabee212fac01583f8e68476c1b91813bf4c645f4d6
+  sha256 of the program's version:  7ee32b00fb1c28cb0d203dabee212fac01583f8e68476c1b91813bf4c645f4d6
+    (the program's version is what tools/maintenance-report-check.ts --copy prints from the report's part 4)
+  The two are the same, line for line. The reader's version was copied out of its reply by hand into a file to be
+  compared, so the checksum is of that copy.
+
+In its words: "All six 'Now' lines matched the file exactly, at the stated line numbers ... I did not have to guess
+at any replacement text."
+
+Asked what should happen after the change, it answered: the test gets past lines 8 and 9 and fails at line 11,
+expecting 7.20 and receiving 8.00. That is the wanted result. Stop, do not make it green, and take the two figures
+to whoever owns the tax rule. It named the tax on line 11 as the assertion to preserve, and named as forbidden:
+changing or removing the amount, loosening an assertion, and touching anything outside the six lines.
+
+==============================================================================
+2. WHAT IT FOUND UNCLEAR OR WRONG
+
+  a. The figure 8.00 was stated as a finding and had never been observed. The test had stopped at line 8, and
+     everything after it was read from the application's change.
+  b. The diff the report quoted showed the tax worked out through a named two-way switch. That is not something
+     written by accident, so "it could be a mistake" was the less likely reading, and the report's "nothing says
+     which" was false on its own evidence.
+  c. Signs W5 and W6 were "to be tried", and W5 was described as if settled. The deliberate faults were not listed.
+  d. "The test has not been touched" was not shown: no checksum value was in the report.
+  e. "It passed before, so the test was sound" does not follow from one pass.
+  f. "Fails at one line for one reason" is true only because the test stops there. Lines 12 and 15 would fail too.
+  g. Lines 13 to 15 never run against the checkout in use until the tax is ruled on.
+  h. "Whoever owns the tax rule" names nobody, and in a made-up shop there is nobody.
+  i. A red test with no owner gets ignored. Marking it as an expected failure, with a ticket, would keep the
+     assertion. The report ruled that out in sign W3 without saying why.
+  j. Smaller: the minus sign, the confirmation's currency sign and the unchanged tax rate were asserted and not
+     quoted from the diff. The effort figures were invented. Which file to edit, and when, was not said.
+
+==============================================================================
+3. WHAT WAS DONE
+
+  b  was a fault in how this quest was built, not only in the report. The switch was a device for the check, and
+     it had been put inside the application, so it appeared in the application's change as if the redesign had
+     added it. It was taken out of the application. The check now makes its own scratch copy of the redesigned
+     checkout with the two tax lines put back. The application's change, as handed in, now shows one word
+     different on the tax line, and the report quotes that.
+  a, c, d, e, f, g, h, j  the report was reworded: it now says at its head what was seen and what was predicted,
+     gives the checksum, quotes the diff lines, lists the eight faults, and says which file to edit and when. A
+     part 10 was added with what the check then observed.
+  i  was taken as a fair alternative. It is now option G in the report, with the reason it is not the proposal.
+
+Not done: the revised report was not read again by a reader. The program applies its part 4 and gets the same
+changed test as before, since part 4 was not altered.

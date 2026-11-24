@@ -1,0 +1,24 @@
+Before the report is written. playwright-maintenance-report, attempt playwright-attempt-005
+Recorded by tools/maintenance-report-check.ts --before. The checkout is made up and ran on this computer only.
+
+==============================================================================
+THE TEST, AS IT IS BEFORE ANY REPORT
+file:     participant/tests/playwright/needs-maintenance.spec.ts
+sha256:   346bc90d1453c9d9002beeebe2879cee96d76c81cdf0ddd877ff63867117ce0c
+bytes:    951
+lines:    16
+taken at: 2026-11-24T19:17:35.909Z
+report:   participant/context/playwright/maintenance-report.md does not exist yet
+  ok   no maintenance report exists yet
+
+==============================================================================
+THE FAILURE (the evidence the report cites)
+Against the checkout BEFORE the redesign, demo-app/checkout-server.before.mjs:
+  passed
+Against the checkout AFTER the redesign, demo-app/checkout-server.mjs, which is the one in use:
+  failed at line 8: Error: expect(locator).toHaveText(expected) failed | Locator: locator('#subtotal') | Expected: "40.00" | Timeout: 1500ms | Error: element(s) not found
+  ok   the test passed before the redesign
+  ok   the test fails after it
+  ok   running the test did not change it: the checksum is the same
+
+RESULT: ALL CHECKS PASSED. 4 checks.

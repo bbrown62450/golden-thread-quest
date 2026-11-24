@@ -1,0 +1,17 @@
+schema_version: 1
+submission_id: submission-20261124193025-9e8329
+quest_id: playwright-maintenance-report
+quest_version: 1
+attempt_id: playwright-attempt-005
+content_hash: sha256:63ac130a7b6d433bb673c13df3575076f5710d894d36c8386c91f4186819e575
+evidence_hash: sha256:dd76cdfb0ebd9da548af1e6f5120338580a20e0752c64956292acab71ba744dc
+submitted_at: '2026-11-24T19:30:25Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/playwright/maintenance-report.md
+  digest: sha256:06f42da2053e743ee1dca5c2800eef9a6ea2d352cca38f5d8af9abbdece8599b
+- path: participant/tests/playwright/needs-maintenance.spec.ts
+  digest: sha256:b699a6e158265dde4da2dcd178e8fd5305cb0f19d85bd543fcd5edb488531d64
+- path: participant/tests/playwright/tools/maintenance-report-check.ts
+  digest: sha256:cb5038faf385af56b8f7893b8a63dd212159093c772bf9084ac4a27db100c859

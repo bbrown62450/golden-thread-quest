@@ -544,4 +544,13 @@ attempts:
   evidence_path: participant/evidence/ba-extract-work-items/ba-attempt-006
   submission_id: submission-20261124185927-8284e7
   review_id: review-20261124190344-03f702
-updated_at: '2026-11-24T19:03:44Z'
+- attempt_id: playwright-attempt-005
+  quest_id: playwright-maintenance-report
+  quest_version: 1
+  content_hash: sha256:63ac130a7b6d433bb673c13df3575076f5710d894d36c8386c91f4186819e575
+  state: submitted
+  started_at: '2026-11-24T19:09:09Z'
+  updated_at: '2026-11-24T19:30:25Z'
+  evidence_path: participant/evidence/playwright-maintenance-report/playwright-attempt-005
+  submission_id: submission-20261124193025-9e8329
+updated_at: '2026-11-24T19:30:25Z'

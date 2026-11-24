@@ -1,0 +1,151 @@
+The unchanged check. playwright-maintenance-report, attempt playwright-attempt-005
+Recorded by tools/maintenance-report-check.ts. The checkout is made up and ran on this computer only, on 127.0.0.1.
+Every change tried below was made to a copy of the test in a scratch folder. The test itself was not written to.
+
+==============================================================================
+PART 1. The test file is unchanged when the report is written (criterion 5)
+participant/tests/playwright/needs-maintenance.spec.ts
+  sha256 BEFORE the report was written, from logs/before-report.txt, taken at 2026-11-24T19:17:35.909Z:
+    346bc90d1453c9d9002beeebe2879cee96d76c81cdf0ddd877ff63867117ce0c
+  the report, participant/context/playwright/maintenance-report.md, was last written at 2026-11-24T19:23:20.303Z
+  sha256 AFTER the report was written, taken now, at 2026-11-24T19:23:20.349Z:
+    346bc90d1453c9d9002beeebe2879cee96d76c81cdf0ddd877ff63867117ce0c
+  ok   logs/before-report.txt exists, and says that no report existed when it was taken
+  ok   the report was written after that checksum was taken
+  ok   the test's checksum now is the checksum taken before the report was written
+  git: the file is new and not yet committed, so git has no earlier version to compare. The checksum above is the comparison. git hash-object: d027653365a1898cfd6122aef7e54a44cd9b177a
+
+==============================================================================
+PART 2. The report has what the quest asks for, and what it says of the failure is what the evidence says (criteria 1, 3, 4, 6)
+  ok   the report has the part "1. Cause"
+  ok   the report has the part "2. Evidence"
+  ok   the report has the part "3. The proposed change"
+  ok   the report has the part "4. The change, line by line"
+  ok   the report has the part "5. The business assertion that must be preserved"
+  ok   the report has the part "6. What would show that the change weakened the test"
+  ok   the report has the part "7. A test change, or a possible product bug"
+  ok   the report has the part "8. Options and effort"
+  ok   the report has the part "9. The triage this follows"
+Files the report cites: 11. participant/tests/playwright/needs-maintenance.spec.ts, participant/evidence/playwright-maintenance-report/playwright-attempt-005/logs/before-report.txt, participant/tests/playwright/tools/maintenance-report-check.ts, participant/tests/playwright/needs-maintenance.app-change.diff, participant/tests/playwright/demo-app/checkout-server.mjs, participant/tests/playwright/demo-app/checkout-server.before.mjs, participant/tests/playwright/maintenance.config.ts, participant/tests/playwright, participant/context/playwright/triage-rules.md, participant/context/playwright/triage-report.md, participant/evidence/playwright-maintenance-report/playwright-attempt-005/logs/unchanged-check.txt
+  ok   every file the report cites exists
+
+The test, run now against the checkout before the redesign: passed
+The test, run now against the checkout in use:              failed at line 8: Error: expect(locator).toHaveText(expected) failed | Locator: locator('#subtotal') | Expected: "40.00" | Timeout: 1500ms | Error: element(s) not found
+  ok   the test passes against the checkout before the redesign and fails against the one in use, as the report says
+  ok   the report gives the line the test fails at, line 8, and the locator it could not find
+  ok   the report names the business assertion to preserve, with its line and its amount: the tax, 7.20
+  ok   the report says the tax figure is a POSSIBLE PRODUCT BUG and that the expected amount is not to be changed
+
+==============================================================================
+PART 3. The change can be carried out from the report alone (criteria 2 and 7)
+Changes read out of the report's part 4: 6, for lines 8, 9, 11, 12, 13, 15.
+  line  8  now: await expect(page.locator("#subtotal")).toHaveText("40.00");
+           to:  await expect(page.getByTestId("summary-subtotal")).toHaveText("£40.00");
+  line  9  now: await expect(page.locator("#discount")).toHaveText("-4.00");
+           to:  await expect(page.getByTestId("summary-discount")).toHaveText("-£4.00");
+  line 11  now: await expect(page.locator("#tax")).toHaveText("7.20");
+           to:  await expect(page.getByTestId("summary-tax")).toHaveText("£7.20");
+  line 12  now: await expect(page.locator("#total")).toHaveText("43.20");
+           to:  await expect(page.getByTestId("summary-total")).toHaveText("£43.20");
+  line 13  now: await page.getByRole("button", { name: "Place order" }).click();
+           to:  await page.getByRole("button", { name: "Buy now" }).click();
+  line 15  now: await expect(page.locator("#confirm-total")).toHaveText("43.20");
+           to:  await expect(page.getByTestId("confirmation-total")).toHaveText("£43.20");
+  ok   every change names a line whose text now is exactly what the report says it is
+  ok   the report's own summary of which lines change and which do not accounts for all 16 lines of the test
+
+The copy made by applying those changes, and nothing else:
+   6   test("checkout shows the right amounts and places the order", async ({ page }) => {
+   7     await page.goto("/");
+   8 *   await expect(page.getByTestId("summary-subtotal")).toHaveText("£40.00");
+   9 *   await expect(page.getByTestId("summary-discount")).toHaveText("-£4.00");
+  10     // BUSINESS RULE: tax is 20% of what the customer pays for the goods, after the discount. 36.00 x 20% = 7.20.
+  11 *   await expect(page.getByTestId("summary-tax")).toHaveText("£7.20");
+  12 *   await expect(page.getByTestId("summary-total")).toHaveText("£43.20");
+  13 *   await page.getByRole("button", { name: "Buy now" }).click();
+  14     await expect(page.getByRole("heading", { name: "Order placed" })).toBeVisible();
+  15 *   await expect(page.getByTestId("confirmation-total")).toHaveText("£43.20");
+  16   });
+  * a line the report changes
+
+==============================================================================
+PART 4. Does the change weaken the test? The report's own six signs, each tried (criterion 4)
+  ok   W1: the copy has as many expect() calls as the test
+  ok   W2: every amount in the test is still in the copy, on the same line, with the same digits
+  ok   W3: nothing that loosens a test was added
+  ok   W4: only the lines the report lists differ, and no line was added or removed
+
+The copy, against the checkout in use: failed at line 11: Error: expect(locator).toHaveText(expected) failed | Locator:  getByTestId('summary-tax') | Expected: "£7.20" | Received: "£8.00" | Timeout:  1500ms
+The copy, against a scratch copy of that checkout with its two tax lines put back as they were before the redesign: passed
+  ok   W5: against the checkout in use the copy fails at line 11, the tax line, expecting £7.20 and receiving £8.00. The business assertion is alive and is the only thing failing
+  ok   W5: with the tax lines put back, the copy passes, all the way through the button and the confirmation. So the change is complete: the layout is dealt with, and nothing but the tax figure stands in the way
+
+W6. Eight deliberate faults, one at a time, switched on by CHECKOUT_FAULT. The test against the OLD checkout. The copy against the NEW one with its tax lines put back.
+  fault                    the test, old checkout        the copy, new checkout
+  tax-left-out-of-total    caught at line 12             caught at line 12
+  tax-rate-wrong           caught at line 11             caught at line 11
+  tax-shown-wrong          caught at line 11             caught at line 11
+  discount-ignored         caught at line 11             caught at line 11
+  total-ignores-discount   caught at line 12             caught at line 12
+  subtotal-wrong           caught at line 8              caught at line 8
+  button-dead              caught at line 14             caught at line 14
+  confirmation-wrong       caught at line 15             caught at line 15
+  ok   W6: the test caught 8 of the 8 faults, and the copy caught 8. Every fault the test caught, the copy catches
+
+==============================================================================
+PART 5. The tempting fixes, as a contrast. Each makes the test pass. None is proposed
+
+TEMPTING FIX: delete the tax assertion, and set the totals to what the page shows.
+  against the checkout in use: passed
+  SIGN W1: the copy has 5 expect() calls and the test has 6
+  SIGN W2: an amount changed or went: line 11 had 7.20 and now has none; line 12 had 43.20 and now has none; line 13 had no amount and now has 44.00; line 15 had 43.20 and now has none
+  SIGN W4: the copy has 14 lines and the test has 16
+  faults it lets through, of 8: tax-shown-wrong
+  ok   "delete the tax assertion, and set the totals to what the page shows" makes the test pass against the checkout in use, and at least one of the report's signs catches it
+
+TEMPTING FIX: set the expected amounts to what the page shows now.
+  against the checkout in use: passed
+  SIGN W2: an amount changed or went: line 11 had 7.20 and now has 8.00; line 12 had 43.20 and now has 44.00; line 15 had 43.20 and now has 44.00
+  faults it lets through, of 8: none
+  ok   "set the expected amounts to what the page shows now" makes the test pass against the checkout in use, and at least one of the report's signs catches it
+
+TEMPTING FIX: keep every line, and only check that an amount is shown.
+  against the checkout in use: passed
+  SIGN W2: an amount changed or went: line 11 had 7.20 and now has none; line 12 had 43.20 and now has none; line 15 had 43.20 and now has none
+  SIGN W3: added a contains match, a pattern match
+  faults it lets through, of 8: tax-left-out-of-total, tax-rate-wrong, tax-shown-wrong, discount-ignored, total-ignores-discount, confirmation-wrong
+  ok   "keep every line, and only check that an amount is shown" makes the test pass against the checkout in use, and at least one of the report's signs catches it
+
+The second of these lets no fault through and is still wrong. It passes because it has taken the new tax figure as correct, which is the
+one thing nobody has decided. Only the signs W2 and W5 show it.
+
+==============================================================================
+PART 6. That this check can fail
+Spoiled: the report's first change gives the line's present text with one character different
+    PROBLEM: Change 1 says line 8 now reads one thing, and the test has another there.
+  ok   reported: "Change 1 says line 8 now reads one thing"
+Spoiled: the report's first change names line 80
+    PROBLEM: Change 1 names line 80, and the test has 16 lines.
+  ok   reported: "names line 80"
+Spoiled: two changes for one line
+    PROBLEM: Change 99 is for line 9, which another change already covers.
+    PROBLEM: Change 99 says line 9 now reads one thing, and the test has another there.
+  ok   reported: "which another change already covers"
+Spoiled: the test file edited after the before-checksum was taken (one space added, in memory)
+    PROBLEM: the checksum differs from the one taken before the report was written
+  ok   reported: "the checksum differs"
+Spoiled: a change the report does not list, made to the copy (line 6, the test's title)
+    PROBLEM: W4: line 6 differs and the report does not list it
+  ok   reported: "W4: line 6 differs"
+Spoiled: the expected tax changed in the copy from 7.20 to 8.00
+    PROBLEM: W2: an amount changed or went: line 11 had 7.20 and now has 8.00
+    PROBLEM: W4: line 10 differs and the report does not list it
+  ok   reported: "W2: an amount changed or went"
+
+==============================================================================
+AT THE END
+sha256 of participant/tests/playwright/needs-maintenance.spec.ts, after every run above: 346bc90d1453c9d9002beeebe2879cee96d76c81cdf0ddd877ff63867117ce0c
+  ok   the test is still byte for byte what it was before the report was written, and the scratch folder is gone
+  ok   the handed-in test still fails against the checkout in use. The proposed change was not applied to it
+
+RESULT: ALL CHECKS PASSED. 37 checks.
