@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261124185927-8284e7
+quest_id: ba-extract-work-items
+quest_version: 1
+attempt_id: ba-attempt-006
+content_hash: sha256:4a3f4b27deafcb402757581523ca625f98fb490e98fb7ec2066f5e66f903683a
+evidence_hash: sha256:989367e93f300186a4ba1dd8602a84f7bf2b729b62959a3abd3f6cd20211b22c
+submitted_at: '2026-11-24T18:59:27Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/extraction-rules.md
+  digest: sha256:a26b2a717aa82f28272783d4a02fd8e9bde22932c19fac78555d042533285e1f
+- path: participant/context/transcripts/sample-meeting.work-items.md
+  digest: sha256:efccc5cf735f60f22d800dfb9b980f6fe2322adcb850942e45a2cd734b2e454b

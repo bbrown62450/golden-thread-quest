@@ -1,0 +1,193 @@
+Do the tests notice a broken extraction check? ba-extract-work-items, attempt ba-attempt-006
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/ba-extract-work-items/extract.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. A cited identifier that is not in the record is not reported (criterion 1)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    CitedLinesExist.test_a_line_removed_from_the_record_is_reported_where_it_is_cited
+    CitedLinesExist.test_an_identifier_written_in_a_note_is_checked_too
+    CitedLinesExist.test_an_item_citing_a_line_that_does_not_exist
+    Command.test_check_fails_with_exit_code_1_and_names_the_identifier
+
+PLANTED BUG B. Only identifiers on citation lines are looked up, so one written in a note is never checked (criteria 1 and 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    CitedLinesExist.test_an_identifier_written_in_a_note_is_checked_too
+
+PLANTED BUG C. An item with no citation at all passes (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    CitedLinesExist.test_an_item_with_no_citation_at_all
+
+PLANTED BUG D. An item needs no mention of the work itself, only any cited line (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    CitedLinesExist.test_an_item_whose_only_citations_are_not_mentions
+
+PLANTED BUG E. Quoted words are not compared with the record (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    CitedLinesExist.test_words_that_are_not_the_records
+
+PLANTED BUG F. The speaker given for a line is not compared with the record (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    CitedLinesExist.test_a_line_given_to_the_wrong_speaker
+
+PLANTED BUG G. A citation into a different transcript is accepted (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    CitedLinesExist.test_a_citation_into_another_transcript
+
+PLANTED BUG H. An owner, size or date may be stated with no line behind it: a gap filled in (criteria 2 and 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhatTheMeetingDidNotSay.test_an_owner_filled_in_with_no_line_is_reported
+
+PLANTED BUG I. One of the six things may be left out altogether (criterion 3)
+  unittest result: FAILED (errors=1)
+  tests that failed (1):
+    WhatTheMeetingDidNotSay.test_one_of_the_six_left_out_is_reported
+
+PLANTED BUG J. NOT SAID may stand beside a line cited as answering (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhatTheMeetingDidNotSay.test_not_said_beside_a_line_that_answers_is_reported
+
+PLANTED BUG K. The count of things said is not compared with the item's own lines (stretch goal)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    WhatTheMeetingDidNotSay.test_a_wrong_count_is_reported
+    WhatTheMeetingDidNotSay.test_an_owner_filled_in_with_no_line_is_reported
+
+PLANTED BUG L. The number of mentions in the heading is not compared with the mentions cited (criterion 4)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Merged.test_a_heading_that_claims_more_mentions_than_are_cited
+    Merged.test_a_merged_item_that_lost_a_mention
+
+PLANTED BUG M. The same line may be the mention of two items, so one piece of work can become two (criterion 4)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Merged.test_a_line_shared_on_purpose_must_be_named_in_the_first_items_note
+    Merged.test_the_same_line_as_a_mention_of_two_items_is_reported
+
+PLANTED BUG N. Two items may have the same title (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Merged.test_two_items_with_one_title_are_reported
+
+PLANTED BUG O. The same item may appear twice (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Merged.test_the_same_item_twice
+
+PLANTED BUG P. A record changed since it was ingested is not noticed (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Separate.test_the_record_changed_after_ingestion_is_reported
+
+PLANTED BUG Q. A file made from another version of the record is accepted (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Separate.test_a_file_made_from_another_version_of_the_record
+
+PLANTED BUG R. One file serving as both record and work-items file is accepted (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Separate.test_one_file_for_both_is_reported
+
+PLANTED BUG S. Work items written into the record are not noticed (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Separate.test_items_written_into_the_record_are_reported
+
+PLANTED BUG T. The record copied into the work-items file is not noticed (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Separate.test_the_record_copied_into_the_items_file_is_reported
+
+PLANTED BUG U. A proposal may be marked decided (criterion 2)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    HowSettled.test_a_proposal_cannot_be_marked_decided
+    HowSettled.test_an_open_matter_cannot_be_marked_decided
+
+PLANTED BUG V. An item may rest on a decision the meeting reversed (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    HowSettled.test_an_item_resting_on_a_reversed_decision_is_reported
+
+PLANTED BUG W. An item may rest on a decision none of whose lines it cites (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    HowSettled.test_resting_on_a_decision_whose_lines_the_item_does_not_cite
+
+PLANTED BUG X. An item may rest on something that is not in the decisions file
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    HowSettled.test_resting_on_something_that_is_not_in_the_decisions_file
+
+PLANTED BUG Y. An item may be made from a line that reads like an instruction (safety rule)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Refused.test_an_item_made_from_an_instruction_like_line_is_reported
+
+PLANTED BUG Z. A refusal need not say why (the refused item)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Refused.test_a_refusal_with_no_reason_is_reported
+
+PLANTED BUG AA. A line of the record that is neither cited nor listed is not noticed (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Refused.test_a_line_neither_cited_nor_listed_is_reported
+
+PLANTED BUG AB. The one-speaker flag is not compared with the speakers cited (stretch goal)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Stretch.test_a_missing_flag_is_reported
+    Stretch.test_a_wrong_flag_is_reported
+
+PLANTED BUG AG. A plain "decided" heading may sit on an item that has a part not settled (criterion 2)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    HowSettled.test_a_plain_decided_heading_on_an_item_with_a_part_not_settled_is_reported
+    HowSettled.test_decided_in_part_with_nothing_listed_as_not_settled_is_reported
+
+PLANTED BUG AH. A plain "decided" heading may rest on a decision that was reopened (criterion 2)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    HowSettled.test_a_plain_decided_heading_on_a_reopened_decision_is_reported
+    HowSettled.test_reopened_on_a_decision_that_was_not_reopened_is_reported
+
+PLANTED BUG AC. The check ends with exit code 0 when it found problems
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Command.test_an_empty_work_items_file_does_not_pass
+    Command.test_check_fails_with_exit_code_1_and_names_the_identifier
+
+PLANTED BUG AD. An empty work-items file passes
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Command.test_an_empty_work_items_file_does_not_pass
+
+PLANTED BUG AE. An intent of two sentences passes
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Merged.test_an_intent_of_two_sentences_is_reported
+
+PLANTED BUG AF. build ranks the table by item number, not by how much was said (stretch goal)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Sound.test_the_handed_in_files_are_what_the_code_writes
+    Stretch.test_the_table_ranks_items_by_how_much_was_said
+
+After the last bug was taken out: extract.py is byte for byte what it was at the start. OK
+
+RESULT: all 34 planted bugs were caught by at least one test, and the file was restored.

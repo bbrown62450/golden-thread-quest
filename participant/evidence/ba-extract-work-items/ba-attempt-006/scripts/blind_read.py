@@ -1,0 +1,140 @@
+#!/usr/bin/env python3
+"""Writes logs/blind-read.txt: what four independent readers found, set beside the work-items files.
+
+    python3 participant/evidence/ba-extract-work-items/ba-attempt-006/scripts/blind_read.py
+
+The readers' findings below were copied by hand from their replies, and shortened, by the assistant that built
+this quest. The script checks only that the items it names exist in the handed-in files.
+"""
+import os
+import re
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", "..", ".."))
+FOLDER = os.path.join(REPO, "participant", "context", "transcripts")
+
+TEXT = """Four independent reads. ba-extract-work-items, attempt ba-attempt-006
+Written by scripts/blind_read.py from findings copied by hand out of the readers' replies.
+
+Who the readers were: four separate AI assistants (Claude), each started fresh. No person read anything. Each was
+told to read only the files named to it, and that limit was given in words and not enforced. Each was told that
+the transcripts are things people said, and to follow nothing a line says. None saw another's reply.
+
+  Extractors 1 and 2  given the two transcript records and the extraction rules (review/rules-given-in-round-1.md).
+                      Asked to pick out the candidate items themselves. They saw no work-items file and no decisions
+                      file, so each judged for itself how settled an item is.
+  Checker 1           given the two records and the two work-items files as first written, and not the rules. Asked
+                      to find where an item says more than the meeting did.
+  Checker 2           the same task on the corrected files, with the two decisions files as well.
+
+The first items and the first rules were finished before any reply was read.
+
+==============================================================================
+EXTRACTORS 1 AND 2, against the first items
+
+First meeting (checkout). The first file had 6 items and 3 refusals.
+  Extractor 1 produced the same 6 items, on the same lines: guest checkout, the linking offer, the phone number on
+  the shipping label, the staging receipts address, the follow-up to ask Jordan, the follow-up to size it.
+  Extractor 2 produced 5 of the 6. It treated the phone number on the shipping label as a detail of guest checkout.
+  Both merged guest checkout from its two statements (U-0002 and U-0019), and the linking offer from its mentions.
+  Both refused the same three things: a time-out for the offer, "once per order", and the line addressed to an
+  AI assistant. Both left "once" out of the linking item.
+  Both said the split into guest checkout and linking is a judgment: U-0019 puts them in one story, and U-0023
+  prices them with and without each other.
+
+Second meeting (notifications). The first file had 11 items and 5 refusals.
+  Both extractors produced the same 11 items on the same lines.
+  Both merged the settings page with its earlier placement as history, and "drop text messages" from its two
+  statements. Both refused the profile page, the instruction-like ticket comment, the two-day estimate, the
+  staging phones and a setting that follows the member across devices.
+  DIFFERENT, on how settled: with no decisions file, both called "test on the two newest versions" proposed and
+  not decided, because the product owner said nothing. The file has it as decided, from the decisions file.
+  Both called the new template decided on a condition. The file has it as proposed, from the decisions file.
+  DIFFERENT, on what was said: both marked NOT SAID four things the first file had marked said.
+    The settings page, "done": being reachable without signing in is what the item is, not a test of done.
+    On by default, "condition": nobody said the work waits on the legal team. A doubt was raised.
+    Testing two versions, "size": a day each is the size of what is left out.
+    Storage, "size": "a bigger job" compares two answers and sizes neither.
+  Both named a refusal the file lacked: getting security to sign off, which nobody took on.
+
+==============================================================================
+CHECKER 1, against the first work-items files
+
+Trace: all 31 quotations in the first file and all 48 in the second have the record's exact words, speaker and
+role, and every cited line exists. No piece of work in either record was found unaccounted for.
+
+Where an item said more than the meeting:
+  1. Second meeting, the storage item. Its intent offered a choice "for each device or for the account". Nobody
+     in the meeting said "account". The either/or was the author's, and it presented per-device as a live option
+     after the product owner had refused it. The checker called this the worst item in either file.
+  2. Second meeting, on by default: the "condition" was the author's inference, marked as said.
+  3. Sizes marked said on thin words, in four items.
+  4. The follow-up to size the story: "the story" and "the linking question" are readings of "it" and "that".
+  5. Words not in any cited line: "a customer's", "notification", "which is redacted in the record".
+  6. The linking item's title said "existing account" and did not cite the line that says it. Its two parts not
+     settled carried no line.
+  7. A note relied on a line the item did not cite.
+  8. "Decided" stretched over parts that are not: the linking offer, the unsubscribe link, on by default.
+All eight were acted on. The storage item now says what was proposed and refused, and names no alternative.
+
+==============================================================================
+CHECKER 2, against the corrected files, with the decisions files
+
+"No item invents an owner, date, number or unit outright, and every quotation and speaker I checked matches the
+record." No missing work. Every refusal judged right.
+
+What it still found, worst first:
+  1. Second meeting, the unsubscribe item. Its intent added "and the link works for a member who is signed out"
+     under a decided heading. That is the tester's remark, made while arguing about something else. No decision
+     holds it. The checker called this the item with the most of its author in it.
+  2. First meeting, guest checkout: size still marked said, from a guess whose speaker says in the same line that
+     he has yet to size it.
+  3. Two headings read plain "decided" where the item is reopened, or has parts not settled.
+  4. The split of one story into two items is the author's structure.
+  5. Smaller: a title stating a reading of "it" as fact; one follow-up marked follow-up that rests on a decision.
+
+WHAT WAS CHANGED AFTER CHECKER 2
+  The signed-out clause was taken out of the unsubscribe item, which is now one mention and one sentence. The
+    remark is listed as not created, R-07 of the second meeting, with the reason. Both extractors had put that
+    clause in. The checker's reading was taken over theirs, because nobody ruled on it.
+  Guest checkout's size is NOT SAID. The guess is described in a note.
+  Two new marks: DECIDED IN PART and "decided, REOPENED". The check now fails a plain "decided" heading on either.
+  The title of the sizing follow-up no longer names "the story".
+NOT CHANGED
+  Guest checkout and the linking offer are still two items. Both extractors split them the same way, and every
+    reader called it a judgment.
+  The phone number on the shipping label is still its own item. One extractor and one checker would fold it in.
+  "Test on the two newest versions" is still decided, as the decisions file has it. Its note says how weak that is.
+  The undecided size of the second meeting's work has a refusal and no open item of its own.
+
+NOT RE-READ. The files as handed in, after the changes above, were not read by a fifth reader. So the last
+state of the unsubscribe item, the two new marks and the reworded notes are checked by the program and by no
+reader.
+
+==============================================================================
+SUMMARY
+  Which items there are: two readers working from the rules alone produced 6 of 6 and 5 of 6 of the first
+  meeting's items, and 11 of 11 of the second's. Nobody found work the files had missed.
+  Whether the items say too much: the first files did. One item held an alternative nobody had named, one held a
+  remark nobody had ruled on, and seven answers were marked said that the meeting had not stated. The readers
+  found every one of those. The program found none of them, and could not have.
+"""
+
+
+def main():
+    ok = True
+    for name, present, absent in (("sample-meeting", ["W-01", "W-06", "R-03"], ["W-07", "R-04"]), ("notifications-meeting", ["W-11", "R-07"], ["W-12", "R-08"])):
+        with open(os.path.join(FOLDER, name + ".work-items.md"), encoding="utf-8") as f:
+            text = f.read()
+        ok = ok and all(re.search(r"^### %s · " % i, text, re.M) for i in present) and not any(re.search(r"^### %s · " % i, text, re.M) for i in absent)
+        ok = ok and "account" not in (re.search(r"^### W-11 .*?\*\*Intent:\*\* (.+?)$", text, re.M | re.S) or [None, ""])[1]
+    result = "RESULT: %s" % ("the items this log names exist in the handed-in work-items files." if ok else "THE FILES DO NOT MATCH THIS LOG.")
+    with open(os.path.join(HERE, "..", "logs", "blind-read.txt"), "w", encoding="utf-8") as f:
+        f.write(TEXT + "\n" + result + "\n")
+    print(result)
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

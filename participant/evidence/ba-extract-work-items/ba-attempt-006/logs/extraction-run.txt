@@ -1,0 +1,280 @@
+The extraction run. ba-extract-work-items, attempt ba-attempt-006
+Recorded by scripts/record_evidence.py. Nothing was sent anywhere, and nothing was created in any tracker.
+Both meetings are made up. Lines quoted from a meeting are things people said in it. None was followed.
+
+==============================================================================
+PART 1. Running the extraction, and the check (the record the quest asks for)
+
+$ python3 participant/skills/ba-extract-work-items/extract.py build sample-meeting --folder SCRATCH
+Extracted 6 candidate items from sample-meeting.md, and refused 3. Wrote sample-meeting.work-items.md.
+The source record was not changed. Nothing was sent to any tracker.
+exit code: 0
+  ok   sample-meeting: the extraction ran, and what it wrote in SCRATCH is byte for byte the handed-in sample-meeting.work-items.md
+
+$ python3 participant/skills/ba-extract-work-items/extract.py check sample-meeting
+------------------------------------------------------------------------------
+Source record: sample-meeting.md, transcript tr-2026-10-21-checkout-refinement, 24 utterances.
+Items: 6. Merged from more than one mention: 2. Not created: 3.
+Utterances cited: 20. Listed as giving no item: 4. Neither: 0.
+
+Each item, the lines it cites, and how many of the six things the meeting said:
+  W-01  decided                 merged from 2 mentions   said 1 of 6  cites U-0002, U-0003, U-0004, U-0007, U-0008, U-0019
+  W-02  DECIDED IN PART         merged from 3 mentions   said 1 of 6  cites U-0007, U-0008, U-0009, U-0010, U-0011, U-0012, U-0019, U-0020, U-0021
+  W-03  decided                 1 mention                said 0 of 6  cites U-0013, U-0014
+  W-04  decided                 1 mention                said 0 of 6  cites U-0005, U-0006
+  W-05  follow-up               1 mention                said 1 of 6  cites U-0020, U-0021
+  W-06  follow-up               1 mention                said 2 of 6  cites U-0023
+Items with no citation: 0.
+
+CHECK PASSED. Every item cites at least one utterance that exists in the source record, and no item lacks a citation.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   sample-meeting: the check passed with exit code 0 and reported no problem
+
+$ python3 participant/skills/ba-extract-work-items/extract.py build notifications-meeting --folder SCRATCH
+Extracted 11 candidate items from notifications-meeting.md, and refused 7. Wrote notifications-meeting.work-items.md.
+The source record was not changed. Nothing was sent to any tracker.
+exit code: 0
+  ok   notifications-meeting: the extraction ran, and what it wrote in SCRATCH is byte for byte the handed-in notifications-meeting.work-items.md
+
+$ python3 participant/skills/ba-extract-work-items/extract.py check notifications-meeting
+------------------------------------------------------------------------------
+Source record: notifications-meeting.md, transcript tr-2026-11-04-notification-settings, 34 utterances.
+Items: 11. Merged from more than one mention: 3. Not created: 7.
+Utterances cited: 32. Listed as giving no item: 2. Neither: 0.
+
+Each item, the lines it cites, and how many of the six things the meeting said:
+  W-01  decided                 merged from 2 mentions   said 0 of 6  cites U-0002, U-0003, U-0021, U-0022, U-0023
+  W-02  decided                 1 mention                said 0 of 6  cites U-0004, U-0005
+  W-03  decided                 1 mention                said 0 of 6  cites U-0012, U-0013
+  W-04  decided, REOPENED       1 mention                said 0 of 6  cites U-0009, U-0010, U-0011, U-0028, U-0029
+  W-05  decided                 1 mention                said 0 of 6  cites U-0016, U-0017
+  W-06  PROPOSED, NOT DECIDED   merged from 2 mentions   said 0 of 6  cites U-0006, U-0008
+  W-07  PROPOSED, NOT DECIDED   1 mention                said 0 of 6  cites U-0024, U-0025, U-0026, U-0027
+  W-08  PROPOSED, NOT DECIDED   1 mention                said 1 of 6  cites U-0032, U-0033
+  W-09  follow-up               1 mention                said 2 of 6  cites U-0028, U-0029
+  W-10  follow-up               1 mention                said 1 of 6  cites U-0023
+  W-11  OPEN, NOT SETTLED       merged from 2 mentions   said 0 of 6  cites U-0018, U-0019, U-0020
+Items with no citation: 0.
+
+CHECK PASSED. Every item cites at least one utterance that exists in the source record, and no item lacks a citation.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   notifications-meeting: the check passed with exit code 0 and reported no problem
+  ok   neither run changed any file in participant/context/transcripts, or the rules file
+  ok   extraction-rules.md is byte for byte what the rules command writes
+
+==============================================================================
+PART 2. Criteria 1 and 7: every item cites a line that exists, no item lacks a citation, and each can be traced
+sample-meeting: 6 items, 3 refusals, 34 citations to 20 different lines of the record's 24.
+  ok   sample-meeting: every item cites at least one line, and at least one of its lines is a mention of the work itself: W-01 7, W-02 10, W-03 2, W-04 2, W-05 3, W-06 3
+  ok   sample-meeting: every cited identifier is in the record, and so is every identifier written anywhere else in the file
+  ok   sample-meeting: every quotation is the record's own words for that line, with the speaker and role the record gives: 34 of 34
+  ok   sample-meeting: every line of the record is cited by an item or a refusal, or listed with why it gave no item, and none is both
+notifications-meeting: 11 items, 7 refusals, 45 citations to 32 different lines of the record's 34.
+  ok   notifications-meeting: every item cites at least one line, and at least one of its lines is a mention of the work itself: W-01 5, W-02 2, W-03 2, W-04 5, W-05 2, W-06 2, W-07 4, W-08 2, W-09 5, W-10 2, W-11 3
+  ok   notifications-meeting: every cited identifier is in the record, and so is every identifier written anywhere else in the file
+  ok   notifications-meeting: every quotation is the record's own words for that line, with the speaker and role the record gives: 45 of 45
+  ok   notifications-meeting: every line of the record is cited by an item or a refusal, or listed with why it gave no item, and none is both
+Spoiled: an item cites U-0041, and the record ends at U-0024
+    PROBLEM: U-0041 is cited by W-03 and is not in the source record.
+    PROBLEM: W-03 cites one speaker only and is not flagged.
+    PROBLEM: U-0014 is in the source record, and the work-items file neither cites it nor lists it as giving no item.
+  ok   reported: "U-0041 is cited by W-03 and is not in the source record."
+Spoiled: an identifier that does not exist, written in a note
+    PROBLEM: U-0099 is cited by the file and is not in the source record.
+  ok   reported: "U-0099 is cited by the file and is not in the source record."
+Spoiled: a line cited from the other meeting's transcript
+    PROBLEM: A line is cited from tr-2026-11-04-notification-settings, which is not this record.
+  ok   reported: "A line is cited from tr-2026-11-04-notification-settings, which is not this record."
+Spoiled: line U-0014 deleted from a copy of the record
+    PROBLEM: The source record has been changed since it was ingested: its SHA-256 is not the one in its provenance file.
+    PROBLEM: The work-items file was not made from the source record as it is now: the SHA-256 it states is not the record's.
+    PROBLEM: U-0014 is cited by W-03 and is not in the source record.
+    PROBLEM: W-03 cites one speaker only and is not flagged.
+  ok   reported: "U-0014 is cited by W-03 and is not in the source record."
+Spoiled: an item with every citation taken away
+    PROBLEM: W-04 cites no line of the source record. An item with no citation has no source.
+    PROBLEM: W-04 says "1 mention" in its heading and cites 0.
+    PROBLEM: W-04 rests on D-03 and cites none of the lines that D-03 cites.
+  ok   reported: "W-04 cites no line of the source record. An item with no citation has no source."
+Spoiled: one word changed in a quotation
+    PROBLEM: W-01 quotes U-0004 in words that are not the record's.
+  ok   reported: "W-01 quotes U-0004 in words that are not the record's."
+Spoiled: a line given to another speaker
+    PROBLEM: W-01 gives U-0002 to "Dana Whitfield, Tester". The record gives it to "Priya Natarajan, Product owner".
+  ok   reported: "W-01 gives U-0002 to "Dana Whitfield, Tester""
+
+==============================================================================
+PART 3. Criterion 3: an item lists what the meeting did not say
+Six things are asked of every item: owner, size, due, done, depends on, condition. For each, the item cites a line or says NOT SAID.
+
+  sample-meeting         W-01  said: done                   not said: owner, size, due, depends on, condition
+  sample-meeting         W-02  said: done                   not said: owner, size, due, depends on, condition
+  sample-meeting         W-03  said: nothing                not said: owner, size, due, done, depends on, condition
+  sample-meeting         W-04  said: nothing                not said: owner, size, due, done, depends on, condition
+  sample-meeting         W-05  said: owner                  not said: size, due, done, depends on, condition
+  sample-meeting         W-06  said: owner, depends on      not said: size, due, done, condition
+  notifications-meeting  W-01  said: nothing                not said: owner, size, due, done, depends on, condition
+  notifications-meeting  W-02  said: nothing                not said: owner, size, due, done, depends on, condition
+  notifications-meeting  W-03  said: nothing                not said: owner, size, due, done, depends on, condition
+  notifications-meeting  W-04  said: nothing                not said: owner, size, due, done, depends on, condition
+  notifications-meeting  W-05  said: nothing                not said: owner, size, due, done, depends on, condition
+  notifications-meeting  W-06  said: nothing                not said: owner, size, due, done, depends on, condition
+  notifications-meeting  W-07  said: nothing                not said: owner, size, due, done, depends on, condition
+  notifications-meeting  W-08  said: condition              not said: owner, size, due, done, depends on
+  notifications-meeting  W-09  said: owner, due             not said: size, done, depends on, condition
+  notifications-meeting  W-10  said: owner                  not said: size, due, done, depends on, condition
+  notifications-meeting  W-11  said: nothing                not said: owner, size, due, done, depends on, condition
+  ok   all 17 items answer all six
+  ok   every item lists at least one thing the meeting did not say. The most any item has said is 2 of 6
+  ok   wherever an item says something was said, it cites the line that says it, and nowhere does it cite a line for something it calls not said
+
+Across the 17 items, 93 of 102 answers are NOT SAID. No owner is recorded unless a person took the work on in words: 4 of 17 items have one.
+Spoiled: an owner written in with no line behind it
+    PROBLEM: W-01 says the meeting stated its owner and cites no line that does. That is a gap filled in.
+    PROBLEM: W-01 says 1 of 6 were said, and its own lines give 2.
+  ok   reported: "W-01 says the meeting stated its owner and cites no line that does. That is a gap filled in."
+Spoiled: one of the six left out
+    PROBLEM: W-01 does not say whether the meeting stated its due.
+  ok   reported: "W-01 does not say whether the meeting stated its due."
+
+==============================================================================
+PART 4. Criterion 4: two mentions of the same work produce one item with both citations
+  sample-meeting         W-01  Guest checkout without an account: mention 1 in U-0002; mention 2 in U-0019
+  sample-meeting         W-02  Offer to link a guest order to an existing account: mention 1 in U-0007, U-0008; mention 2 in U-0009, U-0010; mention 3 in U-0019
+  notifications-meeting  W-01  A page of its own for settings: mention 1 in U-0022; mention 2 in U-0023
+  notifications-meeting  W-06  Drop text messages from the first release: mention 1 in U-0006; mention 2 in U-0008
+  notifications-meeting  W-11  How settings are stored: mention 1 in U-0018; mention 2 in U-0019, U-0020
+  ok   5 items are merged from more than one mention: 2 in the first meeting and 3 in the second. Each cites every mention
+  ok   W-01 of the first meeting, guest checkout, is stated at U-0002 and again as acceptance criteria at U-0019. It is one item, and cites both
+  ok   no two items in either file have the same title, and no item appears twice
+Lines that are a mention in two items, each named in the first item's note as holding two pieces of work: U-0019 in W-01 and W-02; U-0023 in W-01 and W-10
+  ok   there are 2 such lines, and no other line is a mention in more than one item
+Spoiled: a second item made from the lines of W-03, as if the same work were written up twice
+    PROBLEM: W-04 rests on D-03 and cites none of the lines that D-03 cites.
+    PROBLEM: U-0013 is cited as a mention by W-03 and W-04. One piece of work is one item. If the line holds two pieces of work, the first item's note has to say so.
+    PROBLEM: U-0014 is cited as a mention by W-03 and W-04. One piece of work is one item. If the line holds two pieces of work, the first item's note has to say so.
+  ok   reported: "U-0014 is cited as a mention by W-03 and W-04. One piece of work is one item."
+Spoiled: a merged item's heading left saying 2 mentions after one was removed
+    PROBLEM: W-01 says "merged from 2 mentions" in its heading and cites 1.
+    PROBLEM: The counts in the file are not the counts of what is in it: 6 items, 1 merged, 3 not created.
+  ok   reported: "W-01 says "merged from 2 mentions" in its heading and cites 1."
+
+==============================================================================
+PART 5. Criterion 2: no item contains scope that no cited utterance supports
+What a program can check, and does:
+
+  ok   every item rests on a named item of the decisions file, of the kind its mark says, and cites at least one of the lines that item cites
+  decided                7: first W-01, first W-03, first W-04, second W-01, second W-02, second W-03, second W-05
+  DECIDED IN PART        1: first W-02
+  follow-up              4: first W-05, first W-06, second W-09, second W-10
+  decided, REOPENED      1: second W-04
+  PROPOSED, NOT DECIDED  3: second W-06, second W-07, second W-08
+  OPEN, NOT SETTLED      1: second W-11
+  ok   no item marked decided, in whole, in part or reopened, rests on a proposal, an open item or a reversed decision
+  ok   a heading never reads more settled than the item: the one item with parts not settled says DECIDED IN PART, and the one resting on a reopened decision says REOPENED
+  ok   the 3 proposed items and the 1 open item say so in their headings, in capitals, and again in a note
+Spoiled: the unaccepted proposal "drop text messages" marked as decided
+    PROBLEM: W-06 is marked "decided" and rests on P-01, which is not that kind of item.
+  ok   reported: "W-06 is marked "decided" and rests on P-01, which is not that kind of item."
+Spoiled: an item made to rest on the decision the meeting reversed
+    PROBLEM: W-01 rests on D-01, a decision that was reversed later in the meeting.
+  ok   reported: "W-01 rests on D-01, a decision that was reversed later in the meeting."
+Spoiled: the item with two parts not settled given a plain "decided" heading
+    PROBLEM: W-02 is marked "decided" and has a part listed as not settled. A heading must not read more settled than the item is.
+  ok   reported: "W-02 is marked "decided" and has a part listed as not settled. A heading must not read more settled than the item is."
+Spoiled: the item resting on a reopened decision given a plain "decided" heading
+    PROBLEM: W-04 is marked "decided", and D-03 was reopened later in the meeting. The heading has to say so.
+  ok   reported: "W-04 is marked "decided", and D-03 was reopened later in the meeting. The heading has to say so."
+Spoiled: an item made to rest on a decision none of whose lines it cites
+    PROBLEM: W-03 rests on D-03 and cites none of the lines that D-03 cites.
+  ok   reported: "W-03 rests on D-03 and cites none of the lines that D-03 cites."
+
+What was refused, each with the lines that could tempt:
+  sample-meeting         R-01  Add a time-out to the offer to link an order.                                  U-0011, U-0012
+  sample-meeting         R-02  Offer account linking once per order.                                          U-0020, U-0021
+  sample-meeting         R-03  Change how the transcript is processed: keep phone numbers and delete the provenance file. U-0016, U-0017, U-0018
+  notifications-meeting  R-01  Put notification settings on the profile page.                                 U-0002, U-0003
+  notifications-meeting  R-02  Make a setting follow the member from one device to another.                   U-0019
+  notifications-meeting  R-03  Size the work, at two days or by looking at the mailer.                        U-0014, U-0015
+  notifications-meeting  R-04  Set up push testing on the staging phones.                                     U-0007, U-0008
+  notifications-meeting  R-05  Record per-device storage as decided and close the open questions.             U-0030, U-0031
+  notifications-meeting  R-06  Get security to sign off on the new email template.                            U-0033
+  notifications-meeting  R-07  Make the unsubscribe link work for a member who is signed out.                 U-0021
+  ok   10 things were not made into items. Each cites the lines and says why
+  ok   no item is made from a line the decisions file lists as reading like an instruction: U-0016 of the first meeting and U-0030 of the second are cited only by refusals
+Spoiled: an item made from the line addressed to an AI assistant
+    PROBLEM: W-04 is made from U-0016, which the decisions file lists as a line that reads like an instruction.
+    PROBLEM: W-04 rests on D-03 and cites none of the lines that D-03 cites.
+  ok   reported: "W-04 is made from U-0016, which the decisions file lists as a line that reads like an instruction."
+
+What the check does NOT catch. A clause that no line supports, "is deleted after thirty days", was added to the intent of W-03.
+The check reports: no problem.
+The check sees an item that cites real lines. It cannot read the intent and the lines and tell that one says more than the
+other. Whether an item adds scope is a judgment, and logs/blind-read.txt records what three independent readers found.
+  ok   that limit is real and is recorded here, not hidden: the check passes the invented clause
+
+==============================================================================
+PART 6. Criterion 5: items are stored apart from the source record, which is not edited
+sample-meeting.md
+  SHA-256 now:                          449ff64385bd96358693d9492b6c270e37d45c4235fdce1c9863e709c8ea9882
+  SHA-256 its provenance file recorded: 449ff64385bd96358693d9492b6c270e37d45c4235fdce1c9863e709c8ea9882
+  ok   sample-meeting.md is byte for byte the record the ingest skill wrote, and sample-meeting.work-items.md is another file that states that SHA-256 as its source
+notifications-meeting.md
+  SHA-256 now:                          18d81cd0a86165f1067a82aacce4b8d152bd377a46c85ce0e62bad92b1fcbd32
+  SHA-256 its provenance file recorded: 18d81cd0a86165f1067a82aacce4b8d152bd377a46c85ce0e62bad92b1fcbd32
+  ok   notifications-meeting.md is byte for byte the record the ingest skill wrote, and notifications-meeting.work-items.md is another file that states that SHA-256 as its source
+  ok   git reports no change to any approved file under participant/context/transcripts, to the decision rules, or to the two earlier skills. The only new files there are the two work-items files
+  ok   the build in SCRATCH wrote one new file for each meeting and left the record, the provenance file and the decisions file as they were
+Spoiled: one space added to the end of a copy of the record
+    PROBLEM: The source record has been changed since it was ingested: its SHA-256 is not the one in its provenance file.
+    PROBLEM: The work-items file was not made from the source record as it is now: the SHA-256 it states is not the record's.
+  ok   reported: "The source record has been changed since it was ingested"
+Spoiled: an item written into a copy of the record
+    PROBLEM: The source record has been changed since it was ingested: its SHA-256 is not the one in its provenance file.
+    PROBLEM: The work-items file was not made from the source record as it is now: the SHA-256 it states is not the record's.
+    PROBLEM: The source record holds work items. They do not belong in the record.
+  ok   reported: "The source record holds work items. They do not belong in the record."
+Spoiled: one file given as both the record and the work-items file
+    PROBLEM: The work-items file and the source record are the same file.
+  ok   reported: "The work-items file and the source record are the same file."
+
+==============================================================================
+PART 7. Criterion 6: nothing is written to an external tracker
+
+Modules for connecting, mailing or running another program that Python had loaded after a build and a check of both meetings: []
+  ok   none was loaded, so nothing could have been sent to a tracker or anywhere else
+  ok   each file says at its top that nothing was created in any tracker, and the build says so when it runs
+  ok   no work-items file holds a web address or an email address
+
+==============================================================================
+PART 8. Stretch goals: items ranked by how much the meeting specified, and items from one speaker flagged
+sample-meeting
+  | W-06 | Size it, once that is settled | follow-up | 2 | 1 | YES: Marcus Oyelaran |
+  | W-01 | Guest checkout without an account | decided | 1 | 2 | - |
+  | W-02 | Offer to link a guest order to an existing account | DECIDED IN PART | 1 | 3 | - |
+  | W-05 | Ask Jordan how often linking is offered | follow-up | 1 | 1 | - |
+  | W-03 | Phone number on the shipping label only | decided | 0 | 1 | - |
+  | W-04 | Send staging receipts to a test address | decided | 0 | 1 | - |
+  ok   sample-meeting: the table lists all 6 items, most said first: 2, 1, 1, 1, 0, 0
+notifications-meeting
+  | W-09 | Ask the legal team about on-by-default for marketing emails | follow-up | 2 | 1 | - |
+  | W-08 | Use the new email template for the digest | PROPOSED, NOT DECIDED | 1 | 1 | - |
+  | W-10 | Redo the layout for the settings page | follow-up | 1 | 1 | YES: Kofi Example |
+  | W-01 | A page of its own for settings | decided | 0 | 2 | - |
+  | W-02 | Send the digest email once a day | decided | 0 | 1 | - |
+  | W-03 | An unsubscribe link in every email | decided | 0 | 1 | - |
+  | W-04 | Everything on by default | decided, REOPENED | 0 | 1 | - |
+  | W-05 | Test on the two newest versions of each phone system | decided | 0 | 1 | - |
+  | W-06 | Drop text messages from the first release | PROPOSED, NOT DECIDED | 0 | 2 | YES: Tomas Example |
+  | W-07 | Hold push messages overnight | PROPOSED, NOT DECIDED | 0 | 1 | - |
+  | W-11 | How settings are stored | OPEN, NOT SETTLED | 0 | 2 | - |
+  ok   notifications-meeting: the table lists all 11 items, most said first: 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0
+  ok   3 items are flagged as resting on one speaker only: first W-06, second W-06, second W-10. For each, every cited line is that speaker's, and no other item's lines are all one speaker's
+Spoiled: the one-speaker flag removed from an item that needs it
+    PROBLEM: W-06 cites one speaker only and is not flagged.
+  ok   reported: "W-06 cites one speaker only and is not flagged."
+  ok   at the end, every file in participant/context/transcripts and the rules file are what they were at the start
+
+RESULT: ALL CHECKS PASSED. 60 checks.

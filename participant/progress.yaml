@@ -534,4 +534,13 @@ attempts:
   evidence_path: participant/evidence/context-next-work/context-attempt-008
   submission_id: submission-20261124182609-0b6c70
   review_id: review-20261124183122-1014a3
-updated_at: '2026-11-24T18:31:22Z'
+- attempt_id: ba-attempt-006
+  quest_id: ba-extract-work-items
+  quest_version: 1
+  content_hash: sha256:4a3f4b27deafcb402757581523ca625f98fb490e98fb7ec2066f5e66f903683a
+  state: submitted
+  started_at: '2026-11-24T18:33:29Z'
+  updated_at: '2026-11-24T18:59:27Z'
+  evidence_path: participant/evidence/ba-extract-work-items/ba-attempt-006
+  submission_id: submission-20261124185927-8284e7
+updated_at: '2026-11-24T18:59:27Z'
