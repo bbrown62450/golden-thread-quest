@@ -1,0 +1,191 @@
+The dependency run. context-dependency-map, attempt context-attempt-007
+Recorded by scripts/record_evidence.py. No request was sent anywhere. Every record is made up.
+
+==============================================================================
+PART 1. The build, on participant/context/dependencies/data.md
+$ python3 participant/skills/context-dependency-map/depmap.py build --out SCRATCH/index.md
+------------------------------------------------------------------------------
+Read 39 records and 28 links.
+CYCLE: decision:E-203 waits on jira:52015 waits on jira:52014 waits on decision:E-203
+CYCLE: jira:52010 waits on jira:52011 waits on jira:52010
+SELF: trello:6a1f000000000000000d0003 waits on itself
+NOT FOUND: decision:E-209, named by jira:52013, jira:52027
+NOT FOUND: jira:52999, named by trello:6a1f000000000000000d0002
+UNREADABLE: blocked_by on github:I_kwFIXdep0003 holds "52001"
+NOT DECIDED: jira:52014 waits on decision:E-203
+NOT DECIDED: jira:52016 waits on decision:E-202
+WILL NEVER FINISH: github:I_kwFIXdep0002 waits on decision:E-204
+WILL NEVER FINISH: jira:52020 waits on jira:52021
+NOT A DECISION: jira:52025 waits on jira:52002
+OUT OF ORDER: jira:52022 waits on jira:52003
+TOO EARLY: jira:52008 starts 2026-12-07, and waits on jira:52007, which finishes 2026-12-08
+TOO EARLY: jira:52010 starts 2026-12-07, and waits on jira:52011, which finishes 2026-12-15
+TOO EARLY: jira:52011 starts 2026-12-07, and waits on jira:52010, which finishes 2026-12-11
+TOO EARLY: jira:52015 starts 2026-12-07, and waits on jira:52014, which finishes 2026-12-22
+Blocking the most: jira:52001 (8), jira:52002 (5), decision:E-209 (3), jira:52003 (3), jira:52010 (2)
+Longest chain: 6 items: jira:52001 <- jira:52002 <- jira:52003 <- jira:52004 <- github:I_kwFIXdep0001 <- trello:6a1f000000000000000d0001
+Wrote index.md. PROBLEMS REPORTED: 16.
+------------------------------------------------------------------------------
+exit code: 1
+Exit code 1 means: the index was built, and problems are reported. The data holds problems on purpose.
+  ok   the index was built and the build ended with exit code 1, because it has problems to report
+  ok   the build changed no file in participant/context/dependencies
+Told to write the index over the data file:
+  NOT BUILT. Refused to write the index over the data file.
+  ok   it refuses, with exit code 2, and the data file is unchanged
+  ok   the index it wrote is the handed-in index.md, byte for byte
+  ok   data.md is byte for byte what make_data.py writes, so it was not adjusted by hand
+
+==============================================================================
+PART 2. Criterion 7: the index is identical across two runs on the same input
+$ python3 participant/skills/context-dependency-map/depmap.py build --out SCRATCH/index-2.md
+exit code: 1
+
+SHA-256 of the first run's index:  88fe03fafd4651a7fceff135bb62f025063a7b19daa375f6e4c25503869ca3a8
+SHA-256 of the second run's index: 88fe03fafd4651a7fceff135bb62f025063a7b19daa375f6e4c25503869ca3a8
+  ok   the second run's index is byte for byte the first run's
+  ok   the second run printed exactly what the first printed
+Five more runs, each a separate Python process with a different hash seed, which changes the order Python keeps sets in:
+  seed 0  88fe03fafd4651a7fceff135bb62f025063a7b19daa375f6e4c25503869ca3a8
+  seed 1  88fe03fafd4651a7fceff135bb62f025063a7b19daa375f6e4c25503869ca3a8
+  seed 2  88fe03fafd4651a7fceff135bb62f025063a7b19daa375f6e4c25503869ca3a8
+  seed 3  88fe03fafd4651a7fceff135bb62f025063a7b19daa375f6e4c25503869ca3a8
+  seed 4  88fe03fafd4651a7fceff135bb62f025063a7b19daa375f6e4c25503869ca3a8
+  ok   all five give the same index as the first run
+  ok   with the records in 20 different orders, and each list of links shuffled, the index is the same every time: 20 of 20
+  ok   the index does not hold the date of this run
+
+==============================================================================
+PART 3. Criterion 1: dependencies come from recorded fields, not from words in a title
+Every link, with the field and the record it was read from:
+
+  decision:E-203                   waits on jira:52015                       blocked_by on decision:E-203
+  github:I_kwFIXdep0001            waits on jira:52004                       blocked_by on github:I_kwFIXdep0001
+  github:I_kwFIXdep0002            waits on decision:E-204                   needs_decision on github:I_kwFIXdep0002
+  jira:52002                       waits on jira:52001                       blocked_by on jira:52002; blocks on jira:52001
+  jira:52003                       waits on jira:52002                       blocked_by on jira:52003; blocks on jira:52002
+  jira:52004                       waits on decision:E-201                   needs_decision on jira:52004
+  jira:52004                       waits on jira:52003                       blocked_by on jira:52004; blocks on jira:52003
+  jira:52005                       waits on jira:52001                       blocked_by on jira:52005; blocks on jira:52001
+  jira:52006                       waits on jira:52005                       blocked_by on jira:52006; blocks on jira:52005
+  jira:52008                       waits on jira:52007                       blocks on jira:52007
+  jira:52010                       waits on jira:52011                       blocked_by on jira:52010
+  jira:52011                       waits on jira:52010                       blocked_by on jira:52011
+  jira:52012                       waits on jira:52010                       blocked_by on jira:52012
+  jira:52013                       waits on decision:E-209                   needs_decision on jira:52013
+  jira:52014                       waits on decision:E-203                   needs_decision on jira:52014
+  jira:52015                       waits on jira:52014                       blocked_by on jira:52015
+  jira:52016                       waits on decision:E-202                   needs_decision on jira:52016
+  jira:52017                       waits on jira:52016                       blocked_by on jira:52017
+  jira:52018                       waits on jira:52019                       blocked_by on jira:52018
+  jira:52020                       waits on jira:52021                       blocked_by on jira:52020
+  jira:52022                       waits on jira:52003                       blocked_by on jira:52022
+  jira:52025                       waits on jira:52002                       needs_decision on jira:52025
+  jira:52026                       waits on jira:52013                       blocked_by on jira:52026
+  jira:52027                       waits on decision:E-209                   needs_decision on jira:52027
+  trello:6a1f000000000000000d0001  waits on github:I_kwFIXdep0001            blocked_by on trello:6a1f000000000000000d0001
+  trello:6a1f000000000000000d0001  waits on jira:52009                       blocked_by on trello:6a1f000000000000000d0001
+  trello:6a1f000000000000000d0002  waits on jira:52999                       blocked_by on trello:6a1f000000000000000d0002
+  trello:6a1f000000000000000d0003  waits on trello:6a1f000000000000000d0003  blocked_by on trello:6a1f000000000000000d0003
+  ok   all 28 links come from blocked_by, blocks or needs_decision, and from no other field
+  ok   the links are exactly the pairs written in those three fields in data.md, read here separately
+
+jira:52023 has the title "Timetable PDF export, once the search API (jira:52003) is done"
+and the description "Depends on jira:52003 and cannot start before the import, jira:52002, is finished."
+  ok   jira:52023 names jira:52003 and jira:52002 in words only, and the index gives it no link
+  ok   jira:52024 has a parent and a related item, and the index gives it no link. Both fields are listed under "Seen and not counted"
+  ok   with every title, description and label replaced by words that name other items, the links are the same 28
+  ok   with the three fields taken off every record and the titles left as they are, there are no links at all
+
+Links written at one end only: 14 of 28.
+
+==============================================================================
+PART 4. Criterion 2: a forward and a reverse index are both generated
+Entries in the forward index: 41. In the reverse index: 41. Records: 39, and 2 more named and not found.
+  ok   each index has an entry for every one of the 41 items
+  ok   each index holds every one of the 28 links once: 28 lines "Waits on" and 28 lines "Waited on by"
+  ok   the reverse index is the forward index turned round: A is waited on by B exactly when B waits on A
+
+"Who is waiting on jira:52001?", from the reverse index:
+  - Waited on by `jira:52002` "Import operator timetables". waiting. From `blocked_by` on `jira:52002`; `blocks` on `jira:52001`.
+  - Waited on by `jira:52005` "Fares page". waiting. From `blocked_by` on `jira:52005`; `blocks` on `jira:52001`.
+
+==============================================================================
+PART 5. Criterion 3: a cycle is reported with the items in it
+  CYCLE of 3: decision:E-203, jira:52014, jira:52015
+    one way round: decision:E-203 waits on jira:52015 waits on jira:52014 waits on decision:E-203
+  CYCLE of 2: jira:52010, jira:52011
+    one way round: jira:52010 waits on jira:52011 waits on jira:52010
+  ok   two cycles are reported: jira:52010 with jira:52011, and decision:E-203 with jira:52014 and jira:52015
+  ok   each way round is real: every step in it is a recorded link, and it ends where it starts
+Checked another way, by following links from each item to see whether it comes back to itself: decision:E-203, jira:52010, jira:52011, jira:52014, jira:52015, trello:6a1f000000000000000d0003
+  ok   that gives the same items: the five in the two cycles, and the one that names itself
+  ok   the item that names itself, trello:6a1f000000000000000d0003, is reported on its own line and not as a cycle
+  ok   jira:52012 waits on a cycle and is not reported as part of it
+  ok   with one of its two links removed, that cycle is no longer reported, and the other still is
+  ok   with one link added from the bottom of the long chain to its top, a third cycle of 6 is reported
+  ok   the build printed both cycles by name
+
+==============================================================================
+PART 6. Criterion 4: a link to a missing item is reported by name, not dropped
+  NOT FOUND: decision:E-209, named by jira:52013, jira:52027
+  NOT FOUND: jira:52999, named by trello:6a1f000000000000000d0002
+  ok   decision:E-209 and jira:52999 are reported by name, each with the records that name it
+  ok   neither link was dropped: each is in the forward index of the record that wrote it, and each missing item has its own entry in both indexes
+  ok   the build printed both by name
+  ok   with a record for decision:E-209 added, it is no longer reported, and jira:52999 still is
+With the record of jira:52002 deleted: decision:E-209, named by jira:52013, jira:52027; jira:52002, named by jira:52003, jira:52025; jira:52999, named by trello:6a1f000000000000000d0002
+  ok   with the record of jira:52002 deleted, it is reported by name with the two records that wait on it
+  ok   the link that is not an identity, "52001" on github:I_kwFIXdep0003, is reported as unreadable and no link is guessed from it
+
+==============================================================================
+PART 7. Criterion 5: a dependency on a decision is represented like one on a work item
+  github:I_kwFIXdep0002        waits on decision:E-204   DROPPED OR SUPERSEDED, needs_decision on github:I_kwFIXdep0002
+  jira:52004                   waits on decision:E-201   satisfied, needs_decision on jira:52004
+  jira:52013                   waits on decision:E-209   NOT FOUND, needs_decision on jira:52013
+  jira:52014                   waits on decision:E-203   NOT DECIDED, needs_decision on jira:52014
+  jira:52016                   waits on decision:E-202   NOT DECIDED, needs_decision on jira:52016
+  jira:52027                   waits on decision:E-209   NOT FOUND, needs_decision on jira:52027
+  ok   6 links are to a decision. They are in the same table of links, the same forward index and the same reverse index as the others
+  ok   a decision is waited on, ranked and counted like a work item: decision:E-209 is third among those blocking the most
+  ok   a decision can wait on work: decision:E-203 waits on jira:52015, and is in a cycle with it
+  ok   written as blocked_by in place of needs_decision, the same links, cycles, counts and top five result
+  ok   a decided decision holds nothing up, and waiting on a proposal or a question is reported: jira:52014 on decision:E-203, jira:52016 on decision:E-202
+
+==============================================================================
+PART 8. Criterion 6: the five items blocking the most other items, with their counts
+  place  item                              blocks in all  directly  the items
+  1      jira:52001                        8              2         github:I_kwFIXdep0001, jira:52002, jira:52003, jira:52004, jira:52005, jira:52006, jira:52025, trello:6a1f000000000000000d0001
+  2      jira:52002                        5              2         github:I_kwFIXdep0001, jira:52003, jira:52004, jira:52025, trello:6a1f000000000000000d0001
+  3      decision:E-209                    3              2         jira:52013, jira:52026, jira:52027
+  4      jira:52003                        3              1         github:I_kwFIXdep0001, jira:52004, trello:6a1f000000000000000d0001
+  5      jira:52010                        2              2         jira:52011, jira:52012
+  ok   five items are listed, with the counts 8, 5, 3, 3 and 2
+  ok   counted again by a different method, sweeping the whole list of links until nothing more is added, every item in the data gets the same set
+  ok   no item outside the five blocks more than the fifth
+  ok   the index says that 6 more items are level with fifth place, and names them
+  ok   a finished item is not counted as blocking: jira:52019 is done, jira:52018 waits on it, and it is in no count
+  ok   the table in the index gives the same five and the same counts
+
+==============================================================================
+PART 9. Stretch goals: the longest chain, and what a slip does
+Longest chain, 6 items: trello:6a1f000000000000000d0001 waits on github:I_kwFIXdep0001 waits on jira:52004 waits on jira:52003 waits on jira:52002 waits on jira:52001
+  ok   every step of the chain is a recorded link
+  ok   trying every path outside the cycles, none is longer than 6
+
+$ python3 participant/skills/context-dependency-map/depmap.py slip jira:52001 5
+  github:I_kwFIXdep0001            earliest start 2026-12-28 -> 2026-12-28, pushed 0
+  jira:52002                       earliest start 2026-12-07 -> 2026-12-10, pushed 3
+  jira:52003                       earliest start 2026-12-14 -> 2026-12-15, pushed 1
+  jira:52004                       earliest start 2026-12-21 -> 2026-12-21, pushed 0
+  jira:52005                       earliest start 2026-12-07 -> 2026-12-10, pushed 3
+  jira:52006                       earliest start 2026-12-17 -> 2026-12-20, pushed 3
+  jira:52025                       earliest start 2026-12-14 -> 2026-12-15, pushed 1
+  trello:6a1f000000000000000d0001  earliest start 2027-01-11 -> 2027-01-11, pushed 0
+  ok   the slip reaches all 8 items that jira:52001 blocks, and no other
+  ok   no item is pushed by more than the 5 days of the slip, and the ones with room in the plan are pushed by less or not at all
+  ok   a slip of 0 days moves nothing
+  ok   an item that waits on a cycle cannot be dated, and the slip says so: jira:52012
+  ok   at the end, every file in participant/context/dependencies is what it was at the start
+
+RESULT: ALL CHECKS PASSED. 51 checks.

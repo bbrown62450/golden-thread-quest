@@ -332,3 +332,8 @@ Every change this application made to your files, newest last.
 - `2026-11-24T15:47:42Z` ba-clarification-questions: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-24T15:47:42Z` Submitted ba-clarification-questions for review as submission-20261124154742-3eb70e.
 - `2026-11-24T15:50:41Z` Review of ba-clarification-questions: approved by Claude (automated reviewer).
+- `2026-11-24T16:58:15Z` Started context-dependency-map as attempt context-attempt-007.
+- `2026-11-24T17:19:36Z` context-dependency-map: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-24T17:20:06Z` context-dependency-map: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-24T17:20:38Z` context-dependency-map: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-24T17:20:38Z` Submitted context-dependency-map for review as submission-20261124172038-b1d0fa.

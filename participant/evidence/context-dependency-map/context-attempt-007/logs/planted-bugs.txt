@@ -1,0 +1,364 @@
+Do the tests notice a broken dependency index? context-dependency-map, attempt context-attempt-007
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/context-dependency-map/depmap.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. A link is made from any identity mentioned in a title or description (criterion 1)
+  unittest result: FAILED (failures=10)
+  tests that failed (10):
+    RecordedFieldsOnly.test_a_description_and_labels_make_no_link
+    RecordedFieldsOnly.test_a_title_that_names_another_item_makes_no_link
+    Command.test_build_reports_by_name_and_ends_with_exit_code_1
+    RecordedFieldsOnly.test_changing_every_title_and_description_changes_no_link
+    Indexes.test_in_the_handed_in_data_each_index_holds_every_link_exactly_once
+    OtherProblems.test_the_handed_in_data_has_sixteen_problems
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    RecordedFieldsOnly.test_the_handed_in_item_whose_title_and_description_name_two_others_has_no_link
+    Slip.test_the_handed_in_slip_of_five_days
+    Blocking.test_the_handed_in_top_five_and_their_counts
+
+PLANTED BUG B. The related field is counted as a dependency (criterion 1)
+  unittest result: FAILED (failures=10)
+  tests that failed (10):
+    Command.test_build_reports_by_name_and_ends_with_exit_code_1
+    Indexes.test_in_the_handed_in_data_each_index_holds_every_link_exactly_once
+    RecordedFieldsOnly.test_parent_and_related_make_no_link_and_are_listed_as_seen
+    Chain.test_the_handed_in_chain_has_six_items_across_three_systems
+    OtherProblems.test_the_handed_in_data_has_sixteen_problems
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    RecordedFieldsOnly.test_the_handed_in_item_whose_title_and_description_name_two_others_has_no_link
+    Slip.test_the_handed_in_slip_of_five_days
+    Blocking.test_the_handed_in_top_five_and_their_counts
+    SameEveryRun.test_the_order_of_the_records_and_of_each_list_does_not_matter
+
+PLANTED BUG C. blocks is read the wrong way round, as if the record waited on the one named (criteria 1 and 2)
+  unittest result: FAILED (failures=15)
+  tests that failed (15):
+    Cycles.test_a_cycle_closed_by_a_blocks_field
+    RecordedFieldsOnly.test_a_link_written_at_both_ends_is_one_link_with_two_sources
+    Missing.test_a_missing_item_named_by_blocks
+    RecordedFieldsOnly.test_blocks_makes_the_same_link_from_the_other_end
+    Indexes.test_both_indexes_are_in_the_written_file_with_every_item
+    Command.test_build_reports_by_name_and_ends_with_exit_code_1
+    Indexes.test_in_the_handed_in_data_each_index_holds_every_link_exactly_once
+    RecordedFieldsOnly.test_one_sided_links_say_which_end_wrote_them
+    Command.test_slip_prints_what_moves
+    Chain.test_the_handed_in_chain_has_six_items_across_three_systems
+    OtherProblems.test_the_handed_in_data_has_sixteen_problems
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Slip.test_the_handed_in_slip_of_five_days
+    Blocking.test_the_handed_in_top_five_and_their_counts
+    Cycles.test_the_two_handed_in_cycles
+
+PLANTED BUG D. A link to an item with no record is dropped without a word (criterion 4)
+  unittest result: FAILED (failures=10, errors=1)
+  tests that failed (11):
+    Missing.test_a_missing_decision_is_reported_the_same_way
+    Missing.test_a_missing_item_named_by_blocks
+    Missing.test_a_missing_target_blocks_and_can_be_ranked
+    Missing.test_a_missing_target_is_kept_and_named_with_who_names_it
+    Indexes.test_both_indexes_are_in_the_written_file_with_every_item
+    Command.test_build_reports_by_name_and_ends_with_exit_code_1
+    Indexes.test_in_the_handed_in_data_each_index_holds_every_link_exactly_once
+    OtherProblems.test_the_handed_in_data_has_sixteen_problems
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Blocking.test_the_handed_in_top_five_and_their_counts
+    Missing.test_the_written_index_names_both_missing_items
+
+PLANTED BUG E. Text that is not an identity is taken as one, so a link is guessed (criterion 4)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    Missing.test_a_link_that_is_not_an_identity_is_reported_and_not_guessed
+    Indexes.test_both_indexes_are_in_the_written_file_with_every_item
+    Indexes.test_in_the_handed_in_data_each_index_holds_every_link_exactly_once
+    OtherProblems.test_the_handed_in_data_has_sixteen_problems
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+
+PLANTED BUG F. The reverse index is a second copy of the forward index (criterion 2)
+  unittest result: FAILED (failures=22, errors=12)
+  tests that failed (34):
+    Decisions.test_a_decision_can_wait_on_work
+    Decisions.test_a_decision_is_a_node_like_a_work_item
+    Slip.test_a_dependent_with_no_slack_moves_by_the_whole_slip
+    RecordedFieldsOnly.test_a_link_written_twice_on_one_record_is_one_link
+    Missing.test_a_missing_decision_is_reported_the_same_way
+    Missing.test_a_missing_item_named_by_blocks
+    Missing.test_a_missing_target_blocks_and_can_be_ranked
+    Missing.test_a_missing_target_is_kept_and_named_with_who_names_it
+    Slip.test_a_slip_larger_than_the_slack_passes_on_what_is_left
+    Slip.test_an_item_nothing_waits_on_moves_nothing
+    Blocking.test_an_item_reached_two_ways_is_counted_once
+    Slip.test_an_item_that_waits_on_a_cycle_cannot_be_dated
+    Indexes.test_both_indexes_are_in_the_written_file_with_every_item
+    Command.test_build_leaves_the_data_file_alone
+    Command.test_build_reports_by_name_and_ends_with_exit_code_1
+    Command.test_clean_data_ends_with_exit_code_0
+    Blocking.test_equal_totals_go_by_direct_count_then_identity
+    Blocking.test_everything_down_the_chain_is_counted_and_the_direct_count_is_beside_it
+    Blocking.test_in_a_cycle_each_item_blocks_the_others_and_never_itself
+    Indexes.test_in_the_handed_in_data_each_index_holds_every_link_exactly_once
+    Slip.test_no_slip_moves_nothing
+    Blocking.test_only_five_are_listed_and_the_ones_level_with_fifth_are_named
+    Indexes.test_reverse_is_the_forward_index_turned_round
+    SameEveryRun.test_separate_python_processes_with_different_hash_seeds_write_the_same_index
+    Slip.test_slack_absorbs_a_slip
+    Command.test_slip_prints_what_moves
+    Blocking.test_the_count_for_the_first_place_checked_by_another_method
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Slip.test_the_handed_in_slip_of_five_days
+    Blocking.test_the_handed_in_top_five_and_their_counts
+    SameEveryRun.test_the_index_holds_no_date_or_time_of_the_run
+    SameEveryRun.test_the_order_of_the_records_and_of_each_list_does_not_matter
+    Missing.test_the_written_index_names_both_missing_items
+    SameEveryRun.test_two_runs_give_the_same_text
+
+PLANTED BUG G. A cycle of two is not reported (criterion 3)
+  unittest result: FAILED (failures=2, errors=27)
+  tests that failed (29):
+    Cycles.test_a_cycle_among_finished_items_is_still_reported
+    Chain.test_a_cycle_is_left_out_and_does_not_hang
+    Cycles.test_a_cycle_through_a_decision
+    Slip.test_an_item_that_waits_on_a_cycle_cannot_be_dated
+    Cycles.test_an_item_that_waits_on_a_cycle_is_not_in_it
+    Indexes.test_both_indexes_are_in_the_written_file_with_every_item
+    Command.test_build_leaves_the_data_file_alone
+    Command.test_build_refuses_to_write_over_the_data
+    Command.test_build_reports_by_name_and_ends_with_exit_code_1
+    RecordedFieldsOnly.test_changing_every_title_and_description_changes_no_link
+    Blocking.test_in_a_cycle_each_item_blocks_the_others_and_never_itself
+    Indexes.test_in_the_handed_in_data_each_index_holds_every_link_exactly_once
+    SameEveryRun.test_separate_python_processes_with_different_hash_seeds_write_the_same_index
+    Command.test_slip_needs_a_record_and_a_number
+    Command.test_slip_prints_what_moves
+    Blocking.test_the_count_for_the_first_place_checked_by_another_method
+    Chain.test_the_handed_in_chain_has_six_items_across_three_systems
+    OtherProblems.test_the_handed_in_data_has_sixteen_problems
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    RecordedFieldsOnly.test_the_handed_in_item_whose_title_and_description_name_two_others_has_no_link
+    Slip.test_the_handed_in_slip_of_five_days
+    Blocking.test_the_handed_in_top_five_and_their_counts
+    SameEveryRun.test_the_index_holds_no_date_or_time_of_the_run
+    SameEveryRun.test_the_order_of_the_records_and_of_each_list_does_not_matter
+    Cycles.test_the_two_handed_in_cycles
+    Missing.test_the_written_index_names_both_missing_items
+    Cycles.test_two_items_that_wait_on_each_other
+    SameEveryRun.test_two_runs_give_the_same_text
+    Cycles.test_two_separate_cycles_are_reported_separately
+
+PLANTED BUG H. Cycle detection forgets what a deeper item reached, so longer cycles are missed (criterion 3)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    Cycles.test_a_cycle_closed_by_a_blocks_field
+    Cycles.test_a_cycle_of_three_with_its_members_and_one_way_round
+    Cycles.test_a_long_cycle_is_found
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Cycles.test_the_two_handed_in_cycles
+
+PLANTED BUG I. Cycle detection treats any item seen before as part of the current path, so shared prerequisites look like cycles (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Cycles.test_two_ways_to_the_same_item_are_not_a_cycle
+
+PLANTED BUG J. An item that names itself is not reported (criterion 3)
+  unittest result: FAILED (failures=1, errors=21)
+  tests that failed (22):
+    Cycles.test_an_item_that_names_itself_is_reported_as_itself_not_as_a_cycle
+    Indexes.test_both_indexes_are_in_the_written_file_with_every_item
+    Command.test_build_leaves_the_data_file_alone
+    Command.test_build_refuses_to_write_over_the_data
+    Command.test_build_reports_by_name_and_ends_with_exit_code_1
+    RecordedFieldsOnly.test_changing_every_title_and_description_changes_no_link
+    Indexes.test_in_the_handed_in_data_each_index_holds_every_link_exactly_once
+    SameEveryRun.test_separate_python_processes_with_different_hash_seeds_write_the_same_index
+    Command.test_slip_needs_a_record_and_a_number
+    Command.test_slip_prints_what_moves
+    Blocking.test_the_count_for_the_first_place_checked_by_another_method
+    Chain.test_the_handed_in_chain_has_six_items_across_three_systems
+    OtherProblems.test_the_handed_in_data_has_sixteen_problems
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    RecordedFieldsOnly.test_the_handed_in_item_whose_title_and_description_name_two_others_has_no_link
+    Slip.test_the_handed_in_slip_of_five_days
+    Blocking.test_the_handed_in_top_five_and_their_counts
+    SameEveryRun.test_the_index_holds_no_date_or_time_of_the_run
+    SameEveryRun.test_the_order_of_the_records_and_of_each_list_does_not_matter
+    Cycles.test_the_two_handed_in_cycles
+    Missing.test_the_written_index_names_both_missing_items
+    SameEveryRun.test_two_runs_give_the_same_text
+
+PLANTED BUG K. A decided decision still counts as holding work up (criterion 5)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Decisions.test_a_decided_decision_holds_nothing_up
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Blocking.test_the_handed_in_top_five_and_their_counts
+
+PLANTED BUG L. Waiting on a proposal or a question is not reported (criterion 5)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Decisions.test_a_proposal_and_a_question_are_not_decided
+    Command.test_build_reports_by_name_and_ends_with_exit_code_1
+    OtherProblems.test_the_handed_in_data_has_sixteen_problems
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+
+PLANTED BUG M. A link to something finished still counts as holding work up (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Chain.test_a_done_item_ends_a_chain
+
+PLANTED BUG N. Only the items waiting directly are counted (criterion 6)
+  unittest result: FAILED (failures=9, errors=2)
+  tests that failed (11):
+    Missing.test_a_missing_target_blocks_and_can_be_ranked
+    Slip.test_a_slip_larger_than_the_slack_passes_on_what_is_left
+    Blocking.test_an_item_reached_two_ways_is_counted_once
+    Blocking.test_everything_down_the_chain_is_counted_and_the_direct_count_is_beside_it
+    Blocking.test_in_a_cycle_each_item_blocks_the_others_and_never_itself
+    Slip.test_no_slip_moves_nothing
+    Slip.test_slack_absorbs_a_slip
+    Blocking.test_the_count_for_the_first_place_checked_by_another_method
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Slip.test_the_handed_in_slip_of_five_days
+    Blocking.test_the_handed_in_top_five_and_their_counts
+
+PLANTED BUG O. In a cycle an item is counted as blocking itself (criterion 6)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Slip.test_an_item_that_waits_on_a_cycle_cannot_be_dated
+    Blocking.test_in_a_cycle_each_item_blocks_the_others_and_never_itself
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Blocking.test_the_handed_in_top_five_and_their_counts
+
+PLANTED BUG P. A dropped item is counted among those blocked (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Blocking.test_a_dropped_waiter_is_not_counted
+
+PLANTED BUG Q. Four items are listed, not five (criterion 6)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Blocking.test_only_five_are_listed_and_the_ones_level_with_fifth_are_named
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Blocking.test_the_handed_in_top_five_and_their_counts
+
+PLANTED BUG R. The list is the items blocking the least (criterion 6)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Missing.test_a_missing_target_blocks_and_can_be_ranked
+    Blocking.test_equal_totals_go_by_direct_count_then_identity
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Blocking.test_the_handed_in_top_five_and_their_counts
+
+PLANTED BUG S. Equal totals ignore the direct count (criterion 6)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Blocking.test_equal_totals_go_by_direct_count_then_identity
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Blocking.test_the_handed_in_top_five_and_their_counts
+
+PLANTED BUG T. The items are listed in whatever order Python's set gives, which changes from run to run (criterion 7)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    SameEveryRun.test_separate_python_processes_with_different_hash_seeds_write_the_same_index
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    SameEveryRun.test_the_order_of_the_records_and_of_each_list_does_not_matter
+
+PLANTED BUG U. Problems are found and the build still ends with exit code 0
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Command.test_build_reports_by_name_and_ends_with_exit_code_1
+
+PLANTED BUG V. A missing target is in the index and is not printed by the build (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Command.test_build_reports_by_name_and_ends_with_exit_code_1
+
+PLANTED BUG W. A cycle is in the index and is not printed by the build (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Command.test_build_reports_by_name_and_ends_with_exit_code_1
+
+PLANTED BUG X. Two records with one identity are accepted, the second replacing the first
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Command.test_two_records_with_one_identity_are_refused
+
+PLANTED BUG Y. The index may be written over the data file
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Command.test_build_refuses_to_write_over_the_data
+
+PLANTED BUG Z. The longest chain follows links into a cycle (stretch goal)
+  unittest result: FAILED (failures=1, errors=24)
+  tests that failed (25):
+    Chain.test_a_cycle_is_left_out_and_does_not_hang
+    Slip.test_an_item_that_waits_on_a_cycle_cannot_be_dated
+    Cycles.test_an_item_that_waits_on_a_cycle_is_not_in_it
+    Indexes.test_both_indexes_are_in_the_written_file_with_every_item
+    Command.test_build_leaves_the_data_file_alone
+    Command.test_build_refuses_to_write_over_the_data
+    Command.test_build_reports_by_name_and_ends_with_exit_code_1
+    RecordedFieldsOnly.test_changing_every_title_and_description_changes_no_link
+    Blocking.test_in_a_cycle_each_item_blocks_the_others_and_never_itself
+    Indexes.test_in_the_handed_in_data_each_index_holds_every_link_exactly_once
+    SameEveryRun.test_separate_python_processes_with_different_hash_seeds_write_the_same_index
+    Command.test_slip_needs_a_record_and_a_number
+    Command.test_slip_prints_what_moves
+    Blocking.test_the_count_for_the_first_place_checked_by_another_method
+    Chain.test_the_handed_in_chain_has_six_items_across_three_systems
+    OtherProblems.test_the_handed_in_data_has_sixteen_problems
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    RecordedFieldsOnly.test_the_handed_in_item_whose_title_and_description_name_two_others_has_no_link
+    Slip.test_the_handed_in_slip_of_five_days
+    Blocking.test_the_handed_in_top_five_and_their_counts
+    SameEveryRun.test_the_index_holds_no_date_or_time_of_the_run
+    SameEveryRun.test_the_order_of_the_records_and_of_each_list_does_not_matter
+    Cycles.test_the_two_handed_in_cycles
+    Missing.test_the_written_index_names_both_missing_items
+    SameEveryRun.test_two_runs_give_the_same_text
+
+PLANTED BUG AA. A slip ignores slack and moves every dependent to the day after its prerequisite (stretch goal)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    Slip.test_a_slip_larger_than_the_slack_passes_on_what_is_left
+    Slip.test_slack_absorbs_a_slip
+    Command.test_slip_prints_what_moves
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Slip.test_the_handed_in_slip_of_five_days
+
+PLANTED BUG AB. A slip is not applied at all (stretch goal)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    Slip.test_a_dependent_with_no_slack_moves_by_the_whole_slip
+    Slip.test_a_slip_larger_than_the_slack_passes_on_what_is_left
+    Command.test_slip_prints_what_moves
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    Slip.test_the_handed_in_slip_of_five_days
+
+PLANTED BUG AC. Starting on the day a prerequisite finishes is not reported as too early
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Slip.test_too_early_is_reported_when_the_plan_starts_before_the_prerequisite_ends
+
+PLANTED BUG AD. needs_decision that names a work item is not reported (criterion 5)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Command.test_build_reports_by_name_and_ends_with_exit_code_1
+    Decisions.test_needs_decision_naming_a_work_item_is_reported_and_kept
+    OtherProblems.test_the_handed_in_data_has_sixteen_problems
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+
+PLANTED BUG AE. Waiting on something dropped or superseded is not reported
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    Decisions.test_a_superseded_decision_will_never_be_made
+    Command.test_build_reports_by_name_and_ends_with_exit_code_1
+    OtherProblems.test_the_handed_in_data_has_sixteen_problems
+    SameEveryRun.test_the_handed_in_files_are_what_the_code_writes
+    OtherProblems.test_waiting_on_a_dropped_item
+
+After the last bug was taken out: depmap.py is byte for byte what it was at the start. OK
+
+RESULT: all 31 planted bugs were caught by at least one test, and the file was restored.

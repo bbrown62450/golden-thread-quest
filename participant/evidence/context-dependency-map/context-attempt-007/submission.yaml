@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261124172038-b1d0fa
+quest_id: context-dependency-map
+quest_version: 1
+attempt_id: context-attempt-007
+content_hash: sha256:5e6b76257d369fa813491bc61a80cd935f14f47f551e9000ede7f54229363e93
+evidence_hash: sha256:ea65f09e187fa5d6c0768dc06665b0f915898ace9750658275448dee2b026bc5
+submitted_at: '2026-11-24T17:20:38Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/dependencies/data.md
+  digest: sha256:4eb382676608582c70cfd7607790c295e1b56c9f90517cd4261976fd2eb320e3
+- path: participant/context/dependencies/index.md
+  digest: sha256:8cb14465dcc9596bc99dda6908513e04a59c1c25f99ddd5eefc7d16ad2cb3c22
