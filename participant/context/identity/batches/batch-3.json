@@ -1,0 +1,83 @@
+{
+ "batch": "batch-3",
+ "synced_at": "2026-11-18T08:00:00Z",
+ "about": "A faulty delivery: two different GitHub records carry one node ID, and one Jira record arrives twice.",
+ "records": [
+  {
+   "system": "github",
+   "record": {
+    "node_id": "I_kwFIX0306",
+    "id": 9000007,
+    "number": 7,
+    "title": "Rotate the signing key",
+    "created_at": "2026-10-20T10:00:00Z",
+    "repository": {
+     "id": 101,
+     "full_name": "acme-fixture/platform"
+    },
+    "html_url": "https://github.com/acme-fixture/platform/issues/7"
+   }
+  },
+  {
+   "system": "github",
+   "record": {
+    "node_id": "I_kwFIX0306",
+    "id": 9000008,
+    "number": 8,
+    "title": "Archive the old dashboards",
+    "created_at": "2026-10-21T10:00:00Z",
+    "repository": {
+     "id": 101,
+     "full_name": "acme-fixture/platform"
+    },
+    "html_url": "https://github.com/acme-fixture/platform/issues/8"
+   }
+  },
+  {
+   "system": "jira",
+   "record": {
+    "id": "40002",
+    "key": "DEMO-2",
+    "self": "https://jira.example.invalid/rest/api/3/issue/40002",
+    "fields": {
+     "summary": "Validate email addresses on intake",
+     "project": {
+      "id": "50000",
+      "key": "DEMO",
+      "name": "Made-up project DEMO"
+     },
+     "created": "2026-11-02T09:00:00.000+0000"
+    }
+   }
+  },
+  {
+   "system": "jira",
+   "record": {
+    "id": "40002",
+    "key": "DEMO-2",
+    "self": "https://jira.example.invalid/rest/api/3/issue/40002",
+    "fields": {
+     "summary": "Validate email addresses on intake",
+     "project": {
+      "id": "50000",
+      "key": "DEMO",
+      "name": "Made-up project DEMO"
+     },
+     "created": "2026-11-02T09:00:00.000+0000"
+    }
+   }
+  },
+  {
+   "system": "trello",
+   "record": {
+    "id": "6ae851100000000000000a01",
+    "idShort": 1,
+    "shortLink": "fixT0001",
+    "name": "Add dark mode",
+    "idBoard": "6740000000000000000000b1",
+    "idList": "6740000000000000000000d1",
+    "pos": 16384
+   }
+  }
+ ]
+}

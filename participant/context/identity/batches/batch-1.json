@@ -1,0 +1,300 @@
+{
+ "batch": "batch-1",
+ "synced_at": "2026-11-10T08:00:00Z",
+ "about": "The first sync.",
+ "records": [
+  {
+   "system": "jira",
+   "record": {
+    "id": "40001",
+    "key": "DEMO-1",
+    "self": "https://jira.example.invalid/rest/api/3/issue/40001",
+    "fields": {
+     "summary": "Set up the intake form",
+     "project": {
+      "id": "50000",
+      "key": "DEMO",
+      "name": "Made-up project DEMO"
+     },
+     "created": "2026-11-02T09:00:00.000+0000"
+    }
+   }
+  },
+  {
+   "system": "jira",
+   "record": {
+    "id": "40002",
+    "key": "DEMO-2",
+    "self": "https://jira.example.invalid/rest/api/3/issue/40002",
+    "fields": {
+     "summary": "Validate email addresses on intake",
+     "project": {
+      "id": "50000",
+      "key": "DEMO",
+      "name": "Made-up project DEMO"
+     },
+     "created": "2026-11-02T09:00:00.000+0000"
+    }
+   }
+  },
+  {
+   "system": "jira",
+   "record": {
+    "id": "40003",
+    "key": "DEMO-3",
+    "self": "https://jira.example.invalid/rest/api/3/issue/40003",
+    "fields": {
+     "summary": "Export intake records as CSV",
+     "project": {
+      "id": "50000",
+      "key": "DEMO",
+      "name": "Made-up project DEMO"
+     },
+     "created": "2026-11-03T09:00:00.000+0000"
+    }
+   }
+  },
+  {
+   "system": "jira",
+   "record": {
+    "id": "40004",
+    "key": "DEMO-4",
+    "self": "https://jira.example.invalid/rest/api/3/issue/40004",
+    "fields": {
+     "summary": "Fix export",
+     "project": {
+      "id": "50000",
+      "key": "DEMO",
+      "name": "Made-up project DEMO"
+     },
+     "created": "2026-11-03T09:00:00.000+0000"
+    }
+   }
+  },
+  {
+   "system": "jira",
+   "record": {
+    "id": "40005",
+    "key": "DEMO-5",
+    "self": "https://jira.example.invalid/rest/api/3/issue/40005",
+    "fields": {
+     "summary": "Schedule the Friday export",
+     "project": {
+      "id": "50000",
+      "key": "DEMO",
+      "name": "Made-up project DEMO"
+     },
+     "created": "2026-11-04T09:00:00.000+0000"
+    }
+   }
+  },
+  {
+   "system": "jira",
+   "record": {
+    "id": "40006",
+    "key": "DEMO-6",
+    "self": "https://jira.example.invalid/rest/api/3/issue/40006",
+    "fields": {
+     "summary": "Fix export",
+     "project": {
+      "id": "50000",
+      "key": "DEMO",
+      "name": "Made-up project DEMO"
+     },
+     "created": "2026-11-05T09:00:00.000+0000"
+    }
+   }
+  },
+  {
+   "system": "jira",
+   "record": {
+    "id": "40007",
+    "key": "DEMO-7",
+    "self": "https://jira.example.invalid/rest/api/3/issue/40007",
+    "fields": {
+     "summary": "Tidy the export folder",
+     "project": {
+      "id": "50000",
+      "key": "DEMO",
+      "name": "Made-up project DEMO"
+     },
+     "created": "2026-11-06T09:00:00.000+0000"
+    }
+   }
+  },
+  {
+   "system": "trello",
+   "record": {
+    "id": "6ae851100000000000000a01",
+    "idShort": 1,
+    "shortLink": "fixT0001",
+    "name": "Add dark mode",
+    "idBoard": "6740000000000000000000b1",
+    "idList": "6740000000000000000000d1",
+    "pos": 16384
+   }
+  },
+  {
+   "system": "trello",
+   "record": {
+    "id": "6ae851100000000000000a02",
+    "idShort": 2,
+    "shortLink": "fixT0002",
+    "name": "Export report as PDF",
+    "idBoard": "6740000000000000000000b1",
+    "idList": "6740000000000000000000d2",
+    "pos": 16384
+   }
+  },
+  {
+   "system": "trello",
+   "record": {
+    "id": "6ae9a2900000000000000a03",
+    "idShort": 3,
+    "shortLink": "fixT0003",
+    "name": "Write onboarding guide",
+    "idBoard": "6740000000000000000000b1",
+    "idList": "6740000000000000000000d1",
+    "pos": 32768
+   }
+  },
+  {
+   "system": "trello",
+   "record": {
+    "id": "6ae9a2900000000000000a04",
+    "idShort": 4,
+    "shortLink": "fixT0004",
+    "name": "Search by title",
+    "idBoard": "6740000000000000000000b1",
+    "idList": "6740000000000000000000d1",
+    "pos": 49152
+   }
+  },
+  {
+   "system": "trello",
+   "record": {
+    "id": "6aeaf4100000000000000a05",
+    "idShort": 5,
+    "shortLink": "fixT0005",
+    "name": "Fix export",
+    "idBoard": "6740000000000000000000b1",
+    "idList": "6740000000000000000000d2",
+    "pos": 32768
+   }
+  },
+  {
+   "system": "trello",
+   "record": {
+    "id": "6aec45900000000000000a06",
+    "idShort": 6,
+    "shortLink": "fixT0006",
+    "name": "Set up project board",
+    "idBoard": "6740000000000000000000b1",
+    "idList": "6740000000000000000000d3",
+    "pos": 16384
+   }
+  },
+  {
+   "system": "trello",
+   "record": {
+    "id": "6aed97100000000000000a07",
+    "idShort": 7,
+    "shortLink": "fixT0007",
+    "name": "Remove old banner",
+    "idBoard": "6740000000000000000000b1",
+    "idList": "6740000000000000000000d3",
+    "pos": 32768
+   }
+  },
+  {
+   "system": "github",
+   "record": {
+    "node_id": "I_kwFIX0301",
+    "id": 9000001,
+    "number": 1,
+    "title": "Export times out on large accounts",
+    "created_at": "2026-10-02T10:00:00Z",
+    "repository": {
+     "id": 101,
+     "full_name": "acme-fixture/platform"
+    },
+    "html_url": "https://github.com/acme-fixture/platform/issues/1"
+   }
+  },
+  {
+   "system": "github",
+   "record": {
+    "node_id": "I_kwFIX0302",
+    "id": 9000002,
+    "number": 2,
+    "title": "Add retry to the webhook sender",
+    "created_at": "2026-10-03T10:00:00Z",
+    "repository": {
+     "id": 101,
+     "full_name": "acme-fixture/platform"
+    },
+    "html_url": "https://github.com/acme-fixture/platform/issues/2"
+   }
+  },
+  {
+   "system": "github",
+   "record": {
+    "node_id": "I_kwFIX0303",
+    "id": 9000003,
+    "number": 3,
+    "title": "Drop the legacy importer",
+    "created_at": "2026-10-04T10:00:00Z",
+    "repository": {
+     "id": 101,
+     "full_name": "acme-fixture/platform"
+    },
+    "html_url": "https://github.com/acme-fixture/platform/issues/3"
+   }
+  },
+  {
+   "system": "github",
+   "record": {
+    "node_id": "I_kwFIX0304",
+    "id": 9000004,
+    "number": 4,
+    "title": "Fix export",
+    "created_at": "2026-10-05T10:00:00Z",
+    "repository": {
+     "id": 101,
+     "full_name": "acme-fixture/platform"
+    },
+    "html_url": "https://github.com/acme-fixture/platform/issues/4"
+   }
+  },
+  {
+   "system": "github",
+   "record": {
+    "node_id": "I_kwFIXab05",
+    "id": 9000005,
+    "number": 5,
+    "title": "Rate-limit the public API",
+    "created_at": "2026-10-06T10:00:00Z",
+    "repository": {
+     "id": 101,
+     "full_name": "acme-fixture/platform"
+    },
+    "html_url": "https://github.com/acme-fixture/platform/issues/5"
+   }
+  },
+  {
+   "system": "github",
+   "record": {
+    "node_id": "I_kwFIXAB05",
+    "id": 9000006,
+    "number": 6,
+    "title": "Document the rate limits",
+    "created_at": "2026-10-07T10:00:00Z",
+    "repository": {
+     "id": 101,
+     "full_name": "acme-fixture/platform"
+    },
+    "html_url": "https://github.com/acme-fixture/platform/issues/6"
+   }
+  }
+ ]
+}

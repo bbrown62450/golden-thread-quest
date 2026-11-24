@@ -1,0 +1,158 @@
+The identity run. context-stable-identities, attempt context-attempt-005
+Recorded by scripts/record_evidence.py. No request was sent anywhere. Every item, project, board and repository is made up.
+
+==============================================================================
+PART 1. Before: the first sync. batch-1, The first sync.
+$ python3 participant/skills/context-stable-identities/identity.py sync --batch participant/context/identity/batches/batch-1.json --folder SCRATCH/identity
+------------------------------------------------------------------------------
+identity: NEW: github:I_kwFIX0301
+identity: NEW: github:I_kwFIX0302
+identity: NEW: github:I_kwFIX0303
+identity: NEW: github:I_kwFIX0304
+identity: NEW: github:I_kwFIXAB05
+identity: NEW: github:I_kwFIXab05
+identity: NEW: jira:40001
+identity: NEW: jira:40002
+identity: NEW: jira:40003
+identity: NEW: jira:40004
+identity: NEW: jira:40005
+identity: NEW: jira:40006
+identity: NEW: jira:40007
+identity: NEW: trello:6ae851100000000000000a01
+identity: NEW: trello:6ae851100000000000000a02
+identity: NEW: trello:6ae9a2900000000000000a03
+identity: NEW: trello:6ae9a2900000000000000a04
+identity: NEW: trello:6aeaf4100000000000000a05
+identity: NEW: trello:6aec45900000000000000a06
+identity: NEW: trello:6aed97100000000000000a07
+identity: batch batch-1 applied. Identities held before: 0. Now: 20. Reported: 0
+------------------------------------------------------------------------------
+exit code: 0
+  ok   20 source records, from 3 systems, got 20 different identities: 7 jira, 7 trello, 6 github
+  ok   each identity is the system, a colon, and the source's own identifier, and holds nothing else (criterion 1)
+  ok   a second derivation, written from rules.md and sharing no code with the skill, gives the same 20 identities (criterion 7)
+Four different items are all called "Fix export": github:I_kwFIX0304, jira:40004, jira:40006, trello:6aeaf4100000000000000a05
+  ok   four items with the same title have four identities, in three systems
+  ok   two GitHub node IDs that differ only in upper and lower case are two identities
+A person keeps a note on the story jira:40003, in a file named after its identity: notes/jira-40003.md, SHA-256 fa3732079563dfd73165226278f1a90eb4ae65c270207fe19ca43172ff33a519
+
+==============================================================================
+PART 2. After: batch-2. A week later. People have renamed and moved items at the source, and the source sends the records in another order.
+  the Jira story 40003    renamed, and moved from project DEMO to project OPS, so its key changed from DEMO-3 to OPS-17. This is the quest's scenario
+  the Jira story 40005    renamed to the title 40003 had just given up
+  a Trello card           renamed, moved to another board, dragged to the top of a list, and renumbered by the new board
+  another Trello card     moved to another list on the same board, and dragged
+  the GitHub issue        renamed, and transferred to another repository, so its number changed from 2 to 41
+  and the source sent all 20 records in a different order.
+$ python3 participant/skills/context-stable-identities/identity.py sync --batch participant/context/identity/batches/batch-2.json --folder SCRATCH/identity
+------------------------------------------------------------------------------
+identity: SAME ITEM, renamed and moved and its reference changed: github:I_kwFIX0302
+identity: SAME ITEM, renamed and moved and its reference changed: jira:40003
+identity: SAME ITEM, renamed: jira:40005
+identity: SAME ITEM, renamed and moved: trello:6ae851100000000000000a02
+identity: batch batch-2 applied. Identities held before: 20. Now: 20. Reported: 0
+(16 lines left out here: those beginning "identity: unchanged")
+------------------------------------------------------------------------------
+exit code: 0
+  ok   every identity is unchanged: the same 20, and no new one (criteria 3 and 4)
+The three items that were renamed and moved, before and after:
+  jira:40003
+      before: title "Export intake records as CSV", in "Made-up project DEMO", reference "DEMO-3"
+      after:  title "Export intake records as CSV, weekly", in "Made-up project OPS", reference "OPS-17"
+  ok   jira:40003 was renamed and moved, and its identity is unchanged: one record, updated in place
+  trello:6ae851100000000000000a02
+      before: title "Export report as PDF", in "6740000000000000000000b1", reference "fixT0002"
+      after:  title "Export report as PDF and CSV", in "6740000000000000000000b2", reference "fixT0002"
+  ok   trello:6ae851100000000000000a02 was renamed and moved, and its identity is unchanged: one record, updated in place
+  github:I_kwFIX0302
+      before: title "Add retry to the webhook sender", in "acme-fixture/platform", reference 2
+      after:  title "Add retry and backoff to the webhook sender", in "acme-fixture/support", reference 41
+  ok   github:I_kwFIX0302 was renamed and moved, and its identity is unchanged: one record, updated in place
+  ok   the note on the story is where it was, unchanged, under the same name: it still belongs to the item (the scenario)
+  ok   the story that took over the old title did not take over the identity: jira:40005 is still the item created on 4 November
+  ok   the card that only changed list and position has the same identity, and nothing recorded as changed: position plays no part (criterion 2)
+
+For comparison: the same two batches, with the identity built in the ways the rules refuse. Counted from the records, not from the map.
+  identity from the title:                                            4 of 20 items would have a different identity after batch-2. And from the start, 1 pair of different items would share one identity
+  identity from the reference people use (key, short link, number):   2 of 20 items would have a different identity after batch-2
+  identity from where it lives and its title:                         4 of 20 items would have a different identity after batch-2. And from the start, 1 pair of different items would share one identity
+  identity from its position in the batch:                           20 of 20 items would have a different identity after batch-2
+  identity from the system and its own identifier:           0 of 20
+  ok   each refused way of building an identity would have broken at least one item across this rename and move, and the rule used broke none
+  ok   under a title-based key the scenario happens exactly: the story's old key now names a DIFFERENT item, jira:40005, and its notes would follow the title to it
+
+==============================================================================
+PART 3. A collision: batch-3. A faulty delivery: two different GitHub records carry one node ID, and one Jira record arrives twice. (criterion 5)
+$ python3 participant/skills/context-stable-identities/identity.py sync --batch participant/context/identity/batches/batch-3.json --folder SCRATCH/identity
+------------------------------------------------------------------------------
+identity: COLLISION: 2 different records in the batch batch-3 both give the identity github:I_kwFIX0306. Neither is written. Nothing is held under that identity, and nothing is written
+identity: NOTE: jira:40002 was delivered 2 times in the batch, each copy the same in every field. It is applied once
+identity: batch batch-3 applied. Identities held before: 20. Now: 20. Reported: 1
+(2 lines left out here: those beginning "identity: unchanged")
+------------------------------------------------------------------------------
+exit code: 3
+  ok   the collision is reported, and the run ends with exit code 3
+  ok   neither of the two records was written: github:I_kwFIX0306 is not in the map
+  ok   the map records the collision with both records' titles, so that a person can see what clashed
+  ok   no other item was touched by it
+  ok   the same record delivered twice, identical in every field, is not a collision: it is applied once and said so
+And a collision on an identity that IS held, tried in memory: two different records both claiming github:I_kwFIX0302.
+  identity: COLLISION: 2 different records in the batch a-clash-on-a-held-identity both give the identity github:I_kwFIX0302. Neither is written. The item already held under that identity is left as it was
+  ok   neither overwrites the item held: it is exactly as it was before the two arrived (criterion 5)
+
+==============================================================================
+PART 4. A reused identifier: batch-4. Jira sends id 40007 for an issue created on another day: the identifier has been reused. Two GitHub records have no creation time. (criterion 6)
+$ python3 participant/skills/context-stable-identities/identity.py sync --batch participant/context/identity/batches/batch-4.json --folder SCRATCH/identity
+------------------------------------------------------------------------------
+identity: NOTE: github:I_kwFIX0301 could not be checked for reuse, because the record has no creation time. It is taken to be the same item
+identity: unchanged: github:I_kwFIX0301
+identity: NEW: github:I_kwFIX0307. Its record gives no creation time, so a later reuse of this identifier could not be told from an update
+identity: REUSED IDENTIFIER: jira:40007 is held by an item created 2026-11-06T09:00:00Z, and the batch batch-4 has a record with the same identifier created 2026-11-20T09:00:00Z. They are two different items. The item held is left as it was, and the newcomer is held aside for a person to decide
+identity: batch batch-4 applied. Identities held before: 20. Now: 21. Reported: 1
+------------------------------------------------------------------------------
+exit code: 3
+  ok   the reuse is reported, with both creation times, and the run ends with exit code 3
+  ok   the item already held is exactly as it was: still "Tidy the export folder", created 6 November
+  ok   the newcomer was given no identity. It is held aside, with its title and both creation times, for a person to decide
+Is it the creation time that decides, and not the title? Two trials in memory, on jira:40006:
+  identity: REUSED IDENTIFIER: jira:40006 is held by an item created 2026-11-05T09:00:00Z, and the batch t1 has a record with the same identifier created 2026-11-25T09:00:00Z. They are two different items. The item held is left as it was, and the newcomer is held aside for a person to decide
+  identity: SAME ITEM, renamed and moved and its reference changed: jira:40006
+  ok   the SAME title with a different creation time is reported as reuse, and a wholly DIFFERENT title, project and key with the same creation time is the same item. The title decides nothing (criterion 2)
+  ok   where a record has no creation time, the run says reuse could not be checked, and does not claim it was
+
+==============================================================================
+PART 5. An identifier the source changed, and records with no usable identifier: batch-5. GitHub replaces a node ID and says which one it replaces. A Jira id arrives as a number. Six records have no usable identifier.
+$ python3 participant/skills/context-stable-identities/identity.py sync --batch participant/context/identity/batches/batch-5.json --folder SCRATCH/identity
+------------------------------------------------------------------------------
+identity: REFUSED: a jira record titled "A story with an empty id" gets no identity: the identifier is empty
+identity: REFUSED: a jira record titled "A story whose id was sent as a decimal" gets no identity: the identifier is 40042.5, which is neither text nor a whole number. It is not repaired
+identity: REFUSED: a jira record titled "A story whose id has a space in front" gets no identity: the identifier " 40009" holds a space, a colon or another character an identifier may not have. It is not repaired
+identity: REFUSED: a trello record titled "A card whose id holds a colon" gets no identity: the identifier "6744:bad" holds a space, a colon or another character an identifier may not have. It is not repaired
+identity: REFUSED: a github record titled "An issue with no node ID" gets no identity: the record has no node_id, the field its identity is built from
+identity: REFUSED: a record from "asana" gets no identity: the system is "asana", and it must be one of jira, trello, github
+identity: ALIAS: the source says github:I_kwFIX0399 is what github:I_kwFIX0303 used to be. The old identity now points to the new one, and what was kept under it follows
+identity: unchanged: github:I_kwFIX0399
+identity: unchanged: jira:40001
+identity: batch batch-5 applied. Identities held before: 21. Now: 21. Reported: 6
+------------------------------------------------------------------------------
+exit code: 3
+  ok   the alias is recorded on the source's own statement: github:I_kwFIX0303 now resolves to github:I_kwFIX0399, which keeps the birth mark and first batch of the old one (stretch goal)
+  ok   six records were refused, each with its reason, and none was given an identity or repaired
+  ok   the Jira id sent as the number 40001 is the item already held as jira:40001
+
+==============================================================================
+PART 6. Export and re-import (stretch goal)
+The map is exported to one file and imported into an empty folder. Then the first two batches are applied again to a third, empty folder, in reverse order of records.
+identity: exported 21 identities and 1 aliases
+identity: imported 21 identities and 1 aliases
+  ok   the imported map is the exported map, byte for byte: every identity, alias and birth mark
+  ok   rebuilding from the source records, read in the opposite order, gives the same 20 identities with the same birth marks
+
+==============================================================================
+PART 7. The handed-in files
+  ok   participant/context/identity/state.json is exactly what these five batches give
+  ok   participant/context/identity/map.md is exactly what the skill writes from it, so the map was not adjusted by hand
+  ok   participant/context/identity/rules.md is exactly what the skill writes from its own tables
+  ok   the map holds 21 source records across three systems, at least fifteen, including the renamed and the moved
+
+RESULT: ALL CHECKS PASSED. 34 checks.

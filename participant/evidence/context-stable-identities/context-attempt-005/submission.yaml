@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261124131055-1d83b6
+quest_id: context-stable-identities
+quest_version: 1
+attempt_id: context-attempt-005
+content_hash: sha256:78183bc80e8921fb989080cca26d76c16df93b3c5c5398dd519a3c17230e8b30
+evidence_hash: sha256:5e7a8c31b01b6901cdbee8604e07448db0b4a7c80bf33143021f684f178c37e3
+submitted_at: '2026-11-24T13:10:55Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/identity/map.md
+  digest: sha256:3c1cb35598443e155a6ea96fca8a126227a9a65a9c93d56f4aebca3247b03313
+- path: participant/context/identity/rules.md
+  digest: sha256:15474b5a9cfcbe73a8a1b39caf79a29ba4e64e5684437d0fe1151ae650adbc3d

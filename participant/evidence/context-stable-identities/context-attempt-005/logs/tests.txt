@@ -1,0 +1,39 @@
+test_a_jira_id_sent_as_a_number_is_the_item_already_held (test_identity.AliasAndRefusal) ... ok
+test_an_alias_is_made_when_the_source_names_the_previous_identifier (test_identity.AliasAndRefusal) ... ok
+test_no_alias_is_made_from_a_matching_title (test_identity.AliasAndRefusal) ... ok
+test_six_records_with_no_usable_identifier_are_refused_and_get_no_identity (test_identity.AliasAndRefusal) ... ok
+test_a_collision_on_an_identity_already_held_leaves_the_held_item_as_it_was (test_identity.Collision) ... ok
+test_records_that_differ_only_in_a_field_that_is_not_shown_still_collide (test_identity.Collision) ... ok
+test_the_same_record_delivered_twice_is_applied_once_and_is_not_a_collision (test_identity.Collision) ... ok
+test_two_different_records_with_one_identity_are_reported_and_neither_is_written (test_identity.Collision) ... ok
+test_a_whole_number_is_written_as_its_digits_and_that_is_the_only_conversion (test_identity.Deriving) ... ok
+test_an_identifier_that_is_not_clean_is_refused_not_repaired (test_identity.Deriving) ... ok
+test_an_identity_is_the_system_a_colon_and_the_identifier (test_identity.Deriving) ... ok
+test_an_unknown_system_is_refused (test_identity.Deriving) ... ok
+test_the_field_used_is_the_one_the_rules_name_and_no_other (test_identity.Deriving) ... ok
+test_the_identifier_is_used_character_for_character (test_identity.Deriving) ... ok
+test_the_rules_document_is_what_the_code_writes_and_can_be_followed_by_hand (test_identity.Deriving) ... ok
+test_a_card_moved_within_its_board_and_dragged_keeps_its_identity_and_records_no_change (test_identity.RenameAndMove) ... ok
+test_a_re_sync_of_unchanged_records_changes_nothing (test_identity.RenameAndMove) ... ok
+test_a_title_swapped_between_two_items_moves_no_identity (test_identity.RenameAndMove) ... ok
+test_after_renames_and_moves_every_identity_is_the_same (test_identity.RenameAndMove) ... ok
+test_items_with_the_same_title_are_separate_items (test_identity.RenameAndMove) ... ok
+test_the_order_of_the_records_and_the_batch_s_name_change_nothing (test_identity.RenameAndMove) ... ok
+test_the_renamed_and_moved_items_were_updated_in_place (test_identity.RenameAndMove) ... ok
+test_twenty_records_across_three_systems_get_twenty_identities (test_identity.RenameAndMove) ... ok
+test_a_different_birth_mark_is_reported_as_reuse_and_nothing_is_overwritten (test_identity.Reuse) ... ok
+test_a_trello_card_s_birth_mark_comes_from_its_id_so_reuse_of_a_card_id_cannot_be_seen (test_identity.Reuse) ... ok
+test_the_same_birth_mark_with_everything_else_changed_is_the_same_item (test_identity.Reuse) ... ok
+test_the_same_moment_written_in_another_time_zone_is_the_same_birth_mark (test_identity.Reuse) ... ok
+test_the_same_title_with_a_different_birth_mark_is_still_reuse (test_identity.Reuse) ... ok
+test_with_no_creation_time_reuse_cannot_be_checked_and_the_run_says_so (test_identity.Reuse) ... ok
+test_a_batch_cannot_be_applied_twice_and_a_broken_batch_stops_with_nothing_written (test_identity.TheMapAndTheFiles) ... ok
+test_an_export_and_an_import_give_the_same_identities (test_identity.TheMapAndTheFiles) ... ok
+test_the_handed_in_map_and_state_are_what_the_five_batches_give (test_identity.TheMapAndTheFiles) ... ok
+test_the_map_lists_every_item_and_what_was_reported (test_identity.TheMapAndTheFiles) ... ok
+test_the_skill_reaches_no_network (test_identity.TheMapAndTheFiles) ... ok
+
+----------------------------------------------------------------------
+Ran 34 tests in 0.018s
+
+OK

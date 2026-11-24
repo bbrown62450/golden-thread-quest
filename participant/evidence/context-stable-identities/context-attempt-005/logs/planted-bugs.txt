@@ -1,0 +1,227 @@
+Do the tests notice a broken identity rule? context-stable-identities, attempt context-attempt-005
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/context-stable-identities/identity.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. The Jira identity is built from the key, DEMO-3, which changes when a story moves project. This is the quest's scenario (criteria 2 and 4)
+  unittest result: FAILED (failures=10, errors=4)
+  tests that failed (14):
+    Reuse.test_a_different_birth_mark_is_reported_as_reuse_and_nothing_is_overwritten
+    AliasAndRefusal.test_a_jira_id_sent_as_a_number_is_the_item_already_held
+    RenameAndMove.test_a_re_sync_of_unchanged_records_changes_nothing
+    RenameAndMove.test_a_title_swapped_between_two_items_moves_no_identity
+    RenameAndMove.test_after_renames_and_moves_every_identity_is_the_same
+    AliasAndRefusal.test_an_alias_is_made_when_the_source_names_the_previous_identifier
+    RenameAndMove.test_items_with_the_same_title_are_separate_items
+    AliasAndRefusal.test_six_records_with_no_usable_identifier_are_refused_and_get_no_identity
+    Deriving.test_the_field_used_is_the_one_the_rules_name_and_no_other
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+    TheMapAndTheFiles.test_the_map_lists_every_item_and_what_was_reported
+    RenameAndMove.test_the_renamed_and_moved_items_were_updated_in_place
+    Reuse.test_the_same_birth_mark_with_everything_else_changed_is_the_same_item
+    Collision.test_the_same_record_delivered_twice_is_applied_once_and_is_not_a_collision
+
+PLANTED BUG B. The GitHub identity is built from the issue's number, which changes on a transfer (criteria 2 and 4)
+  unittest result: FAILED (failures=11, errors=3)
+  tests that failed (14):
+    Collision.test_a_collision_on_an_identity_already_held_leaves_the_held_item_as_it_was
+    RenameAndMove.test_a_re_sync_of_unchanged_records_changes_nothing
+    RenameAndMove.test_after_renames_and_moves_every_identity_is_the_same
+    AliasAndRefusal.test_an_alias_is_made_when_the_source_names_the_previous_identifier
+    RenameAndMove.test_items_with_the_same_title_are_separate_items
+    AliasAndRefusal.test_no_alias_is_made_from_a_matching_title
+    AliasAndRefusal.test_six_records_with_no_usable_identifier_are_refused_and_get_no_identity
+    Deriving.test_the_field_used_is_the_one_the_rules_name_and_no_other
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+    TheMapAndTheFiles.test_the_map_lists_every_item_and_what_was_reported
+    RenameAndMove.test_the_renamed_and_moved_items_were_updated_in_place
+    Collision.test_the_same_record_delivered_twice_is_applied_once_and_is_not_a_collision
+    Collision.test_two_different_records_with_one_identity_are_reported_and_neither_is_written
+    Reuse.test_with_no_creation_time_reuse_cannot_be_checked_and_the_run_says_so
+
+PLANTED BUG C. The Trello identity is built from the card's name (criteria 2 and 3)
+  unittest result: FAILED (failures=11, errors=2)
+  tests that failed (13):
+    TheMapAndTheFiles.test_a_batch_cannot_be_applied_twice_and_a_broken_batch_stops_with_nothing_written
+    RenameAndMove.test_a_card_moved_within_its_board_and_dragged_keeps_its_identity_and_records_no_change
+    RenameAndMove.test_a_re_sync_of_unchanged_records_changes_nothing
+    Reuse.test_a_trello_card_s_birth_mark_comes_from_its_id_so_reuse_of_a_card_id_cannot_be_seen
+    RenameAndMove.test_after_renames_and_moves_every_identity_is_the_same
+    AliasAndRefusal.test_an_alias_is_made_when_the_source_names_the_previous_identifier
+    RenameAndMove.test_items_with_the_same_title_are_separate_items
+    AliasAndRefusal.test_six_records_with_no_usable_identifier_are_refused_and_get_no_identity
+    Deriving.test_the_field_used_is_the_one_the_rules_name_and_no_other
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+    RenameAndMove.test_the_renamed_and_moved_items_were_updated_in_place
+    RenameAndMove.test_twenty_records_across_three_systems_get_twenty_identities
+    Collision.test_two_different_records_with_one_identity_are_reported_and_neither_is_written
+
+PLANTED BUG D. The identifier is put in lower case, so two GitHub items become one (criterion 1)
+  unittest result: FAILED (failures=14, errors=3)
+  tests that failed (17):
+    TheMapAndTheFiles.test_a_batch_cannot_be_applied_twice_and_a_broken_batch_stops_with_nothing_written
+    Collision.test_a_collision_on_an_identity_already_held_leaves_the_held_item_as_it_was
+    RenameAndMove.test_a_re_sync_of_unchanged_records_changes_nothing
+    RenameAndMove.test_after_renames_and_moves_every_identity_is_the_same
+    AliasAndRefusal.test_an_alias_is_made_when_the_source_names_the_previous_identifier
+    Deriving.test_an_identity_is_the_system_a_colon_and_the_identifier
+    RenameAndMove.test_items_with_the_same_title_are_separate_items
+    AliasAndRefusal.test_no_alias_is_made_from_a_matching_title
+    Deriving.test_the_field_used_is_the_one_the_rules_name_and_no_other
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+    Deriving.test_the_identifier_is_used_character_for_character
+    TheMapAndTheFiles.test_the_map_lists_every_item_and_what_was_reported
+    RenameAndMove.test_the_renamed_and_moved_items_were_updated_in_place
+    Collision.test_the_same_record_delivered_twice_is_applied_once_and_is_not_a_collision
+    RenameAndMove.test_twenty_records_across_three_systems_get_twenty_identities
+    Collision.test_two_different_records_with_one_identity_are_reported_and_neither_is_written
+    Reuse.test_with_no_creation_time_reuse_cannot_be_checked_and_the_run_says_so
+
+PLANTED BUG E. A space around an identifier is trimmed, where the rule is to refuse (criterion 7)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    AliasAndRefusal.test_an_alias_is_made_when_the_source_names_the_previous_identifier
+    Deriving.test_an_identifier_that_is_not_clean_is_refused_not_repaired
+    AliasAndRefusal.test_six_records_with_no_usable_identifier_are_refused_and_get_no_identity
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+
+PLANTED BUG F. A decimal is rounded to a whole number, where the rule is to refuse (criterion 7)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Deriving.test_a_whole_number_is_written_as_its_digits_and_that_is_the_only_conversion
+    AliasAndRefusal.test_an_alias_is_made_when_the_source_names_the_previous_identifier
+    AliasAndRefusal.test_six_records_with_no_usable_identifier_are_refused_and_get_no_identity
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+
+PLANTED BUG G. A whole number is not written as its digits, so 40001 and "40001" are two items (criterion 7)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    AliasAndRefusal.test_a_jira_id_sent_as_a_number_is_the_item_already_held
+    Deriving.test_a_whole_number_is_written_as_its_digits_and_that_is_the_only_conversion
+    AliasAndRefusal.test_an_alias_is_made_when_the_source_names_the_previous_identifier
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+
+PLANTED BUG H. An unknown system is given an identity anyway (criterion 1)
+  unittest result: FAILED (failures=1, errors=6)
+  tests that failed (7):
+    AliasAndRefusal.test_a_jira_id_sent_as_a_number_is_the_item_already_held
+    AliasAndRefusal.test_an_alias_is_made_when_the_source_names_the_previous_identifier
+    TheMapAndTheFiles.test_an_export_and_an_import_give_the_same_identities
+    Deriving.test_an_unknown_system_is_refused
+    AliasAndRefusal.test_six_records_with_no_usable_identifier_are_refused_and_get_no_identity
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+    TheMapAndTheFiles.test_the_map_lists_every_item_and_what_was_reported
+
+PLANTED BUG I. A collision is not noticed: the last record in the batch wins (criterion 5)
+  unittest result: FAILED (failures=7)
+  tests that failed (7):
+    Collision.test_a_collision_on_an_identity_already_held_leaves_the_held_item_as_it_was
+    AliasAndRefusal.test_an_alias_is_made_when_the_source_names_the_previous_identifier
+    Collision.test_records_that_differ_only_in_a_field_that_is_not_shown_still_collide
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+    TheMapAndTheFiles.test_the_map_lists_every_item_and_what_was_reported
+    Collision.test_the_same_record_delivered_twice_is_applied_once_and_is_not_a_collision
+    Collision.test_two_different_records_with_one_identity_are_reported_and_neither_is_written
+
+PLANTED BUG J. A collision is reported, and the first record is written all the same (criterion 5)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    Collision.test_a_collision_on_an_identity_already_held_leaves_the_held_item_as_it_was
+    AliasAndRefusal.test_an_alias_is_made_when_the_source_names_the_previous_identifier
+    Collision.test_records_that_differ_only_in_a_field_that_is_not_shown_still_collide
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+    Collision.test_two_different_records_with_one_identity_are_reported_and_neither_is_written
+
+PLANTED BUG K. Two records that differ are taken for one record delivered twice (criterion 5)
+  unittest result: FAILED (failures=7)
+  tests that failed (7):
+    Collision.test_a_collision_on_an_identity_already_held_leaves_the_held_item_as_it_was
+    AliasAndRefusal.test_an_alias_is_made_when_the_source_names_the_previous_identifier
+    Collision.test_records_that_differ_only_in_a_field_that_is_not_shown_still_collide
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+    TheMapAndTheFiles.test_the_map_lists_every_item_and_what_was_reported
+    Collision.test_the_same_record_delivered_twice_is_applied_once_and_is_not_a_collision
+    Collision.test_two_different_records_with_one_identity_are_reported_and_neither_is_written
+
+PLANTED BUG L. A reused identifier is not noticed: the newcomer overwrites the item held (criterion 6)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Reuse.test_a_different_birth_mark_is_reported_as_reuse_and_nothing_is_overwritten
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+    TheMapAndTheFiles.test_the_map_lists_every_item_and_what_was_reported
+    Reuse.test_the_same_title_with_a_different_birth_mark_is_still_reuse
+
+PLANTED BUG M. A reused identifier is reported, and the newcomer overwrites the item held all the same (criterion 6)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Reuse.test_a_different_birth_mark_is_reported_as_reuse_and_nothing_is_overwritten
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+
+PLANTED BUG N. Reuse is decided by comparing titles, not birth marks (criterion 2)
+  unittest result: FAILED (failures=10)
+  tests that failed (10):
+    Reuse.test_a_different_birth_mark_is_reported_as_reuse_and_nothing_is_overwritten
+    RenameAndMove.test_a_re_sync_of_unchanged_records_changes_nothing
+    RenameAndMove.test_a_title_swapped_between_two_items_moves_no_identity
+    Reuse.test_a_trello_card_s_birth_mark_comes_from_its_id_so_reuse_of_a_card_id_cannot_be_seen
+    RenameAndMove.test_after_renames_and_moves_every_identity_is_the_same
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+    TheMapAndTheFiles.test_the_map_lists_every_item_and_what_was_reported
+    RenameAndMove.test_the_renamed_and_moved_items_were_updated_in_place
+    Reuse.test_the_same_birth_mark_with_everything_else_changed_is_the_same_item
+    Reuse.test_the_same_title_with_a_different_birth_mark_is_still_reuse
+
+PLANTED BUG O. A birth mark is compared as text, so one moment written in two time zones looks like two (criterion 6)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Reuse.test_a_different_birth_mark_is_reported_as_reuse_and_nothing_is_overwritten
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+    TheMapAndTheFiles.test_the_map_lists_every_item_and_what_was_reported
+    Reuse.test_the_same_moment_written_in_another_time_zone_is_the_same_birth_mark
+
+PLANTED BUG P. An alias is made whenever the title matches an item already held, without the source saying so (stretch goal, criterion 2)
+  unittest result: FAILED (failures=13)
+  tests that failed (13):
+    TheMapAndTheFiles.test_a_batch_cannot_be_applied_twice_and_a_broken_batch_stops_with_nothing_written
+    Reuse.test_a_different_birth_mark_is_reported_as_reuse_and_nothing_is_overwritten
+    RenameAndMove.test_a_re_sync_of_unchanged_records_changes_nothing
+    Reuse.test_a_trello_card_s_birth_mark_comes_from_its_id_so_reuse_of_a_card_id_cannot_be_seen
+    RenameAndMove.test_after_renames_and_moves_every_identity_is_the_same
+    AliasAndRefusal.test_an_alias_is_made_when_the_source_names_the_previous_identifier
+    RenameAndMove.test_items_with_the_same_title_are_separate_items
+    AliasAndRefusal.test_no_alias_is_made_from_a_matching_title
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+    RenameAndMove.test_the_order_of_the_records_and_the_batch_s_name_change_nothing
+    Reuse.test_the_same_birth_mark_with_everything_else_changed_is_the_same_item
+    Reuse.test_the_same_title_with_a_different_birth_mark_is_still_reuse
+    RenameAndMove.test_twenty_records_across_three_systems_get_twenty_identities
+
+PLANTED BUG Q. A change of title is not recorded, so the map cannot say an item was renamed (criterion 3)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+    TheMapAndTheFiles.test_the_map_lists_every_item_and_what_was_reported
+    RenameAndMove.test_the_renamed_and_moved_items_were_updated_in_place
+
+PLANTED BUG R. The same batch can be applied twice
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheMapAndTheFiles.test_a_batch_cannot_be_applied_twice_and_a_broken_batch_stops_with_nothing_written
+
+PLANTED BUG S. An import merges into a map that already exists
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheMapAndTheFiles.test_an_export_and_an_import_give_the_same_identities
+
+PLANTED BUG T. A refused record is given an identity from its title, to be helpful (criterion 2)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    AliasAndRefusal.test_an_alias_is_made_when_the_source_names_the_previous_identifier
+    TheMapAndTheFiles.test_the_handed_in_map_and_state_are_what_the_five_batches_give
+
+After the last bug was taken out: identity.py is byte for byte what it was at the start. OK
+
+RESULT: all 20 planted bugs were caught by at least one test, and the file was restored.

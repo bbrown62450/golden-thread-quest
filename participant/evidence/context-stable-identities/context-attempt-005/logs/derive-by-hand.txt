@@ -1,0 +1,83 @@
+Can another person derive the same identity from the rules? context-stable-identities, attempt context-attempt-005
+Written by the assistant (Claude) from the reports of two blind readers. No script made this file.
+
+WHAT WAS DONE
+  Two fresh AI assistants were started, one after the other. Neither had any memory of this work. Each was given two files
+  and nothing else: rules.md, and a list of made-up source records with no answers. Each was told to read only those two
+  files, to run no program and write no code, and to work each identity out by reading, as a person would with pen and
+  paper. Where the rules did not settle a case it was to say so, and not guess.
+  Their answers were then compared with what the skill gives for the same records.
+
+WHAT THIS IS NOT
+  The readers were AI assistants, not people. The limits were given in words and nothing enforced them: each said it kept
+  them, and each said it ran no command at all. Both read the rules more carefully than a hurried person would.
+
+ROUND 1: the rules as first written, 16 records
+  Identities matching the skill: 15 of 16.
+  The 16th was a record from a system the rules did not name, "asana". The reader wrote that the rules did not settle it,
+  and that it would refuse the record but that this was its reading, not a stated rule. The skill refuses it. So the reader
+  and the skill agreed on the outcome, and the rules had not said it.
+  The reader found twelve gaps in the rules. The ones that could have led a careful person to a different identity:
+    - nothing said what to do with a system other than the three;
+    - "the field id" did not say the top-level id, and a Jira record also has a project id inside it;
+    - a decimal was refused and a full stop was allowed, so the text "40003.0" could be read either way;
+    - whole numbers only: negative numbers, exponents, null, true, false, lists and objects were not covered;
+    - "letters" did not say whether an accented letter counts;
+    - the fields the birth mark is read from were not named for Jira and GitHub, nor how to compare two times;
+    - "ignore every other field" contradicted the sections that read the creation time and the previous identifier;
+    - a rule for one batch and a rule for an earlier batch overlapped, and "batch" was not defined.
+  One thing in round 1 was the assistant's fault and not the rules': it asked the reader to find three pairs of records
+  that were the same item, and only two were in the list. The reader said so.
+  The rules were then rewritten for every one of the twelve.
+
+ROUND 2: the revised rules, 22 records, six of them new and chosen to be hard
+  Identities matching the skill: 22 of 22. No record was "not settled".
+
+    record  the reader wrote                    the skill gives                     what the record is
+       1    jira:40003                          jira:40003                          a story, as first synced
+       2    github:I_kwFIXab05                  github:I_kwFIXab05                  a node ID that differs from record 4 only in case
+       3    trello:6ae851100000000000000a02     trello:6ae851100000000000000a02     a card, as first synced
+       4    github:I_kwFIXAB05                  github:I_kwFIXAB05
+       5    github:I_kwFIX0303                  github:I_kwFIX0303
+       6    jira:40003                          jira:40003                          record 1 after being renamed and moved to another project
+       7    github:I_kwFIX0302                  github:I_kwFIX0302                  an issue after a rename and a transfer
+       8    trello:6ae851100000000000000a02     trello:6ae851100000000000000a02     record 3 after being renamed and moved to another board
+       9    github:I_kwFIX0399                  github:I_kwFIX0399                  a node ID the source says replaces I_kwFIX0303
+      10    jira:40001                          jira:40001                          an id sent as the number 40001
+      11    REFUSED                             REFUSED                             an empty id
+      12    REFUSED                             REFUSED                             an id sent as the number 40042.5
+      13    REFUSED                             REFUSED                             an id with a space in front
+      14    REFUSED                             REFUSED                             an id holding a colon
+      15    REFUSED                             REFUSED                             no node ID
+      16    REFUSED                             REFUSED                             a system the rules do not name
+      17    jira:40003.0                        jira:40003.0                        NEW: an id sent as the TEXT "40003.0"
+      18    REFUSED                             REFUSED                             NEW: the system written "Jira"
+      19    REFUSED                             REFUSED                             NEW: an id that is null
+      20    REFUSED                             REFUSED                             NEW: a node ID with an accented letter
+      21    trello:shortid                      trello:shortid                      NEW: a card id that is not 24 characters
+      22    REFUSED                             REFUSED                             NEW: an id sent as the number -7
+
+  The reader also found, from the rules alone, that records 1 and 6 are one item and that records 3 and 8 are one item,
+  by their birth marks and not by their titles, and that record 9 is record 5 under a changed identifier, by the source's
+  own statement and by nothing else.
+
+  Where the reader said a careful person could still differ:
+    - record 21. The rules described a Trello id as "24 characters". A reader could take that for a test and refuse
+      "shortid". The reader did not, because the list of refusals has no such test.
+    - record 17. The rules did not say how to tell text from a number.
+    - records 16 and 18. "No identity" and "refused" could be read as two different things.
+  And it pointed out a consequence the assistant had not seen: because text is never read for meaning, the TEXT forms of
+  everything refused as a number are accepted. The text "-7" gives jira:-7. The text "40003.0" gives jira:40003.0, a
+  separate and valid-looking identity beside jira:40003.
+
+AFTER ROUND 2
+  Five sentences were added to the rules for the points above: how to tell text from a number, where the system comes
+  from, that "24 characters" describes and does not test, what a null previous identifier means, and what happens with no
+  birth mark on either side. The last consequence was left as it is and written down as a limit.
+  No third reader read the rules after those five sentences. So the rules as handed in are the round-2 rules plus five
+  sentences that nobody has yet tried to follow.
+
+WHAT EACH READER SAID ABOUT KEEPING TO THE LIMITS
+  Round 1: kept them. Read the two files. Ran no command, wrote no code, wrote no file.
+  Round 2: kept them. Read the two files. Ran no command, wrote no code, wrote no file. Said it did not count the
+           characters of the Trello id by program, and that no identity depends on it.

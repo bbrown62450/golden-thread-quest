@@ -1,0 +1,440 @@
+{
+ "aliases": {
+  "github:I_kwFIX0303": {
+   "basis": "the source's own record names \"I_kwFIX0303\" as the identifier it had before",
+   "now": "github:I_kwFIX0399",
+   "since": "batch-5"
+  }
+ },
+ "batches": [
+  "batch-1",
+  "batch-2",
+  "batch-3",
+  "batch-4",
+  "batch-5"
+ ],
+ "collisions": [
+  {
+   "batch": "batch-3",
+   "identity": "github:I_kwFIX0306",
+   "records": 2,
+   "seen_as": [
+    "Rotate the signing key",
+    "Archive the old dashboards"
+   ]
+  }
+ ],
+ "format": "identity-map/1",
+ "held_aside": [
+  {
+   "batch": "batch-4",
+   "held_birth_mark": "2026-11-06T09:00:00Z",
+   "identity": "jira:40007",
+   "newcomer": {
+    "container": "Made-up project DEMO",
+    "reference": "DEMO-7",
+    "title": "Rotate the signing key"
+   },
+   "newcomer_birth_mark": "2026-11-20T09:00:00Z"
+  }
+ ],
+ "items": {
+  "github:I_kwFIX0301": {
+   "birth_basis": "the field `created_at`: the creation time GitHub states",
+   "birth_mark": "2026-10-02T10:00:00Z",
+   "first_batch": "batch-1",
+   "history": [],
+   "last_batch": "batch-4",
+   "now": {
+    "container": "acme-fixture/platform",
+    "reference": 1,
+    "title": "Export times out on large accounts"
+   },
+   "source_id": "I_kwFIX0301",
+   "system": "github"
+  },
+  "github:I_kwFIX0302": {
+   "birth_basis": "the field `created_at`: the creation time GitHub states",
+   "birth_mark": "2026-10-03T10:00:00Z",
+   "first_batch": "batch-1",
+   "history": [
+    {
+     "batch": "batch-2",
+     "change": "renamed",
+     "from": "Add retry to the webhook sender",
+     "to": "Add retry and backoff to the webhook sender"
+    },
+    {
+     "batch": "batch-2",
+     "change": "moved",
+     "from": "acme-fixture/platform",
+     "to": "acme-fixture/support"
+    },
+    {
+     "batch": "batch-2",
+     "change": "its reference changed",
+     "from": 2,
+     "to": 41
+    }
+   ],
+   "last_batch": "batch-2",
+   "now": {
+    "container": "acme-fixture/support",
+    "reference": 41,
+    "title": "Add retry and backoff to the webhook sender"
+   },
+   "source_id": "I_kwFIX0302",
+   "system": "github"
+  },
+  "github:I_kwFIX0304": {
+   "birth_basis": "the field `created_at`: the creation time GitHub states",
+   "birth_mark": "2026-10-05T10:00:00Z",
+   "first_batch": "batch-1",
+   "history": [],
+   "last_batch": "batch-2",
+   "now": {
+    "container": "acme-fixture/platform",
+    "reference": 4,
+    "title": "Fix export"
+   },
+   "source_id": "I_kwFIX0304",
+   "system": "github"
+  },
+  "github:I_kwFIX0307": {
+   "birth_basis": null,
+   "birth_mark": null,
+   "first_batch": "batch-4",
+   "history": [],
+   "last_batch": "batch-4",
+   "now": {
+    "container": "acme-fixture/platform",
+    "reference": 9,
+    "title": "Add a status page"
+   },
+   "source_id": "I_kwFIX0307",
+   "system": "github"
+  },
+  "github:I_kwFIX0399": {
+   "birth_basis": "the field `created_at`: the creation time GitHub states",
+   "birth_mark": "2026-10-04T10:00:00Z",
+   "first_batch": "batch-1",
+   "history": [
+    {
+     "batch": "batch-5",
+     "change": "the source changed its identifier",
+     "from": "github:I_kwFIX0303",
+     "to": "github:I_kwFIX0399"
+    }
+   ],
+   "last_batch": "batch-5",
+   "now": {
+    "container": "acme-fixture/platform",
+    "reference": 3,
+    "title": "Drop the legacy importer"
+   },
+   "source_id": "I_kwFIX0399",
+   "system": "github"
+  },
+  "github:I_kwFIXAB05": {
+   "birth_basis": "the field `created_at`: the creation time GitHub states",
+   "birth_mark": "2026-10-07T10:00:00Z",
+   "first_batch": "batch-1",
+   "history": [],
+   "last_batch": "batch-2",
+   "now": {
+    "container": "acme-fixture/platform",
+    "reference": 6,
+    "title": "Document the rate limits"
+   },
+   "source_id": "I_kwFIXAB05",
+   "system": "github"
+  },
+  "github:I_kwFIXab05": {
+   "birth_basis": "the field `created_at`: the creation time GitHub states",
+   "birth_mark": "2026-10-06T10:00:00Z",
+   "first_batch": "batch-1",
+   "history": [],
+   "last_batch": "batch-2",
+   "now": {
+    "container": "acme-fixture/platform",
+    "reference": 5,
+    "title": "Rate-limit the public API"
+   },
+   "source_id": "I_kwFIXab05",
+   "system": "github"
+  },
+  "jira:40001": {
+   "birth_basis": "the field `fields.created`: the creation time Jira states",
+   "birth_mark": "2026-11-02T09:00:00Z",
+   "first_batch": "batch-1",
+   "history": [],
+   "last_batch": "batch-5",
+   "now": {
+    "container": "Made-up project DEMO",
+    "reference": "DEMO-1",
+    "title": "Set up the intake form"
+   },
+   "source_id": "40001",
+   "system": "jira"
+  },
+  "jira:40002": {
+   "birth_basis": "the field `fields.created`: the creation time Jira states",
+   "birth_mark": "2026-11-02T09:00:00Z",
+   "first_batch": "batch-1",
+   "history": [],
+   "last_batch": "batch-3",
+   "now": {
+    "container": "Made-up project DEMO",
+    "reference": "DEMO-2",
+    "title": "Validate email addresses on intake"
+   },
+   "source_id": "40002",
+   "system": "jira"
+  },
+  "jira:40003": {
+   "birth_basis": "the field `fields.created`: the creation time Jira states",
+   "birth_mark": "2026-11-03T09:00:00Z",
+   "first_batch": "batch-1",
+   "history": [
+    {
+     "batch": "batch-2",
+     "change": "renamed",
+     "from": "Export intake records as CSV",
+     "to": "Export intake records as CSV, weekly"
+    },
+    {
+     "batch": "batch-2",
+     "change": "moved",
+     "from": "Made-up project DEMO",
+     "to": "Made-up project OPS"
+    },
+    {
+     "batch": "batch-2",
+     "change": "its reference changed",
+     "from": "DEMO-3",
+     "to": "OPS-17"
+    }
+   ],
+   "last_batch": "batch-2",
+   "now": {
+    "container": "Made-up project OPS",
+    "reference": "OPS-17",
+    "title": "Export intake records as CSV, weekly"
+   },
+   "source_id": "40003",
+   "system": "jira"
+  },
+  "jira:40004": {
+   "birth_basis": "the field `fields.created`: the creation time Jira states",
+   "birth_mark": "2026-11-03T09:00:00Z",
+   "first_batch": "batch-1",
+   "history": [],
+   "last_batch": "batch-2",
+   "now": {
+    "container": "Made-up project DEMO",
+    "reference": "DEMO-4",
+    "title": "Fix export"
+   },
+   "source_id": "40004",
+   "system": "jira"
+  },
+  "jira:40005": {
+   "birth_basis": "the field `fields.created`: the creation time Jira states",
+   "birth_mark": "2026-11-04T09:00:00Z",
+   "first_batch": "batch-1",
+   "history": [
+    {
+     "batch": "batch-2",
+     "change": "renamed",
+     "from": "Schedule the Friday export",
+     "to": "Export intake records as CSV"
+    }
+   ],
+   "last_batch": "batch-2",
+   "now": {
+    "container": "Made-up project DEMO",
+    "reference": "DEMO-5",
+    "title": "Export intake records as CSV"
+   },
+   "source_id": "40005",
+   "system": "jira"
+  },
+  "jira:40006": {
+   "birth_basis": "the field `fields.created`: the creation time Jira states",
+   "birth_mark": "2026-11-05T09:00:00Z",
+   "first_batch": "batch-1",
+   "history": [],
+   "last_batch": "batch-2",
+   "now": {
+    "container": "Made-up project DEMO",
+    "reference": "DEMO-6",
+    "title": "Fix export"
+   },
+   "source_id": "40006",
+   "system": "jira"
+  },
+  "jira:40007": {
+   "birth_basis": "the field `fields.created`: the creation time Jira states",
+   "birth_mark": "2026-11-06T09:00:00Z",
+   "first_batch": "batch-1",
+   "history": [],
+   "last_batch": "batch-2",
+   "now": {
+    "container": "Made-up project DEMO",
+    "reference": "DEMO-7",
+    "title": "Tidy the export folder"
+   },
+   "source_id": "40007",
+   "system": "jira"
+  },
+  "trello:6ae851100000000000000a01": {
+   "birth_basis": "the first 8 characters of the card `id`, which are the creation time in seconds since 1970, written in base 16. The id carries its own birth. An id that is not 24 characters of base 16 has no birth mark",
+   "birth_mark": "2026-11-02T09:00:00Z",
+   "first_batch": "batch-1",
+   "history": [],
+   "last_batch": "batch-3",
+   "now": {
+    "container": "6740000000000000000000b1",
+    "reference": "fixT0001",
+    "title": "Add dark mode"
+   },
+   "source_id": "6ae851100000000000000a01",
+   "system": "trello"
+  },
+  "trello:6ae851100000000000000a02": {
+   "birth_basis": "the first 8 characters of the card `id`, which are the creation time in seconds since 1970, written in base 16. The id carries its own birth. An id that is not 24 characters of base 16 has no birth mark",
+   "birth_mark": "2026-11-02T09:00:00Z",
+   "first_batch": "batch-1",
+   "history": [
+    {
+     "batch": "batch-2",
+     "change": "renamed",
+     "from": "Export report as PDF",
+     "to": "Export report as PDF and CSV"
+    },
+    {
+     "batch": "batch-2",
+     "change": "moved",
+     "from": "6740000000000000000000b1",
+     "to": "6740000000000000000000b2"
+    }
+   ],
+   "last_batch": "batch-2",
+   "now": {
+    "container": "6740000000000000000000b2",
+    "reference": "fixT0002",
+    "title": "Export report as PDF and CSV"
+   },
+   "source_id": "6ae851100000000000000a02",
+   "system": "trello"
+  },
+  "trello:6ae9a2900000000000000a03": {
+   "birth_basis": "the first 8 characters of the card `id`, which are the creation time in seconds since 1970, written in base 16. The id carries its own birth. An id that is not 24 characters of base 16 has no birth mark",
+   "birth_mark": "2026-11-03T09:00:00Z",
+   "first_batch": "batch-1",
+   "history": [],
+   "last_batch": "batch-2",
+   "now": {
+    "container": "6740000000000000000000b1",
+    "reference": "fixT0003",
+    "title": "Write onboarding guide"
+   },
+   "source_id": "6ae9a2900000000000000a03",
+   "system": "trello"
+  },
+  "trello:6ae9a2900000000000000a04": {
+   "birth_basis": "the first 8 characters of the card `id`, which are the creation time in seconds since 1970, written in base 16. The id carries its own birth. An id that is not 24 characters of base 16 has no birth mark",
+   "birth_mark": "2026-11-03T09:00:00Z",
+   "first_batch": "batch-1",
+   "history": [],
+   "last_batch": "batch-2",
+   "now": {
+    "container": "6740000000000000000000b1",
+    "reference": "fixT0004",
+    "title": "Search by title"
+   },
+   "source_id": "6ae9a2900000000000000a04",
+   "system": "trello"
+  },
+  "trello:6aeaf4100000000000000a05": {
+   "birth_basis": "the first 8 characters of the card `id`, which are the creation time in seconds since 1970, written in base 16. The id carries its own birth. An id that is not 24 characters of base 16 has no birth mark",
+   "birth_mark": "2026-11-04T09:00:00Z",
+   "first_batch": "batch-1",
+   "history": [],
+   "last_batch": "batch-2",
+   "now": {
+    "container": "6740000000000000000000b1",
+    "reference": "fixT0005",
+    "title": "Fix export"
+   },
+   "source_id": "6aeaf4100000000000000a05",
+   "system": "trello"
+  },
+  "trello:6aec45900000000000000a06": {
+   "birth_basis": "the first 8 characters of the card `id`, which are the creation time in seconds since 1970, written in base 16. The id carries its own birth. An id that is not 24 characters of base 16 has no birth mark",
+   "birth_mark": "2026-11-05T09:00:00Z",
+   "first_batch": "batch-1",
+   "history": [],
+   "last_batch": "batch-2",
+   "now": {
+    "container": "6740000000000000000000b1",
+    "reference": "fixT0006",
+    "title": "Set up project board"
+   },
+   "source_id": "6aec45900000000000000a06",
+   "system": "trello"
+  },
+  "trello:6aed97100000000000000a07": {
+   "birth_basis": "the first 8 characters of the card `id`, which are the creation time in seconds since 1970, written in base 16. The id carries its own birth. An id that is not 24 characters of base 16 has no birth mark",
+   "birth_mark": "2026-11-06T09:00:00Z",
+   "first_batch": "batch-1",
+   "history": [],
+   "last_batch": "batch-2",
+   "now": {
+    "container": "6740000000000000000000b1",
+    "reference": "fixT0007",
+    "title": "Remove old banner"
+   },
+   "source_id": "6aed97100000000000000a07",
+   "system": "trello"
+  }
+ },
+ "refused": [
+  {
+   "batch": "batch-5",
+   "reason": "the identifier is empty",
+   "seen_as": "\"A story with an empty id\"",
+   "system": "jira"
+  },
+  {
+   "batch": "batch-5",
+   "reason": "the identifier is 40042.5, which is neither text nor a whole number. It is not repaired",
+   "seen_as": "\"A story whose id was sent as a decimal\"",
+   "system": "jira"
+  },
+  {
+   "batch": "batch-5",
+   "reason": "the identifier \" 40009\" holds a space, a colon or another character an identifier may not have. It is not repaired",
+   "seen_as": "\"A story whose id has a space in front\"",
+   "system": "jira"
+  },
+  {
+   "batch": "batch-5",
+   "reason": "the identifier \"6744:bad\" holds a space, a colon or another character an identifier may not have. It is not repaired",
+   "seen_as": "\"A card whose id holds a colon\"",
+   "system": "trello"
+  },
+  {
+   "batch": "batch-5",
+   "reason": "the record has no node_id, the field its identity is built from",
+   "seen_as": "\"An issue with no node ID\"",
+   "system": "github"
+  },
+  {
+   "batch": "batch-5",
+   "reason": "the system is \"asana\", and it must be one of jira, trello, github",
+   "seen_as": "a record",
+   "system": "asana"
+  }
+ ]
+}

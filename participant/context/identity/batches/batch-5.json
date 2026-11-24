@@ -1,0 +1,124 @@
+{
+ "batch": "batch-5",
+ "synced_at": "2026-11-21T08:00:00Z",
+ "about": "GitHub replaces a node ID and says which one it replaces. A Jira id arrives as a number. Six records have no usable identifier.",
+ "records": [
+  {
+   "system": "github",
+   "record": {
+    "node_id": "I_kwFIX0399",
+    "id": 9000003,
+    "number": 3,
+    "title": "Drop the legacy importer",
+    "created_at": "2026-10-04T10:00:00Z",
+    "repository": {
+     "id": 101,
+     "full_name": "acme-fixture/platform"
+    },
+    "html_url": "https://github.com/acme-fixture/platform/issues/3",
+    "previous_identifier": "I_kwFIX0303"
+   }
+  },
+  {
+   "system": "jira",
+   "record": {
+    "id": 40001,
+    "key": "DEMO-1",
+    "self": "https://jira.example.invalid/rest/api/3/issue/40001",
+    "fields": {
+     "summary": "Set up the intake form",
+     "project": {
+      "id": "50000",
+      "key": "DEMO",
+      "name": "Made-up project DEMO"
+     },
+     "created": "2026-11-02T09:00:00.000+0000"
+    }
+   }
+  },
+  {
+   "system": "jira",
+   "record": {
+    "id": "",
+    "key": "DEMO-90",
+    "self": "https://jira.example.invalid/rest/api/3/issue/",
+    "fields": {
+     "summary": "A story with an empty id",
+     "project": {
+      "id": "50000",
+      "key": "DEMO",
+      "name": "Made-up project DEMO"
+     },
+     "created": "2026-11-07T09:00:00.000+0000"
+    }
+   }
+  },
+  {
+   "system": "jira",
+   "record": {
+    "id": 40042.5,
+    "key": "DEMO-91",
+    "self": "https://jira.example.invalid/rest/api/3/issue/40042",
+    "fields": {
+     "summary": "A story whose id was sent as a decimal",
+     "project": {
+      "id": "50000",
+      "key": "DEMO",
+      "name": "Made-up project DEMO"
+     },
+     "created": "2026-11-07T09:00:00.000+0000"
+    }
+   }
+  },
+  {
+   "system": "jira",
+   "record": {
+    "id": " 40009",
+    "key": "DEMO-92",
+    "self": "https://jira.example.invalid/rest/api/3/issue/ 40009",
+    "fields": {
+     "summary": "A story whose id has a space in front",
+     "project": {
+      "id": "50000",
+      "key": "DEMO",
+      "name": "Made-up project DEMO"
+     },
+     "created": "2026-11-07T09:00:00.000+0000"
+    }
+   }
+  },
+  {
+   "system": "trello",
+   "record": {
+    "id": "6744:bad",
+    "idShort": 8,
+    "shortLink": "fixT0008",
+    "name": "A card whose id holds a colon",
+    "idBoard": "6740000000000000000000b1",
+    "idList": "6740000000000000000000d1",
+    "pos": 1
+   }
+  },
+  {
+   "system": "github",
+   "record": {
+    "id": 9000093,
+    "number": 93,
+    "title": "An issue with no node ID",
+    "created_at": "2026-10-08T10:00:00Z",
+    "repository": {
+     "id": 101,
+     "full_name": "acme-fixture/platform"
+    },
+    "html_url": "https://github.com/acme-fixture/platform/issues/93"
+   }
+  },
+  {
+   "system": "asana",
+   "record": {
+    "gid": "1200000000000001",
+    "name": "A task from a system the rules do not know"
+   }
+  }
+ ]
+}
