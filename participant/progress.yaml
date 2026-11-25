@@ -598,9 +598,10 @@ attempts:
   quest_id: scrum-standup-digest
   quest_version: 1
   content_hash: sha256:f2a28c60b7bdd71a3aefba70b766a9f77bcd0f4a083a701406d06cdc88627c1a
-  state: submitted
+  state: needs_changes
   started_at: '2026-11-25T12:34:31Z'
-  updated_at: '2026-11-25T15:46:14Z'
+  updated_at: '2026-11-25T16:36:04Z'
   evidence_path: participant/evidence/scrum-standup-digest/scrum-attempt-001
   submission_id: submission-20261125154614-157f51
-updated_at: '2026-11-25T15:46:14Z'
+  review_id: review-20261125163604-b0b3cd
+updated_at: '2026-11-25T16:36:04Z'

@@ -397,3 +397,4 @@ Every change this application made to your files, newest last.
 - `2026-11-25T15:42:12Z` scrum-standup-digest: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
 - `2026-11-25T15:46:14Z` scrum-standup-digest: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-25T15:46:14Z` Submitted scrum-standup-digest for review as submission-20261125154614-157f51.
+- `2026-11-25T16:36:04Z` Review of scrum-standup-digest: needs_changes by Claude (automated reviewer).
