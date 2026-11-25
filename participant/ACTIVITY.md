@@ -416,3 +416,8 @@ Every change this application made to your files, newest last.
 - `2026-11-25T19:31:28Z` playwright-risk-strategy: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-25T19:31:28Z` Submitted playwright-risk-strategy for review as submission-20261125193127-128f50.
 - `2026-11-25T19:47:03Z` Review of playwright-risk-strategy: approved by Claude (automated reviewer).
+- `2026-11-25T19:55:46Z` Started scrum-scope-change as attempt scrum-attempt-003.
+- `2026-11-25T20:34:28Z` scrum-scope-change: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-25T20:36:34Z` scrum-scope-change: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-25T20:37:51Z` scrum-scope-change: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-25T20:37:51Z` Submitted scrum-scope-change for review as submission-20261125203751-86ec22.

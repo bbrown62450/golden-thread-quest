@@ -1,0 +1,261 @@
+The scope run. scrum-scope-change, attempt scrum-attempt-003
+Recorded by scripts/record_evidence.py. Nothing was sent anywhere and nothing was posted to any tracker.
+The snapshots are made up. Paths are from the repository's top folder. SCRATCH is a temporary folder, deleted at the end.
+Nothing here needed redacting: the names in it are of invented people, and it holds no credential.
+
+==============================================================================
+PART 1. The comparison, run on the handed-in snapshots
+$ python3 participant/skills/scrum-scope-change/scope.py compare --snapshots participant/context/scrum/scope/snapshots.md --out SCRATCH/first/scope-change.md
+  wrote scope-change.md  sha256 393480cddd73dbdbc057f7e206fa295b9dc954eda26daa8520fd02153e37dec6
+  Compared snapshot "later" with snapshot "start". Matched by identifier.
+  Committed at start: 30. Later: 30. Net change: 0.
+  Added (2): PIER-312, PIER-313
+  Removed (2): PIER-303, PIER-310
+  Materially changed (4): PIER-304 [estimate, scope], PIER-306 [estimate], PIER-307 [acceptance], PIER-309 [acceptance]
+  Differed only in noise, and left out of the change of scope (4): PIER-302 [title], PIER-305 [assignee], PIER-308 [acceptance], PIER-311 [description]
+  Unchanged (1): PIER-301
+  Cannot be told (0): none
+  Gaps: 0.
+  exit code 0
+
+$ python3 participant/skills/scrum-scope-change/scope.py compare --snapshots participant/context/scrum/scope/snapshots.md --out SCRATCH/second/scope-change.md
+  wrote scope-change.md  sha256 393480cddd73dbdbc057f7e206fa295b9dc954eda26daa8520fd02153e37dec6
+  Compared snapshot "later" with snapshot "start". Matched by identifier.
+  Committed at start: 30. Later: 30. Net change: 0.
+  Added (2): PIER-312, PIER-313
+  Removed (2): PIER-303, PIER-310
+  Materially changed (4): PIER-304 [estimate, scope], PIER-306 [estimate], PIER-307 [acceptance], PIER-309 [acceptance]
+  Differed only in noise, and left out of the change of scope (4): PIER-302 [title], PIER-305 [assignee], PIER-308 [acceptance], PIER-311 [description]
+  Unchanged (1): PIER-301
+  Cannot be told (0): none
+  Gaps: 0.
+  exit code 0
+
+  ok   the two runs, 2 seconds apart, wrote reports that are byte for byte the same, and not empty
+  ok   the handed-in report, participant/context/scrum/scope/scope-change.md, is byte for byte what these runs wrote
+  ok   a third run, from a copy of the file under another name in another folder, wrote the same bytes again
+  ok   the output names the items that differed only in noise and were left out of every count
+
+==============================================================================
+PART 2. The snapshots (the first required item)
+participant/context/scrum/scope/snapshots.md, sha256 7ed65fc7b35317d9bd465662f6c886735d26234a8cfa047ff2b2f45e428d4aad
+Read here, by this script's own lines: 11 items in the start snapshot, 11 in the later one.
+  ok   every item in both snapshots has an estimate that is a whole number
+  ok   the file says of itself that it is made up, and holds exactly one snapshot named start and one named later
+
+==============================================================================
+PART 3. The classes and the totals, worked out again here (criteria 1 to 5 and 7)
+Made by this script's own lines from the two snapshots, and compared with what the report lists.
+  identifiers in the later snapshot only: PIER-312, PIER-313
+  identifiers in the start snapshot only: PIER-303, PIER-310
+  ok   criterion 2: the report lists as added exactly the 2 items whose identifier is in the later snapshot only
+  ok   criterion 3: the report lists as removed exactly the 2 items whose identifier is in the start snapshot only
+
+  in both, and the estimate, scope or acceptance differs once formatting is set aside:
+    PIER-304  estimate, scope
+    PIER-306  estimate
+    PIER-307  acceptance
+    PIER-309  acceptance
+  in both, and only something else differs:
+    PIER-302  title
+    PIER-305  assignee
+    PIER-308  acceptance
+    PIER-311  description
+  in both, and nothing differs: PIER-301
+  ok   criterion 4: the report lists as materially changed exactly these 4 items, each with exactly these fields
+  ok   criterion 5: the report lists as noise exactly these 4 items, each with exactly these fields, and none of them is in section 1 or in section 8
+  ok   the one item in which nothing differs is listed as unchanged, and no item is in two lists or in none
+
+  criterion 1, a contrast. Matched on TITLE, these later titles have no match at start: Export bookings as a spreadsheet; Reserve a berth for a visiting boat; Take a deposit when booking
+  ok   criterion 1: matched on title there would be 3 items "added", the renamed PIER-302 among them. The report has 2, and has PIER-302 as noise with both titles
+  ok   criterion 5: each noise item is shown with both versions of what differs, so a person can see what was not counted. The description that gained a sentence is there whole
+  ok   the report says that noise is a statement about three fields, and not a statement that no work was added
+  ok   criterion 4: for PIER-304 the report gives both estimates and the difference: 8 to 4
+  ok   criterion 4: for PIER-304 the report shows the scope entries that are in one snapshot and not the other: 1 and 0
+  ok   criterion 4: for PIER-306 the report gives both estimates and the difference: 3 to 5
+  ok   criterion 4: for PIER-307 the report shows the acceptance entries that are in one snapshot and not the other: 1 and 1
+  ok   criterion 4: for PIER-309 the report shows the acceptance entries that are in one snapshot and not the other: 1 and 1
+  ok   the two changes of wording in a criterion both carry the sentence that the report cannot tell a rewording from a change of meaning, and the entry that was only taken out does not
+
+  the sums, made here: start 30, later 30, added 9, removed 7, re-estimated PIER-304 -4, PIER-306 +2, moved 22
+  ok   criterion 7: the report states the committed total at start, 30, and later, 30, and the net change, 0
+  ok   criterion 7: it breaks the net change down as worked out here, and the parts add up: 30 + 9 - 7 -2 = 30
+  ok   the scenario: the net change is 0 and the report still says that 22 points moved
+
+==============================================================================
+PART 4. Identical snapshots report no change (criterion 6)
+$ python3 participant/skills/scrum-scope-change/scope.py compare --snapshots participant/context/scrum/scope/snapshots.md --later start --out SCRATCH/same/scope-change.md
+  wrote scope-change.md  sha256 203078e3c78a95a3516d78782ca29330f0786bbff2bf99b89ef5d5731ea2a196
+  Compared snapshot "start" with snapshot "start". Matched by identifier.
+  Committed at start: 30. Later: 30. Net change: 0.
+  Added (0): none
+  Removed (0): none
+  Materially changed (0): none
+  Differed only in noise, and left out of the change of scope (0): none
+  Unchanged (11): PIER-301, PIER-302, PIER-303, PIER-304, PIER-305, PIER-306, PIER-307, PIER-308, PIER-309, PIER-310, PIER-311
+  Cannot be told (0): none
+  Gaps: 0.
+  NO CHANGE.
+  exit code 0
+
+  ok   criterion 6: the start snapshot compared with itself prints NO CHANGE, and its report says so and lists nothing as added, removed, materially changed or noise
+  ok   criterion 6: a file whose two snapshots are separate copies of the same 11 items also reports no change
+  ok   a contrast: the handed-in report, whose net change is also 0, does not say "No change"
+
+==============================================================================
+PART 5. Stretch: remaining capacity, and who is recorded as making each change
+  - Uncommitted at start: 2 points. Uncommitted later: 2 points.
+  - `PIER-312` added: -5 points of uncommitted capacity.
+  - `PIER-313` added: -4 points of uncommitted capacity.
+  - `PIER-303` removed: +2 points of uncommitted capacity.
+  - `PIER-310` removed: +5 points of uncommitted capacity.
+  - `PIER-304` re-estimated: +4 points of uncommitted capacity.
+  - `PIER-306` re-estimated: -2 points of uncommitted capacity.
+  ok   capacity not yet committed is the file's capacity, 32, less the committed total: 2 at start and 2 later
+  ok   each of the 6 changes of points is shown with its effect on that figure, and the effects add up to the change in it: 0
+
+  - `product_owner`: "Odile Marchetti".
+  - `changed_by` is the same text as `product_owner` (3): `PIER-306` (materially changed), `PIER-307` (materially changed), `PIER-312` (added).
+  - `changed_by` is other text (3):
+  - Added or materially changed, with no `changed_by` (0): none.
+  - Removed (2): `PIER-303`, `PIER-310`. Who removed an item is in neither snapshot.
+
+  changed_by is not the product owner, read here: PIER-313, PIER-304, PIER-309
+  ok   the 3 added or materially changed items whose changed_by is not the product_owner's text are listed as other text, each with the name recorded, and no other is
+  ok   the 3 whose changed_by is the product_owner's text are listed as that
+  ok   the section says what is recorded, that it does not say whether a change was agreed, and that it is not a finding about anyone
+
+==============================================================================
+PART 6. The check, and that it can fail
+$ python3 participant/skills/scrum-scope-change/scope.py check --snapshots participant/context/scrum/scope/snapshots.md --report participant/context/scrum/scope/scope-change.md
+  CHECK PASSED. None of the things this check looks for was found. What it looks for is in SKILL.md.
+  exit code 0
+
+  ok   the check reports no problem on the handed-in report
+That pass shows little by itself: the check reads the snapshots with scope.py's own code.
+So the report is spoiled in memory, one thing at a time, written to SCRATCH, and the check is run on it.
+Spoiled: an added item taken out
+    PROBLEM: Section 2 does not list as added exactly the items the snapshots give.
+    PROBLEM: Section 2 does not give for PIER-313 its estimate and its title as the snapshot has them.
+  ok   reported: "does not list as added exactly"
+Spoiled: a removed item taken out
+    PROBLEM: Section 3 does not list as removed exactly the items the snapshots give.
+    PROBLEM: Section 3 does not give for PIER-303 its estimate and its title as the snapshot has them.
+  ok   reported: "does not list as removed exactly"
+Spoiled: the renamed item listed as a material change
+    PROBLEM: Section 4 does not list as materially changed exactly the items the snapshots give.
+    PROBLEM: The heading of section 4 does not give the number of items listed under it.
+  ok   reported: "does not list as materially changed exactly"
+Spoiled: a field left out of a material change
+    PROBLEM: Section 4 does not give for PIER-304 exactly the fields that differ.
+  ok   reported: "does not give for PIER-304 exactly the fields that differ"
+Spoiled: a material change moved to noise
+    PROBLEM: Section 5 does not list as noise exactly the items the snapshots give.
+    PROBLEM: The heading of section 5 does not give the number of items listed under it.
+  ok   reported: "does not list as noise exactly"
+Spoiled: the number in a heading changed
+    PROBLEM: The heading of section 2 does not give the number of items listed under it.
+  ok   reported: "heading of section 2 does not give the number"
+Spoiled: the net change changed
+    PROBLEM: Section 1 does not say, once: - **Net change: 0 points.**
+  ok   reported: "Section 1 does not say, once: - **Net change: 0 points.**"
+Spoiled: a committed total changed
+    PROBLEM: Section 1 does not say, once: - Committed later: 30 points, in
+  ok   reported: "Section 1 does not say, once: - Committed later: 30 points"
+Spoiled: an estimate changed
+    PROBLEM: Section 4 does not give for PIER-304 the two estimates and their difference.
+  ok   reported: "does not give for PIER-304 the two estimates"
+Spoiled: "No change" written at the top of a report of changes
+    PROBLEM: The report says "No change" when something differs, or does not say it when nothing does.
+  ok   reported: "says "No change" when something differs"
+Spoiled: the unchanged item taken out
+    PROBLEM: Section 6 does not list as unchanged exactly the items no compared field of which differs, with their number.
+    PROBLEM: The report does not put every item of the two snapshots in exactly one of its lists.
+  ok   reported: "does not list as unchanged exactly"
+Spoiled: a second, different net change written under the first
+    PROBLEM: Section 1 does not say, once: - **Net change: 0 points.**
+  ok   reported: "Section 1 does not say, once: - **Net change: 0 points.**"
+Spoiled: an item slipped into the added list without its marks
+    PROBLEM: Section 2 has a line that begins like an item and is not one: - PIER-999: 5 points. "Slipped in"
+    PROBLEM: The report names PIER-999, which is in neither snapshot.
+  ok   reported: "has a line that begins like an item and is not one"
+Spoiled: "No change" written lower down the report
+    PROBLEM: The report says "No change" when something differs, or does not say it when nothing does.
+  ok   reported: "says "No change" when something differs"
+Spoiled: "NO CHANGE." written in capitals, without its marks
+    PROBLEM: The report says "No change" when something differs, or does not say it when nothing does.
+  ok   reported: "says "No change" when something differs"
+Spoiled: an unchanged item listed as added, with a star for its bullet
+    PROBLEM: Section 2 has a line that begins like an item and is not one: * `PIER-301`: 3 points. "List the berths that are 
+  ok   reported: "has a line that begins like an item and is not one"
+Spoiled: the estimate of an added item changed
+    PROBLEM: Section 2 does not give for PIER-312 its estimate and its title as the snapshot has them.
+  ok   reported: "Section 2 does not give for PIER-312 its estimate and its title"
+Spoiled: a second estimate line under a material change
+    PROBLEM: Section 4 does not give for PIER-304 the two estimates and their difference.
+  ok   reported: "does not give for PIER-304 the two estimates"
+Spoiled: an item in neither snapshot named without its marks
+    PROBLEM: The report names PIER-999, which is in neither snapshot.
+  ok   reported: "names PIER-999, which is in neither snapshot"
+Spoiled: an item named that is in neither snapshot
+    PROBLEM: The report names PIER-999, which is in neither snapshot.
+  ok   reported: "which is in neither snapshot"
+Spoiled: the snapshots changed after the report was made (one estimate), in a copy
+    PROBLEM: The report does not give the checksum of this file: it was made from another.
+    PROBLEM: Section 1 does not say, once: - **Net change: +2 points.**
+  ok   reported: "it was made from another"
+
+What the check does not look at: the entries quoted in section 4, the sentences that say why a change counts, sections 5's
+quotations, sections 8 and 9, and the lines of section 1 other than the two totals and the net change. Parts 3 to 5 above look at those.
+
+==============================================================================
+PART 7. Snapshots that are wrong in their form, tried in memory
+Each is the handed-in file with one thing changed. Nothing is written. The claim in each is about what the comparison then reports.
+Changed: the estimate of PIER-313 left blank
+    added 2, removed 2, material 4, noise 4, unchanged 1, cannot be told 0, gaps 1
+  ok   it is a gap and is not counted as nothing: the later total is given as 26, the added points as 5, the section is marked NOT COMPLETE with the item named, and the parts still add up
+Changed: the estimate of PIER-301 written "large" in the later snapshot
+    added 2, removed 2, material 4, noise 4, unchanged 0, cannot be told 1, gaps 1
+  ok   the item is neither material, nor noise, nor unchanged: whether its estimate changed cannot be told
+Changed: PIER-312 given twice in the later snapshot
+    added 1, removed 2, material 4, noise 4, unchanged 1, cannot be told 0, gaps 1
+  ok   neither copy is used, it is a gap, and it is not reported as added
+Changed: a sentence written inside an item, outside any field
+    added 2, removed 2, material 4, noise 4, unchanged 1, cannot be told 0, gaps 1
+  ok   the sentence is a gap, quoted, and is not acted on
+Changed: the later snapshot's heading changed, so that there is no snapshot named later
+    added 0, removed 0, material 0, noise 0, unchanged 0, cannot be told 0, gaps 1
+  ok   it is a gap, the report says NOTHING WAS COMPARED, and it gives no total, no net change and nothing as removed
+Changed: the estimate of PIER-305 written "?" at start and 5 later
+    added 2, removed 2, material 4, noise 3, unchanged 1, cannot be told 1, gaps 1
+  ok   the item is in no figure on either side, so no points appear that no part explains: 29 and 29, and the parts add up
+Changed: a heading "## Carried over" put in the middle of the start snapshot, so that seven items fall under it
+    added 2, removed 1, material 1, noise 1, unchanged 1, cannot be told 0, gaps 7
+  ok   it is a gap, the seven items are not read, and none of them is reported as added
+Changed: the heading of PIER-302 in the start snapshot written "PIER-302 (was 12)"
+    added 2, removed 2, material 4, noise 3, unchanged 1, cannot be told 0, gaps 2
+  ok   it is a gap, and PIER-302 is not reported as added
+Changed: the list entries of one item written with no indent, in both snapshots
+    added 2, removed 2, material 4, noise 3, unchanged 1, cannot be told 1, gaps 4
+  ok   the item is not called unchanged or noise: its lines were not read, so it cannot be told
+Changed: a criterion changed from "within 1,5 seconds" to "within 15 seconds"
+    added 2, removed 2, material 4, noise 4, unchanged 1, cannot be told 0, gaps 0
+  ok   it is material: a comma inside an entry is not set aside as formatting
+Changed: the scope list of PIER-301 emptied in the later snapshot
+    added 2, removed 2, material 5, noise 4, unchanged 0, cannot be told 0, gaps 1
+  ok   it is material, with the two entries that went shown, and not "cannot be told"
+Changed: a criterion changed from "Supports PDF, PNG, ..." to "Supports PDF, PNG"
+    added 2, removed 2, material 4, noise 4, unchanged 1, cannot be told 0, gaps 0
+  ok   it is material: only one last full stop is set aside, not a run of them
+Changed: the estimate of PIER-301 written "TBD" in both snapshots, with nothing else changed in it
+    added 2, removed 2, material 4, noise 4, unchanged 1, cannot be told 0, gaps 2
+  ok   it is unchanged, since its lines are the same letter for letter. It is a gap and is in no figure: 27 and 27
+Changed: a title worded as an instruction
+    added 2, removed 2, material 4, noise 4, unchanged 1, cannot be told 0, gaps 0
+  ok   nothing but that title's own line changes: the same 4 material changes, and the item is noise
+
+==============================================================================
+AT THE END
+  ok   the snapshots and the report are byte for byte what they were at the start, and the scratch folder is gone
+
+RESULT: ALL CHECKS PASSED. 68 checks.

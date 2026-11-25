@@ -1,0 +1,126 @@
+Independent reads of the scope-change report and of the program that writes it. scrum-scope-change, attempt scrum-attempt-003
+Copied by hand, and shortened, from the readers' replies by the assistant that built this quest. No program wrote this file.
+
+Who the readers were: three separate AI assistants (Claude), each started fresh. No person read the work. Each was told
+to read only the files named to it, to run nothing and to write nothing. Those limits were given in words and not
+enforced. None saw another's reply. In each round the program, its tests and its record were finished and passing
+before any reply was read.
+
+  Reader 1   given the first report and the snapshots. Asked to compare the two snapshots by hand, field by field, to
+             add up every number, and to say which classifications it would argue with.
+  Reader 2   given the first program, its rules, the snapshots and the first report. Asked what input would make it
+             assert something the snapshots do not support, and where the code and the rules differ.
+  Reader 3   given the second program, its rules, the snapshots and the second report. Both tasks. It was told what
+             readers 1 and 2 had found, and not to take the fixes on trust.
+
+==============================================================================
+ROUND 1. The first version (70 tests, 49 recorded checks, 43 planted bugs, all passing)
+
+READER 1, BY HAND. "My classification agrees with the report's sections 2 to 6 for all 13 identifiers."
+  Every number of section 1 matched its own sums: both totals of 30, the net change of 0, 9 added, 7 removed, the
+  re-estimates of -4 and +2, and 22 points moved. Sections 8 and 9 matched. Every quoted entry and title matched the
+  snapshots character for character. It could not see the run on identical snapshots.
+  What it would argue with:
+  - PIER-311 as noise. "Real extra work, uncounted, 0 points." Its description gained a sentence that asks for more.
+    The section's heading said "nothing of the commitment differs", which claimed more than was shown.
+  - PIER-309 as material. The words of one criterion are in another order and pass and fail the same tests. The report
+    flags that it cannot tell, but the same sentence sits on an obvious change, 2 seconds to 10, and on this.
+  - "Material means the commitment changed" contradicted the report's own admission. "May have changed."
+  - "Remaining capacity" would be read as capacity left on the day. It ignores work done.
+  - The section on who changed what "reads as naming people who overstepped, despite the disclaimer", and its one long
+    line could not be parsed.
+  - "Is in no count": the noise section has a count of its own.
+
+READER 2, THE CODE AGAINST THE RULES. The shipped report agreed with the shipped snapshots. "The faults are all on other
+inputs." The ones that mattered:
+  - A snapshot name typed wrongly gave "Committed later: 0 points. Net change: -30 points", in bold, and exit code 0.
+  - An estimate unusable at start and usable later put points into the net change that no part explained.
+  - List entries written with no indent were dropped, and the item was listed as unchanged.
+  - A stray "## " line inside a snapshot dropped every item after it, which were then reported as added.
+  - A heading such as "### PIER-302 (was 12)" made the item both a gap and "added".
+  - Sums of decimals gave "Net change: -1.11022e-16 points" beside "No change".
+  - A number that was content, "24. December is excluded", was taken off as numbering.
+  - The rule for setting formatting aside made eleven pairs of different meaning equal: "1,5 seconds" and "15
+    seconds"; "status != active" and "status = active"; "-5 degrees" and "5 degrees"; a range and a pair.
+  - Quotations cut at 157 characters could print two different texts as the same.
+  - The day a snapshot was taken was printed outside quotes, so a file could put a sentence into the report.
+  - Trouble in a snapshot that was not being compared stopped "No change" being said.
+  - The check failed three kinds of correct report the program itself writes.
+
+WHAT WAS CHANGED AFTER ROUND 1
+  The program was rewritten. With a snapshot missing it says NOTHING WAS COMPARED and gives no total, and ends with an
+  error code. An item is in the figures only if its estimate can be used on both sides, so the parts always add up.
+  Sums are exact. Very little is now set aside as formatting: capitals, spacing, the kind of quote or dash, a mark at
+  the very end, and order. A line that is not read keeps its item from being called unchanged or noise. Headings that
+  are not what they should be are gaps, and the items under them are not called added or removed. Numbering is taken
+  off only when it runs 1, 2, 3 down the list. Other people's text is quoted everywhere, and the report says when two
+  quotations cannot show their difference.
+  Wording: material "changed or may have". Noise "is a statement about three fields. It is not a statement that no
+  work was added." Capacity "not yet committed", with "no account of work done". The last section says what
+  `changed_by` records, one item to a line, and that it "is not a finding about anyone".
+  Tests went from 70 to 105. Each fault has a test, in a class named for the readers.
+
+==============================================================================
+ROUND 2. The second version (105 tests, 60 recorded checks, 59 planted bugs, all passing)
+
+READER 3. "My comparison by identifier agrees with the report on every class, field, quoted text and number."
+  Of the twelve earlier faults it traced: seven fixed, five partly.
+  What it still found:
+  - The formatting rule still made some different meanings equal. A run of full stops at the end was taken off, so
+    "PDF, PNG, ..." equalled "PDF, PNG". A raised 2 was folded to a 2, so "10 squared" equalled "102". A straight
+    double quote became a single one, so 6 inches equalled 6 feet. A tab was deleted and not treated as a space.
+  - A list of one entry beginning "1." still lost its number.
+  - A list that was emptied was "cannot be told", though the entries that went are known.
+  - An item with a field given twice used the last value in the totals, with no mark on the net change.
+  - A heading in other capitals, "### Pier-305", left the item reported as removed and in the bold net change.
+  - An item that "cannot be told" showed none of its other differences.
+  - Identical snapshots with the same gap in both did not report "No change". "The criterion fails."
+  - A stray "## " line with no item under it still cut a list short without a word.
+  - Entries quoted in the material section could still print the same on both sides.
+  - The check passed a bold net change in a report that compared nothing, "NO CHANGE" in capitals, an item listed
+    with a star, and a wrong estimate on an added item. It failed one kind of correct report.
+  - The rules document said "nothing else is set aside" and "with both versions", and neither was true.
+  - Wording: the capacity effects had signs opposite to section 1 with no word to say why. The noise section said
+    the criteria "do not differ" above an item listed for its criteria. "Nothing below was estimated" in a report
+    about estimates.
+  It still thought the last section could be read as judging: three names stand under "other text" than the owner's.
+
+WHAT WAS CHANGED AFTER ROUND 2, AND NOT READ AGAIN
+  Formatting: only one mark at the very end is set aside; compatibility forms are no longer folded; a double quote
+  stays a double quote; a tab is a space. A list of one entry keeps its number. A list emptied on one side is
+  material. An item with a line not read or a field given twice is in no figure. A heading that cannot be read marks
+  the net effect NOT COMPLETE. An item that cannot be told has its other differences printed. Items that are the same
+  letter for letter are unchanged, so identical snapshots report "No change" and say that there are gaps. A heading
+  that cuts a list short is a gap. Material entries that would print the same say so. Noise in a list shows both
+  versions. The capacity lines say "of uncommitted capacity".
+  The check: section 1 must read "Not compared" when nothing was; "no change" is looked for in any capitals; a line
+  with any bullet must be an item; added and removed items must carry their own estimate and title; NOT COMPLETE must
+  be there exactly when it should; identifiers are looked for with or without their marks.
+  The rules document was corrected in each place the reader named.
+  Tests went from 105 to 128, recorded checks from 60 to 68, planted bugs from 59 to 76.
+
+  NOT DONE, and written into the rules document:
+  - Capitals are set aside, so "5 mW" and "5 MW" are the same.
+  - Reordering entries is noise, so a change in the order of steps is missed.
+  - An entry nested under another is read as an entry of its own.
+  - A line that starts "### " inside an item is read as a new item.
+  - The last section still lists names under "other text". It says what is recorded, and what it does not say.
+  - PIER-307, a change of meaning, and PIER-309, a rewording, still carry the same sentence. The program cannot tell
+    them apart, which is the decision the participant made.
+
+  NOBODY HAS READ THE HANDED-IN VERSION. The handed-in report differs from the one reader 3 checked by wording only: the
+  noise section's opening sentence, the versions now shown for PIER-308, the words "of uncommitted capacity", "guessed
+  or filled in", and the line on how to read noise. No class, no field and no number changed. The handed-in program
+  differs by every code change above. Those are covered by tests and planted bugs, and by no reader.
+
+==============================================================================
+SUMMARY
+  Are the classes and the numbers right for these snapshots? Two readers compared the snapshots by hand, one on each
+  version, and agreed with the report on every item, field, quotation and number.
+  Did the first program assert things the snapshots did not support, on other input? Yes, in a dozen ways a reader found
+  by reading the code. The second still did, in fewer and smaller ways.
+  Does the handed-in program? Not in any way a reader named that was not then corrected or written down as a limit.
+  It has not been read since, and each read so far found something.
+  Which classification would a team argue with? Both readers of the report said the same one first: PIER-311, new work
+  written into a description, which the rule calls noise.
+  A person has not read any of it.

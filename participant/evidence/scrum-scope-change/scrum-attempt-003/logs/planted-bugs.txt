@@ -1,0 +1,587 @@
+Do the tests notice a broken comparison? scrum-scope-change, attempt scrum-attempt-003
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/scrum-scope-change/scope.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. Items are matched by title, so a renamed item is reported as added (criterion 1)
+  unittest result: FAILED (failures=25)
+  tests that failed (25):
+    CapacityAndWho.test_a_change_with_nobody_recorded_is_not_said_to_be_anyones
+    TheSecondRead.test_a_heading_that_cuts_a_list_short_is_a_gap_and_the_item_is_in_no_figure
+    TheFirstRead.test_a_heading_that_is_not_a_snapshot_with_items_under_it_is_a_gap_and_those_items_are_not_called_added
+    NetEffect.test_a_net_change_that_is_not_nothing_has_its_sign
+    TheCheck.test_a_wrong_heading_count_is_reported
+    TheFirstRead.test_an_added_item_with_no_usable_estimate_is_not_given_an_effect_of_nothing
+    TheFirstRead.test_an_estimate_unusable_at_start_and_usable_later_is_in_no_figure_and_the_parts_still_add_up
+    Matching.test_an_item_whose_title_changed_is_the_same_item
+    TheSecondRead.test_an_item_with_a_field_given_twice_is_in_no_figure
+    Matching.test_an_item_with_a_new_identifier_and_every_other_field_the_same_is_one_removed_and_one_added
+    AddedAndRemoved.test_in_the_later_snapshot_only_is_added
+    TheFirstRead.test_the_check_passes_the_programs_own_report_of_a_file_with_an_item_given_twice
+    TheSecondRead.test_the_check_passes_the_programs_own_report_of_an_item_given_twice_at_start_and_absent_later
+    TheFirstRead.test_the_check_passes_the_programs_own_report_of_snapshots_named_like_identifiers
+    TheSecondRead.test_the_check_reports_a_second_net_change_without_its_marks
+    TheSecondRead.test_the_check_reports_no_change_in_any_capitals_and_without_its_marks
+    TheFirstRead.test_the_check_reports_no_change_written_lower_down
+    TheFirstRead.test_the_parts_add_up_to_the_later_total_whatever_is_wrong_with_the_file
+    NetEffect.test_the_points_that_moved_are_stated_beside_a_net_change_that_hides_them
+    Matching.test_the_program_never_compares_titles_to_find_an_item
+    CapacityAndWho.test_the_report_judges_nobody
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+    NetEffect.test_the_totals_and_the_net_change_are_stated
+    TheCheck.test_the_written_report_passes
+    Matching.test_two_items_with_one_title_are_two_items
+
+PLANTED BUG B. An item in the later snapshot only is not reported as added (criterion 2)
+  unittest result: FAILED (failures=24)
+  tests that failed (24):
+    CapacityAndWho.test_a_change_with_nobody_recorded_is_not_said_to_be_anyones
+    TheSecondRead.test_a_heading_that_cuts_a_list_short_is_a_gap_and_the_item_is_in_no_figure
+    TheFirstRead.test_a_heading_that_is_not_a_snapshot_with_items_under_it_is_a_gap_and_those_items_are_not_called_added
+    NetEffect.test_a_net_change_that_is_not_nothing_has_its_sign
+    TheCheck.test_a_wrong_heading_count_is_reported
+    TheCheck.test_an_added_item_taken_out_is_reported
+    TheFirstRead.test_an_added_item_with_no_usable_estimate_is_not_given_an_effect_of_nothing
+    TheFirstRead.test_an_estimate_unusable_at_start_and_usable_later_is_in_no_figure_and_the_parts_still_add_up
+    TheSecondRead.test_an_item_with_a_field_given_twice_is_in_no_figure
+    Matching.test_an_item_with_a_new_identifier_and_every_other_field_the_same_is_one_removed_and_one_added
+    TheFirstRead.test_another_spelling_of_the_owners_name_is_called_other_text_and_not_another_person
+    CapacityAndWho.test_changes_not_recorded_as_the_product_owners_are_listed_with_who_is_recorded
+    AddedAndRemoved.test_in_the_later_snapshot_only_is_added
+    CapacityAndWho.test_remaining_capacity_is_the_capacity_less_the_committed_total
+    TheSecondRead.test_the_check_reports_a_second_net_change_without_its_marks
+    TheSecondRead.test_the_check_reports_a_wrong_estimate_or_title_on_an_added_item
+    TheSecondRead.test_the_check_reports_no_change_in_any_capitals_and_without_its_marks
+    TheFirstRead.test_the_check_reports_no_change_written_lower_down
+    TheFirstRead.test_the_parts_add_up_to_the_later_total_whatever_is_wrong_with_the_file
+    NetEffect.test_the_points_that_moved_are_stated_beside_a_net_change_that_hides_them
+    CapacityAndWho.test_the_report_judges_nobody
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+    NetEffect.test_the_totals_and_the_net_change_are_stated
+    Matching.test_two_items_with_one_title_are_two_items
+
+PLANTED BUG C. An item in the start snapshot only is not reported as removed (criterion 3)
+  unittest result: FAILED (failures=20)
+  tests that failed (20):
+    TheSecondRead.test_a_heading_that_could_not_be_read_marks_the_net_effect_not_complete
+    TheSecondRead.test_a_heading_that_cuts_a_list_short_is_a_gap_and_the_item_is_in_no_figure
+    TheFirstRead.test_a_heading_that_is_not_a_snapshot_with_items_under_it_is_a_gap_and_those_items_are_not_called_added
+    NetEffect.test_a_net_change_that_is_not_nothing_has_its_sign
+    TheCheck.test_a_removed_item_taken_out_is_reported
+    TheFirstRead.test_an_estimate_unusable_at_start_and_usable_later_is_in_no_figure_and_the_parts_still_add_up
+    TheCheck.test_an_item_in_neither_snapshot_is_reported
+    TheSecondRead.test_an_item_with_a_field_given_twice_is_in_no_figure
+    Matching.test_an_item_with_a_new_identifier_and_every_other_field_the_same_is_one_removed_and_one_added
+    CapacityAndWho.test_changes_not_recorded_as_the_product_owners_are_listed_with_who_is_recorded
+    AddedAndRemoved.test_in_the_start_snapshot_only_is_removed
+    CapacityAndWho.test_remaining_capacity_is_the_capacity_less_the_committed_total
+    TheSecondRead.test_the_check_reports_a_wrong_estimate_or_title_on_an_added_item
+    TheSecondRead.test_the_check_reports_an_item_listed_with_a_star
+    TheFirstRead.test_the_check_reports_an_item_written_without_its_marks
+    TheFirstRead.test_the_parts_add_up_to_the_later_total_whatever_is_wrong_with_the_file
+    NetEffect.test_the_points_that_moved_are_stated_beside_a_net_change_that_hides_them
+    CapacityAndWho.test_the_report_judges_nobody
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+    NetEffect.test_the_totals_and_the_net_change_are_stated
+
+PLANTED BUG D. A changed estimate is not material (criterion 4)
+  unittest result: FAILED (failures=21)
+  tests that failed (21):
+    Material.test_a_changed_estimate_is_material_with_both_figures
+    TheCheck.test_a_field_left_out_of_a_material_change_is_reported
+    TheSecondRead.test_a_heading_that_cuts_a_list_short_is_a_gap_and_the_item_is_in_no_figure
+    TheFirstRead.test_a_heading_that_is_not_a_snapshot_with_items_under_it_is_a_gap_and_those_items_are_not_called_added
+    NetEffect.test_a_net_change_that_is_not_nothing_has_its_sign
+    TheCheck.test_a_noise_item_moved_to_material_is_reported
+    Text.test_a_title_worded_as_an_instruction_changes_nothing
+    TheCheck.test_a_wrong_estimate_is_reported
+    Material.test_an_entry_taken_out_of_the_scope_list_is_material
+    TheFirstRead.test_an_estimate_unusable_at_start_and_usable_later_is_in_no_figure_and_the_parts_still_add_up
+    Material.test_an_item_that_is_material_and_also_has_noise_names_the_noise_and_is_counted_once
+    TheSecondRead.test_an_item_with_a_field_given_twice_is_in_no_figure
+    CapacityAndWho.test_changes_not_recorded_as_the_product_owners_are_listed_with_who_is_recorded
+    CapacityAndWho.test_remaining_capacity_is_the_capacity_less_the_committed_total
+    TheSecondRead.test_the_check_reports_a_second_estimate_line_in_a_material_change
+    TheFirstRead.test_the_parts_add_up_to_the_later_total_whatever_is_wrong_with_the_file
+    NetEffect.test_the_points_that_moved_are_stated_beside_a_net_change_that_hides_them
+    CapacityAndWho.test_the_report_judges_nobody
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+    NetEffect.test_the_totals_and_the_net_change_are_stated
+    Noise.test_title_description_and_assignee_alone_are_noise
+
+PLANTED BUG E. A changed scope list is not material (criterion 4)
+  unittest result: FAILED (failures=7, errors=1)
+  tests that failed (8):
+    TheCheck.test_a_field_left_out_of_a_material_change_is_reported
+    TheSecondRead.test_a_list_that_is_empty_in_both_cannot_be_told
+    TheSecondRead.test_a_list_that_was_emptied_is_material_and_shows_what_went
+    TheCheck.test_a_noise_item_moved_to_material_is_reported
+    Material.test_an_entry_added_to_the_scope_list_is_material
+    Material.test_an_entry_only_taken_out_is_not_said_to_be_a_possible_rewording
+    Material.test_an_entry_taken_out_of_the_scope_list_is_material
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+
+PLANTED BUG F. Changed acceptance criteria are not material (criterion 4)
+  unittest result: FAILED (failures=13, errors=1)
+  tests that failed (14):
+    Material.test_a_criterion_given_twice_and_then_once_is_material
+    TheFirstRead.test_a_number_at_the_front_of_an_entry_that_is_not_numbering_is_kept
+    Material.test_a_number_changed_inside_a_criterion_is_material
+    Material.test_a_reworded_criterion_is_material_and_the_report_says_it_cannot_tell_which
+    Text.test_a_title_worded_as_an_instruction_changes_nothing
+    TheCheck.test_an_unchanged_item_taken_out_is_reported
+    Noise.test_capitals_punctuation_numbering_and_order_of_a_list_are_noise
+    CapacityAndWho.test_changes_not_recorded_as_the_product_owners_are_listed_with_who_is_recorded
+    TheSecondRead.test_entries_that_would_print_the_same_are_said_to_differ_beyond_what_is_printed
+    TheSecondRead.test_list_noise_shows_both_versions
+    TheSecondRead.test_the_check_reports_an_unknown_item_written_without_its_marks
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+    Noise.test_title_description_and_assignee_alone_are_noise
+    Noise.test_who_changed_an_item_is_not_itself_a_difference
+
+PLANTED BUG G. A criterion whose words changed is noise unless one was added or taken out
+  unittest result: FAILED (failures=7, errors=1)
+  tests that failed (8):
+    TheFirstRead.test_a_number_at_the_front_of_an_entry_that_is_not_numbering_is_kept
+    Material.test_a_number_changed_inside_a_criterion_is_material
+    Material.test_a_reworded_criterion_is_material_and_the_report_says_it_cannot_tell_which
+    Text.test_a_title_worded_as_an_instruction_changes_nothing
+    CapacityAndWho.test_changes_not_recorded_as_the_product_owners_are_listed_with_who_is_recorded
+    TheSecondRead.test_entries_that_would_print_the_same_are_said_to_differ_beyond_what_is_printed
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+    Noise.test_title_description_and_assignee_alone_are_noise
+
+PLANTED BUG H. Capitals in a list entry count as a change (criterion 5)
+  unittest result: FAILED (failures=8)
+  tests that failed (8):
+    CapacityAndWho.test_a_change_with_nobody_recorded_is_not_said_to_be_anyones
+    Text.test_a_title_worded_as_an_instruction_changes_nothing
+    Noise.test_capitals_punctuation_numbering_and_order_of_a_list_are_noise
+    TheSecondRead.test_list_noise_shows_both_versions
+    TheSecondRead.test_one_last_mark_and_a_tab_between_words_are_still_set_aside
+    Noise.test_setting_formatting_aside
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+    Noise.test_title_description_and_assignee_alone_are_noise
+
+PLANTED BUG I. A full stop at the end of a list entry counts as a change (criterion 5)
+  unittest result: FAILED (failures=8)
+  tests that failed (8):
+    CapacityAndWho.test_a_change_with_nobody_recorded_is_not_said_to_be_anyones
+    Text.test_a_title_worded_as_an_instruction_changes_nothing
+    Noise.test_capitals_punctuation_numbering_and_order_of_a_list_are_noise
+    TheSecondRead.test_list_noise_shows_both_versions
+    TheSecondRead.test_one_last_mark_and_a_tab_between_words_are_still_set_aside
+    Noise.test_setting_formatting_aside
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+    Noise.test_title_description_and_assignee_alone_are_noise
+
+PLANTED BUG J. A comma inside an entry is set aside, so 1,5 and 15 are the same
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Material.test_a_decimal_point_and_a_sign_are_kept_when_formatting_is_set_aside
+    TheFirstRead.test_entries_that_mean_different_things_are_not_made_the_same
+
+PLANTED BUG K. A dash becomes a space, so a range and a pair are the same
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Noise.test_setting_formatting_aside
+
+PLANTED BUG L. Every difference is material: a title, a description or an assignee counts (criterion 5)
+  unittest result: FAILED (failures=13, errors=1)
+  tests that failed (14):
+    CapacityAndWho.test_a_change_with_nobody_recorded_is_not_said_to_be_anyones
+    Noise.test_a_description_that_asks_for_more_work_is_noise_and_both_versions_are_shown
+    TheFirstRead.test_a_field_given_twice_keeps_the_item_from_being_called_unchanged
+    TheSecondRead.test_a_list_that_is_empty_in_both_cannot_be_told
+    Text.test_a_title_worded_as_an_instruction_changes_nothing
+    Noise.test_an_estimate_written_differently_and_the_same_number_is_noise
+    Matching.test_an_item_whose_title_changed_is_the_same_item
+    Noise.test_capitals_punctuation_numbering_and_order_of_a_list_are_noise
+    TheFirstRead.test_list_entries_that_are_not_indented_do_not_leave_the_item_called_unchanged
+    TheSecondRead.test_list_noise_shows_both_versions
+    Identical.test_only_noise_is_not_called_no_change
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+    Noise.test_title_description_and_assignee_alone_are_noise
+    TheSecondRead.test_what_else_differs_in_an_item_that_cannot_be_told_is_printed
+
+PLANTED BUG M. A change of assignee is not listed at all
+  unittest result: FAILED (failures=8)
+  tests that failed (8):
+    Material.test_an_item_that_is_material_and_also_has_noise_names_the_noise_and_is_counted_once
+    TheCheck.test_an_unchanged_item_taken_out_is_reported
+    TheSecondRead.test_the_check_reports_an_unknown_item_written_without_its_marks
+    Matching.test_the_program_never_compares_titles_to_find_an_item
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+    Noise.test_title_description_and_assignee_alone_are_noise
+    TheSecondRead.test_what_else_differs_in_an_item_that_cannot_be_told_is_printed
+    Noise.test_who_changed_an_item_is_not_itself_a_difference
+
+PLANTED BUG N. A blank estimate is counted as nothing
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Gaps.test_a_blank_estimate_is_a_gap_and_is_not_counted_as_nothing
+
+PLANTED BUG O. An estimate written differently, and the same number, is material
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Noise.test_an_estimate_written_differently_and_the_same_number_is_noise
+
+PLANTED BUG P. An identifier given twice in one snapshot: the last item is used
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    AddedAndRemoved.test_an_item_given_twice_in_one_snapshot_is_a_gap_and_is_not_called_added_or_removed
+    TheFirstRead.test_an_item_given_twice_in_one_snapshot_is_in_neither_total
+
+PLANTED BUG Q. An item given twice in one snapshot is reported as removed
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    AddedAndRemoved.test_an_item_given_twice_in_one_snapshot_is_a_gap_and_is_not_called_added_or_removed
+
+PLANTED BUG R. With a snapshot missing, every item is reported as removed
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Gaps.test_a_snapshot_that_is_not_there_is_a_gap_and_nothing_is_called_added_or_removed
+
+PLANTED BUG S. With a snapshot missing, totals and a net change are still printed
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    TheFirstRead.test_a_snapshot_name_typed_wrongly_gives_no_totals_and_no_net_change
+    Gaps.test_a_snapshot_that_is_not_there_is_a_gap_and_nothing_is_called_added_or_removed
+    TheFirstRead.test_the_check_passes_the_programs_own_report_when_nothing_was_compared
+
+PLANTED BUG T. The net change loses its sign (criterion 7)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    NetEffect.test_a_net_change_that_is_not_nothing_has_its_sign
+    TheSecondRead.test_the_check_passes_the_programs_own_report_of_an_item_given_twice_at_start_and_absent_later
+
+PLANTED BUG U. The points that moved leave out the re-estimates
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    NetEffect.test_the_points_that_moved_are_stated_beside_a_net_change_that_hides_them
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+
+PLANTED BUG V. "No change" is said whenever the net change is nothing (criterion 6)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    Identical.test_a_net_change_of_nothing_is_not_called_no_change
+    Identical.test_only_noise_is_not_called_no_change
+    TheFirstRead.test_the_check_passes_the_programs_own_report_when_nothing_was_compared
+    TheFirstRead.test_the_day_a_snapshot_was_taken_is_printed_as_other_peoples_text
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+
+PLANTED BUG W. "No change" is said when only noise differs
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Identical.test_only_noise_is_not_called_no_change
+
+PLANTED BUG X. An item with an unusable estimate on one side stays in the other side's total
+  unittest result: FAILED (failures=2, errors=8)
+  tests that failed (10):
+    Gaps.test_a_blank_estimate_is_a_gap_and_is_not_counted_as_nothing
+    TheSecondRead.test_a_heading_that_cuts_a_list_short_is_a_gap_and_the_item_is_in_no_figure
+    TheFirstRead.test_an_added_item_with_no_usable_estimate_is_not_given_an_effect_of_nothing
+    TheFirstRead.test_an_estimate_of_four_hundred_digits_is_a_gap_and_not_a_crash
+    Gaps.test_an_estimate_that_is_not_a_number_is_a_gap
+    TheFirstRead.test_an_estimate_unusable_at_start_and_usable_later_is_in_no_figure_and_the_parts_still_add_up
+    TheSecondRead.test_an_item_with_a_field_given_twice_is_in_no_figure
+    TheSecondRead.test_the_check_reports_a_missing_not_complete
+    TheFirstRead.test_the_parts_add_up_to_the_later_total_whatever_is_wrong_with_the_file
+    TheSecondRead.test_what_else_differs_in_an_item_that_cannot_be_told_is_printed
+
+PLANTED BUG Y. An item given twice in one snapshot stays in the other snapshot's total
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    TheFirstRead.test_a_heading_that_is_not_a_snapshot_with_items_under_it_is_a_gap_and_those_items_are_not_called_added
+    TheFirstRead.test_an_item_given_twice_in_one_snapshot_is_in_neither_total
+    TheFirstRead.test_an_item_whose_heading_has_more_than_its_identifier_is_not_called_removed_or_added
+    TheFirstRead.test_the_parts_add_up_to_the_later_total_whatever_is_wrong_with_the_file
+
+PLANTED BUG Z. A line in an item that is not a field is dropped silently
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Gaps.test_a_line_in_an_item_that_is_not_a_field_is_a_gap
+    TheFirstRead.test_list_entries_that_are_not_indented_do_not_leave_the_item_called_unchanged
+
+PLANTED BUG AA. An item with a line that was not read can still be called unchanged
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheFirstRead.test_a_field_given_twice_keeps_the_item_from_being_called_unchanged
+    TheSecondRead.test_an_item_with_a_field_given_twice_is_in_no_figure
+
+PLANTED BUG AB. A field given twice is not reported
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Gaps.test_a_field_given_twice_is_a_gap
+    TheFirstRead.test_a_field_given_twice_keeps_the_item_from_being_called_unchanged
+    TheSecondRead.test_an_item_with_a_field_given_twice_is_in_no_figure
+
+PLANTED BUG AC. A number at the front of an entry is always taken for numbering
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheSecondRead.test_a_list_of_one_entry_keeps_a_number_at_its_front
+    TheFirstRead.test_a_number_at_the_front_of_an_entry_that_is_not_numbering_is_kept
+
+PLANTED BUG AD. Items under a heading that is not a snapshot are reported as added
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_a_heading_that_is_not_a_snapshot_with_items_under_it_is_a_gap_and_those_items_are_not_called_added
+
+PLANTED BUG AE. An item whose heading has more than its identifier is reported as added
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_an_item_whose_heading_has_more_than_its_identifier_is_not_called_removed_or_added
+
+PLANTED BUG AF. The effect of an added item on uncommitted capacity has the wrong sign
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    CapacityAndWho.test_remaining_capacity_is_the_capacity_less_the_committed_total
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+
+PLANTED BUG AG. A change whose changed_by is the product owner is listed as other text
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    CapacityAndWho.test_changes_not_recorded_as_the_product_owners_are_listed_with_who_is_recorded
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+
+PLANTED BUG AH. A change with nobody recorded is not listed
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    CapacityAndWho.test_a_change_with_nobody_recorded_is_not_said_to_be_anyones
+
+PLANTED BUG AI. Any cell that says "Made up" makes the report call the file made up
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Text.test_the_report_calls_the_snapshots_made_up_only_when_their_opening_says_so
+
+PLANTED BUG AJ. An entry that was only taken out is said to be a possible rewording
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Material.test_an_entry_only_taken_out_is_not_said_to_be_a_possible_rewording
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+
+PLANTED BUG AK. A reworded criterion is not said to need a person
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Material.test_a_reworded_criterion_is_material_and_the_report_says_it_cannot_tell_which
+    TheSecondRead.test_entries_that_would_print_the_same_are_said_to_differ_beyond_what_is_printed
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+
+PLANTED BUG AL. A quote mark in a title is printed as it is
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Text.test_other_peoples_text_cannot_end_its_quotation_or_start_a_line
+
+PLANTED BUG AM. A criterion given twice counts as given once
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Material.test_a_criterion_given_twice_and_then_once_is_material
+
+PLANTED BUG AN. An entry given twice and then once is not shown as gone
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_an_entry_given_twice_and_then_once_is_shown_as_one_entry_gone
+
+PLANTED BUG AO. A list written on the field's own line is read as a list
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Gaps.test_a_list_written_on_one_line_is_a_gap_and_the_item_is_neither_material_nor_noise
+
+PLANTED BUG AP. A list with no entries is not a gap
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    TheSecondRead.test_a_list_that_was_emptied_is_material_and_shows_what_went
+    TheFirstRead.test_a_list_with_no_entries_is_a_gap
+    TheSecondRead.test_identical_snapshots_with_the_same_gap_in_both_still_report_no_change
+
+PLANTED BUG AQ. A capacity that is not a number is not reported
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    CapacityAndWho.test_a_capacity_that_is_not_a_number_is_a_gap
+
+PLANTED BUG AR. The day a snapshot was taken, given twice, is not reported
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_the_day_given_twice_is_a_gap
+
+PLANTED BUG AS. Two versions that print the same are not said to differ
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_two_versions_that_would_print_the_same_are_said_to_differ_beyond_what_is_printed
+
+PLANTED BUG AT. The program ends as if all was well when nothing was compared
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_a_snapshot_name_typed_wrongly_gives_no_totals_and_no_net_change
+
+PLANTED BUG AU. The check lets a wrong list of added, removed, material or noise through
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    TheCheck.test_a_noise_item_moved_to_material_is_reported
+    TheCheck.test_a_removed_item_taken_out_is_reported
+    TheCheck.test_an_added_item_taken_out_is_reported
+
+PLANTED BUG AV. The check lets a wrong number in a heading through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_wrong_heading_count_is_reported
+
+PLANTED BUG AW. The check lets an item written without its marks through
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheSecondRead.test_the_check_reports_an_item_listed_with_a_star
+    TheFirstRead.test_the_check_reports_an_item_written_without_its_marks
+
+PLANTED BUG AX. The check lets a field be left out of a material change
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_field_left_out_of_a_material_change_is_reported
+
+PLANTED BUG AY. The check lets a wrong estimate through
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheCheck.test_a_wrong_estimate_is_reported
+    TheSecondRead.test_the_check_reports_a_second_estimate_line_in_a_material_change
+
+PLANTED BUG AZ. The check lets a wrong or second total or net change through
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    TheCheck.test_a_wrong_net_change_is_reported
+    TheCheck.test_a_wrong_total_is_reported
+    TheFirstRead.test_the_check_reports_a_second_net_change_line
+    TheSecondRead.test_the_check_reports_a_second_net_change_without_its_marks
+
+PLANTED BUG BA. The check lets "No change" stand anywhere in a report of changes
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    TheCheck.test_no_change_written_over_a_report_of_changes_is_reported
+    TheSecondRead.test_the_check_reports_no_change_in_any_capitals_and_without_its_marks
+    TheFirstRead.test_the_check_reports_no_change_written_lower_down
+
+PLANTED BUG BB. The check lets a report that compared nothing go without saying so
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_the_check_reports_a_missing_nothing_was_compared
+
+PLANTED BUG BC. The check lets a report of another file through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_report_of_another_file_is_reported
+
+PLANTED BUG BD. The check lets an item in neither snapshot be named
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheCheck.test_an_item_in_neither_snapshot_is_reported
+    TheSecondRead.test_the_check_reports_an_unknown_item_written_without_its_marks
+
+PLANTED BUG BE. The check lets the unchanged list be wrong
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_an_unchanged_item_taken_out_is_reported
+
+PLANTED BUG BF. The check lets an item be in no list
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_an_unchanged_item_taken_out_is_reported
+
+PLANTED BUG BG. The check fails the program's own report of an item given twice
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_the_check_passes_the_programs_own_report_of_an_item_given_twice_at_start_and_absent_later
+
+PLANTED BUG BH. A run of full stops at the end of an entry is set aside, so an open list equals a closed one
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_more_entries_that_mean_different_things_are_not_made_the_same
+
+PLANTED BUG BI. Compatibility forms are folded, so a raised 2 is a 2
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_more_entries_that_mean_different_things_are_not_made_the_same
+
+PLANTED BUG BJ. A double quote mark and a single one are the same
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_more_entries_that_mean_different_things_are_not_made_the_same
+
+PLANTED BUG BK. A list of one entry loses a number at its front
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_a_list_of_one_entry_keeps_a_number_at_its_front
+
+PLANTED BUG BL. A list that was emptied cannot be told, and is not material
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_a_list_that_was_emptied_is_material_and_shows_what_went
+
+PLANTED BUG BM. An item with a field given twice stays in the figures
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheSecondRead.test_a_heading_that_cuts_a_list_short_is_a_gap_and_the_item_is_in_no_figure
+    TheSecondRead.test_an_item_with_a_field_given_twice_is_in_no_figure
+
+PLANTED BUG BN. A heading that cuts a list short is not reported
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_a_heading_that_cuts_a_list_short_is_a_gap_and_the_item_is_in_no_figure
+
+PLANTED BUG BO. A heading that could not be read does not mark the net effect
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_a_heading_that_could_not_be_read_marks_the_net_effect_not_complete
+
+PLANTED BUG BP. What else differs in an item that cannot be told is not printed
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_what_else_differs_in_an_item_that_cannot_be_told_is_printed
+
+PLANTED BUG BQ. Identical items with a gap are not called unchanged
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_identical_snapshots_with_the_same_gap_in_both_still_report_no_change
+
+PLANTED BUG BR. Entries that print the same are not said to differ
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_entries_that_would_print_the_same_are_said_to_differ_beyond_what_is_printed
+
+PLANTED BUG BS. List noise shows no versions
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Noise.test_capitals_punctuation_numbering_and_order_of_a_list_are_noise
+    TheSecondRead.test_list_noise_shows_both_versions
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_program_writes_and_passes_its_check
+
+PLANTED BUG BT. The check lets a net change stand in a report that compared nothing
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_the_check_reports_a_net_change_in_a_report_that_compared_nothing
+
+PLANTED BUG BU. The check lets a wrong estimate or title on an added or removed item through
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheSecondRead.test_the_check_reports_a_wrong_estimate_or_title_on_an_added_item
+    Matching.test_the_program_never_compares_titles_to_find_an_item
+
+PLANTED BUG BV. The check lets a missing NOT COMPLETE through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_the_check_reports_a_missing_not_complete
+
+PLANTED BUG BW. The check does not see an identifier written without its marks
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_the_check_reports_an_unknown_item_written_without_its_marks
+
+PLANTED BUG BX. A report that cannot be written ends in an error and not a message
+  unittest result: FAILED (errors=2)
+  tests that failed (2):
+    TheFirstRead.test_a_file_that_cannot_be_read_ends_with_a_message_and_not_an_error
+    TheSecondRead.test_a_report_that_cannot_be_written_ends_with_a_message
+
+After the last bug was taken out: scope.py is byte for byte what it was at the start. OK
+
+RESULT: all 76 planted bugs were caught by at least one test, and the file was restored.
