@@ -421,3 +421,4 @@ Every change this application made to your files, newest last.
 - `2026-11-25T20:36:34Z` scrum-scope-change: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
 - `2026-11-25T20:37:51Z` scrum-scope-change: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-25T20:37:51Z` Submitted scrum-scope-change for review as submission-20261125203751-86ec22.
+- `2026-11-25T20:50:56Z` Review of scrum-scope-change: approved by Claude (automated reviewer).

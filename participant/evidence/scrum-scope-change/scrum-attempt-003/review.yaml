@@ -1,0 +1,28 @@
+schema_version: 1
+review_id: review-20261125205056-1141db
+quest_id: scrum-scope-change
+quest_version: 1
+attempt_id: scrum-attempt-003
+evidence_hash: sha256:13fc86fa600ee5e2f3850d9722d445c89ce2cebfd2d33d4580c631d6c71137e5
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-25T20:50:56Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/scrum/scope/scope-change.md
+  digest: sha256:9624d2aec7822c1c1e78aa0bf7a3dc769d071ed0c33e5e9e55879d4a55d7190e
+- path: participant/context/scrum/scope/snapshots.md
+  digest: sha256:d2aec5b7cf2b83d6cd0610e3e4f7bd88413212572bc7654e5fad6ad254c9a542
+verification_statement: Automated review. I checked the snapshots, the report, the
+  scope run log, the test log, the planted-bug log, the independent-read log and PROOF.md
+  against all 7 criteria. I recomputed the numbers by hand from snapshots.md. Start
+  is 3+3+2+8+1+3+2+1+1+5+1 = 30. Later is 3+3+4+1+5+2+1+1+1+5+4 = 30. Added points
+  are 9 (PIER-312 and PIER-313), removed points are 7 (PIER-303 and PIER-310), and
+  the re-estimates are -4 and +2. These match section 1 of the report and Part 3 of
+  the run log. All three readers were AI and the participant says so plainly. The
+  log shown is under scrum-attempt-003. PROOF.md says copies were placed at the attempt-001
+  path the quest names, and the pre-check reports the required files present. The
+  snapshots contain a title worded as an instruction. It is test data aimed at the
+  program, not at me, so no injection is suspected. Each of the 7 acceptance criteria
+  was matched to text quoted word for word from the evidence.

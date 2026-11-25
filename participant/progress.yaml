@@ -628,9 +628,10 @@ attempts:
   quest_id: scrum-scope-change
   quest_version: 1
   content_hash: sha256:d6be56dfa18fa0ac48f4f63e1fa0abfd6d05bf6df8fec839e3a2e48da809ae6c
-  state: submitted
+  state: verified
   started_at: '2026-11-25T19:55:46Z'
-  updated_at: '2026-11-25T20:37:51Z'
+  updated_at: '2026-11-25T20:50:56Z'
   evidence_path: participant/evidence/scrum-scope-change/scrum-attempt-003
   submission_id: submission-20261125203751-86ec22
-updated_at: '2026-11-25T20:37:51Z'
+  review_id: review-20261125205056-1141db
+updated_at: '2026-11-25T20:50:56Z'
