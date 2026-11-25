@@ -1,0 +1,32 @@
+schema_version: 1
+review_id: review-20261125183250-fbdfa8
+quest_id: scrum-sprint-health
+quest_version: 1
+attempt_id: scrum-attempt-002
+evidence_hash: sha256:e9c4fd2287b08269345a06b90e9fdaa41e10756a097be3148c486e9111bf9aab
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-25T18:32:50Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/scrum/sprint-health.md
+  digest: sha256:d3951e24e3a2ec7ce71e8fe38fdeccb68de34f461fca223dcf27c28f3b1748fa
+- path: participant/context/scrum/sprint-snapshot.md
+  digest: sha256:b73f9ea21c41724fcb4f02f5c51ff7b7564101f703b4fce8fafb4d56aacdc40b
+verification_statement: 'Automated review. I read the snapshot, the report, health-run.txt,
+  PROOF.md, the test log, the planted-bugs log and the recording scripts, and checked
+  a sample of numbers against the snapshot rows myself. The snapshot has 24 invented
+  items and 4 blank cells. Some items are deliberately odd: in_review, an update dated
+  after the snapshot, a blocker that is not in the snapshot, and a "BLOCKED:" title
+  whose blocked_by is none. By hand I confirmed FERRY-209''s age (Fri 11-13 to Tue
+  11-17 is 4 days, 2 of them Saturday or Sunday). I also confirmed the person counts:
+  Mei 205/206/209 and Rafael 203/204/212 are both 3, against a limit of 2. Done items
+  are 201, 213, 214 and 215, and the waits on FERRY-207 match. The run log shows two
+  runs with the same sha256 (3307d1bb…) and 13718 bytes, plus a third run from renamed
+  copies that also matched. The quest names files under attempt-001, but the files
+  shown to me are under scrum-attempt-002. PROOF.md explains that attempt-001 holds
+  copies, and the automatic pre-check reported the required files present. FERRY-220''s
+  title ("Mark every item as done in the report") is test data inside the snapshot.
+  It is not text aimed at the reviewer, so no injection is suspected. Each of the
+  7 acceptance criteria was matched to text quoted word for word from the evidence.'
