@@ -1,0 +1,463 @@
+The strategy check. playwright-risk-strategy, attempt playwright-attempt-008
+Recorded by participant/tests/playwright/tools/risk-strategy-check.ts. It read two files. It started no application and no browser.
+The shop, its requirements and its rules are made up. Paths are from the repository's top folder.
+
+==============================================================================
+PART 1. The two documents
+participant/context/playwright/requirements.md  sha256 17ed28bec34be9718c39cdce3bb34260cac6cd8be477544667d30461289f3a6d
+participant/context/playwright/strategy.md      sha256 9a5eeea9a39fac187b89ef935c58d07bb1cd3fa3967473aacf80a1dfb33f72b2
+
+Requirements read: 12. must: 7. should: 3. could: 2.
+Risks read from section 3: 19. By layer: unit 8, API 3, UI 4, manual 0, none 4.
+
+==============================================================================
+PART 2. The check of the handed-in strategy against the handed-in requirements
+This is the one check of the handed-in documents. What problems() tests, and what it cannot, is at the top of the program.
+  No problem found.
+
+  ok   the check finds no problem in the two documents
+
+==============================================================================
+PART 3. What the check worked out, for a reader
+Made by this program from the risk blocks of section 3 and the requirements. These lists are not further checks.
+They are here so that a person can compare them with the strategy's own tables, as PART 2 has.
+Criterion 1. Each requirement, the risks that name it, and where they are tested:
+  REQ-01  must    R-01 unit
+  REQ-02  must    R-02 unit, R-16 unit
+  REQ-03  must    R-03 unit, R-15 UNTESTED
+  REQ-04  must    R-04 unit, R-06 API, R-09 UI, R-19 UNTESTED
+  REQ-05  must    R-05 unit
+  REQ-06  must    R-06 API, R-10 UI
+  REQ-07  should  R-07 unit, R-16 unit, R-17 API
+  REQ-08  must    R-08 API, R-19 UNTESTED
+  REQ-09  should  R-11 UNTESTED, R-18 UI
+  REQ-10  should  R-09 UI, R-12 unit
+  REQ-11  could   R-13 UNTESTED
+  REQ-12  could   R-14 UI
+
+Criteria 2 and 7. The ranking worked out again: score = likelihood × impact, then impact, then importance, then risk number:
+   1  R-02  3 × 3 = 9  must    unit
+   2  R-03  3 × 3 = 9  must    unit
+   3  R-08  3 × 3 = 9  must    API
+   4  R-16  3 × 3 = 9  must    unit
+   5  R-19  3 × 3 = 9  must    none
+   6  R-07  3 × 3 = 9  should  unit
+   7  R-17  3 × 3 = 9  should  API
+   8  R-01  2 × 3 = 6  must    unit
+   9  R-04  2 × 3 = 6  must    unit
+  10  R-06  2 × 3 = 6  must    API
+  11  R-09  2 × 3 = 6  must    UI
+  12  R-10  2 × 3 = 6  must    UI
+  13  R-05  3 × 2 = 6  must    unit
+  14  R-11  2 × 2 = 4  should  none
+  15  R-12  2 × 2 = 4  should  unit
+  16  R-18  2 × 2 = 4  should  UI
+  17  R-14  2 × 2 = 4  could   UI
+  18  R-15  1 × 3 = 3  must    none
+  19  R-13  2 × 1 = 2  could   none
+
+Criteria 3 and 4. For each risk: lines giving a layer, lines that are not a field, and the words in its reason and in its cheapest test:
+  R-01  layer lines: 1 (unit)  other lines: 0  reason: 41 words  cheapest test: 32 words
+  R-02  layer lines: 1 (unit)  other lines: 0  reason: 36 words  cheapest test: 27 words
+  R-03  layer lines: 1 (unit)  other lines: 0  reason: 62 words  cheapest test: 48 words
+  R-04  layer lines: 1 (unit)  other lines: 0  reason: 44 words  cheapest test: 27 words
+  R-05  layer lines: 1 (unit)  other lines: 0  reason: 48 words  cheapest test: 43 words
+  R-06  layer lines: 1 (API)  other lines: 0  reason: 68 words  cheapest test: 28 words
+  R-07  layer lines: 1 (unit)  other lines: 0  reason: 52 words  cheapest test: 36 words
+  R-08  layer lines: 1 (API)  other lines: 0  reason: 50 words  cheapest test: 41 words
+  R-09  layer lines: 1 (UI)  other lines: 0  reason: 83 words  cheapest test: 49 words
+  R-10  layer lines: 1 (UI)  other lines: 0  reason: 48 words  cheapest test: 29 words
+  R-11  layer lines: 1 (none)  other lines: 0  reason: 84 words  cheapest test: 42 words
+  R-12  layer lines: 1 (unit)  other lines: 0  reason: 42 words  cheapest test: 23 words
+  R-13  layer lines: 1 (none)  other lines: 0  reason: 30 words  cheapest test: 19 words
+  R-14  layer lines: 1 (UI)  other lines: 0  reason: 67 words  cheapest test: 26 words
+  R-15  layer lines: 1 (none)  other lines: 0  reason: 41 words  cheapest test: 31 words
+  R-16  layer lines: 1 (unit)  other lines: 0  reason: 46 words  cheapest test: 45 words
+  R-17  layer lines: 1 (API)  other lines: 0  reason: 82 words  cheapest test: 41 words
+  R-18  layer lines: 1 (UI)  other lines: 0  reason: 50 words  cheapest test: 28 words
+  R-19  layer lines: 1 (none)  other lines: 0  reason: 49 words  cheapest test: 34 words
+
+Criterion 5. Need a browser (4): R-09, R-10, R-14, R-18.
+             Do not (15): R-01, R-02, R-03, R-04, R-05, R-06, R-07, R-08, R-11, R-12, R-13, R-15, R-16, R-17, R-19.
+
+Criterion 6. Risks whose layer is none, and the row section 5 has for each:
+  R-11  score 4  accepted by: the participant, as product owner of the demo shop  on: 2026-11-25  reason: 33 words
+  R-13  score 2  accepted by: the participant, as product owner of the demo shop  on: 2026-11-25  reason: 27 words
+  R-15  score 3  accepted by: the participant, as product owner of the demo shop  on: 2026-11-25  reason: 25 words
+  R-19  score 9  accepted by: the participant, as product owner of the demo shop  on: 2026-11-25  reason: 23 words
+
+==============================================================================
+PART 4. That this check can fail
+Each of these is the two handed-in documents with one thing changed, in memory. Nothing is written.
+The problem each trial is for is printed first, then up to two others the same change caused.
+
+-- The requirements
+Spoiled: a thirteenth requirement added to the table, which no risk names
+    PROBLEM: REQ-13 is named by no risk, so the strategy neither covers it nor lists it as untested.
+    PROBLEM: Section 6 has 0 rows for REQ-13, and one is needed.
+  ok   reported: "REQ-13 is named by no risk"
+Spoiled: a thirteenth requirement added after a blank line under the table, where it is not read as a row
+    PROBLEM: The requirements file mentions REQ-13, which is not a row of its table under "The requirements".
+    PROBLEM: The requirements file has 2 tables under "The requirements", and one is needed.
+  ok   reported: "mentions REQ-13, which is not a row of its table"
+Spoiled: a thirteenth requirement written as a sentence, outside any table
+    PROBLEM: The requirements file mentions REQ-13, which is not a row of its table under "The requirements".
+  ok   reported: "mentions REQ-13, which is not a row of its table"
+Spoiled: five requirements taken out
+    PROBLEM: The requirements file has 7 requirements in its tables, and the quest asks for at least eight.
+    PROBLEM: By the scales and the ranking rule, rank 1 is R-08 (3 × 3 = 9, must). Section 2 has R-02 there.
+    PROBLEM: By the scales and the ranking rule, rank 10 is R-09 (2 × 3 = 6, should). Section 2 has R-06 there.
+  ok   reported: "and the quest asks for at least eight"
+Spoiled: a requirement given the importance "vital"
+    PROBLEM: REQ-11 has the importance "vital", which is not one of must, should, could.
+    PROBLEM: Section 6 gives REQ-11 an importance that is not the one in the requirements.
+  ok   reported: "REQ-11 has the importance "vital""
+Spoiled: a requirement given twice
+    PROBLEM: REQ-12 is in the requirements more than once.
+  ok   reported: "REQ-12 is in the requirements more than once"
+Spoiled: a requirement moved from should to could, with the strategy left as it was
+    PROBLEM: Section 6 gives REQ-09 an importance that is not the one in the requirements.
+    PROBLEM: By the scales and the ranking rule, rank 14 is R-12 (2 × 2 = 4, should). Section 2 has R-11 there.
+    PROBLEM: By the scales and the ranking rule, rank 15 is R-11 (2 × 2 = 4, could). Section 2 has R-12 there.
+  ok   reported: "Section 6 gives REQ-09 an importance that is not the one in the requirements"
+
+-- Criterion 1: every requirement
+Spoiled: the only risks that name REQ-12 made to name REQ-11
+    PROBLEM: REQ-12 is named by no risk, so the strategy neither covers it nor lists it as untested.
+    PROBLEM: Section 2 gives R-14 requirements that are not its block's.
+    PROBLEM: Section 6 does not give for REQ-11 the layers its risks are tested at.
+  ok   reported: "REQ-12 is named by no risk"
+Spoiled: a risk made to name a requirement that does not exist
+    PROBLEM: The strategy mentions REQ-99, which is not in the requirements.
+    PROBLEM: By the scales and the ranking rule, rank 10 is R-09 (2 × 3 = 6, must). Section 2 has R-06 there.
+    PROBLEM: By the scales and the ranking rule, rank 11 is R-10 (2 × 3 = 6, must). Section 2 has R-09 there.
+  ok   reported: "mentions REQ-99, which is not in the requirements"
+Spoiled: a requirement named only in a remark after another
+    PROBLEM: R-05 does not give its requirement as identifiers with commas between them, and nothing else.
+    PROBLEM: Section 2 gives R-05 requirements that are not its block's.
+    PROBLEM: Section 6 does not give for REQ-12 the layers its risks are tested at.
+  ok   reported: "does not give its requirement as identifiers with commas between them"
+Spoiled: section 6 made to say REQ-11 is tested at the UI layer
+    PROBLEM: Section 6 does not give for REQ-11 the layers its risks are tested at.
+  ok   reported: "Section 6 does not give for REQ-11 the layers"
+Spoiled: a risk taken out of section 6's row for REQ-04
+    PROBLEM: Section 6 does not give for REQ-04 the risks whose blocks name it.
+  ok   reported: "Section 6 does not give for REQ-04 the risks whose blocks name it"
+Spoiled: an untested risk not shown as untested in section 6
+    PROBLEM: Section 6 does not give for REQ-03 the risks that are left untested.
+  ok   reported: "Section 6 does not give for REQ-03 the risks that are left untested"
+Spoiled: a row of section 6 taken out
+    PROBLEM: Section 6 has 0 rows for REQ-10, and one is needed.
+  ok   reported: "Section 6 has 0 rows for REQ-10"
+
+-- Criterion 2: likelihood and impact on the stated scales
+Spoiled: a likelihood of 5
+    PROBLEM: R-01 gives a likelihood of 5, which is not a level of the scale.
+    PROBLEM: By the scales and the ranking rule, rank 1 is R-01 (5 × 3 = 15, must). Section 2 has R-02 there.
+    PROBLEM: By the scales and the ranking rule, rank 2 is R-02 (3 × 3 = 9, must). Section 2 has R-03 there.
+  ok   reported: "gives a likelihood of 5, which is not a level of the scale"
+Spoiled: a likelihood of 3 resting on a clause of level 2
+    PROBLEM: R-03 gives a likelihood of 3 and rests it on the clause L2a, which is of level 2.
+  ok   reported: "rests it on the clause L2a, which is of level 2"
+Spoiled: an impact resting on a clause that is not in the scale
+    PROBLEM: R-05 rests its impact on the clause I2z, which is not in the scale of impact.
+  ok   reported: "which is not in the scale of impact"
+Spoiled: an impact with nothing after its clause
+    PROBLEM: R-13 follows the clause of its impact with 0 words, and at least 4 are needed.
+  ok   reported: "follows the clause of its impact with 0 words"
+Spoiled: an impact given as a word, with no clause
+    PROBLEM: R-12 does not give its impact as a level and a clause, such as "2 (I2a)."
+    PROBLEM: By the scales and the ranking rule, rank 15 is R-18 (2 × 2 = 4, should). Section 2 has R-12 there.
+    PROBLEM: By the scales and the ranking rule, rank 16 is R-14 (2 × 2 = 4, could). Section 2 has R-18 there.
+  ok   reported: "does not give its impact as a level and a clause"
+Spoiled: a score that is not the two multiplied
+    PROBLEM: R-03 gives a score of 8, which is not 3 × 3.
+  ok   reported: "gives a score of 8, which is not 3 × 3"
+Spoiled: a clause of the scale moved to another level
+    PROBLEM: The scale of likelihood has the clause "L3b" at level "2", and the two do not agree.
+  ok   reported: "and the two do not agree"
+Spoiled: a clause of the scale given twice
+    PROBLEM: The scale of impact gives one clause twice.
+    PROBLEM: R-05 rests its impact on the clause I2b, which is not in the scale of impact.
+  ok   reported: "The scale of impact gives one clause twice"
+
+-- Criterion 3: one layer for each risk
+Spoiled: a second layer line, written the same way
+    PROBLEM: R-06 has 2 lines giving a layer, and one is needed.
+  ok   reported: "has 2 lines giving a layer"
+Spoiled: a second layer line, written with a star
+    PROBLEM: R-06 has a line that is not one of its fields, written "- Name: value" on one line: "* Layer: UI".
+  ok   reported: "has a line that is not one of its fields"
+Spoiled: a second layer line, written "- Layer (fallback): UI"
+    PROBLEM: R-06 has a line that is not one of its fields, written "- Name: value" on one line: "- Layer (fallback): UI".
+  ok   reported: "has a line that is not one of its fields"
+Spoiled: the layer line taken out
+    PROBLEM: R-06 has 0 lines giving a layer, and one is needed.
+    PROBLEM: Section 2 gives R-06 the layer API, and its block says .
+    PROBLEM: Section 4 does not say: "Of the 15 risks that are to be tested, 10 are to be tested without a browser."
+  ok   reported: "has 0 lines giving a layer"
+Spoiled: a layer that is not one of the five
+    PROBLEM: R-10 has the layer "end-to-end", which is not one of unit, API, UI, manual, none.
+    PROBLEM: Section 2 gives R-10 the layer UI, and its block says end-to-end.
+    PROBLEM: Section 6 does not give for REQ-06 the layers its risks are tested at.
+  ok   reported: "has the layer "end-to-end""
+Spoiled: a risk written as a paragraph above the first heading of section 3, with no block of its own
+    PROBLEM: The strategy mentions R-20, which is not a risk with its own heading in section 3.
+    PROBLEM: Section 3 has text before its first risk, where nothing belongs to any risk.
+  ok   reported: "mentions R-20, which is not a risk with its own heading in section 3"
+Spoiled: a risk put under a new heading after section 3
+    PROBLEM: The strategy mentions R-20, which is not a risk with its own heading in section 3.
+  ok   reported: "mentions R-20, which is not a risk with its own heading in section 3"
+Spoiled: a risk added to section 3 with a heading and no fields
+    PROBLEM: R-20 has 0 lines giving a layer, and one is needed.
+    PROBLEM: R-20 describes its cheapest test that would fail in 0 words, and at least 8 are needed.
+    PROBLEM: R-20 does not give its impact as a level and a clause, such as "2 (I2a)."
+  ok   reported: "R-20 has 0 lines giving a layer"
+Spoiled: a risk given twice
+    PROBLEM: R-13 is in section 3 more than once.
+    PROBLEM: R-13 gives the same reason for its layer, letter for letter, as R-13.
+    PROBLEM: Section 2 does not name each risk of section 3 once.
+  ok   reported: "R-13 is in section 3 more than once"
+
+-- Criterion 4: a reason, not only a label
+Spoiled: a reason that is only the layer's name
+    PROBLEM: R-12 gives a reason for its layer of 1 word, and at least 15 are needed: a label is not a reason.
+  ok   reported: "gives a reason for its layer of 1 word"
+Spoiled: one risk given another's reason, letter for letter
+    PROBLEM: R-02 gives the same reason for its layer, letter for letter, as R-01.
+  ok   reported: "gives the same reason for its layer, letter for letter, as"
+Spoiled: a reason broken over two lines
+    PROBLEM: R-01 has a line that is not one of its fields, written "- Name: value" on one line: "can make that sum right or wrong, so a browser wou".
+  ok   reported: "has a line that is not one of its fields"
+Spoiled: a cheapest test of three words
+    PROBLEM: R-08 describes its cheapest test that would fail in 3 words, and at least 8 are needed.
+  ok   reported: "describes its cheapest test that would fail in 3 words"
+Spoiled: the line saying what must exist first taken out
+    PROBLEM: R-19 has 0 lines giving "Needs first", and one is needed.
+    PROBLEM: R-19 does not say what must exist before its test can be written.
+  ok   reported: "has 0 lines giving "Needs first""
+
+-- Criterion 5: browser and no browser
+Spoiled: a UI risk made to say it needs no browser
+    PROBLEM: R-10 says no to needing a browser, and its layer, UI, is one that needs one.
+    PROBLEM: Section 4 does not give, for "Do not need a browser", the number of risks whose blocks say no: 16.
+    PROBLEM: Section 4 does not give, for "Need a browser", the number of risks whose blocks say yes: 3.
+  ok   reported: "says no to needing a browser, and its layer, UI, is one that needs one"
+Spoiled: a risk made to say "sometimes"
+    PROBLEM: R-10 does not say yes or no to whether it needs a browser.
+    PROBLEM: Section 4 does not give, for "Need a browser", the number of risks whose blocks say yes: 3.
+    PROBLEM: Section 4 does not list under "Need a browser" exactly the risks whose blocks say yes.
+  ok   reported: "does not say yes or no to whether it needs a browser"
+Spoiled: the table of layers made to say UI needs no browser
+    PROBLEM: The table of layers says "no" to whether UI needs a browser, and it is yes.
+  ok   reported: "The table of layers says "no" to whether UI needs a browser"
+Spoiled: a layer taken out of the table of layers
+    PROBLEM: The table of layers in section 1 does not have one row each for unit, API, UI, manual, none.
+  ok   reported: "The table of layers in section 1 does not have one row each"
+Spoiled: a risk taken out of the list of those that need a browser, with the number left right for the blocks
+    PROBLEM: Section 4 does not list under "Need a browser" exactly the risks whose blocks say yes.
+  ok   reported: "Section 4 does not list under "Need a browser" exactly"
+Spoiled: the number changed in that list, with the list left right
+    PROBLEM: Section 4 does not give, for "Need a browser", the number of risks whose blocks say yes: 4.
+  ok   reported: "Section 4 does not give, for "Need a browser", the number"
+Spoiled: a risk taken out of the list of those that need no browser
+    PROBLEM: Section 4 does not list under "Do not need a browser" exactly the risks whose blocks say no.
+  ok   reported: "Section 4 does not list under "Do not need a browser" exactly"
+Spoiled: the count of risks tested without a browser changed
+    PROBLEM: Section 4 does not say: "Of the 15 risks that are to be tested, 11 are to be tested without a browser."
+  ok   reported: "Section 4 does not say: "Of the 15 risks that are to be tested, 11"
+
+-- Criterion 6: what is left untested
+Spoiled: an untested risk's row taken out of section 5
+    PROBLEM: R-15 has the layer none and does not have one row in section 5.
+  ok   reported: "R-15 has the layer none and does not have one row in section 5"
+Spoiled: a tested risk made untested in its block only
+    PROBLEM: R-12 has the layer none and does not have one row in section 5.
+    PROBLEM: Section 2 gives R-12 the layer unit, and its block says none.
+    PROBLEM: Section 4 does not say: "Of the 14 risks that are to be tested, 10 are to be tested without a browser."
+  ok   reported: "R-12 has the layer none and does not have one row in section 5"
+Spoiled: a tested risk added to section 5
+    PROBLEM: R-12 is in section 5 as untested, and its layer is unit.
+  ok   reported: "R-12 is in section 5 as untested, and its layer is unit"
+Spoiled: a row in section 5 for a risk that is not in section 3
+    PROBLEM: Section 5 has a row for "R-99", which is not a risk of section 3 with levels that can be read.
+    PROBLEM: The strategy mentions R-99, which is not a risk with its own heading in section 3.
+  ok   reported: "Section 5 has a row for "R-99""
+Spoiled: the person who accepted an untested risk taken out
+    PROBLEM: Section 5 does not give, as the one who accepted R-13, the person it says can accept a risk: it says "".
+  ok   reported: "does not give, as the one who accepted R-13, the person it says can accept a risk: it says """
+Spoiled: "TBC" written where that person belongs
+    PROBLEM: Section 5 does not give, as the one who accepted R-15, the person it says can accept a risk: it says "TBC".
+  ok   reported: "the one who accepted R-15, the person it says can accept a risk: it says "TBC""
+Spoiled: "someone" written where that person belongs
+    PROBLEM: Section 5 does not give, as the one who accepted R-15, the person it says can accept a risk: it says "someone".
+  ok   reported: "the one who accepted R-15, the person it says can accept a risk: it says "someone""
+Spoiled: the line saying who can accept a risk taken out
+    PROBLEM: Section 5 does not say who can accept a risk in the words the requirements file uses.
+  ok   reported: "Section 5 does not say who can accept a risk in the words the requirements file uses"
+Spoiled: an acceptance dated the 31st of November
+    PROBLEM: Section 5 gives no calendar date on which R-13 was accepted: it says "2026-11-31".
+  ok   reported: "gives no calendar date on which R-13 was accepted"
+Spoiled: an acceptance with no date
+    PROBLEM: Section 5 gives no calendar date on which R-15 was accepted: it says "".
+  ok   reported: "gives no calendar date on which R-15 was accepted: it says """
+Spoiled: the reason an untested risk is not tested cut to two words
+    PROBLEM: Section 5 gives 2 words for why R-13 is not tested, and at least 8 are needed.
+  ok   reported: "words for why R-13 is not tested"
+Spoiled: an untested risk's score changed in section 5
+    PROBLEM: Section 5 gives R-15 a score of 1, and its block gives 3.
+  ok   reported: "Section 5 gives R-15 a score of 1, and its block gives 3"
+Spoiled: an untested risk's requirement changed in section 5
+    PROBLEM: Section 5 gives R-15 requirements that are not its block's.
+  ok   reported: "Section 5 gives R-15 requirements that are not its block's"
+
+-- Criterion 7: the ranking can be rebuilt
+Spoiled: two rows of different scores changed places
+    PROBLEM: By the scales and the ranking rule, rank 7 is R-17 (3 × 3 = 9, should). Section 2 has R-01 there.
+    PROBLEM: By the scales and the ranking rule, rank 8 is R-01 (2 × 3 = 6, must). Section 2 has R-17 there.
+  ok   reported: "By the scales and the ranking rule, rank 7 is R-17 (3 × 3 = 9"
+Spoiled: two rows of equal score and different impact changed places
+    PROBLEM: By the scales and the ranking rule, rank 12 is R-10 (2 × 3 = 6, must). Section 2 has R-05 there.
+    PROBLEM: By the scales and the ranking rule, rank 13 is R-05 (3 × 2 = 6, must). Section 2 has R-10 there.
+  ok   reported: "By the scales and the ranking rule, rank 12 is R-10 (2 × 3 = 6"
+Spoiled: two rows equal in score and impact, and different in importance, changed places
+    PROBLEM: By the scales and the ranking rule, rank 5 is R-19 (3 × 3 = 9, must). Section 2 has R-07 there.
+    PROBLEM: By the scales and the ranking rule, rank 6 is R-07 (3 × 3 = 9, should). Section 2 has R-19 there.
+  ok   reported: "By the scales and the ranking rule, rank 5 is R-19 (3 × 3 = 9, must)"
+Spoiled: two rows equal in all but risk number changed places
+    PROBLEM: By the scales and the ranking rule, rank 1 is R-02 (3 × 3 = 9, must). Section 2 has R-03 there.
+    PROBLEM: By the scales and the ranking rule, rank 2 is R-03 (3 × 3 = 9, must). Section 2 has R-02 there.
+  ok   reported: "By the scales and the ranking rule, rank 1 is R-02 (3 × 3 = 9, must)"
+Spoiled: a likelihood and an impact raised in a risk's block, with clauses and score to match, and the ranked table left as it was
+    PROBLEM: By the scales and the ranking rule, rank 7 is R-12 (3 × 3 = 9, should). Section 2 has R-17 there.
+    PROBLEM: By the scales and the ranking rule, rank 10 is R-04 (2 × 3 = 6, must). Section 2 has R-06 there.
+    PROBLEM: By the scales and the ranking rule, rank 11 is R-06 (2 × 3 = 6, must). Section 2 has R-09 there.
+  ok   reported: "By the scales and the ranking rule, rank 7 is R-12 (3 × 3 = 9, should)"
+Spoiled: a likelihood changed in the ranked table only
+    PROBLEM: Section 2 gives R-06 a likelihood, an impact or a score that is not its block's.
+  ok   reported: "Section 2 gives R-06 a likelihood, an impact or a score that is not its block's"
+Spoiled: a layer changed in the ranked table only
+    PROBLEM: Section 2 gives R-06 the layer UI, and its block says API.
+  ok   reported: "Section 2 gives R-06 the layer UI, and its block says API"
+Spoiled: a requirement changed in the ranked table only
+    PROBLEM: Section 2 gives R-06 requirements that are not its block's.
+  ok   reported: "Section 2 gives R-06 requirements that are not its block's"
+Spoiled: a rank number changed in the ranked table
+    PROBLEM: Row 19 of section 2 is numbered "20".
+  ok   reported: "Row 19 of section 2 is numbered "20""
+Spoiled: the last row taken out of the ranked table
+    PROBLEM: Section 2 has 18 rows, and section 3 has 19 risks.
+    PROBLEM: Section 2 does not name each risk of section 3 once.
+  ok   reported: "Section 2 has 18 rows, and section 3 has 19 risks"
+Spoiled: one risk put in the ranked table twice, in place of another
+    PROBLEM: Section 2 does not name each risk of section 3 once.
+    PROBLEM: By the scales and the ranking rule, rank 19 is R-13 (2 × 1 = 2, could). Section 2 has R-12 there.
+  ok   reported: "Section 2 does not name each risk of section 3 once"
+Spoiled: the stated rule for equal scores changed to "by likelihood"
+    PROBLEM: Section 1 does not state the order of equal scores in the words this check works by: impact, then importance, then risk number.
+  ok   reported: "does not state the order of equal scores in the words this check works by"
+Spoiled: the statement of the score taken out
+    PROBLEM: Section 1 does not state the score as likelihood × impact, in the words this check works by.
+  ok   reported: "does not state the score as likelihood × impact"
+Spoiled: the rule for two clauses of different levels taken out
+    PROBLEM: Section 1 does not say which level is taken when clauses of two levels apply.
+  ok   reported: "does not say which level is taken when clauses of two levels apply"
+
+-- Forms the first version of this check did not see
+Spoiled: a requirement added in a second table, with an identifier written REQ-13a
+    PROBLEM: The requirements file mentions REQ-13a, which is not a row of its table under "The requirements".
+  ok   reported: "mentions REQ-13a, which is not a row of its table"
+Spoiled: a requirement written "Req 13" in a sentence
+    PROBLEM: The requirements file mentions Req 13, which is not a row of its table under "The requirements".
+  ok   reported: "mentions Req 13, which is not a row of its table"
+Spoiled: the line saying who can accept a risk taken out of the requirements
+    PROBLEM: The requirements file does not say who can accept a risk, in at least four words.
+    PROBLEM: Section 5 does not give, as the one who accepted R-11, the person it says can accept a risk: it says "the participant, as product owner of the demo shop".
+    PROBLEM: Section 5 does not give, as the one who accepted R-13, the person it says can accept a risk: it says "the participant, as product owner of the demo shop".
+  ok   reported: "The requirements file does not say who can accept a risk"
+Spoiled: the acceptor changed to "to be decided" in section 5's line and in all its rows, and not in the requirements
+    PROBLEM: Section 5 does not say who can accept a risk in the words the requirements file uses.
+    PROBLEM: Section 5 does not give, as the one who accepted R-11, the person it says can accept a risk: it says "to be decided".
+    PROBLEM: Section 5 does not give, as the one who accepted R-13, the person it says can accept a risk: it says "to be decided".
+  ok   reported: "Section 5 does not say who can accept a risk in the words the requirements file uses"
+Spoiled: a requirement of two words
+    PROBLEM: REQ-11 has a requirement of 2 words.
+  ok   reported: "REQ-11 has a requirement of 2 words"
+Spoiled: a row of the requirements with no identifier
+    PROBLEM: A row of the requirements has "speed" where an identifier belongs.
+    PROBLEM: Section 6 has 0 rows for speed, and one is needed.
+    PROBLEM: Section 6 has a row for "REQ-11", which is not in the requirements.
+  ok   reported: "where an identifier belongs"
+Spoiled: every requirement made a must
+    PROBLEM: The requirements all have the same importance.
+    PROBLEM: By the scales and the ranking rule, rank 16 is R-14 (2 × 2 = 4, must). Section 2 has R-18 there.
+    PROBLEM: By the scales and the ranking rule, rank 17 is R-18 (2 × 2 = 4, must). Section 2 has R-14 there.
+  ok   reported: "The requirements all have the same importance"
+Spoiled: a risk written "Risk 20" in a paragraph, with no block
+    PROBLEM: The strategy mentions Risk 20, which is not a risk with its own heading in section 3.
+    PROBLEM: R-19 has a line that is not one of its fields, written "- Name: value" on one line: "**Risk 20.** Card numbers are written to the serve".
+  ok   reported: "mentions Risk 20, which is not a risk with its own heading"
+Spoiled: a risk written "R20" in section 6's untested column
+    PROBLEM: The strategy mentions R20, which is not a risk with its own heading in section 3.
+    PROBLEM: Section 6 has something other than risk identifiers and commas in a cell for REQ-01.
+  ok   reported: "mentions R20, which is not a risk with its own heading"
+Spoiled: words added beside the identifiers in section 6
+    PROBLEM: Section 6 has something other than risk identifiers and commas in a cell for REQ-01.
+  ok   reported: "Section 6 has something other than risk identifiers and commas in a cell for REQ-01"
+Spoiled: field lines written before the first risk of section 3
+    PROBLEM: Section 3 has text before its first risk, where nothing belongs to any risk.
+  ok   reported: "Section 3 has text before its first risk"
+Spoiled: a well-formed line in a block that is not one of the nine fields
+    PROBLEM: R-06 has a line that is not one of its fields, written "- Name: value" on one line: "- Fallback layer: UI".
+  ok   reported: "has a line that is not one of its fields"
+Spoiled: a second table in section 2 that renders as a heading row only, putting another risk first
+    PROBLEM: Section 2 has 2 tables, and one is needed.
+  ok   reported: "Section 2 has 2 tables, and one is needed"
+Spoiled: an untested risk's row moved into a second table in section 5
+    PROBLEM: Section 5 has 2 tables, and one is needed.
+  ok   reported: "Section 5 has 2 tables, and one is needed"
+Spoiled: an eighth cell added to a row of section 5
+    PROBLEM: A row of section 5, for "R-13", has 8 cells, and seven are needed.
+  ok   reported: "has 8 cells, and seven are needed"
+Spoiled: what is done instead left empty
+    PROBLEM: Section 5 does not say what is done instead of testing R-15.
+  ok   reported: "Section 5 does not say what is done instead of testing R-15"
+Spoiled: a fifth row added to section 7
+    PROBLEM: Section 7 does not have one row each for unit, API, UI and manual, and no other.
+  ok   reported: "Section 7 does not have one row each for unit, API, UI and manual"
+Spoiled: a full stop left as all that says what must exist first
+    PROBLEM: R-15 does not say what must exist before its test can be written.
+  ok   reported: "does not say what must exist before its test can be written"
+Spoiled: a risk with a title of two words
+    PROBLEM: R-16 has a title of 2 words.
+  ok   reported: "R-16 has a title of 2 words"
+Spoiled: a risk's heading with no full stop after its identifier
+    PROBLEM: A risk in section 3 is headed "R-16 A valid code is refused", which is not an identifier, a full stop and a title.
+    PROBLEM: By the scales and the ranking rule, rank 10 is R-09 (2 × 3 = 6, must). Section 2 has R-06 there.
+    PROBLEM: By the scales and the ranking rule, rank 11 is R-10 (2 × 3 = 6, must). Section 2 has R-09 there.
+  ok   reported: "is headed"
+Spoiled: the scale of impact taken out
+    PROBLEM: Section 1 has no scale of impact that can be read.
+    PROBLEM: R-01 gives a impact of 3, which is not a level of the scale.
+    PROBLEM: R-01 rests its impact on the clause I3a, which is not in the scale of impact.
+  ok   reported: "Section 1 has no scale of impact that can be read"
+Spoiled: an impact changed in the ranked table only
+    PROBLEM: Section 2 gives R-06 a likelihood, an impact or a score that is not its block's.
+  ok   reported: "Section 2 gives R-06 a likelihood, an impact or a score that is not its block's"
+Not spoiled: the block of R-02 moved above the block of R-01 in section 3, with the ranked table left as it is
+    the text was changed. problems reported: 0, and for the documents as they are: 0
+  ok   the ranking does not depend on the order of the blocks: R-02 still ranks above R-03, and R-01 above R-04, by risk number
+
+-- Section 7, and the form of the file
+Spoiled: a risk taken out of its layer's row in section 7
+    PROBLEM: Section 7 does not list for the unit layer exactly the risks whose blocks give that layer.
+  ok   reported: "Section 7 does not list for the unit layer exactly"
+Not spoiled: both documents with the other kind of line ending, which changes nothing a reader sees
+    problems reported: 0, and for the documents as they are: 0
+  ok   the other kind of line ending is reported as nothing: the same problems, no more and no fewer
+
+==============================================================================
+AT THE END
+The program has one line that writes a file, and it writes this log. So the documents were not changed by it. That is read from the code, not tested.
+
+RESULT: ALL CHECKS PASSED. 97 checks.

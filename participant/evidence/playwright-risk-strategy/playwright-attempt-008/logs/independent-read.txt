@@ -1,0 +1,141 @@
+Independent reads of the test strategy and of its check. playwright-risk-strategy, attempt playwright-attempt-008
+Copied by hand, and shortened, from the readers' replies by the assistant that built this quest. No program wrote this file.
+
+Who the readers were: four separate AI assistants (Claude), each started fresh. No person read the work. Each was told
+to read only the files named to it, to run nothing and to write nothing. Those limits were given in words and not
+enforced. None saw another's reply. In each round the documents and the check were finished, and the check passing,
+before any reply was read.
+
+  Reader 1   given the first requirements and strategy, and the demo's code for background. Asked, as a test lead, to
+             rebuild the ranking by hand, to judge each layer, and to find what was untested and not said to be.
+  Reader 2   given the first check script, its two inputs and its log. Asked what wrong documents it would pass, what
+             right ones it would fail, and which of its labels claimed more than they tested.
+  Reader 3   reader 1's task, on the second version. Told what reader 1 found, and not to take the fixes on trust.
+  Reader 4   reader 2's task, on the second version. Told what reader 2 found, and not to take the fixes on trust.
+
+==============================================================================
+ROUND 1. The first version: 15 risks, a check of 40 checks, all passing
+
+READER 1, THE STRATEGY. The ranked table matched its own rebuilding from the stated levels, row for row.
+  What it found:
+  - The scales left choices open. Working from the clauses alone it put two risks at another level, and found seven
+    more where either of two levels could be defended. There was no clause for code that is not written yet. The rule
+    that the higher level is taken was stated for likelihood only.
+  - Eight of the 15 risks scored 6, and seven of those were ordered by risk number alone. The requirements' must,
+    should and could played no part.
+  - Six "cheapest tests" could not be run against the shop. "Call the function that works out the amounts with a
+    basket": the function takes no basket, is not exported, and loading its file starts the server. The demo keeps no
+    orders and gives every order one reference, so the test for a repeated order would pass today with the feature not
+    built. The demo accepts no code. Rounding is not in the sums at all.
+  - Layers it would move: the narrow-screen check from a person to a browser test, because the reason given for a
+    person was wrong; the keyboard part of the accessibility check to a browser test; the end-date decision down to
+    unit.
+  - Parts of requirements reached by no risk and not said to be untested: the money itself, in two must requirements;
+    "by a second press"; the refusal message; a valid code wrongly refused.
+  - The manual check was one "nobody would really do": no checklist, no screen reader named, no person.
+  - Sentences that claimed too much: "fails for this fault and for nothing else"; "it has not changed", of a function
+    the demo's own notes say was changed; a run-time comparison that was not like for like.
+  The risk it would want a person to check even with a test: rounding, R-05. "The test's expected values are worked out
+  by hand by the same person who reads the rule, so the test repeats that reading and does not check it."
+
+READER 2, THE CHECK. What mattered:
+  - A requirement added after a blank line under the table was never read, so the strategy need not mention it.
+  - A risk written as a paragraph, or under a new heading after section 3, was invisible: no layer, no reason, no rank,
+    and nothing reported.
+  - A second layer line written "* Layer: UI" was not seen.
+  - "Names who accepted it" was a list of twelve placeholder words. "TBC" or "someone" passed.
+  - The rule for equal scores was fixed in the program and never compared with the rule the document states.
+  - A risk nobody means to test can be relabelled "manual" and leave section 5 with no acceptance. The check cannot
+    know.
+  - A file with the other kind of line ending lost every field. A strategy with nothing untested failed.
+  - Of the 40 checks, the eight in PART 3 and the one in PART 1 restated PART 2 and could not fail once it passed.
+  - More than twenty rules had no trial. The last key of the ranking, the risk number, was exercised by nothing.
+  - A line reading "- constructor: x" in a risk's block would crash it.
+
+WHAT WAS CHANGED AFTER ROUND 1
+  The strategy was rewritten. A clause was added for code not written. The higher level is taken on both scales. Equal
+  scores are ordered by impact, then by the requirement's importance, then by risk number. Every risk gained a line
+  saying what must exist before its test can be written. The narrow-screen check and the keyboard check moved to
+  browser tests. Four risks were added, making 19, and the parts of requirements no test reaches are listed. The run
+  times were worked out again from the cases each block lists.
+  The check was rewritten. Anything written REQ-n or R-n anywhere must be a row or a risk. Every line of a risk's block
+  must be one of its fields. The stated ranking rule must be the words the program works by. The one who accepted must
+  be the one the document names. Line endings are made the same. PART 3 prints lists for a reader and makes no checks.
+  Trials went from 29 to 72.
+  Two acceptances given on the first version were kept. One risk's score rose from 1 to 2 under the new scales.
+
+==============================================================================
+ROUND 2. The second version: 19 risks, a check of 75 checks, all passing
+
+READER 3, THE STRATEGY. Section 2 matched its rebuilding, all 19 rows. Every count in the prose it checked was right.
+  "The arithmetic and counts are right, but criteria 1, 6 and 7 are not fully met."
+  What it found:
+  - Two levels the scales themselves forced the other way. The payment risk, R-19, had a likelihood of 2 while its own
+    block said the shop has no payment provider, which is the clause for something not written: 3, and a score of 9.
+    A valid code refused, R-16, had an impact of 2 while R-02 rated the same loss, a tenth of the order, at 3.
+  - The screen-reader check was "untested in practice with no acceptance". The document admitted nobody had done it
+    and still gave it the layer manual. "Criterion 6 fails for it today."
+  - "Several cannot be written yet": it counted them. Eleven of the sixteen planned tests could not be written against
+    the demo.
+  - R-09 is put in a browser while its own block says it could be read without one, against the strategy's own rule.
+  - "Needs first" was incomplete for four risks. The test for R-16 could pass for a function that refuses every code,
+    which was the very thing its reason said it guarded against.
+  - Clauses reached by no test and not listed: "can be read" at 320 pixels; that an order exists; that two orders get
+    two references; an expired code at the server.
+  - Fifteen of the 19 risks sat in a group ordered by number alone. The document mentioned one such group of seven.
+  - Section 8 said one more risk would need acceptance. If the release went without the unbuilt features, five would.
+  The risk it would want a person to check even with a test: rounding, R-05, again. "The owner should sign the worked
+  examples."
+
+READER 4, THE CHECK. It traced each of reader 2's findings. Most were fixed. Two were fixed in part, and one only in
+problems() and not in the rest of the program.
+  What it found:
+  - A requirement added in a second table with an identifier written "REQ-13a" passed. So did a risk written "Risk 20"
+    or "R20", and field lines written before the first risk.
+  - A second table that renders as a heading row alone was swallowed whole: a row could be shown to a reader and
+    never read by the check.
+  - The acceptor was compared only with a line of the same file. Changing both to "to be decided" passed.
+  - Words written beside identifiers in a table cell were ignored.
+  - The risk number was still not isolated as the last key of the ranking: the blocks are in number order and the sort
+    keeps that order, so deleting the key changed no result.
+  - With the other kind of line ending the main program still misread the files, though problems() did not.
+  - Nine rules had no trial of their own. Five conditions could be deleted with every trial still passing.
+  - Header sentences that claimed more than the code did: "however it is written"; "the person section 5 says".
+  It verified by hand, against the code: the counts, the whole ranking, word counts for three risks, and all 72 trial
+  outputs. "No log line disagrees with the code."
+
+WHAT WAS CHANGED AFTER ROUND 2, AND NOT READ AGAIN
+  The strategy: R-19, R-16 and R-02 now score 9, and R-12 scores 4. The clauses were reworded so that those are forced.
+  The screen-reader risk, R-11, has no layer and is in section 5. The manual layer has no risk left. The document says
+  that 10 of the 15 planned tests cannot be written yet, and names the 5 that can. R-09 is named as the one exception
+  to the rule for choosing a layer. "Needs first" was completed for R-02, R-06, R-08, R-12, R-16 and R-17, and R-16's
+  test has a case that must pass whatever is ruled. The clauses no test reaches are listed. All four groups ordered by
+  number alone are named. Section 8 was rewritten.
+  The check: identifiers in any spelling are looked for. Sections 2, 5, 6 and 7 must each have one table. Table cells
+  that hold identifiers must hold nothing else. Nothing may be written in section 3 before its first risk. The acceptor
+  must be the one the requirements file names. A trial moves a block to show that the risk number, and not the order
+  of the blocks, is the last key. Trials went from 72 to 96, and each rule reader 4 listed as untried has one.
+  Two acceptances were asked for again, because what was being accepted had changed: R-19, at its new score, and R-11,
+  as untested.
+
+  NOT DONE:
+  - The check does not apply the rule that the higher level is taken. It checks that the rule is stated.
+  - It cannot tell a risk that is missing, a requirement written with no identifier, or a "manual" nobody will do.
+  - A sentence elsewhere in the document can contradict one the check has verified.
+  - Reader 3's smaller points that stand: untested risks sit in the "do not need a browser" group; the bullet is still
+    called "Cheapest test that would fail", which says more than a plan can; "tax rate changes rarely" is unsupported.
+
+  NOBODY HAS READ THE HANDED-IN VERSION. The handed-in strategy differs from the one reader 3 read by everything in the
+  list above: four scores, one layer, the ranked table, and about thirty sentences. The handed-in check differs from
+  the one reader 4 read by several new rules and 24 new trials. The check passes on the handed-in documents, and that is
+  the only thing that has looked at them since.
+
+==============================================================================
+SUMMARY
+  Can the ranking be rebuilt from the stated levels? Two readers did it by hand, one on each version, and both matched
+  the table row for row.
+  Can the levels be rebuilt from the scales? Not wholly. Each reader, working from the clauses, put some risks at
+  another level, fewer the second time. The handed-in scales have not been tried.
+  Was anything untested without being said? Yes, in both versions a reader found some. What they named is now listed.
+  Did the check pass wrong documents? Yes, in both versions. Each form a reader named is now reported.
+  A person has not read any of it.
