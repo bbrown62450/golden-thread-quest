@@ -1,0 +1,243 @@
+The health run. scrum-sprint-health, attempt scrum-attempt-002
+Recorded by scripts/record_evidence.py. Nothing was sent anywhere and nothing was posted to any tracker.
+The snapshot is made up. Paths are from the repository's top folder. SCRATCH is a temporary folder, deleted at the end.
+
+==============================================================================
+PART 1. The report generated twice from the same snapshot (criterion 7)
+$ python3 participant/skills/scrum-sprint-health/health.py generate --snapshot participant/context/scrum/sprint-snapshot.md --previous participant/context/scrum/health/day-06/sprint-snapshot.md --out SCRATCH/first/sprint-health.md
+  wrote sprint-health.md  sha256 3307d1bb0d3b3592dec3f53e7e2586cdfc39c39c07a6b7da0604f50360fd19bc
+  Items: 24. Done: 4. In progress: 11. Not started: 7. Aging: 5. Blocked: 4. Risks: 7. Gaps: 8.
+  exit code 0
+
+$ python3 participant/skills/scrum-sprint-health/health.py generate --snapshot participant/context/scrum/sprint-snapshot.md --previous participant/context/scrum/health/day-06/sprint-snapshot.md --out SCRATCH/second/sprint-health.md
+  wrote sprint-health.md  sha256 3307d1bb0d3b3592dec3f53e7e2586cdfc39c39c07a6b7da0604f50360fd19bc
+  Items: 24. Done: 4. In progress: 11. Not started: 7. Aging: 5. Blocked: 4. Risks: 7. Gaps: 8.
+  exit code 0
+
+The two runs were started 2 seconds apart.
+  first:  13718 bytes, sha256 3307d1bb0d3b3592dec3f53e7e2586cdfc39c39c07a6b7da0604f50360fd19bc
+  second: 13718 bytes, sha256 3307d1bb0d3b3592dec3f53e7e2586cdfc39c39c07a6b7da0604f50360fd19bc
+  ok   the two reports are byte for byte the same, and are not empty
+  ok   the handed-in report, participant/context/scrum/sprint-health.md, is byte for byte what these runs wrote
+
+A third run, from copies of the two snapshots under other names in another folder, started from that folder:
+$ python3 health.py generate --snapshot today.md --previous before.md --out out.md
+  wrote out.md  sha256 3307d1bb0d3b3592dec3f53e7e2586cdfc39c39c07a6b7da0604f50360fd19bc
+  Items: 24. Done: 4. In progress: 11. Not started: 7. Aging: 5. Blocked: 4. Risks: 7. Gaps: 8.
+  exit code 0
+  ok   the third report is byte for byte the same as the first: the bytes do not depend on where the files are or what they are called
+  ok   the snapshots were not changed by generating
+  ok   health.py has none of the calls that ask for the time: datetime.now, utcnow, time.time, today(), date.today, localtime, gmtime
+Modules health.py imports: argparse, datetime, hashlib, os, re, sys.
+  ok   it imports only these six, and has no call that starts a program or imports by name
+
+A contrast: the same snapshot with its own snapshot_date changed to the next day, in memory.
+  ok   with the snapshot's date a day later, the age of FERRY-203 goes from 6 to 7. So the day counted to is the snapshot's field
+
+==============================================================================
+PART 2. The snapshot (the first required item)
+participant/context/scrum/sprint-snapshot.md, sha256 959a6e662f8b19ddf25919b2c1d73c88d4baa478c0e9677fa7eb1360d097b9cb
+Rows: 24. Columns: id, title, status, assignee, created, updated, blocked_by, depends_on.
+Blank cells, by column: status: FERRY-217; assignee: FERRY-219; created: none; updated: FERRY-218; blocked_by: FERRY-220; depends_on: none.
+  ok   the snapshot has at least twenty work items: 24
+  ok   every row has eight cells, and 4 cells in all are blank
+  ok   the snapshot says it is made up, and records its own date, an aging threshold of 3 and a limit on work in progress of 2
+  ok   the report gives the checksum of the bytes of this snapshot, and no path to it
+
+==============================================================================
+PART 3. Each number of the report, worked out again here from the snapshot's rows (criteria 1 to 5)
+The counts below are made by this script's own few lines, not by health.py. Each is compared with what the report lists.
+  status done        here:  4   in the report:  4   FERRY-201, FERRY-213, FERRY-214, FERRY-215
+  ok   criterion 1: the report lists as done exactly the 4 items whose status is done
+  status in_progress here: 11   in the report: 11   FERRY-202, FERRY-203, FERRY-204, FERRY-205, FERRY-206, FERRY-208, FERRY-209, FERRY-211, FERRY-212, FERRY-218, FERRY-219
+  ok   criterion 1: the report lists as in_progress exactly the 11 items whose status is in_progress
+  status todo        here:  7   in the report:  7   FERRY-207, FERRY-210, FERRY-216, FERRY-220, FERRY-221, FERRY-223, FERRY-224
+  ok   criterion 1: the report lists as todo exactly the 7 items whose status is todo
+  ok   criterion 1: the first line of section 1 gives these totals: 22 of 24 with a usable status, 4 done, 11 in progress, 7 not started
+  ok   criterion 1: the 2 items with a blank or unrecognised status are in none of the three lists, and are named as in none: FERRY-217, FERRY-222
+  ok   criterion 1: section 1 names every one of the 24 items exactly once
+
+  in progress, with a usable update date, and the days from it to 2026-11-17: FERRY-202 1, FERRY-203 6, FERRY-204 6, FERRY-205 6, FERRY-206 6, FERRY-208 1, FERRY-209 4, FERRY-211 1, FERRY-212 0, FERRY-219 1
+  ok   criterion 2: the report shows the threshold, 3 days, says it is the snapshot's own, and says the days are calendar days
+  ok   criterion 2: the report lists as aging exactly the 5 items in progress last updated more than 3 days before the snapshot: FERRY-203, FERRY-204, FERRY-205, FERRY-206, FERRY-209
+  ok   criterion 2: it lists as not aging exactly the other 5 with a usable date: FERRY-202, FERRY-208, FERRY-211, FERRY-212, FERRY-219
+  the same, with the weekday and the Saturdays and Sundays inside each age, worked out here: FERRY-202 Mon 1d 0we, FERRY-203 Wed 6d 2we, FERRY-204 Wed 6d 2we, FERRY-205 Wed 6d 2we, FERRY-206 Wed 6d 2we, FERRY-208 Mon 1d 0we, FERRY-209 Fri 4d 2we, FERRY-211 Mon 1d 0we, FERRY-212 Tue 0d 0we, FERRY-219 Mon 1d 0we
+  ok   criterion 2: all 10 of these items are shown with their update date, its weekday, the number of days and how many of them are a Saturday or Sunday, and all four are what is worked out here
+  in the snapshot of the day before, items in progress at exactly 3 days: FERRY-209
+  ok   criterion 2: an item at exactly the threshold is not aging. In the report of the day before, FERRY-209 is at exactly 3 days and is listed as not aging
+
+  rows not done whose blocked_by names something: FERRY-205 (FERRY-203), FERRY-208 (FERRY-207), FERRY-209 (FERRY-207), FERRY-221 (FERRY-299)
+  ok   criterion 3: the report lists as blocked exactly those 4 items
+  ok   criterion 3: beside each it gives the blocker, and it is the one in the item's blocked_by cell
+  rows whose TITLE has the word blocked in it: FERRY-211. Its blocked_by is: none.
+  ok   criterion 3: the item whose title begins "BLOCKED:" is not in the blocked section, and its blocked_by says none
+
+  Jonas Verhoeven   2 in progress: FERRY-208, FERRY-218
+  Mei Abernathy     3 in progress: FERRY-205, FERRY-206, FERRY-209
+  Rafael Lindqvist  3 in progress: FERRY-203, FERRY-204, FERRY-212
+  Tamsin Okoro      2 in progress: FERRY-202, FERRY-211
+  ok   criterion 4: for each of the 4 names the report gives the number of items in progress and lists them, and both are these
+  each count set beside the limit of 2, worked out here: Jonas Verhoeven: this is at the limit; Mei Abernathy: this is 1 more than the limit; Rafael Lindqvist: this is 1 more than the limit; Tamsin Okoro: this is at the limit
+  ok   criterion 4: the limit is stated, 2, as the snapshot's own, and each of the 4 counts is set beside it as worked out here
+  ok   each count also says which of its items are recorded as blocked and which are aging, and those are the ones worked out above
+  ok   and where an item's update date or blocked_by is blank, the count says it cannot be told for that item, and does not say none: FERRY-218, beside the name it is recorded against
+  ok   criterion 4: with the limit line taken out of the snapshot, in memory, the report says none is set, compares no count with one, and adds no gap
+  ok   criterion 4: with the limit written as "two", in memory, the report does not say none is set. It says one is recorded and cannot be used, and lists a gap
+  ok   criterion 4: the item in progress whose assignee is blank is counted for nobody
+
+  waits, worked out here: an item not done whose blocked_by or depends_on names an item not done: FERRY-204 on FERRY-203, FERRY-205 on FERRY-203, FERRY-208 on FERRY-207, FERRY-209 on FERRY-207, FERRY-210 on FERRY-208, FERRY-216 on FERRY-224, FERRY-224 on FERRY-216
+  ok   criterion 5: the 7 waits worked out here are exactly the waits in the report, each once, as a risk or under one of the two headings for waits that are not
+  ok   criterion 5: the report gives the total as 7 waits on 5 different items, and names those items
+  the reasons, worked out here for each wait: FERRY-204 on FERRY-203: D3; FERRY-205 on FERRY-203: D3; FERRY-208 on FERRY-207: D1 D2; FERRY-209 on FERRY-207: D1 D2; FERRY-210 on FERRY-208: D4; FERRY-216 on FERRY-224: D1 D4; FERRY-224 on FERRY-216: D1 D4
+  ok   criterion 5: the report calls a risk exactly the 7 waits for which one of D1 to D4 holds here, and gives each exactly the reasons worked out here
+  ok   criterion 5: each risk names both items and the field or fields the link is in, and those are the cells that hold it
+  ok   criterion 5: every reason given names the field it is read from
+  ok   the scenario's case is reported: FERRY-208 and FERRY-209 both wait on FERRY-207, whose status is todo and whose assignee is unassigned
+  ok   stretch: a chain of three is reported whole: FERRY-210 waits on FERRY-208 waits on FERRY-207, and each of the two links is among the waits worked out here
+  ok   the two items that depend on each other are reported as a loop and not as a chain
+
+==============================================================================
+PART 4. The gaps the report gives for items with missing fields (criterion 6)
+  - [GAP] `FERRY-217`, field `status`: it is blank. Left out of: progress, aging, work in progress and dependency risk.
+  - [GAP] `FERRY-218`, field `updated`: it is blank. Left out of: aging: how long it has gone without an update is not known.
+  - [GAP] `FERRY-219`, field `assignee`: it is blank. That is not the same as being recorded as unassigned. Left out of: work in progress for each person.
+  - [GAP] `FERRY-220`, field `created and updated`: they disagree: it is recorded as updated on 2026-11-12 and created on 2026-11-14, which is later. Which of the two is wrong is not known. Left out of: aging.
+  - [GAP] `FERRY-220`, field `blocked_by`: it is blank. That is not the same as none. Left out of: blocked items and dependency risk.
+  - [GAP] `FERRY-221`, field `blocked_by`: it names FERRY-299, which is not in the snapshot. Left out of: dependency risk, as far as FERRY-299 goes: whether FERRY-299 is done cannot be told.
+  - [GAP] `FERRY-222`, field `status`: it is "in_review", which is not one of todo, in_progress, done, written exactly so. The report cannot classify it. Left out of: progress, aging, work in progress and dependency risk.
+  - [GAP] `FERRY-223`, field `updated`: it is 2026-11-18, which is after the snapshot's own date, 2026-11-17. Left out of: aging.
+
+  blank cells in the snapshot, found here: FERRY-217 status, FERRY-218 updated, FERRY-219 assignee, FERRY-220 blocked_by
+  ok   criterion 6: each of the 4 blank cells in the snapshot has its own gap entry, naming the item and the field
+  ok   criterion 6: the section holds 8 entries, says so, and the top of the report gives the same number
+  ok   criterion 6: every gap entry says what the item is left out of
+  ok   criterion 6, not estimated. FERRY-217, no status: in the line for none of the three statuses, and in no other line of section 1
+  ok   criterion 6, not estimated. FERRY-218, no update date: in the line for cannot be told, and in neither the aging nor the not aging line
+  ok   criterion 6, not estimated. FERRY-220, no blocked_by: in the line for cannot be told, and not in the blocked list
+  ok   the item the report could not classify is named as that: FERRY-222, whose status is "in_review"
+  ok   a field that is recorded as empty is not a gap: FERRY-207 is recorded as unassigned, and has no gap entry
+  ok   all 24 titles are in section 8, each between double quotes beside its identifier, and none is anywhere before it
+
+==============================================================================
+PART 5. Stretch: what changed since the day before
+  - [CHANGE] ADDED: `FERRY-224` is in this snapshot and was not in the previous one.
+  - [CHANGE] NEWLY AGING: `FERRY-209` was last updated 4 days before this snapshot, and 3 days before the previous one.
+  - [CHANGE] STATUS: `FERRY-212` was `todo` and is now `in_progress`.
+  - [CHANGE] STATUS: `FERRY-215` was `in_progress` and is now `done`.
+  - [CHANGE] DEPENDS_ON: the `depends_on` of `FERRY-216` was none and is now FERRY-224.
+
+  the differences between the two snapshots in the fields the section says it compares, found here: ADDED FERRY-224, DEPENDS_ON FERRY-216, NEWLY AGING FERRY-209, STATUS FERRY-212, STATUS FERRY-215
+  ok   the 5 changes reported are exactly these, by kind and by item
+  ok   the section names the previous snapshot by the checksum of its bytes, and says what it compares and what it does not
+
+==============================================================================
+PART 6. The check, and that it can fail
+$ python3 participant/skills/scrum-sprint-health/health.py check --snapshot participant/context/scrum/sprint-snapshot.md --previous participant/context/scrum/health/day-06/sprint-snapshot.md --report participant/context/scrum/sprint-health.md
+  CHECK PASSED. None of the things this check looks for was found. What it looks for is in SKILL.md.
+  exit code 0
+
+  ok   the check reports no problem on the handed-in report
+That pass shows little by itself: the check reads the snapshot with the generator's own code.
+So the report is spoiled in memory, one thing at a time, written to SCRATCH, and the check is run on it.
+Spoiled: a count raised by one, with the same items listed
+    PROBLEM: A line gives the number 5 and lists 4 items: - Done (5): `FERRY-201`, `FERRY-213`, `FERRY-214`, `FERRY-215`.
+  ok   reported: "gives the number 5 and lists 4 items"
+Spoiled: a total in the first line of section 1 changed
+    PROBLEM: The first line of section 1 does not give the counts of the snapshot.
+  ok   reported: "first line of section 1 does not give the counts"
+Spoiled: an item that is not started listed as done
+    PROBLEM: Section 1 does not account for every item of the snapshot exactly once.
+    PROBLEM: Section 1 does not list as done exactly the items whose status is done.
+  ok   reported: "does not list as done exactly"
+Spoiled: the item with no status left out of section 1
+    PROBLEM: A line gives the number 2 and lists 1 items: - In none of the three, because the status is blank or is not one of t
+    PROBLEM: Section 1 does not account for every item of the snapshot exactly once.
+  ok   reported: "does not account for every item"
+Spoiled: an item updated the day before called aging
+    PROBLEM: Section 2 does not list as aging, and as not aging, exactly the items in progress on each side of the threshold.
+  ok   reported: "does not list as aging, and as not aging, exactly"
+Spoiled: the number of days on an aging item changed
+    PROBLEM: Section 2 gives FERRY-203 an update date or a number of days that is not the snapshot's.
+  ok   reported: "an update date or a number of days that is not the snapshot's"
+Spoiled: the item with BLOCKED in its title put in the blocked list
+    PROBLEM: Section 3 does not list as blocked exactly the items whose blocked_by names an item.
+  ok   reported: "does not list as blocked exactly"
+Spoiled: an item counted for another name
+    PROBLEM: Section 4 does not count, for each person, exactly the items in progress recorded against them.
+  ok   reported: "does not count, for each person"
+Spoiled: a count that is over the limit said to be at it
+    PROBLEM: Section 4 does not set the count for "Mei Abernathy" beside the limit correctly.
+  ok   reported: "does not set the count for"
+Spoiled: a dependency risk taken out
+    PROBLEM: Section 5 does not list as risks exactly the waits that one of D1 to D4 holds for.
+  ok   reported: "does not list as risks exactly"
+Spoiled: a dependency risk with its reason taken out
+    PROBLEM: A dependency risk does not say why it is one:   - `FERRY-210` waits on `FERRY-208` (in its `depends_on`).
+  ok   reported: "does not say why it is one"
+Spoiled: a gap taken out
+    PROBLEM: Section 6 does not hold one entry for each gap in the snapshot, or its count is not the number of entries.
+    PROBLEM: The gap in FERRY-218, field updated, is not in section 6.
+  ok   reported: "field updated, is not in section 6"
+Spoiled: a judgement of a person written in
+    PROBLEM: Section 4 does not set the count for "Mei Abernathy" beside the limit correctly.
+    PROBLEM: The report uses the word "overloaded". It is to count work and say nothing about a person.
+  ok   reported: "uses the word "overloaded""
+Spoiled: the number of risks changed
+    PROBLEM: Section 5 does not give the number of waits, of items waited on, or of risks that the snapshot gives.
+  ok   reported: "does not give the number of waits"
+Spoiled: the threshold at the top of the report changed
+    PROBLEM: The report does not show the aging threshold the snapshot sets.
+  ok   reported: "does not show the aging threshold"
+Spoiled: an item that is not in the snapshot named
+    PROBLEM: The report names FERRY-777, which is not in the snapshot.
+  ok   reported: "which is not in the snapshot"
+Spoiled: the snapshot changed after the report was made (one status), in a copy
+    PROBLEM: Section 1 does not list as done exactly the items whose status is done.
+    PROBLEM: Section 1 does not list as in_progress exactly the items whose status is in_progress.
+  ok   reported: "it was made from another"
+
+What the check does not look at: the wording of each reason, the chains, the loops, the items others wait on, the weekend days,
+sections 7 and 8, and the lines that say what could not be told. Parts 3 to 5 above look at those, on this one report.
+
+==============================================================================
+PART 7. A snapshot that is wrong in its form, tried in memory
+Each is the handed-in snapshot with one thing changed. Nothing is written. The claim in each is about what the generator then reports.
+Changed: a blank line put inside the table, before the row of FERRY-213
+    items read: 24. gaps: 8. aging: 5.
+  ok   the rows after the blank line are still read: 24 items, and the same 8 gaps
+Changed: a line of prose put inside the table
+    items read: 24. gaps: 9. aging: 5.
+  ok   the line is a gap, quoted, and the rows after it are still read
+Changed: the line of dashes under the table's headings taken out
+    items read: 0. gaps: 1. aging: 0.
+  ok   no row is read, no row is taken for the missing line, and it is a gap
+Changed: the threshold written as "3 days"
+    items read: 24. gaps: 9. aging: 0.
+  ok   nothing is called aging, the report does not say none is set, and it is a gap
+Changed: the threshold given twice, as 3 and as 9
+    items read: 24. gaps: 9. aging: 0.
+  ok   neither value is used, nothing is called aging, and it is a gap
+Changed: a line "- aging_after_days: 99" added at the end of the file, outside the section headed The sprint
+    items read: 24. gaps: 8. aging: 5.
+  ok   it is not read: the threshold is still 3 and the same 5 items are aging
+Changed: the assignee of FERRY-202 written as "TBD"
+    items read: 24. gaps: 9. aging: 5.
+  ok   TBD is not counted as a person, and it is a gap
+Changed: a bar put inside the title of FERRY-207, so that its row has nine cells
+    items read: 23. gaps: 13. aging: 5.
+  ok   FERRY-207 is not said to be absent from the snapshot: the report says its row cannot be used
+Changed: the heading of the header section written as "## The Sprint"
+    items read: 24. gaps: 8. aging: 0.
+  ok   it is a gap, and the report does not say that no threshold or limit is set
+Changed: FERRY-217, whose status is blank, given a blocked_by of FERRY-207
+    items read: 24. gaps: 8. aging: 5.
+  ok   it is not listed as blocked and not done. It is listed apart, as an item whose status cannot be used
+Changed: FERRY-204 made to depend on FERRY-219, whose assignee is blank
+    items read: 24. gaps: 8. aging: 5.
+  ok   the wait is not filed under "none of D1 to D4 holds". It is listed as one that cannot be told
+
+==============================================================================
+AT THE END
+  ok   the two snapshots and the two reports are byte for byte what they were at the start, and the scratch folder is gone
+
+RESULT: ALL CHECKS PASSED. 81 checks.

@@ -1,0 +1,631 @@
+Do the tests notice a broken report generator? scrum-sprint-health, attempt scrum-attempt-002
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/scrum-sprint-health/health.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. An item with no status is counted as not started (criterion 6)
+  unittest result: FAILED (failures=16)
+  tests that failed (16):
+    Gaps.test_a_blank_line_inside_the_table_does_not_drop_the_rows_after_it
+    TheSecondRead.test_a_line_in_the_header_with_a_name_the_report_does_not_use_is_not_read_or_printed
+    Changes.test_a_status_that_became_unusable_is_said_not_to_be_compared
+    TheCheck.test_a_total_that_is_not_the_snapshots_is_reported
+    TheSecondRead.test_a_wait_on_an_item_whose_own_links_cannot_be_assessed_is_not_said_to_have_no_reason
+    WorkInProgress.test_an_item_against_a_name_with_no_usable_status_is_said_to_be_in_no_count
+    TheCheck.test_an_item_left_out_of_section_one_is_reported
+    TheSecondRead.test_an_item_whose_status_cannot_be_used_is_not_listed_as_not_done
+    Progress.test_an_item_with_no_status_is_in_no_count
+    DependencyRisk.test_an_item_with_no_status_that_names_another_is_not_assessed
+    Gaps.test_each_planted_gap_is_listed_with_its_field_and_what_it_is_left_out_of
+    WorkInProgress.test_no_limit_in_the_snapshot_is_said_and_none_is_made_up
+    Aging.test_no_threshold_in_the_snapshot_means_nothing_is_called_aging_and_is_not_a_gap
+    Progress.test_progress_is_counted_from_status_and_lists_the_items
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+    DependencyRisk.test_waiting_on_an_item_with_no_status_is_not_assessed_and_is_in_no_count
+
+PLANTED BUG B. A status that is not one of the three is taken as in progress (criterion 6)
+  unittest result: FAILED (failures=11)
+  tests that failed (11):
+    Progress.test_a_status_in_other_letters_is_not_taken_for_the_one_it_resembles
+    Progress.test_a_status_that_is_not_one_of_the_three_is_not_guessed
+    TheCheck.test_a_total_that_is_not_the_snapshots_is_reported
+    WorkInProgress.test_an_item_against_a_name_with_no_usable_status_is_said_to_be_in_no_count
+    TheCheck.test_an_item_left_out_of_section_one_is_reported
+    Progress.test_an_item_with_no_status_is_in_no_count
+    TheCheck.test_an_item_wrongly_called_not_aging_is_reported
+    Progress.test_progress_is_counted_from_status_and_lists_the_items
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+    Aging.test_what_is_not_aging_is_listed_with_its_date_too
+    TheSecondRead.test_with_no_threshold_the_days_are_still_shown
+
+PLANTED BUG C. Aging is at the threshold and not older than it (criterion 2)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Aging.test_exactly_the_threshold_is_not_older_than_it
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+    Changes.test_the_section_names_the_previous_snapshot_and_says_what_it_does_and_does_not_compare
+    Changes.test_what_changed_is_reported_by_identifier
+
+PLANTED BUG D. The aging threshold is a constant and not the snapshot's (criterion 2)
+  unittest result: FAILED (failures=10)
+  tests that failed (10):
+    Changes.test_a_changed_threshold_is_reported_and_each_snapshot_keeps_its_own
+    Aging.test_a_header_line_given_twice_is_a_gap_and_neither_value_is_used
+    Aging.test_a_threshold_that_is_not_a_whole_number_is_a_gap_and_is_not_called_unset
+    TheSecondRead.test_a_threshold_that_was_not_set_is_not_said_to_have_been_unusable
+    Aging.test_another_threshold_in_the_snapshot_changes_what_is_aging
+    TheSecondRead.test_no_section_headed_the_sprint_is_a_gap_and_nothing_is_called_unset
+    Aging.test_no_threshold_in_the_snapshot_means_nothing_is_called_aging_and_is_not_a_gap
+    TheSecondRead.test_two_sections_headed_the_sprint_are_a_gap_and_neither_is_read
+    DependencyRisk.test_with_no_threshold_a_wait_on_an_item_in_progress_cannot_be_told
+    TheSecondRead.test_with_no_threshold_the_days_are_still_shown
+
+PLANTED BUG E. The limit on work in progress is made up when none is recorded (criterion 4)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Changes.test_a_changed_limit_is_reported
+    WorkInProgress.test_a_limit_that_is_not_a_whole_number_is_a_gap_and_is_not_called_unset
+    WorkInProgress.test_no_limit_in_the_snapshot_is_said_and_none_is_made_up
+
+PLANTED BUG F. An item not in progress can be aging (criterion 2)
+  unittest result: FAILED (failures=6)
+  tests that failed (6):
+    TheCheck.test_a_risk_with_its_reason_taken_out_is_reported
+    Aging.test_an_item_not_in_progress_is_never_aging
+    TheCheck.test_an_item_wrongly_called_aging_is_reported
+    Aging.test_another_threshold_in_the_snapshot_changes_what_is_aging
+    Aging.test_older_than_the_threshold_is_aging_with_the_days_the_date_and_its_weekday
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+
+PLANTED BUG G. A missing update date is treated as the day of the snapshot (criterion 6)
+  unittest result: FAILED (failures=17, errors=1)
+  tests that failed (18):
+    Gaps.test_a_blank_line_inside_the_table_does_not_drop_the_rows_after_it
+    TheSecondRead.test_a_count_for_a_name_says_which_items_cannot_be_told
+    TheCheck.test_a_gap_taken_out_is_reported
+    TheSecondRead.test_a_line_in_the_header_with_a_name_the_report_does_not_use_is_not_read_or_printed
+    Aging.test_a_missing_update_date_is_a_gap_and_is_neither_aging_nor_fresh
+    TheCheck.test_a_title_may_use_any_word_and_name_any_identifier
+    DependencyRisk.test_a_wait_on_an_item_whose_update_date_is_blank_is_not_said_to_have_no_reason
+    TheCheck.test_an_item_wrongly_called_not_aging_is_reported
+    Changes.test_an_update_date_that_became_unusable_is_said_not_to_be_compared
+    Gaps.test_each_planted_gap_is_listed_with_its_field_and_what_it_is_left_out_of
+    WorkInProgress.test_no_limit_in_the_snapshot_is_said_and_none_is_made_up
+    Aging.test_no_threshold_in_the_snapshot_means_nothing_is_called_aging_and_is_not_a_gap
+    TheSecondRead.test_the_check_passes_a_report_whose_previous_snapshot_names_an_item_in_neither
+    TheCheck.test_the_generated_report_passes
+    Regeneration.test_the_report_gives_the_checksum_of_the_bytes_of_its_snapshot
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+    Aging.test_what_is_not_aging_is_listed_with_its_date_too
+    TheSecondRead.test_with_no_threshold_the_days_are_still_shown
+
+PLANTED BUG H. An update after the snapshot is accepted
+  unittest result: FAILED (failures=7)
+  tests that failed (7):
+    Gaps.test_a_blank_line_inside_the_table_does_not_drop_the_rows_after_it
+    TheSecondRead.test_a_line_in_the_header_with_a_name_the_report_does_not_use_is_not_read_or_printed
+    Aging.test_an_update_after_the_snapshot_is_a_gap
+    Gaps.test_each_planted_gap_is_listed_with_its_field_and_what_it_is_left_out_of
+    WorkInProgress.test_no_limit_in_the_snapshot_is_said_and_none_is_made_up
+    Aging.test_no_threshold_in_the_snapshot_means_nothing_is_called_aging_and_is_not_a_gap
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+
+PLANTED BUG I. An update before the item was created is accepted
+  unittest result: FAILED (failures=7)
+  tests that failed (7):
+    Gaps.test_a_blank_line_inside_the_table_does_not_drop_the_rows_after_it
+    TheSecondRead.test_a_line_in_the_header_with_a_name_the_report_does_not_use_is_not_read_or_printed
+    Aging.test_dates_that_disagree_are_a_gap_that_blames_neither
+    Gaps.test_each_planted_gap_is_listed_with_its_field_and_what_it_is_left_out_of
+    WorkInProgress.test_no_limit_in_the_snapshot_is_said_and_none_is_made_up
+    Aging.test_no_threshold_in_the_snapshot_means_nothing_is_called_aging_and_is_not_a_gap
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+
+PLANTED BUG J. A title that says blocked makes an item blocked (criterion 3)
+  unittest result: FAILED (failures=6)
+  tests that failed (6):
+    Blocked.test_a_title_that_says_blocked_does_not_make_an_item_blocked
+    Blocked.test_blocked_comes_from_the_field
+    WorkInProgress.test_it_is_counted_for_each_person_with_the_items_and_which_are_blocked_or_aging
+    Text.test_the_program_uses_a_title_in_two_places_and_both_only_carry_it_to_be_printed
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+    TheCheck.test_the_title_that_says_blocked_put_in_the_blocked_list_is_reported
+
+PLANTED BUG K. A blank blocked_by is read as none (criterion 6)
+  unittest result: FAILED (failures=11)
+  tests that failed (11):
+    Blocked.test_a_blank_blocked_by_is_a_gap_and_not_none
+    Gaps.test_a_blank_line_inside_the_table_does_not_drop_the_rows_after_it
+    Changes.test_a_blocker_field_that_became_unusable_is_said_not_to_be_compared
+    TheSecondRead.test_a_line_in_the_header_with_a_name_the_report_does_not_use_is_not_read_or_printed
+    TheSecondRead.test_a_wait_on_an_item_whose_own_links_cannot_be_assessed_is_not_said_to_have_no_reason
+    Blocked.test_an_item_that_names_itself_is_a_gap_and_is_not_called_unblocked
+    Gaps.test_each_planted_gap_is_listed_with_its_field_and_what_it_is_left_out_of
+    WorkInProgress.test_no_limit_in_the_snapshot_is_said_and_none_is_made_up
+    Aging.test_no_threshold_in_the_snapshot_means_nothing_is_called_aging_and_is_not_a_gap
+    DependencyRisk.test_the_links_that_could_not_be_assessed_are_listed
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+
+PLANTED BUG L. A blocker that is not in the snapshot drops out of the blocked list
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    Blocked.test_a_blocker_that_is_not_in_the_snapshot_is_shown_and_is_a_gap
+    TheSecondRead.test_an_item_whose_row_cannot_be_used_is_not_said_to_be_absent_or_removed
+    Blocked.test_blocked_comes_from_the_field
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+    TheCheck.test_the_title_that_says_blocked_put_in_the_blocked_list_is_reported
+
+PLANTED BUG M. A blank assignee is counted as a person (criterion 6)
+  unittest result: FAILED (failures=10)
+  tests that failed (10):
+    WorkInProgress.test_a_blank_assignee_is_counted_for_nobody
+    Gaps.test_a_blank_line_inside_the_table_does_not_drop_the_rows_after_it
+    TheSecondRead.test_a_line_in_the_header_with_a_name_the_report_does_not_use_is_not_read_or_printed
+    DependencyRisk.test_a_reason_that_holds_is_given_with_the_one_that_cannot_be_told
+    DependencyRisk.test_a_wait_on_an_item_whose_assignee_is_blank_is_not_said_to_have_no_reason
+    WorkInProgress.test_a_word_that_stands_where_a_name_belongs_is_a_gap_and_is_not_counted_as_a_person
+    Gaps.test_each_planted_gap_is_listed_with_its_field_and_what_it_is_left_out_of
+    WorkInProgress.test_no_limit_in_the_snapshot_is_said_and_none_is_made_up
+    Aging.test_no_threshold_in_the_snapshot_means_nothing_is_called_aging_and_is_not_a_gap
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+
+PLANTED BUG N. Unassigned is treated as a person's name
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    DependencyRisk.test_a_risk_names_both_items_the_field_and_why
+    TheCheck.test_a_risk_with_its_reason_taken_out_is_reported
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+    WorkInProgress.test_unassigned_is_recorded_and_is_not_a_gap
+
+PLANTED BUG O. A word such as TBD where a name belongs is counted as a person
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WorkInProgress.test_a_word_that_stands_where_a_name_belongs_is_a_gap_and_is_not_counted_as_a_person
+
+PLANTED BUG P. Items not in progress count toward work in progress (criterion 4)
+  unittest result: FAILED (failures=10)
+  tests that failed (10):
+    TheSecondRead.test_a_count_for_a_name_says_which_items_cannot_be_told
+    TheCheck.test_a_count_set_wrongly_beside_the_limit_is_reported
+    TheCheck.test_a_judgement_of_a_person_is_reported
+    TheCheck.test_an_item_counted_for_the_wrong_person_is_reported
+    WorkInProgress.test_it_is_counted_for_each_person_with_the_items_and_which_are_blocked_or_aging
+    WorkInProgress.test_no_limit_in_the_snapshot_is_said_and_none_is_made_up
+    WorkInProgress.test_only_items_in_progress_count
+    WorkInProgress.test_the_limit_is_the_snapshots
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+    WorkInProgress.test_under_the_limit_is_said_too
+
+PLANTED BUG Q. Waiting on a done item is a wait (criterion 5)
+  unittest result: FAILED (failures=6)
+  tests that failed (6):
+    DependencyRisk.test_a_wait_on_an_item_whose_assignee_is_blank_is_not_said_to_have_no_reason
+    DependencyRisk.test_a_wait_with_none_of_the_reasons_is_listed_apart
+    TheSecondRead.test_the_check_reports_a_wrong_number_of_risks_or_of_waits
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+    DependencyRisk.test_the_waits_are_counted_and_so_are_the_different_items_waited_on
+    DependencyRisk.test_waiting_on_something_done_is_not_waiting
+
+PLANTED BUG R. A done item still waits (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    DependencyRisk.test_an_item_that_is_done_waits_on_nothing
+
+PLANTED BUG S. An unassigned item waited on is not a risk (criterion 5)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    DependencyRisk.test_a_risk_names_both_items_the_field_and_why
+    TheCheck.test_a_risk_with_its_reason_taken_out_is_reported
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+
+PLANTED BUG T. A blank assignee on the item waited on is called unassigned
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    DependencyRisk.test_a_reason_that_holds_is_given_with_the_one_that_cannot_be_told
+    DependencyRisk.test_a_wait_on_an_item_whose_assignee_is_blank_is_not_said_to_have_no_reason
+
+PLANTED BUG U. A wait on an item whose assignee is blank is filed under "none of D1 to D4 holds"
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    DependencyRisk.test_a_reason_that_holds_is_given_with_the_one_that_cannot_be_told
+    DependencyRisk.test_a_wait_on_an_item_whose_assignee_is_blank_is_not_said_to_have_no_reason
+
+PLANTED BUG V. An aging item waited on is not a risk (criterion 5)
+  unittest result: FAILED (failures=7)
+  tests that failed (7):
+    DependencyRisk.test_a_wait_on_an_item_whose_assignee_is_blank_is_not_said_to_have_no_reason
+    TheSecondRead.test_a_wait_on_an_item_whose_own_links_cannot_be_assessed_is_not_said_to_have_no_reason
+    DependencyRisk.test_a_wait_with_none_of_the_reasons_is_listed_apart
+    TheSecondRead.test_the_check_reports_a_wrong_number_of_risks_or_of_waits
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+    DependencyRisk.test_the_waits_are_counted_and_so_are_the_different_items_waited_on
+    DependencyRisk.test_waiting_on_an_aging_item_is_a_risk_with_its_days
+
+PLANTED BUG W. A wait on an item whose update date is blank is filed under "none of D1 to D4 holds"
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    DependencyRisk.test_a_wait_on_an_item_whose_update_date_is_blank_is_not_said_to_have_no_reason
+    DependencyRisk.test_with_no_threshold_a_wait_on_an_item_in_progress_cannot_be_told
+
+PLANTED BUG X. An item waited on that is itself waiting is not a risk (criterion 5)
+  unittest result: FAILED (failures=7)
+  tests that failed (7):
+    TheCheck.test_a_risk_taken_out_is_reported
+    DependencyRisk.test_a_wait_on_an_item_whose_assignee_is_blank_is_not_said_to_have_no_reason
+    TheSecondRead.test_a_wait_on_an_item_whose_own_links_cannot_be_assessed_is_not_said_to_have_no_reason
+    DependencyRisk.test_a_wait_with_none_of_the_reasons_is_listed_apart
+    TheSecondRead.test_the_check_reports_a_wrong_number_of_risks_or_of_waits
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+    DependencyRisk.test_the_waits_are_counted_and_so_are_the_different_items_waited_on
+
+PLANTED BUG Y. A chain of three is not reported
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    DependencyRisk.test_a_chain_of_three_is_reported_whole
+    TheSecondRead.test_a_chain_that_a_loop_member_waits_on_is_still_reported
+    DependencyRisk.test_a_loop_of_three_is_reported_as_one_loop_and_not_as_a_chain
+    DependencyRisk.test_a_wait_into_a_loop_is_not_reported_as_a_chain
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+
+PLANTED BUG Z. Two items that wait on each other are not reported
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    TheSecondRead.test_a_chain_that_a_loop_member_waits_on_is_still_reported
+    DependencyRisk.test_a_wait_into_a_loop_is_not_reported_as_a_chain
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+    DependencyRisk.test_two_items_that_wait_on_each_other_are_reported_and_do_not_loop
+
+PLANTED BUG AA. A wait into a loop is reported as a chain
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    DependencyRisk.test_a_wait_into_a_loop_is_not_reported_as_a_chain
+
+PLANTED BUG AB. An item two others wait on is not reported
+  unittest result: FAILED (failures=2, errors=2)
+  tests that failed (4):
+    DependencyRisk.test_an_item_that_is_done_waits_on_nothing
+    DependencyRisk.test_an_item_two_others_wait_on_is_reported_with_them
+    DependencyRisk.test_an_item_with_no_status_that_names_another_is_not_assessed
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+
+PLANTED BUG AC. Two rows with one identifier: the last is used
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheSecondRead.test_an_item_on_two_rows_is_not_said_to_be_absent
+    Gaps.test_two_rows_with_one_identifier_are_a_gap_and_neither_is_used
+
+PLANTED BUG AD. A row with the wrong number of cells is dropped silently
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Gaps.test_a_row_with_the_wrong_number_of_cells_is_a_gap
+    TheSecondRead.test_an_item_whose_row_cannot_be_used_is_not_said_to_be_absent_or_removed
+
+PLANTED BUG AE. A blank line inside the table drops every row after it
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Gaps.test_a_blank_line_inside_the_table_does_not_drop_the_rows_after_it
+
+PLANTED BUG AF. A line of prose inside the table is dropped silently
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Gaps.test_a_line_of_prose_inside_the_table_is_a_gap_and_the_rows_after_it_are_read
+
+PLANTED BUG AG. A table with no line of dashes: its first row is taken for that line and lost
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Gaps.test_a_table_without_its_line_of_dashes_is_a_gap_and_no_row_is_taken_for_it
+
+PLANTED BUG AH. A threshold or limit that cannot be used is reported as "none is set", with no gap
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    WorkInProgress.test_a_limit_that_is_not_a_whole_number_is_a_gap_and_is_not_called_unset
+    Aging.test_a_threshold_that_is_not_a_whole_number_is_a_gap_and_is_not_called_unset
+
+PLANTED BUG AI. A header line given twice: the first value is used
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Aging.test_a_header_line_given_twice_is_a_gap_and_neither_value_is_used
+    TheSecondRead.test_a_sprint_line_given_twice_is_not_called_unrecorded
+
+PLANTED BUG AJ. Header lines are read from the whole file and not from the section headed The sprint
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Aging.test_a_line_shaped_like_a_header_line_elsewhere_in_the_file_is_not_read
+
+PLANTED BUG AK. The computer's clock is used and not the snapshot's date (criterion 7)
+  unittest result: FAILED (failures=35)
+  tests that failed (35):
+    Gaps.test_a_blank_line_inside_the_table_does_not_drop_the_rows_after_it
+    Changes.test_a_changed_threshold_is_reported_and_each_snapshot_keeps_its_own
+    TheSecondRead.test_a_count_for_a_name_says_which_items_cannot_be_told
+    TheSecondRead.test_a_line_in_the_header_with_a_name_the_report_does_not_use_is_not_read_or_printed
+    Aging.test_a_line_shaped_like_a_header_line_elsewhere_in_the_file_is_not_read
+    TheSecondRead.test_a_snapshot_date_that_cannot_be_used_is_not_called_unrecorded
+    Aging.test_a_snapshot_date_that_is_not_a_date_is_a_gap
+    DependencyRisk.test_a_wait_on_an_item_whose_assignee_is_blank_is_not_said_to_have_no_reason
+    TheSecondRead.test_a_wait_on_an_item_whose_own_links_cannot_be_assessed_is_not_said_to_have_no_reason
+    DependencyRisk.test_a_wait_with_none_of_the_reasons_is_listed_apart
+    TheCheck.test_a_wrong_number_of_days_is_reported
+    TheCheck.test_a_wrong_update_date_is_reported
+    Aging.test_an_age_that_is_over_the_threshold_only_by_a_weekend_says_so
+    TheCheck.test_an_item_wrongly_called_aging_is_reported
+    TheCheck.test_an_item_wrongly_called_not_aging_is_reported
+    Aging.test_an_update_after_the_snapshot_is_a_gap
+    Aging.test_another_threshold_in_the_snapshot_changes_what_is_aging
+    Aging.test_days_are_counted_to_the_snapshots_date_and_not_to_any_other
+    Gaps.test_each_planted_gap_is_listed_with_its_field_and_what_it_is_left_out_of
+    Aging.test_exactly_the_threshold_is_not_older_than_it
+    WorkInProgress.test_it_is_counted_for_each_person_with_the_items_and_which_are_blocked_or_aging
+    WorkInProgress.test_no_limit_in_the_snapshot_is_said_and_none_is_made_up
+    Aging.test_no_snapshot_date_means_nothing_is_called_aging_and_it_is_a_gap
+    Aging.test_no_threshold_in_the_snapshot_means_nothing_is_called_aging_and_is_not_a_gap
+    Aging.test_older_than_the_threshold_is_aging_with_the_days_the_date_and_its_weekday
+    Aging.test_one_day_more_than_the_threshold_is_aging
+    Text.test_the_generator_imports_nothing_that_reaches_a_network_and_never_asks_the_time
+    TheSecondRead.test_the_previous_snapshot_dated_later_is_said
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+    Changes.test_the_section_names_the_previous_snapshot_and_says_what_it_does_and_does_not_compare
+    Aging.test_the_threshold_is_the_snapshots_and_is_shown
+    DependencyRisk.test_waiting_on_an_aging_item_is_a_risk_with_its_days
+    Changes.test_what_changed_is_reported_by_identifier
+    Aging.test_what_is_not_aging_is_listed_with_its_date_too
+    TheSecondRead.test_with_no_threshold_the_days_are_still_shown
+
+PLANTED BUG AL. A date that is not a date is accepted
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Aging.test_a_date_that_is_not_a_date_is_a_gap
+
+PLANTED BUG AM. The checksum is of the text after its line endings are changed, and not of the bytes of the file
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Regeneration.test_the_report_gives_the_checksum_of_the_bytes_of_its_snapshot
+
+PLANTED BUG AN. Only Sundays are counted as weekend days
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    Aging.test_an_age_that_is_over_the_threshold_only_by_a_weekend_says_so
+    Aging.test_older_than_the_threshold_is_aging_with_the_days_the_date_and_its_weekday
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+    Aging.test_weekend_days_are_counted_after_the_first_day_up_to_the_last
+
+PLANTED BUG AO. An item that is done is listed as blocked
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Blocked.test_an_item_that_is_done_is_not_listed_as_blocked_and_is_listed_apart
+
+PLANTED BUG AP. An item that names itself in blocked_by is taken as not blocked, with no gap
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Blocked.test_an_item_that_names_itself_is_a_gap_and_is_not_called_unblocked
+
+PLANTED BUG AQ. A changed title is reported as a change
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Changes.test_a_changed_title_or_assignee_is_not_reported_as_the_section_says
+    Text.test_the_program_uses_a_title_in_two_places_and_both_only_carry_it_to_be_printed
+
+PLANTED BUG AR. A removed item is not reported
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Changes.test_a_removed_item_is_not_said_to_be_done
+    TheSecondRead.test_an_item_whose_row_cannot_be_used_is_not_said_to_be_absent_or_removed
+
+PLANTED BUG AS. A changed depends_on is not reported
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+    Changes.test_the_section_names_the_previous_snapshot_and_says_what_it_does_and_does_not_compare
+    Changes.test_what_changed_is_reported_by_identifier
+
+PLANTED BUG AT. A quote mark in a title is printed as it is
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Text.test_a_title_cannot_end_its_quotation_or_start_a_line
+
+PLANTED BUG AU. Any cell that says "Made up" makes the report call the snapshot made up
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Text.test_the_program_uses_a_title_in_two_places_and_both_only_carry_it_to_be_printed
+    Text.test_the_report_calls_the_snapshot_made_up_only_when_its_opening_says_so
+
+PLANTED BUG AV. A threshold that changed between the two snapshots is not reported
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Changes.test_a_changed_threshold_is_reported_and_each_snapshot_keeps_its_own
+    TheSecondRead.test_a_threshold_that_was_not_set_is_not_said_to_have_been_unusable
+
+PLANTED BUG AW. The check lets a wrong count through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_count_that_is_not_the_number_of_items_listed_is_reported
+
+PLANTED BUG AX. The check lets an item be listed under the wrong status
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_an_item_moved_from_one_status_to_another_is_reported
+
+PLANTED BUG AY. The check lets an item be left out of section 1
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_an_item_left_out_of_section_one_is_reported
+
+PLANTED BUG AZ. The check lets wrong totals through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_total_that_is_not_the_snapshots_is_reported
+
+PLANTED BUG BA. The check lets a wrong aging list through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_an_item_wrongly_called_aging_is_reported
+
+PLANTED BUG BB. The check lets a wrong list of what is not aging through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_an_item_wrongly_called_not_aging_is_reported
+
+PLANTED BUG BC. The check lets a wrong number of days through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_wrong_number_of_days_is_reported
+
+PLANTED BUG BD. The check lets a wrong update date through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_wrong_update_date_is_reported
+
+PLANTED BUG BE. The check lets a wrong blocked list through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_the_title_that_says_blocked_put_in_the_blocked_list_is_reported
+
+PLANTED BUG BF. The check lets a wrong blocker through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_wrong_blocker_is_reported
+
+PLANTED BUG BG. The check lets work be counted for the wrong person
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_an_item_counted_for_the_wrong_person_is_reported
+
+PLANTED BUG BH. The check lets a count be set wrongly beside the limit
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_count_set_wrongly_beside_the_limit_is_reported
+
+PLANTED BUG BI. The check lets a risk be taken out
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_risk_taken_out_is_reported
+
+PLANTED BUG BJ. The check lets a risk go without its reason
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_risk_with_its_reason_taken_out_is_reported
+
+PLANTED BUG BK. The check lets a gap be taken out
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_gap_taken_out_is_reported
+
+PLANTED BUG BL. The check lets a report of another snapshot through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_report_of_another_snapshot_is_reported
+
+PLANTED BUG BM. The check lets a report compared with another previous snapshot through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_report_compared_with_another_previous_snapshot_is_reported
+
+PLANTED BUG BN. The check lets a judgement of a person through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_judgement_of_a_person_is_reported
+
+PLANTED BUG BO. The check reads titles for judging words and identifiers
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_title_may_use_any_word_and_name_any_identifier
+
+PLANTED BUG BP. The check lets an item that is not in the snapshot be named
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_an_item_that_is_not_in_the_snapshot_is_reported
+
+PLANTED BUG BQ. The check lets a second section with a number already used through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_second_section_with_a_number_already_used_is_reported
+
+PLANTED BUG BR. A count for a name says "Aging: none" and not which items cannot be told
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheSecondRead.test_a_count_for_a_name_says_which_items_cannot_be_told
+    TheHandedInFiles.test_the_report_on_disk_is_what_the_generator_writes_and_passes_its_check
+
+PLANTED BUG BS. A wait on an item whose own links cannot be assessed is filed under "none of D1 to D4 holds"
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_a_wait_on_an_item_whose_own_links_cannot_be_assessed_is_not_said_to_have_no_reason
+
+PLANTED BUG BT. A header line with a name the report does not use is read, and printed
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_a_line_in_the_header_with_a_name_the_report_does_not_use_is_not_read_or_printed
+
+PLANTED BUG BU. Two sections headed The sprint: the first is read
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_two_sections_headed_the_sprint_are_a_gap_and_neither_is_read
+
+PLANTED BUG BV. An item whose status cannot be used is listed as blocked and not done
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_an_item_whose_status_cannot_be_used_is_not_listed_as_not_done
+
+PLANTED BUG BW. A threshold that was not set is said to have been unusable
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Changes.test_a_changed_limit_is_reported
+    TheSecondRead.test_a_threshold_that_was_not_set_is_not_said_to_have_been_unusable
+
+PLANTED BUG BX. An item whose row cannot be used is said not to be in the snapshot
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheSecondRead.test_an_item_on_two_rows_is_not_said_to_be_absent
+    TheSecondRead.test_an_item_whose_row_cannot_be_used_is_not_said_to_be_absent_or_removed
+
+PLANTED BUG BY. An item whose row cannot be used is reported as removed
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_an_item_whose_row_cannot_be_used_is_not_said_to_be_absent_or_removed
+
+PLANTED BUG BZ. A chain that a loop member waits on is not reported
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_a_chain_that_a_loop_member_waits_on_is_still_reported
+
+PLANTED BUG CA. A created date after the snapshot is accepted
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_a_created_date_after_the_snapshot_is_a_gap
+
+PLANTED BUG CB. Curly quotation marks in a title are printed as they are
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_other_quotation_marks_and_unseen_characters_cannot_end_a_quotation
+
+PLANTED BUG CC. A previous snapshot dated later is not remarked on
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_the_previous_snapshot_dated_later_is_said
+
+PLANTED BUG CD. With no threshold, the days are not shown
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_with_no_threshold_the_days_are_still_shown
+
+PLANTED BUG CE. The check fails a correct report whose previous snapshot names an item in neither
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_the_check_passes_a_report_whose_previous_snapshot_names_an_item_in_neither
+
+PLANTED BUG CF. The check lets a wrong number of waits or of risks through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_the_check_reports_a_wrong_number_of_risks_or_of_waits
+
+PLANTED BUG CG. The check lets a threshold changed at the top of the report through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheSecondRead.test_the_check_reports_a_threshold_changed_at_the_top_of_the_report
+
+After the last bug was taken out: health.py is byte for byte what it was at the start. OK
+
+RESULT: all 85 planted bugs were caught by at least one test, and the file was restored.

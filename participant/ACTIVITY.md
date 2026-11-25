@@ -404,3 +404,8 @@ Every change this application made to your files, newest last.
 - `2026-11-25T16:59:02Z` scrum-standup-digest: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-25T16:59:02Z` Submitted scrum-standup-digest for review as submission-20261125165902-91fc0d.
 - `2026-11-25T17:18:59Z` Review of scrum-standup-digest: approved by Claude (automated reviewer).
+- `2026-11-25T17:25:46Z` Started scrum-sprint-health as attempt scrum-attempt-002.
+- `2026-11-25T18:14:38Z` scrum-sprint-health: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-25T18:15:41Z` scrum-sprint-health: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-25T18:28:37Z` scrum-sprint-health: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-25T18:28:37Z` Submitted scrum-sprint-health for review as submission-20261125182837-77d4f2.

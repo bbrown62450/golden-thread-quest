@@ -1,0 +1,142 @@
+Independent reads of the sprint health report and of its generator. scrum-sprint-health, attempt scrum-attempt-002
+Copied by hand, and shortened, from the readers' replies by the assistant that built this quest. No program wrote this file.
+
+Who the readers were: five separate AI assistants (Claude), each started fresh. No person read the work, and no teammate
+was walked through it. Each was told to read only the files named to it, to run nothing and to write nothing. Those
+limits were given in words and not enforced. None saw another's reply. In each round the generator, its tests and its
+record were finished and passing before any reply was read.
+
+  Reader 1   given the first report and the two snapshots. Asked to work every number out again by hand.
+  Reader 2   given the first report and nothing else. Asked, as a team lead who will act on it, what it would not
+             accept, and whether anything in it judges a person.
+  Reader 3   given the generator as first built, the skill document, the snapshots and the first report. Asked where
+             the code and the written rules differ, and what input would make it assert something unsupported.
+  Reader 4   given the second report and the two snapshots, and not the code. Reader 1's task, on the second version.
+  Reader 5   given the second generator, the skill document, the snapshots and the second report. Reader 3's task. It
+             was told what reader 3 had found and that those faults were said to be fixed, and not to take that on trust.
+
+==============================================================================
+ROUND 1. The first version (78 tests, 50 recorded checks, 44 planted bugs, all passing)
+
+READER 1, BY HAND. Sections 1 to 6 matched its own working exactly: every status count, every number of days, every
+blocker, every count for a person, all seven risks with their reasons, and all eight gaps.
+  What it found:
+  - Section 7 did not report that the depends_on of FERRY-216 had changed, and did not say what it compares.
+  - The gap for FERRY-220 blamed its updated date. Either of the two dates could be the wrong one.
+  - A plural slip, and "left out of aging" said of items that are not started, where aging never applied.
+
+READER 2, THE REPORT ALONE. The counts reconciled. It found no sentence that judged a person. What it would not accept:
+  - The work-in-progress section put "1 more than the limit" beside a name without showing that two of those items were
+    blocked by someone else's. "It implies what it says it does not say."
+  - "6 days" was Wednesday to Tuesday: 4 working days. FERRY-209's "4 days" was Friday to Tuesday: 2 working days. It
+    was aging only because of the weekend, and the report gave no weekday to see that by.
+  - The seven risks are three situations. "Risk" is the report's own word.
+  - Section 5 had no line for a wait where a rule could not be told.
+  - "Recorded status: 22 of 24" was wrong of FERRY-222, whose status is recorded, as in_review.
+  - Titles were shown for some items only, so the two titles the report warns about could not be seen.
+
+READER 3, THE CODE AGAINST THE RULES. The findings that mattered:
+  - A blank line inside the table silently dropped every row after it. So did a missing line of dashes: the first row
+    was taken for it.
+  - A threshold or limit that could not be used, such as "3 days", was reported as "none is set", with no gap.
+  - Header lines were read from anywhere in the file, and the last one won.
+  - "TBD" or "none" in the assignee column was counted as a person.
+  - A wait on an item whose assignee or update date was blank was filed under "none of D1 to D4 holds".
+  - A loop of three items or more was described as a chain.
+  - The report printed the path of its snapshot, so its bytes depended on where the file was. The checksum was of the
+    decoded text and not of the file's bytes.
+  - Any cell containing "Made up" made the report call the snapshot made up.
+  - Of the check: it could not fail on the generator's own output, and it passed many wrong reports.
+  - Of the record of the evidence: several labels claimed more than their condition tested. One compared lists with a
+    function that stops at the shorter. Some counts were written in by hand. The comparison with the limit was not
+    worked out again. "Every age" was tested on one item.
+
+WHAT WAS CHANGED AFTER ROUND 1
+  The generator was rewritten. Every finding above was acted on, and each has a test.
+  The report names its snapshot by the checksum of its bytes and prints no path. Header lines are read from one section.
+  An unusable threshold or limit is a gap and is not called unset. A blank line does not end the table. Words that
+  stand for nobody are gaps. Each age gives its weekday and how many of its days are a Saturday or Sunday, and items
+  that are not aging are listed with theirs. Each count for a name says which of its items are blocked and which are
+  aging. Section 5 has a list for waits where a rule cannot be told, a list of links that could not be assessed, and
+  the number of different items waited on. Loops of any length are found. Section 7 says what it compares and what it
+  does not, and compares depends_on. Every title is in a section of its own, and nowhere else.
+  The record of the evidence was rewritten: each number is worked out again by its own code, the bytes are compared and
+  not the decoded text, and a third run is made from copies under other names in another folder.
+
+==============================================================================
+ROUND 2. The second version (125 tests, 75 recorded checks, 69 planted bugs, all passing)
+
+READER 4, BY HAND. "Every count and list in sections 1-8 matches my own working."
+  It worked out each age, each weekday and each count of weekend days itself, all seven waits, the five items waited
+  on, each risk's reasons, the chain, the loop, the eight gaps and the five changes. All matched.
+  It could not check the two checksums, or that the report reads nothing but the two snapshots.
+  What it found:
+  - Beside one name the report said "Aging: none". One of that name's two items has a blank update date. "This line
+    presents the missing value as a 'no'."
+  - "So none of them can be first", of the loop, is an inference about the work. The fields show each naming the other.
+  - Section 7's list of what is not compared read as complete and was not: waits, risks, loops and gaps are not compared.
+  - Section 2 does not show an item at exactly the threshold. Day 7 has none.
+  - Wording: "0 days ... Of those days"; a gap whose field is given as "created and updated"; "left out of: aging" said
+    of items that are not started; identifiers without their usual marks after "blocked_by is".
+  Could be read as judging a person: over the limit and aging stand beside a name on one line, and the line does not
+  say whose items the blockers are. The heading "for each person" sits against "it says nothing about any person".
+  The numbers it said a team would argue with: "Waits that are a risk (7)" of 7, where any item not started makes a
+  risk and one probable data-entry mistake makes two. "Aging (5)", for FERRY-209, aging only by the weekend. And "1
+  more than the limit".
+
+READER 5, THE CODE AGAINST THE RULES. It traced reader 3's seven faults and found them fixed, "but three of them survive
+in other places". The sample report agreed with both snapshots on everything it re-derived.
+  Wrong assertions and silent losses it found, each with an input that shows it:
+  - Whether the item waited on is itself waiting could be untellable, and the wait was still filed under "none holds".
+  - A header line written a little differently (two spaces, a star, a capital), or a section headed "The Sprint", gave
+    "none is set" with no gap. Two sections headed "The sprint": the second was ignored.
+  - An item whose status could not be used, with a blocker, was listed under "blocked, and not done".
+  - A snapshot date that was recorded and unusable was called "not recorded".
+  - In section 7, a threshold that had not been set was said to have been "not usable".
+  - A bar inside a title made the row unusable, and the item was then said to be "not in the snapshot", and "removed".
+  - A chain that an item in a loop waits on was never reported. A chain could end on an item in a loop.
+  - With no threshold, section 2 showed no dates at all, against the skill document.
+  - A created date after the snapshot was not a gap.
+  - Words for nobody that are not on the fixed list, such as "TBC", are still counted as names.
+  Crashes: a file that is not UTF-8; a chain of about a thousand items; a few dozen items each depending on many others.
+  Of the check: it fails one kind of correct report (a previous snapshot naming an item that is in neither). It passed
+  a changed number of risks, a changed threshold at the top, an age line with its weekday removed, and more.
+  Text: the names of header lines were printed unquoted. Curly quotation marks and unseen characters passed through.
+  A row not closed by a bar is quoted whole in its gap entry, title included.
+
+WHAT WAS CHANGED AFTER ROUND 2, AND NOT READ AGAIN
+  All three of reader 4's first three findings, and reader 5's wrong assertions and silent losses except the last.
+  The count for a name now says which of its items cannot be told. The loop and chain sentences say only what is
+  recorded. Section 7 lists everything it does not compare. Whether the item waited on is itself waiting can be "cannot
+  be told". Header lines are read more tolerantly, only the six known names are read, and none or two header sections
+  is a gap. An item with an unusable status and a blocker is listed apart. An unusable date is called unusable. "Not
+  set" and "not usable" are kept apart in section 7. An unusable row is called that, and is not reported as absent,
+  removed or added. Chains no longer include or depend on loop members. With no threshold the days are still shown. A
+  created date after the snapshot is a gap. More quotation marks and unseen characters are replaced. The check knows
+  the previous snapshot's unknown identifiers, and compares the numbers of waits and risks and the threshold at the top.
+  The made-up snapshot of day 6 no longer describes a case that is only in day 7.
+  Tests went from 125 to 146, recorded checks from 75 to 81, planted bugs from 69 to 85. Each fault has a test.
+
+  NOT DONE, and written into the skill document as limits:
+  - The list of words for nobody is fixed. Two names in one cell are one name.
+  - A file that is not UTF-8, a very long chain or a very dense set of dependencies ends or exhausts the program.
+  - The check's remaining blind spots, and the three ways it can fail a correct report.
+  - A web address or an @name in a title is printed as it is.
+  - Wording reader 4 named and that stands: "0 days ... Of those days"; "left out of: aging" for items not started; the
+    gap whose field is "created and updated"; over the limit and aging on one line beside a name.
+
+  NOBODY HAS READ THE HANDED-IN VERSION. The handed-in report differs from the one reader 4 checked by: three sentences,
+  the added "cannot be told for" at the end of each count for a name, the added line in section 3 for items whose
+  status cannot be used, the longer "Not compared" sentence, a few words at the top, and the two checksums. No count, no
+  list, no age, no risk and no gap changed. The handed-in generator differs from the one reader 5 read by all the code
+  changes above. They are covered by tests and planted bugs, and by no reader.
+
+==============================================================================
+SUMMARY
+  Are the numbers right? Two readers worked every number of the report out again by hand, one on each version. Neither
+  found a wrong count, list, age or reason.
+  Did the first generator assert things the snapshot did not support, on other input? Yes, in several ways a reader
+  found by reading the code. None showed on the sample. The second generator still did, in fewer ways.
+  Does the handed-in generator? Not in any way a reader named and that was not then corrected or written down as a
+  limit. But it has not been read since, and each read so far found something.
+  A teammate was not walked through the report.

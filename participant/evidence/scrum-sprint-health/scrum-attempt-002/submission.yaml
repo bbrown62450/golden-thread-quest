@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261125182837-77d4f2
+quest_id: scrum-sprint-health
+quest_version: 1
+attempt_id: scrum-attempt-002
+content_hash: sha256:b96de6f537f956c539b09a1f4ba62741956bd8c6d798dee68c037fe2da76d9cd
+evidence_hash: sha256:e9c4fd2287b08269345a06b90e9fdaa41e10756a097be3148c486e9111bf9aab
+submitted_at: '2026-11-25T18:28:37Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/scrum/sprint-health.md
+  digest: sha256:d3951e24e3a2ec7ce71e8fe38fdeccb68de34f461fca223dcf27c28f3b1748fa
+- path: participant/context/scrum/sprint-snapshot.md
+  digest: sha256:b73f9ea21c41724fcb4f02f5c51ff7b7564101f703b4fce8fafb4d56aacdc40b
