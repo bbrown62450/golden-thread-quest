@@ -638,9 +638,10 @@ attempts:
   quest_id: jira-add-comment
   quest_version: 1
   content_hash: sha256:d730ce55b8ff2bb0a1e42ca4ba3b4ef4480a1b4f6860ece20c44209824b2b7f5
-  state: submitted
+  state: verified
   started_at: '2026-11-25T20:53:19Z'
-  updated_at: '2026-11-25T21:36:42Z'
+  updated_at: '2026-11-25T21:54:04Z'
   evidence_path: participant/evidence/jira-add-comment/jira-attempt-013
   submission_id: submission-20261125213642-2c8ea1
-updated_at: '2026-11-25T21:36:42Z'
+  review_id: review-20261125215404-e14d42
+updated_at: '2026-11-25T21:54:04Z'

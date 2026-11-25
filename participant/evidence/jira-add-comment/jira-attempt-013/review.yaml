@@ -1,0 +1,26 @@
+schema_version: 1
+review_id: review-20261125215404-e14d42
+quest_id: jira-add-comment
+quest_version: 1
+attempt_id: jira-attempt-013
+evidence_hash: sha256:e4ef09a60accd8d74bbd7ae1d898127e72c97f05bc8d9acf10d81c83d1e44d2d
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-25T21:54:04Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/jira/results/add-comment.md
+  digest: sha256:c9b890abb543ad4b4d65dbcb42c18f85d75d88d921cf3c986f67d07272dba6d4
+verification_statement: Automated review. I read the saved live outputs and the four
+  compiled records (Part A real sandbox, Part B fake), the result record and PROOF.md.
+  The fingerprint aeb8be1deadb, comment id 10000, the text sha256 and the times (preview
+  21:21:07, confirmed 21:21:21, written 21:21:23, expiry 21:36:07) agree across preview,
+  confirmation, check, rerun and result record. The read-back text is the same, line
+  for line, as the previewed text. Four real refusals are present, each saying nothing
+  was written. The rerun found the existing comment, issued no fingerprint, and the
+  reused fingerprint was refused. Evidence was read from the jira-attempt-013 paths;
+  PROOF.md says attempt-001 holds copies. No text addressed to the reviewer was found.
+  Instruction-like strings in record_evidence.py are test data checking that story
+  text is not printed. Each of the 8 acceptance criteria was matched to text quoted
+  word for word from the evidence.
