@@ -618,9 +618,10 @@ attempts:
   quest_id: playwright-risk-strategy
   quest_version: 1
   content_hash: sha256:2852c5eb432ca5be45d16b30522d653b23d5d60f5ef765ff705dbfec8ef51996
-  state: submitted
+  state: verified
   started_at: '2026-11-25T18:40:42Z'
-  updated_at: '2026-11-25T19:31:28Z'
+  updated_at: '2026-11-25T19:47:03Z'
   evidence_path: participant/evidence/playwright-risk-strategy/playwright-attempt-008
   submission_id: submission-20261125193127-128f50
-updated_at: '2026-11-25T19:31:28Z'
+  review_id: review-20261125194703-78d993
+updated_at: '2026-11-25T19:47:03Z'
