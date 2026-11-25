@@ -1,0 +1,111 @@
+{
+  "as_of": "2026-11-24T09:00:00Z",
+  "items": {
+    "github:I_kwFXsc0001": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:35:00Z",
+      "status": "open"
+    },
+    "github:I_kwFXsc0002": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:35:00Z",
+      "status": "open"
+    },
+    "github:I_kwFXsc0003": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:35:00Z",
+      "status": "done"
+    },
+    "github:I_kwFXsc0004": {
+      "asserted": false,
+      "retrieved_at": "2026-11-23T07:35:00Z",
+      "status": "open"
+    },
+    "github:I_kwFXsc0007": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:35:00Z",
+      "status": "open"
+    },
+    "jira:53001": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:30:00Z",
+      "status": "in_progress"
+    },
+    "jira:53002": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:30:00Z",
+      "status": "open"
+    },
+    "jira:53003": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:30:00Z",
+      "status": "in_progress"
+    },
+    "jira:53004": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:30:00Z",
+      "status": "done"
+    },
+    "jira:53005": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:30:00Z",
+      "status": "in_progress"
+    },
+    "jira:53006": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:30:00Z",
+      "status": "open"
+    },
+    "jira:53007": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:30:00Z",
+      "status": "in_progress"
+    },
+    "jira:53008": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:30:00Z",
+      "status": "open"
+    },
+    "jira:53010": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:30:00Z",
+      "status": "open"
+    },
+    "jira:53011": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:30:00Z",
+      "status": "dropped"
+    },
+    "jira:53012": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:30:00Z",
+      "status": "in_progress"
+    },
+    "jira:53013": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T07:30:00Z",
+      "status": "in_progress"
+    },
+    "jira:53014": {
+      "asserted": false,
+      "retrieved_at": "2026-11-24T07:30:00Z",
+      "status": "in_progress"
+    },
+    "trello:6b2e0000000000000000c001": {
+      "asserted": false,
+      "retrieved_at": "2026-11-22T07:40:00Z",
+      "status": "in_progress"
+    },
+    "trello:6b2e0000000000000000c002": {
+      "asserted": false,
+      "retrieved_at": "2026-11-22T07:40:00Z",
+      "status": "open"
+    },
+    "trello:6b2e0000000000000000c003": {
+      "asserted": false,
+      "retrieved_at": "2026-11-22T07:40:00Z",
+      "status": "done"
+    }
+  },
+  "scope": "all"
+}

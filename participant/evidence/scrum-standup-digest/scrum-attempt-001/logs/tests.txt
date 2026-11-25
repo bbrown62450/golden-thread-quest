@@ -1,3 +1,9 @@
+test_an_inference_from_a_link_saved_with_a_record_names_no_note (test_digest.AfterTheReview) ... ok
+test_an_inference_that_depends_on_a_note_names_the_note_in_what_it_rests_on (test_digest.AfterTheReview) ... ok
+test_the_header_says_citation_ages_and_points_to_aging_as_a_different_count (test_digest.AfterTheReview) ... ok
+test_a_run_that_states_its_scope_has_it_printed (test_digest.AfterTheSecondRead) ... ok
+test_open_is_called_open_and_not_not_started (test_digest.AfterTheSecondRead) ... ok
+test_with_no_inference_the_count_line_does_not_point_at_lines_that_are_not_there (test_digest.AfterTheSecondRead) ... ok
 test_an_item_not_started_is_never_aging (test_digest.Aging) ... ok
 test_in_progress_and_unchanged_for_the_threshold_is_aging_with_the_number (test_digest.Aging) ... ok
 test_one_day_short_of_the_threshold_is_not_aging (test_digest.Aging) ... ok
@@ -81,8 +87,19 @@ test_at_exactly_the_limit_a_record_is_fresh (test_digest.Staleness) ... ok
 test_one_second_past_the_limit_is_stale (test_digest.Staleness) ... ok
 test_the_check_reports_a_stale_item_stated_as_current (test_digest.Staleness) ... ok
 test_the_thresholds_are_the_ones_the_skill_states (test_digest.Staleness) ... ok
+test_a_folder_that_is_not_a_real_sync_is_refused (test_from_sync.EndToEnd) ... ok
+test_a_sync_becomes_context_the_digest_reads_and_marks_as_live (test_from_sync.EndToEnd) ... ok
+test_an_item_new_on_the_second_day_is_reported_as_added (test_from_sync.EndToEnd) ... ok
+test_the_secret_is_kept_beside_the_real_folder_and_not_in_the_context (test_from_sync.EndToEnd) ... ok
+test_a_masked_identity_depends_on_the_secret (test_from_sync.Masking) ... ok
+test_a_masked_identity_is_one_the_digest_accepts (test_from_sync.Masking) ... ok
+test_bodies_and_comments_are_not_copied_and_their_count_is_kept (test_from_sync.Masking) ... ok
+test_no_real_value_is_left (test_from_sync.Masking) ... ok
+test_the_owner_and_another_person_are_told_apart_and_neither_is_named (test_from_sync.Masking) ... ok
+test_the_same_item_has_the_same_masked_identity_on_another_day (test_from_sync.Masking) ... ok
+test_titles_numbers_labels_states_and_times_are_kept (test_from_sync.Masking) ... ok
 
 ----------------------------------------------------------------------
-Ran 83 tests in 0.879s
+Ran 100 tests in 1.081s
 
 OK

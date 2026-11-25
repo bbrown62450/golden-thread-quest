@@ -1,17 +1,17 @@
 schema_version: 1
-submission_id: submission-20261125154614-157f51
+submission_id: submission-20261125165902-91fc0d
 quest_id: scrum-standup-digest
 quest_version: 1
 attempt_id: scrum-attempt-001
 content_hash: sha256:f2a28c60b7bdd71a3aefba70b766a9f77bcd0f4a083a701406d06cdc88627c1a
-evidence_hash: sha256:cd7978529e23fc11f89b4c10b3d13465352fbc761732e69da7bd12648e698afa
-submitted_at: '2026-11-25T15:46:14Z'
+evidence_hash: sha256:b2373a95884e856ad3c734aece8bd4914116d3c56f38be898bc672d86871b305
+submitted_at: '2026-11-25T16:59:02Z'
 submitted_by: beaubrown
 secret_scan_clean: true
 proof_files:
 - path: participant/context/scrum/standup-digest.md
-  digest: sha256:5d0326ec957af56655dd1977f195e2e5238fcad9c43df105a7e90cdcacfc6eda
+  digest: sha256:54ff154beb4fadbffaaf56c7810b445e2d356f0fbe1031568a1613b51143030b
 - path: participant/context/scrum/standup-gaps.md
-  digest: sha256:e4d216e6d5966391b4970f78691ddcbb01ff2a594e985518a684bf00f97df073
+  digest: sha256:afa719f8c6f346e4f5602c614e9b93577586d98adf43662249ca9e875ab0a0da
 - path: participant/skills/scrum-standup-digest/SKILL.md
-  digest: sha256:d46a815c90679d0655bd30c440ee3d7241168b67048bf9cf8b9752a31a7133a9
+  digest: sha256:81c21762acebec0577a0ff4dd327b3caa54b6d3f7462f1b597bec551475700b3

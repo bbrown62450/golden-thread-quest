@@ -34,10 +34,11 @@ PLANTED BUG D. A record with no readable retrieval time is treated as fresh
     FoundByReaders.test_a_time_that_is_not_a_real_date_is_not_a_time
 
 PLANTED BUG E. A status the source does not state is asserted (criterion 6)
-  unittest result: FAILED (failures=4)
-  tests that failed (4):
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
     FoundByReaders.test_a_status_that_differs_where_one_side_was_not_asserted_is_a_gap_and_not_a_change
     Gaps.test_a_status_the_source_does_not_state_is_unsupported_and_kept_apart
+    test_from_sync.test_a_sync_becomes_context_the_digest_reads_and_marks_as_live
     FoundByReaders.test_a_title_cannot_end_its_quotation_or_start_a_line_or_forge_a_citation
     Citations.test_every_observed_line_cites_an_item_and_its_retrieval_time
 
@@ -51,11 +52,12 @@ PLANTED BUG F. A title that says blocked makes an item blocked (criterion 7)
     PeopleAndText.test_the_scoped_digest_uses_a_field_and_says_nothing_of_a_person
 
 PLANTED BUG G. A person's explicit note is not counted (criterion 7)
-  unittest result: FAILED (failures=5)
-  tests that failed (5):
+  unittest result: FAILED (failures=5, errors=1)
+  tests that failed (6):
     FoundByReaders.test_a_blocks_note_naming_an_item_with_no_record_is_missing
     Inference.test_a_stale_blocker_is_rule_three
     Blocked.test_an_explicit_note_makes_an_item_blocked
+    AfterTheReview.test_an_inference_that_depends_on_a_note_names_the_note_in_what_it_rests_on
     FoundByReaders.test_one_blocker_done_and_one_not_is_not_called_all_done
     FoundByReaders.test_the_scoped_digest_does_not_fail_on_a_blocker_outside_its_scope
 
@@ -91,9 +93,10 @@ PLANTED BUG K. A removed item is not reported (criterion 9)
     Changes.test_added_removed_and_changed_are_reported_by_identity
 
 PLANTED BUG L. An added item is not reported (criterion 9)
-  unittest result: FAILED (failures=1)
-  tests that failed (1):
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
     Changes.test_added_removed_and_changed_are_reported_by_identity
+    test_from_sync.test_an_item_new_on_the_second_day_is_reported_as_added
 
 PLANTED BUG M. A status change is reported even when one side was not asserted
   unittest result: FAILED (errors=1)
@@ -101,8 +104,8 @@ PLANTED BUG M. A status change is reported even when one side was not asserted
     FoundByReaders.test_a_status_that_differs_where_one_side_was_not_asserted_is_a_gap_and_not_a_change
 
 PLANTED BUG N. The computer's clock is read (criterion 10)
-  unittest result: FAILED (failures=35, errors=1)
-  tests that failed (36):
+  unittest result: FAILED (failures=36, errors=3)
+  tests that failed (39):
     FoundByReaders.test_a_blocked_field_with_no_basis_says_so
     Gaps.test_a_blocker_with_no_record_is_missing
     Blocked.test_a_blocking_link_is_reported_from_the_record
@@ -118,11 +121,14 @@ PLANTED BUG N. The computer's clock is read (criterion 10)
     Changes.test_a_removed_item_is_not_said_to_be_done
     Inference.test_a_stale_blocker_is_rule_three
     Gaps.test_a_status_the_source_does_not_state_is_unsupported_and_kept_apart
+    test_from_sync.test_a_sync_becomes_context_the_digest_reads_and_marks_as_live
     FoundByReaders.test_a_title_cannot_end_its_quotation_or_start_a_line_or_forge_a_citation
     Blocked.test_a_title_that_says_blocked_does_not_make_an_item_blocked
     PeopleAndText.test_a_title_worded_as_an_instruction_changes_nothing
     Changes.test_added_removed_and_changed_are_reported_by_identity
     Blocked.test_an_explicit_note_makes_an_item_blocked
+    AfterTheReview.test_an_inference_from_a_link_saved_with_a_record_names_no_note
+    AfterTheReview.test_an_inference_that_depends_on_a_note_names_the_note_in_what_it_rests_on
     Blocked.test_an_item_whose_blocked_field_is_unknown_is_not_said_to_be_free
     Staleness.test_at_exactly_the_limit_a_record_is_fresh
     Citations.test_every_observed_line_cites_an_item_and_its_retrieval_time

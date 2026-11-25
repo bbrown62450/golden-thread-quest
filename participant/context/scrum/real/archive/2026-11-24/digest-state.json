@@ -1,0 +1,21 @@
+{
+  "as_of": "2026-11-24T09:00:00Z",
+  "items": {
+    "github:I_masked_6f2caf5822e9": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T00:39:47Z",
+      "status": "open"
+    },
+    "github:I_masked_9a82865f4d89": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T00:39:47Z",
+      "status": "done"
+    },
+    "github:I_masked_cb209c0f7229": {
+      "asserted": true,
+      "retrieved_at": "2026-11-24T00:39:47Z",
+      "status": "open"
+    }
+  },
+  "scope": "all"
+}

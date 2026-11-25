@@ -31,7 +31,7 @@ import sys
 STALE_AFTER_HOURS = 24   # a record retrieved more than this long before --as-of is stale. At exactly the limit it is fresh.
 AGING_AFTER_DAYS = 5     # an item in progress whose source had not changed for this many whole days, or more, WHEN IT WAS RETRIEVED.
 MODEL = "work-item/1"
-STATUS_WORDS = {"open": "open, which is to say not started as far as the source says", "in_progress": "in progress", "done": "done", "dropped": "closed without being done"}
+STATUS_WORDS = {"open": "open", "in_progress": "in progress", "done": "done", "dropped": "closed without being done"}
 SHORT = {"open": "open", "in_progress": "in progress", "done": "done", "dropped": "closed without being done"}
 TIME = re.compile(r"^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$")
 IDENTITY = re.compile(r"^(jira|github|trello):[A-Za-z0-9_.-]+$")
@@ -148,12 +148,12 @@ def load(context):
     for run, body in re.findall(r"^## (\S+)\n(.*?)(?=^## |\Z)", read(os.path.join(context, "sync-runs.md")), re.S | re.M):
         field = lambda key: (re.search(r"^- %s: (.*)$" % key, body, re.M) or [None, ""])[1].strip()  # noqa: E731
         listed = [] if field("items") in ("", "none") else [one.strip() for one in field("items").split(",")]
-        runs.append({"run": run, "system": field("system"), "retrieved_at": field("retrieved_at"), "result": field("result"), "items": listed})
+        runs.append({"run": run, "system": field("system"), "retrieved_at": field("retrieved_at"), "result": field("result"), "items": listed, "scope": field("scope")})
     names = [n.strip() for n in re.findall(r"^- (.+)$", read(os.path.join(context, "redaction.md")), re.M)] if os.path.exists(os.path.join(context, "redaction.md")) else []
     return {"items": items, "trouble": trouble, "notes": notes, "note_files": note_files, "runs": runs, "names": names}
 
 
-def safe(text, names):
+def safe(text, names, limit=90):
     """Other people's text made fit to print: redacted, and with nothing in it that could end the quotation it sits in,
     start a line, or be taken for markup or for one of the generator's own citations. It is never read for meaning."""
     out = str(text)
@@ -166,7 +166,7 @@ def safe(text, names):
         out = out.replace(bad, good)
     out = re.sub(r"\[(?!name\]|email address\]|customer number\]|telephone number\])", "(", out)
     out = re.sub(r"(?<!\[name)(?<!\[email address)(?<!\[customer number)(?<!\[telephone number)\]", ")", out)
-    return out if len(out) <= 90 else out[:87] + "..."
+    return out if limit is None or len(out) <= limit else out[:limit - 3] + "..."
 
 
 def links_of(identity, entry, notes, note_files):
@@ -272,6 +272,8 @@ def build(context, as_of, previous, scope="all"):
                 if other not in items and not any(g["what"] == other for g in gaps):
                     gap("MISSING", other, "`%s` is recorded as blocking it, and there is no local record of it" % identity, "anything about it")
         not_done, done, unseen = [], [], []
+        from_note = {other for other, where in blockers if where.startswith("a person")}
+        note_part = lambda others: ["notes/%s" % f for f in data["note_files"].get(identity, [])] if from_note & set(others) else []  # noqa: E731
         for other, where in blockers:
             if other not in items:
                 if not any(g["what"] == other for g in gaps):
@@ -288,16 +290,16 @@ def build(context, as_of, previous, scope="all"):
             else:
                 not_done.append(other)
         for other in not_done:
-            inferences.append(("I1", "`%s` is waiting on `%s`, which is %s." % (identity, other, SHORT[stated[other]["c"]["status"]]), [identity, other]))
+            inferences.append(("I1", "`%s` is waiting on `%s`, which is %s." % (identity, other, SHORT[stated[other]["c"]["status"]]), [identity, other], note_part([other])))
         for other, why in unseen:
-            inferences.append(("I3", "`%s` waits on `%s`, and whether that is done is not known here: %s." % (identity, other, why), [identity]))
+            inferences.append(("I3", "`%s` waits on `%s`, and whether that is done is not known here: %s." % (identity, other, why), [identity], note_part([other])))
         if blockers and not not_done and not unseen:
             inferences.append(("I2", "Every recorded blocker of `%s` is done or closed (%s). That does not say `%s` is free: its own record may still say blocked, and a blocker may not be recorded."
-                               % (identity, ", ".join("`%s`" % o for o in done), identity), [identity] + done))
+                               % (identity, ", ".join("`%s`" % o for o in done), identity), [identity] + done, note_part(done)))
         if not_done or unseen:
             waiting.append(identity)
     if unknown_blocked:
-        gap("UNSUPPORTED", ", ".join(unknown_blocked), "for each of these, the record's `blocked` field is unknown and no note records a blocker. Nothing else is read to decide it",
+        gap("UNSUPPORTED", ", ".join(unknown_blocked), "for each of these, the record's `blocked` field is unknown, and no link saved with the record and no note records a blocker. Nothing else is read to decide it",
             "that they are blocked, or that they are not")
 
     # Aging: in progress, stated, fresh, and unchanged at the source for the threshold or longer WHEN RETRIEVED.
@@ -373,18 +375,20 @@ def render_digest(model):
     kinds = lambda kind: sum(1 for g in model["gaps"] if g["kind"] == kind)  # noqa: E731
     blocked_ids = sorted({i for i, _ in model["blocked"]})
     out = ["# Stand-up digest, as of %s" % model["as_of"], "",
-           "**Built from made-up context.**" if items and all(e["p"].get("sync_source") == "made-up" for e in items.values()) else "**Built from local context.**",
+           "**Built from made-up context.**" if items and all(e["p"].get("sync_source") == "made-up" for e in items.values())
+           else "**Built from context that a real synchronization run wrote.** Every record says `sync_source` is `live`." if items and all(e["p"].get("sync_source") == "live" for e in items.values())
+           else "**Built from local context.** Not every record says where it came from, or they do not agree.",
            "Written by `participant/skills/scrum-standup-digest/digest.py`. No source system was contacted while it was written: it reads local files only.", "",
-           "- Scope: %s" % ("every item in the local context" if model["scope"] == "all" else "only items whose record says `assigned_to_me` is yes. That is a field of the record. This digest says nothing about any person"),
+           "- Scope: %s" % ("every item in the local context. That is what the runs below retrieved, which may not be every item there is" if model["scope"] == "all" else "only items whose record says `assigned_to_me` is yes. That is a field of the record. This digest says nothing about any person"),
            "- Window: %s" % ("from %s, the time the previous digest was for, to %s" % (previous["as_of"], model["as_of"]) if previous else "no previous digest could be compared with. This digest is for %s and reports no changes" % model["as_of"]),
            "- A record is **stale** if it was retrieved more than %d hours before %s, or cannot be shown to be fresh. A stale record is not stated as current." % (STALE_AFTER_HOURS, model["as_of"]),
            "- An item is **aging** if it is in progress and, when it was retrieved, its source had not changed for %d whole days or more." % AGING_AFTER_DAYS,
-           "- **Every age here is counted to %s.** Read later than that, everything is older than it says." % model["as_of"],
-           "- Gap report: `standup-gaps.md`, beside this file. It has %d entries: what this digest does not assert, and why." % len(model["gaps"]), "",
+           "- **The age in each citation is counted from when the record was retrieved to %s.** Read later than that, every record is older than its citation says. Aging is a different count: see section 4." % model["as_of"],
+           "- Gap report: `standup-gaps.md`, beside this file. Entries in it: %d. Each is something this digest does not assert, and why." % len(model["gaps"]), "",
            "## At a glance", "",
            "Counts only. Each is of lines further down, where every item is cited.", "",
            "- In progress: %d. Recorded as blocked: %d. Aging: %d. Changes since the previous digest: %s." % (len(by_status("in_progress")), len(blocked_ids), len(model["aging"]), len(model["changes"]) if previous else "not compared"),
-           "- Not asserted: %d stale records, and %d gap entries in all (%d stale, %d missing, %d unsupported)." % (len(model["stale"]), len(model["gaps"]), kinds("STALE"), kinds("MISSING"), kinds("UNSUPPORTED")), "",
+           "- Not asserted: stale records, %d. Gap entries in all, %d (stale %d, missing %d, unsupported %d)." % (len(model["stale"]), len(model["gaps"]), kinds("STALE"), kinds("MISSING"), kinds("UNSUPPORTED")), "",
            "## The synchronization runs this digest was built from", "",
            "| Run | System | Result | Retrieved at | Age at this digest | Fresh records used | Items the run lists | Verdict |", "|---|---|---|---|---|---|---|---|"]
     for run in model["runs"]:
@@ -394,6 +398,10 @@ def render_digest(model):
     named = sorted({str(e["p"].get("sync_run")) for i, e in items.items() if model["in_scope"](i)} - {r["run"] for r in model["runs"]})
     for run in named:
         out.append("| `%s` | | | | | 0 | | NOT IN sync-runs.md. Records that name it are not asserted |" % (run if RUN_NAME.match(run) else "unreadable"))
+    scoped = [r for r in model["runs"] if r.get("scope")]
+    if scoped:
+        out += ["", "What each run says of its own scope. **A digest covers no more than its runs retrieved**:", ""]
+        out += ["- `%s`: \"%s\"" % (r["run"] if RUN_NAME.match(r["run"]) else "unreadable", safe(r["scope"], names, None)) for r in scoped]
     out += ["", "## How to read this", "",
             "- **OBSERVED** lines say what one fresh record says. An OBSERVED · CHANGE line compares that record with the state the previous digest kept. An OBSERVED · AGING line applies the %d-day threshold to two times in the record. An OBSERVED · COUNT line counts the lines above it." % AGING_AFTER_DAYS,
             "- **INFERENCE** lines are the generator's own conclusions, drawn from more than one record by one of the rules I1 to I4. They are all in section 7 and nowhere else.",
@@ -431,12 +439,14 @@ def render_digest(model):
             "- [OBSERVED · COUNT] Not counted above, because this digest does not assert them: stale records, %d (%s); fresh records whose status the source does not state, %d. Items with no readable record are in the gap report and are in no count."
             % (len(model["stale"]), ", ".join("`%s`" % i for i in sorted(model["stale"])) or "none", len(model["fresh"]) - len(stated)), "",
             "## 7. INFERENCE: the generator's own conclusions", "",
-            "**These are not observations.** Each is drawn by one of the rules I1 to I4 in the skill, from more than one record, and names every record it rests on.",
+            "**These are not observations.** Each is drawn by one of the rules I1 to I4 in the skill. I1 to I3 are drawn from more than one record and name every record they rest on. I4 counts them.",
             "I1: waiting on a blocker that is not done. I2: every recorded blocker is done, which does not mean free. I3: waiting on a blocker this digest cannot see. I4: a count of I1 and I3.", ""]
-    for rule, text, cites in model["inferences"]:
-        out.append("- [INFERENCE %s] %s Rests on: %s." % (rule, text, "; ".join(cite(model, i) for i in cites)))
-    out += ["- [INFERENCE I4] Items waiting on something that is not done, or that this digest cannot see: %d (%s). Recorded as blocked with no blocker named, and so in neither I1 nor I3: %d (%s). Rests on the I1 and I3 lines above and on section 3."
-            % (len(model["waiting"]), ", ".join("`%s`" % i for i in model["waiting"]) or "none", len(model["no_blocker_named"]), ", ".join("`%s`" % i for i in model["no_blocker_named"]) or "none"), "",
+    for rule, text, cites, note_files in model["inferences"]:
+        rests = [cite(model, i) for i in cites] + ["the person's note `%s`, which records the link and carries no date" % f for f in note_files]
+        out.append("- [INFERENCE %s] %s Rests on: %s." % (rule, text, "; ".join(rests)))
+    out += ["- [INFERENCE I4] Items waiting on something that is not done, or that this digest cannot see: %d (%s). Recorded as blocked with no blocker named, and so in neither I1 nor I3: %d (%s). %s"
+            % (len(model["waiting"]), ", ".join("`%s`" % i for i in model["waiting"]) or "none", len(model["no_blocker_named"]), ", ".join("`%s`" % i for i in model["no_blocker_named"]) or "none",
+               "Rests on the I1 and I3 lines above and on section 3." if model["inferences"] else "There is no I1, I2 or I3 line in this digest: nothing here is recorded as blocked by anything."), "",
             "## 8. Status the source does not state", "",
             "The record's `status_basis` is not `stated`. These are not counted as observed.", ""]
     unstated = [i for i in sorted(model["fresh"]) if i not in stated]
@@ -577,7 +587,7 @@ def check(context, as_of, out, scope="all"):
     if not said or int(said.group(1)) != progress:
         say("Section 6 gives a count of work in progress that is not the number of lines in section 2.")
     entries = len(re.findall(r"^- \[(?:STALE|MISSING|UNSUPPORTED)\] ", gaps, re.M))
-    said = re.search(r"It has (\d+) entries", digest)
+    said = re.search(r"Entries in it: (\d+)\.", digest)
     if not said or int(said.group(1)) != entries:
         say("The digest says the gap report has a number of entries that it does not have.")
     quiet = re.sub(r"`[^`\n]*`", "", digest + gaps)
@@ -609,7 +619,7 @@ def main(argv=None):
         for name in written:
             with open(os.path.join(args.out, name), "rb") as f:
                 print("wrote %-18s sha256 %s" % (name, hashlib.sha256(f.read()).hexdigest()))
-        print("%d records read. %d fresh, %d stale. %d gap entries. No source system was contacted." % (len(model["items"]), len(model["fresh"]), len(model["stale"]), len(model["gaps"])))
+        print("Records read: %d. Fresh: %d. Stale: %d. Gap entries: %d. No source system was contacted." % (len(model["items"]), len(model["fresh"]), len(model["stale"]), len(model["gaps"])))
         return 0
     problems = check(args.context, args.as_of, args.out, args.scope)
     for problem in problems:

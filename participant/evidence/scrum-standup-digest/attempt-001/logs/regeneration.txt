@@ -1,39 +1,42 @@
 The regeneration record. scrum-standup-digest, attempt scrum-attempt-001
-Recorded by scripts/record_evidence.py. Nothing was sent anywhere. No source system was read: the context is made up.
+Recorded by scripts/record_evidence.py. Nothing was sent anywhere, and no source system was read while it ran.
+Parts 1 to 3 are of the handed-in digest, built from a REAL GitHub sync the participant ran, masked. Parts 4 to 8 are of a second
+digest built from a MADE-UP sprint, kept as a fixture for the cases the real day does not have.
 Paths are from the repository's top folder. SCRATCH is a temporary folder, deleted at the end.
 
 ==============================================================================
-PART 1. The digest generated twice from unchanged context (criterion 10)
-$ python3 participant/skills/scrum-standup-digest/digest.py generate --context participant/context/scrum/sprint/2026-11-24 --as-of 2026-11-24T09:00:00Z --previous participant/context/scrum/archive/2026-11-23/digest-state.json --out SCRATCH/first
-  wrote standup-digest.md  sha256 bf7d1fcb6aacf178a86cdbf6a2e3cbeb79147db07d4a51d71a84546fa8904bfd
-  wrote standup-gaps.md    sha256 548965a362be812179056ad6dfac2ec73be4132e6b86fe6ee7c5df379a191633
-  wrote digest-state.json  sha256 13df46852c62748f19ce84a5d9b460934c777fbb47ea8047e90f0f2f78b9ac38
-  21 records read. 17 fresh, 4 stale. 13 gap entries. No source system was contacted.
+PART 1. The handed-in digest generated twice from unchanged REAL context (criterion 10)
+$ python3 participant/skills/scrum-standup-digest/digest.py generate --context participant/context/scrum/real/2026-11-25 --as-of 2026-11-25T17:30:00Z --previous participant/context/scrum/real/archive/2026-11-24/digest-state.json --out SCRATCH/first
+  wrote standup-digest.md  sha256 40eb35839b79da75651305fcd818f26362ef433c3f1028a57f356e89382ce899
+  wrote standup-gaps.md    sha256 acdc4ae3e8dc469723e3b4ad271d6bf3e004c96704674288236b3b02cf629d7f
+  wrote digest-state.json  sha256 758cf21aed9304da980e8c56a2581c22cbcea7145f2a66fb709e709fb3026cdc
+  Records read: 3. Fresh: 3. Stale: 0. Gap entries: 1. No source system was contacted.
   exit code 0
 
-$ python3 participant/skills/scrum-standup-digest/digest.py generate --context participant/context/scrum/sprint/2026-11-24 --as-of 2026-11-24T09:00:00Z --previous participant/context/scrum/archive/2026-11-23/digest-state.json --out SCRATCH/second
-  wrote standup-digest.md  sha256 bf7d1fcb6aacf178a86cdbf6a2e3cbeb79147db07d4a51d71a84546fa8904bfd
-  wrote standup-gaps.md    sha256 548965a362be812179056ad6dfac2ec73be4132e6b86fe6ee7c5df379a191633
-  wrote digest-state.json  sha256 13df46852c62748f19ce84a5d9b460934c777fbb47ea8047e90f0f2f78b9ac38
-  21 records read. 17 fresh, 4 stale. 13 gap entries. No source system was contacted.
+$ python3 participant/skills/scrum-standup-digest/digest.py generate --context participant/context/scrum/real/2026-11-25 --as-of 2026-11-25T17:30:00Z --previous participant/context/scrum/real/archive/2026-11-24/digest-state.json --out SCRATCH/second
+  wrote standup-digest.md  sha256 40eb35839b79da75651305fcd818f26362ef433c3f1028a57f356e89382ce899
+  wrote standup-gaps.md    sha256 acdc4ae3e8dc469723e3b4ad271d6bf3e004c96704674288236b3b02cf629d7f
+  wrote digest-state.json  sha256 758cf21aed9304da980e8c56a2581c22cbcea7145f2a66fb709e709fb3026cdc
+  Records read: 3. Fresh: 3. Stale: 0. Gap entries: 1. No source system was contacted.
   exit code 0
 
 The two runs were started 2 seconds apart. The computer's clock is not an input: the time the digest is for is given with --as-of.
 
-  standup-digest.md  first: 15917 bytes, sha256 bf7d1fcb6aacf178a86cdbf6a2e3cbeb79147db07d4a51d71a84546fa8904bfd
-                     second: 15917 bytes, sha256 bf7d1fcb6aacf178a86cdbf6a2e3cbeb79147db07d4a51d71a84546fa8904bfd
+  standup-digest.md  first: 6720 bytes, sha256 40eb35839b79da75651305fcd818f26362ef433c3f1028a57f356e89382ce899
+                     second: 6720 bytes, sha256 40eb35839b79da75651305fcd818f26362ef433c3f1028a57f356e89382ce899
   ok   standup-digest.md is byte for byte the same in both runs
-  standup-gaps.md    first: 3620 bytes, sha256 548965a362be812179056ad6dfac2ec73be4132e6b86fe6ee7c5df379a191633
-                     second: 3620 bytes, sha256 548965a362be812179056ad6dfac2ec73be4132e6b86fe6ee7c5df379a191633
+  standup-gaps.md    first: 1144 bytes, sha256 acdc4ae3e8dc469723e3b4ad271d6bf3e004c96704674288236b3b02cf629d7f
+                     second: 1144 bytes, sha256 acdc4ae3e8dc469723e3b4ad271d6bf3e004c96704674288236b3b02cf629d7f
   ok   standup-gaps.md is byte for byte the same in both runs
-  digest-state.json  first: 2765 bytes, sha256 13df46852c62748f19ce84a5d9b460934c777fbb47ea8047e90f0f2f78b9ac38
-                     second: 2765 bytes, sha256 13df46852c62748f19ce84a5d9b460934c777fbb47ea8047e90f0f2f78b9ac38
+  digest-state.json  first: 487 bytes, sha256 758cf21aed9304da980e8c56a2581c22cbcea7145f2a66fb709e709fb3026cdc
+                     second: 487 bytes, sha256 758cf21aed9304da980e8c56a2581c22cbcea7145f2a66fb709e709fb3026cdc
   ok   digest-state.json is byte for byte the same in both runs
   ok   the handed-in digest, gap report and state are byte for byte what these runs wrote
   ok   the context was not changed by generating: every file under participant/context/scrum has the checksum it had before
 
-A contrast: the same context with --as-of 2026-11-24T09:30:00Z, half an hour later.
-  ok   a different --as-of gives a different digest, in which the Jira records are 2 h 0 min old and not 1 h 30 min. So the time the digest is for is an input
+A contrast: the same context with --as-of 2026-11-25T18:00:00Z, half an hour later.
+  ok   a different --as-of gives a different digest, in which the records are 1 h 12 min old and not 0 h 42 min. So the time the digest is for is an input
+  ok   the fixture digest, of the made-up sprint, is also the same in two runs, and is what participant/context/scrum/fixture/ holds
   ok   digest.py never asks for the time: it has no datetime.now, utcnow, time.time or today()
 
 ==============================================================================
@@ -45,11 +48,51 @@ Every place digest.py opens a file: os.path.join(args.out; path.
   ok   it opens files in two places only, its own read() and write(), and those are given paths under --context, --previous and --out
 The generator was also run with every attempt to open a network socket made to fail. Since it imports nothing that could try, this run is a formality, and is recorded as one.
   ok   that run wrote the same three files byte for byte, and no socket was asked for
-  ok   every record it read says sync_source is "made-up", and the digest says so on its third line. That line repeats what the records say of themselves
 
 ==============================================================================
-PART 3. Citations, retrieval times, the window and the runs (criteria 2, 3 and 11)
-$ python3 participant/skills/scrum-standup-digest/digest.py check --context participant/context/scrum/sprint/2026-11-24 --as-of 2026-11-24T09:00:00Z --out participant/context/scrum
+PART 3. The handed-in digest is of a real day of synchronized work, masked (criteria 1 to 3 and 11, on real context)
+The context: participant/context/scrum/real/2026-11-25/. What the sync saved, masked, says of itself:
+  source: live    last successful sync: 2026-11-25T16:47:42Z    issues: 3    pull requests left out: 1
+  scope: RESTRICTED with --only-repos to 1 repository. This is not every repository
+The day before, participant/context/scrum/real/2026-11-24/: last successful sync 2026-11-24T00:39:47Z, issues: 3.
+
+  ok   the saved sync says its source is "live", every canonical record made from it says sync_source is "live", and the digest's third line says so
+  ok   each record's retrieval time and run are the sync's own: retrieved at its last successful sync, by the run of that time
+  ok   nothing under participant/context/scrum/real/, and nothing in the digest or the gap report, has the form of a GitHub node ID. Every identity is a masked one
+  ok   the masked copy holds no body or comment text, and names nobody: every author and assignee is [owner]
+  ok   the same three masked identities are in both days. A real item keeps its masked identity from one day to the next
+
+$ python3 participant/skills/scrum-standup-digest/digest.py check --context participant/context/scrum/real/2026-11-25 --as-of 2026-11-25T17:30:00Z --out participant/context/scrum
+  CHECK PASSED. None of the things this check looks for was found. What it looks for, and what it does not, is in SKILL.md.
+  exit code 0
+
+  ok   the check reports no problem on the handed-in digest
+The statement lines of the handed-in digest:
+  - [OBSERVED] Done, stated by the source; title, redacted: "Made-up task two". `github:I_masked_9a82865f4d89`, retrieved 2026-11-25T16:47:42Z (0 h 42 min before this digest), run `github-read-assigned:2026-11-25
+  - [OBSERVED] Open, stated by the source; title, redacted: "Made-up bug: the export leaves the last row out". `github:I_masked_6f2caf5822e9`, retrieved 2026-11-25T16:47:42Z (0 h 42 min before this digest), run `
+  - [OBSERVED] Open, stated by the source; title, redacted: "Made-up task one". `github:I_masked_cb209c0f7229`, retrieved 2026-11-25T16:47:42Z (0 h 42 min before this digest), run `github-read-assigned:2026-11-25
+  - [OBSERVED · COUNT] Items with a fresh record whose status the source states: 3. In progress: 0. Open: 2. Done: 1. Closed without being done: 0.
+  - [OBSERVED · COUNT] Work in progress: 0. They are: none.
+  - [OBSERVED · COUNT] Recorded as blocked: 0. They are: none. Aging: 0.
+  - [OBSERVED · COUNT] Not counted above, because this digest does not assert them: stale records, 0 (none); fresh records whose status the source does not state, 0. Items with no readable record are in the gap r
+  - [INFERENCE I4] Items waiting on something that is not done, or that this digest cannot see: 0 (none). Recorded as blocked with no blocker named, and so in neither I1 nor I3: 0 (none). There is no I1, I2 or I3
+
+  ok   criteria 2 and 3, on the real digest: each of the three items has a line that cites it by identity, with its record's own retrieval time and run
+  ok   criterion 11, on the real digest: it states its window, from the previous digest's time to this one's, and the one run it was built from, with its time
+  ok   the real digest reports what the real records say and no more: two open, one done, none in progress, none blocked, none aging, no change since the day before
+  ok   its one gap entry says that whether the three items are blocked is not recorded, so neither blocked nor free is asserted
+  ok   the real digest says what the run says of its own scope: restricted to one repository, which is not every repository, and one pull request left out
+WHAT THE REAL DAY DOES NOT SHOW. It has no stale record, no blocked or aging item, no inference, no missing record and no change. So it gives
+criteria 4 to 9 nothing to show beyond "none". Those are shown on the fixture, below, by the same generator.
+
+==============================================================================
+PARTS 4 TO 8 ARE OF THE FIXTURE: a digest of a MADE-UP sprint, participant/context/scrum/fixture/standup-digest.md
+Everything in it is invented, and every record says sync_source is "made-up". It is here for the cases a real day rarely has.
+  ok   every record of the fixture says sync_source is "made-up", and the fixture digest says so on its third line
+
+==============================================================================
+PART 4. FIXTURE. Citations, retrieval times, the window and the runs (criteria 2, 3 and 11)
+$ python3 participant/skills/scrum-standup-digest/digest.py check --context participant/context/scrum/sprint/2026-11-24 --as-of 2026-11-24T09:00:00Z --out participant/context/scrum/fixture
   CHECK PASSED. None of the things this check looks for was found. What it looks for, and what it does not, is in SKILL.md.
   exit code 0
 
@@ -71,7 +114,7 @@ The counts in section 6, and the same counted here from the cited lines of secti
   ok   it also lists a run that a record names and sync-runs.md does not, and says records naming it are not asserted
 
 ==============================================================================
-PART 4. Observed, inference, stale and gaps kept apart (criteria 4, 5 and 6)
+PART 5. FIXTURE. Observed, inference, stale and gaps kept apart (criteria 4, 5 and 6)
 Statement lines by their label: INFERENCE 4, LAST KNOWN 4, NOT STATED 1, OBSERVED 30.
 Statement lines that cite more than one record, which is what makes a conclusion and not an observation: 2. All of them are in section 7: True.
   ok   criterion 4: every line labelled INFERENCE is in section 7, section 7 holds no other statement line, and no line outside it rests on more than one record
@@ -88,7 +131,7 @@ Stale records, older than 24 hours at 2026-11-24T09:00:00Z: github:I_kwFXsc0004,
   ok   the number of gaps the digest says the report holds is the number of entries in it: 13
 
 ==============================================================================
-PART 5. Blocked, aging and changes (criteria 7, 8 and 9)
+PART 6. FIXTURE. Blocked, aging and changes (criteria 7, 8 and 9)
 jira:53005 is titled "BLOCKED: waiting on legal sign-off for fare wording". Its record says blocked: no.
   ok   criterion 7: the item whose TITLE begins "BLOCKED:" is not in the blocked section. Its record says it is not blocked
 Shown as blocked: github:I_kwFXsc0001, github:I_kwFXsc0007, jira:53002, jira:53007.
@@ -106,23 +149,23 @@ Blocked by a recorded field, link or note, worked out here from the records: git
 - [OBSERVED · CHANGE · STATUS] In progress in the previous digest, done now; title, redacted: "Fix the time zone of evening sailings". `jira:53004`, retrieved 2026-11-24T
   ok   criterion 9: the digest's own lines report one item added, one removed and one status change, each by its identity
   ok   criterion 9: the removed item is not said to be done. The gap report says why it went is not recorded
-  ok   criterion 9: the state kept for the next digest holds identities and no titles
+  ok   criterion 9: the state kept for the next digest holds identities and no titles, in the fixture and in the real one
 
 ==============================================================================
-PART 6. No person, and nothing that should not be shared (criterion 12, and the safety rules)
+PART 7. FIXTURE AND REAL. No person, and nothing that should not be shared (criterion 12, and the safety rules)
   ok   criterion 12: neither file uses any of these words: assignee, assigned to, is working, is busy, behind, on leave, velocity, productiv, available today. A list of words is a weak test: it would miss a statement about a person worded another way
   ok   criterion 12: the generator never reads who an item is assigned to. The only field about assignment it reads is assigned_to_me, for --scope
   ok   criterion 12: the digest says in its own words that it makes no statement about any person, and the skill documents the limit
 jira:53010's title in the record holds a made-up customer number, name and email address. In the digest it reads:
-  - [OBSERVED] Open, which is to say not started as far as the source says, stated by the source; title, redacted: "Refund [customer number] f
+  - [OBSERVED] Open, stated by the source; title, redacted: "Refund [customer number] for [name] ([email address])". `jira:53010`, retrieved 2
   ok   the made-up name, email address and customer number in a title are not in the digest or the gap report
 Every place digest.py touches a title: safe(model["items"][identity]["c"]["title, title_of(. Each prints it, through safe(). No condition in the program reads one.
   ok   no branch of the generator reads a title: the word title appears in no if, elif, while or comparison in digest.py
   ok   the item whose title is worded as an instruction is reported as open, as its record says
 
 ==============================================================================
-PART 7. That these checks can fail
-The handed-in digest is spoiled in memory, one thing at a time, written to SCRATCH, and the check is run on it.
+PART 8. That these checks can fail
+The fixture digest is spoiled in memory, one thing at a time, written to SCRATCH, and the check is run on it.
 Spoiled: a confident sentence with no citation added to the observed lines
     PROBLEM: A line of section 2 cites no item with its retrieval time: - [OBSERVED] Search work is progressing well.
     PROBLEM: Section 6 gives a count of work in progress that is not the number of lines in section 2.
@@ -174,6 +217,6 @@ Those are tried by the tests in logs/tests.txt, on the generator, and not by thi
 
 ==============================================================================
 AT THE END
-  ok   the handed-in files and the whole of the context are byte for byte what they were at the start, and the scratch folder is gone
+  ok   the handed-in files, the fixture and the whole of both contexts are byte for byte what they were at the start, and the scratch folder is gone
 
-RESULT: ALL CHECKS PASSED. 56 checks.
+RESULT: ALL CHECKS PASSED. 68 checks.

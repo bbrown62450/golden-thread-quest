@@ -1,0 +1,212 @@
+{
+ "identity": {
+  "id": "[user id]",
+  "login": "[owner]"
+ },
+ "issues": {
+  "I_masked_6f2caf5822e9": {
+   "assignees": [
+    "[owner]"
+   ],
+   "author": "[owner]",
+   "body": "[not copied]",
+   "closed_at": null,
+   "comments": [],
+   "created_at": "2026-11-23T18:59:17Z",
+   "events": [
+    {
+     "actor": "[owner]",
+     "created_at": "2026-11-23T18:59:17Z",
+     "detail": {
+      "assignee": "[owner]"
+     },
+     "event": "assigned",
+     "key": "id:[event id]"
+    }
+   ],
+   "first_seen": "2026-11-25T16:47:42Z",
+   "full_name": "[owner]/gtq-sandbox",
+   "id": "[issue id]",
+   "labels": [
+    "bug"
+   ],
+   "last_synced": "2026-11-25T16:47:42Z",
+   "milestone": null,
+   "node_id": "I_masked_6f2caf5822e9",
+   "number": 4,
+   "previously": [],
+   "private": true,
+   "repo_id": "[repository id]",
+   "state": "open",
+   "state_history": [
+    {
+     "seen_at": "2026-11-25T16:47:42Z",
+     "state": "open",
+     "state_reason": null
+    }
+   ],
+   "state_reason": null,
+   "status": "assigned",
+   "title": "Made-up bug: the export leaves the last row out",
+   "updated_at": "2026-11-23T18:59:17Z"
+  },
+  "I_masked_9a82865f4d89": {
+   "assignees": [
+    "[owner]"
+   ],
+   "author": "[owner]",
+   "body": "",
+   "closed_at": "2026-11-21T17:22:16Z",
+   "comments": [
+    {
+     "author": "[owner]",
+     "body": "[not copied]",
+     "created_at": "2026-11-21T17:13:39Z",
+     "id": "[comment id]",
+     "updated_at": "2026-11-21T17:13:39Z"
+    }
+   ],
+   "created_at": "2026-11-21T17:13:25Z",
+   "events": [
+    {
+     "actor": "[owner]",
+     "created_at": "2026-11-21T17:13:25Z",
+     "detail": {
+      "assignee": "[owner]"
+     },
+     "event": "assigned",
+     "key": "id:[event id]"
+    },
+    {
+     "actor": "[owner]",
+     "created_at": "2026-11-21T17:22:16Z",
+     "detail": {},
+     "event": "closed",
+     "key": "id:[event id]"
+    }
+   ],
+   "first_seen": "2026-11-25T16:47:42Z",
+   "full_name": "[owner]/gtq-sandbox",
+   "id": "[issue id]",
+   "labels": [],
+   "last_synced": "2026-11-25T16:47:42Z",
+   "milestone": null,
+   "node_id": "I_masked_9a82865f4d89",
+   "number": 2,
+   "previously": [],
+   "private": true,
+   "repo_id": "[repository id]",
+   "state": "closed",
+   "state_history": [
+    {
+     "seen_at": "2026-11-25T16:47:42Z",
+     "state": "closed",
+     "state_reason": "completed"
+    }
+   ],
+   "state_reason": "completed",
+   "status": "assigned",
+   "title": "Made-up task two",
+   "updated_at": "2026-11-21T17:22:16Z"
+  },
+  "I_masked_cb209c0f7229": {
+   "assignees": [
+    "[owner]"
+   ],
+   "author": "[owner]",
+   "body": "[not copied]",
+   "closed_at": null,
+   "comments": [
+    {
+     "author": "[owner]",
+     "body": "[not copied]",
+     "created_at": "2026-11-21T22:26:00Z",
+     "id": "[comment id]",
+     "updated_at": "2026-11-21T22:26:00Z"
+    },
+    {
+     "author": "[owner]",
+     "body": "[not copied]",
+     "created_at": "2026-11-23T20:28:49Z",
+     "id": "[comment id]",
+     "updated_at": "2026-11-23T20:38:20Z"
+    },
+    {
+     "author": "[owner]",
+     "body": "[not copied]",
+     "created_at": "2026-11-23T20:38:35Z",
+     "id": "[comment id]",
+     "updated_at": "2026-11-23T20:38:35Z"
+    }
+   ],
+   "created_at": "2026-11-21T17:13:09Z",
+   "events": [
+    {
+     "actor": "[owner]",
+     "created_at": "2026-11-21T17:13:09Z",
+     "detail": {
+      "assignee": "[owner]"
+     },
+     "event": "assigned",
+     "key": "id:[event id]"
+    },
+    {
+     "actor": "[owner]",
+     "created_at": "2026-11-21T17:14:58Z",
+     "detail": {
+      "kind": "pull request",
+      "merged_at": null,
+      "node_id": "PR_masked_e70f5326b68e",
+      "ref": "[owner]/gtq-sandbox#3",
+      "state": "open"
+     },
+     "event": "cross-referenced",
+     "key": "cross-referenced:PR_masked_e70f5326b68e:2026-11-21T17:14:58Z"
+    }
+   ],
+   "first_seen": "2026-11-25T16:47:42Z",
+   "full_name": "[owner]/gtq-sandbox",
+   "id": "[issue id]",
+   "labels": [
+    "enhancement",
+    "question"
+   ],
+   "last_synced": "2026-11-25T16:47:42Z",
+   "milestone": null,
+   "node_id": "I_masked_cb209c0f7229",
+   "number": 1,
+   "previously": [],
+   "private": true,
+   "repo_id": "[repository id]",
+   "state": "open",
+   "state_history": [
+    {
+     "seen_at": "2026-11-25T16:47:42Z",
+     "state": "open",
+     "state_reason": null
+    }
+   ],
+   "state_reason": null,
+   "status": "assigned",
+   "title": "Made-up task one",
+   "updated_at": "2026-11-23T20:38:49Z"
+  }
+ },
+ "last_successful_sync": "2026-11-25T16:47:42Z",
+ "pulls_left_out": 1,
+ "repos": {
+  "[repository id]": {
+   "full_name": "[owner]/gtq-sandbox",
+   "id": "[repository id]",
+   "last_successful_sync": "2026-11-25T16:47:42Z",
+   "previously": [],
+   "private": true,
+   "pulls_left_out": 1,
+   "seen_at": "2026-11-25T16:47:42Z",
+   "unreadable": null
+  }
+ },
+ "schema": 1,
+ "scope": "RESTRICTED with --only-repos to 1 repository. This is not every repository",
+ "source": "live"
+}

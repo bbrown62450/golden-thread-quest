@@ -398,3 +398,8 @@ Every change this application made to your files, newest last.
 - `2026-11-25T15:46:14Z` scrum-standup-digest: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-25T15:46:14Z` Submitted scrum-standup-digest for review as submission-20261125154614-157f51.
 - `2026-11-25T16:36:04Z` Review of scrum-standup-digest: needs_changes by Claude (automated reviewer).
+- `2026-11-25T16:57:17Z` scrum-standup-digest: needs_changes → in_progress (Resume after a reviewer asked for changes.)
+- `2026-11-25T16:57:51Z` scrum-standup-digest: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-25T16:58:25Z` scrum-standup-digest: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-25T16:59:02Z` scrum-standup-digest: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-25T16:59:02Z` Submitted scrum-standup-digest for review as submission-20261125165902-91fc0d.

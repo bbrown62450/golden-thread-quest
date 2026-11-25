@@ -1,7 +1,7 @@
 Independent reads of the digest and of its generator. scrum-standup-digest, attempt scrum-attempt-001
 Copied by hand, and shortened, from the readers' replies by the assistant that built this quest. No program wrote this file.
 
-Who the readers were: four separate AI assistants (Claude), each started fresh. No person read the work, and no teammate
+Who the readers were: five separate AI assistants (Claude), each started fresh. No person read the work, and no teammate
 was walked through it. Each was told to read only the files named to it, to run nothing and to write nothing. Those
 limits were given in words and not enforced. None saw another's reply. The generator, its tests and its record were
 finished and passing before any reply was read.
@@ -13,6 +13,11 @@ finished and passing before any reply was read.
   Reader 3   given the generator as first built, the skill document, the first digest and the record of the evidence.
              Asked where the code and the written rules differ, and what input would make it assert something unsupported.
   Reader 4   given the final digest, gap report, skill document and records. Readers 1 and 2's tasks, on the final version.
+  Reader 5   after the review. Given the digest built from REAL context, its gap report, and the masked records of both
+             real days. Asked to check every line against its record, and to look for anything real left unmasked.
+
+Rounds 1 and 2 are of the digest of the MADE-UP sprint, which was handed in first and is now kept as the fixture, in
+participant/context/scrum/fixture/. Round 3 is of the digest handed in the second time, built from a real sync.
 
 ==============================================================================
 ROUND 1. The first version
@@ -113,6 +118,41 @@ NOT CHANGED AFTER ROUND 2
   Everything in its list above stands.
 
 ==============================================================================
+THE REVIEW, AND ROUND 3: the digest built from real context
+
+The first hand-in was reviewed and came back needing changes. The blocking finding: the digest was built from invented
+records, and the quest asks for a real day of synchronized work. Two smaller findings were the first two of reader 4's
+list above: the header's claim about ages, and the inference that did not name its note. Both were corrected.
+The participant then ran a real GitHub sync. It and a real sync from the day before were masked, turned into canonical
+records by the approved skill, and the digest was generated from those. The made-up sprint was kept as the fixture.
+
+READER 5, AGAINST THE REAL RECORDS. "The digest is accurate against its records."
+  Statement lines about items: 3. Verified: 3. Wrong: 0. Ages, titles, counts, the window, the table of runs and the
+  number of gap entries: "all correct".
+  Each canonical record against the masked sync it was made from: "all match", field by field.
+  The two days: "'no change' is true." The same three identities, the same statuses.
+  Coverage: all three synced issues are in the digest and in the gap entry, and the gap's reason is true.
+  Looking for anything real: "nothing real found." No login, no node ID, no numeric id, no email address, and no body or
+  comment text. It listed what is kept on purpose: the repository's name, the issue numbers, labels and times.
+  About a person: "no."
+  What it found:
+  - The digest called an open issue "open, which is to say not started as far as the source says". The record says
+    open. One of those issues has a pull request linked to it and three comments, "so 'not started' is more than the
+    source states".
+  - The digest said its scope was every item in the local context, and nowhere said that the run was restricted to
+    one repository, or that it left a pull request out.
+  - The count of inferences said it rested on "the I1 and I3 lines above". There were none.
+  - The gap entry said nothing else is read to decide whether an item is blocked. Saved links are read too.
+  - "1 entries".
+
+WHAT WAS CHANGED AFTER READER 5, AND NOT READ AGAIN
+  All five. "Open" is now called open. The digest prints what each run says of its own scope, and says a digest covers
+  no more than its runs retrieved. The count of inferences says when there are none to rest on. The gap entry names
+  saved links. The plural is gone.
+  No record, no identity, no status and no count changed. The handed-in digest differs from the one reader 5 read by
+  those wordings and by one added paragraph on scope, which nobody has read since.
+
+==============================================================================
 SUMMARY
   Is every statement traceable? Two readers checked each line against its record: 23 of 31, then 30 of 31, and no line
   was contradicted by its record in either round.
@@ -120,4 +160,6 @@ SUMMARY
   readers found it independently.
   Would the first generator have misled on other input? Yes, in several ways a reader found by reading the code, none of
   which the sample happened to show.
+  The digest built from real context: one reader checked its three item lines against the masked records and found
+  them right, and found nothing real left unmasked. It is a small day, and shows little.
   A teammate was not walked through the digest. The optional evidence is not provided.

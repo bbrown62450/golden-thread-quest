@@ -6,6 +6,27 @@ the gap report and is not stated.
 
 It reads and writes local files only. It contacts no source system, and creates or changes nothing in one.
 
+## From a real sync to a digest
+
+The digest reads canonical records. It does not read a source system, and it does not read what a sync saved. Three
+steps get from one to the other, and each is a separate program:
+
+1. **Sync**, by an earlier skill, run by a person with their own read-only token. For GitHub:
+   `participant/skills/github-read-assigned/sync.py --source live --out FOLDER`. FOLDER is outside the repository.
+2. **Mask and normalize**: `from_sync.py FOLDER CONTEXT`. It masks the saved sync (logins, the user id, node IDs and other
+   numeric ids are replaced, and bodies and comments are not copied), runs the approved canonical model skill,
+   `participant/skills/context-work-item-model/normalize.py`, over the masked copy, and writes `sync-runs.md` from the
+   sync's own account of itself. A masked node ID is `I_masked_` and 12 characters taken from a hash of a secret and the
+   real node ID. The secret stays beside FOLDER, outside the repository. So an item has the same masked identity on
+   every day, and nobody without the secret can work back to the real one.
+3. **Digest**: `digest.py generate --context CONTEXT ...`.
+
+Only step 1 contacts anything. `from_sync.py` handles GitHub only. Jira and Trello would each need the same step.
+
+The worked example has two contexts: `participant/context/scrum/real/`, two real days from the participant's sandbox
+repository, masked, which the handed-in digest is built from; and `participant/context/scrum/sprint/`, a made-up sprint
+written by `make_sprint.py` to hold the cases a real day rarely has, whose digest is in `participant/context/scrum/fixture/`.
+
 ## Inputs
 
 A folder of local context, given with `--context`:
@@ -109,7 +130,11 @@ Three kinds, each entry with its reason and what was therefore not asserted.
 - **It is not independent of the generator.** It reads the context with the same code, so a fault in that reading is
   invisible to it.
 
-`make_sprint.py` writes the made-up two-day sprint the worked example uses.
+`from_sync.py REAL_FOLDER CONTEXT` builds a context from a real GitHub sync, as described above.
+`make_sprint.py` writes the made-up two-day sprint that the fixture digest is built from.
+
+The digest's third line says where its context came from, by what the records say of themselves: a real
+synchronization run (`sync_source: live`), made-up, or mixed.
 
 ## Redaction
 

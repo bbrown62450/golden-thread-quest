@@ -3,9 +3,17 @@
 
     python3 participant/evidence/scrum-standup-digest/scrum-attempt-001/scripts/record_evidence.py
 
-It generates the digest twice from unchanged context, into two scratch folders, SCRATCH/first and SCRATCH/second, and
-compares every byte. Then it checks the handed-in digest against the context, criterion by criterion. The scratch
-folders are deleted at the end. The handed-in files and the context are not changed, and it checks that.
+There are two digests, and this records both.
+
+  THE HANDED-IN DIGEST is built from REAL context: two days of the participant's own GitHub sync, masked, under
+  participant/context/scrum/real/. It is generated twice into scratch folders and every byte is compared (parts 1 to 3).
+  It is a small day: three items and nothing blocked, stale or changed.
+
+  THE FIXTURE DIGEST is built from a MADE-UP sprint, under participant/context/scrum/sprint/, written to hold the cases a
+  real day rarely has: a stale record, a title that says blocked, a blocker with no record. The same generator, the same
+  rules. It is what shows the criteria that the real day gives nothing to show (parts 4 to 8).
+
+The scratch folders are deleted at the end. No handed-in file and no context is changed, and it checks that.
 """
 import hashlib
 import json
@@ -25,9 +33,12 @@ sys.path.insert(0, SKILL)
 import digest as dg  # noqa: E402
 
 SCRUM = os.path.join(REPO, "participant", "context", "scrum")
+REAL = os.path.join(SCRUM, "real", "2026-11-25")
+REAL_PREVIOUS = os.path.join(SCRUM, "real", "archive", "2026-11-24", "digest-state.json")
+REAL_AS_OF = "2026-11-25T17:30:00Z"
+FIXTURE = os.path.join(SCRUM, "fixture")
 CONTEXT = os.path.join(SCRUM, "sprint", "2026-11-24")
-MONDAY = os.path.join(SCRUM, "sprint", "2026-11-23")
-PREVIOUS = os.path.join(SCRUM, "archive", "2026-11-23", "digest-state.json")
+PREVIOUS = os.path.join(FIXTURE, "archive", "2026-11-23", "digest-state.json")
 AS_OF = "2026-11-24T09:00:00Z"
 NAMES = ("standup-digest.md", "standup-gaps.md", "digest-state.json")
 LOGS = os.path.join(HERE, "..", "logs")
@@ -49,7 +60,9 @@ def tree(folder):
 class Log:
     def __init__(self):
         self.lines = ["The regeneration record. scrum-standup-digest, attempt scrum-attempt-001",
-                      "Recorded by scripts/record_evidence.py. Nothing was sent anywhere. No source system was read: the context is made up.",
+                      "Recorded by scripts/record_evidence.py. Nothing was sent anywhere, and no source system was read while it ran.",
+                      "Parts 1 to 3 are of the handed-in digest, built from a REAL GitHub sync the participant ran, masked. Parts 4 to 8 are of a second",
+                      "digest built from a MADE-UP sprint, kept as a fixture for the cases the real day does not have.",
                       "Paths are from the repository's top folder. SCRATCH is a temporary folder, deleted at the end."]
         self.failed, self.count = [], 0
 
@@ -75,10 +88,10 @@ def main():
     scratch = tempfile.mkdtemp(prefix="gtq-digest-")
     before = tree(os.path.join(SCRUM))
     handed = {name: dg.read(os.path.join(SCRUM, name)) for name in NAMES}
-    command = ["participant/skills/scrum-standup-digest/digest.py", "generate", "--context", "participant/context/scrum/sprint/2026-11-24", "--as-of", AS_OF,
-               "--previous", "participant/context/scrum/archive/2026-11-23/digest-state.json"]
+    command = ["participant/skills/scrum-standup-digest/digest.py", "generate", "--context", "participant/context/scrum/real/2026-11-25", "--as-of", REAL_AS_OF,
+               "--previous", "participant/context/scrum/real/archive/2026-11-24/digest-state.json"]
 
-    log.part("PART 1. The digest generated twice from unchanged context (criterion 10)")
+    log.part("PART 1. The handed-in digest generated twice from unchanged REAL context (criterion 10)")
     runs = []
     for which in ("first", "second"):
         out = os.path.join(scratch, which)
@@ -95,15 +108,19 @@ def main():
     log.check("the handed-in digest, gap report and state are byte for byte what these runs wrote", all(handed[name].encode("utf-8") == runs[0][name] for name in NAMES))
     log.check("the context was not changed by generating: every file under participant/context/scrum has the checksum it had before", tree(SCRUM) == before)
     other = os.path.join(scratch, "later")
-    dg.generate(CONTEXT, "2026-11-24T09:30:00Z", PREVIOUS, other)
-    log.out("", "A contrast: the same context with --as-of 2026-11-24T09:30:00Z, half an hour later.")
-    log.check("a different --as-of gives a different digest, in which the Jira records are 2 h 0 min old and not 1 h 30 min. So the time the digest is for is an input",
-              dg.read(os.path.join(other, "standup-digest.md")) != handed["standup-digest.md"] and "(2 h 0 min before this digest)" in dg.read(os.path.join(other, "standup-digest.md")))
+    dg.generate(REAL, "2026-11-25T18:00:00Z", REAL_PREVIOUS, other)
+    log.out("", "A contrast: the same context with --as-of 2026-11-25T18:00:00Z, half an hour later.")
+    log.check("a different --as-of gives a different digest, in which the records are 1 h 12 min old and not 0 h 42 min. So the time the digest is for is an input",
+              dg.read(os.path.join(other, "standup-digest.md")) != handed["standup-digest.md"] and "(1 h 12 min before this digest)" in dg.read(os.path.join(other, "standup-digest.md")) and "(0 h 42 min before this digest)" in handed["standup-digest.md"])
+    fixture = {name: dg.read(os.path.join(FIXTURE, name)) for name in NAMES}
+    again = dg.generate(CONTEXT, AS_OF, PREVIOUS, os.path.join(scratch, "fixture-first"))[1]
+    twice = dg.generate(CONTEXT, AS_OF, PREVIOUS, os.path.join(scratch, "fixture-second"))[1]
+    log.check("the fixture digest, of the made-up sprint, is also the same in two runs, and is what participant/context/scrum/fixture/ holds", again == twice == fixture)
     source = dg.read(os.path.join(SKILL, "digest.py"))
     log.check("digest.py never asks for the time: it has no datetime.now, utcnow, time.time or today()", not any(call in source for call in ("datetime.now", "utcnow", "time.time", "today()")))
 
     log.part("PART 2. Local context only (criterion 1)")
-    model, written = dg.generate(CONTEXT, AS_OF, PREVIOUS, os.path.join(scratch, "in-process"))
+    real_model, written = dg.generate(REAL, REAL_AS_OF, REAL_PREVIOUS, os.path.join(scratch, "in-process"))
     imports = sorted(set(re.findall(r"^(?:import|from) (\w+)", source, re.M)))
     log.out("Modules digest.py imports: %s." % ", ".join(imports))
     log.check("digest.py imports only these seven, none of which opens a network connection: argparse, datetime, hashlib, json, os, re, sys", imports == ["argparse", "datetime", "hashlib", "json", "os", "re", "sys"])
@@ -115,19 +132,60 @@ def main():
     real, opened = socket.socket, []
     socket.socket = lambda *a, **k: opened.append(1) or (_ for _ in ()).throw(OSError("no network in this run"))
     try:
-        again = dg.generate(CONTEXT, AS_OF, PREVIOUS, os.path.join(scratch, "no-network"))[1]
+        again = dg.generate(REAL, REAL_AS_OF, REAL_PREVIOUS, os.path.join(scratch, "no-network"))[1]
     finally:
         socket.socket = real
     log.out("The generator was also run with every attempt to open a network socket made to fail. Since it imports nothing that could try, this run is a formality, and is recorded as one.")
     log.check("that run wrote the same three files byte for byte, and no socket was asked for", not opened and all(again[name] == handed[name] for name in NAMES))
-    log.check("every record it read says sync_source is \"made-up\", and the digest says so on its third line. That line repeats what the records say of themselves",
-              all(e["p"].get("sync_source") == "made-up" for e in model["items"].values()) and handed["standup-digest.md"].split("\n")[2] == "**Built from made-up context.**")
 
-    digest, gaps = handed["standup-digest.md"], handed["standup-gaps.md"]
+    log.part("PART 3. The handed-in digest is of a real day of synchronized work, masked (criteria 1 to 3 and 11, on real context)")
+    rd, rg = handed["standup-digest.md"], handed["standup-gaps.md"]
+    ritems = real_model["items"]
+    saved = json.loads(dg.read(os.path.join(REAL, "source", "github", "assigned", "assigned.json")))
+    before_day = json.loads(dg.read(os.path.join(SCRUM, "real", "2026-11-24", "source", "github", "assigned", "assigned.json")))
+    log.out("The context: participant/context/scrum/real/2026-11-25/. What the sync saved, masked, says of itself:",
+            "  source: %s    last successful sync: %s    issues: %d    pull requests left out: %s" % (saved.get("source"), saved.get("last_successful_sync"), len(saved["issues"]), saved.get("pulls_left_out")),
+            "  scope: %s" % saved.get("scope"), "The day before, participant/context/scrum/real/2026-11-24/: last successful sync %s, issues: %d." % (before_day.get("last_successful_sync"), len(before_day["issues"])), "")
+    log.check("the saved sync says its source is \"live\", every canonical record made from it says sync_source is \"live\", and the digest's third line says so",
+              saved.get("source") == "live" and len(ritems) == len(saved["issues"]) == 3 and all(e["p"].get("sync_source") == "live" for e in ritems.values()) and rd.split("\n")[2].startswith("**Built from context that a real synchronization run wrote.**"))
+    log.check("each record's retrieval time and run are the sync's own: retrieved at its last successful sync, by the run of that time",
+              all(e["p"]["retrieved_at"] == saved["last_successful_sync"] and e["p"]["sync_run"] == "github-read-assigned:" + saved["last_successful_sync"] for e in ritems.values()))
+    whole = "".join(dg.read(os.path.join(root, name)) for root, _, files in os.walk(os.path.join(SCRUM, "real")) for name in files) + rd + rg
+    log.check("nothing under participant/context/scrum/real/, and nothing in the digest or the gap report, has the form of a GitHub node ID. Every identity is a masked one",
+              not re.search(r"\b(I|PR|IC|U|R)_kw[A-Za-z0-9]", whole) and all(re.match(r"^github:I_masked_[0-9a-f]{12}$", i) for i in ritems))
+    log.check("the masked copy holds no body or comment text, and names nobody: every author and assignee is [owner]",
+              all(issue.get("body") in ("", "[not copied]") and all(c.get("body") == "[not copied]" for c in issue.get("comments", [])) and issue.get("author") == "[owner]" and issue.get("assignees") == ["[owner]"] for issue in saved["issues"].values()))
+    log.check("the same three masked identities are in both days. A real item keeps its masked identity from one day to the next", sorted(saved["issues"]) == sorted(before_day["issues"]))
+    done = subprocess.run([sys.executable, os.path.join(SKILL, "digest.py"), "check", "--context", REAL, "--as-of", REAL_AS_OF, "--out", SCRUM], capture_output=True, text=True)
+    log.out("", "$ python3 participant/skills/scrum-standup-digest/digest.py check --context participant/context/scrum/real/2026-11-25 --as-of %s --out participant/context/scrum" % REAL_AS_OF,
+            *("  " + line for line in done.stdout.rstrip().splitlines()), "  exit code %d" % done.returncode, "")
+    log.check("the check reports no problem on the handed-in digest", done.returncode == 0)
+    rlines = [l for l in rd.split("\n") if l.startswith("- [")]
+    rcited = [(i, at, run) for l in rlines for i, at, _, run in re.findall(r"`((?:jira|github|trello):[A-Za-z0-9_.-]+)`, retrieved (\S+) \(([^)]*) before this digest\), run `([^`]+)`", l)]
+    log.out("The statement lines of the handed-in digest:", *("  " + l[:210] for l in rlines), "")
+    log.check("criteria 2 and 3, on the real digest: each of the three items has a line that cites it by identity, with its record's own retrieval time and run",
+              sorted(i for i, _, _ in rcited) == sorted(ritems) and all(ritems[i]["p"]["retrieved_at"] == at and ritems[i]["p"]["sync_run"] == run for i, at, run in rcited))
+    log.check("criterion 11, on the real digest: it states its window, from the previous digest's time to this one's, and the one run it was built from, with its time",
+              "- Window: from 2026-11-24T09:00:00Z, the time the previous digest was for, to %s" % REAL_AS_OF in rd and "| `github-read-assigned:%s` | github | completed | %s |" % (saved["last_successful_sync"], saved["last_successful_sync"]) in rd)
+    log.check("the real digest reports what the real records say and no more: two open, one done, none in progress, none blocked, none aging, no change since the day before",
+              "In progress: 0. Open: 2. Done: 1. Closed without being done: 0." in rd and "Recorded as blocked: 0." in rd and real_model["changes"] == [] and real_model["aging"] == [] and not real_model["stale"])
+    log.check("its one gap entry says that whether the three items are blocked is not recorded, so neither blocked nor free is asserted", len(real_model["gaps"]) == 1 and "the record's `blocked` field is unknown" in rg)
+    log.check("the real digest says what the run says of its own scope: restricted to one repository, which is not every repository, and one pull request left out",
+              "RESTRICTED with --only-repos to 1 repository. This is not every repository. Pull requests the sync left out, because a pull request is not a work item: 1" in rd)
+    log.out("WHAT THE REAL DAY DOES NOT SHOW. It has no stale record, no blocked or aging item, no inference, no missing record and no change. So it gives",
+            "criteria 4 to 9 nothing to show beyond \"none\". Those are shown on the fixture, below, by the same generator.")
+
+    log.part("PARTS 4 TO 8 ARE OF THE FIXTURE: a digest of a MADE-UP sprint, participant/context/scrum/fixture/standup-digest.md",
+             "Everything in it is invented, and every record says sync_source is \"made-up\". It is here for the cases a real day rarely has.")
+    model = dg.generate(CONTEXT, AS_OF, PREVIOUS, os.path.join(scratch, "fixture-model"))[0]
+    log.check("every record of the fixture says sync_source is \"made-up\", and the fixture digest says so on its third line",
+              all(e["p"].get("sync_source") == "made-up" for e in model["items"].values()) and fixture["standup-digest.md"].split("\n")[2] == "**Built from made-up context.**")
+
+    digest, gaps = fixture["standup-digest.md"], fixture["standup-gaps.md"]
     items = model["items"]
-    log.part("PART 3. Citations, retrieval times, the window and the runs (criteria 2, 3 and 11)")
-    done = subprocess.run([sys.executable, os.path.join(SKILL, "digest.py"), "check", "--context", CONTEXT, "--as-of", AS_OF, "--out", SCRUM], capture_output=True, text=True)
-    log.out("$ python3 participant/skills/scrum-standup-digest/digest.py check --context participant/context/scrum/sprint/2026-11-24 --as-of %s --out participant/context/scrum" % AS_OF,
+    log.part("PART 4. FIXTURE. Citations, retrieval times, the window and the runs (criteria 2, 3 and 11)")
+    done = subprocess.run([sys.executable, os.path.join(SKILL, "digest.py"), "check", "--context", CONTEXT, "--as-of", AS_OF, "--out", FIXTURE], capture_output=True, text=True)
+    log.out("$ python3 participant/skills/scrum-standup-digest/digest.py check --context participant/context/scrum/sprint/2026-11-24 --as-of %s --out participant/context/scrum/fixture" % AS_OF,
             *("  " + line for line in done.stdout.rstrip().splitlines()), "  exit code %d" % done.returncode, "")
     log.check("the check reports no problem. It reads the finished files back and compares them with the records. It shares the reading of the records with the generator", done.returncode == 0)
     lines = [l for l in digest.split("\n") if l.startswith("- [")]
@@ -151,7 +209,7 @@ def main():
               len(model["runs"]) == 4 and all(re.search(r"^\| `%s` \| %s \| %s \| %s \|" % (re.escape(r["run"]), r["system"], r["result"], r["retrieved_at"]), digest, re.M) for r in model["runs"]))
     log.check("it also lists a run that a record names and sync-runs.md does not, and says records naming it are not asserted", "| `github-read-assigned:2026-11-23T07:35:00Z` | | | | | 0 | | NOT IN sync-runs.md." in digest)
 
-    log.part("PART 4. Observed, inference, stale and gaps kept apart (criteria 4, 5 and 6)")
+    log.part("PART 5. FIXTURE. Observed, inference, stale and gaps kept apart (criteria 4, 5 and 6)")
     tags = {}
     for l in lines:
         tags.setdefault(re.match(r"- \[([A-Z ]+?)(?: ·| I\d|\])", l).group(1), []).append(l)
@@ -176,9 +234,9 @@ def main():
     log.check("criterion 6: the item a run retrieved with no record, the record that cannot be read, and the blocker with no record are each in the gap report with a reason, and none is cited as a statement",
               all("[MISSING] `%s`. Reason: " % w in gaps for w in ("github:I_kwFXsc0005", "items/github-I_kwFXsc0006.md", "jira:53099")) and "I_kwFXsc0005" not in digest and "I_kwFXsc0006" not in digest and "`jira:53099`, retrieved" not in digest)
     log.check("criterion 6: the one fresh item whose status the source does not state is in section 8, apart, and in the gap report, and not among the observed statuses", "jira:53014" in section(digest, 8) and "jira:53014" not in section(digest, 2) and "[UNSUPPORTED] `jira:53014`" in gaps)
-    log.check("the number of gaps the digest says the report holds is the number of entries in it: %d" % len(model["gaps"]), "It has %d entries" % len(model["gaps"]) in digest and gaps.count("\n- [") == len(model["gaps"]))
+    log.check("the number of gaps the digest says the report holds is the number of entries in it: %d" % len(model["gaps"]), "Entries in it: %d." % len(model["gaps"]) in digest and gaps.count("\n- [") == len(model["gaps"]))
 
-    log.part("PART 5. Blocked, aging and changes (criteria 7, 8 and 9)")
+    log.part("PART 6. FIXTURE. Blocked, aging and changes (criteria 7, 8 and 9)")
     log.out("jira:53005 is titled \"%s\". Its record says blocked: %s." % (items["jira:53005"]["c"]["title"], items["jira:53005"]["c"]["blocked"]))
     log.check("criterion 7: the item whose TITLE begins \"BLOCKED:\" is not in the blocked section. Its record says it is not blocked", "jira:53005" not in section(digest, 3) and "jira:53005" in section(digest, 2))
     shown = re.findall(r"^- \[OBSERVED · BLOCKED\][^\n]*`((?:jira|github|trello):[^`]+)`, retrieved", section(digest, 3), re.M)
@@ -193,11 +251,12 @@ def main():
     log.check("criterion 9: the digest's own lines report one item added, one removed and one status change, each by its identity",
               re.findall(r"^- \[OBSERVED · CHANGE · (\w+)\][^\n]*?`((?:jira|github|trello):[^`]+)`", section(digest, 1), re.M) == [("ADDED", "jira:53008"), ("REMOVED", "jira:53009"), ("STATUS", "jira:53004")])
     log.check("criterion 9: the removed item is not said to be done. The gap report says why it went is not recorded", "Why is not recorded" in section(digest, 1) and "[UNSUPPORTED] `jira:53009`" in gaps)
-    state = json.loads(handed["digest-state.json"])
-    log.check("criterion 9: the state kept for the next digest holds identities and no titles", "jira:53001" in state["items"] and not any(e["c"]["title"] in handed["digest-state.json"] for e in items.values()))
+    state = json.loads(fixture["digest-state.json"])
+    log.check("criterion 9: the state kept for the next digest holds identities and no titles, in the fixture and in the real one",
+              "jira:53001" in state["items"] and not any(e["c"]["title"] in fixture["digest-state.json"] for e in items.values()) and not any(e["c"]["title"] in handed["digest-state.json"] for e in ritems.values()))
 
-    log.part("PART 6. No person, and nothing that should not be shared (criterion 12, and the safety rules)")
-    both = digest + gaps
+    log.part("PART 7. FIXTURE AND REAL. No person, and nothing that should not be shared (criterion 12, and the safety rules)")
+    both = digest + gaps + rd + rg
     words = ("assignee", "assigned to ", "is working", "is busy", "behind", "on leave", "velocity", "productiv", "available today")
     log.check("criterion 12: neither file uses any of these words: %s. A list of words is a weak test: it would miss a statement about a person worded another way" % ", ".join(w.strip() for w in words),
               not any(w in both.lower() for w in words))
@@ -210,7 +269,7 @@ def main():
     log.check("no branch of the generator reads a title: the word title appears in no if, elif, while or comparison in digest.py", not re.search(r"^\s*(if|elif|while)\b[^\n]*title", source, re.M))
     log.check("the item whose title is worded as an instruction is reported as open, as its record says", any("`jira:53006`" in l and l.startswith("- [OBSERVED] Open") for l in section(digest, 5).split("\n")))
 
-    log.part("PART 7. That these checks can fail", "The handed-in digest is spoiled in memory, one thing at a time, written to SCRATCH, and the check is run on it.")
+    log.part("PART 8. That these checks can fail", "The fixture digest is spoiled in memory, one thing at a time, written to SCRATCH, and the check is run on it.")
 
     def trial(label, expect, old, new, where="digest"):
         base = digest if where == "digest" else gaps
@@ -247,7 +306,7 @@ def main():
 
     shutil.rmtree(scratch, ignore_errors=True)
     log.part("AT THE END")
-    log.check("the handed-in files and the whole of the context are byte for byte what they were at the start, and the scratch folder is gone", tree(SCRUM) == before and not os.path.exists(scratch))
+    log.check("the handed-in files, the fixture and the whole of both contexts are byte for byte what they were at the start, and the scratch folder is gone", tree(SCRUM) == before and not os.path.exists(scratch))
     log.lines += ["", "RESULT: %s" % ("%d OF %d CHECKS FAILED." % (len(log.failed), log.count) if log.failed else "ALL CHECKS PASSED. %d checks." % log.count)]
     os.makedirs(LOGS, exist_ok=True)
     with open(os.path.join(LOGS, "regeneration.txt"), "w", encoding="utf-8") as f:

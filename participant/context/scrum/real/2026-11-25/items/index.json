@@ -1,0 +1,9 @@
+{
+ "items": {
+  "github:I_masked_6f2caf5822e9": "github-I_masked_6f2caf5822e9.md",
+  "github:I_masked_9a82865f4d89": "github-I_masked_9a82865f4d89.md",
+  "github:I_masked_cb209c0f7229": "github-I_masked_cb209c0f7229.md"
+ },
+ "model": "work-item/1",
+ "note": "identity -> file. Rebuilt on every run from what is inside the files. It can be deleted."
+}
