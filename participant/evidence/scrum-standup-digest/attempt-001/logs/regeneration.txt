@@ -1,0 +1,179 @@
+The regeneration record. scrum-standup-digest, attempt scrum-attempt-001
+Recorded by scripts/record_evidence.py. Nothing was sent anywhere. No source system was read: the context is made up.
+Paths are from the repository's top folder. SCRATCH is a temporary folder, deleted at the end.
+
+==============================================================================
+PART 1. The digest generated twice from unchanged context (criterion 10)
+$ python3 participant/skills/scrum-standup-digest/digest.py generate --context participant/context/scrum/sprint/2026-11-24 --as-of 2026-11-24T09:00:00Z --previous participant/context/scrum/archive/2026-11-23/digest-state.json --out SCRATCH/first
+  wrote standup-digest.md  sha256 bf7d1fcb6aacf178a86cdbf6a2e3cbeb79147db07d4a51d71a84546fa8904bfd
+  wrote standup-gaps.md    sha256 548965a362be812179056ad6dfac2ec73be4132e6b86fe6ee7c5df379a191633
+  wrote digest-state.json  sha256 13df46852c62748f19ce84a5d9b460934c777fbb47ea8047e90f0f2f78b9ac38
+  21 records read. 17 fresh, 4 stale. 13 gap entries. No source system was contacted.
+  exit code 0
+
+$ python3 participant/skills/scrum-standup-digest/digest.py generate --context participant/context/scrum/sprint/2026-11-24 --as-of 2026-11-24T09:00:00Z --previous participant/context/scrum/archive/2026-11-23/digest-state.json --out SCRATCH/second
+  wrote standup-digest.md  sha256 bf7d1fcb6aacf178a86cdbf6a2e3cbeb79147db07d4a51d71a84546fa8904bfd
+  wrote standup-gaps.md    sha256 548965a362be812179056ad6dfac2ec73be4132e6b86fe6ee7c5df379a191633
+  wrote digest-state.json  sha256 13df46852c62748f19ce84a5d9b460934c777fbb47ea8047e90f0f2f78b9ac38
+  21 records read. 17 fresh, 4 stale. 13 gap entries. No source system was contacted.
+  exit code 0
+
+The two runs were started 2 seconds apart. The computer's clock is not an input: the time the digest is for is given with --as-of.
+
+  standup-digest.md  first: 15917 bytes, sha256 bf7d1fcb6aacf178a86cdbf6a2e3cbeb79147db07d4a51d71a84546fa8904bfd
+                     second: 15917 bytes, sha256 bf7d1fcb6aacf178a86cdbf6a2e3cbeb79147db07d4a51d71a84546fa8904bfd
+  ok   standup-digest.md is byte for byte the same in both runs
+  standup-gaps.md    first: 3620 bytes, sha256 548965a362be812179056ad6dfac2ec73be4132e6b86fe6ee7c5df379a191633
+                     second: 3620 bytes, sha256 548965a362be812179056ad6dfac2ec73be4132e6b86fe6ee7c5df379a191633
+  ok   standup-gaps.md is byte for byte the same in both runs
+  digest-state.json  first: 2765 bytes, sha256 13df46852c62748f19ce84a5d9b460934c777fbb47ea8047e90f0f2f78b9ac38
+                     second: 2765 bytes, sha256 13df46852c62748f19ce84a5d9b460934c777fbb47ea8047e90f0f2f78b9ac38
+  ok   digest-state.json is byte for byte the same in both runs
+  ok   the handed-in digest, gap report and state are byte for byte what these runs wrote
+  ok   the context was not changed by generating: every file under participant/context/scrum has the checksum it had before
+
+A contrast: the same context with --as-of 2026-11-24T09:30:00Z, half an hour later.
+  ok   a different --as-of gives a different digest, in which the Jira records are 2 h 0 min old and not 1 h 30 min. So the time the digest is for is an input
+  ok   digest.py never asks for the time: it has no datetime.now, utcnow, time.time or today()
+
+==============================================================================
+PART 2. Local context only (criterion 1)
+Modules digest.py imports: argparse, datetime, hashlib, json, os, re, sys.
+  ok   digest.py imports only these seven, none of which opens a network connection: argparse, datetime, hashlib, json, os, re, sys
+  ok   it uses nothing of os that starts a program, and loads no module by name at run time: no os.system, popen, exec, spawn or fork, no __import__ and no importlib
+Every place digest.py opens a file: os.path.join(args.out; path.
+  ok   it opens files in two places only, its own read() and write(), and those are given paths under --context, --previous and --out
+The generator was also run with every attempt to open a network socket made to fail. Since it imports nothing that could try, this run is a formality, and is recorded as one.
+  ok   that run wrote the same three files byte for byte, and no socket was asked for
+  ok   every record it read says sync_source is "made-up", and the digest says so on its third line. That line repeats what the records say of themselves
+
+==============================================================================
+PART 3. Citations, retrieval times, the window and the runs (criteria 2, 3 and 11)
+$ python3 participant/skills/scrum-standup-digest/digest.py check --context participant/context/scrum/sprint/2026-11-24 --as-of 2026-11-24T09:00:00Z --out participant/context/scrum
+  CHECK PASSED. None of the things this check looks for was found. What it looks for, and what it does not, is in SKILL.md.
+  exit code 0
+
+  ok   the check reports no problem. It reads the finished files back and compares them with the records. It shares the reading of the records with the generator
+Statement lines in the digest: 39. With at least one citation of the form identity, retrieval time, age, run: 33.
+Lines with none, and why each needs none:
+  - [OBSERVED · CHANGE · REMOVED] `jira:53009`: it was in the previous digest's context, and there is no record of it now, and the latest completed jira
+  - [OBSERVED · COUNT] Items with a fresh record whose status the source states: 16. In progress: 6. Open: 7. Done: 2. Closed without being done: 1.
+  - [OBSERVED · COUNT] Work in progress: 6. They are: `jira:53001`, `jira:53003`, `jira:53005`, `jira:53007`, `jira:53012`, `jira:53013`.
+  - [OBSERVED · COUNT] Recorded as blocked: 4. They are: `github:I_kwFXsc0001`, `github:I_kwFXsc0007`, `jira:53002`, `jira:53007`. Aging: 2.
+  - [OBSERVED · COUNT] Not counted above, because this digest does not assert them: stale records, 4 (`github:I_kwFXsc0004`, `trello:6b2e000000000000000
+  - [INFERENCE I4] Items waiting on something that is not done, or that this digest cannot see: 3 (`github:I_kwFXsc0007`, `jira:53002`, `jira:53007`). R
+  ok   criterion 2: every statement line cites an item by identity, retrieval time, age and run, except 6: the counts, the summary of the inferences, and the removed item, which has no record to cite
+The counts in section 6, and the same counted here from the cited lines of sections 2 and 5: ('16', '6', '7', '2', '1') and ('16', '6', '7', '2', '1').
+  ok   the counts in section 6 are the numbers of cited lines above them, counted again here
+  ok   criterion 3: every citation gives a retrieval time, and it is the time in that item's own record: 35 of 35
+  ok   criterion 11: the digest states its window, from the previous digest's time to this one's
+  ok   criterion 11: it lists every synchronization run in sync-runs.md, the failed one too, each with the time the run gives
+  ok   it also lists a run that a record names and sync-runs.md does not, and says records naming it are not asserted
+
+==============================================================================
+PART 4. Observed, inference, stale and gaps kept apart (criteria 4, 5 and 6)
+Statement lines by their label: INFERENCE 4, LAST KNOWN 4, NOT STATED 1, OBSERVED 30.
+Statement lines that cite more than one record, which is what makes a conclusion and not an observation: 2. All of them are in section 7: True.
+  ok   criterion 4: every line labelled INFERENCE is in section 7, section 7 holds no other statement line, and no line outside it rests on more than one record
+  ok   criterion 4: every inference but the count cites, after the words "Rests on", a record that exists, with that record's retrieval time
+Stale records, older than 24 hours at 2026-11-24T09:00:00Z: github:I_kwFXsc0004, trello:6b2e0000000000000000c001, trello:6b2e0000000000000000c002, trello:6b2e0000000000000000c003.
+  ok   criterion 5: no stale record is cited in any section that states something as current
+  ok   criterion 5: each stale record is under LAST KNOWN in the digest and under STALE in the gap report, with its age and the limit
+  ok   criteria 5 and 8: the two thresholds in the digest, in the skill and in the code are the same numbers, 24 hours and 5 days. The boundaries themselves are tried in the tests: logs/tests.txt
+  github:I_kwFXsc0005: in the gap report as MISSING yes; in the digest as a statement: no
+  items/github-I_kwFXsc0006.md: in the gap report as MISSING yes; in the digest as a statement: no
+  jira:53099: in the gap report as MISSING yes; in the digest as a statement: no
+  ok   criterion 6: the item a run retrieved with no record, the record that cannot be read, and the blocker with no record are each in the gap report with a reason, and none is cited as a statement
+  ok   criterion 6: the one fresh item whose status the source does not state is in section 8, apart, and in the gap report, and not among the observed statuses
+  ok   the number of gaps the digest says the report holds is the number of entries in it: 13
+
+==============================================================================
+PART 5. Blocked, aging and changes (criteria 7, 8 and 9)
+jira:53005 is titled "BLOCKED: waiting on legal sign-off for fare wording". Its record says blocked: no.
+  ok   criterion 7: the item whose TITLE begins "BLOCKED:" is not in the blocked section. Its record says it is not blocked
+Shown as blocked: github:I_kwFXsc0001, github:I_kwFXsc0007, jira:53002, jira:53007.
+Blocked by a recorded field, link or note, worked out here from the records: github:I_kwFXsc0001, github:I_kwFXsc0007, jira:53002, jira:53007.
+  ok   criterion 7: the items shown as blocked are exactly the fresh items whose record's blocked field says yes, or that have a saved link or a note line saying blocked_by. Worked out here from the records
+  ok   criterion 7: a note written as prose, saying an item is blocked on a named person, records nothing: that item is not shown as blocked and the note's words are nowhere
+
+- [OBSERVED · AGING] In progress, and when retrieved its source had not changed for 7 days (last change 2026-11-16T08:30:00Z); title, redacted: "Import the operator's win
+- [OBSERVED · AGING] In progress, and when retrieved its source had not changed for 5 days (last change 2026-11-19T07:30:00Z); title, redacted: "Accessible colours for th
+  ok   criterion 8: the two items in progress whose source had not changed for 5 days or more when retrieved are listed as aging, each with its number of days: 7 and 5
+  ok   criterion 8: the item unchanged for 3 days when retrieved is not listed
+
+- [OBSERVED · CHANGE · ADDED] It was not in the previous digest's context; title, redacted: "Show the next sailing on the home page". `jira:53008`, retrieved 2026-11-24T0
+- [OBSERVED · CHANGE · REMOVED] `jira:53009`: it was in the previous digest's context, and there is no record of it now, and the latest completed jira run does not list i
+- [OBSERVED · CHANGE · STATUS] In progress in the previous digest, done now; title, redacted: "Fix the time zone of evening sailings". `jira:53004`, retrieved 2026-11-24T
+  ok   criterion 9: the digest's own lines report one item added, one removed and one status change, each by its identity
+  ok   criterion 9: the removed item is not said to be done. The gap report says why it went is not recorded
+  ok   criterion 9: the state kept for the next digest holds identities and no titles
+
+==============================================================================
+PART 6. No person, and nothing that should not be shared (criterion 12, and the safety rules)
+  ok   criterion 12: neither file uses any of these words: assignee, assigned to, is working, is busy, behind, on leave, velocity, productiv, available today. A list of words is a weak test: it would miss a statement about a person worded another way
+  ok   criterion 12: the generator never reads who an item is assigned to. The only field about assignment it reads is assigned_to_me, for --scope
+  ok   criterion 12: the digest says in its own words that it makes no statement about any person, and the skill documents the limit
+jira:53010's title in the record holds a made-up customer number, name and email address. In the digest it reads:
+  - [OBSERVED] Open, which is to say not started as far as the source says, stated by the source; title, redacted: "Refund [customer number] f
+  ok   the made-up name, email address and customer number in a title are not in the digest or the gap report
+Every place digest.py touches a title: safe(model["items"][identity]["c"]["title, title_of(. Each prints it, through safe(). No condition in the program reads one.
+  ok   no branch of the generator reads a title: the word title appears in no if, elif, while or comparison in digest.py
+  ok   the item whose title is worded as an instruction is reported as open, as its record says
+
+==============================================================================
+PART 7. That these checks can fail
+The handed-in digest is spoiled in memory, one thing at a time, written to SCRATCH, and the check is run on it.
+Spoiled: a confident sentence with no citation added to the observed lines
+    PROBLEM: A line of section 2 cites no item with its retrieval time: - [OBSERVED] Search work is progressing well.
+    PROBLEM: Section 6 gives a count of work in progress that is not the number of lines in section 2.
+  ok   reported: "cites no item with its retrieval time"
+Spoiled: one citation's retrieval time changed by a minute
+    PROBLEM: Section 2 gives jira:53001 the retrieval time 2026-11-24T07:31:00Z, and its record says 2026-11-24T07:30:00Z.
+  ok   reported: "and its record says"
+Spoiled: one citation's age changed
+    PROBLEM: Section 3 gives github:I_kwFXsc0001 the age "0 h 5 min", and by its retrieval time it is "1 h 25 min".
+  ok   reported: "the age "0 h 5 min""
+Spoiled: a stale record's line moved up among the current ones
+    PROBLEM: Section 2 says github:I_kwFXsc0004 is "when retrieved", and its record says open, stated.
+    PROBLEM: Section 2 states something of github:I_kwFXsc0004 as current, and its record is stale.
+  ok   reported: "as current, and its record is stale"
+Spoiled: an item in progress said to be done, with its citation left right
+    PROBLEM: Section 2 says jira:53001 is "done", and its record says in_progress, stated.
+  ok   reported: "says jira:53001 is"
+Spoiled: a fresh item left out of the digest altogether
+    PROBLEM: Section 6 gives a count of work in progress that is not the number of lines in section 2.
+    PROBLEM: jira:53013 has a fresh record and its status is in none of sections 2, 5 and 8.
+  ok   reported: "has a fresh record and its status is in none of sections"
+Spoiled: the number of days on an aging line changed
+    PROBLEM: Section 4 says jira:53003 is aging, and by its record it is not, or not by that number of days.
+  ok   reported: "is aging, and by its record it is not, or not by that number of days"
+Spoiled: the item with BLOCKED in its title added to the blocked section
+    PROBLEM: jira:53005 is shown as blocked, and no recorded field, link or note says so.
+  ok   reported: "is shown as blocked, and no recorded field, link or note says so"
+Spoiled: an inference moved out of the inference section
+    PROBLEM: An inference is outside section 7, or a line in section 7 is not labelled as inference: - [INFERENCE I1] `github:I_kwFXsc0007` is waiting on `jira:53003`, whi
+  ok   reported: "An inference is outside section 7"
+Spoiled: a name from the redaction list put back
+    PROBLEM: The name "Dana Whitlock", which redaction.md lists, is in the digest or the gap report.
+  ok   reported: "which redaction.md lists"
+Spoiled: an item that has no record cited
+    PROBLEM: Section 2 cites jira:59999, of which there is no local record.
+    PROBLEM: jira:53001 has a fresh record and its status is in none of sections 2, 5 and 8.
+  ok   reported: "of which there is no local record"
+Spoiled: the count of work in progress changed
+    PROBLEM: Section 6 gives a count of work in progress that is not the number of lines in section 2.
+  ok   reported: "a count of work in progress that is not the number of lines"
+Spoiled: an entry taken out of the gap report
+    PROBLEM: The digest says the gap report has a number of entries that it does not have.
+  ok   reported: "number of entries"
+Spoiled: a stale item taken out of the gap report
+    PROBLEM: github:I_kwFXsc0004 is stale and is not in the gap report as stale.
+  ok   reported: "is stale and is not in the gap report as stale"
+What the check does not look at: whether a BLOCKING line, a CHANGE line or an INFERENCE line says what the records say, and the verdicts in the table of runs.
+Those are tried by the tests in logs/tests.txt, on the generator, and not by this check on the finished files.
+
+==============================================================================
+AT THE END
+  ok   the handed-in files and the whole of the context are byte for byte what they were at the start, and the scratch folder is gone
+
+RESULT: ALL CHECKS PASSED. 56 checks.

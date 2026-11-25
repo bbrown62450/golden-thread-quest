@@ -594,4 +594,13 @@ attempts:
   evidence_path: participant/evidence/playwright-success-evidence/playwright-attempt-007
   submission_id: submission-20261124231925-29b1b2
   review_id: review-20261124232354-ff895b
-updated_at: '2026-11-24T23:23:54Z'
+- attempt_id: scrum-attempt-001
+  quest_id: scrum-standup-digest
+  quest_version: 1
+  content_hash: sha256:f2a28c60b7bdd71a3aefba70b766a9f77bcd0f4a083a701406d06cdc88627c1a
+  state: submitted
+  started_at: '2026-11-25T12:34:31Z'
+  updated_at: '2026-11-25T15:46:14Z'
+  evidence_path: participant/evidence/scrum-standup-digest/scrum-attempt-001
+  submission_id: submission-20261125154614-157f51
+updated_at: '2026-11-25T15:46:14Z'

@@ -1,0 +1,327 @@
+Do the tests notice a broken digest generator? scrum-standup-digest, attempt scrum-attempt-001
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/scrum-standup-digest/digest.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. The stale limit is not applied (criterion 5)
+  unittest result: FAILED (failures=7)
+  tests that failed (7):
+    Staleness.test_a_record_older_than_the_limit_is_stale_and_not_asserted
+    Inference.test_a_stale_blocker_is_rule_three
+    FoundByReaders.test_a_title_cannot_end_its_quotation_or_start_a_line_or_forge_a_citation
+    Citations.test_every_observed_line_cites_an_item_and_its_retrieval_time
+    Staleness.test_one_second_past_the_limit_is_stale
+    FoundByReaders.test_the_scoped_digest_does_not_fail_on_a_blocker_outside_its_scope
+    PeopleAndText.test_the_scoped_digest_uses_a_field_and_says_nothing_of_a_person
+
+PLANTED BUG B. A record at exactly the limit is called stale
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Staleness.test_at_exactly_the_limit_a_record_is_fresh
+
+PLANTED BUG C. A record retrieved after the digest's time is treated as fresh
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Staleness.test_a_record_retrieved_after_the_digests_time_is_stale
+
+PLANTED BUG D. A record with no readable retrieval time is treated as fresh
+  unittest result: FAILED (errors=2)
+  tests that failed (2):
+    Staleness.test_a_record_with_no_retrieval_time_is_stale
+    FoundByReaders.test_a_time_that_is_not_a_real_date_is_not_a_time
+
+PLANTED BUG E. A status the source does not state is asserted (criterion 6)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    FoundByReaders.test_a_status_that_differs_where_one_side_was_not_asserted_is_a_gap_and_not_a_change
+    Gaps.test_a_status_the_source_does_not_state_is_unsupported_and_kept_apart
+    FoundByReaders.test_a_title_cannot_end_its_quotation_or_start_a_line_or_forge_a_citation
+    Citations.test_every_observed_line_cites_an_item_and_its_retrieval_time
+
+PLANTED BUG F. A title that says blocked makes an item blocked (criterion 7)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    FoundByReaders.test_a_title_cannot_end_its_quotation_or_start_a_line_or_forge_a_citation
+    Blocked.test_a_title_that_says_blocked_does_not_make_an_item_blocked
+    Citations.test_every_observed_line_cites_an_item_and_its_retrieval_time
+    FoundByReaders.test_the_scoped_digest_does_not_fail_on_a_blocker_outside_its_scope
+    PeopleAndText.test_the_scoped_digest_uses_a_field_and_says_nothing_of_a_person
+
+PLANTED BUG G. A person's explicit note is not counted (criterion 7)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    FoundByReaders.test_a_blocks_note_naming_an_item_with_no_record_is_missing
+    Inference.test_a_stale_blocker_is_rule_three
+    Blocked.test_an_explicit_note_makes_an_item_blocked
+    FoundByReaders.test_one_blocker_done_and_one_not_is_not_called_all_done
+    FoundByReaders.test_the_scoped_digest_does_not_fail_on_a_blocker_outside_its_scope
+
+PLANTED BUG H. Aging starts a day late (criterion 8)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Aging.test_in_progress_and_unchanged_for_the_threshold_is_aging_with_the_number
+
+PLANTED BUG I. Aging is counted to the digest's time and not to retrieval (criterion 8)
+  unittest result: FAILED (failures=7)
+  tests that failed (7):
+    FoundByReaders.test_a_title_cannot_end_its_quotation_or_start_a_line_or_forge_a_citation
+    FoundByReaders.test_aging_is_counted_to_retrieval_and_not_to_the_digest
+    Citations.test_every_observed_line_cites_an_item_and_its_retrieval_time
+    Aging.test_in_progress_and_unchanged_for_the_threshold_is_aging_with_the_number
+    FoundByReaders.test_the_scoped_digest_does_not_fail_on_a_blocker_outside_its_scope
+    PeopleAndText.test_the_scoped_digest_uses_a_field_and_says_nothing_of_a_person
+    Aging.test_whole_days_are_counted_down
+
+PLANTED BUG J. An item not started can be aging (criterion 8)
+  unittest result: FAILED (failures=5)
+  tests that failed (5):
+    FoundByReaders.test_a_title_cannot_end_its_quotation_or_start_a_line_or_forge_a_citation
+    Aging.test_an_item_not_started_is_never_aging
+    Citations.test_every_observed_line_cites_an_item_and_its_retrieval_time
+    FoundByReaders.test_the_scoped_digest_does_not_fail_on_a_blocker_outside_its_scope
+    PeopleAndText.test_the_scoped_digest_uses_a_field_and_says_nothing_of_a_person
+
+PLANTED BUG K. A removed item is not reported (criterion 9)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Changes.test_a_removed_item_is_not_said_to_be_done
+    Changes.test_added_removed_and_changed_are_reported_by_identity
+
+PLANTED BUG L. An added item is not reported (criterion 9)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Changes.test_added_removed_and_changed_are_reported_by_identity
+
+PLANTED BUG M. A status change is reported even when one side was not asserted
+  unittest result: FAILED (errors=1)
+  tests that failed (1):
+    FoundByReaders.test_a_status_that_differs_where_one_side_was_not_asserted_is_a_gap_and_not_a_change
+
+PLANTED BUG N. The computer's clock is read (criterion 10)
+  unittest result: FAILED (failures=35, errors=1)
+  tests that failed (36):
+    FoundByReaders.test_a_blocked_field_with_no_basis_says_so
+    Gaps.test_a_blocker_with_no_record_is_missing
+    Blocked.test_a_blocking_link_is_reported_from_the_record
+    FoundByReaders.test_a_blocks_note_naming_an_item_with_no_record_is_missing
+    Citations.test_a_cited_retrieval_time_is_the_records_own
+    Inference.test_a_done_blocker_is_rule_two_and_does_not_say_the_item_is_free
+    FoundByReaders.test_a_fresh_looking_record_whose_run_is_not_listed_is_not_asserted
+    FoundByReaders.test_a_link_saved_with_a_record_whose_blocked_field_says_no_is_still_shown
+    Staleness.test_a_record_older_than_the_limit_is_stale_and_not_asserted
+    Staleness.test_a_record_retrieved_after_the_digests_time_is_stale
+    FoundByReaders.test_a_record_that_disagrees_with_its_run_about_the_time_is_not_asserted
+    Blocked.test_a_recorded_field_makes_an_item_blocked
+    Changes.test_a_removed_item_is_not_said_to_be_done
+    Inference.test_a_stale_blocker_is_rule_three
+    Gaps.test_a_status_the_source_does_not_state_is_unsupported_and_kept_apart
+    FoundByReaders.test_a_title_cannot_end_its_quotation_or_start_a_line_or_forge_a_citation
+    Blocked.test_a_title_that_says_blocked_does_not_make_an_item_blocked
+    PeopleAndText.test_a_title_worded_as_an_instruction_changes_nothing
+    Changes.test_added_removed_and_changed_are_reported_by_identity
+    Blocked.test_an_explicit_note_makes_an_item_blocked
+    Blocked.test_an_item_whose_blocked_field_is_unknown_is_not_said_to_be_free
+    Staleness.test_at_exactly_the_limit_a_record_is_fresh
+    Citations.test_every_observed_line_cites_an_item_and_its_retrieval_time
+    Aging.test_in_progress_and_unchanged_for_the_threshold_is_aging_with_the_number
+    FoundByReaders.test_one_blocker_done_and_one_not_is_not_called_all_done
+    Staleness.test_one_second_past_the_limit_is_stale
+    FoundByReaders.test_the_basis_a_record_gives_is_redacted_too
+    FoundByReaders.test_the_check_reports_a_wrong_age_and_a_wrong_run
+    FoundByReaders.test_the_check_reports_a_wrong_number_of_days_on_an_aging_line
+    FoundByReaders.test_the_check_reports_a_wrong_status_word_on_a_cited_line
+    Blocked.test_the_check_reports_an_item_shown_as_blocked_with_no_record_of_it
+    Regeneration.test_the_clock_is_never_read
+    FoundByReaders.test_the_scoped_digest_does_not_fail_on_a_blocker_outside_its_scope
+    PeopleAndText.test_the_scoped_digest_uses_a_field_and_says_nothing_of_a_person
+    Citations.test_the_window_and_the_runs_are_stated
+    Inference.test_waiting_on_an_item_that_is_not_done_is_rule_one
+
+PLANTED BUG O. Names on the redaction list are not taken out
+  unittest result: FAILED (failures=6)
+  tests that failed (6):
+    FoundByReaders.test_a_listed_name_inside_an_ordinary_word_is_left_alone
+    FoundByReaders.test_a_title_cannot_end_its_quotation_or_start_a_line_or_forge_a_citation
+    Citations.test_every_observed_line_cites_an_item_and_its_retrieval_time
+    PeopleAndText.test_names_emails_and_customer_numbers_are_taken_out_of_titles
+    PeopleAndText.test_redaction_also_catches_a_name_in_other_capitals
+    FoundByReaders.test_the_basis_a_record_gives_is_redacted_too
+
+PLANTED BUG P. Email addresses are not taken out
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    PeopleAndText.test_names_emails_and_customer_numbers_are_taken_out_of_titles
+    FoundByReaders.test_the_basis_a_record_gives_is_redacted_too
+
+PLANTED BUG Q. An item a run retrieved with no record is dropped silently (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Gaps.test_an_item_a_run_lists_with_no_record_is_missing
+
+PLANTED BUG R. A record that cannot be read is dropped silently (criterion 6)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    FoundByReaders.test_a_blocked_value_that_is_not_one_of_the_three_makes_the_record_unreadable
+    FoundByReaders.test_a_misspelt_status_basis_makes_the_record_unreadable
+    Gaps.test_a_record_that_cannot_be_read_is_missing_and_never_asserted
+
+PLANTED BUG S. A blocker with no record is not reported as missing (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Gaps.test_a_blocker_with_no_record_is_missing
+
+PLANTED BUG T. The scoped digest holds every item
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    FoundByReaders.test_the_scoped_digest_does_not_fail_on_a_blocker_outside_its_scope
+    PeopleAndText.test_the_scoped_digest_uses_a_field_and_says_nothing_of_a_person
+
+PLANTED BUG U. Items with nothing recorded about being blocked are not in the gap report
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Blocked.test_an_item_whose_blocked_field_is_unknown_is_not_said_to_be_free
+
+PLANTED BUG V. A system with no fresh run is not reported
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Staleness.test_a_system_with_no_fresh_completed_run_is_reported
+
+PLANTED BUG W. The check lets a stale record be stated as current
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Staleness.test_the_check_reports_a_stale_item_stated_as_current
+
+PLANTED BUG X. The check lets a wrong retrieval time through (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Citations.test_the_check_reports_a_wrong_retrieval_time
+
+PLANTED BUG Y. The check lets an item be shown as blocked with no record of it
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Blocked.test_the_check_reports_an_item_shown_as_blocked_with_no_record_of_it
+
+PLANTED BUG Z. The check lets a listed name through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    PeopleAndText.test_the_check_reports_a_listed_name_in_the_digest
+
+PLANTED BUG AA. The check lets a line with no citation through (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Citations.test_the_check_reports_a_line_with_no_citation
+
+PLANTED BUG AB. No previous digest gives an empty list of changes and no gap
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Gaps.test_no_previous_digest_is_a_gap_and_not_an_empty_list_of_changes
+
+PLANTED BUG AC. A recorded blocking link is not reported (criterion 7)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    Blocked.test_a_blocking_link_is_reported_from_the_record
+    FoundByReaders.test_a_blocks_note_naming_an_item_with_no_record_is_missing
+    Blocked.test_the_check_reports_an_item_shown_as_blocked_with_no_record_of_it
+
+PLANTED BUG AD. One blocker done and one not is called every blocker done
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FoundByReaders.test_one_blocker_done_and_one_not_is_not_called_all_done
+
+PLANTED BUG AE. The check lets a cited item with no record through
+  unittest result: FAILED (errors=1)
+  tests that failed (1):
+    Citations.test_the_check_reports_a_cited_item_that_has_no_record
+
+PLANTED BUG AF. A removed item's absence is not put in the gap report
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    Changes.test_a_removed_item_is_not_said_to_be_done
+
+PLANTED BUG AG. A fresh-looking record whose run is not listed is asserted
+  unittest result: FAILED (errors=1)
+  tests that failed (1):
+    FoundByReaders.test_a_fresh_looking_record_whose_run_is_not_listed_is_not_asserted
+
+PLANTED BUG AH. A record that disagrees with its run about the time is asserted
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FoundByReaders.test_a_record_that_disagrees_with_its_run_about_the_time_is_not_asserted
+
+PLANTED BUG AI. Two files for one item: the later one is used
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FoundByReaders.test_two_files_for_one_item_are_reported_and_neither_is_used
+
+PLANTED BUG AJ. A note whose heading names no item is used or dropped silently
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FoundByReaders.test_a_note_with_a_heading_that_names_no_item_is_reported
+
+PLANTED BUG AK. Prose in a note is not reported
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FoundByReaders.test_a_note_line_almost_in_record_form_is_reported_and_not_used
+
+PLANTED BUG AL. A previous digest of another scope is compared with
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FoundByReaders.test_a_previous_digest_of_another_scope_is_not_compared_with
+
+PLANTED BUG AM. A quote mark in a title is printed as it is
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    Blocked.test_a_recorded_field_makes_an_item_blocked
+    FoundByReaders.test_a_title_cannot_end_its_quotation_or_start_a_line_or_forge_a_citation
+
+PLANTED BUG AN. A line break in a title is printed as it is
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FoundByReaders.test_a_title_cannot_end_its_quotation_or_start_a_line_or_forge_a_citation
+
+PLANTED BUG AO. A listed name is taken out of the middle of a word
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FoundByReaders.test_a_listed_name_inside_an_ordinary_word_is_left_alone
+
+PLANTED BUG AP. The previous state may be the file this run writes
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FoundByReaders.test_previous_must_not_be_the_file_this_run_writes
+
+PLANTED BUG AQ. The check lets a wrong status word through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FoundByReaders.test_the_check_reports_a_wrong_status_word_on_a_cited_line
+
+PLANTED BUG AR. The check lets a fresh item be left out
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FoundByReaders.test_the_check_reports_a_fresh_item_left_out
+
+PLANTED BUG AS. The check lets a wrong number of aging days through
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FoundByReaders.test_the_check_reports_a_wrong_number_of_days_on_an_aging_line
+
+PLANTED BUG AT. The check lets gap entries be taken out
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FoundByReaders.test_the_check_reports_a_gap_report_with_entries_taken_out
+
+PLANTED BUG AU. A link saved with a record is ignored when the blocked field says no
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FoundByReaders.test_a_link_saved_with_a_record_whose_blocked_field_says_no_is_still_shown
+
+PLANTED BUG AV. A blocker outside the digest's scope is cited as if it were inside
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    FoundByReaders.test_the_scoped_digest_does_not_fail_on_a_blocker_outside_its_scope
+
+After the last bug was taken out: digest.py is byte for byte what it was at the start. OK
+
+RESULT: all 48 planted bugs were caught by at least one test, and the file was restored.

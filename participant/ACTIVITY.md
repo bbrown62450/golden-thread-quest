@@ -392,3 +392,8 @@ Every change this application made to your files, newest last.
 - `2026-11-24T23:19:25Z` playwright-success-evidence: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-24T23:19:25Z` Submitted playwright-success-evidence for review as submission-20261124231925-29b1b2.
 - `2026-11-24T23:23:55Z` Review of playwright-success-evidence: approved by Claude (automated reviewer).
+- `2026-11-25T12:34:31Z` Started scrum-standup-digest as attempt scrum-attempt-001.
+- `2026-11-25T15:41:20Z` scrum-standup-digest: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-25T15:42:12Z` scrum-standup-digest: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-25T15:46:14Z` scrum-standup-digest: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-25T15:46:14Z` Submitted scrum-standup-digest for review as submission-20261125154614-157f51.

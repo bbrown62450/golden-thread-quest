@@ -1,0 +1,123 @@
+Independent reads of the digest and of its generator. scrum-standup-digest, attempt scrum-attempt-001
+Copied by hand, and shortened, from the readers' replies by the assistant that built this quest. No program wrote this file.
+
+Who the readers were: four separate AI assistants (Claude), each started fresh. No person read the work, and no teammate
+was walked through it. Each was told to read only the files named to it, to run nothing and to write nothing. Those
+limits were given in words and not enforced. None saw another's reply. The generator, its tests and its record were
+finished and passing before any reply was read.
+
+  Reader 1   given the first digest and gap report and nothing else. Asked, as a manager who will act on it, which lines
+             do not answer "how do you know that?".
+  Reader 2   given the first digest, the gap report and the records they were built from. Asked to check every
+             statement against its cited record, by reading.
+  Reader 3   given the generator as first built, the skill document, the first digest and the record of the evidence.
+             Asked where the code and the written rules differ, and what input would make it assert something unsupported.
+  Reader 4   given the final digest, gap report, skill document and records. Readers 1 and 2's tasks, on the final version.
+
+==============================================================================
+ROUND 1. The first version
+
+READER 2, AGAINST THE RECORDS. 31 statement lines. "23 verified from the citation alone. 8 not fully verifiable or loosely
+worded, 0 flatly wrong." Every count was right. Every item of the context was in the digest or in the gap report: "None is
+in neither."
+The eight:
+  - Two aging lines said "unchanged for 8 days" and "for 5 days". The records showed no change only up to the time they
+    were retrieved, an hour and a half earlier. "It meets the stated rule, yet says more than the record shows."
+  - A line said an item was blocked on the strength of a person's note, and cited the item's record, which says blocked
+    is unknown. The note was not cited, and has no date.
+  - A stale record named a run that was in no list of runs.
+  - Three ages were cut short by 20 minutes, where every other age was given to the minute.
+  - The removed item has no record to cite.
+
+READER 1, THE DIGEST ALONE. It could not obey the title worded as an instruction, and found nothing about any person and no
+personal data. What it would not accept:
+  - The same aging lines: "It only reaches the 5-day threshold by assuming no change between retrieval and 09:00."
+  - "OBSERVED lines state what a fresh record says, and nothing more" was untrue of the removed, count and aging lines.
+  - A fourth inference rule was used under a heading that named three.
+  - The digest said 4 stale records and the gap report said 5 stale.
+  - It was too long to run a stand-up from, and had no summary at the top. One item appeared five times.
+  - A title worded as an instruction "is still a live string for any downstream automated reader".
+
+READER 3, THE CODE AGAINST THE RULES. The findings that mattered:
+  - With two blockers, one done and one not, the generator printed that every blocker was done.
+  - A record that called itself fresh was asserted even when no completed run was listed for it. A record's run was
+    never matched against the list of runs.
+  - A note with a slightly wrong heading or line was dropped without a word. So were two files claiming one item: the
+    later one won.
+  - Under the per-person scope, an item still in the context was reported as removed, "which is false", and a blocker
+    outside the scope crashed the generator.
+  - A status that changed where one side had not been asserted gave no change line and no gap.
+  - A double quote in a title ended the quotation marking it as other people's text. A carriage return started a line.
+  - A redaction name was matched inside ordinary words. A date in a title was taken for a telephone number.
+  - The basis a record gives for being blocked was printed unredacted, and as "None" when missing.
+  - A time with a month 13 crashed it. The previous state could be the file the run was about to write.
+  - Of the check: it would pass a line saying "done" of an item in progress, if the citation was right. It would pass a
+    digest with a fresh item left out, and a gap report with its entries deleted.
+  - Of the record of the evidence: the test that no socket was opened could not fail, since the generator imports
+    nothing that opens one. Several other checks tested the generator's own wording against itself.
+  Its verdict on the twelve criteria: one holds, nine hold with a reservation, and two "hold on the sample, fail in
+  general": gaps, and changes under the per-person scope.
+
+WHAT WAS CHANGED AFTER ROUND 1
+  The generator was rewritten. Aging is counted to the time the record was retrieved. A record is fresh only if the run
+  it names is listed as completed and gives the same time. "Every blocker is done" is said only when every one is.
+  Malformed notes, prose in notes, duplicate files and unreadable values each make a gap entry. The per-person scope no
+  longer compares with a digest of another scope, and no longer fails on a blocker outside it. A status change with one
+  side unasserted is a gap. Other people's text is redacted and made unable to end its quotation or start a line.
+  Names are matched as whole words. The digest has a summary at the top, cites the note file, and lists a run that a
+  record names and no list has.
+  The check now also looks at the status word, the aging days, the age, the run, a fresh item left out, the count of
+  work in progress and the number of gap entries.
+  The record of the evidence: the socket run is now recorded as a formality, and the criterion rests on the list of what
+  the generator imports and where it opens files. Checks that tested wording against itself were replaced by checks
+  that work the answer out again from the records.
+  Tests went from 54 to 83. Each fault above has a test, in a class named for the readers.
+  NOT DONE: nothing detects a title that is worded as an instruction. That would mean reading titles for meaning.
+
+==============================================================================
+ROUND 2. The final version
+
+READER 4. "The digest is accurate against its records; I found no wrong fact."
+  Statement lines: 31. Verified from the citation: 30. Wrong: 0. The one that cannot be verified from a citation is the
+  removed item, which has no record. It checked that line against the previous state and the list of runs, and it held.
+  Counts: "all correct", in every place they are stated. Aging: 7 whole days and exactly 5.
+  Coverage: "nothing is in neither document."
+  Inferences: "all four follow their rules."
+  Gap report: "all 13 reasons are true of the context."
+  People and redaction: "clean."
+  The criteria it was asked about:
+     2  every statement cites its item        HOLDS WITH A RESERVATION: the removed line cites the previous state
+     3  retrieval time shown                  HOLDS WITH A RESERVATION: count lines list identities without times
+     4  observed and inference separated      HOLDS
+     5  staleness applied                     HOLDS
+     6  unsupported items in the gap report   HOLDS
+     7  blocked from records, not titles      HOLDS
+     8  aging with the number of days         HOLDS
+     9  added and removed by identity         HOLDS WITH A RESERVATION: two items new to a run's list, with no readable
+                                              record, are reported as missing and not as added
+    11  window and runs stated                HOLDS
+    12  no statement about a person           HOLDS
+  What it still found, all of it wording:
+  - The header says every age is counted to the digest's time. Aging is counted to retrieval. The header is too broad.
+  - The digest says names are taken out of titles. Only names on the list are.
+  - The first inference line rests on a note, and its "Rests on" names the two records and not the note.
+  - Section 6 is headed "counts of the lines above" and its last line counts lines below.
+  - "Open, which is to say not started" is the generator's gloss. The record says open.
+  - One gap entry gives one of the two reasons its record is stale.
+  The sentence it called hardest to defend: "`github:I_kwFXsc0007` is waiting on `jira:53003`, which is in progress."
+  "A present-tense claim resting on an undated note of unknown authorship, while the item's own record says blocked is
+  unknown."
+
+NOT CHANGED AFTER ROUND 2
+  Nothing. The digest, the gap report, the skill document and the generator handed in are the ones reader 4 read.
+  Everything in its list above stands.
+
+==============================================================================
+SUMMARY
+  Is every statement traceable? Two readers checked each line against its record: 23 of 31, then 30 of 31, and no line
+  was contradicted by its record in either round.
+  Did the first version assert more than its records showed? Yes, in two aging lines, by an hour and a half. Two
+  readers found it independently.
+  Would the first generator have misled on other input? Yes, in several ways a reader found by reading the code, none of
+  which the sample happened to show.
+  A teammate was not walked through the digest. The optional evidence is not provided.
