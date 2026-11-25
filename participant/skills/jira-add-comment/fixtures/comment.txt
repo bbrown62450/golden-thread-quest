@@ -1,0 +1,2 @@
+Checked against the made-up onboarding checklist on 25 November.
+No change to the story is needed. This is a test comment.

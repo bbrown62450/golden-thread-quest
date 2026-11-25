@@ -1,0 +1,163 @@
+The comment check. jira-add-comment, attempt jira-attempt-013
+Recorded by scripts/record_evidence.py. Each block between dashed lines is what a command printed.
+STATE and WORK stand for temporary folders.
+
+
+==============================================================================
+PART A. The real sandbox: reading the story back and finding the comment
+These are the files the workflow saved, with the site's address removed, when the participant ran it in their own
+terminal with their own credentials. This script copies them in unchanged. It cannot establish by reading them who
+ran what, or that a person read a preview before confirming it. The saved files hold no command line and no exit
+code, so the commands are given in PROOF.md and not here. Each check below is of the saved text and no more.
+
+logs/live-comment-check.txt:
+------------------------------------------------------------------------------
+COMMENT CHECK for the write of preview aeb8be1deadb. Nothing is written by this command.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Story:      SCRUM-1 (issue id 10000), in project SCRUM (project id 10000).
+Comment:    comment id 10000, the identifier Jira gave when it was written.
+
+The text the preview showed, between the bars:
+    | Test comment from the Golden Thread Quest sandbox exercise, added on 25 November 2026.
+    | It records nothing about real work and can be deleted.
+The text read back from Jira now, between the bars:
+    | Test comment from the Golden Thread Quest sandbox exercise, added on 25 November 2026.
+    | It records nothing about real work and can be deleted.
+
+
+  the text read back is the text previewed, character for character (141 characters, sha256 b2da122aadd5d2fe): yes
+  it is plain text, with nothing added: no formatting, links or mentions: yes
+  its author is this identity: yes
+  its visibility is the one previewed: everyone who can see the story: yes
+  WHO CAN SEE IT, as the preview showed: EVERYONE who can see the story SCRUM-1. No restriction is put on the comment. The story has no security level.
+  the story's security level is what it was when the comment was written (none): yes
+  comments on the story with this text and this visibility by this identity: 1 of the 1 this identity can see
+
+Where the text came from, as the preview stated: the file add-comment.txt beside the change file, sha256 c8c152877189547310c53ed0cadaef4360e29b0af85dc087f424d04eadc1ffec.
+  That file today: the same name and the same sha256, so it still holds the text that was sent.
+  Who or what put the text in that file is not known to this workflow. It did not write the file and did not
+  take the text from Jira.
+
+Requests sent to Jira: 4. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/myself
+  GET /rest/api/3/issue/10000
+  GET /rest/api/3/issue/10000/comment/10000
+  GET /rest/api/3/issue/10000/comment
+
+FOUND: the comment is on the story as previewed.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
+------------------------------------------------------------------------------
+  ok   live comment check: the comment is found as previewed
+  ok   live comment check: the program reports that the text read back is the text previewed
+  ok   live comment check: the program reports the author as this identity, meaning the token's account
+  ok   live comment check: its visibility is the one the preview showed
+  ok   live comment check: there is exactly one such comment
+  ok   live comment check: it restates where the text came from
+  ok   live comment check: the program's own list of the requests it sent holds only reads
+  ok   live comment check: no web address and no atlassian name is in the saved text
+  ok   live comment check: nothing shaped like an email address is in the saved text
+  ok   live comment check: no line says NO
+  ok   the lines of text the check printed as read back are, line for line, the lines the confirmed preview printed between its bars
+  ok   the check is of the comment id the approved run was given: 10000
+  ok   the check is for the fingerprint the second preview printed
+  ok   live comment check: the text previewed and the text read back, as printed, are the same lines
+
+==============================================================================
+PART B. The fake Jira, carrying on from the approved write recorded in confirmation.txt
+The Jira in this part is fake_jira.py, a made-up one. No real Jira was read or written, so nothing in it is
+redacted: the site, the projects, the stories and the people are invented.
+
+$ python3 participant/skills/jira-add-comment/comment.py check --source fake --change WORK/wanted.json --state STATE --fingerprint 1521283a1b4e
+------------------------------------------------------------------------------
+COMMENT CHECK for the write of preview 1521283a1b4e. Nothing is written by this command.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Story:      SAND-1 (issue id 30001), in project SAND (project id 20001).
+Comment:    comment id 50123, the identifier Jira gave when it was written.
+
+The text the preview showed, between the bars:
+    | Checked against the made-up onboarding checklist on 25 November.
+    | No change to the story is needed. This is a test comment.
+The text read back from Jira now, between the bars:
+    | Checked against the made-up onboarding checklist on 25 November.
+    | No change to the story is needed. This is a test comment.
+
+
+  the text read back is the text previewed, character for character (122 characters, sha256 1c538bd17513b7df): yes
+  it is plain text, with nothing added: no formatting, links or mentions: yes
+  its author is this identity: yes
+  its visibility is the one previewed: everyone who can see the story: yes
+  WHO CAN SEE IT, as the preview showed: EVERYONE who can see the story SAND-1. No restriction is put on the comment. The story has no security level.
+  the story's security level is what it was when the comment was written (none): yes
+  comments on the story with this text and this visibility by this identity: 1 of the 3 this identity can see
+
+Where the text came from, as the preview stated: the file comment.txt beside the change file, sha256 810ad29174abb8dfbb743e0dd92e69777dc0a2169852024a866c89c7f4636959.
+  That file today: the same name and the same sha256, so it still holds the text that was sent.
+  Who or what put the text in that file is not known to this workflow. It did not write the file and did not
+  take the text from Jira.
+
+Requests sent to Jira: 4. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/myself
+  GET /rest/api/3/issue/30001
+  GET /rest/api/3/issue/30001/comment/50123
+  GET /rest/api/3/issue/30001/comment
+
+FOUND: the comment is on the story as previewed.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 2: read back by its identifier, the comment has the same text as the preview, line for line
+  ok   it has the expected author and the visibility the preview showed
+  ok   criterion 1: beside it stands the preview's statement of where the text came from, and the file still holds that text
+  ok   the check sent only reads
+
+A contrast: someone else adds a comment with the very same text. The check still finds one by this identity.
+$ python3 participant/skills/jira-add-comment/fake_jira.py other-comment --state STATE --story SAND-1 --text "A made-up reply from someone else."
+------------------------------------------------------------------------------
+FAKE JIRA: someone else added comment 50124 to SAND-1.
+FAKE JIRA holds for SAND-1 (issue id 30001): 4 comments. By this identity: 1. Comment ids: 50001, 50002, 50123, 50124.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/jira-add-comment/comment.py check --source fake --change WORK/wanted.json --state STATE --fingerprint 1521283a1b4e
+------------------------------------------------------------------------------
+COMMENT CHECK for the write of preview 1521283a1b4e. Nothing is written by this command.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Story:      SAND-1 (issue id 30001), in project SAND (project id 20001).
+Comment:    comment id 50123, the identifier Jira gave when it was written.
+
+The text the preview showed, between the bars:
+    | Checked against the made-up onboarding checklist on 25 November.
+    | No change to the story is needed. This is a test comment.
+The text read back from Jira now, between the bars:
+    | Checked against the made-up onboarding checklist on 25 November.
+    | No change to the story is needed. This is a test comment.
+
+
+  the text read back is the text previewed, character for character (122 characters, sha256 1c538bd17513b7df): yes
+  it is plain text, with nothing added: no formatting, links or mentions: yes
+  its author is this identity: yes
+  its visibility is the one previewed: everyone who can see the story: yes
+  WHO CAN SEE IT, as the preview showed: EVERYONE who can see the story SAND-1. No restriction is put on the comment. The story has no security level.
+  the story's security level is what it was when the comment was written (none): yes
+  comments on the story with this text and this visibility by this identity: 1 of the 4 this identity can see
+
+Where the text came from, as the preview stated: the file comment.txt beside the change file, sha256 810ad29174abb8dfbb743e0dd92e69777dc0a2169852024a866c89c7f4636959.
+  That file today: the same name and the same sha256, so it still holds the text that was sent.
+  Who or what put the text in that file is not known to this workflow. It did not write the file and did not
+  take the text from Jira.
+
+Requests sent to Jira: 4. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/myself
+  GET /rest/api/3/issue/30001
+  GET /rest/api/3/issue/30001/comment/50123
+  GET /rest/api/3/issue/30001/comment
+
+FOUND: the comment is on the story as previewed.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   with another person's comment added since, the check still passes, and counts 1 of the 4
+
+RESULT: ALL CHECKS PASSED. 19 checks.

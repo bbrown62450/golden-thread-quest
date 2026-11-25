@@ -1,0 +1,45 @@
+CONFIRMATION for preview aeb8be1deadb, given by: the participant (the name given with the confirmation).
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). Kind of project, as Jira gives it: software.
+            On the sandbox allowlist: yes. The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+Story:      SCRUM-1 (issue id 10000). The id is what identifies it. Its title is other people's text and is not
+            shown: check the key against the story you mean, in Jira.
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  the saved preview is unaltered and has not been used: ok
+  the change file and the text file ask for exactly what the preview showed: ok
+  the project is on the sandbox allowlist for this site: ok
+  Jira says this identity may comment on the story: ok
+  the story's 0 comments, read just before the write, hold no such comment by this identity: ok
+
+WRITTEN to Jira: one comment on story SCRUM-1. Jira answered 201 and gave it the comment id 10000.
+The confirmation and the write happened in this one run of the command.
+
+Read back from Jira after the write, by that comment id:
+  the text read back is the text previewed, character for character (141 characters, sha256 b2da122aadd5d2fe): yes
+  it is plain text, with nothing added: no formatting, links or mentions: yes
+  its author is this identity: yes
+  its visibility is the one previewed: everyone who can see the story: yes
+  comments on the story with this text and this visibility by this identity, counted after the write: 1
+
+RESULT RECORD
+  Issue key: SCRUM-1
+  Issue id: 10000 (this identifies the story; a key can change)
+  Identifier of what was created: Jira comment id 10000, on that issue
+  Target project: SCRUM (project id 10000), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 4aabe3d08fbad6b1
+  Visibility: everyone who can see the story; no restriction on the comment
+  Story's security level when written: none
+  Text: 141 characters, sha256 b2da122aadd5d2fef45202e57038746dc55e34578a4cc12eaa656524e3155505, from the file add-comment.txt (file sha256 c8c152877189547310c53ed0cadaef4360e29b0af85dc087f424d04eadc1ffec)
+  Read back after the write: as previewed: same text, plain, by this identity, same visibility
+  Written at: 2026-11-25 21:21:23 UTC
+  Confirmed by: the participant, at 2026-11-25 21:21:21 UTC
+  Preview: fingerprint aeb8be1deadb, made 2026-11-25 21:21:07 UTC
+  To reverse: delete comment 10000 on the story in Jira, by hand. This workflow does not delete. Emails Jira sent about the comment cannot be taken back
+
+The result record was also saved as Markdown where --result said.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

@@ -1,0 +1,454 @@
+The confirmation, and four refusals. jira-add-comment, attempt jira-attempt-013
+Recorded by scripts/record_evidence.py. Each block between dashed lines is what a command printed.
+STATE and WORK stand for temporary folders.
+
+
+==============================================================================
+PART A. The real sandbox: the approved run, and the four refusals
+These are the files the workflow saved, with the site's address removed, when the participant ran it in their own
+terminal with their own credentials. This script copies them in unchanged. It cannot establish by reading them who
+ran what, or that a person read a preview before confirming it. The saved files hold no command line and no exit
+code, so the commands are given in PROOF.md and not here. Each check below is of the saved text and no more.
+
+logs/live-preview-first.txt:
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). Kind of project, as Jira gives it: software.
+            On the sandbox allowlist: yes. The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+Story:      SCRUM-1 (issue id 10000). The id is what identifies it. Its title is other people's text and is not
+            shown: check the key against the story you mean, in Jira.
+
+The change that would be made: one comment on SCRUM-1.
+  It would appear under the Jira account the API token belongs to, called this identity below. Not under the
+  name given with the confirmation.
+  Text, exactly as it would be sent, between the bars. 141 characters, 2 lines:
+    | Test comment from the Golden Thread Quest sandbox exercise, added on 25 November 2026.
+    | It records nothing about real work and can be deleted.
+  WHO CAN SEE IT: EVERYONE who can see the story SCRUM-1. No restriction is put on the comment. The story has no security level.
+    This workflow cannot list who that is, and cannot tell whether the project is open to customers or to the
+    public. Jira may also email the story's watchers the whole text.
+  Where the text came from: the file add-comment.txt beside the change file, sha256 c8c152877189547310c53ed0cadaef4360e29b0af85dc087f424d04eadc1ffec.
+    Who or what put the text in that file is not known to this workflow. It did not write the file and did not
+    take the text from Jira.
+  It is sent as plain text: no formatting, no links, no mentions. Nothing else on the story would be sent.
+  A comment cannot be unsent. It can be deleted afterwards, by hand, and emails already sent stay sent.
+
+Looked for in the text and not found: email addresses, web addresses, telephone numbers, @names, and
+  words that mark something as private. That is a search for patterns. It is not a judgement that the
+  text is fit to be seen. The person confirming reads the text.
+Looked for in the text and not found: 9 patterns that look like a secret. A text that matched one would
+  have been refused.
+
+Permission check, asked of Jira for this story and this identity:
+  may see the story        (BROWSE_PROJECTS): yes
+  may comment on the story (ADD_COMMENTS):    yes
+Duplicate check, made against Jira just now: the story has 0 comments that this identity can see. Each was
+  compared with the text. A comment restricted to others would not be among them.
+  With the same text, by this identity: 0.
+  With the same text, by someone else:  0.
+Where Jira cannot check: its request to add a comment has no 'only if there is no such comment' condition.
+  The confirmation reads the comments again just before writing and stops if this comment is there by then.
+
+Snapshot of the story and its comments as Jira returned them, before the preview: 2ec64df223ea9438
+Snapshot of the story and its comments as Jira returned them, after the preview:  2ec64df223ea9438
+The two are the same. Jira is unchanged, as far as two reads of the story and its comments can show. A snapshot
+  is of the story's last-updated time, project and security level, and of every comment this identity can see.
+Requests sent to Jira: 6. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SCRUM-1
+  GET /rest/api/3/myself
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/10000/comment
+  GET /rest/api/3/issue/10000
+  GET /rest/api/3/issue/10000/comment
+
+Fingerprint of this preview: baf8fd02ec23
+Made:    2026-11-25 21:20:13 UTC
+Expires: 2026-11-25 21:35:13 UTC (15 minutes after it was made)
+
+Nothing has been written. To add this comment, a person who has read this preview confirms it by its
+fingerprint.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
+------------------------------------------------------------------------------
+
+logs/live-confirmation.txt:
+------------------------------------------------------------------------------
+CONFIRMATION for preview aeb8be1deadb, given by: the participant (the name given with the confirmation).
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). Kind of project, as Jira gives it: software.
+            On the sandbox allowlist: yes. The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+Story:      SCRUM-1 (issue id 10000). The id is what identifies it. Its title is other people's text and is not
+            shown: check the key against the story you mean, in Jira.
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  the saved preview is unaltered and has not been used: ok
+  the change file and the text file ask for exactly what the preview showed: ok
+  the project is on the sandbox allowlist for this site: ok
+  Jira says this identity may comment on the story: ok
+  the story's 0 comments, read just before the write, hold no such comment by this identity: ok
+
+WRITTEN to Jira: one comment on story SCRUM-1. Jira answered 201 and gave it the comment id 10000.
+The confirmation and the write happened in this one run of the command.
+
+Read back from Jira after the write, by that comment id:
+  the text read back is the text previewed, character for character (141 characters, sha256 b2da122aadd5d2fe): yes
+  it is plain text, with nothing added: no formatting, links or mentions: yes
+  its author is this identity: yes
+  its visibility is the one previewed: everyone who can see the story: yes
+  comments on the story with this text and this visibility by this identity, counted after the write: 1
+
+RESULT RECORD
+  Issue key: SCRUM-1
+  Issue id: 10000 (this identifies the story; a key can change)
+  Identifier of what was created: Jira comment id 10000, on that issue
+  Target project: SCRUM (project id 10000), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 4aabe3d08fbad6b1
+  Visibility: everyone who can see the story; no restriction on the comment
+  Story's security level when written: none
+  Text: 141 characters, sha256 b2da122aadd5d2fef45202e57038746dc55e34578a4cc12eaa656524e3155505, from the file add-comment.txt (file sha256 c8c152877189547310c53ed0cadaef4360e29b0af85dc087f424d04eadc1ffec)
+  Read back after the write: as previewed: same text, plain, by this identity, same visibility
+  Written at: 2026-11-25 21:21:23 UTC
+  Confirmed by: the participant, at 2026-11-25 21:21:21 UTC
+  Preview: fingerprint aeb8be1deadb, made 2026-11-25 21:21:07 UTC
+  To reverse: delete comment 10000 on the story in Jira, by hand. This workflow does not delete. Emails Jira sent about the comment cannot be taken back
+
+The result record was also saved as Markdown where --result said.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
+------------------------------------------------------------------------------
+
+logs/live-refused-missing.txt:
+------------------------------------------------------------------------------
+
+REFUSED: no confirmation was given. A confirmation names the fingerprint of the preview it approves, and there is no way to write without one.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
+------------------------------------------------------------------------------
+
+logs/live-refused-differs.txt:
+------------------------------------------------------------------------------
+
+REFUSED: the change is not the one that was previewed: the text is not the text the preview showed. Make a new preview and read it.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
+------------------------------------------------------------------------------
+
+logs/live-refused-stale.txt:
+------------------------------------------------------------------------------
+TEST CLOCK: pretending it is 16 minutes later than it is.
+
+REFUSED: this preview is too old. It was made 16 minutes ago and the limit is 15. Make a new preview and read it.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
+------------------------------------------------------------------------------
+
+logs/live-refused-allowlist.txt:
+------------------------------------------------------------------------------
+
+REFUSED: project SCRUM (project id 10000) on the Jira site with fingerprint 4aabe3d08fbad6b1 is not on the sandbox allowlist (allowlist-without-sandbox.json). This workflow writes only to projects listed there.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
+------------------------------------------------------------------------------
+
+THE ORDER OF THE REAL RUNS, as the participant was asked to make them. It is not in the saved files.
+  1. A preview with an allowlist file that lists no project: refused (live-refused-allowlist.txt).
+  2. A first preview (live-preview-first.txt). It was made only to try the next three refusals against.
+  3. A confirmation with no fingerprint and no name: refused (live-refused-missing.txt).
+  4. The text file was changed by the assistant, in the repository only. A confirmation of the first preview by its
+     fingerprint: refused (live-refused-differs.txt). The text file was put back, and its checksum checked.
+  5. A confirmation of the first preview with the TEST CLOCK set 16 minutes on: refused (live-refused-stale.txt).
+     The preview was in truth under a minute old. No real preview was left to pass its limit.
+  6. A second preview (logs/live-preview.txt, in preview.txt). This is the one that was confirmed.
+  7. The confirmation of the second preview (live-confirmation.txt). This is the one write.
+The first preview was never confirmed. It is still unused, and has passed its limit.
+  ok   live first preview: it is a preview, with a fingerprint of its own
+  ok   live first preview: no web address and no atlassian name is in the saved text
+  ok   live first preview: nothing shaped like an email address is in the saved text
+  ok   the first preview's fingerprint is not the one the approved run confirmed
+  ok   live approved run: the confirmation names the preview's fingerprint and who gave it
+  ok   live approved run: the write and the confirmation were one run
+  ok   live approved run: Jira gave the comment an identifier
+  ok   live approved run: the program reports that the text read back is the text previewed
+  ok   live approved run: the program reports the author as this identity, meaning the token's account. Which account that is, is not in the output
+  ok   live approved run: the program counted one such comment after the write
+  ok   live approved run: it holds a result record
+  ok   live approved run: no web address and no atlassian name is in the saved text
+  ok   live approved run: nothing shaped like an email address is in the saved text
+  ok   live approved run: no line of the read-back says NO
+  ok   live refusal, no confirmation: it is refused for that reason
+  ok   live refusal, no confirmation: it says nothing has been written
+  ok   live refusal, no confirmation: no web address and no atlassian name is in the saved text
+  ok   live refusal, no confirmation: nothing shaped like an email address is in the saved text
+  ok   live refusal, no confirmation: its output has no line saying something was written
+  ok   live refusal, a change that differs: it is refused for that reason
+  ok   live refusal, a change that differs: it says nothing has been written
+  ok   live refusal, a change that differs: no web address and no atlassian name is in the saved text
+  ok   live refusal, a change that differs: nothing shaped like an email address is in the saved text
+  ok   live refusal, a change that differs: its output has no line saying something was written
+  ok   live refusal, a preview made to look too old by the test clock: it is refused for that reason
+  ok   live refusal, a preview made to look too old by the test clock: it says nothing has been written
+  ok   live refusal, a preview made to look too old by the test clock: no web address and no atlassian name is in the saved text
+  ok   live refusal, a preview made to look too old by the test clock: nothing shaped like an email address is in the saved text
+  ok   live refusal, a preview made to look too old by the test clock: its output has no line saying something was written
+  ok   live refusal, a project not on the allowlist: it is refused for that reason
+  ok   live refusal, a project not on the allowlist: it says nothing has been written
+  ok   live refusal, a project not on the allowlist: no web address and no atlassian name is in the saved text
+  ok   live refusal, a project not on the allowlist: nothing shaped like an email address is in the saved text
+  ok   live refusal, a project not on the allowlist: its output has no line saying something was written
+  ok   live refusal by the test clock: the output itself says the clock was pretended
+
+Across the saved files: preview aeb8be1deadb made 2026-11-25 21:21:07, expires 2026-11-25 21:36:07. Confirmed 2026-11-25 21:21:21. Written 2026-11-25 21:21:23.
+  ok   the approved run confirms the fingerprint that the second preview printed
+  ok   by the times printed, the confirmation and the write came after that preview was made and before it expired
+  ok   the checksum of the text in the result record begins with the one the read-back line printed
+  ok   the preview that was confirmed printed 2 lines of text between its bars
+
+==============================================================================
+PART B. The fake Jira
+The Jira in this part is fake_jira.py, a made-up one. No real Jira was read or written, so nothing in it is
+redacted: the site, the projects, the stories and the people are invented.
+
+==============================================================================
+B1. Refusal: no confirmation
+$ python3 participant/skills/jira-add-comment/comment.py preview --source fake --change WORK/wanted.json --allowlist participant/skills/jira-add-comment/fixtures/fake-allowlist.json --state STATE
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). Kind of project, as Jira gives it: software.
+            On the sandbox allowlist: yes. The allowlist is the file fake-allowlist.json, sha256 1885e693a4f7dd83, which lists 2 projects.
+Story:      SAND-1 (issue id 30001). The id is what identifies it. Its title is other people's text and is not
+            shown: check the key against the story you mean, in Jira.
+
+The change that would be made: one comment on SAND-1.
+  It would appear under the Jira account the API token belongs to, called this identity below. Not under the
+  name given with the confirmation.
+  Text, exactly as it would be sent, between the bars. 122 characters, 2 lines:
+    | Checked against the made-up onboarding checklist on 25 November.
+    | No change to the story is needed. This is a test comment.
+  WHO CAN SEE IT: EVERYONE who can see the story SAND-1. No restriction is put on the comment. The story has no security level.
+    This workflow cannot list who that is, and cannot tell whether the project is open to customers or to the
+    public. Jira may also email the story's watchers the whole text.
+  Where the text came from: the file comment.txt beside the change file, sha256 810ad29174abb8dfbb743e0dd92e69777dc0a2169852024a866c89c7f4636959.
+    Who or what put the text in that file is not known to this workflow. It did not write the file and did not
+    take the text from Jira.
+  It is sent as plain text: no formatting, no links, no mentions. Nothing else on the story would be sent.
+  A comment cannot be unsent. It can be deleted afterwards, by hand, and emails already sent stay sent.
+
+Looked for in the text and not found: email addresses, web addresses, telephone numbers, @names, and
+  words that mark something as private. That is a search for patterns. It is not a judgement that the
+  text is fit to be seen. The person confirming reads the text.
+Looked for in the text and not found: 9 patterns that look like a secret. A text that matched one would
+  have been refused.
+
+Permission check, asked of Jira for this story and this identity:
+  may see the story        (BROWSE_PROJECTS): yes
+  may comment on the story (ADD_COMMENTS):    yes
+Duplicate check, made against Jira just now: the story has 2 comments that this identity can see. Each was
+  compared with the text. A comment restricted to others would not be among them.
+  With the same text, by this identity: 0.
+  With the same text, by someone else:  0.
+Where Jira cannot check: its request to add a comment has no 'only if there is no such comment' condition.
+  The confirmation reads the comments again just before writing and stops if this comment is there by then.
+
+Snapshot of the story and its comments as Jira returned them, before the preview: 818c9caac310d9f5
+Snapshot of the story and its comments as Jira returned them, after the preview:  818c9caac310d9f5
+The two are the same. Jira is unchanged, as far as two reads of the story and its comments can show. A snapshot
+  is of the story's last-updated time, project and security level, and of every comment this identity can see.
+Requests sent to Jira: 6. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/myself
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30001/comment
+  GET /rest/api/3/issue/30001
+  GET /rest/api/3/issue/30001/comment
+
+Fingerprint of this preview: 1521283a1b4e
+Made:    2026-11-25 21:27:32 UTC
+Expires: 2026-11-25 21:42:32 UTC (15 minutes after it was made)
+
+Nothing has been written. To add this comment, a person who has read this preview confirms it by its
+fingerprint.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/jira-add-comment/comment.py confirm --source fake --change WORK/wanted.json --allowlist participant/skills/jira-add-comment/fixtures/fake-allowlist.json --state STATE
+------------------------------------------------------------------------------
+
+REFUSED: no confirmation was given. A confirmation names the fingerprint of the preview it approves, and there is no way to write without one.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+$ python3 participant/skills/jira-add-comment/fake_jira.py show --state STATE --story SAND-1
+------------------------------------------------------------------------------
+FAKE JIRA holds for SAND-1 (issue id 30001): 2 comments. By this identity: 0. Comment ids: 50001, 50002.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 6: with no fingerprint and no name, it is refused
+  ok   nothing was written: the story has no comment by this identity
+$ python3 participant/skills/jira-add-comment/comment.py confirm --source fake --change WORK/wanted.json --allowlist participant/skills/jira-add-comment/fixtures/fake-allowlist.json --state STATE --fingerprint 1521283a1b4e
+------------------------------------------------------------------------------
+
+REFUSED: no confirmation was given. A confirmation gives the name of the person confirming.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   criterion 6: with a fingerprint and no name of who confirms, it is refused
+
+==============================================================================
+B2. Refusal: the change differs from the preview
+After the preview, two words of the text file in WORK were changed.
+$ python3 participant/skills/jira-add-comment/comment.py confirm --source fake --change WORK/wanted.json --allowlist participant/skills/jira-add-comment/fixtures/fake-allowlist.json --state STATE --fingerprint 1521283a1b4e --confirmed-by "the participant"
+------------------------------------------------------------------------------
+
+REFUSED: the change is not the one that was previewed: the text is not the text the preview showed. Make a new preview and read it.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+$ python3 participant/skills/jira-add-comment/fake_jira.py show --state STATE --story SAND-1
+------------------------------------------------------------------------------
+FAKE JIRA holds for SAND-1 (issue id 30001): 2 comments. By this identity: 0. Comment ids: 50001, 50002.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 6: the confirmation is refused, because the text is not the text the preview showed
+  ok   nothing was written
+The text file was put back as it was.
+
+==============================================================================
+B3. Refusal: the preview is older than the limit
+The test clock is used here: the command is told to pretend it is 16 minutes later, and says so in its output.
+$ python3 participant/skills/jira-add-comment/comment.py confirm --source fake --change WORK/wanted.json --allowlist participant/skills/jira-add-comment/fixtures/fake-allowlist.json --state STATE --fingerprint 1521283a1b4e --confirmed-by "the participant" --pretend-minutes-later 16
+------------------------------------------------------------------------------
+TEST CLOCK: pretending it is 16 minutes later than it is.
+
+REFUSED: this preview is too old. It was made 16 minutes ago and the limit is 15. Make a new preview and read it.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+$ python3 participant/skills/jira-add-comment/fake_jira.py show --state STATE --story SAND-1
+------------------------------------------------------------------------------
+FAKE JIRA holds for SAND-1 (issue id 30001): 2 comments. By this identity: 0. Comment ids: 50001, 50002.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 6: at 16 minutes it is refused, with the stated limit of 15
+  ok   nothing was written
+
+==============================================================================
+B4. Refusal: a project that is not on the sandbox allowlist
+$ python3 participant/skills/jira-add-comment/comment.py preview --source fake --change WORK/not-on-allowlist.json --allowlist participant/skills/jira-add-comment/fixtures/fake-allowlist.json --state STATE
+------------------------------------------------------------------------------
+
+REFUSED: project PROD (project id 20002) on the Jira site with fingerprint 738169e667642f09 is not on the sandbox allowlist (fake-allowlist.json). This workflow writes only to projects listed there.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+$ python3 participant/skills/jira-add-comment/fake_jira.py show --state STATE --story PROD-9
+------------------------------------------------------------------------------
+FAKE JIRA holds for PROD-9 (issue id 30004): 0 comments. By this identity: 0. Comment ids: none.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 5: a story in a project that is not listed is refused at the preview, after one read
+  ok   nothing was written to it, though Jira would have let this identity comment there
+$ python3 participant/skills/jira-add-comment/comment.py confirm --source fake --change WORK/wanted.json --allowlist participant/skills/jira-add-comment/fixtures/fake-allowlist-without-sand.json --state STATE --fingerprint 1521283a1b4e --confirmed-by "the participant"
+------------------------------------------------------------------------------
+
+REFUSED: project SAND (project id 20001) on the Jira site with fingerprint 738169e667642f09 is not on the sandbox allowlist (fake-allowlist-without-sand.json). This workflow writes only to projects listed there.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+$ python3 participant/skills/jira-add-comment/fake_jira.py show --state STATE --story SAND-1
+------------------------------------------------------------------------------
+FAKE JIRA holds for SAND-1 (issue id 30001): 2 comments. By this identity: 0. Comment ids: 50001, 50002.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 5: a preview made while the project was listed is refused at the confirmation once it is not
+
+==============================================================================
+B5. The approved run
+$ python3 participant/skills/jira-add-comment/comment.py confirm --source fake --change WORK/wanted.json --allowlist participant/skills/jira-add-comment/fixtures/fake-allowlist.json --state STATE --fingerprint 1521283a1b4e --confirmed-by "the participant" --result STATE/result.md
+------------------------------------------------------------------------------
+CONFIRMATION for preview 1521283a1b4e, given by: the participant (the name given with the confirmation).
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). Kind of project, as Jira gives it: software.
+            On the sandbox allowlist: yes. The allowlist is the file fake-allowlist.json, sha256 1885e693a4f7dd83, which lists 2 projects.
+Story:      SAND-1 (issue id 30001). The id is what identifies it. Its title is other people's text and is not
+            shown: check the key against the story you mean, in Jira.
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  the saved preview is unaltered and has not been used: ok
+  the change file and the text file ask for exactly what the preview showed: ok
+  the project is on the sandbox allowlist for this site: ok
+  Jira says this identity may comment on the story: ok
+  the story's 2 comments, read just before the write, hold no such comment by this identity: ok
+
+WRITTEN to Jira: one comment on story SAND-1. Jira answered 201 and gave it the comment id 50123.
+The confirmation and the write happened in this one run of the command.
+
+Read back from Jira after the write, by that comment id:
+  the text read back is the text previewed, character for character (122 characters, sha256 1c538bd17513b7df): yes
+  it is plain text, with nothing added: no formatting, links or mentions: yes
+  its author is this identity: yes
+  its visibility is the one previewed: everyone who can see the story: yes
+  comments on the story with this text and this visibility by this identity, counted after the write: 1
+
+RESULT RECORD
+  Issue key: SAND-1
+  Issue id: 30001 (this identifies the story; a key can change)
+  Identifier of what was created: Jira comment id 50123, on that issue
+  Target project: SAND (project id 20001), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 738169e667642f09
+  Visibility: everyone who can see the story; no restriction on the comment
+  Story's security level when written: none
+  Text: 122 characters, sha256 1c538bd17513b7df69d30ab3061be4ff386ee264a96d2ca5dc0c21f6e7c8be69, from the file comment.txt (file sha256 810ad29174abb8dfbb743e0dd92e69777dc0a2169852024a866c89c7f4636959)
+  Read back after the write: as previewed: same text, plain, by this identity, same visibility
+  Written at: 2026-11-25 21:27:33 UTC
+  Confirmed by: the participant, at 2026-11-25 21:27:33 UTC
+  Preview: fingerprint 1521283a1b4e, made 2026-11-25 21:27:32 UTC
+  To reverse: delete comment 50123 on the story in Jira, by hand. This workflow does not delete. Emails Jira sent about the comment cannot be taken back
+
+The result record was also saved as Markdown where --result said.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/jira-add-comment/fake_jira.py show --state STATE --story SAND-1
+------------------------------------------------------------------------------
+FAKE JIRA holds for SAND-1 (issue id 30001): 3 comments. By this identity: 1. Comment ids: 50001, 50002, 50123.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 6: the same preview, unchanged and in time, is confirmed by its fingerprint and the name of who confirms
+  ok   criterion 3: the write came after the checks, in the same run as the confirmation
+  ok   criterion 2: the comment read back is the text previewed, character for character, plain, by this identity, with the visibility previewed
+  ok   one comment was written: the story now has 3 comments, 1 by this identity
+  ok   criterion 7: the result record holds the issue key, the comment's identifier, the project, the time written and who confirmed
+
+==============================================================================
+B6. A fingerprint is used once
+$ python3 participant/skills/jira-add-comment/comment.py confirm --source fake --change WORK/wanted.json --allowlist participant/skills/jira-add-comment/fixtures/fake-allowlist.json --state STATE --fingerprint 1521283a1b4e --confirmed-by "the participant"
+------------------------------------------------------------------------------
+
+REFUSED: the preview 1521283a1b4e has already been confirmed and written. A fingerprint is used once.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+$ python3 participant/skills/jira-add-comment/fake_jira.py show --state STATE --story SAND-1
+------------------------------------------------------------------------------
+FAKE JIRA holds for SAND-1 (issue id 30001): 3 comments. By this identity: 1. Comment ids: 50001, 50002, 50123.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   confirming the same preview again is refused, and no second comment is written
+
+RESULT: ALL CHECKS PASSED. 55 checks.

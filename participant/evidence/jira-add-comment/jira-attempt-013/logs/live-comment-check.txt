@@ -1,0 +1,37 @@
+COMMENT CHECK for the write of preview aeb8be1deadb. Nothing is written by this command.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Story:      SCRUM-1 (issue id 10000), in project SCRUM (project id 10000).
+Comment:    comment id 10000, the identifier Jira gave when it was written.
+
+The text the preview showed, between the bars:
+    | Test comment from the Golden Thread Quest sandbox exercise, added on 25 November 2026.
+    | It records nothing about real work and can be deleted.
+The text read back from Jira now, between the bars:
+    | Test comment from the Golden Thread Quest sandbox exercise, added on 25 November 2026.
+    | It records nothing about real work and can be deleted.
+
+
+  the text read back is the text previewed, character for character (141 characters, sha256 b2da122aadd5d2fe): yes
+  it is plain text, with nothing added: no formatting, links or mentions: yes
+  its author is this identity: yes
+  its visibility is the one previewed: everyone who can see the story: yes
+  WHO CAN SEE IT, as the preview showed: EVERYONE who can see the story SCRUM-1. No restriction is put on the comment. The story has no security level.
+  the story's security level is what it was when the comment was written (none): yes
+  comments on the story with this text and this visibility by this identity: 1 of the 1 this identity can see
+
+Where the text came from, as the preview stated: the file add-comment.txt beside the change file, sha256 c8c152877189547310c53ed0cadaef4360e29b0af85dc087f424d04eadc1ffec.
+  That file today: the same name and the same sha256, so it still holds the text that was sent.
+  Who or what put the text in that file is not known to this workflow. It did not write the file and did not
+  take the text from Jira.
+
+Requests sent to Jira: 4. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/myself
+  GET /rest/api/3/issue/10000
+  GET /rest/api/3/issue/10000/comment/10000
+  GET /rest/api/3/issue/10000/comment
+
+FOUND: the comment is on the story as previewed.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

@@ -1,0 +1,129 @@
+Independent reads of the comment workflow and of its evidence. jira-add-comment, attempt jira-attempt-013
+Copied by hand, and shortened, from the readers' replies by the assistant that built this quest. No program wrote this file.
+
+Who the readers were: two separate AI assistants (Claude), each started fresh. No person read the work. Each was told to
+read only the files named to it, to run nothing, to write nothing and to contact nothing. Those limits were given in
+words and not enforced. Neither saw the other's reply.
+
+  Reader 1   BEFORE any real run. Given the first workflow, the fake Jira, the rules document and a record of previews
+             against the fake. Asked, as someone who knew a real comment was about to be posted, for any path that could
+             write without a valid confirmation, or to the wrong place, and for anything the fake would hide about the
+             real Jira.
+  Reader 2   AFTER the real runs. Given the workflow as it ran, the rules document, the four evidence records and the
+             result record. Asked whether the real output shows each criterion, whether it is consistent with itself,
+             whether anything in it is unredacted, and whether reader 1's faults were really fixed.
+
+==============================================================================
+READER 1, before the real run (85 tests and 54 planted bugs passing at the time)
+
+Its verdict: "I found no path that posts different text, to a different story, site or project, than the preview showed.
+The real faults are in what happens after the POST, in the local single-use and expiry controls, and in a few real-API
+mismatches that fail safe."
+  It traced, and found to hold: a preview and a check cannot write; the text that is sent is the text that was compared;
+  the story is named by its id for every read and for the write; a redirect is not followed and credentials are not
+  passed on; a change of site fails the fingerprint; the write is sent once and never retried.
+  What it found:
+  - After a successful write, a read that failed gave "REFUSED ... Nothing has been written", with exit code 1.
+  - A failure of the program after the write lost everything it had printed, the comment's identifier included.
+  - The saved previews are plain files with no secret behind them. Marking a used one unused, or changing its time,
+    would pass. "A forged record cannot post different text, story, site or visibility."
+  - Two confirmations of one fingerprint at the same moment could both write.
+  - The count after the write went by text and author, and the duplicate check also by visibility.
+  - The preview said "on the sandbox allowlist: yes" and did not say which file.
+  - Against real Jira: the role's number was sent where its name belongs; a story with no security field was reported
+    as having no level; an unrestricted comment on a service project would be seen by customers and nothing said so;
+    looking at the story in a browser during a preview would have stopped it; "the story has N comments" means N that
+    this identity can see.
+  - Secrets: "DB_PASSWORD=...", "client_secret=..." and a web address with a password in it were not refused. More
+    characters that cannot be seen were let through.
+  - The check printed text read back from Jira as it came, unseen characters and all.
+  - Wording: "it was typed or pasted there by a person" is something the program cannot know. The preview did not say
+    that the comment goes under the token's account and not under the name given at confirmation.
+
+WHAT WAS CHANGED AFTER READER 1, BEFORE ANYTHING WAS RUN AGAINST REAL JIRA
+  Once a write is sent, nothing is reported as not written unless Jira was read and shows it. A failed read or a failed
+  program ends with "A PERSON NEEDS TO LOOK" and exit code 2, with what was printed still shown. The comment's
+  identifier is saved as soon as Jira gives it. A marker file stops two runs confirming one preview. The count after
+  the write uses the duplicate check's own rule. The preview names the allowlist file with its checksum, says under
+  whose account the comment would appear, and says it cannot tell whether a project is open to customers. A role is
+  sent by name only. A missing security field is "Jira did not say". An unrestricted comment on a service project is
+  refused. The snapshot leaves out fields that move when someone only looks. The secret patterns went from eight to
+  nine and catch the forms it named. Unseen characters are replaced in what the check prints. The site's address must
+  be its name, with no port or path.
+  Tests went from 85 to 103. Planted bugs went from 54 to 69. Each fault has a test.
+  NOT CHANGED, and written into the rules: the saved previews have no secret behind them.
+
+==============================================================================
+READER 2, after the real runs (103 tests and 69 planted bugs passing)
+
+The real output, checked against itself. All of this it found to hold:
+  - The fingerprint is the same in the preview, the confirmation, the check, the refused re-use and the result record.
+  - Times: preview made 21:21:07, confirmed 21:21:21, written 21:21:23, expiry 21:36:07. "The write is after the
+    preview, within the limit, and in one run."
+  - The comment id is the same in the confirmation, the check, the second run and the result record.
+  - The text: the two lines are identical in the preview, in both halves of the check and in the second run. It counted
+    the characters: 141, as printed. The checksums agree wherever they are printed.
+  - The site fingerprint, the project id and the allowlist file with its checksum are the same throughout.
+  - Counts: 0 comments at the preview, 0 just before the write, 1 after, 1 at the check, 1 at the second run.
+  - The result record equals the block the run printed, line for line.
+  Redaction: "None found: site address, real email, account id, token, home-folder path." It listed what it was unsure
+  of: the site fingerprint, which a guessed name could confirm; the words "Golden Thread Quest" in the comment; the
+  keys and ids; the role "the participant".
+
+By criterion, from the real output alone:
+   1  text, story, visibility, source      HOLDS. The source is a file name and a checksum; who wrote the file is unknown
+   2  read back matches                    HOLDS, as far as saved text can show
+   3  site, project, nothing written       PARTLY. The saved preview shows a marker and a fingerprint where the site was.
+                                           "Nothing written" rests on the program's own list of requests and a count of 0
+   4  permission and duplicate checks      HOLDS
+   5  allowlist only                       PARTLY. The real refusal was made by giving another allowlist file, not by
+                                           aiming at another project. The allowlist's contents were not in its folder
+   6  fingerprint, refusals, expiry        PARTLY. Missing and differing were refused on the real site. Expiry was not
+                                           seen against real time. The refusal for a missing name is from the fake only
+   7  result record                        HOLDS in form. The confirmer is a role and not a name
+   8  no duplicate on a second run         HOLDS. The limit is stated
+
+What it found wrong with the record, as it then stood:
+  - The three refusals that need an open preview did not say which preview they were made against, or when.
+  - 14 seconds passed between the preview and its confirmation. "The evidence does not show a person read it; nothing
+    in the files can."
+  - The real part had no command lines and no exit codes.
+  - Labels that claimed more than saved text shows: "it sent no write: no POST is listed" was true of every file,
+    since refusals list no requests at all; "a preview too old", of one made to look old by the test clock; "its
+    author is the expected one", when which account that is appears nowhere; "run by the participant ... copied
+    unchanged", which reading cannot establish.
+  - The project id, the issue id and the comment id are all 10000, so a mix-up between them could not show.
+
+What it found in the code as it ran:
+  - Reader 1's faults: five fixed, three partly. A run stopped from the keyboard still prints nothing. Two open previews
+    of one comment can each be confirmed. The secret patterns still miss a quoted name, "pw=" and short values.
+  - New: the allowlist file is read twice in a run, once to enforce and once for the checksum shown. The service-project
+    refusal lets a comment through where Jira does not give the kind of project. A security level that Jira does not
+    report does not stop a write. If the state folder cannot be written just after the write, the identifier is lost.
+    The check trusts the record of the write as it finds it.
+  - The rules document said a person typed the text file, that three things from Jira are printed, and that output is
+    always shown after a write. None was quite true.
+
+WHAT WAS CHANGED AFTER READER 2, AND NOT READ AGAIN
+  The record: it now includes the first preview and states the order of the real runs, with which preview each refusal
+  was made against, and says the expiry refusal used the test clock on a preview under a minute old. The vacuous
+  "no POST" check was replaced by one that the output has no line saying something was written. Labels now say "the
+  program reports" where that is all saved text shows. New checks compare the saved files with each other: the
+  fingerprint, the times, the comment id, and the lines of text.
+  The rules document: corrected in each place it named, with a section listing the code limits it found.
+  THE WORKFLOW ITSELF WAS NOT CHANGED. The file is the one that made the real runs, so that the real output and the
+  code agree. Its sha256 is in PROOF.md. Reader 2's findings in the code stand, and are listed in the rules document.
+
+  NOT DONE: no real refusal aimed at another project; no real preview left to expire; no real run of a role-restricted
+  comment, a story with a security level, a service project, or a failure after a write. Those are on the fake only.
+
+==============================================================================
+SUMMARY
+  Could it have posted the wrong text, or to the wrong place? Reader 1 traced every path and found none.
+  Is the real evidence consistent with itself? Reader 2 checked each fingerprint, time, identifier, checksum and line of
+  text across the files and found them to agree.
+  Is anything real left unredacted? Reader 2 found nothing, and listed what it was unsure of.
+  Was the workflow right before the real run? Not wholly. Reader 1 found faults in what happens after a write, and they
+  were corrected first. Reader 2 then found smaller ones, which stand.
+  Did a person read the preview before confirming? Nothing in the files can show that.
+  A person has not read any of this.

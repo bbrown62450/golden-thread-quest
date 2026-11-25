@@ -1,0 +1,56 @@
+NOTHING TO ADD. Nothing has been written.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). Kind of project, as Jira gives it: software.
+            On the sandbox allowlist: yes. The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+Story:      SCRUM-1 (issue id 10000). The id is what identifies it. Its title is other people's text and is not
+            shown: check the key against the story you mean, in Jira.
+
+The comment asked for: one comment on SCRUM-1.
+  It would appear under the Jira account the API token belongs to, called this identity below. Not under the
+  name given with the confirmation.
+  Text, exactly as it would be sent, between the bars. 141 characters, 2 lines:
+    | Test comment from the Golden Thread Quest sandbox exercise, added on 25 November 2026.
+    | It records nothing about real work and can be deleted.
+  WHO CAN SEE IT: EVERYONE who can see the story SCRUM-1. No restriction is put on the comment. The story has no security level.
+    This workflow cannot list who that is, and cannot tell whether the project is open to customers or to the
+    public. Jira may also email the story's watchers the whole text.
+  Where the text came from: the file add-comment.txt beside the change file, sha256 c8c152877189547310c53ed0cadaef4360e29b0af85dc087f424d04eadc1ffec.
+    Who or what put the text in that file is not known to this workflow. It did not write the file and did not
+    take the text from Jira.
+  It is sent as plain text: no formatting, no links, no mentions. Nothing else on the story would be sent.
+  A comment cannot be unsent. It can be deleted afterwards, by hand, and emails already sent stay sent.
+
+Looked for in the text and not found: email addresses, web addresses, telephone numbers, @names, and
+  words that mark something as private. That is a search for patterns. It is not a judgement that the
+  text is fit to be seen. The person confirming reads the text.
+Looked for in the text and not found: 9 patterns that look like a secret. A text that matched one would
+  have been refused.
+
+Permission check, asked of Jira for this story and this identity:
+  may see the story        (BROWSE_PROJECTS): yes
+  may comment on the story (ADD_COMMENTS):    yes
+Duplicate check, made against Jira just now: the story has 1 comment that this identity can see. Each was
+  compared with the text. A comment restricted to others would not be among them.
+  With the same text, by this identity: 1 (comment id 10000, seen by everyone who can see the story).
+  With the same text, by someone else:  0.
+Where Jira cannot check: its request to add a comment has no 'only if there is no such comment' condition.
+  The confirmation reads the comments again just before writing and stops if this comment is there by then.
+
+Snapshot of the story and its comments as Jira returned them, before the preview: 3655f8153be7729f
+Snapshot of the story and its comments as Jira returned them, after the preview:  3655f8153be7729f
+The two are the same. Jira is unchanged, as far as two reads of the story and its comments can show. A snapshot
+  is of the story's last-updated time, project and security level, and of every comment this identity can see.
+Requests sent to Jira: 6. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SCRUM-1
+  GET /rest/api/3/myself
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/10000/comment
+  GET /rest/api/3/issue/10000
+  GET /rest/api/3/issue/10000/comment
+
+This identity has already put this comment on the story, with this visibility: comment id 10000.
+No fingerprint is issued, because there is nothing to confirm, and nothing was sent.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

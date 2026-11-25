@@ -1,0 +1,399 @@
+Do the tests notice a broken comment workflow? jira-add-comment, attempt jira-attempt-013
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/jira-add-comment/comment.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. A preview can write (criterion 3)
+  unittest result: FAILED (errors=2)
+  tests that failed (2):
+    ThePreview.test_a_preview_has_no_way_to_write
+    TheCheck.test_it_has_no_way_to_write
+
+PLANTED BUG B. The live preview is handed the write function (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheProgram.test_the_only_write_it_can_send_is_one_comment_on_one_story
+
+PLANTED BUG C. The allowlist is not checked (criterion 5)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    TheAllowlist.test_a_project_taken_off_the_list_after_the_preview_is_refused_at_the_confirmation
+    TheAllowlist.test_a_project_that_is_not_listed_is_refused_at_the_preview_before_anything_else_is_asked
+    TheAllowlist.test_a_story_moved_to_another_project_after_the_preview_is_refused
+    TheAllowlist.test_the_same_project_id_on_another_site_is_not_the_listed_project
+
+PLANTED BUG D. The allowlist is checked by project id alone, on any site (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheAllowlist.test_the_same_project_id_on_another_site_is_not_the_listed_project
+
+PLANTED BUG E. The allowlist is not checked again at the confirmation (criterion 5)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheAllowlist.test_a_project_taken_off_the_list_after_the_preview_is_refused_at_the_confirmation
+    TheAllowlist.test_a_story_moved_to_another_project_after_the_preview_is_refused
+
+PLANTED BUG F. The permission check is not applied (criterion 4)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    ThePermissionCheck.test_a_permission_taken_away_after_the_preview_is_refused_at_the_confirmation
+    ThePermissionCheck.test_a_story_this_identity_may_not_comment_on_is_refused_though_its_project_is_listed
+
+PLANTED BUG G. No answer to the permission check is taken as yes (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ThePermissionCheck.test_no_answer_to_the_permission_check_is_not_taken_as_yes
+
+PLANTED BUG H. A confirmation with no fingerprint is accepted (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_without_a_fingerprint_or_without_a_name_nothing_is_written
+
+PLANTED BUG I. A confirmation with no name is accepted (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_without_a_fingerprint_or_without_a_name_nothing_is_written
+
+PLANTED BUG J. A preview never expires (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_preview_is_good_for_fifteen_minutes_and_no_longer
+
+PLANTED BUG K. A preview is good for an hour (criterion 6)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheConfirmation.test_a_preview_is_good_for_fifteen_minutes_and_no_longer
+    ThePreview.test_it_issues_a_fingerprint_with_its_limit_and_saves_the_preview
+
+PLANTED BUG L. A text changed after the preview is sent (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_text_changed_after_the_preview_is_refused
+
+PLANTED BUG M. A visibility changed after the preview is sent (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_visibility_or_a_story_changed_after_the_preview_is_refused
+
+PLANTED BUG N. A story changed in the change file after the preview is sent (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_visibility_or_a_story_changed_after_the_preview_is_refused
+
+PLANTED BUG O. A saved preview that was altered is accepted (criterion 6)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheConfirmation.test_a_preview_dated_in_the_future_is_refused
+    TheConfirmation.test_a_saved_preview_that_was_altered_is_refused
+
+PLANTED BUG P. A fingerprint can be used twice (criterion 8)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheConfirmation.test_a_fingerprint_is_used_once
+    TheFirstRead.test_the_comments_identifier_is_kept_at_once_so_that_the_check_can_be_made_later
+
+PLANTED BUG Q. A preview whose write was sent and failed can be used again
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    WhenTheWriteGoesWrong.test_a_refusal_from_jira_is_reported_as_nothing_written_and_the_preview_is_spent
+    WhenTheWriteGoesWrong.test_no_answer_to_the_write_is_not_known_and_the_write_is_not_sent_again
+
+PLANTED BUG R. The duplicate check is not made at the preview (criterion 8)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    WhenTheWriteGoesWrong.test_a_comment_that_was_added_though_no_answer_came_is_found_by_the_next_preview
+    ThePreview.test_every_comment_is_read_when_they_come_in_pages
+    TheRerun.test_previewing_again_after_the_write_finds_the_comment_and_issues_no_fingerprint
+    TheRerun.test_the_whole_workflow_run_three_times_leaves_one_comment
+
+PLANTED BUG S. The duplicate check is not made again at the confirmation (criterion 8)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_the_same_comment_put_there_by_this_identity_since_the_preview_stops_the_write
+
+PLANTED BUG T. The duplicate check counts a comment by anyone as this one
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ThePreview.test_the_same_text_by_someone_else_is_counted_and_does_not_stop_the_preview
+
+PLANTED BUG U. The duplicate check ignores visibility
+  unittest result: FAILED (failures=1, errors=1)
+  tests that failed (2):
+    TheFirstRead.test_a_comment_for_a_role_is_counted_apart_from_the_same_text_for_everyone
+    TheConfirmation.test_the_same_text_for_everyone_does_not_count_as_the_comment_for_a_role
+
+PLANTED BUG V. Only the first page of comments is read
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ThePreview.test_every_comment_is_read_when_they_come_in_pages
+
+PLANTED BUG W. A list of comments that cannot be read is taken as empty
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    ThePreview.test_a_list_of_comments_that_cannot_be_read_stops_the_preview
+    TheFirstRead.test_a_read_that_fails_after_the_write_is_not_reported_as_nothing_written
+
+PLANTED BUG X. The text sent is not the text previewed (criterion 2)
+  unittest result: FAILED (failures=14)
+  tests that failed (14):
+    TheFirstRead.test_a_comment_for_a_role_is_counted_apart_from_the_same_text_for_everyone
+    TheConfirmation.test_a_comment_for_a_role_is_sent_with_that_restriction_and_read_back_with_it
+    WhenTheWriteGoesWrong.test_a_comment_that_was_added_though_no_answer_came_is_found_by_the_next_preview
+    TheConfirmation.test_a_confirmed_preview_adds_the_comment_once_with_the_exact_text
+    TheConfirmation.test_a_preview_is_good_for_fifteen_minutes_and_no_longer
+    WhenTheWriteGoesWrong.test_a_second_copy_that_appeared_in_the_last_moment_is_reported
+    WhenTheWriteGoesWrong.test_a_text_that_jira_changed_is_reported_for_a_person_to_look_at
+    TheConfirmation.test_another_persons_comment_since_the_preview_does_not_stop_the_write
+    TheCheck.test_it_finds_the_comment_with_the_same_text_author_and_visibility
+    TheRerun.test_previewing_again_after_the_write_finds_the_comment_and_issues_no_fingerprint
+    TheConfirmation.test_the_comment_is_read_back_and_compared_with_the_preview
+    TheFirstRead.test_the_comments_identifier_is_kept_at_once_so_that_the_check_can_be_made_later
+    TheText.test_the_line_ending_at_the_end_of_the_file_is_not_part_of_the_comment_and_other_endings_are_read
+    TheRerun.test_the_whole_workflow_run_three_times_leaves_one_comment
+
+PLANTED BUG Y. The comment is not compared with the preview when read back (criterion 2)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheCheck.test_a_comment_edited_in_jira_since_is_reported
+    WhenTheWriteGoesWrong.test_a_text_that_jira_changed_is_reported_for_a_person_to_look_at
+
+PLANTED BUG Z. Formatting or a mention that Jira added is not noticed
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhenTheWriteGoesWrong.test_formatting_or_a_mention_that_jira_added_is_reported
+
+PLANTED BUG AA. The author of the comment read back is not checked
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhenTheWriteGoesWrong.test_a_comment_that_comes_back_under_another_author_is_reported
+
+PLANTED BUG AB. The visibility of the comment read back is not checked
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_comment_restricted_in_jira_since_is_reported
+
+PLANTED BUG AC. A role restriction is asked for and not sent
+  unittest result: FAILED (failures=2, errors=1)
+  tests that failed (3):
+    TheFirstRead.test_a_comment_for_a_role_is_counted_apart_from_the_same_text_for_everyone
+    TheConfirmation.test_a_comment_for_a_role_is_sent_with_that_restriction_and_read_back_with_it
+    TheFirstRead.test_a_role_is_sent_by_its_name_and_nothing_else
+
+PLANTED BUG AD. The visibility is not shown under the text (criterion 1)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    ThePreview.test_a_comment_for_a_role_shows_the_role_and_checks_that_the_project_has_it
+    TheFirstRead.test_a_story_for_which_jira_gives_no_security_field_is_not_said_to_have_no_level
+    ThePreview.test_a_story_with_a_security_level_says_so_beside_the_visibility
+    ThePreview.test_the_visibility_is_on_the_line_under_the_text
+
+PLANTED BUG AE. The story's security level is not shown
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ThePreview.test_a_story_with_a_security_level_says_so_beside_the_visibility
+
+PLANTED BUG AF. A security level put on the story after the preview is not noticed
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_security_level_put_on_the_story_since_the_preview_stops_the_write
+
+PLANTED BUG AG. Where the text came from is not shown (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ThePreview.test_it_says_where_the_text_came_from_with_the_files_checksum
+
+PLANTED BUG AH. A text that looks like a secret is sent (stretch goal)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheText.test_a_text_that_looks_as_if_it_holds_a_secret_is_refused_and_the_secret_is_not_shown
+    TheFirstRead.test_more_shapes_of_secret_are_refused
+
+PLANTED BUG AI. The secret that was matched is printed in the refusal
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheText.test_a_text_that_looks_as_if_it_holds_a_secret_is_refused_and_the_secret_is_not_shown
+
+PLANTED BUG AJ. What may be private is not pointed out
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheText.test_what_may_be_private_is_pointed_out_and_not_refused
+
+PLANTED BUG AK. An empty line in the text is sent
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheText.test_an_empty_line_a_space_at_an_end_a_tab_and_an_unseen_character_are_refused
+
+PLANTED BUG AL. A character that cannot be seen is sent
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheText.test_an_empty_line_a_space_at_an_end_a_tab_and_an_unseen_character_are_refused
+    TheFirstRead.test_more_characters_that_cannot_be_seen_are_refused
+
+PLANTED BUG AM. The text file may be anywhere on the computer
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheChangeFile.test_the_text_file_is_a_plain_name_beside_the_change_file
+
+PLANTED BUG AN. Any visibility is accepted as everyone
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheChangeFile.test_only_everyone_or_one_role_is_a_visibility
+
+PLANTED BUG AO. A role the project does not have is sent
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ThePreview.test_a_role_the_project_does_not_have_is_refused
+
+PLANTED BUG AP. The write is sent again when no answer comes
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    WhenTheWriteGoesWrong.test_a_comment_that_was_added_though_no_answer_came_is_found_by_the_next_preview
+    WhenTheWriteGoesWrong.test_no_answer_to_the_write_is_not_known_and_the_write_is_not_sent_again
+
+PLANTED BUG AQ. A refusal from Jira is reported as written
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    WhenTheWriteGoesWrong.test_a_refusal_from_jira_is_reported_as_nothing_written_and_the_preview_is_spent
+    TheFirstRead.test_what_jira_said_in_refusing_is_shown_as_its_own_words
+
+PLANTED BUG AR. A second copy made in the last moment is not reported
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhenTheWriteGoesWrong.test_a_second_copy_that_appeared_in_the_last_moment_is_reported
+
+PLANTED BUG AS. A comment that does not read back as previewed is reported as done
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    WhenTheWriteGoesWrong.test_a_text_that_jira_changed_is_reported_for_a_person_to_look_at
+    WhenTheWriteGoesWrong.test_formatting_or_a_mention_that_jira_added_is_reported
+
+PLANTED BUG AT. The story changing during the preview is not noticed
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ThePreview.test_a_story_that_changes_during_the_preview_stops_it
+
+PLANTED BUG AU. The result record leaves out the comment's identifier (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_the_result_record_holds_what_the_quest_asks_for
+
+PLANTED BUG AV. The result record leaves out who confirmed (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_the_result_record_holds_what_the_quest_asks_for
+
+PLANTED BUG AW. The site's address is left in a saved log
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheProgram.test_a_saved_log_has_the_sites_address_taken_out
+
+PLANTED BUG AX. The site's address is left in the result record
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_the_result_record_holds_what_the_quest_asks_for
+
+PLANTED BUG AY. The check passes a comment whose text was changed
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    TheCheck.test_a_comment_edited_in_jira_since_is_reported
+    TheCheck.test_a_comment_restricted_in_jira_since_is_reported
+    TheCheck.test_a_comment_that_was_deleted_is_not_found
+
+PLANTED BUG AZ. The check can write
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheProgram.test_from_the_command_line_only_the_confirmation_is_given_a_way_to_write
+
+PLANTED BUG BA. A confirmation against another Jira site is accepted
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheAllowlist.test_a_confirmation_against_another_site_is_refused
+
+PLANTED BUG BB. Text from a comment already on the story is printed
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ThePreview.test_nothing_in_the_story_or_its_comments_is_printed
+
+PLANTED BUG BC. A read that fails after the write is reported as nothing written
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_a_read_that_fails_after_the_write_is_not_reported_as_nothing_written
+
+PLANTED BUG BD. A failure of the program after the write hides that it was sent
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_a_failure_of_the_program_after_the_write_still_shows_what_was_sent
+
+PLANTED BUG BE. The comment's identifier is not kept until everything after the write has worked
+  unittest result: FAILED (errors=1)
+  tests that failed (1):
+    TheFirstRead.test_the_comments_identifier_is_kept_at_once_so_that_the_check_can_be_made_later
+
+PLANTED BUG BF. Two runs confirming one preview at once both write
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_two_runs_confirming_one_preview_at_once_do_not_both_write
+
+PLANTED BUG BG. The count after the write ignores visibility
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_a_comment_for_a_role_is_counted_apart_from_the_same_text_for_everyone
+
+PLANTED BUG BH. A role is sent with its number as well as its name
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_a_role_is_sent_by_its_name_and_nothing_else
+
+PLANTED BUG BI. A story for which Jira gives no security field is said to have no level
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_a_story_for_which_jira_gives_no_security_field_is_not_said_to_have_no_level
+
+PLANTED BUG BJ. An unrestricted comment is sent to a service project
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheFirstRead.test_a_project_that_became_a_service_project_after_the_preview_is_refused
+    TheFirstRead.test_an_unrestricted_comment_is_not_sent_to_a_service_project
+
+PLANTED BUG BK. Another allowlist file at the confirmation is accepted
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_another_allowlist_file_at_the_confirmation_is_refused_though_it_lists_the_project
+
+PLANTED BUG BL. The site's address may carry a port or a path
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_the_sites_address_must_be_its_name_and_nothing_more
+
+PLANTED BUG BM. Looking at the story in a browser during a preview stops it
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_looking_at_the_story_in_a_browser_during_a_preview_does_not_stop_it
+
+PLANTED BUG BN. The check prints unseen characters that Jira returns
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_the_check_does_not_print_unseen_characters_that_jira_returns
+
+PLANTED BUG BO. Jira's own words in a refusal are printed as they come
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheFirstRead.test_what_jira_said_in_refusing_is_shown_as_its_own_words
+
+PLANTED BUG BP. The preview does not say which allowlist file was used
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ThePreview.test_it_shows_the_site_the_project_and_the_story
+
+PLANTED BUG BQ. The preview does not say under whose account the comment appears
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    ThePreview.test_it_shows_the_site_the_project_and_the_story
+    TheFirstRead.test_the_preview_says_whose_name_the_comment_goes_under_and_that_the_storys_title_is_not_shown
+
+After the last bug was taken out: comment.py is byte for byte what it was at the start. OK
+
+RESULT: all 69 planted bugs were caught by at least one test, and the file was restored.

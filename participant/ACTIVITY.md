@@ -422,3 +422,8 @@ Every change this application made to your files, newest last.
 - `2026-11-25T20:37:51Z` scrum-scope-change: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-25T20:37:51Z` Submitted scrum-scope-change for review as submission-20261125203751-86ec22.
 - `2026-11-25T20:50:56Z` Review of scrum-scope-change: approved by Claude (automated reviewer).
+- `2026-11-25T20:53:19Z` Started jira-add-comment as attempt jira-attempt-013.
+- `2026-11-25T21:32:22Z` jira-add-comment: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-25T21:33:48Z` jira-add-comment: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-25T21:36:42Z` jira-add-comment: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-25T21:36:42Z` Submitted jira-add-comment for review as submission-20261125213642-2c8ea1.

@@ -634,4 +634,13 @@ attempts:
   evidence_path: participant/evidence/scrum-scope-change/scrum-attempt-003
   submission_id: submission-20261125203751-86ec22
   review_id: review-20261125205056-1141db
-updated_at: '2026-11-25T20:50:56Z'
+- attempt_id: jira-attempt-013
+  quest_id: jira-add-comment
+  quest_version: 1
+  content_hash: sha256:d730ce55b8ff2bb0a1e42ca4ba3b4ef4480a1b4f6860ece20c44209824b2b7f5
+  state: submitted
+  started_at: '2026-11-25T20:53:19Z'
+  updated_at: '2026-11-25T21:36:42Z'
+  evidence_path: participant/evidence/jira-add-comment/jira-attempt-013
+  submission_id: submission-20261125213642-2c8ea1
+updated_at: '2026-11-25T21:36:42Z'

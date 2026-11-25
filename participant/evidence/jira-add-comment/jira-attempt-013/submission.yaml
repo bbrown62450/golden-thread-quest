@@ -1,0 +1,13 @@
+schema_version: 1
+submission_id: submission-20261125213642-2c8ea1
+quest_id: jira-add-comment
+quest_version: 1
+attempt_id: jira-attempt-013
+content_hash: sha256:d730ce55b8ff2bb0a1e42ca4ba3b4ef4480a1b4f6860ece20c44209824b2b7f5
+evidence_hash: sha256:e4ef09a60accd8d74bbd7ae1d898127e72c97f05bc8d9acf10d81c83d1e44d2d
+submitted_at: '2026-11-25T21:36:42Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/jira/results/add-comment.md
+  digest: sha256:c9b890abb543ad4b4d65dbcb42c18f85d75d88d921cf3c986f67d07272dba6d4

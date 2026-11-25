@@ -1,0 +1,6 @@
+
+REFUSED: no confirmation was given. A confirmation names the fingerprint of the preview it approves, and there is no way to write without one.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

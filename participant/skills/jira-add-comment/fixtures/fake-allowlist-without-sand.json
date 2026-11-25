@@ -1,0 +1,10 @@
+{
+  "about": "An allowlist used with the fake Jira that does not list SAND, to see the confirmation refuse.",
+  "sandbox_projects": [
+    {
+      "site_fingerprint": "738169e667642f09",
+      "project_id": "20003",
+      "note": "RO on the fake Jira"
+    }
+  ]
+}

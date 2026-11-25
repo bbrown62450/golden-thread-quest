@@ -1,0 +1,330 @@
+The preview. jira-add-comment, attempt jira-attempt-013
+Recorded by scripts/record_evidence.py. Each block between dashed lines is what a command printed.
+STATE and WORK stand for temporary folders.
+
+
+==============================================================================
+PART A. The real sandbox: the workflow stopping at a preview
+These are the files the workflow saved, with the site's address removed, when the participant ran it in their own
+terminal with their own credentials. This script copies them in unchanged. It cannot establish by reading them who
+ran what, or that a person read a preview before confirming it. The saved files hold no command line and no exit
+code, so the commands are given in PROOF.md and not here. Each check below is of the saved text and no more.
+
+logs/live-preview.txt:
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). Kind of project, as Jira gives it: software.
+            On the sandbox allowlist: yes. The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+Story:      SCRUM-1 (issue id 10000). The id is what identifies it. Its title is other people's text and is not
+            shown: check the key against the story you mean, in Jira.
+
+The change that would be made: one comment on SCRUM-1.
+  It would appear under the Jira account the API token belongs to, called this identity below. Not under the
+  name given with the confirmation.
+  Text, exactly as it would be sent, between the bars. 141 characters, 2 lines:
+    | Test comment from the Golden Thread Quest sandbox exercise, added on 25 November 2026.
+    | It records nothing about real work and can be deleted.
+  WHO CAN SEE IT: EVERYONE who can see the story SCRUM-1. No restriction is put on the comment. The story has no security level.
+    This workflow cannot list who that is, and cannot tell whether the project is open to customers or to the
+    public. Jira may also email the story's watchers the whole text.
+  Where the text came from: the file add-comment.txt beside the change file, sha256 c8c152877189547310c53ed0cadaef4360e29b0af85dc087f424d04eadc1ffec.
+    Who or what put the text in that file is not known to this workflow. It did not write the file and did not
+    take the text from Jira.
+  It is sent as plain text: no formatting, no links, no mentions. Nothing else on the story would be sent.
+  A comment cannot be unsent. It can be deleted afterwards, by hand, and emails already sent stay sent.
+
+Looked for in the text and not found: email addresses, web addresses, telephone numbers, @names, and
+  words that mark something as private. That is a search for patterns. It is not a judgement that the
+  text is fit to be seen. The person confirming reads the text.
+Looked for in the text and not found: 9 patterns that look like a secret. A text that matched one would
+  have been refused.
+
+Permission check, asked of Jira for this story and this identity:
+  may see the story        (BROWSE_PROJECTS): yes
+  may comment on the story (ADD_COMMENTS):    yes
+Duplicate check, made against Jira just now: the story has 0 comments that this identity can see. Each was
+  compared with the text. A comment restricted to others would not be among them.
+  With the same text, by this identity: 0.
+  With the same text, by someone else:  0.
+Where Jira cannot check: its request to add a comment has no 'only if there is no such comment' condition.
+  The confirmation reads the comments again just before writing and stops if this comment is there by then.
+
+Snapshot of the story and its comments as Jira returned them, before the preview: 2ec64df223ea9438
+Snapshot of the story and its comments as Jira returned them, after the preview:  2ec64df223ea9438
+The two are the same. Jira is unchanged, as far as two reads of the story and its comments can show. A snapshot
+  is of the story's last-updated time, project and security level, and of every comment this identity can see.
+Requests sent to Jira: 6. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SCRUM-1
+  GET /rest/api/3/myself
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/10000/comment
+  GET /rest/api/3/issue/10000
+  GET /rest/api/3/issue/10000/comment
+
+Fingerprint of this preview: aeb8be1deadb
+Made:    2026-11-25 21:21:07 UTC
+Expires: 2026-11-25 21:36:07 UTC (15 minutes after it was made)
+
+Nothing has been written. To add this comment, a person who has read this preview confirms it by its
+fingerprint.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
+------------------------------------------------------------------------------
+  ok   live preview: it says nothing has been written
+  ok   live preview: it shows the Jira site by its marker and fingerprint
+  ok   live preview: it shows the project, and that it is on the sandbox allowlist, naming the allowlist file
+  ok   live preview: it says under whose account the comment would appear
+  ok   live preview: it shows who can see the comment
+  ok   live preview: it says where the text came from
+  ok   live preview: it records the permission check
+  ok   live preview: it records the duplicate check
+  ok   live preview: it states where Jira cannot check
+  ok   live preview: it gives the before and after snapshots, and says they are the same
+  ok   live preview: the program's own list of the requests it sent holds only reads
+  ok   live preview: it gives a fingerprint
+  ok   live preview: it carries the program's note that the output was searched for the credentials
+  ok   live preview: no web address and no atlassian name is in the saved text
+  ok   live preview: nothing shaped like an email address is in the saved text
+  ok   live preview: the two snapshot codes printed are the same code
+
+==============================================================================
+PART B. The fake Jira
+The Jira in this part is fake_jira.py, a made-up one. No real Jira was read or written, so nothing in it is
+redacted: the site, the projects, the stories and the people are invented.
+
+$ python3 participant/skills/jira-add-comment/fake_jira.py show --state STATE --story SAND-1
+------------------------------------------------------------------------------
+FAKE JIRA holds for SAND-1 (issue id 30001): 2 comments. By this identity: 0. Comment ids: 50001, 50002.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/jira-add-comment/comment.py preview --source fake --change WORK/wanted.json --allowlist participant/skills/jira-add-comment/fixtures/fake-allowlist.json --state STATE
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). Kind of project, as Jira gives it: software.
+            On the sandbox allowlist: yes. The allowlist is the file fake-allowlist.json, sha256 1885e693a4f7dd83, which lists 2 projects.
+Story:      SAND-1 (issue id 30001). The id is what identifies it. Its title is other people's text and is not
+            shown: check the key against the story you mean, in Jira.
+
+The change that would be made: one comment on SAND-1.
+  It would appear under the Jira account the API token belongs to, called this identity below. Not under the
+  name given with the confirmation.
+  Text, exactly as it would be sent, between the bars. 122 characters, 2 lines:
+    | Checked against the made-up onboarding checklist on 25 November.
+    | No change to the story is needed. This is a test comment.
+  WHO CAN SEE IT: EVERYONE who can see the story SAND-1. No restriction is put on the comment. The story has no security level.
+    This workflow cannot list who that is, and cannot tell whether the project is open to customers or to the
+    public. Jira may also email the story's watchers the whole text.
+  Where the text came from: the file comment.txt beside the change file, sha256 810ad29174abb8dfbb743e0dd92e69777dc0a2169852024a866c89c7f4636959.
+    Who or what put the text in that file is not known to this workflow. It did not write the file and did not
+    take the text from Jira.
+  It is sent as plain text: no formatting, no links, no mentions. Nothing else on the story would be sent.
+  A comment cannot be unsent. It can be deleted afterwards, by hand, and emails already sent stay sent.
+
+Looked for in the text and not found: email addresses, web addresses, telephone numbers, @names, and
+  words that mark something as private. That is a search for patterns. It is not a judgement that the
+  text is fit to be seen. The person confirming reads the text.
+Looked for in the text and not found: 9 patterns that look like a secret. A text that matched one would
+  have been refused.
+
+Permission check, asked of Jira for this story and this identity:
+  may see the story        (BROWSE_PROJECTS): yes
+  may comment on the story (ADD_COMMENTS):    yes
+Duplicate check, made against Jira just now: the story has 2 comments that this identity can see. Each was
+  compared with the text. A comment restricted to others would not be among them.
+  With the same text, by this identity: 0.
+  With the same text, by someone else:  0.
+Where Jira cannot check: its request to add a comment has no 'only if there is no such comment' condition.
+  The confirmation reads the comments again just before writing and stops if this comment is there by then.
+
+Snapshot of the story and its comments as Jira returned them, before the preview: 818c9caac310d9f5
+Snapshot of the story and its comments as Jira returned them, after the preview:  818c9caac310d9f5
+The two are the same. Jira is unchanged, as far as two reads of the story and its comments can show. A snapshot
+  is of the story's last-updated time, project and security level, and of every comment this identity can see.
+Requests sent to Jira: 6. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/myself
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30001/comment
+  GET /rest/api/3/issue/30001
+  GET /rest/api/3/issue/30001/comment
+
+Fingerprint of this preview: 1521283a1b4e
+Made:    2026-11-25 21:27:32 UTC
+Expires: 2026-11-25 21:42:32 UTC (15 minutes after it was made)
+
+Nothing has been written. To add this comment, a person who has read this preview confirms it by its
+fingerprint.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/jira-add-comment/fake_jira.py show --state STATE --story SAND-1
+------------------------------------------------------------------------------
+FAKE JIRA holds for SAND-1 (issue id 30001): 2 comments. By this identity: 0. Comment ids: 50001, 50002.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 1: the preview shows the exact text of the comment, line for line
+  ok   criterion 1: the visibility is on the line directly under the text, and says who can see it
+  ok   criterion 1: it names the target story, and where the text came from with the file's checksum
+  ok   criterion 3: it shows the Jira site, the project and the exact change
+  ok   criterion 3: nothing was written. The fake Jira holds the same comments before and after: (2, 0) and (2, 0)
+  ok   criterion 3: every request the preview sent was a GET
+  ok   the preview's own before and after snapshots of the story and its comments are the same code
+  ok   criterion 4: it records the permission check: may see the story, may comment on it
+  ok   criterion 4: it records the duplicate check, with the number of comments compared
+  ok   criterion 4: it states where Jira cannot check
+  ok   criterion 6: it gives a fingerprint of the preview and when it expires
+  ok   nothing from the story or from the comments already on it is printed, though both are worded as instructions
+
+==============================================================================
+A comment for one project role, on a story with a security level
+$ python3 participant/skills/jira-add-comment/comment.py preview --source fake --change WORK/wanted-role.json --allowlist participant/skills/jira-add-comment/fixtures/fake-allowlist.json --state STATE
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). Kind of project, as Jira gives it: software.
+            On the sandbox allowlist: yes. The allowlist is the file fake-allowlist.json, sha256 1885e693a4f7dd83, which lists 2 projects.
+Story:      SAND-2 (issue id 30002). The id is what identifies it. Its title is other people's text and is not
+            shown: check the key against the story you mean, in Jira.
+
+The change that would be made: one comment on SAND-2.
+  It would appear under the Jira account the API token belongs to, called this identity below. Not under the
+  name given with the confirmation.
+  Text, exactly as it would be sent, between the bars. 122 characters, 2 lines:
+    | Checked against the made-up onboarding checklist on 25 November.
+    | No change to the story is needed. This is a test comment.
+  WHO CAN SEE IT: ONLY people in the project role "Administrators" who can also see the story SAND-2. The story has the security level "Staff only", which limits who can see it.
+    This workflow cannot list who that is, and cannot tell whether the project is open to customers or to the
+    public. Jira may also email the story's watchers the whole text.
+  Where the text came from: the file comment.txt beside the change file, sha256 810ad29174abb8dfbb743e0dd92e69777dc0a2169852024a866c89c7f4636959.
+    Who or what put the text in that file is not known to this workflow. It did not write the file and did not
+    take the text from Jira.
+  It is sent as plain text: no formatting, no links, no mentions. Nothing else on the story would be sent.
+  A comment cannot be unsent. It can be deleted afterwards, by hand, and emails already sent stay sent.
+
+Looked for in the text and not found: email addresses, web addresses, telephone numbers, @names, and
+  words that mark something as private. That is a search for patterns. It is not a judgement that the
+  text is fit to be seen. The person confirming reads the text.
+Looked for in the text and not found: 9 patterns that look like a secret. A text that matched one would
+  have been refused.
+
+Permission check, asked of Jira for this story and this identity:
+  may see the story        (BROWSE_PROJECTS): yes
+  may comment on the story (ADD_COMMENTS):    yes
+  the project has the role "Administrators" (role id 10002): yes
+Duplicate check, made against Jira just now: the story has 0 comments that this identity can see. Each was
+  compared with the text. A comment restricted to others would not be among them.
+  With the same text, by this identity: 0.
+  With the same text, by someone else:  0.
+Where Jira cannot check: its request to add a comment has no 'only if there is no such comment' condition.
+  The confirmation reads the comments again just before writing and stops if this comment is there by then.
+
+Snapshot of the story and its comments as Jira returned them, before the preview: 3a44b028f5bba8cf
+Snapshot of the story and its comments as Jira returned them, after the preview:  3a44b028f5bba8cf
+The two are the same. Jira is unchanged, as far as two reads of the story and its comments can show. A snapshot
+  is of the story's last-updated time, project and security level, and of every comment this identity can see.
+Requests sent to Jira: 7. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SAND-2
+  GET /rest/api/3/myself
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30002/comment
+  GET /rest/api/3/project/20001/role
+  GET /rest/api/3/issue/30002
+  GET /rest/api/3/issue/30002/comment
+
+Fingerprint of this preview: 0b725d207d22
+Made:    2026-11-25 21:27:32 UTC
+Expires: 2026-11-25 21:42:32 UTC (15 minutes after it was made)
+
+Nothing has been written. To add this comment, a person who has read this preview confirms it by its
+fingerprint.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the restriction and the story's security level are both beside the text
+  ok   the preview checked that the project has that role
+
+==============================================================================
+Private content: a text that looks as if it holds a secret is refused, before Jira is asked anything
+The text file in WORK was changed to hold a made-up password written out. It is not printed here.
+$ python3 participant/skills/jira-add-comment/comment.py preview --source fake --change WORK/wanted.json --allowlist participant/skills/jira-add-comment/fixtures/fake-allowlist.json --state STATE
+------------------------------------------------------------------------------
+
+REFUSED: the text looks as if it holds a password, key or token written out, on line 1. A comment cannot be unsent, so this workflow does not send it. The matching text is not shown here.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   stretch goal: the text is refused, and the reason names the kind of secret and the line
+  ok   the matching text is not shown in the refusal
+  ok   no request was sent to Jira
+
+==============================================================================
+Private content: what may be private is pointed out, and not refused
+The text file in WORK was changed to hold a made-up email address and the word confidential.
+$ python3 participant/skills/jira-add-comment/comment.py preview --source fake --change WORK/wanted.json --allowlist participant/skills/jira-add-comment/fixtures/fake-allowlist.json --state STATE
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). Kind of project, as Jira gives it: software.
+            On the sandbox allowlist: yes. The allowlist is the file fake-allowlist.json, sha256 1885e693a4f7dd83, which lists 2 projects.
+Story:      SAND-1 (issue id 30001). The id is what identifies it. Its title is other people's text and is not
+            shown: check the key against the story you mean, in Jira.
+
+The change that would be made: one comment on SAND-1.
+  It would appear under the Jira account the API token belongs to, called this identity below. Not under the
+  name given with the confirmation.
+  Text, exactly as it would be sent, between the bars. 73 characters, 2 lines:
+    | Ask sam.example@example.invalid about this.
+    | The details are confidential.
+  WHO CAN SEE IT: EVERYONE who can see the story SAND-1. No restriction is put on the comment. The story has no security level.
+    This workflow cannot list who that is, and cannot tell whether the project is open to customers or to the
+    public. Jira may also email the story's watchers the whole text.
+  Where the text came from: the file comment.txt beside the change file, sha256 92aeaea7207cf5fed7e0512a14ed18b3f2acd7f37fdd90c7a278140683605899.
+    Who or what put the text in that file is not known to this workflow. It did not write the file and did not
+    take the text from Jira.
+  It is sent as plain text: no formatting, no links, no mentions. Nothing else on the story would be sent.
+  A comment cannot be unsent. It can be deleted afterwards, by hand, and emails already sent stay sent.
+
+LOOK AT THESE BEFORE CONFIRMING. They are not refused. Each may be something private:
+  line 1: an email address
+  line 2: a word that marks something as private
+Looked for in the text and not found: 9 patterns that look like a secret. A text that matched one would
+  have been refused.
+
+Permission check, asked of Jira for this story and this identity:
+  may see the story        (BROWSE_PROJECTS): yes
+  may comment on the story (ADD_COMMENTS):    yes
+Duplicate check, made against Jira just now: the story has 2 comments that this identity can see. Each was
+  compared with the text. A comment restricted to others would not be among them.
+  With the same text, by this identity: 0.
+  With the same text, by someone else:  0.
+Where Jira cannot check: its request to add a comment has no 'only if there is no such comment' condition.
+  The confirmation reads the comments again just before writing and stops if this comment is there by then.
+
+Snapshot of the story and its comments as Jira returned them, before the preview: 818c9caac310d9f5
+Snapshot of the story and its comments as Jira returned them, after the preview:  818c9caac310d9f5
+The two are the same. Jira is unchanged, as far as two reads of the story and its comments can show. A snapshot
+  is of the story's last-updated time, project and security level, and of every comment this identity can see.
+Requests sent to Jira: 6. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/myself
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30001/comment
+  GET /rest/api/3/issue/30001
+  GET /rest/api/3/issue/30001/comment
+
+Fingerprint of this preview: b42a542ebd6b
+Made:    2026-11-25 21:27:32 UTC
+Expires: 2026-11-25 21:42:32 UTC (15 minutes after it was made)
+
+Nothing has been written. To add this comment, a person who has read this preview confirms it by its
+fingerprint.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the preview points both out, by line, above the fingerprint, for the person confirming to judge
+
+RESULT: ALL CHECKS PASSED. 34 checks.
