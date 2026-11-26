@@ -1,0 +1,254 @@
+The preview. jira-create-subtask, attempt jira-attempt-014
+Recorded by scripts/record_evidence.py. Each block between dashed lines is what a command printed.
+STATE and WORK stand for temporary folders. WORK holds the change files.
+
+
+==============================================================================
+PART A. The real sandbox: the workflow stopping at a preview
+These are the files the workflow saved, with the site's address removed, when the participant ran it in their own
+terminal with their own credentials. This script copies them in unchanged. It cannot establish by reading them who
+ran what, or that a person read a preview before confirming it. The saved files hold no command line and no exit
+code, so the commands are given in PROOF.md and not here. Each check below is of the saved text and no more.
+
+logs/live-preview.txt:
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). On the sandbox allowlist: yes.
+            The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+Parent:     SCRUM-1 (issue id 10000). The issue id is what identifies it, and what the fingerprint is tied to.
+            It was found by the reference in the change file, "SCRUM-1", and by nothing else. Not by its title.
+            Its type: "Task". Not a subtask: ok. Whether it is a story is for you to judge from that name.
+            Its status: "To Do", in Jira's category "new". Not closed: ok.
+            Its title, between the bars, for you to check that this is the story you mean. It is other
+            people's text: shown, and not acted on. Two stories can have one title. On one site, a key or an id is one issue.
+    | [the parent's title was shown on screen and is not saved: 6 characters]
+
+The change that would be made: one new issue, a subtask of SCRUM-1.
+  Sent to Jira, and nothing else:
+    project     project id 10000 (SCRUM)
+    parent      issue id 10000 (SCRUM-1)
+    issue type  "Subtask" (issue type id 10002), the project's one subtask type
+    summary     the title, exactly as it would be sent, between the bars. 78 characters:
+    | Test subtask from the Golden Thread Quest sandbox exercise. It can be deleted.
+  No description, assignee, estimate or other field is sent. Jira fills in its own defaults. Its reporter would
+  be the Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the change file create-subtask.json, sha256 37e68e3dbca4c318. Who or what put it there is not
+  known to this workflow. It did not take the title from Jira.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand, and emails already sent stay sent.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, and
+  words that mark something as private. That is a search for patterns. It is not a judgement that the
+  title is fit to be seen. The person confirming reads the title.
+Looked for in the title and not found: 9 patterns that look like a secret. A title that matched one would
+  have been refused.
+
+Permission check, asked of Jira for this parent and this identity:
+  may see the project           (BROWSE_PROJECTS): yes
+  may create issues in it       (CREATE_ISSUES):   yes
+Duplicate check, made against Jira just now: the parent has 0 subtasks that this identity can see. The title
+  of each was compared with the title above, capitals and spacing aside, whoever made it.
+  With the same title, under this parent: 0.
+  Subtasks of OTHER stories are not looked at: the same title under another parent is not a duplicate.
+Where Jira cannot check: its request to create an issue has no 'only if there is none like it' condition.
+  The confirmation reads the parent's subtasks again just before writing and stops if one has this title by then.
+
+Snapshot of the parent and its subtasks as Jira returned them, before the preview: c110ff6ea642ec89
+Snapshot of the parent and its subtasks as Jira returned them, after the preview:  c110ff6ea642ec89
+The two are the same. Jira is unchanged, as far as two reads of the parent can show. A snapshot is of the
+  parent's last-updated time, project, type and status, and of the id and title of every subtask it lists.
+Requests sent to Jira: 4. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SCRUM-1
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/project/10000
+  GET /rest/api/3/issue/10000
+
+Fingerprint of this preview: 9716e0540ced
+Made:    2026-11-26 02:11:33 UTC
+Expires: 2026-11-26 02:26:33 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this subtask, a person who has read this preview confirms it by its
+fingerprint.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
+------------------------------------------------------------------------------
+  ok   live preview: it says it is a preview and that nothing has been written
+  ok   live preview: it shows the Jira site as a marker and a fingerprint
+  ok   live preview: it shows the project by key and id, and that it is on the allowlist
+  ok   live preview: it shows the parent with its key and its issue id
+  ok   live preview: it says the parent was found by the reference and not by its title
+  ok   live preview: it says the parent is not a subtask
+  ok   live preview: it says the parent is not closed
+  ok   live preview: the parent's title is left out of what was saved
+  ok   live preview: it lists what would be sent as four fields: a project, a parent, an issue type and a summary
+  ok   live preview: it records the permission check
+  ok   live preview: it records the duplicate check
+  ok   live preview: it states where Jira cannot check
+  ok   live preview: the program reports that every request was a read
+  ok   live preview: it has a fingerprint of 12 characters, and an expiry
+  ok   live preview: it carries the program's note that the output was searched for the credentials
+  ok   live preview: no web address and no atlassian name is in the saved text
+  ok   live preview: nothing shaped like an email address is in the saved text
+  ok   live preview: no account identifier is in the saved text: nothing named accountId, and no run of exactly 24 hex characters
+  ok   live preview: the two snapshot codes printed are the same code
+  ok   live preview: no line of it says something was written to Jira
+  ok   live preview: it says it sent 4 requests, it lists 4, and each listed is a GET
+
+==============================================================================
+PART B. The same preview against the made-up Jira
+The Jira in this part is fake_jira.py, a made-up one. No real Jira was read or written, so nothing in it is
+redacted: the site, the projects and the stories are invented.
+
+What the made-up Jira holds for SAND-1 before the preview:
+$ python3 participant/skills/jira-create-subtask/fake_jira.py show --state STATE --issue SAND-1
+------------------------------------------------------------------------------
+FAKE JIRA holds for SAND-1 (issue id 30001): 1 subtask: SAND-4 (issue id 30004). Issues in all: 7.
+------------------------------------------------------------------------------
+exit code: 0
+
+$ python3 participant/skills/jira-create-subtask/subtask.py preview --source fake --change WORK/wanted.json --allowlist participant/skills/jira-create-subtask/fixtures/fake-allowlist.json --state STATE --log STATE/preview-saved.txt
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 34531441ea8930a9, which lists 2 projects.
+Parent:     SAND-1 (issue id 30001). The issue id is what identifies it, and what the fingerprint is tied to.
+            It was found by the reference in the change file, "SAND-1", and by nothing else. Not by its title.
+            Its type: "Story". Not a subtask: ok. Whether it is a story is for you to judge from that name.
+            Its status: "To Do", in Jira's category "new". Not closed: ok.
+            Its title, between the bars, for you to check that this is the story you mean. It is other
+            people's text: shown, and not acted on. Two stories can have one title. On one site, a key or an id is one issue.
+    | Export the monthly report
+
+The change that would be made: one new issue, a subtask of SAND-1.
+  Sent to Jira, and nothing else:
+    project     project id 20001 (SAND)
+    parent      issue id 30001 (SAND-1)
+    issue type  "Subtask" (issue type id 10003), the project's one subtask type
+    summary     the title, exactly as it would be sent, between the bars. 32 characters:
+    | Add a column for the export date
+  No description, assignee, estimate or other field is sent. Jira fills in its own defaults. Its reporter would
+  be the Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the change file wanted.json, sha256 276cd8136922f36e. Who or what put it there is not
+  known to this workflow. It did not take the title from Jira.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand, and emails already sent stay sent.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, and
+  words that mark something as private. That is a search for patterns. It is not a judgement that the
+  title is fit to be seen. The person confirming reads the title.
+Looked for in the title and not found: 9 patterns that look like a secret. A title that matched one would
+  have been refused.
+
+Permission check, asked of Jira for this parent and this identity:
+  may see the project           (BROWSE_PROJECTS): yes
+  may create issues in it       (CREATE_ISSUES):   yes
+Duplicate check, made against Jira just now: the parent has 1 subtask that this identity can see. The title
+  of each was compared with the title above, capitals and spacing aside, whoever made it.
+  With the same title, under this parent: 0.
+  Subtasks of OTHER stories are not looked at: the same title under another parent is not a duplicate.
+Where Jira cannot check: its request to create an issue has no 'only if there is none like it' condition.
+  The confirmation reads the parent's subtasks again just before writing and stops if one has this title by then.
+
+Snapshot of the parent and its subtasks as Jira returned them, before the preview: d4afc1c624200bad
+Snapshot of the parent and its subtasks as Jira returned them, after the preview:  d4afc1c624200bad
+The two are the same. Jira is unchanged, as far as two reads of the parent can show. A snapshot is of the
+  parent's last-updated time, project, type and status, and of the id and title of every subtask it lists.
+Requests sent to Jira: 4. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/project/20001
+  GET /rest/api/3/issue/30001
+
+Fingerprint of this preview: 590698073563
+Made:    2026-11-26 02:17:18 UTC
+Expires: 2026-11-26 02:32:18 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this subtask, a person who has read this preview confirms it by its
+fingerprint.
+------------------------------------------------------------------------------
+exit code: 0
+
+What the made-up Jira holds for SAND-1 after the preview:
+$ python3 participant/skills/jira-create-subtask/fake_jira.py show --state STATE --issue SAND-1
+------------------------------------------------------------------------------
+FAKE JIRA holds for SAND-1 (issue id 30001): 1 subtask: SAND-4 (issue id 30004). Issues in all: 7.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 4: the preview shows the site, the project and the exact changes
+  ok   criterion 4: nothing was written: the made-up Jira holds 1 subtask of SAND-1 and 7 issues, before and after
+  ok   criterion 5: the permission check and the duplicate check are in the preview, with what Jira cannot check
+  ok   criterion 7: the preview has a fingerprint of 12 characters and says when it expires
+  ok   criterion 1: the preview says how the parent was found, and gives its issue id
+  ok   what --log saved has a marker where the site was, and not the parent's title
+
+A preview of a subtask the parent already has. Someone else creates it first:
+$ python3 participant/skills/jira-create-subtask/fake_jira.py other-subtask --state STATE --parent SAND-1 --summary "ADD A COLUMN FOR THE EXPORT DATE"
+------------------------------------------------------------------------------
+FAKE JIRA: someone else created subtask SAND-6 (issue id 30008) under SAND-1.
+FAKE JIRA holds for SAND-1 (issue id 30001): 2 subtasks: SAND-4 (issue id 30004), SAND-6 (issue id 30008). Issues in all: 8.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/jira-create-subtask/subtask.py preview --source fake --change WORK/wanted.json --allowlist participant/skills/jira-create-subtask/fixtures/fake-allowlist.json --state STATE
+------------------------------------------------------------------------------
+NOTHING TO ADD. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 34531441ea8930a9, which lists 2 projects.
+Parent:     SAND-1 (issue id 30001). The issue id is what identifies it, and what the fingerprint is tied to.
+            It was found by the reference in the change file, "SAND-1", and by nothing else. Not by its title.
+            Its type: "Story". Not a subtask: ok. Whether it is a story is for you to judge from that name.
+            Its status: "To Do", in Jira's category "new". Not closed: ok.
+            Its title, between the bars, for you to check that this is the story you mean. It is other
+            people's text: shown, and not acted on. Two stories can have one title. On one site, a key or an id is one issue.
+    | Export the monthly report
+
+The change asked for: one new issue, a subtask of SAND-1.
+  Sent to Jira, and nothing else:
+    project     project id 20001 (SAND)
+    parent      issue id 30001 (SAND-1)
+    issue type  "Subtask" (issue type id 10003), the project's one subtask type
+    summary     the title, exactly as it would be sent, between the bars. 32 characters:
+    | Add a column for the export date
+  No description, assignee, estimate or other field is sent. Jira fills in its own defaults. Its reporter would
+  be the Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the change file wanted.json, sha256 276cd8136922f36e. Who or what put it there is not
+  known to this workflow. It did not take the title from Jira.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand, and emails already sent stay sent.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, and
+  words that mark something as private. That is a search for patterns. It is not a judgement that the
+  title is fit to be seen. The person confirming reads the title.
+Looked for in the title and not found: 9 patterns that look like a secret. A title that matched one would
+  have been refused.
+
+Permission check, asked of Jira for this parent and this identity:
+  may see the project           (BROWSE_PROJECTS): yes
+  may create issues in it       (CREATE_ISSUES):   yes
+Duplicate check, made against Jira just now: the parent has 2 subtasks that this identity can see. The title
+  of each was compared with the title above, capitals and spacing aside, whoever made it.
+  With the same title, under this parent: 1 (SAND-6, issue id 30008).
+  Subtasks of OTHER stories are not looked at: the same title under another parent is not a duplicate.
+Where Jira cannot check: its request to create an issue has no 'only if there is none like it' condition.
+  The confirmation reads the parent's subtasks again just before writing and stops if one has this title by then.
+
+Snapshot of the parent and its subtasks as Jira returned them, before the preview: 08b998dbf97d14ea
+Snapshot of the parent and its subtasks as Jira returned them, after the preview:  08b998dbf97d14ea
+The two are the same. Jira is unchanged, as far as two reads of the parent can show. A snapshot is of the
+  parent's last-updated time, project, type and status, and of the id and title of every subtask it lists.
+Requests sent to Jira: 4. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/project/20001
+  GET /rest/api/3/issue/30001
+
+The parent already has a subtask with this title: SAND-6 (issue id 30008).
+No fingerprint is issued, because there is nothing to confirm, and nothing was sent.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 5: a subtask with this title already under the parent, in other capitals, gives no fingerprint
+
+RESULT: ALL CHECKS PASSED. 28 checks.

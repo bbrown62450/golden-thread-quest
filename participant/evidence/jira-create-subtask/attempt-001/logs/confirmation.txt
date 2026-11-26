@@ -1,0 +1,455 @@
+The confirmation, and the refusals. jira-create-subtask, attempt jira-attempt-014
+Recorded by scripts/record_evidence.py. Each block between dashed lines is what a command printed.
+STATE and WORK stand for temporary folders. WORK holds the change files.
+
+
+==============================================================================
+PART A. The real sandbox: the approved run, and the four refusals
+These are the files the workflow saved, with the site's address removed, when the participant ran it in their own
+terminal with their own credentials. This script copies them in unchanged. It cannot establish by reading them who
+ran what, or that a person read a preview before confirming it. The saved files hold no command line and no exit
+code, so the commands are given in PROOF.md and not here. Each check below is of the saved text and no more.
+
+logs/live-preview-first.txt:
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). On the sandbox allowlist: yes.
+            The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+Parent:     SCRUM-1 (issue id 10000). The issue id is what identifies it, and what the fingerprint is tied to.
+            It was found by the reference in the change file, "SCRUM-1", and by nothing else. Not by its title.
+            Its type: "Task". Not a subtask: ok. Whether it is a story is for you to judge from that name.
+            Its status: "To Do", in Jira's category "new". Not closed: ok.
+            Its title, between the bars, for you to check that this is the story you mean. It is other
+            people's text: shown, and not acted on. Two stories can have one title. On one site, a key or an id is one issue.
+    | [the parent's title was shown on screen and is not saved: 6 characters]
+
+The change that would be made: one new issue, a subtask of SCRUM-1.
+  Sent to Jira, and nothing else:
+    project     project id 10000 (SCRUM)
+    parent      issue id 10000 (SCRUM-1)
+    issue type  "Subtask" (issue type id 10002), the project's one subtask type
+    summary     the title, exactly as it would be sent, between the bars. 78 characters:
+    | Test subtask from the Golden Thread Quest sandbox exercise. It can be deleted.
+  No description, assignee, estimate or other field is sent. Jira fills in its own defaults. Its reporter would
+  be the Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the change file create-subtask.json, sha256 37e68e3dbca4c318. Who or what put it there is not
+  known to this workflow. It did not take the title from Jira.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand, and emails already sent stay sent.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, and
+  words that mark something as private. That is a search for patterns. It is not a judgement that the
+  title is fit to be seen. The person confirming reads the title.
+Looked for in the title and not found: 9 patterns that look like a secret. A title that matched one would
+  have been refused.
+
+Permission check, asked of Jira for this parent and this identity:
+  may see the project           (BROWSE_PROJECTS): yes
+  may create issues in it       (CREATE_ISSUES):   yes
+Duplicate check, made against Jira just now: the parent has 0 subtasks that this identity can see. The title
+  of each was compared with the title above, capitals and spacing aside, whoever made it.
+  With the same title, under this parent: 0.
+  Subtasks of OTHER stories are not looked at: the same title under another parent is not a duplicate.
+Where Jira cannot check: its request to create an issue has no 'only if there is none like it' condition.
+  The confirmation reads the parent's subtasks again just before writing and stops if one has this title by then.
+
+Snapshot of the parent and its subtasks as Jira returned them, before the preview: c110ff6ea642ec89
+Snapshot of the parent and its subtasks as Jira returned them, after the preview:  c110ff6ea642ec89
+The two are the same. Jira is unchanged, as far as two reads of the parent can show. A snapshot is of the
+  parent's last-updated time, project, type and status, and of the id and title of every subtask it lists.
+Requests sent to Jira: 4. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SCRUM-1
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/project/10000
+  GET /rest/api/3/issue/10000
+
+Fingerprint of this preview: b2df57569a4d
+Made:    2026-11-26 02:10:25 UTC
+Expires: 2026-11-26 02:25:25 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this subtask, a person who has read this preview confirms it by its
+fingerprint.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
+------------------------------------------------------------------------------
+
+logs/live-confirmation.txt:
+------------------------------------------------------------------------------
+CONFIRMATION for preview 9716e0540ced, given by: the participant (the name given with the confirmation).
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). On the sandbox allowlist: yes.
+            The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+Parent:     SCRUM-1 (issue id 10000). The issue id is what identifies it, and what the fingerprint is tied to.
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  the saved preview is unaltered and has not been used: ok
+  the change file asks for exactly what the preview showed: ok
+  the reference in the change file still leads to issue id 10000: ok
+  the project is on the sandbox allowlist for this site: ok
+  the parent is not a subtask and is not closed: ok
+  Jira says this identity may create issues in the project: ok
+  the parent's 0 subtasks, read just before the write, hold none with this title: ok
+
+WRITTEN to Jira: one subtask, SCRUM-24 (issue id 10023), under parent SCRUM-1. Jira answered 201.
+The confirmation and the write happened in this one run of the command.
+
+Read back from Jira after the write, by that issue id:
+  its parent, read back, is issue id 10000. The parent intended is issue id 10000 (SCRUM-1). They are the same: yes
+  its issue type, read back, is a subtask type (issue type id 10002): yes
+  its title, read back, is the title previewed, character for character (78 characters, sha256 21e2fccb9b8fc04d): yes
+  its project, read back, is project id 10000, the parent's: yes
+  the parent's own list of its 1 subtasks, read again, holds issue id 10023: yes
+  subtasks of this parent with this title, counted after the write: 1
+
+RESULT RECORD
+  Issue key: SCRUM-24, the subtask that was created
+  Identifier of what was created: Jira issue id 10023
+  Parent intended: SCRUM-1, issue id 10000 (the id identifies it; a key can change)
+  Parent read back from the subtask after the write: issue id 10000, the same
+  Target project: SCRUM (project id 10000), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 4aabe3d08fbad6b1
+  Issue type: "Subtask" (issue type id 10002)
+  Title: 78 characters, sha256 21e2fccb9b8fc04df19aa29052562949af730af6f6c7c418bc837107571eb9c7, from the change file create-subtask.json (file sha256 37e68e3dbca4c3185c8d582ad8f821c6799af99c904afc7bd1c25cef654f48a3)
+  Read back after the write: as previewed: same parent, a subtask, same title, same project, and listed by the parent
+  Written at: 2026-11-26 02:11:54 UTC
+  Confirmed by: the participant, at 2026-11-26 02:11:51 UTC
+  Preview: fingerprint 9716e0540ced, made 2026-11-26 02:11:33 UTC
+  To reverse: delete SCRUM-24 in Jira, by hand. This workflow does not delete. Emails Jira sent about it cannot be taken back
+
+The result record was also saved as Markdown where --result said.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
+------------------------------------------------------------------------------
+
+logs/live-refused-missing.txt:
+------------------------------------------------------------------------------
+
+REFUSED: no confirmation was given. A confirmation names the fingerprint of the preview it approves, and there is no way to write without one.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
+------------------------------------------------------------------------------
+
+logs/live-refused-differs.txt:
+------------------------------------------------------------------------------
+
+REFUSED: the change is not the one that was previewed: the title is not the title the preview showed; the change file is not the file the preview showed. Make a new preview and read it.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
+------------------------------------------------------------------------------
+
+logs/live-refused-stale.txt:
+------------------------------------------------------------------------------
+TEST CLOCK: pretending it is 16 minutes later than it is.
+
+REFUSED: this preview is too old. It was made 16 minutes ago and the limit is 15. Make a new preview and read it.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
+------------------------------------------------------------------------------
+
+logs/live-refused-allowlist.txt:
+------------------------------------------------------------------------------
+
+REFUSED: project SCRUM (project id 10000) on the Jira site with fingerprint 4aabe3d08fbad6b1 is not on the sandbox allowlist (allowlist-without-sandbox.json). This workflow writes only to projects listed there.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
+------------------------------------------------------------------------------
+
+The order of the real runs, as the participant was asked to make them:
+  1. A preview naming a parent that does not exist: refused (live-refused-missing-parent.txt, in parent-check.txt).
+  2. A preview with an allowlist file that lists no project: refused (live-refused-allowlist.txt).
+  3. A first preview (live-preview-first.txt). It was made only to try the next three refusals against.
+  4. A confirmation with no fingerprint and no name: refused (live-refused-missing.txt).
+  5. A confirmation of the first preview's fingerprint with a change file whose title had been altered:
+     refused (live-refused-differs.txt).
+  6. A confirmation of the first preview with the TEST CLOCK set 16 minutes on: refused (live-refused-stale.txt).
+     The preview was not 16 minutes old. The program was told to act as if it were.
+  7. A second preview (live-preview.txt, in preview.txt). This is the one that was confirmed.
+  8. The confirmation of the second preview (live-confirmation.txt). This is the one write.
+  9. The parent check, the second run, and a preview naming the new subtask as a parent (in parent-check.txt
+     and rerun.txt).
+
+  ok   live first preview: it is a preview, with a fingerprint of its own
+  ok   live first preview: no web address and no atlassian name is in the saved text
+  ok   live first preview: nothing shaped like an email address is in the saved text
+  ok   live first preview: no account identifier is in the saved text: nothing named accountId, and no run of exactly 24 hex characters
+  ok   live approved run: the confirmation names a fingerprint and gives a name for who gave it
+  ok   live approved run: the program reports that the confirmation and the write happened in one run
+  ok   live approved run: it reports one subtask written
+  ok   live approved run: the parent read back is reported as the parent intended
+  ok   live approved run: it holds a result record
+  ok   live approved run: the result record names who confirmed
+  ok   live approved run: no web address and no atlassian name is in the saved text
+  ok   live approved run: nothing shaped like an email address is in the saved text
+  ok   live approved run: no account identifier is in the saved text: nothing named accountId, and no run of exactly 24 hex characters
+  ok   live refusal, no confirmation: it is refused for that reason
+  ok   live refusal, no confirmation: the line after the refusal says nothing has been written
+  ok   live refusal, no confirmation: no web address and no atlassian name is in the saved text
+  ok   live refusal, no confirmation: nothing shaped like an email address is in the saved text
+  ok   live refusal, no confirmation: no account identifier is in the saved text: nothing named accountId, and no run of exactly 24 hex characters
+  ok   live refusal, no confirmation: it has no line saying something was written to Jira, and no fingerprint
+  ok   live refusal, a change that differs: it is refused for that reason
+  ok   live refusal, a change that differs: the line after the refusal says nothing has been written
+  ok   live refusal, a change that differs: no web address and no atlassian name is in the saved text
+  ok   live refusal, a change that differs: nothing shaped like an email address is in the saved text
+  ok   live refusal, a change that differs: no account identifier is in the saved text: nothing named accountId, and no run of exactly 24 hex characters
+  ok   live refusal, a change that differs: it has no line saying something was written to Jira, and no fingerprint
+  ok   live refusal, a preview made to look too old by the test clock: it is refused for that reason
+  ok   live refusal, a preview made to look too old by the test clock: the line after the refusal says nothing has been written
+  ok   live refusal, a preview made to look too old by the test clock: no web address and no atlassian name is in the saved text
+  ok   live refusal, a preview made to look too old by the test clock: nothing shaped like an email address is in the saved text
+  ok   live refusal, a preview made to look too old by the test clock: no account identifier is in the saved text: nothing named accountId, and no run of exactly 24 hex characters
+  ok   live refusal, a preview made to look too old by the test clock: it has no line saying something was written to Jira, and no fingerprint
+  ok   live refusal, a project not on the allowlist: it is refused for that reason
+  ok   live refusal, a project not on the allowlist: the line after the refusal says nothing has been written
+  ok   live refusal, a project not on the allowlist: no web address and no atlassian name is in the saved text
+  ok   live refusal, a project not on the allowlist: nothing shaped like an email address is in the saved text
+  ok   live refusal, a project not on the allowlist: no account identifier is in the saved text: nothing named accountId, and no run of exactly 24 hex characters
+  ok   live refusal, a project not on the allowlist: it has no line saying something was written to Jira, and no fingerprint
+  ok   live refusal by the test clock: the output itself says the clock was pretended
+  ok   live: the fingerprint confirmed (9716e0540ced) is the fingerprint of the saved preview
+  ok   live: it is not the fingerprint of the first preview, which was only refused against
+  ok   live: the parent in the confirmation is the parent in the preview: SCRUM-1 (issue id 10000)
+  ok   live: the write (2026-11-26 02:11:54 UTC) is after the preview was made (2026-11-26 02:11:33 UTC) and before it expired (2026-11-26 02:26:33 UTC (15 minutes after it was made))
+  ok   live: the title's checksum in the result record is the checksum of the title the preview showed
+  ok   criterion 8: participant/context/jira/results/create-subtask.md holds the 13 lines of the result record the run printed. (Both were written by that one run, so this shows the file was not changed since, and no more.)
+  ok   criterion 8: the result record holds the issue key
+  ok   criterion 8: the result record holds the identifier of what was created
+  ok   criterion 8: the result record holds the target project
+  ok   criterion 8: the result record holds the timestamp
+  ok   criterion 8: the result record holds the confirmer
+  ok   criterion 8: the result record holds no site address
+
+==============================================================================
+PART B. The approved run and the refusals against the made-up Jira
+The Jira in this part is fake_jira.py, a made-up one. No real Jira was read or written, so nothing in it is
+redacted: the site, the projects and the stories are invented.
+
+B1. A preview, then five confirmations and one preview that must be refused. What the made-up Jira holds first:
+$ python3 participant/skills/jira-create-subtask/fake_jira.py show --state STATE --issue SAND-1
+------------------------------------------------------------------------------
+FAKE JIRA holds for SAND-1 (issue id 30001): 1 subtask: SAND-4 (issue id 30004). Issues in all: 7.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 participant/skills/jira-create-subtask/subtask.py preview --source fake --change WORK/wanted.json --allowlist participant/skills/jira-create-subtask/fixtures/fake-allowlist.json --state STATE
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 34531441ea8930a9, which lists 2 projects.
+Parent:     SAND-1 (issue id 30001). The issue id is what identifies it, and what the fingerprint is tied to.
+            It was found by the reference in the change file, "SAND-1", and by nothing else. Not by its title.
+            Its type: "Story". Not a subtask: ok. Whether it is a story is for you to judge from that name.
+            Its status: "To Do", in Jira's category "new". Not closed: ok.
+            Its title, between the bars, for you to check that this is the story you mean. It is other
+            people's text: shown, and not acted on. Two stories can have one title. On one site, a key or an id is one issue.
+    | Export the monthly report
+
+The change that would be made: one new issue, a subtask of SAND-1.
+  Sent to Jira, and nothing else:
+    project     project id 20001 (SAND)
+    parent      issue id 30001 (SAND-1)
+    issue type  "Subtask" (issue type id 10003), the project's one subtask type
+    summary     the title, exactly as it would be sent, between the bars. 32 characters:
+    | Add a column for the export date
+  No description, assignee, estimate or other field is sent. Jira fills in its own defaults. Its reporter would
+  be the Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the change file wanted.json, sha256 276cd8136922f36e. Who or what put it there is not
+  known to this workflow. It did not take the title from Jira.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand, and emails already sent stay sent.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, and
+  words that mark something as private. That is a search for patterns. It is not a judgement that the
+  title is fit to be seen. The person confirming reads the title.
+Looked for in the title and not found: 9 patterns that look like a secret. A title that matched one would
+  have been refused.
+
+Permission check, asked of Jira for this parent and this identity:
+  may see the project           (BROWSE_PROJECTS): yes
+  may create issues in it       (CREATE_ISSUES):   yes
+Duplicate check, made against Jira just now: the parent has 1 subtask that this identity can see. The title
+  of each was compared with the title above, capitals and spacing aside, whoever made it.
+  With the same title, under this parent: 0.
+  Subtasks of OTHER stories are not looked at: the same title under another parent is not a duplicate.
+Where Jira cannot check: its request to create an issue has no 'only if there is none like it' condition.
+  The confirmation reads the parent's subtasks again just before writing and stops if one has this title by then.
+
+Snapshot of the parent and its subtasks as Jira returned them, before the preview: d4afc1c624200bad
+Snapshot of the parent and its subtasks as Jira returned them, after the preview:  d4afc1c624200bad
+The two are the same. Jira is unchanged, as far as two reads of the parent can show. A snapshot is of the
+  parent's last-updated time, project, type and status, and of the id and title of every subtask it lists.
+Requests sent to Jira: 4. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/project/20001
+  GET /rest/api/3/issue/30001
+
+Fingerprint of this preview: 590698073563
+Made:    2026-11-26 02:17:18 UTC
+Expires: 2026-11-26 02:32:18 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this subtask, a person who has read this preview confirms it by its
+fingerprint.
+------------------------------------------------------------------------------
+exit code: 0
+
+No confirmation at all:
+$ python3 participant/skills/jira-create-subtask/subtask.py confirm --source fake --change WORK/wanted.json --allowlist participant/skills/jira-create-subtask/fixtures/fake-allowlist.json --state STATE
+------------------------------------------------------------------------------
+
+REFUSED: no confirmation was given. A confirmation names the fingerprint of the preview it approves, and there is no way to write without one.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   criterion 7: a missing confirmation is refused
+
+A fingerprint with no name:
+$ python3 participant/skills/jira-create-subtask/subtask.py confirm --source fake --change WORK/wanted.json --allowlist participant/skills/jira-create-subtask/fixtures/fake-allowlist.json --state STATE --fingerprint 590698073563
+------------------------------------------------------------------------------
+
+REFUSED: no confirmation was given. A confirmation gives the name of the person confirming.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   criterion 7: a fingerprint with nobody's name is refused
+
+The title in the change file is altered after the preview, and the old fingerprint is confirmed:
+$ python3 participant/skills/jira-create-subtask/subtask.py confirm --source fake --change WORK/wanted.json --allowlist participant/skills/jira-create-subtask/fixtures/fake-allowlist.json --state STATE --fingerprint 590698073563 --confirmed-by "the participant"
+------------------------------------------------------------------------------
+
+REFUSED: the change is not the one that was previewed: the title is not the title the preview showed; the change file is not the file the preview showed. Make a new preview and read it.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   criterion 7: a change that differs from the preview is refused
+
+The parent in the change file is changed to SAND-2, the story with the same title, and the old fingerprint is confirmed:
+$ python3 participant/skills/jira-create-subtask/subtask.py confirm --source fake --change WORK/twin.json --allowlist participant/skills/jira-create-subtask/fixtures/fake-allowlist.json --state STATE --fingerprint 590698073563 --confirmed-by "the participant"
+------------------------------------------------------------------------------
+
+REFUSED: the change is not the one that was previewed: it names a different parent. Make a new preview and read it.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   criterion 7: the same title aimed at the other story with that title is refused
+
+The preview is 16 minutes old, by the test clock:
+$ python3 participant/skills/jira-create-subtask/subtask.py confirm --source fake --change WORK/wanted.json --allowlist participant/skills/jira-create-subtask/fixtures/fake-allowlist.json --state STATE --fingerprint 590698073563 --confirmed-by "the participant" --pretend-minutes-later 16
+------------------------------------------------------------------------------
+TEST CLOCK: pretending it is 16 minutes later than it is.
+
+REFUSED: this preview is too old. It was made 16 minutes ago and the limit is 15. Make a new preview and read it.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   criterion 7: a preview older than the stated 15 minutes is refused
+
+A parent in a project that is not on the allowlist:
+$ python3 participant/skills/jira-create-subtask/subtask.py preview --source fake --change WORK/production.json --allowlist participant/skills/jira-create-subtask/fixtures/fake-allowlist.json --state STATE
+------------------------------------------------------------------------------
+
+REFUSED: project PROD (project id 20002) on the Jira site with fingerprint 738169e667642f09 is not on the sandbox allowlist (fake-allowlist.json). This workflow writes only to projects listed there.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   criterion 6: a project not on the sandbox allowlist is refused, at the preview
+
+What the made-up Jira holds after those six refusals:
+$ python3 participant/skills/jira-create-subtask/fake_jira.py show --state STATE --issue SAND-1
+------------------------------------------------------------------------------
+FAKE JIRA holds for SAND-1 (issue id 30001): 1 subtask: SAND-4 (issue id 30004). Issues in all: 7.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   after the six refusals the made-up Jira holds what it held: 1 subtask of SAND-1 and 7 issues
+
+B2. The approved run. The same preview is still open and unaltered, and is now confirmed:
+$ python3 participant/skills/jira-create-subtask/subtask.py confirm --source fake --change WORK/wanted.json --allowlist participant/skills/jira-create-subtask/fixtures/fake-allowlist.json --state STATE --fingerprint 590698073563 --confirmed-by "the participant" --result STATE/result.md
+------------------------------------------------------------------------------
+CONFIRMATION for preview 590698073563, given by: the participant (the name given with the confirmation).
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 34531441ea8930a9, which lists 2 projects.
+Parent:     SAND-1 (issue id 30001). The issue id is what identifies it, and what the fingerprint is tied to.
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  the saved preview is unaltered and has not been used: ok
+  the change file asks for exactly what the preview showed: ok
+  the reference in the change file still leads to issue id 30001: ok
+  the project is on the sandbox allowlist for this site: ok
+  the parent is not a subtask and is not closed: ok
+  Jira says this identity may create issues in the project: ok
+  the parent's 1 subtask, read just before the write, hold none with this title: ok
+
+WRITTEN to Jira: one subtask, SAND-6 (issue id 30008), under parent SAND-1. Jira answered 201.
+The confirmation and the write happened in this one run of the command.
+
+Read back from Jira after the write, by that issue id:
+  its parent, read back, is issue id 30001. The parent intended is issue id 30001 (SAND-1). They are the same: yes
+  its issue type, read back, is a subtask type (issue type id 10003): yes
+  its title, read back, is the title previewed, character for character (32 characters, sha256 5fb5cacf0cbb480c): yes
+  its project, read back, is project id 20001, the parent's: yes
+  the parent's own list of its 2 subtasks, read again, holds issue id 30008: yes
+  subtasks of this parent with this title, counted after the write: 1
+
+RESULT RECORD
+  Issue key: SAND-6, the subtask that was created
+  Identifier of what was created: Jira issue id 30008
+  Parent intended: SAND-1, issue id 30001 (the id identifies it; a key can change)
+  Parent read back from the subtask after the write: issue id 30001, the same
+  Target project: SAND (project id 20001), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 738169e667642f09
+  Issue type: "Subtask" (issue type id 10003)
+  Title: 32 characters, sha256 5fb5cacf0cbb480c7e78a11d4c4a4751df23a9b585f0f58929cd04232805bb55, from the change file wanted.json (file sha256 276cd8136922f36e1ff1e3bac652bf989307f1e241df87bc2193154365711fdf)
+  Read back after the write: as previewed: same parent, a subtask, same title, same project, and listed by the parent
+  Written at: 2026-11-26 02:17:18 UTC
+  Confirmed by: the participant, at 2026-11-26 02:17:18 UTC
+  Preview: fingerprint 590698073563, made 2026-11-26 02:17:18 UTC
+  To reverse: delete SAND-6 in Jira, by hand. This workflow does not delete. Emails Jira sent about it cannot be taken back
+
+The result record was also saved as Markdown where --result said.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 4: with the fingerprint and a name, one subtask is written
+  ok   criterion 7: the confirmation names the fingerprint of the preview
+  ok   criterion 3: the parent read back is the parent intended
+  ok   criterion 8: the result record holds the key, the identifier, the project, the time and the confirmer
+
+$ python3 participant/skills/jira-create-subtask/fake_jira.py show --state STATE --issue SAND-1
+------------------------------------------------------------------------------
+FAKE JIRA holds for SAND-1 (issue id 30001): 2 subtasks: SAND-4 (issue id 30004), SAND-6 (issue id 30008). Issues in all: 8.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the made-up Jira now holds one more subtask of SAND-1 and one more issue
+$ python3 participant/skills/jira-create-subtask/fake_jira.py show --state STATE --issue SAND-2
+------------------------------------------------------------------------------
+FAKE JIRA holds for SAND-2 (issue id 30002): 0 subtasks. Issues in all: 8.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the other story with the same title, SAND-2, still has no subtask
+
+The same fingerprint again:
+$ python3 participant/skills/jira-create-subtask/subtask.py confirm --source fake --change WORK/wanted.json --allowlist participant/skills/jira-create-subtask/fixtures/fake-allowlist.json --state STATE --fingerprint 590698073563 --confirmed-by "the participant"
+------------------------------------------------------------------------------
+
+REFUSED: the preview 590698073563 has already been confirmed and written. A fingerprint is used once.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   criterion 7: a fingerprint is used once
+
+RESULT: ALL CHECKS PASSED. 64 checks.

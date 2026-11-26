@@ -1,0 +1,6 @@
+
+REFUSED: the parent named, SCRUM-24 (issue id 10023), is itself a subtask: its issue type is "Subtask". A subtask cannot be the parent of a subtask. Name the story.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

@@ -434,3 +434,8 @@ Every change this application made to your files, newest last.
 - `2026-11-26T01:11:09Z` playwright-tagging: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-26T01:11:09Z` Submitted playwright-tagging for review as submission-20261126011109-cac4f5.
 - `2026-11-26T01:22:53Z` Review of playwright-tagging: approved by Claude (automated reviewer).
+- `2026-11-26T01:53:39Z` Started jira-create-subtask as attempt jira-attempt-014.
+- `2026-11-26T02:22:46Z` jira-create-subtask: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-26T02:24:54Z` jira-create-subtask: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-26T02:28:23Z` jira-create-subtask: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-26T02:28:23Z` Submitted jira-create-subtask for review as submission-20261126022823-cd4b44.

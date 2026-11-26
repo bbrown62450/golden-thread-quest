@@ -1,0 +1,425 @@
+Do the tests notice a broken subtask workflow? jira-create-subtask, attempt jira-attempt-014
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into participant/skills/jira-create-subtask/subtask.py, every test was run, and the
+bug was taken out again. Only local files are used.
+
+Before any bug: OK
+
+PLANTED BUG A. A preview can write (criterion 4)
+  unittest result: FAILED (failures=1, errors=1)
+  tests that failed (2):
+    TheConfirmation.test_a_confirm_command_given_no_way_to_write_writes_nothing
+    ThePreview.test_a_preview_has_no_way_to_write
+
+PLANTED BUG B. The live preview is handed the write function (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheLiveConnection.test_a_preview_is_given_no_way_to_write
+
+PLANTED BUG C. The fake preview is handed the write function (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheProgram.test_only_confirm_is_given_a_way_to_write
+
+PLANTED BUG D. A live connection will send any write (criterion 4)
+  unittest result: FAILED (errors=1)
+  tests that failed (1):
+    TheLiveConnection.test_the_only_write_a_live_connection_sends_is_one_subtask
+
+PLANTED BUG E. A parent that is a subtask is accepted (criterion 2)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheParent.test_a_parent_that_is_a_subtask_is_refused_before_the_preview
+    TheConfirmation.test_a_parent_turned_into_a_subtask_after_the_preview_is_refused
+
+PLANTED BUG F. A closed parent is accepted (the closed-parent rule)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheParent.test_a_closed_parent_is_refused_before_the_preview
+    TheConfirmation.test_a_parent_closed_after_the_preview_is_refused
+
+PLANTED BUG G. A status with no category is taken as open (the closed-parent rule)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheParent.test_a_parent_whose_status_category_jira_does_not_give_is_refused
+
+PLANTED BUG H. A parent Jira does not return is not refused as missing (criterion 2)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheParent.test_a_parent_that_does_not_exist_is_refused_before_the_preview
+
+PLANTED BUG I. The parent may be given as any text, a title included (criterion 1)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheChangeFile.test_a_path_in_place_of_a_reference
+    TheParent.test_a_title_in_place_of_a_reference_is_refused_before_jira_is_asked
+
+PLANTED BUG J. The parent checks are not made again at the confirmation (criterion 2)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheConfirmation.test_a_parent_closed_after_the_preview_is_refused
+    TheConfirmation.test_a_parent_turned_into_a_subtask_after_the_preview_is_refused
+
+PLANTED BUG K. The write names the parent by the reference in the change file, not the pinned id (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_key_that_now_leads_to_another_issue_is_refused
+
+PLANTED BUG L. A reference that now leads to another issue is not noticed (criterion 1)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_key_that_now_leads_to_another_issue_is_refused
+
+PLANTED BUG M. The subtask is sent with the project as its parent id (criterion 3)
+  unittest result: FAILED (failures=30, errors=1)
+  tests that failed (31):
+    TheCheck.test_a_check_has_no_way_to_write
+    TheConfirmation.test_a_confirmed_preview_creates_one_subtask_under_the_parent
+    TheProgram.test_a_credential_found_after_a_write_says_that_a_write_was_sent
+    TheConfirmation.test_a_fingerprint_is_used_once
+    TheParent.test_a_parent_can_be_named_by_its_issue_id
+    TheConfirmation.test_a_preview_just_inside_the_limit_is_accepted
+    WhenTheWriteGoesWrong.test_a_read_that_fails_after_the_write_needs_a_person
+    WhenTheWriteGoesWrong.test_a_refusal_by_jira_with_the_subtask_created_all_the_same_needs_a_person
+    TheRerun.test_a_second_preview_after_the_write_finds_nothing_to_add
+    TheCheck.test_a_second_subtask_with_the_title_is_reported
+    WhenTheWriteGoesWrong.test_a_server_error_with_the_subtask_created_needs_a_person
+    TheCheck.test_a_subtask_since_deleted_is_reported
+    TheCheck.test_a_subtask_since_moved_to_another_parent_is_reported
+    TheConfirmation.test_a_subtask_stored_as_another_type_needs_a_person
+    TheConfirmation.test_a_subtask_stored_under_another_parent_needs_a_person
+    TheConfirmation.test_a_title_stored_differently_needs_a_person
+    TheParent.test_a_title_worded_as_an_instruction_is_shown_and_changes_nothing
+    WhenTheWriteGoesWrong.test_a_write_applied_with_the_answer_lost_needs_a_person
+    TheCheck.test_a_write_record_that_names_another_parent_than_the_preview_is_reported
+    TheCheck.test_another_site
+    TheCheck.test_it_reads_the_subtask_back_and_compares_the_parent
+    WhenTheWriteGoesWrong.test_jiras_own_words_are_shown_quoted
+    TheConfirmation.test_the_last_read_before_the_write_is_of_the_parent_by_its_id
+    TheConfirmation.test_the_parent_link_is_read_back_and_matches
+    TheConfirmation.test_the_result_record_holds_what_criterion_8_asks
+    TheConfirmation.test_the_result_record_is_saved_as_markdown_without_the_site
+    WhenTheWriteGoesWrong.test_the_same_subtask_created_by_someone_at_the_last_moment_is_reported
+    TheProgram.test_the_three_commands_from_the_command_line
+    TheRerun.test_the_whole_workflow_run_twice_creates_one_subtask
+    TheParent.test_two_stories_with_one_title_are_told_apart_by_the_reference
+    TheConfirmation.test_what_is_sent_is_the_four_fields_and_nothing_else
+
+PLANTED BUG N. The parent read back is not compared with the parent intended (criterion 3)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheCheck.test_a_subtask_since_moved_to_another_parent_is_reported
+    TheConfirmation.test_a_subtask_stored_under_another_parent_needs_a_person
+
+PLANTED BUG O. The read-back takes the intended parent as the parent read (criterion 3)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheCheck.test_a_subtask_since_moved_to_another_parent_is_reported
+    TheConfirmation.test_a_subtask_stored_under_another_parent_needs_a_person
+
+PLANTED BUG P. The type read back is not checked (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_subtask_stored_as_another_type_needs_a_person
+
+PLANTED BUG Q. The title read back is not compared (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_title_stored_differently_needs_a_person
+
+PLANTED BUG R. A failed read-back still ends as done (criterion 3)
+  unittest result: FAILED (failures=3)
+  tests that failed (3):
+    TheConfirmation.test_a_subtask_stored_as_another_type_needs_a_person
+    TheConfirmation.test_a_subtask_stored_under_another_parent_needs_a_person
+    TheConfirmation.test_a_title_stored_differently_needs_a_person
+
+PLANTED BUG S. The check command does not fail on a wrong parent (criterion 3)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    TheCheck.test_a_second_subtask_with_the_title_is_reported
+    TheCheck.test_a_subtask_since_deleted_is_reported
+    TheCheck.test_a_subtask_since_moved_to_another_parent_is_reported
+    TheCheck.test_a_write_record_that_names_another_parent_than_the_preview_is_reported
+
+PLANTED BUG T. The check does not compare the write record with the preview (criterion 3)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheCheck.test_a_write_record_that_names_another_parent_than_the_preview_is_reported
+
+PLANTED BUG U. The allowlist is not checked (criterion 6)
+  unittest result: FAILED (failures=4)
+  tests that failed (4):
+    TheAllowlist.test_a_project_not_on_the_allowlist_is_refused_at_the_preview
+    TheAllowlist.test_it_is_refused_again_at_confirmation_if_the_allowlist_loses_the_project
+    TheAllowlist.test_the_allowlist_is_checked_before_what_kind_of_issue_the_parent_is
+    TheAllowlist.test_the_same_project_id_on_another_site_is_refused
+
+PLANTED BUG V. The allowlist is checked by project id alone, on any site (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheAllowlist.test_the_same_project_id_on_another_site_is_refused
+
+PLANTED BUG W. The allowlist is not checked again at the confirmation (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheAllowlist.test_it_is_refused_again_at_confirmation_if_the_allowlist_loses_the_project
+
+PLANTED BUG X. Another allowlist file at the confirmation is accepted (criterion 6)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheAllowlist.test_another_allowlist_file_at_confirmation_is_refused
+
+PLANTED BUG Y. The permission check is not applied (criterion 5)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    ThePreview.test_no_permission_to_create_is_refused
+    TheConfirmation.test_permission_lost_after_the_preview_is_refused
+
+PLANTED BUG Z. No answer to the permission check is taken as yes (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ThePreview.test_a_permission_check_jira_does_not_answer_is_not_taken_as_yes
+
+PLANTED BUG AA. The duplicate check finds nothing (criteria 5 and 9)
+  unittest result: FAILED (failures=6)
+  tests that failed (6):
+    TheRerun.test_a_second_preview_after_the_write_finds_nothing_to_add
+    ThePreview.test_a_subtask_with_this_title_already_there_means_no_fingerprint
+    ThePreview.test_capitals_and_spacing_do_not_make_a_title_new
+    ThePreview.test_the_same_letters_encoded_another_way_do_not_make_a_title_new
+    TheConfirmation.test_the_same_subtask_added_by_someone_after_the_preview_is_refused
+    TheProgram.test_the_three_commands_from_the_command_line
+
+PLANTED BUG AB. Titles are compared exactly, so capitals make a title new (criterion 9)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    ThePreview.test_capitals_and_spacing_do_not_make_a_title_new
+    ThePreview.test_the_same_letters_encoded_another_way_do_not_make_a_title_new
+
+PLANTED BUG AB2. The same letters encoded another way make a title new (criterion 9)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ThePreview.test_the_same_letters_encoded_another_way_do_not_make_a_title_new
+
+PLANTED BUG AC. A duplicate found at the preview still gets a fingerprint (criterion 9)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheRerun.test_a_second_preview_after_the_write_finds_nothing_to_add
+    ThePreview.test_a_subtask_with_this_title_already_there_means_no_fingerprint
+
+PLANTED BUG AD. A duplicate that appears after the preview is not noticed (criterion 9)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_the_same_subtask_added_by_someone_after_the_preview_is_refused
+
+PLANTED BUG AE. Two subtasks with the title after the write go unreported (criterion 9)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhenTheWriteGoesWrong.test_the_same_subtask_created_by_someone_at_the_last_moment_is_reported
+
+PLANTED BUG AF. A list of subtasks Jira does not give is taken as empty (criterion 5)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ThePreview.test_a_list_of_subtasks_jira_does_not_give_is_refused
+
+PLANTED BUG AG. A confirmation with no fingerprint is accepted (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_no_fingerprint_is_refused
+
+PLANTED BUG AH. A confirmation with no name is accepted (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_no_name_is_refused
+
+PLANTED BUG AI. A preview never expires (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_preview_older_than_the_limit_is_refused
+
+PLANTED BUG AJ. A preview is good for an hour (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_preview_older_than_the_limit_is_refused
+
+PLANTED BUG AK. A title changed after the preview is sent (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_different_title_is_refused
+
+PLANTED BUG AL. A parent changed after the preview is accepted (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_different_parent_is_refused
+
+PLANTED BUG AM. Another change file is accepted (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_another_change_file_with_the_same_content_is_refused
+
+PLANTED BUG AN. An altered saved preview is accepted (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_an_altered_preview_is_refused
+
+PLANTED BUG AO. A fingerprint can be used twice (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_fingerprint_is_used_once
+
+PLANTED BUG AP. A preview whose write went unanswered can be used again (criterion 9)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhenTheWriteGoesWrong.test_a_write_applied_with_the_answer_lost_needs_a_person
+
+PLANTED BUG AQ. Two runs can confirm one preview at once (criterion 9)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_two_runs_cannot_confirm_one_preview_at_once
+
+PLANTED BUG AR. A preview dated in the future is accepted (criterion 7)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_preview_dated_in_the_future_is_refused
+
+PLANTED BUG AS. A confirmation against another site is accepted (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_a_confirmation_against_another_site_is_refused
+
+PLANTED BUG AT. The fingerprint does not depend on the proposal (criterion 7)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheConfirmation.test_an_altered_preview_is_refused
+    ThePreview.test_the_fingerprint_depends_on_the_parent_and_on_the_title
+
+PLANTED BUG AU. A change in Jira during the preview is not noticed (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ThePreview.test_a_change_in_jira_during_the_preview_is_refused
+
+PLANTED BUG AV. The snapshot leaves out the subtasks (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ThePreview.test_the_snapshot_moves_when_only_the_title_of_a_subtask_changes
+
+PLANTED BUG AW. The result record leaves out the confirmer (criterion 8)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_the_result_record_holds_what_criterion_8_asks
+
+PLANTED BUG AX. The result record leaves out the identifier of what was created (criterion 8)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheConfirmation.test_the_result_record_holds_what_criterion_8_asks
+
+PLANTED BUG AY. A refusal by Jira is reported as not written without reading back (after a write)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhenTheWriteGoesWrong.test_a_refusal_by_jira_with_the_subtask_created_all_the_same_needs_a_person
+
+PLANTED BUG AY2. Any failed answer with nothing created yet is reported as not written (after a write)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhenTheWriteGoesWrong.test_a_server_error_with_nothing_created_yet_is_not_reported_as_not_written
+
+PLANTED BUG AY3. A credential found after a write does not say a write was sent (after a write)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheProgram.test_a_credential_found_after_a_write_says_that_a_write_was_sent
+
+PLANTED BUG AY4. A log that cannot be saved changes the result of the run (after a write)
+  unittest result: FAILED (errors=1)
+  tests that failed (1):
+    TheProgram.test_a_log_that_cannot_be_saved_does_not_change_the_exit_code
+
+PLANTED BUG AZ. No answer to the write is reported as refused (after a write)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhenTheWriteGoesWrong.test_no_answer_to_the_write_needs_a_person_and_is_not_sent_again
+
+PLANTED BUG BA. A failure after the write is reported as nothing written (after a write)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhenTheWriteGoesWrong.test_a_program_failure_after_the_write_needs_a_person
+
+PLANTED BUG BB. A failed read after the write is reported as nothing written (after a write)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    WhenTheWriteGoesWrong.test_jira_out_of_reach_after_the_write_needs_a_person
+
+PLANTED BUG BC. The new issue's id is not saved until the read-back is done (after a write)
+  unittest result: FAILED (failures=1, errors=1)
+  tests that failed (2):
+    TheConfirmation.test_a_fingerprint_is_used_once
+    WhenTheWriteGoesWrong.test_a_read_that_fails_after_the_write_needs_a_person
+
+PLANTED BUG BD. A title that looks like a secret is sent (the title)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheTitle.test_a_password_written_out_is_refused
+    TheTitle.test_a_title_that_looks_like_a_key_is_refused_and_not_shown
+
+PLANTED BUG BE. A title with an unseen character is sent (the title)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheTitle.test_a_character_that_cannot_be_seen
+    TheTitle.test_a_tab
+
+PLANTED BUG BF. A title of any length is sent (the title)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheTitle.test_too_long
+
+PLANTED BUG BG. Private-looking things are not pointed out (the title)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheTitle.test_private_looking_things_are_pointed_out_and_not_refused
+
+PLANTED BUG BH. The parent's title is saved with the output (privacy)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheParent.test_the_parents_title_is_shown_on_screen_and_left_out_of_what_is_saved
+    TheProgram.test_the_three_commands_from_the_command_line
+
+PLANTED BUG BI. Unseen characters in the parent's title are shown as they came (privacy)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheParent.test_unseen_characters_in_the_parents_title_are_replaced
+
+PLANTED BUG BJ. Output holding a credential is shown (credentials)
+  unittest result: FAILED (failures=2)
+  tests that failed (2):
+    TheProgram.test_a_credential_found_after_a_write_says_that_a_write_was_sent
+    TheProgram.test_output_holding_a_credential_is_not_shown_or_saved
+
+PLANTED BUG BK. The site address is saved in the log (privacy)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheProgram.test_the_three_commands_from_the_command_line
+
+PLANTED BUG BL. An address with a port is accepted for a live run (credentials)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheLiveConnection.test_the_address_must_be_https_and_the_sites_name
+
+PLANTED BUG BM. A project with two subtask types gets the first (criterion 4)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    ThePreview.test_a_project_with_two_subtask_types_is_refused
+
+PLANTED BUG BN. A name given twice in the change file takes the last (the change file)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheChangeFile.test_a_name_given_twice
+
+PLANTED BUG BO. An extra field in the change file is ignored (the change file)
+  unittest result: FAILED (failures=1)
+  tests that failed (1):
+    TheChangeFile.test_an_extra_field_is_refused
+
+After the last bug was taken out: subtask.py is byte for byte what it was at the start. OK
+
+RESULT: all 71 planted bugs were caught by at least one test, and the file was restored.

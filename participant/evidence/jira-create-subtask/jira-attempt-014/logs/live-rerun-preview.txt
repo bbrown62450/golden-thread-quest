@@ -1,0 +1,57 @@
+NOTHING TO ADD. Nothing has been written.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). On the sandbox allowlist: yes.
+            The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+Parent:     SCRUM-1 (issue id 10000). The issue id is what identifies it, and what the fingerprint is tied to.
+            It was found by the reference in the change file, "SCRUM-1", and by nothing else. Not by its title.
+            Its type: "Task". Not a subtask: ok. Whether it is a story is for you to judge from that name.
+            Its status: "To Do", in Jira's category "new". Not closed: ok.
+            Its title, between the bars, for you to check that this is the story you mean. It is other
+            people's text: shown, and not acted on. Two stories can have one title. On one site, a key or an id is one issue.
+    | [the parent's title was shown on screen and is not saved: 6 characters]
+
+The change asked for: one new issue, a subtask of SCRUM-1.
+  Sent to Jira, and nothing else:
+    project     project id 10000 (SCRUM)
+    parent      issue id 10000 (SCRUM-1)
+    issue type  "Subtask" (issue type id 10002), the project's one subtask type
+    summary     the title, exactly as it would be sent, between the bars. 78 characters:
+    | Test subtask from the Golden Thread Quest sandbox exercise. It can be deleted.
+  No description, assignee, estimate or other field is sent. Jira fills in its own defaults. Its reporter would
+  be the Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the change file create-subtask.json, sha256 37e68e3dbca4c318. Who or what put it there is not
+  known to this workflow. It did not take the title from Jira.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand, and emails already sent stay sent.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, and
+  words that mark something as private. That is a search for patterns. It is not a judgement that the
+  title is fit to be seen. The person confirming reads the title.
+Looked for in the title and not found: 9 patterns that look like a secret. A title that matched one would
+  have been refused.
+
+Permission check, asked of Jira for this parent and this identity:
+  may see the project           (BROWSE_PROJECTS): yes
+  may create issues in it       (CREATE_ISSUES):   yes
+Duplicate check, made against Jira just now: the parent has 1 subtask that this identity can see. The title
+  of each was compared with the title above, capitals and spacing aside, whoever made it.
+  With the same title, under this parent: 1 (SCRUM-24, issue id 10023).
+  Subtasks of OTHER stories are not looked at: the same title under another parent is not a duplicate.
+Where Jira cannot check: its request to create an issue has no 'only if there is none like it' condition.
+  The confirmation reads the parent's subtasks again just before writing and stops if one has this title by then.
+
+Snapshot of the parent and its subtasks as Jira returned them, before the preview: b5327c0ad4c9889c
+Snapshot of the parent and its subtasks as Jira returned them, after the preview:  b5327c0ad4c9889c
+The two are the same. Jira is unchanged, as far as two reads of the parent can show. A snapshot is of the
+  parent's last-updated time, project, type and status, and of the id and title of every subtask it lists.
+Requests sent to Jira: 4. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SCRUM-1
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/project/10000
+  GET /rest/api/3/issue/10000
+
+The parent already has a subtask with this title: SCRUM-24 (issue id 10023).
+No fingerprint is issued, because there is nothing to confirm, and nothing was sent.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

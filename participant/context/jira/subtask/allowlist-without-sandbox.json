@@ -1,0 +1,4 @@
+{
+  "about": "An allowlist that lists no project. Used once, to see the workflow refuse the sandbox project when it is not listed.",
+  "sandbox_projects": []
+}

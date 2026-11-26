@@ -1,0 +1,124 @@
+Independent reads of the subtask workflow and of its evidence. jira-create-subtask, attempt jira-attempt-014
+Copied by hand, and shortened, from the readers' replies by the assistant that built this quest. No program wrote this file.
+
+Who the readers were: two separate AI assistants (Claude), each started fresh. No person read the work. Each was given a
+copy of the files and told to read only those, to run nothing, to write nothing and to contact nothing. Those limits were
+given in words and not enforced. Neither saw the other's reply.
+
+  Reader 1   BEFORE any real run. Given the first workflow, the fake Jira and one preview against the fake. Asked, as
+             someone who knew a real subtask was about to be created, for any path that could write without a valid
+             confirmation, or under another parent, and for anything the fake would hide about the real Jira.
+  Reader 2   AFTER the real runs. Given the workflow as it ran, the rules document, the script that made the records,
+             the four records and the result record. Asked whether the real output is consistent with itself, whether it
+             shows each criterion, whether anything is unredacted, and where a check claims more than it tests.
+
+==============================================================================
+READER 1, before the real run (124 tests and 67 planted bugs passing at the time)
+
+Its verdict: "I found no path that sends the POST without passing the confirm checks, and none where parent id, project
+id or title sent differ from the saved preview."
+  What it found:
+  - MOST SERIOUS. Any failed answer to the write, with the parent read back unchanged, was reported as "nothing was
+    written". If Jira's edge answered 502 while the create was still under way, the subtask would appear seconds later,
+    and a new preview made in between would lead to a duplicate.
+  - A log that could not be saved after a write gave a traceback and exit code 1, which means "nothing written".
+  - A run stopped from the keyboard after the write prints nothing.
+  - An answer of 201 with no usable id did not name the subtask it then found under the parent.
+  - A credential found in the output after a write stopped the output without saying that a write had been sent.
+  - The saved previews are plain files with no secret behind them. Anyone who can write the state folder, "including
+    the agent running it", could make a preview no person saw. It could not change the target beyond what the change
+    file and the allowlist permit. Copying a preview to another state folder gives a second unused copy.
+  - The allowlist is whatever file is given. The program knows "listed", not "sandbox".
+  - The duplicate check did not treat the same letters encoded two ways as one title, and ignores punctuation. The
+    parent's security level was asked for and never used.
+  - Against real Jira: the shapes "match the published spec as far as I know. Fairly sure; every mismatch refuses."
+    Required fields are not modelled. The parent is not required to be a Story. Just after a create, a read may not
+    yet show the subtask, which would be a loud false alarm. Whether the list of subtasks is ever cut short it did not
+    know.
+  - Wording: "the key and the id cannot repeat" is true on one site only.
+
+WHAT WAS CHANGED AFTER READER 1, BEFORE ANYTHING WAS RUN AGAINST REAL JIRA
+  Only the answers 400, 401, 403 and 404, with the parent's subtasks unchanged, are reported as nothing written. Any
+  other failed answer ends with "A PERSON NEEDS TO LOOK", and says Jira may still be creating the subtask. A log that
+  cannot be saved no longer changes the exit code. A subtask found after an answer with no id is named. A credential
+  found after a write says that a write was sent. Titles are compared with the encoding of letters set aside. The
+  security level is no longer asked for. The preview says the type is for the person to judge, and that a key or an
+  id is one issue on one site.
+  Tests went from 124 to 130. Planted bugs went from 67 to 71. Each change has a test.
+  NOT CHANGED, and written into the rules: a run stopped from the keyboard; previews with no secret behind them; the
+  allowlist being whatever file is given; the false alarm when Jira is slow; punctuation in titles; whether the list of
+  subtasks can be cut short.
+
+==============================================================================
+READER 2, after the real runs (130 tests and 71 planted bugs passing)
+
+The real output, checked against itself. "Nothing contradictory found." It found these to agree:
+  - The site fingerprint, the allowlist's checksum, the parent SCRUM-1 with issue id 10000, the subtask SCRUM-24 with
+    issue id 10023 and the issue type id, in every block and in the result record.
+  - The two fingerprints: the first preview's, and the second's, which is the one in the confirmation, the parent
+    check, the refused re-use and the result record.
+  - Times: made 02:11:33, confirmed 02:11:51, written 02:11:54, expiry 02:26:33.
+  - The title: 78 characters by its own count, with the checksum's first characters matching the full checksum.
+  - Counts: 0 subtasks at both previews and just before the write. 1 at the read-back, the parent check and the rerun.
+  - Snapshots: one code in both previews, and another in the rerun, "so it changed after the write".
+  - The result record equals the block the run printed, line for line.
+  Redaction: "No site address, email, account id, personal name, token or home-folder path found by reading and by
+  search." Unsure of: the site fingerprint, which a guessed name could confirm; and "6 characters", which is the
+  length of the parent's title.
+
+By criterion, from the real output alone:
+   1  parent by identifier                 PARTLY. The key and the id are shown and the read by key is listed. "Not by
+                                           title" is the program's own sentence. Two stories with one title, and a title
+                                           given as a reference, are on the fake only
+   2  missing parent, subtask as parent    HOLDS, on the saved text. The exit codes are on the fake only
+   3  parent read back and matching        HOLDS. All of it is printed by the program. There is no other view of Jira
+   4  preview, nothing written             PARTLY. The site is a marker in what is saved. "Nothing written" rests on the
+                                           program's list of requests and its snapshots. That a person read the preview
+                                           is not shown: 18 seconds passed before the confirmation
+   5  permission and duplicate checks      HOLDS
+   6  allowlist only                       PARTLY. The real refusal was made by giving an allowlist that lists nothing.
+                                           No other real project was tried
+   7  fingerprint, refusals, expiry        PARTLY. Missing and differing were refused on the real site. Expiry was shown
+                                           only with the test clock
+   8  result record                        HOLDS. The confirmer is the words "the participant", which nothing checks
+   9  no duplicate on a second run         HOLDS. The limit is stated
+
+What it found wrong with the records, as they then stood:
+  - The four real refusals that need no preview carry no time and no fingerprint. Nothing in them ties them to this
+    attempt or to the order stated. The order is text the script prints.
+  - The real confirmation lists no requests, so the write itself is never shown as a request.
+  - The parent's issue id and the project's id are both 10000, so a mix-up between them would not show in this run.
+  - Checks whose labels said more than they tested: "it shows the parent with its key and its issue id" looked for the
+    word "Parent:". "The parent's own list holds the subtask" looked for words that are there whether the line ends
+    yes or NO. "It says it writes nothing" looked for a heading. Five more of the same kind. A dead branch in the
+    refusal check. The count of requests was printed and not compared. Two cross-checks were skipped silently if a
+    file was missing.
+  - THE REAL PARENT IS A TASK, NOT A STORY. The workflow never requires a story, and its messages and the heading of its
+    result record say "story". This was not stated anywhere.
+  - The rules document: `check` exits with 1 when the subtask is not as previewed, and the document said 1 means refused.
+    A one-word title is not refused before Jira is asked: it is asked as a key. The result record is saved before the
+    credential search. Several small rules in the code were not described.
+
+WHAT WAS CHANGED AFTER READER 2, AND NOT READ AGAIN
+  The checks it named now test what their labels say: the parent line by its pattern, the four fields that are sent,
+  "yes" at the end of the line about the parent's list, the same id on both sides of the read-back line, the count of
+  requests against the number listed. The dead branch is gone. A missing file now fails a check. The records went
+  from 150 checks to 144, because doubled ones were merged.
+  The rules document was corrected in each place it named, and now says that the real parent was a Task.
+  THE WORKFLOW ITSELF WAS NOT CHANGED after the real runs, so that the real output and the code agree. Its sha256 is in
+  PROOF.md. So its messages still say "story", and its confirmation still lists no requests.
+
+  NOT DONE: no real run against a Story. No real refusal aimed at another project. No real preview left to expire. No
+  real closed parent, and no real failure after a write. Those are on the fake only.
+
+==============================================================================
+SUMMARY
+  Could it have created the subtask under the wrong parent? Reader 1 traced the paths and found none.
+  Is the real evidence consistent with itself? Reader 2 checked each fingerprint, id, time, count and checksum across
+  the files and found them to agree.
+  Is anything real left unredacted? Reader 2 found nothing, and listed two things it was unsure of.
+  Was the workflow right before the real run? Not wholly. Reader 1 found that a server error could be reported as
+  nothing written, and that was corrected first.
+  Did the checks say more than they tested? Some did. They were corrected after reader 2.
+  Did a person read the preview before confirming? Nothing in the files can show that.
+  A person has not read any of this.

@@ -1,0 +1,23 @@
+PARENT CHECK for the write of preview 9716e0540ced. Nothing is written by this command.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Subtask:    SCRUM-24 (issue id 10023), the identifiers Jira gave when it was created.
+Parent intended, as the preview showed it: SCRUM-1 (issue id 10000).
+Parent read back from the subtask just now: issue id 10000.
+
+  its parent, read back, is issue id 10000. The parent intended is issue id 10000 (SCRUM-1). They are the same: yes
+  its issue type, read back, is a subtask type (issue type id 10002): yes
+  its title, read back, is the title previewed, character for character (78 characters, sha256 21e2fccb9b8fc04d): yes
+  its project, read back, is project id 10000, the parent's: yes
+  the parent's own list of its 1 subtasks holds issue id 10023: yes
+  the parent the write recorded is the parent the preview showed (issue id 10000): yes
+  subtasks of this parent with this title: 1
+
+Requests sent to Jira: 2. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/10023
+  GET /rest/api/3/issue/10000
+
+FOUND: the subtask is under the parent intended.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

@@ -1,0 +1,6 @@
+
+REFUSED: Jira answered 404 for the parent. It does not exist, or this identity is not permitted to see it. Jira gives one answer for both.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

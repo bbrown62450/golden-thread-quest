@@ -654,4 +654,13 @@ attempts:
   evidence_path: participant/evidence/playwright-tagging/playwright-attempt-009
   submission_id: submission-20261126011109-cac4f5
   review_id: review-20261126012253-8a696f
-updated_at: '2026-11-26T01:22:53Z'
+- attempt_id: jira-attempt-014
+  quest_id: jira-create-subtask
+  quest_version: 1
+  content_hash: sha256:d2616bff2abde11c1a16c9dd877143492d00849d51070b74b24bd0ebda2a5c25
+  state: submitted
+  started_at: '2026-11-26T01:53:39Z'
+  updated_at: '2026-11-26T02:28:23Z'
+  evidence_path: participant/evidence/jira-create-subtask/jira-attempt-014
+  submission_id: submission-20261126022823-cd4b44
+updated_at: '2026-11-26T02:28:23Z'

@@ -1,0 +1,47 @@
+CONFIRMATION for preview 9716e0540ced, given by: the participant (the name given with the confirmation).
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). On the sandbox allowlist: yes.
+            The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+Parent:     SCRUM-1 (issue id 10000). The issue id is what identifies it, and what the fingerprint is tied to.
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  the saved preview is unaltered and has not been used: ok
+  the change file asks for exactly what the preview showed: ok
+  the reference in the change file still leads to issue id 10000: ok
+  the project is on the sandbox allowlist for this site: ok
+  the parent is not a subtask and is not closed: ok
+  Jira says this identity may create issues in the project: ok
+  the parent's 0 subtasks, read just before the write, hold none with this title: ok
+
+WRITTEN to Jira: one subtask, SCRUM-24 (issue id 10023), under parent SCRUM-1. Jira answered 201.
+The confirmation and the write happened in this one run of the command.
+
+Read back from Jira after the write, by that issue id:
+  its parent, read back, is issue id 10000. The parent intended is issue id 10000 (SCRUM-1). They are the same: yes
+  its issue type, read back, is a subtask type (issue type id 10002): yes
+  its title, read back, is the title previewed, character for character (78 characters, sha256 21e2fccb9b8fc04d): yes
+  its project, read back, is project id 10000, the parent's: yes
+  the parent's own list of its 1 subtasks, read again, holds issue id 10023: yes
+  subtasks of this parent with this title, counted after the write: 1
+
+RESULT RECORD
+  Issue key: SCRUM-24, the subtask that was created
+  Identifier of what was created: Jira issue id 10023
+  Parent intended: SCRUM-1, issue id 10000 (the id identifies it; a key can change)
+  Parent read back from the subtask after the write: issue id 10000, the same
+  Target project: SCRUM (project id 10000), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 4aabe3d08fbad6b1
+  Issue type: "Subtask" (issue type id 10002)
+  Title: 78 characters, sha256 21e2fccb9b8fc04df19aa29052562949af730af6f6c7c418bc837107571eb9c7, from the change file create-subtask.json (file sha256 37e68e3dbca4c3185c8d582ad8f821c6799af99c904afc7bd1c25cef654f48a3)
+  Read back after the write: as previewed: same parent, a subtask, same title, same project, and listed by the parent
+  Written at: 2026-11-26 02:11:54 UTC
+  Confirmed by: the participant, at 2026-11-26 02:11:51 UTC
+  Preview: fingerprint 9716e0540ced, made 2026-11-26 02:11:33 UTC
+  To reverse: delete SCRUM-24 in Jira, by hand. This workflow does not delete. Emails Jira sent about it cannot be taken back
+
+The result record was also saved as Markdown where --result said.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
