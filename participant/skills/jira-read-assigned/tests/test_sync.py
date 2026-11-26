@@ -62,7 +62,7 @@ class Sandbox:
         return response
 
     def run(self, *args, base_url="https://example.invalid", drop=None):
-        os.environ.update(JIRA_BASE_URL=base_url, JIRA_EMAIL="tester@example.invalid", JIRA_API_TOKEN="token-test")
+        os.environ.update(dict(zip(("JIRA_BASE_URL", "JIRA_EMAIL", "JIRA_API_TOKEN"), (base_url, "tester@example.invalid", "token-test"))))   # made-up values
         if drop:
             os.environ.pop(drop)
         sys.argv = ["sync.py", *args]

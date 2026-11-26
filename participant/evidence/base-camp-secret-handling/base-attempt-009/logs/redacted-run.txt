@@ -1,0 +1,115 @@
+A command that uses a credential, with the value masked. base-camp-secret-handling, attempt base-attempt-009
+Recorded by scripts/record_evidence.py. Each block between dashed lines is what a command printed.
+Every credential in these runs is made up and built when the script runs. None is written in this record.
+A block shows what the command wrote to standard output, and after it what it wrote to standard error.
+
+The credential is set in the environment of each command by this script, as a person would set it for a session.
+It is the fake token: "ghp_" and then the word "example" repeated to 36 characters. 40 characters in all.
+It is never on a command line, except in part 5, where that mistake is made on purpose. The script puts it in the
+environment of the process it starts. Where a command line below held it, it is written as <the fake token>.
+
+==============================================================================
+1. ORDINARY USE
+$ python3 participant/tools/use_credential.py call        (GTQ_DEMO_TOKEN holds the fake token)
+------------------------------------------------------------------------------
+Credential: read from the environment variable GTQ_DEMO_TOKEN. Its value: [REDACTED] (40 characters)
+            It was not given on the command line and was not read from a file.
+The made-up service accepted the credential: status 200, signed in as demo-user, 3 items.
+------------------------------------------------------------------------------
+exit status: 0
+  ok   criterion 1: the command says the credential came from the environment variable, and not from the command line or a file
+  ok   criterion 3: where the value would be, the output has [REDACTED]
+  ok   the command did use it: the made-up service accepted it
+
+==============================================================================
+2. A DEBUGGING SWITCH that prints the request and its headers
+$ python3 participant/tools/use_credential.py call --verbose        (GTQ_DEMO_TOKEN holds the fake token)
+------------------------------------------------------------------------------
+Credential: read from the environment variable GTQ_DEMO_TOKEN. Its value: [REDACTED] (40 characters)
+            It was not given on the command line and was not read from a file.
+Request, as a debugging switch would print it:
+  GET https://service.example.invalid/items?access_token=[REDACTED]
+  Accept: application/json
+  Authorization: Bearer [REDACTED]
+  The same credential as a Basic sign-in header would hold it: Basic [REDACTED]
+The made-up service accepted the credential: status 200, signed in as demo-user, 3 items.
+------------------------------------------------------------------------------
+exit status: 0
+  ok   criterion 3: the credential is masked in the web address, in the Authorization header, and in its base64 form
+
+==============================================================================
+3. AN ERROR MESSAGE. The made-up service refuses the credential, and repeats in its error what it was sent
+$ python3 participant/tools/use_credential.py call --rejected        (GTQ_DEMO_TOKEN holds the fake token)
+------------------------------------------------------------------------------
+Credential: read from the environment variable GTQ_DEMO_TOKEN. Its value: [REDACTED] (40 characters)
+            It was not given on the command line and was not read from a file.
+THE SERVICE REFUSED (status 401). Its own words, which repeat what it was sent: the credential in the header 'Bearer [REDACTED]' is not valid for /items
+------------------------------------------------------------------------------
+exit status: 1
+  ok   criterion 2: the service's error, which holds the credential, reaches the output with it masked
+  ok   and the mask is what did it: asked directly, without the mask, the service's error does hold the value (compared here, not printed)
+
+==============================================================================
+4. A CRASH. The program fails with an error whose message holds the credential
+$ python3 participant/tools/use_credential.py call --crash        (GTQ_DEMO_TOKEN holds the fake token)
+------------------------------------------------------------------------------
+Credential: read from the environment variable GTQ_DEMO_TOKEN. Its value: [REDACTED] (40 characters)
+            It was not given on the command line and was not read from a file.
+THE PROGRAM FAILED. What Python reported, with the credential masked:
+  Traceback (most recent call last):
+    File "REPO/participant/tools/use_credential.py", line 238, in main
+      return cmd_call(args, value) if args.command == "call" else cmd_scan(args)
+    File "REPO/participant/tools/use_credential.py", line 174, in cmd_call
+      raise RuntimeError("could not read the reply to the request made with %s" % headers["Authorization"])
+  RuntimeError: could not read the reply to the request made with Bearer [REDACTED]
+------------------------------------------------------------------------------
+exit status: 3
+  ok   criterion 2: Python's own report of the error is printed with the credential masked
+
+==============================================================================
+5. WHERE THE CREDENTIAL MAY COME FROM
+$ python3 participant/tools/use_credential.py call        (the variable is not set)
+------------------------------------------------------------------------------
+REFUSED: the environment variable GTQ_DEMO_TOKEN is not set. A credential comes from the environment, set by hand
+for the session. It is never given on the command line and never read from a file.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   criterion 1: with the variable not set, the command refuses
+
+The mistake the policy forbids, made on purpose: the fake token typed on the command line. A program's usual complaint
+about a command it does not understand repeats what was typed. This one must not.
+$ python3 participant/tools/use_credential.py call --token <the fake token>        (the variable is not set)
+------------------------------------------------------------------------------
+REFUSED: the command line was not understood. What was typed is not repeated here, in case part of it was a
+credential. A credential is never given on the command line. Run with --help to see what is accepted.
+------------------------------------------------------------------------------
+exit status: 2
+  ok   criterion 1: there is no option to give it on the command line: the command is refused, with status 2
+  ok   criterion 2: the refusal does not repeat what was typed: the fake token is nowhere in what was printed
+$ python3 participant/tools/use_credential.py call --token <the fake token>        (GTQ_DEMO_TOKEN holds the fake token)
+------------------------------------------------------------------------------
+REFUSED: the command line was not understood. What was typed is not repeated here, in case part of it was a
+credential. A credential is never given on the command line. Run with --help to see what is accepted.
+------------------------------------------------------------------------------
+exit status: 2
+  ok   criterion 1: there is no option to give it on the command line: the command is refused, with status 2
+  ok   criterion 2: the refusal does not repeat what was typed: the fake token is nowhere in what was printed
+$ python3 participant/tools/use_credential.py call --verbose        (GTQ_DEMO_TOKEN holds a value without the word example)
+------------------------------------------------------------------------------
+REFUSED: the value of GTQ_DEMO_TOKEN does not contain the word "example". This demonstration takes a made-up value
+only, so that a real credential is never put through it. Nothing was done with the value.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   a value that is not plainly made up is refused before it is used, and is not shown
+
+==============================================================================
+6. THIS RECORD, SCANNED
+$ python tools/secret_scan.py TEMP/record-so-far.txt
+------------------------------------------------------------------------------
+secret-scan: 1 files scanned, 0 finding(s)
+------------------------------------------------------------------------------
+exit status: 0
+  ok   criterion 6: the program's scanner finds nothing in the text of this record so far
+  ok   this record itself holds none of the made-up credentials, in any of the forms they were used in
+
+RESULT: ALL CHECKS PASSED. 15 checks.

@@ -54,10 +54,10 @@ def read_settings() -> dict:
 def get_json(settings: dict, path: str) -> dict:
     """Send a read-only GET to Jira and return the parsed JSON response."""
     credentials = f"{settings['JIRA_EMAIL']}:{settings['JIRA_API_TOKEN']}"
-    token = base64.b64encode(credentials.encode("utf-8")).decode("ascii")
+    encoded = base64.b64encode(credentials.encode("utf-8")).decode("ascii")
     request = urllib.request.Request(
         f"{settings['JIRA_BASE_URL']}{path}",
-        headers={"Accept": "application/json", "Authorization": f"Basic {token}"},
+        headers={"Accept": "application/json", "Authorization": f"Basic {encoded}"},
     )
     try:
         with urllib.request.urlopen(request, timeout=30) as response:

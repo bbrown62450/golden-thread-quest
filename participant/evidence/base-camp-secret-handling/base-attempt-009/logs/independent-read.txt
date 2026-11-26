@@ -1,0 +1,84 @@
+Independent reads. base-camp-secret-handling, attempt base-attempt-009
+Written by hand, not by a script.
+
+WHO READ IT
+Two readers. BOTH WERE AI: fresh AI assistants started for this one job, with no knowledge of how the work was made.
+No person has read this work before hand-in. Each was given only a copy of the files, in a folder outside the
+repository, and was told in words to read only those files, to run nothing and to write nothing. Those limits were
+asked for. They were not enforced by anything.
+
+The first version of everything was finished before either reply was read.
+
+READER 1 was given the policy only, and ten made-up situations to answer from it, as someone who had never seen the
+project. It was asked where the policy left it unsure.
+
+READER 2 was given the tool, its tests, the commit hook, the recording script and the three records. It was asked to
+find a way a credential could reach the output, and anything the records claimed that the files did not show.
+
+WHAT READER 2 FOUND, AND WHAT WAS DONE
+
+ 1. SERIOUS. A credential typed on the command line was printed back. The tool had no option that takes a
+    credential, so `call --token VALUE` was refused. But the refusal was Python's ordinary one, which repeats what
+    it did not understand, value included. No mask could catch it: the tool had never been told that value.
+    AND THE RECORD HID IT. The recording script changed that one line of the saved output, replacing the fake value
+    with the words "<the fake token>", so the record looked clean. That was my doing and it was wrong: a record
+    that is edited to look right is not a record.
+    DONE: the tool now never repeats a command line it does not understand. The line in the script that edited the
+    record is deleted. The record now checks, on the output exactly as printed, that the value is absent, with the
+    variable set and not set. Three planted bugs cover it.
+ 2. The mask worked only when the file was run as a script. Used from another program, a failure went out unmasked.
+    DONE: the tool's main function reports its own failures through the mask. One test and one planted bug.
+ 3. The value was written down for masking only after the command line was read.
+    DONE: it is the first thing done.
+ 4. The mask can give a value away by what is missing, if the value is a piece of ordinary text.
+    DONE IN PART: a value shorter than 20 characters is refused and never masked. The rest is stated as a limit.
+ 5. The commit hook did not look at renamed files.            DONE, and shown in logs/pre-commit.txt part 5.
+ 6. The hook could take a file name beginning with a dash for an option, and cut a name at a space.
+                                                              DONE, and shown in part 6.
+ 7. The hook scanned the file on disk, not the staged copy that would be committed.
+                                                              DONE, and shown in part 4.
+ 8. The hook said "blocked: a credential was found" when the scan had not run at all.
+                                                              DONE: a different message. Shown in part 7.
+ 9. "The whole repository" was narrower than it sounded: new files were scanned only under participant/, and the
+    record did not name them.
+    DONE: every file Git does not track or ignore, in the whole repository, listed by name. What is still not
+    scanned is said in the record: ignored files, history, other branches, commit messages, pictures.
+10. The second pattern was never run over the repository, and its misses and false alarms were not shown.
+    DONE: it is run over every tracked file. It reports one place, in the program's own tests of its scanner, which
+    is a made-up value and not a credential. That false alarm is left in the record as it is. Its misses (capitals,
+    name on another line, key cut in two) and a second false alarm (a checksum) are shown in logs/leak-scan.txt 4c.
+11. The records were checked before their last lines were written, not as saved.
+    DONE: logs/records-scan.txt reads the three finished files back and scans them.
+12. The command lines in the record showed `NAME=<value> command`, the very form the policy forbids.
+    DONE: the record now says the variable is set in the environment of the process, which is what happens.
+
+WHAT READER 1 FOUND, AND WHAT WAS DONE (all in participant/context/secret-handling.md)
+
+ 1. A line under "Checking this policy" gave a command that scans a folder. I then confirmed that the program's
+    scanner, given a folder, scans no file and passes. The policy was recommending a check that cannot fail.
+    DONE: the line is corrected, and the trap is in the list of what the scan does not see.
+ 2. "Two ways only" and "from nowhere else" disagreed with the .env exception.     DONE: one exception, named as one.
+ 3. Leak step 1 said "do not commit" and step 5 said "commit that".                 DONE: reworded.
+ 4. Nothing about terminal scrollback, or a chat with a person.                     DONE: both added.
+ 5. An exported variable can be read by every program in that terminal, the agent included.
+    DONE: credentials are exported only in a terminal the agent does not run commands in. Stated as a rule I keep,
+    not a lock.
+ 6. "The AI agent never holds a credential" was not true of this pilot.             DONE: said as it is.
+ 7. The leak steps had no deadline, no check that the old value is dead, nothing about other credentials leaked
+    alongside, nothing on removing a chat message or screenshot, no place for the record, and "tell the program
+    owner" meant telling myself.                                                    DONE: all six.
+ 8. "What programs here do" claimed more than was checked.     DONE: it now describes the demonstration tool only.
+ 9. Limits of the scan that were missing: files that are not text, ignored files, other branches, commit messages,
+    that CI runs after the push, that the second pattern is not in CI.              DONE.
+10. Words used without saying what they mean.                                       DONE: a short list at the top.
+11. The two Trello items were written up as if closed.         DONE: marked "not closed", with the open steps named.
+
+WHAT WAS FOUND IN ADDITION, AFTER THE READS
+The planted-bug run first caught 25 of 27. The two it missed were real gaps in the tests: for the test's value the
+two kinds of base64 give the same text, so one hid the absence of the other. A test with a value where they differ
+was added. 27 of 27 are caught now.
+
+WHAT HAS NOT BEEN RE-READ
+Neither reader has seen the corrected version. Nobody independent has read: the rewritten tool, the rewritten hook,
+the rewritten policy, the new records, the planted-bug script, or PROOF.md. The claim that each finding is fixed is
+mine, checked by the tests, the planted bugs and the records, and by no second reader.

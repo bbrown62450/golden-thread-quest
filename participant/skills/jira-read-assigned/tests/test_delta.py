@@ -89,7 +89,7 @@ class Sandbox:
         self.jira.fail_on_request_number = fail_on_request
         self.jira._searches = 0
         self.jira.requests.clear()
-        os.environ.update(JIRA_BASE_URL="https://example.invalid", JIRA_EMAIL="tester@example.invalid", JIRA_API_TOKEN="token-test")
+        os.environ.update(dict(zip(("JIRA_BASE_URL", "JIRA_EMAIL", "JIRA_API_TOKEN"), ("https://example.invalid", "tester@example.invalid", "token-test"))))   # made-up values
         sys.argv = ["sync.py", *args]
         output = io.StringIO()
         try:

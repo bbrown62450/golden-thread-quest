@@ -1,0 +1,167 @@
+A planted credential, found by the scan. base-camp-secret-handling, attempt base-attempt-009
+Recorded by scripts/record_evidence.py. Each block between dashed lines is what a command printed.
+Every credential in these runs is made up and built when the script runs. None is written in this record.
+A block shows what the command wrote to standard output, and after it what it wrote to standard error.
+
+
+==============================================================================
+1. THE FAKE TOKEN, PLANTED IN A FILE
+A settings file is written to TEMP/project/service-config.txt, outside the repository. Its third line is the careless
+one: the fake token pasted in "just to test". The file's four lines, with the value left out here:
+
+    # settings for the made-up service
+    base_url = https://service.example.invalid
+    api_token = <the fake token, 40 characters>
+    timeout_seconds = 30
+
+$ python tools/secret_scan.py TEMP/project/service-config.txt
+------------------------------------------------------------------------------
+TEMP/project/service-config.txt:3:13: [github-token] GitHub token — ghp… (40 chars)
+secret-scan: 1 files scanned, 1 finding(s)
+------------------------------------------------------------------------------
+exit status: 1
+  ok   criterion 4: the scan finds the planted credential and exits with a failure status (1)
+  ok   it says where, by file, line and column, and which pattern: a GitHub token
+  ok   it does not print the value: it shows the first three characters and the length
+
+==============================================================================
+2. THE SAME SCAN AFTER THE LINE IS TAKEN OUT
+$ python tools/secret_scan.py TEMP/project/service-config.txt
+------------------------------------------------------------------------------
+secret-scan: 1 files scanned, 0 finding(s)
+------------------------------------------------------------------------------
+exit status: 0
+  ok   the same scan of the same file passes: exit status 0, no finding
+
+==============================================================================
+3. THE WHOLE REPOSITORY
+With no path, the scanner looks at every file Git tracks in the repository.
+$ python tools/secret_scan.py 
+------------------------------------------------------------------------------
+secret-scan: 2785 files scanned, 0 finding(s)
+------------------------------------------------------------------------------
+exit status: 0
+  ok   a scan of the whole repository is clean: 2785 tracked files, no finding, exit status 0
+
+Git does not track a new file until it is added, so the scan above did not look at files that are not committed yet.
+Every such file in the whole repository, that Git does not ignore, is scanned here by name: 19 files.
+0 pictures among them are left out: a scan of text cannot read a picture.
+
+    participant/context/secret-handling.md
+    participant/evidence/base-camp-secret-handling/attempt-001/PROOF.md
+    participant/evidence/base-camp-secret-handling/attempt-001/README.md
+    participant/evidence/base-camp-secret-handling/attempt-001/logs/leak-scan.txt
+    participant/evidence/base-camp-secret-handling/attempt-001/logs/redacted-run.txt
+    participant/evidence/base-camp-secret-handling/base-attempt-009/PROOF.md
+    participant/evidence/base-camp-secret-handling/base-attempt-009/logs/independent-read.txt
+    participant/evidence/base-camp-secret-handling/base-attempt-009/logs/leak-scan.txt
+    participant/evidence/base-camp-secret-handling/base-attempt-009/logs/planted-bugs.txt
+    participant/evidence/base-camp-secret-handling/base-attempt-009/logs/pre-commit.txt
+    participant/evidence/base-camp-secret-handling/base-attempt-009/logs/records-scan.txt
+    participant/evidence/base-camp-secret-handling/base-attempt-009/logs/redacted-run.txt
+    participant/evidence/base-camp-secret-handling/base-attempt-009/logs/tests.txt
+    participant/evidence/base-camp-secret-handling/base-attempt-009/manifest.yaml
+    participant/evidence/base-camp-secret-handling/base-attempt-009/scripts/planted_bugs.py
+    participant/evidence/base-camp-secret-handling/base-attempt-009/scripts/record_evidence.py
+    participant/tools/pre-commit-secret-scan
+    participant/tools/tests/test_use_credential.py
+    participant/tools/use_credential.py
+
+$ python tools/secret_scan.py -- <the 19 files listed above>
+------------------------------------------------------------------------------
+secret-scan: 19 files scanned, 0 finding(s)
+------------------------------------------------------------------------------
+exit status: 0
+  ok   the files Git does not track yet are clean too: 19 files, no finding
+
+What is NOT scanned here: files Git ignores (local-data/, .env, the virtual environment), the history of old commits,
+other branches, commit messages, and pictures.
+
+The second pattern, over the same two sets of files.
+
+$ python3 participant/tools/use_credential.py scan <every file Git tracks>
+------------------------------------------------------------------------------
+tests/unit/test_secret_patterns.py:802:21: [trello-api-key] what may be a Trello API key: 32 hex characters (not shown)
+second-pattern scan: 2795 files scanned, 1 finding
+------------------------------------------------------------------------------
+exit status: 1
+  ok   the second pattern reports ONE place in the tracked files and exits with 1. It is not a credential: it is a made-up value in the program's own test of its scanner. A shape scan reports shapes, and this is a false alarm that is left standing, not hidden
+$ python3 participant/tools/use_credential.py scan <the 19 files listed above>
+------------------------------------------------------------------------------
+second-pattern scan: 19 files scanned, 0 findings
+------------------------------------------------------------------------------
+exit status: 0
+  ok   the second pattern finds nothing in the files Git does not track yet
+
+==============================================================================
+4. WHAT THE SCAN CANNOT SEE
+4a. A credential of a shape the program's scanner does not know: the fake Trello API key, 32 hex characters, in a note.
+
+$ python tools/secret_scan.py TEMP/project/notes.md
+------------------------------------------------------------------------------
+secret-scan: 1 files scanned, 0 finding(s)
+------------------------------------------------------------------------------
+exit status: 0
+  ok   THE LIMIT, shown: the program's scanner passes a file that holds the fake Trello key
+
+The second pattern, added for this quest, run on the same file (stretch goal):
+$ python3 participant/tools/use_credential.py scan TEMP/project/notes.md
+------------------------------------------------------------------------------
+TEMP/project/notes.md:3:19: [trello-api-key] what may be a Trello API key: 32 hex characters (not shown)
+second-pattern scan: 1 file scanned, 1 finding
+------------------------------------------------------------------------------
+exit status: 1
+  ok   stretch goal: the second pattern finds it, says where, does not print it, and exits with a failure status
+$ python3 participant/tools/use_credential.py scan TEMP/project/notes.md
+------------------------------------------------------------------------------
+second-pattern scan: 1 file scanned, 0 findings
+------------------------------------------------------------------------------
+exit status: 0
+  ok   after the key is taken out, the second pattern passes
+
+4b. A credential with no shape at all: four ordinary words joined by hyphens, in the same note, called a door code.
+
+$ python tools/secret_scan.py TEMP/project/notes.md
+------------------------------------------------------------------------------
+secret-scan: 1 files scanned, 0 finding(s)
+------------------------------------------------------------------------------
+exit status: 0
+$ python3 participant/tools/use_credential.py scan TEMP/project/notes.md
+------------------------------------------------------------------------------
+second-pattern scan: 1 file scanned, 0 findings
+------------------------------------------------------------------------------
+exit status: 0
+  ok   THE LIMIT, shown: both scans pass a file that holds a secret with no recognizable shape. A passing scan does not mean there is no secret
+
+4c. The second pattern's own limits. Three files, with the fake Trello key written in different ways.
+
+found.txt: the key as a JSON field named key, after the option --api-key, and as TRELLO_API_KEY=.
+$ python3 participant/tools/use_credential.py scan TEMP/project/found.txt
+------------------------------------------------------------------------------
+TEMP/project/found.txt:1:10: [trello-api-key] what may be a Trello API key: 32 hex characters (not shown)
+TEMP/project/found.txt:2:16: [trello-api-key] what may be a Trello API key: 32 hex characters (not shown)
+TEMP/project/found.txt:3:23: [trello-api-key] what may be a Trello API key: 32 hex characters (not shown)
+second-pattern scan: 1 file scanned, 3 findings
+------------------------------------------------------------------------------
+exit status: 1
+  ok   found in all three ways of writing it, one per line
+
+missed.txt: the key in capitals; the key alone on a line with its name on the line before; the key cut in two across lines.
+$ python3 participant/tools/use_credential.py scan TEMP/project/missed.txt
+------------------------------------------------------------------------------
+second-pattern scan: 1 file scanned, 0 findings
+------------------------------------------------------------------------------
+exit status: 0
+  ok   THE LIMIT, shown: the second pattern passes all three. A real key written any of these ways would not be caught
+
+checksum.txt: one line that says Trello and holds an MD5 checksum, which is also 32 hex characters. It is not a key.
+$ python3 participant/tools/use_credential.py scan TEMP/project/checksum.txt
+------------------------------------------------------------------------------
+TEMP/project/checksum.txt:1:41: [trello-api-key] what may be a Trello API key: 32 hex characters (not shown)
+second-pattern scan: 1 file scanned, 1 finding
+------------------------------------------------------------------------------
+exit status: 1
+  ok   THE LIMIT, shown: the second pattern reports the checksum as if it were a key. It sees a shape, not a meaning
+  ok   this record itself holds none of the made-up credentials, in any of the forms they were used in
+
+RESULT: ALL CHECKS PASSED. 16 checks.

@@ -1,0 +1,199 @@
+The scan as a pre-commit hook that blocks the commit. base-camp-secret-handling, attempt base-attempt-009
+Recorded by scripts/record_evidence.py. Each block between dashed lines is what a command printed.
+Every credential in these runs is made up and built when the script runs. None is written in this record.
+A block shows what the command wrote to standard output, and after it what it wrote to standard error.
+
+The stretch goal. A new, empty Git repository is made in TEMP/sandbox-repository. The hook, participant/tools/pre-commit-secret-scan,
+is copied to its .git/hooks/pre-commit by this script. It is NOT installed in the real repository: that is for a person to do.
+The hook scans the staged copy of each file, which it writes out under TEMP/hook-work. So the places it reports begin there.
+
+==============================================================================
+1. A COMMIT OF A FILE THAT HOLDS THE FAKE TOKEN
+$ git add service-config.txt
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit status: 0
+$ git commit -m "Add settings"
+------------------------------------------------------------------------------
+secret-scan: 1 files scanned, 1 finding(s)
+TEMP/hook-work/gtq-pre-commit.Tf4nkC/staged/service-config.txt:3:13: [github-token] GitHub token — ghp… (40 chars)
+second-pattern scan: 1 file scanned, 0 findings
+pre-commit: COMMIT BLOCKED. A staged file holds what looks like a credential. Nothing was committed.
+pre-commit: take the value out of the file and add it again. If it was a real credential, it has been on this disk: rotate it.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   stretch goal: the commit is blocked: Git exits with a failure status and the hook says why
+Commits in the sandbox repository now: 0
+  ok   no commit was made: the repository has no commit at all
+
+==============================================================================
+2. THE SAME COMMIT AFTER THE LINE IS TAKEN OUT
+$ git add service-config.txt
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit status: 0
+$ git commit -m "Add settings"
+------------------------------------------------------------------------------
+[main (root-commit) 0ab44c0] Add settings
+ 1 file changed, 3 insertions(+)
+ create mode 100644 service-config.txt
+secret-scan: 1 files scanned, 0 finding(s)
+second-pattern scan: 1 file scanned, 0 findings
+------------------------------------------------------------------------------
+exit status: 0
+  ok   the commit goes through: exit status 0, and the repository now has one commit
+
+==============================================================================
+3. A COMMIT OF A NOTE THAT HOLDS THE FAKE TRELLO KEY, which only the second pattern knows
+$ git add notes.md
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit status: 0
+$ git commit -m "Add notes"
+------------------------------------------------------------------------------
+secret-scan: 1 files scanned, 0 finding(s)
+TEMP/hook-work/gtq-pre-commit.j1dfzf/staged/notes.md:3:19: [trello-api-key] what may be a Trello API key: 32 hex characters (not shown)
+second-pattern scan: 1 file scanned, 1 finding
+pre-commit: COMMIT BLOCKED. A staged file holds what looks like a credential. Nothing was committed.
+pre-commit: take the value out of the file and add it again. If it was a real credential, it has been on this disk: rotate it.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   the commit is blocked by the second pattern, and the repository still has one commit
+
+==============================================================================
+4. THE FILE IS CLEANED ON DISK BUT NOT ADDED AGAIN. What would be committed is the staged copy, which still holds the key
+$ git commit -m "Add notes"
+------------------------------------------------------------------------------
+secret-scan: 1 files scanned, 0 finding(s)
+TEMP/hook-work/gtq-pre-commit.EzKxfr/staged/notes.md:3:19: [trello-api-key] what may be a Trello API key: 32 hex characters (not shown)
+second-pattern scan: 1 file scanned, 1 finding
+pre-commit: COMMIT BLOCKED. A staged file holds what looks like a credential. Nothing was committed.
+pre-commit: take the value out of the file and add it again. If it was a real credential, it has been on this disk: rotate it.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   the commit is still blocked: the hook scans what is staged, not what is on disk
+$ git add notes.md
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit status: 0
+$ git commit -m "Add notes"
+------------------------------------------------------------------------------
+[main 54933ef] Add notes
+ 1 file changed, 3 insertions(+)
+ create mode 100644 notes.md
+secret-scan: 1 files scanned, 0 finding(s)
+second-pattern scan: 1 file scanned, 0 findings
+------------------------------------------------------------------------------
+exit status: 0
+  ok   after the clean file is added again, the commit goes through: two commits
+
+==============================================================================
+5. A FILE THAT IS RENAMED, AND GIVEN THE FAKE TOKEN IN THE SAME COMMIT
+$ git mv service-config.txt settings.txt
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit status: 0
+$ git add settings.txt
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit status: 0
+$ git commit -m "Rename settings"
+------------------------------------------------------------------------------
+secret-scan: 1 files scanned, 1 finding(s)
+TEMP/hook-work/gtq-pre-commit.NUD14E/staged/settings.txt:3:13: [github-token] GitHub token — ghp… (40 chars)
+second-pattern scan: 1 file scanned, 0 findings
+pre-commit: COMMIT BLOCKED. A staged file holds what looks like a credential. Nothing was committed.
+pre-commit: take the value out of the file and add it again. If it was a real credential, it has been on this disk: rotate it.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   the commit is blocked: a renamed file is scanned like a new one
+$ git reset -q --hard
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit status: 0
+
+==============================================================================
+6. A FILE WHOSE NAME BEGINS WITH A DASH AND HAS A SPACE IN IT, holding the fake token
+$ git add -- "-n odd name.txt"
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit status: 0
+$ git commit -m "Add a file with an odd name"
+------------------------------------------------------------------------------
+secret-scan: 1 files scanned, 1 finding(s)
+TEMP/hook-work/gtq-pre-commit.jOVWEm/staged/-n odd name.txt:3:13: [github-token] GitHub token — ghp… (40 chars)
+second-pattern scan: 1 file scanned, 0 findings
+pre-commit: COMMIT BLOCKED. A staged file holds what looks like a credential. Nothing was committed.
+pre-commit: take the value out of the file and add it again. If it was a real credential, it has been on this disk: rotate it.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   the commit is blocked: the name is not taken for an option, and is not cut at the space
+$ git reset -q --hard
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit status: 0
+
+==============================================================================
+7. THE SCAN CANNOT BE RUN. GTQ_HOME names a folder that is not there, and a clean file is committed
+$ git add clean.txt
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit status: 0
+$ git commit -m "Add a clean file        (GTQ_HOME=TEMP/not-there)"
+------------------------------------------------------------------------------
+pre-commit: COMMIT STOPPED. The secret scan could not be run: there is no Python at TEMP/not-there/.venv/bin/python
+pre-commit: no file was scanned, so nothing is known about this commit. Put the scan right and commit again.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   the commit is stopped, and the message says the scan did not run. It does not say a credential was found
+$ git commit -m "Add a clean file"
+------------------------------------------------------------------------------
+[main ce3754e] Add a clean file
+ 1 file changed, 1 insertion(+)
+ create mode 100644 clean.txt
+secret-scan: 1 files scanned, 0 finding(s)
+second-pattern scan: 1 file scanned, 0 findings
+------------------------------------------------------------------------------
+exit status: 0
+  ok   with the scan able to run, the same clean commit goes through: three commits
+
+==============================================================================
+8. WHAT THE HOOK DOES NOT STOP
+$ git add notes.md
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit status: 0
+$ git commit -m "Change notes"
+------------------------------------------------------------------------------
+secret-scan: 1 files scanned, 0 finding(s)
+TEMP/hook-work/gtq-pre-commit.Y5kYpZ/staged/notes.md:3:19: [trello-api-key] what may be a Trello API key: 32 hex characters (not shown)
+second-pattern scan: 1 file scanned, 1 finding
+pre-commit: COMMIT BLOCKED. A staged file holds what looks like a credential. Nothing was committed.
+pre-commit: take the value out of the file and add it again. If it was a real credential, it has been on this disk: rotate it.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   first, with the hook running, this commit of the fake key is blocked
+The same commit again, with Git's own switch that skips every hook:
+$ git commit --no-verify -m "Change notes"
+------------------------------------------------------------------------------
+[main f95e23b] Change notes
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+------------------------------------------------------------------------------
+exit status: 0
+  ok   THE LIMIT, shown: with --no-verify the hook does not run and the fake key is committed. A hook is a reminder, not a lock
+
+That commit is in a sandbox that is deleted when this script ends. The key in it is made up.
+  ok   this record itself holds none of the made-up credentials, in any of the forms they were used in
+
+RESULT: ALL CHECKS PASSED. 13 checks.

@@ -1,0 +1,25 @@
+The three records above, scanned as they were saved. base-camp-secret-handling, attempt base-attempt-009
+Recorded by scripts/record_evidence.py. Each block between dashed lines is what a command printed.
+Every credential in these runs is made up and built when the script runs. None is written in this record.
+A block shows what the command wrote to standard output, and after it what it wrote to standard error.
+
+Each record checks itself before it is finished, so that check is of the text before its last lines. Here the three
+finished files are read back from disk and scanned.
+$ python tools/secret_scan.py participant/evidence/base-camp-secret-handling/base-attempt-009/logs/redacted-run.txt participant/evidence/base-camp-secret-handling/base-attempt-009/logs/leak-scan.txt participant/evidence/base-camp-secret-handling/base-attempt-009/logs/pre-commit.txt
+------------------------------------------------------------------------------
+secret-scan: 3 files scanned, 0 finding(s)
+------------------------------------------------------------------------------
+exit status: 0
+  ok   criterion 6: the program's scanner finds nothing in the three finished records
+$ python3 participant/tools/use_credential.py scan participant/evidence/base-camp-secret-handling/base-attempt-009/logs/redacted-run.txt participant/evidence/base-camp-secret-handling/base-attempt-009/logs/leak-scan.txt participant/evidence/base-camp-secret-handling/base-attempt-009/logs/pre-commit.txt
+------------------------------------------------------------------------------
+second-pattern scan: 3 files scanned, 0 findings
+------------------------------------------------------------------------------
+exit status: 0
+  ok   the second pattern finds nothing in them
+  ok   none of the made-up credentials is in them, in any form used: compared one by one, 17 forms
+  ok   the recording script never had to take a value out of a record: its last-resort marker is in none of them
+  ok   each record ends with ALL CHECKS PASSED
+  ok   this record itself holds none of the made-up credentials, in any of the forms they were used in
+
+RESULT: ALL CHECKS PASSED. 6 checks.

@@ -1,0 +1,40 @@
+test_a_crash_whose_message_holds_the_credential (tests.test_use_credential.TheCredentialIsNeverPrinted.test_a_crash_whose_message_holds_the_credential) ... ok
+test_a_debugging_print_of_the_request_and_its_headers (tests.test_use_credential.TheCredentialIsNeverPrinted.test_a_debugging_print_of_the_request_and_its_headers) ... ok
+test_a_value_with_characters_a_web_address_changes (tests.test_use_credential.TheCredentialIsNeverPrinted.test_a_value_with_characters_a_web_address_changes) ... ok
+test_an_error_from_the_service_that_repeats_the_credential (tests.test_use_credential.TheCredentialIsNeverPrinted.test_an_error_from_the_service_that_repeats_the_credential) ... ok
+test_each_base64_form_is_masked_when_the_two_base64_alphabets_differ (tests.test_use_credential.TheCredentialIsNeverPrinted.test_each_base64_form_is_masked_when_the_two_base64_alphabets_differ)
+For most values the ordinary and the URL-safe base64 are the same text, and one hides a gap in the other. ... ok
+test_masking_covers_each_form_the_value_takes (tests.test_use_credential.TheCredentialIsNeverPrinted.test_masking_covers_each_form_the_value_takes) ... ok
+test_ordinary_use (tests.test_use_credential.TheCredentialIsNeverPrinted.test_ordinary_use) ... ok
+test_percent_escapes_written_in_small_letters_are_masked_too (tests.test_use_credential.TheCredentialIsNeverPrinted.test_percent_escapes_written_in_small_letters_are_masked_too) ... ok
+test_the_service_really_does_repeat_it_so_the_mask_is_doing_the_work (tests.test_use_credential.TheCredentialIsNeverPrinted.test_the_service_really_does_repeat_it_so_the_mask_is_doing_the_work) ... ok
+test_32_hex_characters_with_nothing_to_say_what_they_are_are_not_reported (tests.test_use_credential.TheSecondPattern.test_32_hex_characters_with_nothing_to_say_what_they_are_are_not_reported) ... ok
+test_a_bare_key_on_a_line_that_says_trello_is_found_and_not_shown (tests.test_use_credential.TheSecondPattern.test_a_bare_key_on_a_line_that_says_trello_is_found_and_not_shown) ... ok
+test_a_clean_file_passes (tests.test_use_credential.TheSecondPattern.test_a_clean_file_passes) ... ok
+test_a_file_that_cannot_be_read_is_not_passed_as_clean (tests.test_use_credential.TheSecondPattern.test_a_file_that_cannot_be_read_is_not_passed_as_clean) ... ok
+test_a_file_that_is_not_text_is_skipped_and_not_counted_as_scanned (tests.test_use_credential.TheSecondPattern.test_a_file_that_is_not_text_is_skipped_and_not_counted_as_scanned) ... ok
+test_a_folder_is_looked_into (tests.test_use_credential.TheSecondPattern.test_a_folder_is_looked_into)
+The program's scanner, given a folder, scans nothing and passes. This one must not. ... ok
+test_a_key_as_the_value_of_a_field_named_key_is_found (tests.test_use_credential.TheSecondPattern.test_a_key_as_the_value_of_a_field_named_key_is_found) ... ok
+test_a_key_given_as_an_option_is_found (tests.test_use_credential.TheSecondPattern.test_a_key_given_as_an_option_is_found) ... ok
+test_a_longer_run_or_one_with_capitals_is_not_a_trello_key (tests.test_use_credential.TheSecondPattern.test_a_longer_run_or_one_with_capitals_is_not_a_trello_key) ... ok
+test_a_scan_that_looked_at_no_file_is_not_a_pass (tests.test_use_credential.TheSecondPattern.test_a_scan_that_looked_at_no_file_is_not_a_pass) ... ok
+test_the_programs_scanner_does_not_find_the_first_two_of_those (tests.test_use_credential.TheSecondPattern.test_the_programs_scanner_does_not_find_the_first_two_of_those)
+Why the second pattern is worth having. If the program's scanner learns this shape, this test will say so. ... ok
+test_a_credential_typed_on_the_command_line_by_mistake_is_not_repeated (tests.test_use_credential.WhereTheCredentialComesFrom.test_a_credential_typed_on_the_command_line_by_mistake_is_not_repeated)
+Python's usual complaint quotes what was typed. No mask could know that value, so nothing typed is repeated. ... ok
+test_a_short_value_is_refused (tests.test_use_credential.WhereTheCredentialComesFrom.test_a_short_value_is_refused) ... ok
+test_a_short_value_is_refused_in_words_that_are_not_masked (tests.test_use_credential.WhereTheCredentialComesFrom.test_a_short_value_is_refused_in_words_that_are_not_masked)
+A short value is not written down for masking: holes punched in ordinary text would give it away. ... ok
+test_a_value_that_is_not_plainly_made_up_is_refused_and_not_shown (tests.test_use_credential.WhereTheCredentialComesFrom.test_a_value_that_is_not_plainly_made_up_is_refused_and_not_shown) ... ok
+test_a_value_that_is_not_proper_text_is_still_masked (tests.test_use_credential.WhereTheCredentialComesFrom.test_a_value_that_is_not_proper_text_is_still_masked) ... ok
+test_not_set_is_refused (tests.test_use_credential.WhereTheCredentialComesFrom.test_not_set_is_refused) ... ok
+test_the_tool_reads_no_file_and_writes_none (tests.test_use_credential.WhereTheCredentialComesFrom.test_the_tool_reads_no_file_and_writes_none) ... ok
+test_there_is_no_way_to_give_it_on_the_command_line_or_from_a_file (tests.test_use_credential.WhereTheCredentialComesFrom.test_there_is_no_way_to_give_it_on_the_command_line_or_from_a_file) ... ok
+test_used_from_another_program_a_failure_is_still_masked_and_does_not_escape (tests.test_use_credential.WhereTheCredentialComesFrom.test_used_from_another_program_a_failure_is_still_masked_and_does_not_escape)
+main() reports its own failures. The mask does not depend on the file being run as a script. ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.903s
+
+OK

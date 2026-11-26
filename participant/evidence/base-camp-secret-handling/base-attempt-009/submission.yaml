@@ -1,0 +1,13 @@
+schema_version: 1
+submission_id: submission-20261126214127-dcb596
+quest_id: base-camp-secret-handling
+quest_version: 1
+attempt_id: base-attempt-009
+content_hash: sha256:f2e8bca2db42eba1fad631bd1e46ee26b449794770cf957301c61adf02a6431d
+evidence_hash: sha256:e9bc229e1b35400772c292498a29bdba04587bc6af51c03bac44a4d09f421bd2
+submitted_at: '2026-11-26T21:41:27Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/secret-handling.md
+  digest: sha256:1d35dc574d630168f91c72c8667ebfcaf116d51ba5215acf525d45176c6ddc60

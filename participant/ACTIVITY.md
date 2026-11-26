@@ -455,3 +455,8 @@ Every change this application made to your files, newest last.
 - `2026-11-26T17:24:25Z` base-camp-ownership-zones: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
 - `2026-11-26T17:25:05Z` base-camp-ownership-zones: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-26T17:25:06Z` Submitted base-camp-ownership-zones for review as submission-20261126172505-106d10.
+- `2026-11-26T17:28:50Z` Started base-camp-secret-handling as attempt base-attempt-009.
+- `2026-11-26T21:39:19Z` base-camp-secret-handling: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-26T21:39:54Z` base-camp-secret-handling: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-26T21:41:27Z` base-camp-secret-handling: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-26T21:41:27Z` Submitted base-camp-secret-handling for review as submission-20261126214127-dcb596.

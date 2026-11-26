@@ -691,4 +691,13 @@ attempts:
   updated_at: '2026-11-26T17:25:05Z'
   evidence_path: participant/evidence/base-camp-ownership-zones/base-attempt-008
   submission_id: submission-20261126172505-106d10
-updated_at: '2026-11-26T17:25:05Z'
+- attempt_id: base-attempt-009
+  quest_id: base-camp-secret-handling
+  quest_version: 1
+  content_hash: sha256:f2e8bca2db42eba1fad631bd1e46ee26b449794770cf957301c61adf02a6431d
+  state: submitted
+  started_at: '2026-11-26T17:28:50Z'
+  updated_at: '2026-11-26T21:41:27Z'
+  evidence_path: participant/evidence/base-camp-secret-handling/base-attempt-009
+  submission_id: submission-20261126214127-dcb596
+updated_at: '2026-11-26T21:41:27Z'

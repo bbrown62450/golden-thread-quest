@@ -1,0 +1,70 @@
+Planted bugs in a copy of participant/tools/use_credential.py. base-camp-secret-handling, attempt base-attempt-009
+Recorded by scripts/planted_bugs.py. One bug at a time is planted in a copy of the tool, in a temporary folder, and the
+tool's tests are run against the copy. CAUGHT means at least one test failed. The real tool is not changed.
+
+First, with no bug planted, the tests against the copy: OK (skipped=1)
+
+ 1. CAUGHT  the mask does nothing
+            FAILED (failures=10, skipped=1): test_a_crash_whose_message_holds_the_credential, test_a_debugging_print_of_the_request_and_its_headers, test_a_value_that_is_not_proper_text_is_still_masked ...
+ 2. CAUGHT  the value is not written down before the command line is read
+            FAILED (failures=6, skipped=1): test_a_crash_whose_message_holds_the_credential, test_a_debugging_print_of_the_request_and_its_headers, test_a_value_with_characters_a_web_address_changes ...
+ 3. CAUGHT  the main parser is Python's ordinary one, which repeats what was typed
+            FAILED (failures=2, skipped=1): test_a_credential_typed_on_the_command_line_by_mistake_is_not_repeated, test_there_is_no_way_to_give_it_on_the_command_line_or_from_a_file
+ 4. CAUGHT  the parsers of `call` and `scan` are Python's ordinary ones
+            FAILED (failures=1, skipped=1): test_a_credential_typed_on_the_command_line_by_mistake_is_not_repeated
+ 5. CAUGHT  the base64 form after the account name is not masked
+            FAILED (failures=1, skipped=1): test_each_base64_form_is_masked_when_the_two_base64_alphabets_differ
+ 6. CAUGHT  the base64 form of the value alone is not masked
+            FAILED (failures=1, skipped=1): test_each_base64_form_is_masked_when_the_two_base64_alphabets_differ
+ 7. CAUGHT  the URL-encoded forms are not masked
+            FAILED (failures=3, skipped=1): test_a_value_with_characters_a_web_address_changes, test_each_base64_form_is_masked_when_the_two_base64_alphabets_differ, test_percent_escapes_written_in_small_letters_are_masked_too
+ 8. CAUGHT  percent-escapes in small letters are not masked
+            FAILED (failures=1, skipped=1): test_percent_escapes_written_in_small_letters_are_masked_too
+ 9. CAUGHT  a value that is not proper text cannot be written down
+            FAILED (errors=1, skipped=1): test_a_value_that_is_not_proper_text_is_still_masked
+10. CAUGHT  a value without the word example is accepted
+            FAILED (failures=1, skipped=1): test_a_value_that_is_not_plainly_made_up_is_refused_and_not_shown
+11. CAUGHT  a short value is accepted
+            FAILED (failures=2, skipped=1): test_a_short_value_is_refused, test_a_short_value_is_refused_in_words_that_are_not_masked
+12. CAUGHT  a variable that is not set is not refused
+            FAILED (failures=1, skipped=1): test_not_set_is_refused
+13. CAUGHT  a failure is reported without the mask
+            FAILED (failures=2, skipped=1): test_a_crash_whose_message_holds_the_credential, test_used_from_another_program_a_failure_is_still_masked_and_does_not_escape
+14. CAUGHT  a failure escapes main() to whoever called it
+            FAILED (errors=1, skipped=1): test_used_from_another_program_a_failure_is_still_masked_and_does_not_escape
+15. CAUGHT  what is sent is not written down when it differs from the value
+            FAILED (failures=1, skipped=1): test_an_error_from_the_service_that_repeats_the_credential
+16. CAUGHT  the made-up service accepts anything
+            FAILED (failures=2, skipped=1): test_an_error_from_the_service_that_repeats_the_credential, test_the_service_really_does_repeat_it_so_the_mask_is_doing_the_work
+17. CAUGHT  the service's refusal is printed without the mask
+            FAILED (failures=1, skipped=1): test_an_error_from_the_service_that_repeats_the_credential
+18. CAUGHT  scan: a longer run of hex is taken for a key
+            FAILED (failures=1, skipped=1): test_a_longer_run_or_one_with_capitals_is_not_a_trello_key
+19. CAUGHT  scan: any 32 hex characters are reported, whatever the line says
+            FAILED (failures=1, skipped=1): test_32_hex_characters_with_nothing_to_say_what_they_are_are_not_reported
+20. CAUGHT  scan: a line that only names a key is not looked at
+            FAILED (failures=2, skipped=1): test_a_key_as_the_value_of_a_field_named_key_is_found, test_a_key_given_as_an_option_is_found
+21. CAUGHT  scan: the option --key is not known as naming a key
+            FAILED (failures=1, skipped=1): test_a_key_given_as_an_option_is_found
+22. CAUGHT  scan: a finding does not make the scan fail
+            FAILED (failures=4, skipped=1): test_a_bare_key_on_a_line_that_says_trello_is_found_and_not_shown, test_a_folder_is_looked_into, test_a_key_as_the_value_of_a_field_named_key_is_found ...
+23. CAUGHT  scan: a path that cannot be read is passed as clean
+            FAILED (failures=1, skipped=1): test_a_file_that_cannot_be_read_is_not_passed_as_clean
+24. CAUGHT  scan: a scan that looked at no file passes
+            FAILED (failures=1, skipped=1): test_a_scan_that_looked_at_no_file_is_not_a_pass
+25. CAUGHT  scan: a folder is not looked into
+            FAILED (failures=3, skipped=1): test_a_file_that_is_not_text_is_skipped_and_not_counted_as_scanned, test_a_folder_is_looked_into, test_a_scan_that_looked_at_no_file_is_not_a_pass
+26. CAUGHT  scan: a file that is not text is scanned and counted
+            FAILED (failures=1, skipped=1): test_a_file_that_is_not_text_is_skipped_and_not_counted_as_scanned
+27. CAUGHT  scan: the finding prints the line it found
+            FAILED (failures=1, skipped=1): test_a_bare_key_on_a_line_that_says_trello_is_found_and_not_shown
+
+Last, with the copy put back as it was: OK (skipped=1)
+The real tool is byte for byte what it was before: yes
+Git reports the same state of the whole repository as before the run: yes
+
+NOT COVERED: the commit hook, participant/tools/pre-commit-secret-scan, has no planted bugs. It is exercised by
+logs/pre-commit.txt only. One behaviour of the tool has no planted bug because no test can tell: a short value is kept
+out of the mask AND its refusal is printed without the mask, so either one alone gives the same output.
+
+RESULT: 27 OF 27 PLANTED BUGS CAUGHT.
