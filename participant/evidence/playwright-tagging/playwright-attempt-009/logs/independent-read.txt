@@ -1,0 +1,111 @@
+Independent reads of the tag scheme, the tagged tests and the tag check. playwright-tagging, attempt playwright-attempt-009
+Copied by hand, and shortened, from the readers' replies by the assistant that built this quest. No program wrote this file.
+
+Who the readers were: two separate AI assistants (Claude), each started fresh. No person read the work. Each was given a
+copy of the files and told to read only those, to run nothing, to write nothing and to contact nothing. Those limits were
+given in words and not enforced. Neither saw the other's reply. The first version of everything was finished, and the
+check passed with 41 checks, before either reply was read.
+
+  Reader 1   Given the scheme, the vocabulary, the ten tests and the application. Asked to act as a second tester: cover
+             the tags, tag each test from the scheme's rules alone, and report every difference and every real choice.
+  Reader 2   Given the check, its saved output and the same files. Asked where the check claims more than it tests, how a
+             test could evade it, and whether the part that shows it can fail is honest.
+
+==============================================================================
+READER 1: tagging the ten tests from the scheme alone
+
+Its verdict: "I would tag three tests differently from the file, and the risk dimension does not survive its own
+'worst thing' rule."
+  Risk, as first written (high: stored data wrong. medium: stored right, shown wrong. low: an inconvenience. Rule: take
+  the worst thing the assertions would catch):
+  - The sixty-customer test was tagged medium. Its assertions are of the same kind as the one-customer form test, tagged
+    high. It tagged it high.
+  - The two list tests were tagged medium. A wrong stored plan fails both, so "the worst" is high. "No test that only
+    reads can tell 'stored wrong' from 'shown wrong'."
+  - The not-found test and the form test were tagged low. Each also fits medium, and the rule says take the worst.
+  - "High and medium are defined by cause, which the assertions cannot observe; medium and low overlap."
+  Feature: a test that adds through the form and asserts a row in the list could be add or list by the rule "the
+  function whose result the test asserts".
+  Read or write, and layer: "no" disagreement possible. They go by what is sent.
+  Duration: no disagreement on the rule, but it cannot be decided by reading and depends on the computer.
+  Wording: "@slow: at most 10 seconds" also covers every fast test. "@read: safe to run against data that others share"
+  means harmless and not reliable: the list tests assert values anyone sharing the data could change. Every smoke test
+  writes, so smoke cannot run where writing is not allowed. A title said "through the interface" and the test uses a
+  request.
+  Weak tests:
+  - The stored name was compared with the application's own answer, not with what was sent.
+  - If the application wrongly accepted the duplicate, that customer was never removed.
+  - In the form tests the id was read straight after the click, perhaps from the page before. In the sixty-customer test
+    one id could then be written down twice and one customer left behind with the test passing. It marked this as
+    possible and not confirmed.
+  - Clean-up accepts "not found". "No other" is checked against one other customer. toContainText looks at the whole row.
+    The form tests' id check can hardly fail. Duplicates differing only in capitals are not tried.
+  - Read tests: "I found no path by which they send a write."
+
+WHAT WAS CHANGED AFTER READER 1
+  Risk is now decided by what a test does and asserts, taking the first that fits: high, the test sends an add, an
+  upgrade or a remove and then asserts which customers exist or what plan one has. Medium, it changes nothing and
+  asserts the same. Low, anything else. The sixty-customer test moved from medium to high. No other tag moved.
+  Feature is now the last thing the test itself does before its assertions, set-up not counted. A test that only looks
+  is a list test, unless all it looks at is the controls of one function.
+  @slow no longer overlaps @fast in words. @read now says it changes nothing and can still fail if someone else changes
+  the data. The selection is named "changes nothing", and says that no smoke test is in it.
+  Tests: the name and plan compared are the ones sent. A duplicate wrongly accepted is removed. The form tests wait until
+  the page names the customer just added before reading its id, and the sixty-customer test fails if an id comes twice.
+  The title was corrected.
+  NOT CHANGED: clean-up still accepts "not found". "No other" is still one other customer. The whole row is still
+  matched. Duplicates differing in capitals are not tried.
+
+==============================================================================
+READER 2: the check, and what its output can and cannot show
+
+  - A failure part-way left the earlier "ALL CHECKS PASSED" file standing, and nothing tied the file to the sources.
+  - The same failure left the application running.
+  - Criteria 1, 6 and 7 could not be shown failing: the function read the real vocabulary and could not be given a
+    spoiled one. The checks of Part 4 had no trial either.
+  - Criterion 7 measured the text the check generates and not the file on disk. "The 60-line cap equals the document's
+    length exactly, so it looks fitted." Lines are a poor measure when some are 240 characters long.
+  - Layer is judged by the User-Agent of requests that reach the recorder, and the labels said "used no browser / used
+    one". A test with a page that never loads the application reads as no browser. One that uses the browser's request
+    client without a page reads as a browser. "No test in the file does any of these; it is a gap in the check."
+  - A test that sends nothing passed as @read and as @layer-api. Requests to another address, changes made with GET and
+    changes made only on some runs are not seen.
+  - "Starting the browser is in that time" was stated in the scheme and not checked. The times it saw (0.06 s with a
+    browser, 0.02 s without) made it doubt it.
+  - "Every test" means every test of one file. Tags on a group of tests, and skipped tests, had no trial.
+  - Nothing checked that the five dimensions are the five asked for. A meaning and a limit could state two numbers.
+  - Part 5: two checks were one change counted twice. One expected text left out the test's name.
+  - Part 4 ran "everything but @write" and not the "@read" selection the scheme documents.
+  - Consistency: "I found no contradiction in the saved output." It added up the 41 checks and the request counts.
+
+WHAT WAS CHANGED AFTER READER 2
+  The log is deleted at the start of a run, ends with a check that the run reached its end, and names the checksums of
+  the test file and the vocabulary. The application and the recorder are stopped whether or not the run fails.
+  The scheme rules can be given a changed copy of the vocabulary. Fourteen trials now show criteria 1, 6 and 7 failing:
+  a dimension missing, one replaced, a limit missing, two limits equal, a second number in a meaning, an empty meaning,
+  an empty rule, one tag in a dimension, a tag in two dimensions, a tag without its @, the document edited, a tag added
+  to it, thirty lines added to it, no document.
+  Criterion 7 measures the file on disk. One page is now at most 66 lines and 3600 characters, set before the new
+  document was measured: it came to 60 lines and 3279 characters. It is still a count, and not a printed page.
+  The five dimensions must be the five asked for, once each. A duration tag's meaning may hold no number: the limit is
+  written once.
+  A test that sends nothing is reported. Labels say "sent no request from a browser". The claim about starting the
+  browser was taken out of the scheme.
+  Part 4 runs the "@read" selection, and checks that @read and @write between them list every test once.
+  New trials: a tag on a group of tests, and a skipped test. The doubled check became one trial with two expectations.
+  The check went from 41 checks to 59.
+  NOT CHANGED, and written at the top of the check as things it cannot test: requests to another address, changes made
+  with GET, a browser that never loads the application, tests in other files, whether Playwright's time includes
+  starting the browser. The Part 4 checks still have no trial of their own. A hung Playwright run would hang the check.
+
+NOT READ AGAIN: neither reader saw the changed scheme, tests or check. Whether a second tester would now tag the ten
+tests the same way has not been tried.
+
+==============================================================================
+SUMMARY
+  Would a second tester have given the same tags? Not for risk, as first written. Reader 1 differed on one test and had
+  a real choice on four more. The rule was rewritten to go by what the test does. That rewrite has not been read.
+  Read or write, and layer? Reader 1 found no room to disagree. The check measures both.
+  Did the check claim more than it tested? In places. Reader 2 found scheme checks that could not be shown failing, a
+  page limit that looked fitted, and labels that said "browser" where a header was read. These were corrected.
+  A person has not read any of this.
