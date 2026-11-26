@@ -1,0 +1,29 @@
+schema_version: 1
+review_id: review-20261126023658-e818cb
+quest_id: jira-create-subtask
+quest_version: 1
+attempt_id: jira-attempt-014
+evidence_hash: sha256:905ef0ebc740943a81dec4a84fc968bb58f7723509747841c869ee096de63087
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-26T02:36:58Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/jira/results/create-subtask.md
+  digest: sha256:a8dd42ca8e4a60694002ac8f9e8c461794167ffac4fc6a99d6e7322a43156aff
+verification_statement: 'Automated review. I read PROOF.md, the four records (preview,
+  confirmation, parent-check, rerun), the saved real outputs, the result record, the
+  test log, the planted-bug log and the account of the two AI readers. The real outputs
+  agree with each other. The preview fingerprint is 9716e0540ced in the preview, the
+  confirmation, the parent check, the refused re-use and the result record. Parent
+  SCRUM-1 is issue id 10000 and subtask SCRUM-24 is issue id 10023 everywhere. The
+  times run in order: preview made 02:11:33, confirmed 02:11:51, written 02:11:54,
+  preview expires 02:26:33. The result record matches the block the run printed. The
+  UTC times fit a local evening on the day before, so the dates are plausible. Each
+  real refusal says nothing was written. Some cases were shown only on the fake Jira:
+  a project other than the sandbox, the stated time limit, and two stories with one
+  title. PROOF.md says so openly, and in each of those cases the real run also showed
+  the control working. Ticket and title text in the evidence is shown as data, and
+  nothing in it addresses the reviewer, so I found no prompt injection. Each of the
+  9 acceptance criteria was matched to text quoted word for word from the evidence.'
