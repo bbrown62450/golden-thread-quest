@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261126132150-1ae060
+quest_id: playwright-test-inventory
+quest_version: 1
+attempt_id: playwright-attempt-010
+content_hash: sha256:2989e7ff4683f71e44e2f3d8502b997649469dddde98c11b12c04c20826a2a34
+evidence_hash: sha256:39e046032d23b4c1c8dbcb6be4d252e115b87ba120a5747d11f6e1f902e4dbda
+submitted_at: '2026-11-26T13:21:50Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/playwright/inventory.md
+  digest: sha256:688c3a9c9729c97c3ce3ef7d4b6288a7511d136282fd9462cb4dc377a8eb73c4
+- path: participant/tests/playwright/tools/inventory.ts
+  digest: sha256:f6c28129399613e8dd55e15f58bc2f6c8c79c3bf6ea9af04063f698a222104d1

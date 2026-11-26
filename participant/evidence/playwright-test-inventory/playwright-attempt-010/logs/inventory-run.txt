@@ -1,0 +1,574 @@
+The inventory run. playwright-test-inventory, attempt playwright-attempt-010
+Recorded by participant/tests/playwright/tools/inventory-check.ts. Each block between dashed lines is what the generator printed.
+No test was run and no application was started. Where it says Playwright lists a file, Playwright loaded that file to list it, which the
+generator never does. TEMP stands for a temporary folder. Paths are from the repository's top folder,
+or, for test files, from participant/tests/playwright. Nothing here is from a real system: the directory and its customers are made up.
+Read: inventoried.spec.ts sha256 c517433267c6f7b0   directory-requirements.md sha256 b00c2036d783d202
+
+==============================================================================
+PART 1. Generated from the test files, twice, with identical results (criteria 1 and 5)
+$ node tools/inventory.ts --out TEMP/first.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 12 tests.
+Incomplete: 0.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote first.md: 111 lines, sha256 ed915f90624a79a9.
+------------------------------------------------------------------------------
+exit code: 0
+$ node tools/inventory.ts --out TEMP/second.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 12 tests.
+Incomplete: 0.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote second.md: 111 lines, sha256 ed915f90624a79a9.
+------------------------------------------------------------------------------
+exit code: 0
+first:  8918 bytes, sha256 ed915f90624a79a93fa85de392a16eeab198e2997809dc2479fd241ac384e623
+second: 8918 bytes, sha256 ed915f90624a79a93fa85de392a16eeab198e2997809dc2479fd241ac384e623
+  ok   criterion 5: the two inventories are the same, byte for byte
+  ok   criterion 5: the inventory holds nothing written as a date (2026-01-31) or as a time of day (12:30)
+
+The inventory on disk, participant/context/playwright/inventory.md, checked against what the generator would write now:
+$ node tools/inventory.ts --check
+------------------------------------------------------------------------------
+Read 1 test file as text: 12 tests.
+Incomplete: 0.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+UP TO DATE: participant/context/playwright/inventory.md is what the test files give.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 1: the inventory on disk is, byte for byte, what the generator gives from the test files today
+What the generator's own file imports: node:crypto, node:fs, node:path, node:url, ../support/tags.ts.
+  ok   the generator imports nothing that could load or run a test: no child_process, no Playwright, and no test file
+  ok   the generator's file has one call that writes a file, and it writes the inventory
+
+Told to write the inventory over the test file:
+$ node tools/inventory.ts --out participant/tests/playwright/inventoried.spec.ts
+------------------------------------------------------------------------------
+The inventory is written to a file whose name ends in .md, and to no other, so that it cannot be written over a test.
+------------------------------------------------------------------------------
+exit code: 2
+  ok   the generator will not write to a file that is not .md, so it cannot be aimed at a test file
+
+==============================================================================
+PART 2. Every test has an identifier, a purpose, tags, a source and a value (criterion 2)
+The inventory on disk is read back here as a person would read it: the rows of its table 'Every test'.
+Playwright is then asked to list the tests of the same file, and the two are compared test by test.
+  DIR-T01  DIR-01  medium  inventoried.spec.ts:73     Catches the page leaving out a customer that exists, or showing it with the wrong plan. It looks at one of the starting customers only.
+  DIR-T02  DIR-01  medium  inventoried.spec.ts:91     Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly.
+  DIR-T03  DIR-07  low     inventoried.spec.ts:111    Catches the add form losing its name label, one of its two plans or its button, any of which stops a person finding it by label.
+  DIR-T04  DIR-02  high    inventoried.spec.ts:132    Catches the data interface storing a name or a plan other than the one it was sent.
+  DIR-T05  DIR-03  high    inventoried.spec.ts:150    Catches a second customer being stored under a name already in use, written exactly as before.
+  DIR-T06  DIR-02  high    inventoried.spec.ts:173    Catches the form sending a name or a plan other than the one typed and chosen. It looks at the page and at what is stored.
+  DIR-T07  DIR-04  high    inventoried.spec.ts:205    Catches an upgrade reaching the wrong customer, or more than one. It looks at one other customer, and on the page only.
+  DIR-T08  DIR-05  high    inventoried.spec.ts:227    Catches a removal taking the wrong customer, or more than one. It looks at one other customer, and on the page only.
+  DIR-T09  DIR-06  low     inventoried.spec.ts:249    Catches a removal of a customer that does not exist being answered as if it had worked. It looks at the answer only, not at what is stored.
+  DIR-T10  DIR-08  low     inventoried.spec.ts:267    Catches customers being lost, or two being given one id, when sixty are added quickly one after another. It does not look at plans.
+  DIR-T11  DIR-01  medium  inventoried.spec.ts:302    Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly.
+  DIR-T12  DIR-03  high    inventoried.spec.ts:320    Catches a second customer being stored when a name already in use is written again in other capitals.
+  ok   the inventory has one row for each test Playwright lists: 12 rows, 12 tests
+  ok   criterion 2: every row has an identifier, a purpose, tags, a source, a value and a place, and none is 'none'
+  ok   criterion 2: no two rows have one identifier
+  ok   criterion 2: every value is high, medium or low
+  ok   the place in each row is the line where Playwright says a test is declared
+  ok   the identifier in each row is the one Playwright reads from that test's annotations
+  ok   the purpose in each row is the one Playwright reads, character for character
+  ok   the source in each row is the one Playwright reads
+  ok   the tags in each row are the tags Playwright would select that test by
+  ok   each row has exactly one tag from each of the five dimensions of the tag scheme
+  ok   every source is a current requirement in directory-requirements.md
+  ok   the value in each row is what a table written in this check gives for its requirement's importance and its risk tag
+  ok   each of the three levels is the value of at least one test
+  ok   the generator's rule gives what that table gives in all nine cases, the 5 that no test of the suite falls in among them
+  ok   the title given for each test, at its place, is the title Playwright shows for the test at that line
+
+==============================================================================
+PART 3. Finding the tests for a requirement (criterion 7)
+The table 'Find the tests for a requirement', against the sources Playwright reads from the tests.
+  DIR-01: DIR-T01 (`inventoried.spec.ts:73`), DIR-T02 (`inventoried.spec.ts:91`), DIR-T11 (`inventoried.spec.ts:302`)
+  DIR-02: DIR-T04 (`inventoried.spec.ts:132`), DIR-T06 (`inventoried.spec.ts:173`)
+  DIR-03: DIR-T05 (`inventoried.spec.ts:150`), DIR-T12 (`inventoried.spec.ts:320`)
+  DIR-04: DIR-T07 (`inventoried.spec.ts:205`)
+  DIR-05: DIR-T08 (`inventoried.spec.ts:227`)
+  DIR-06: DIR-T09 (`inventoried.spec.ts:249`)
+  DIR-07: DIR-T03 (`inventoried.spec.ts:111`)
+  DIR-08: DIR-T10 (`inventoried.spec.ts:267`)
+  DIR-09: **none**
+  ok   criterion 7: each of the 9 current requirements has a row, and the row lists exactly the tests whose source it is
+  ok   a requirement with no test is shown as having none: DIR-09
+  ok   criterion 7: beside each of the 12 tests in those rows is its file and line, and it is the line where Playwright says that test is declared
+
+==============================================================================
+PART 4. The duplicate the inventory found in the suite as it is (criterion 4)
+  - "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+    - DIR-T02 (`inventoried.spec.ts:91`), tags @feature-list @risk-medium @read @layer-api @fast
+    - DIR-T11 (`inventoried.spec.ts:302`), tags @feature-list @risk-medium @read @layer-api @fast
+Possible overlap, a weaker sign: the same source and the same tags.
+  - DIR-01, @fast @feature-list @layer-api @read @risk-medium: DIR-T02 (`inventoried.spec.ts:91`), DIR-T11 (`inventoried.spec.ts:302`)
+  - DIR-03, @fast @feature-add @layer-api @risk-high @write: DIR-T05 (`inventoried.spec.ts:150`), DIR-T12 (`inventoried.spec.ts:320`)
+  ok   the tests Playwright reads with one source and one set of tags are DIR-T02 and DIR-T11; DIR-T05 and DIR-T12, and the inventory reports those groups as possible overlap and no other
+  ok   criterion 4: the tests Playwright reads with one purpose are DIR-T02 and DIR-T11, and the inventory reports that group and no other
+
+==============================================================================
+PART 5. What happens when the tests change
+Each trial copies inventoried.spec.ts to a file beside it, adds or changes one test in the copy, and runs the generator on the copy.
+The inventory is written to TEMP. Nothing is edited by hand.
+
+-- A thirteenth test is added, with an identifier, a purpose and a source. Its source is DIR-09, the requirement that had no test.
+$ node tools/inventory.ts --spec inventoried.scratch-1.spec.ts --out TEMP/trial-1.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 13 tests.
+Incomplete: 0.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote trial-1.md: 113 lines, sha256 7c60422388e0d6c1.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 6: the generator reads the added test and reports 13 tests, none incomplete
+  ok   criterion 6: the new inventory has a row for DIR-T13 that the old one did not, with its purpose, its source and a value worked out for it
+  ok   Playwright, asked to list that copy, lists thirteen tests too, the last with the identifier DIR-T13
+  ok   criterion 6: every other row is what it was
+  ok   criterion 7: DIR-09 now lists DIR-T13, where it listed none
+
+-- A test is added with no purpose.
+$ node tools/inventory.ts --spec inventoried.scratch-3.spec.ts --out TEMP/trial-3.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 13 tests.
+Incomplete: 1.
+  INCOMPLETE DIR-T13 at inventoried.scratch-3.spec.ts:343, "a test with no purpose": it has no purpose.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote trial-3.md: 114 lines, sha256 32e3aa2a9a5e99ce.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 3: a test with no purpose is reported as incomplete, by its identifier and its place
+
+-- A test is added with no source requirement.
+$ node tools/inventory.ts --spec inventoried.scratch-4.spec.ts --out TEMP/trial-4.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 13 tests.
+Incomplete: 1.
+  INCOMPLETE DIR-T13 at inventoried.scratch-4.spec.ts:343, "a test with no source": it has no source requirement.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote trial-4.md: 114 lines, sha256 8bc1ab3c56e1391c.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 3: a test with no source is reported as incomplete
+
+-- A test is added with no identifier, no purpose and no source: only a title and tags.
+$ node tools/inventory.ts --spec inventoried.scratch-5.spec.ts --out TEMP/trial-5.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 13 tests.
+Incomplete: 1.
+  INCOMPLETE (no identifier, inventoried.scratch-5.spec.ts:343) at inventoried.scratch-5.spec.ts:343, "a test with nothing written about it": it has no identifier; it has no purpose; it has no source requirement.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote trial-5.md: 116 lines, sha256 c145cac7a207d06c.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 3: a test with nothing written about it is reported, by its place, for all three
+  ok   criterion 3: the inventory itself lists it under 'Incomplete', and shows it as not scored
+
+-- A test is added with the identifier of another test, DIR-T02.
+$ node tools/inventory.ts --spec inventoried.scratch-6.spec.ts --out TEMP/trial-6.md
+------------------------------------------------------------------------------
+REJECTED: two tests have one identifier. An identifier names one test. Nothing was written.
+  DIR-T02: inventoried.scratch-6.spec.ts:91 "the list of customers comes back as data, each with an id, a name and a plan" AND inventoried.scratch-6.spec.ts:343 "a test with a borrowed identifier"
+------------------------------------------------------------------------------
+exit code: 1
+  ok   two tests sharing an identifier are rejected, both are named by file and line, and the exit code is 1
+  ok   when it rejects, the generator writes no inventory at all
+
+-- A test is added whose purpose is that of DIR-T04, in other capitals, with commas added and without the full stop.
+$ node tools/inventory.ts --spec inventoried.scratch-7.spec.ts --out TEMP/trial-7.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 13 tests.
+Incomplete: 0.
+Groups of possible duplicates: 2.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+  POSSIBLE DUPLICATES DIR-T04 and DIR-T13: the purpose of each is "Catches the data interface storing a name or a plan other than the one it was sent."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote trial-7.md: 116 lines, sha256 de92006a6c0cdfa0.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 4: two tests with the same purpose, capitals and punctuation aside, are reported as possible duplicates
+
+Purposes that say nothing:
+
+-- A test is added with a purpose of three words.
+$ node tools/inventory.ts --spec inventoried.scratch-8.spec.ts --out TEMP/trial-8.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 13 tests.
+Incomplete: 1.
+  INCOMPLETE DIR-T13 at inventoried.scratch-8.spec.ts:343, "a test with a short purpose": its purpose is 3 words long, and fewer than 6 cannot say what a test is for.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote trial-8.md: 114 lines, sha256 621ae8ef860f8155.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   a purpose of three words is reported as incomplete
+
+-- A test is added whose purpose is six letters, each a word.
+$ node tools/inventory.ts --spec inventoried.scratch-9.spec.ts --out TEMP/trial-9.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 13 tests.
+Incomplete: 0.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote trial-9.md: 113 lines, sha256 a057fc57b7f64ad1.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   KNOWN LIMIT, shown and not hidden: a purpose of six words that say nothing is NOT reported. The rule counts words
+
+-- A test is added whose purpose is 'Show that' and then its own title.
+$ node tools/inventory.ts --spec inventoried.scratch-10.spec.ts --out TEMP/trial-10.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 13 tests.
+Incomplete: 1.
+  INCOMPLETE DIR-T13 at inventoried.scratch-10.spec.ts:343, "the number of customers on each plan comes back as data": its purpose only repeats its title.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote trial-10.md: 114 lines, sha256 a98f79aea25e37a5.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   a purpose that is 'Show that' and the title again is reported as incomplete
+
+-- A test is added whose purpose is its own title again.
+$ node tools/inventory.ts --spec inventoried.scratch-11.spec.ts --out TEMP/trial-11.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 13 tests.
+Incomplete: 1.
+  INCOMPLETE DIR-T13 at inventoried.scratch-11.spec.ts:343, "the number of customers on each plan comes back as data": its purpose only repeats its title.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote trial-11.md: 114 lines, sha256 5a15204cd05471bc.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   a purpose that only repeats the title is reported as incomplete
+
+Sources that are not current requirements (stretch goal):
+
+-- A test is added whose source is DIR-10, a requirement that was withdrawn.
+$ node tools/inventory.ts --spec inventoried.scratch-12.spec.ts --out TEMP/trial-12.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 13 tests.
+Incomplete: 1.
+  INCOMPLETE DIR-T13 at inventoried.scratch-12.spec.ts:343, "a test of a withdrawn requirement": its source, DIR-10, is a requirement that was withdrawn.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote trial-12.md: 114 lines, sha256 77f4ffbc113d17e8.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   stretch goal: a test whose source requirement was withdrawn is reported
+  ok   stretch goal: the inventory lists it under 'Tests whose source is not a current requirement', with why the requirement was withdrawn, and does not score it
+
+-- A test is added whose source is DIR-99, which was never a requirement.
+$ node tools/inventory.ts --spec inventoried.scratch-13.spec.ts --out TEMP/trial-13.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 13 tests.
+Incomplete: 1.
+  INCOMPLETE DIR-T13 at inventoried.scratch-13.spec.ts:343, "a test of nothing": its source, DIR-99, is not a requirement in the requirements document.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote trial-13.md: 114 lines, sha256 b17ee06f4c05b882.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   a source that is not in the requirements document is reported
+
+Things written where the generator cannot read them:
+
+-- The purpose of DIR-T01 is put in a variable, and the annotation names the variable.
+$ node tools/inventory.ts --spec inventoried.scratch-14.spec.ts --out TEMP/trial-14.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 12 tests.
+Incomplete: 1.
+  INCOMPLETE DIR-T01 at inventoried.scratch-14.spec.ts:75, "the page lists a customer that was there before, with its plan": its purpose is not written out as plain quoted text.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote trial-14.md: 112 lines, sha256 0ad2d82068a395f9.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   a purpose that is not written out beside the test is reported, and not guessed
+
+-- The risk tag is taken off DIR-T01.
+$ node tools/inventory.ts --spec inventoried.scratch-15.spec.ts --out TEMP/trial-15.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 12 tests.
+Incomplete: 1.
+  INCOMPLETE DIR-T01 at inventoried.scratch-15.spec.ts:73, "the page lists a customer that was there before, with its plan": it has 0 risk tags, so it cannot be given a value.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote trial-15.md: 112 lines, sha256 b6228810b42dd83f.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   a test with no risk tag is reported, and not given a value
+
+-- A tag of DIR-T01 is misspelt: @fsat for @fast.
+$ node tools/inventory.ts --spec inventoried.scratch-16.spec.ts --out TEMP/trial-16.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 12 tests.
+Incomplete: 1.
+  INCOMPLETE DIR-T01 at inventoried.scratch-16.spec.ts:73, "the page lists a customer that was there before, with its plan": it has a tag that is not in the tag scheme: @fsat.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+Wrote trial-16.md: 112 lines, sha256 32e3e8e2c0912e4a.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   a tag that is not in the tag scheme is reported
+
+==============================================================================
+PART 6. That the generator reads a harder file as Playwright does
+6a. A file written to be awkward to read as text, in ways the generator says it can read: groups inside groups with tags
+of their own, a tag in a group's title, single quotes, a title in back quotes, a test inside a comment, the word test( inside a string,
+regular expressions with braces and quotes in them, a division, a skipped test, a skipped group, a test with its details after a comment,
+and, inside tests, test.step and a conditional test.skip. The generator's reading is compared with Playwright's list.
+$ node tools/inventory.ts --spec inventoried.scratch-17.spec.ts --out TEMP/awkward.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 5 tests.
+Incomplete: 5.
+  INCOMPLETE AWK-1 at inventoried.scratch-17.spec.ts:10, "a group @ingroup > first in the group": it has no purpose; it has no source requirement; it has tags that are not in the tag scheme: @grouped @ingroup @one; it has 0 risk tags, so it cannot be given a value.
+  INCOMPLETE AWK-3 at inventoried.scratch-17.spec.ts:28, "a skipped test @inline": it has no source requirement; it has a tag that is not in the tag scheme: @inline; it has 0 risk tags, so it cannot be given a value; it is declared with test.skip, so it does not run as an ordinary test.
+  INCOMPLETE AWK-4 at inventoried.scratch-17.spec.ts:25, "a skipped group > third, in a group that is skipped": a group it is in, at line 24, is declared with test.describe.skip, so it does not run; it has no purpose; it has no source requirement; it has a tag that is not in the tag scheme: @four; it has 0 risk tags, so it cannot be given a value.
+  INCOMPLETE (no identifier, inventoried.scratch-17.spec.ts:17) at inventoried.scratch-17.spec.ts:17, "a group @ingroup > an inner group > second, with a title in back quotes": it has no identifier; it has no purpose; it has no source requirement; it has tags that are not in the tag scheme: @grouped @ingroup @two @three; it has 0 risk tags, so it cannot be given a value.
+  INCOMPLETE (no identifier, inventoried.scratch-17.spec.ts:30) at inventoried.scratch-17.spec.ts:30, "a test with no details at all éA": it has no identifier; it has no purpose; it has no source requirement; it has 0 risk tags, so it cannot be given a value.
+Groups of possible duplicates: 0.
+Groups of possible overlap: 0.
+Wrote awkward.md: 120 lines, sha256 eadef6e211484f62.
+------------------------------------------------------------------------------
+exit code: 0
+Playwright lists:
+  line 10  a group @ingroup > first in the group   @grouped @ingroup @one
+  line 17  a group @ingroup > an inner group > second, with a title in back quotes   @grouped @ingroup @three @two
+  line 25  a skipped group > third, in a group that is skipped   @four
+  line 28  a skipped test @inline   @inline
+  line 30  a test with no details at all éA   
+  ok   the generator finds the tests Playwright lists, and no test in a comment, a string or a step: 5 and 5
+  ok   each is at the line Playwright gives, with the tags Playwright gives: a group's tag, a tag in a group's title and a tag in a test's title among them
+  ok   each, at its line, has the title Playwright shows, with the names of its groups before it and its escapes read
+  ok   each has the identifier Playwright reads for it, or none where Playwright reads none
+  ok   the skipped test, and the test in the skipped group, are in the inventory and are each reported as not running
+  ok   the generator did not ask for this file to be looked at: it read all of it
+
+6b. Ways of writing tests that the generator does NOT read. It must say so, and not pass over them in silence.
+Each file below is listed by Playwright and read by the generator. The two may differ. What matters is that the generator says where.
+
+-- Tests declared in a loop, each with a title worked out when the file runs.
+$ node tools/inventory.ts --spec inventoried.scratch-18.spec.ts --out TEMP/unread-18.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 2 tests.
+Incomplete: 2.
+  INCOMPLETE (no identifier, inventoried.scratch-18.spec.ts:2) at inventoried.scratch-18.spec.ts:2, "(title not readable)": its title is not written out as plain quoted text, so it may be more than one test when the file runs; it has no identifier; it has no purpose; it has no source requirement; it has 0 risk tags, so it cannot be given a value.
+  INCOMPLETE (no identifier, inventoried.scratch-18.spec.ts:3) at inventoried.scratch-18.spec.ts:3, "an ordinary test beside it": it has no identifier; it has no purpose; it has no source requirement; it has 0 risk tags, so it cannot be given a value.
+Groups of possible duplicates: 0.
+Groups of possible overlap: 0.
+Wrote unread-18.md: 98 lines, sha256 66e7c993c2d4bf0f.
+------------------------------------------------------------------------------
+exit code: 0
+Playwright lists 3 tests in this file. The generator found 2.
+  ok   a test whose title is worked out when the file runs is reported, with a warning that it may be more than one test
+
+-- `test` taken under another name.
+$ node tools/inventory.ts --spec inventoried.scratch-19.spec.ts --out TEMP/unread-19.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 1 tests.
+  LOOK AT inventoried.scratch-19.spec.ts: it takes `test` under another name (`test as ...`), and does not then make its own `test`.
+Incomplete: 1.
+  INCOMPLETE (no identifier, inventoried.scratch-19.spec.ts:4) at inventoried.scratch-19.spec.ts:4, "an ordinary test beside it": it has no identifier; it has no purpose; it has no source requirement; it has 0 risk tags, so it cannot be given a value.
+Groups of possible duplicates: 0.
+Groups of possible overlap: 0.
+Wrote unread-19.md: 90 lines, sha256 d4dfd151885efc9f.
+------------------------------------------------------------------------------
+exit code: 0
+Playwright lists 2 tests in this file. The generator found 1.
+  ok   a file that takes `test` under another name is reported as a file to look at
+
+-- `test.describe` given another name.
+$ node tools/inventory.ts --spec inventoried.scratch-20.spec.ts --out TEMP/unread-20.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 2 tests.
+  LOOK AT inventoried.scratch-20.spec.ts: it gives `test` or `test.describe` another name.
+Incomplete: 2.
+  INCOMPLETE (no identifier, inventoried.scratch-20.spec.ts:3) at inventoried.scratch-20.spec.ts:3, "inside it": it has no identifier; it has no purpose; it has no source requirement; it has 0 risk tags, so it cannot be given a value.
+  INCOMPLETE (no identifier, inventoried.scratch-20.spec.ts:4) at inventoried.scratch-20.spec.ts:4, "an ordinary test beside it": it has no identifier; it has no purpose; it has no source requirement; it has 0 risk tags, so it cannot be given a value.
+Groups of possible duplicates: 0.
+Groups of possible overlap: 0.
+Wrote unread-20.md: 97 lines, sha256 2dbdf5115b869d7f.
+------------------------------------------------------------------------------
+exit code: 0
+Playwright lists 2 tests in this file. The generator found 2.
+  ok   a file that gives `test.describe` another name is reported as a file to look at
+
+-- A group whose body is one expression, with no braces.
+$ node tools/inventory.ts --spec inventoried.scratch-21.spec.ts --out TEMP/unread-21.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 2 tests.
+  LOOK AT inventoried.scratch-21.spec.ts: at line 2 it has a group whose body is not written as `() => { ... }`, so the tests in it may be read without the group's title and tags.
+Incomplete: 2.
+  INCOMPLETE (no identifier, inventoried.scratch-21.spec.ts:2) at inventoried.scratch-21.spec.ts:2, "inside it": it has no identifier; it has no purpose; it has no source requirement; it has 0 risk tags, so it cannot be given a value.
+  INCOMPLETE (no identifier, inventoried.scratch-21.spec.ts:3) at inventoried.scratch-21.spec.ts:3, "an ordinary test beside it": it has no identifier; it has no purpose; it has no source requirement; it has 0 risk tags, so it cannot be given a value.
+Groups of possible duplicates: 0.
+Groups of possible overlap: 0.
+Wrote unread-21.md: 97 lines, sha256 929a678035c4a8b9.
+------------------------------------------------------------------------------
+exit code: 0
+Playwright lists 2 tests in this file. The generator found 2.
+  ok   a group whose body has no braces is reported as a file to look at
+
+-- A test whose details are a variable.
+$ node tools/inventory.ts --spec inventoried.scratch-22.spec.ts --out TEMP/unread-22.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 2 tests.
+Incomplete: 2.
+  INCOMPLETE (no identifier, inventoried.scratch-22.spec.ts:3) at inventoried.scratch-22.spec.ts:3, "a test with details in a variable": its details are not written out as a plain object; it has no identifier; it has no purpose; it has no source requirement; it has 0 risk tags, so it cannot be given a value.
+  INCOMPLETE (no identifier, inventoried.scratch-22.spec.ts:4) at inventoried.scratch-22.spec.ts:4, "an ordinary test beside it": it has no identifier; it has no purpose; it has no source requirement; it has 0 risk tags, so it cannot be given a value.
+Groups of possible duplicates: 0.
+Groups of possible overlap: 0.
+Wrote unread-22.md: 98 lines, sha256 59aeb84d663a0cc9.
+------------------------------------------------------------------------------
+exit code: 0
+Playwright lists 2 tests in this file. The generator found 2.
+  ok   a test whose details are a variable is reported as unreadable, and not as having none
+
+-- A group whose tags are a variable.
+$ node tools/inventory.ts --spec inventoried.scratch-23.spec.ts --out TEMP/unread-23.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 2 tests.
+Incomplete: 2.
+  INCOMPLETE (no identifier, inventoried.scratch-23.spec.ts:4) at inventoried.scratch-23.spec.ts:4, "a group with tags in a variable > inside it": a group it is in, at line 3, could not be read: the tags are not written out as plain quoted text; it has no identifier; it has no purpose; it has no source requirement; it has 0 risk tags, so it cannot be given a value.
+  INCOMPLETE (no identifier, inventoried.scratch-23.spec.ts:6) at inventoried.scratch-23.spec.ts:6, "an ordinary test beside it": it has no identifier; it has no purpose; it has no source requirement; it has 0 risk tags, so it cannot be given a value.
+Groups of possible duplicates: 0.
+Groups of possible overlap: 0.
+Wrote unread-23.md: 98 lines, sha256 011fe50a3909ae8e.
+------------------------------------------------------------------------------
+exit code: 0
+Playwright lists 2 tests in this file. The generator found 2.
+  ok   a test in a group whose tags cannot be read is itself reported
+
+-- A file in which there is no test.
+$ node tools/inventory.ts --spec inventoried.scratch-24.spec.ts --out TEMP/empty.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 0 tests.
+  LOOK AT inventoried.scratch-24.spec.ts: no test was found in it.
+Incomplete: 0.
+Groups of possible duplicates: 0.
+Groups of possible overlap: 0.
+Wrote empty.md: 84 lines, sha256 d390f40e24ed82fa.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   a file in which no test is found is reported as a file to look at
+
+==============================================================================
+PART 7. An inventory edited by hand, and one that is out of date
+A copy of the inventory with one purpose reworded by hand:
+$ node tools/inventory.ts --check --out TEMP/edited.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 12 tests.
+Incomplete: 0.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+NOT UP TO DATE: edited.md is not what the files give. It was edited by hand, or a test file or the requirements changed since it was generated. Nothing was written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   an inventory edited by hand is reported as not what the test files give, and the exit code is 1
+  ok   with --check the generator did not put it right: the file is as it was left
+
+The inventory of today's tests, checked against a copy of the test file with a thirteenth test added:
+$ node tools/inventory.ts --check --spec inventoried.scratch-25.spec.ts --out TEMP/stale.md
+------------------------------------------------------------------------------
+Read 1 test file as text: 13 tests.
+Incomplete: 0.
+Groups of possible duplicates: 1.
+  POSSIBLE DUPLICATES DIR-T02 and DIR-T11: the purpose of each is "Catches the data interface dropping a field or adding one for any customer, or returning a starting customer wrongly."
+Groups of possible overlap: 2.
+  POSSIBLE OVERLAP DIR-T02 and DIR-T11: each has the source DIR-01 and the same tags
+  POSSIBLE OVERLAP DIR-T05 and DIR-T12: each has the source DIR-03 and the same tags
+NOT UP TO DATE: stale.md is not what the files give. It was edited by hand, or a test file or the requirements changed since it was generated. Nothing was written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   an inventory made before a test was added is reported as out of date
+
+==============================================================================
+PART 8. The whole folder, as it is: what an undocumented suite looks like
+The generator is pointed at every test file in participant/tests/playwright. The files of earlier quests were written before
+purposes and sources were, and are left as they were approved. Only some lines of what it printed are kept here.
+This inventory is written to TEMP and thrown away. The inventory that is handed in is of inventoried.spec.ts alone.
+$ node tools/inventory.ts --all --out TEMP/all.md
+------------------------------------------------------------------------------
+Read 10 test files as text: 45 tests.
+Incomplete: 33.
+  INCOMPLETE (no identifier, coupled.spec.ts:26) at coupled.spec.ts:26, "coupled: adds Test User through the form": it has no identifier; it has no purpose; it has no source requirement; it has 0 risk tags, so it cannot be given a value.
+  INCOMPLETE (no identifier, coupled.spec.ts:35) at coupled.spec.ts:35, "coupled: upgrades Test User to the plus plan": it has no identifier; it has no purpose; it has no source requirement; it has 0 risk tags, so it cannot be given a value.
+  INCOMPLETE (no identifier, failure-evidence.spec.ts:39) at failure-evidence.spec.ts:39, "the total of order ord-1001 is shown": it has no identifier; it has no purpose; it has no source requirement; it has 0 risk tags, so it cannot be given a value.
+  ... and 30 more lines beginning INCOMPLETE
+Groups of possible duplicates: 1.
+Groups of possible overlap: 2.
+Wrote all.md: 340 lines, sha256 e46011784b7eeace.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   it reads the 10 files in the folder whose names end in .spec.ts. It does not look in folders below, and does not ask any Playwright settings which files are tests
+  ok   by the generator's own count it finds 45 tests: the 12 of inventoried.spec.ts, none reported, and 33 in the other files, each reported as incomplete. THE COUNT FOR THE OTHER FILES WAS NOT COMPARED WITH PLAYWRIGHT'S
+
+==============================================================================
+AT THE END
+  ok   the check ran to its end
+  ok   every one of the 10 test files in the folder, and the requirements, are byte for byte what they were at the start: the generator changed no test file
+  ok   the inventory on disk is byte for byte what it was at the start, and no changed copy of the test file is left
+
+RESULT: ALL CHECKS PASSED. 69 checks.

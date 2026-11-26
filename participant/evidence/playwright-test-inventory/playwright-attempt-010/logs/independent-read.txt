@@ -1,0 +1,119 @@
+Independent reads of the test inventory, its generator and its run record. playwright-test-inventory, attempt playwright-attempt-010
+Copied by hand, and shortened, from the readers' replies by the assistant that built this quest. No program wrote this file.
+
+Who the readers were: two separate AI assistants (Claude), each started fresh. No person read the work. Each was given a
+copy of the files and told to read only those, to run nothing, to write nothing and to contact nothing. Those limits were
+given in words and not enforced. Neither saw the other's reply. The first version of everything was finished, and the run
+record passed with 53 checks, before either reply was read.
+
+  Reader 1   Played a new teammate. First given only the inventory, the requirements and the tag scheme, and asked to
+             find the tests for a requirement, the requirement with no test, the duplicates, and what each of two tests
+             is for. Then allowed to open the test file, and asked whether each purpose says what its test asserts.
+  Reader 2   Given the generator, the check, the test file, the inventory and the run record. Asked for test files the
+             generator would misread without saying so, and for checks that say more than they test.
+
+==============================================================================
+READER 1: the new teammate (criterion 7, and the purposes)
+
+With the inventory alone:
+  - The tests for "a name already in use is refused": found, DIR-T05 and DIR-T12. "About 20 seconds: the table gave the
+    IDs, but I had to go to 'Every test' for the line numbers."
+  - The requirement with no test: DIR-09. "Instant, from the Summary line."
+  - The possible duplicate, DIR-T02 and DIR-T11: found. "From the inventory alone I could not tell" whether they check
+    the same thing.
+  - The value score: "High is exactly the smoke selection, so it adds nothing over the tags." It cannot order tests
+    within a level. "Risk can only lower a score, never raise it."
+  - What the inventory did not tell it: which half of a requirement a test covers, and whether a requirement is covered
+    wholly or in part. "The table only says 'has a test'."
+  - The purposes, as first written ("Show that ..."): "None is generic, but most restate the title." Two said less than
+    their titles. Only two of twelve added anything to the title.
+
+With the test file open:
+  - Three purposes claimed more than the test asserts. DIR-T02 said "every customer" and checks one exactly. DIR-T06 and
+    DIR-T10 said "stored" and looked only at the page.
+  - Four purposes said less than the test asserts.
+  - DIR-T09 serves DIR-06 only in part: the requirement says "changes nothing", and the test looks at the answer only.
+  - The duplicate pair: "T11 is almost wholly redundant." DIR-T02 already makes the same check.
+  - Pairs the inventory missed: DIR-T06 and DIR-T10 run the same path. DIR-T05 and DIR-T12 are one script with one
+    change. "Duplicate detection works only on identical purpose text. Rewording one purpose would hide the pair."
+
+WHAT WAS CHANGED AFTER READER 1
+  All twelve purposes were rewritten. Each now says what fault the test catches and, where it matters, what the test
+  does not look at: "Catches an upgrade reaching the wrong customer, or more than one. It looks at one other customer,
+  and on the page only." DIR-T06 now also reads what was stored, so that its purpose is true. An assertion in DIR-T04
+  that tested the test's own helper was taken out.
+  The table for finding tests now gives each test's file and line, and says that a test listed against a requirement
+  may not cover all of it.
+  A second, weaker sign was added: "possible overlap", tests with the same source and the same tags. It reports
+  DIR-T05 with DIR-T12, as well as the duplicate pair. It does not report DIR-T06 with DIR-T10, whose tags differ.
+  A purpose that is "Show that" and the title again is now reported as repeating the title.
+  NOT CHANGED: the value rule. It is still the lower of the requirement's importance and the test's risk, so "high" is
+  the same six tests the smoke selection gives. The inventory now says what the value does and does not mean.
+
+==============================================================================
+READER 2: the generator and the check
+
+Its main finding: the generator reads test files as text with a reader written by hand, and there were many ways of
+writing a test that it would miss, or give the wrong tags, WITHOUT SAYING ANYTHING.
+  - A title that is not a quoted string, as in a loop: the test was dropped, with no row and no report.
+  - `test` under another name, or `test.describe` given another name: missed.
+  - A group whose details could not be read: its tests lost the group's tags, with nothing reported.
+  - A tag in a group's title: ignored.
+  - A group whose body has no braces: its tests lost the group, and the next block could gain it.
+  - A regular expression after `=>` or `)`: a quote inside it opened a "string" that swallowed tests. A division after
+    `value!` was read as a regular expression.
+  - Escapes written as \x41 were decoded wrongly. Tests in a skipped group were not marked.
+  - Details in a variable were reported as "no purpose", not as unreadable.
+  "PART 6's fixture contains none of these."
+Checks that said more than they tested:
+  - The count for the whole folder is "arithmetic on the generator's own output", never compared with Playwright.
+  - "The generator changed no test file" hashed one test file of ten.
+  - "Writes in one place only" counted a word, and `--out` could name any file, a test file among them.
+  - The value table "is the same rule retyped, so it tests arithmetic and not soundness", and four of nine cases were
+    never tried.
+  - A check that tags were present could not fail. The title was not tied to its row.
+Sameness of two runs: "Two back-to-back runs on one machine prove little: the code has no clock or randomness." The
+inventory would differ on Windows, with other line ends, with the files named in another order, or on a Node without
+its language tables.
+The rule that the generator only reads: it does not load or run a test file. It also reads the requirements and the tag
+vocabulary. The CHECK tool does load test files, through Playwright's list, and the record understated that.
+Design: duplicates are found by identical text only. "a b c d e f" passes as a purpose. A requirement written "Must"
+was read as withdrawn. Identifiers are unique only among the files given. A file with no test gave an inventory in
+silence.
+
+WHAT WAS CHANGED AFTER READER 2
+  The reader in the generator was rewritten so that what it cannot read is said out loud:
+    a title worked out when the file runs gives a row, reported, with a warning that it may be many tests;
+    a group that cannot be read marks every test in it;
+    `test` under another name, a renamed `test.describe`, a group with no braces, braces that do not pair up, and a
+    file with no test are each reported for the FILE, in a new section, "Files to look at".
+  Regular expressions are recognised by what stands before them, everywhere in the file. Tags in a group's title, the
+  missing escapes and skipped groups are read. Details in a variable are reported as unreadable.
+  The generator will not write to a file that is not .md. Line ends are read as one kind. Files are put in order.
+  Sorting no longer depends on language settings. "Must" is read as must. Letters of every alphabet count in a purpose.
+  A tag that is not in the tag scheme is reported.
+  The check: Part 6 now has a harder file, compared with Playwright's list by line, tags, title and identifier, and
+  seven files written in ways the generator does not read, each of which it must report. All nine cases of the value
+  rule are tried. Every test file in the folder is hashed before and after. The count for the whole folder is labelled
+  as the generator's own and not compared. The record says that Playwright loads a file to list it.
+  The run record went from 53 checks to 69.
+  NOT CHANGED, and stated:
+    a test with a plain title declared in a loop is read as one test, and nothing notices;
+    "a b c d e f" still passes as a purpose: the run record shows it passing, as a known limit;
+    duplicates by purpose are still by identical text;
+    identifiers are unique only among the files given;
+    the generator can still be wrong, without knowing, about a file written unusually enough. Only the comparison with
+    Playwright's list would show it, and that comparison is made by the check, on the files of this quest.
+
+NOT READ AGAIN: neither reader saw the rewritten purposes, the rewritten generator or the new checks.
+
+==============================================================================
+SUMMARY
+  Could a new teammate find the tests for a requirement? Reader 1 did, in about 20 seconds, and wanted the line numbers
+  in the same table. They are there now.
+  Did the purposes say what the tests are for? Not at first. Most restated the title and three claimed more than the
+  test checks. They were rewritten. The rewrite has not been read.
+  Did the generator read test files rightly? The file of this quest, yes, by comparison with Playwright. Other ways of
+  writing tests it would have missed in silence. It now reports those it knows it cannot read.
+  Did the checks say more than they tested? Several did. They were corrected.
+  A person has not read any of this.

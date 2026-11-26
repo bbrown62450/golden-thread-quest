@@ -664,4 +664,13 @@ attempts:
   evidence_path: participant/evidence/jira-create-subtask/jira-attempt-014
   submission_id: submission-20261126022823-cd4b44
   review_id: review-20261126023658-e818cb
-updated_at: '2026-11-26T02:36:58Z'
+- attempt_id: playwright-attempt-010
+  quest_id: playwright-test-inventory
+  quest_version: 1
+  content_hash: sha256:2989e7ff4683f71e44e2f3d8502b997649469dddde98c11b12c04c20826a2a34
+  state: submitted
+  started_at: '2026-11-26T12:52:10Z'
+  updated_at: '2026-11-26T13:21:50Z'
+  evidence_path: participant/evidence/playwright-test-inventory/playwright-attempt-010
+  submission_id: submission-20261126132150-1ae060
+updated_at: '2026-11-26T13:21:50Z'
