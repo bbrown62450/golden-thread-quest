@@ -1,0 +1,225 @@
+The hook, where, and the audit. base-camp-ownership-zones, attempt base-attempt-008
+Recorded by scripts/record_evidence.py. Each block between dashed lines is what a command printed.
+Every write is aimed at a sandbox of made-up files, shown as SANDBOX. Nothing here is from a real system.
+
+
+==============================================================================
+THE HOOK: the same check, for the agent's own file-editing tools (criterion 2)
+Claude Code can run a command before each use of a file-editing tool, giving it the tool call as JSON on standard input.
+If the command exits with 2, the edit is not made and the agent is shown what the command wrote to standard error.
+Below, `zones.py hook` is given tool calls made up here, in the shape Claude Code sends. No agent is running in this record.
+
+Tool call: {"tool_name": "Write", "tool_input": {"file_path": "SANDBOX/repo/participant/context/new-note.md"}, "cwd": "SANDBOX/repo"}
+$ (the tool call on standard input) python3 participant/tools/zones.py --root SANDBOX/repo hook
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit code: 0
+  ok   Write: let through, with exit code 0 and nothing said
+
+Tool call: {"tool_name": "Edit", "tool_input": {"file_path": "SANDBOX/repo/participant/context/notes.md"}, "cwd": "SANDBOX/repo"}
+$ (the tool call on standard input) python3 participant/tools/zones.py --root SANDBOX/repo hook
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit code: 0
+  ok   Edit: let through, with exit code 0 and nothing said
+
+Tool call: {"tool_name": "Edit", "tool_input": {"file_path": "SANDBOX/repo/content/quests/sample-quest.md"}, "cwd": "SANDBOX/repo"}
+$ (the tool call on standard input) python3 participant/tools/zones.py --root SANDBOX/repo hook
+------------------------------------------------------------------------------
+zones: REFUSED by rule R10. "SANDBOX/repo/content/quests/sample-quest.md" resolves to `content/quests/sample-quest.md`, which is in: Program-owned. Everything listed as program-owned belongs to the program's maintainers and is not changed here. The edit was not made. The zone rules are in participant/context/zone-rules.md.
+------------------------------------------------------------------------------
+exit code: 2
+  ok   Edit: stopped, with exit code 2, by rule R10
+
+Tool call: {"tool_name": "Write", "tool_input": {"file_path": "SANDBOX/repo/local-data/saved-response.json"}, "cwd": "SANDBOX/repo"}
+$ (the tool call on standard input) python3 participant/tools/zones.py --root SANDBOX/repo hook
+------------------------------------------------------------------------------
+zones: REFUSED by rule R5. "SANDBOX/repo/local-data/saved-response.json" resolves to `local-data/saved-response.json`, which is in: Private data. `local-data`, `.claude/settings.local.json`, `.claude/worktrees` are private data. Programs the participant runs write there; the agent's edits do not. The edit was not made. The zone rules are in participant/context/zone-rules.md.
+------------------------------------------------------------------------------
+exit code: 2
+  ok   Write: stopped, with exit code 2, by rule R5
+
+Tool call: {"tool_name": "Write", "tool_input": {"file_path": "SANDBOX/repo/generated/index.html"}, "cwd": "SANDBOX/repo"}
+$ (the tool call on standard input) python3 participant/tools/zones.py --root SANDBOX/repo hook
+------------------------------------------------------------------------------
+zones: REFUSED by rule R6. "SANDBOX/repo/generated/index.html" resolves to `generated/index.html`, which is in: Generated and tool-managed. The built site, installed packages, caches and `.git/` are written only by the tool that makes them. The edit was not made. The zone rules are in participant/context/zone-rules.md.
+------------------------------------------------------------------------------
+exit code: 2
+  ok   Write: stopped, with exit code 2, by rule R6
+
+Tool call: {"tool_name": "Write", "tool_input": {"file_path": "SANDBOX/repo/participant/context/../../README.md"}, "cwd": "SANDBOX/repo"}
+$ (the tool call on standard input) python3 participant/tools/zones.py --root SANDBOX/repo hook
+------------------------------------------------------------------------------
+zones: REFUSED by rule R10. "SANDBOX/repo/participant/context/../../README.md" resolves to `README.md`, which is in: Program-owned. Everything listed as program-owned belongs to the program's maintainers and is not changed here. The edit was not made. The zone rules are in participant/context/zone-rules.md.
+------------------------------------------------------------------------------
+exit code: 2
+  ok   Write: stopped, with exit code 2, by rule R10
+
+Tool call: {"tool_name": "Write", "tool_input": {"file_path": "SANDBOX/repo/participant/context/link-to-curriculum/new.md"}, "cwd": "SANDBOX/repo"}
+$ (the tool call on standard input) python3 participant/tools/zones.py --root SANDBOX/repo hook
+------------------------------------------------------------------------------
+zones: REFUSED by rule R10. "SANDBOX/repo/participant/context/link-to-curriculum/new.md" resolves to `content/quests/new.md`, which is in: Program-owned. Everything listed as program-owned belongs to the program's maintainers and is not changed here. Here: as written it seemed to be in the participant zone, and it resolves to `content/quests/new.md`: a symbolic link on the way leads there. The edit was not made. The zone rules are in participant/context/zone-rules.md.
+------------------------------------------------------------------------------
+exit code: 2
+  ok   Write: stopped, with exit code 2, by rule R10
+
+Tool call: {"tool_name": "MultiEdit", "tool_input": {"file_path": "SANDBOX/repo/participant/progress.yaml"}, "cwd": "SANDBOX/repo"}
+$ (the tool call on standard input) python3 participant/tools/zones.py --root SANDBOX/repo hook
+------------------------------------------------------------------------------
+zones: REFUSED by rule R7. "SANDBOX/repo/participant/progress.yaml" resolves to `participant/progress.yaml`, which is in: Participant-owned. Inside `participant/`, what the application writes is not written by hand: `progress.yaml`, `ACTIVITY.md`, `.progress.lock`, and in each attempt folder `manifest.yaml`, `submission.yaml`, `review.yaml`, `validation`. The edit was not made. The zone rules are in participant/context/zone-rules.md.
+------------------------------------------------------------------------------
+exit code: 2
+  ok   MultiEdit: stopped, with exit code 2, by rule R7
+
+Tool call: {"tool_name": "Edit", "tool_input": {"file_path": "SANDBOX/repo/participant/tools/zones.py"}, "cwd": "SANDBOX/repo"}
+$ (the tool call on standard input) python3 participant/tools/zones.py --root SANDBOX/repo hook
+------------------------------------------------------------------------------
+zones: REFUSED by rule R3. "SANDBOX/repo/participant/tools/zones.py" resolves to `participant/tools/zones.py`, which is in: Participant-owned. Inside `participant/`, the agent does not write what steers the agent or Git, or this tool: `.claude`, `CLAUDE.md`, `CLAUDE.local.md`, `.mcp.json`, `.git`, `.gitattributes`, `.gitmodules`, `.pre-commit-config.yaml`, and `participant/tools/zones.py`. The participant changes those by hand. The edit was not made. The zone rules are in participant/context/zone-rules.md.
+------------------------------------------------------------------------------
+exit code: 2
+  ok   Edit: stopped, with exit code 2, by rule R3
+
+Tool call: {"tool_name": "Write", "tool_input": {"file_path": "SANDBOX/repo/.claude/settings.local.json"}, "cwd": "SANDBOX/repo"}
+$ (the tool call on standard input) python3 participant/tools/zones.py --root SANDBOX/repo hook
+------------------------------------------------------------------------------
+zones: REFUSED by rule R5. "SANDBOX/repo/.claude/settings.local.json" resolves to `.claude/settings.local.json`, which is in: Private data. `local-data`, `.claude/settings.local.json`, `.claude/worktrees` are private data. Programs the participant runs write there; the agent's edits do not. The edit was not made. The zone rules are in participant/context/zone-rules.md.
+------------------------------------------------------------------------------
+exit code: 2
+  ok   Write: stopped, with exit code 2, by rule R5
+
+Tool call: {"tool_name": "Write", "tool_input": {"file_path": "SANDBOX/outside/scratch.txt"}, "cwd": "SANDBOX/repo"}
+$ (the tool call on standard input) python3 participant/tools/zones.py --root SANDBOX/repo hook
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit code: 0
+  ok   Write: let through, with exit code 0 and nothing said
+
+Tool call: {"tool_name": "Bash", "tool_input": {"command": "echo x > content/quests/sample-quest.md"}, "cwd": "SANDBOX/repo"}
+$ (the tool call on standard input) python3 participant/tools/zones.py --root SANDBOX/repo hook
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit code: 0
+  ok   Bash: let through, with exit code 0 and nothing said
+
+THE LAST CALL ABOVE IS THE LIMIT. A shell command that writes into the curriculum is a Bash call, not a file edit, and the hook
+lets it through. The hook checks the agent's file-editing tools. It does not check what a command the agent runs writes.
+The call before it is let through for another reason: the file is not in the repository at all.
+
+The repository named by another spelling of its path. This disk sets capitals aside, so SANDBOX/REPO is SANDBOX/repo:
+Tool call: {"tool_name": "Write", "tool_input": {"file_path": "SANDBOX/REPO/README.md"}, "cwd": "SANDBOX/repo"}
+$ (the tool call on standard input) python3 participant/tools/zones.py --root SANDBOX/repo hook
+------------------------------------------------------------------------------
+zones: REFUSED by rule R10. "SANDBOX/REPO/README.md" resolves to `README.md`, which is in: Program-owned. Everything listed as program-owned belongs to the program's maintainers and is not changed here. The edit was not made. The zone rules are in participant/context/zone-rules.md.
+------------------------------------------------------------------------------
+exit code: 2
+  ok   Write, by another spelling of the repository's path: stopped, with exit code 2, by rule R10
+  ok   the hook wrote nothing: every name and byte under SANDBOX is what it was
+
+==============================================================================
+WHERE: which zone a path belongs to (stretch goal)
+$ python3 participant/tools/zones.py --root SANDBOX/repo where participant/context/notes.md content/quests/sample-quest.md generated/index.html local-data/raw-response.json participant/context/link-to-curriculum/sample-quest.md stray-notes.txt
+------------------------------------------------------------------------------
+participant/context/notes.md
+  resolves to:  participant/context/notes.md
+  zone:         Participant-owned
+  written by:   The participant, and the AI agent when the participant asks. Some files in it are not the agent's to write: see the exceptions.
+  Git:          Tracked. `gtq hand-in` commits everything in this folder, and nothing else.
+  the agent:    ALLOWED by rule R9. "participant/context/notes.md" resolves to `participant/context/notes.md`, which is in: Participant-owned. Everything else inside `participant/` is the participant's. The participant and the agent may write there. THIS IS THE ONLY RULE THAT ALLOWS A WRITE.
+content/quests/sample-quest.md
+  resolves to:  content/quests/sample-quest.md
+  zone:         Program-owned
+  written by:   The program's maintainers, in the program's own repository. This repository is a copy of that one.
+  Git:          Tracked. It comes from the program's repository and is never part of a hand-in. A change to it here would show in `git status` and must not be committed.
+  the agent:    REFUSED by rule R10. "content/quests/sample-quest.md" resolves to `content/quests/sample-quest.md`, which is in: Program-owned. Everything listed as program-owned belongs to the program's maintainers and is not changed here.
+generated/index.html
+  resolves to:  generated/index.html
+  zone:         Generated and tool-managed
+  written by:   The tool that makes each: `make build`, the package installers, Python, Git. Never a person or the agent by hand.
+  Git:          Not tracked. All but `.git/` are ignored by `.gitignore`. `.git/` is Git's own store, which Git never lists.
+  the agent:    REFUSED by rule R6. "generated/index.html" resolves to `generated/index.html`, which is in: Generated and tool-managed. The built site, installed packages, caches and `.git/` are written only by the tool that makes them.
+local-data/raw-response.json
+  resolves to:  local-data/raw-response.json
+  zone:         Private data
+  written by:   Programs the participant runs, at run time, and the participant by hand. Credentials: the participant alone, by hand. The agent may run such a program; it does not write these files itself.
+  Git:          Not tracked. Ignored by `.gitignore`. It must never be committed or leave this computer.
+  the agent:    REFUSED by rule R5. "local-data/raw-response.json" resolves to `local-data/raw-response.json`, which is in: Private data. `local-data`, `.claude/settings.local.json`, `.claude/worktrees` are private data. Programs the participant runs write there; the agent's edits do not.
+participant/context/link-to-curriculum/sample-quest.md
+  resolves to:  content/quests/sample-quest.md
+  zone:         Program-owned
+  written by:   The program's maintainers, in the program's own repository. This repository is a copy of that one.
+  Git:          Tracked. It comes from the program's repository and is never part of a hand-in. A change to it here would show in `git status` and must not be committed.
+  the agent:    REFUSED by rule R10. "participant/context/link-to-curriculum/sample-quest.md" resolves to `content/quests/sample-quest.md`, which is in: Program-owned. Everything listed as program-owned belongs to the program's maintainers and is not changed here. Here: as written it seemed to be in the participant zone, and it resolves to `content/quests/sample-quest.md`: a symbolic link on the way leads there.
+stray-notes.txt
+  resolves to:  stray-notes.txt
+  zone:         NONE. It fits no zone
+  the agent:    REFUSED by rule R11. "stray-notes.txt" resolves to `stray-notes.txt`, which is in: no zone. A path that fits no zone, or that is not a place a file can be, is refused. A new kind of file needs a zone before it is written.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   stretch goal: it names the zone of each of the four kinds of path, the zone a link really leads to, and a path in no zone
+
+==============================================================================
+THE AUDIT: a check that fails when a file is in no zone (stretch goal)
+$ python3 participant/tools/zones.py --root SANDBOX/repo audit
+------------------------------------------------------------------------------
+Looked at 18 files and tool-managed or private folders under the root.
+  Program-owned:               5
+  Participant-owned:           10
+  Generated and tool-managed:  2
+  Private data:                1
+  IN NO ZONE:                  0
+EVERY FILE IS IN A ZONE.
+(This looks at the top of the repository. Anything inside `participant/` is in the participant's zone by being there, so the audit cannot fail for it.)
+------------------------------------------------------------------------------
+exit code: 0
+  ok   stretch goal: with every file of the sandbox in a zone, the audit passes
+
+A file is then put where no zone covers it, by this script, in the sandbox:
+$ python3 participant/tools/zones.py --root SANDBOX/repo audit
+------------------------------------------------------------------------------
+Looked at 19 files and tool-managed or private folders under the root.
+  Program-owned:               5
+  Participant-owned:           10
+  Generated and tool-managed:  2
+  Private data:                1
+  IN NO ZONE:                  1
+    stray-notes.txt
+FILES IN NO ZONE: 1. Each needs a zone in participant/tools/zones.py before anything writes there.
+(This looks at the top of the repository. Anything inside `participant/` is in the participant's zone by being there, so the audit cannot fail for it.)
+------------------------------------------------------------------------------
+exit code: 1
+  ok   stretch goal: the audit fails, with exit code 1, and names the file
+
+==============================================================================
+THE REAL REPOSITORY. Read only: nothing is written
+$ python3 participant/tools/zones.py audit
+------------------------------------------------------------------------------
+Looked at 2886 files and tool-managed or private folders under the root.
+  Program-owned:               495
+  Participant-owned:           2381
+  Generated and tool-managed:  8
+  Private data:                2
+  IN NO ZONE:                  0
+EVERY FILE IS IN A ZONE.
+(This looks at the top of the repository. Anything inside `participant/` is in the participant's zone by being there, so the audit cannot fail for it.)
+------------------------------------------------------------------------------
+exit code: 0
+  ok   every file at the top of the real repository is in a zone. (Anything inside participant/ is in the participant's zone by being there, so this cannot fail for it.)
+
+What Git itself says, asked here and not taken from the rules:
+  top-level names Git tracks: .claude, .env.example, .gitattributes, .github, .gitignore, .pre-commit-config.yaml, CLAUDE.md, CONTRIBUTING.md, HANDOFF-PROMPT.md, IMAGE-PLAN.md, LICENSE, LICENSE-CONTENT, Makefile, PACKAGE-MANIFEST.md, PLANNING-STATUS.md, README.md, VALIDATION-REPORT.md, artifacts, assets, content, deploy, docs, fixtures, install.sh, participant, prototype, pyproject.toml, quest_app, schemas, scripts, templates, tests, tools, validators, vendor
+  of the names the rules call not tracked, Git ignores: generated, generated.lock, local-data, .venv, .claude/settings.local.json, .env, participant/node_modules
+  ok   criterion 1, the Git status: every top-level name Git tracks is `participant` or is listed as program-owned, and nothing listed as program-owned is missing from Git
+  ok   criterion 1, the Git status: Git ignores each of the seven generated and private names asked about
+$ python3 participant/tools/zones.py rules --check
+------------------------------------------------------------------------------
+UP TO DATE: participant/context/zone-rules.md is what the rules give.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 1: participant/context/zone-rules.md is what the tool writes from its rules today: it was not edited by hand since
+  ok   criterion 1: the rules name four zones, and the row of each has what it holds, who may write, whether the agent may, and its Git status
+
+RESULT: ALL CHECKS PASSED. 22 checks.

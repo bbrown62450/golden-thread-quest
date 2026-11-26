@@ -1,0 +1,105 @@
+The same write, allowed. base-camp-ownership-zones, attempt base-attempt-008
+Recorded by scripts/record_evidence.py. Each block between dashed lines is what a command printed.
+Every write is aimed at a sandbox of made-up files, shown as SANDBOX. Nothing here is from a real system.
+
+The same sandbox as refused-write.txt left, unchanged. The same command, with the same text. Only the path differs:
+it is in the participant's folder.
+
+==============================================================================
+THE ALLOWED WRITE
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to participant/context/new-note.md --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+ALLOWED by rule R9. "participant/context/new-note.md" resolves to `participant/context/new-note.md`, which is in: Participant-owned. Everything else inside `participant/` is the participant's. The participant and the agent may write there. THIS IS THE ONLY RULE THAT ALLOWS A WRITE.
+WRITTEN: 33 bytes to `participant/context/new-note.md`.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 5: the same command, aimed at a participant-owned folder, succeeds: exit code 0, allowed by rule R9
+  ok   the file is there, and holds the text that was given
+  ok   it is the only thing that changed: nothing is gone, every other name and byte under SANDBOX is what it was, and no temporary file is left
+
+More writes the rules allow:
+
+A new folder inside the participant's zone, made as needed.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to participant/skills/a-new-skill/SKILL.md --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+ALLOWED by rule R9. "participant/skills/a-new-skill/SKILL.md" resolves to `participant/skills/a-new-skill/SKILL.md`, which is in: Participant-owned. Everything else inside `participant/` is the participant's. The participant and the agent may write there. THIS IS THE ONLY RULE THAT ALLOWS A WRITE.
+WRITTEN: 33 bytes to `participant/skills/a-new-skill/SKILL.md`.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   allowed, by rule R9
+
+A path that begins in the curriculum and whose `..` lands in the participant's folder. It is judged by where it lands.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to content/../participant/context/landed-here.md --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+ALLOWED by rule R9. "content/../participant/context/landed-here.md" resolves to `participant/context/landed-here.md`, which is in: Participant-owned. Everything else inside `participant/` is the participant's. The participant and the agent may write there. THIS IS THE ONLY RULE THAT ALLOWS A WRITE. Here: as written it starts in the program zone, and its `..` leads to `participant/context/landed-here.md`.
+WRITTEN: 33 bytes to `participant/context/landed-here.md`.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   allowed, by rule R9
+
+Through a link that stays inside the participant's folder. The link is kept, and the file it leads to is written.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to participant/context/link-to-my-notes.md --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+ALLOWED by rule R9. "participant/context/link-to-my-notes.md" resolves to `participant/context/notes.md`, which is in: Participant-owned. Everything else inside `participant/` is the participant's. The participant and the agent may write there. THIS IS THE ONLY RULE THAT ALLOWS A WRITE. Here: as written it names `participant/context/link-to-my-notes.md`, and it resolves to `participant/context/notes.md`: a symbolic link on the way leads there.
+WRITTEN: 33 bytes to `participant/context/notes.md`.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   allowed, by rule R9
+  ok   the link is still a link, and the notes it leads to hold the new text
+
+==============================================================================
+THE SANDBOX AFTERWARDS
+Every name under SANDBOX:
+  outside                                                            folder
+  outside/elsewhere.txt                                              30 bytes
+  repo                                                               folder
+  repo/.claude                                                       folder
+  repo/.claude/settings.json                                         3 bytes
+  repo/.git                                                          folder
+  repo/.git/HEAD                                                     13 bytes
+  repo/README.md                                                     19 bytes
+  repo/content                                                       folder
+  repo/content/quests                                                folder
+  repo/content/quests/sample-quest.md                                18 bytes
+  repo/docs                                                          folder
+  repo/docs/GUIDE.md                                                 18 bytes
+  repo/generated                                                     folder
+  repo/generated/index.html                                          13 bytes
+  repo/local-data                                                    folder
+  repo/local-data/raw-response.json                                  18 bytes
+  repo/participant                                                   folder
+  repo/participant/ACTIVITY.md                                       10 bytes
+  repo/participant/context                                           folder
+  repo/participant/context/landed-here.md                            33 bytes
+  repo/participant/context/link-out                                  link to SANDBOX/outside
+  repo/participant/context/link-to-curriculum                        link to SANDBOX/repo/content/quests
+  repo/participant/context/link-to-my-notes.md                       link to SANDBOX/repo/participant/context/notes.md
+  repo/participant/context/link-to-nowhere.md                        link to SANDBOX/outside/not-there-yet.txt
+  repo/participant/context/link-to-readme.md                         link to SANDBOX/repo/README.md
+  repo/participant/context/new-note.md                               33 bytes
+  repo/participant/context/notes.md                                  33 bytes
+  repo/participant/context/second-name-of-the-guide.md               18 bytes
+  repo/participant/evidence                                          folder
+  repo/participant/evidence/a-quest                                  folder
+  repo/participant/evidence/a-quest/attempt-1                        folder
+  repo/participant/evidence/a-quest/attempt-1/PROOF.md               8 bytes
+  repo/participant/evidence/a-quest/attempt-1/manifest.yaml          14 bytes
+  repo/participant/evidence/a-quest/attempt-1/validation             folder
+  repo/participant/evidence/a-quest/attempt-1/validation/result.yaml 14 bytes
+  repo/participant/progress.yaml                                     14 bytes
+  repo/participant/skills                                            folder
+  repo/participant/skills/a-new-skill                                folder
+  repo/participant/skills/a-new-skill/SKILL.md                       33 bytes
+  repo/quest_app                                                     folder
+  repo/quest_app/app.py                                              27 bytes
+
+What differs from the listing in refused-write.txt:
+  repo/participant/context/landed-here.md
+  repo/participant/context/new-note.md
+  repo/participant/context/notes.md
+  repo/participant/skills
+  repo/participant/skills/a-new-skill
+  repo/participant/skills/a-new-skill/SKILL.md
+  ok   everything that changed is inside SANDBOX/repo/participant, and nothing was removed
+
+RESULT: ALL CHECKS PASSED. 8 checks.

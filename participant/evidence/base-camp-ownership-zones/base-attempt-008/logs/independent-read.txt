@@ -1,0 +1,122 @@
+Independent reads of the zone rules, the zone tool and its evidence. base-camp-ownership-zones, attempt base-attempt-008
+Copied by hand, and shortened, from the readers' replies by the assistant that built this quest. No program wrote this file.
+
+Who the readers were: two separate AI assistants (Claude), each started fresh. No person read the work. Each was given a
+copy of the files and told to read only those, to run nothing, to write nothing and to contact nothing. Those limits were
+given in words and not enforced. Neither saw the other's reply. The first version of everything was finished before
+either reply was read: 53 tests and 26 planted bugs passing, and the three records passing with 27, 8 and 17 checks.
+
+  Reader 1   Given ONLY the rules document. Asked, as a new person, where each of sixteen kinds of new file should go,
+             which zone that is, who may put it there and whether Git tracks it, and then to criticise the rules.
+  Reader 2   Given the tool, its tests, the rules, the records and the script that made them. Asked to find a path, or a
+             state of the disk, for which the tool allows a write that lands outside the participant's zone.
+
+==============================================================================
+READER 1: placing new files from the rules alone (criterion 6)
+
+It placed eleven of the sixteen from the document, with the words it relied on: a note, a raw response, a redacted
+copy, a tool, a proof, a correction to a guide, the built site, a change to progress.yaml, a test, a new top-level
+folder (refused), a file under .claude/ (refused).
+It could not decide two: a lock file written by an installer, and real data about real people brought in by hand.
+It found the document contradicting itself:
+  - A credential goes "nowhere in the repository", and yet a rule says the participant writes credential files by hand.
+  - The rule for a hard link came after the rule that allows a write, under "the first that fits decides", so as written
+    it could never be reached.
+  - "Every file is in exactly one zone", while two paths inside a program-owned folder are private.
+  - The application's lock file was in one list and not in the rule.
+It found it silent on:
+  - whether a person, editing by hand, is held to the same rules as the agent. "The tool checks only the agent."
+  - what "the application" is, and eight other words.
+  - which generated things may be deleted. Only the built site was said to be.
+  - "`zones.py` lives in `participant/tools/`, which the rules let the agent write. The agent can rewrite the rules;
+    the document is silent on this."
+  - deletes, renames and moves; what Git itself changes; whether the hook is installed; personal data in screenshots;
+    that a hand-in commits everything in the participant's folder.
+
+WHAT WAS CHANGED AFTER READER 1
+  The rules are in order now: the hard-link rule comes before the one rule that allows. The folder lists in the
+  document are written from the same lists the tool applies, not typed a second time. The credential row says: best
+  nowhere; if a tool insists, `.env` at the top, by the participant, never by the agent. Rows were added for an
+  installer's lock file, real personal data, a temporary experiment, a change to the agent's behaviour, and a quest
+  marked done. The page says the tool checks the agent and a person is held to the table by reading `git status`. It
+  says what may be deleted and what must not. It has a list of its words, and a longer list of what the tool does not
+  see. The tool itself, and the files that steer the agent, became a rule of their own: see reader 2.
+
+==============================================================================
+READER 2: getting a write past the check
+
+It found ways. Each is from reading the code; two that depend on how this kind of disk behaves it marked as untested.
+  1. THE HOOK COULD BE WALKED AROUND BY SPELLING THE REPOSITORY'S PATH ANOTHER WAY. The hook decided "this file is not in
+     the repository" by comparing text. On a disk that sets capitals aside, the same folder spelt with one capital
+     changed is the same folder, and the text does not match. The hook let such an edit through without judging it.
+  2. THE GUARD SAT IN THE ZONE IT GUARDS. The tool's own file, and settings files, instructions and Git hooks placed
+     inside the participant's folder, were all allowed. "One permitted Write disables or replaces the hook."
+  3. An application file was matched by its exact name only. A path inside it, such as the lock file's name with a
+     file below it, was allowed, and a folder was made at the application's name.
+  4. `--from FILE` read any file, so private data could be copied into the folder that is handed in.
+  5. `--root` could be a folder inside the real repository, making a write into the curriculum look allowed.
+  6. The hook failed open outside its own error handling: a broken tool file, or a missing Python, exits with 1,
+     which Claude Code does not treat as a refusal.
+  7. Between the check and the write, folders were made before the path was resolved again, and were left behind.
+  8. Credential names that were allowed: key.pem.bak, credentials.yaml, .git-credentials, .pypirc, id_ecdsa and more.
+  9. A letter that some disks treat as "s" slipped past the comparison of names.
+  10. Paths that were allowed and then failed with an error and no rule named: through a file, a stale temporary name,
+      a link that loops.
+  Smaller: the hard-link rule protects nothing in the command, which never writes through a file; it matters for the
+  hook. An executable file lost its permission on being replaced. Some harmless names are refused.
+Honesty: "Criterion 2 'every' is not shown. No record shows the hook installed in any settings file or a real agent
+edit blocked." "This page and the tool cannot disagree" overclaimed: the lists on the page were typed twice.
+Checks that could print ok while false: "names and quotes" did not check the quoting. Two checks looked for the words
+"symbolic link", which the rule's own text always holds. The Git status in the rules was never asked of Git. A check
+of what changed could not see a deletion. Tests that survived removal of a protection: the second resolving of the
+path, and the exclusive creation of the temporary file.
+
+WHAT WAS CHANGED AFTER READER 2
+  1. "Inside the repository" is now decided by walking up from the place, folder by folder, until a folder IS the
+     root: the same folder on the same disk, whatever it is called. The hook judges every edit and lets through only
+     what is not in the repository both as written and as resolved.
+  2. A new rule, R3: inside the participant's folder the agent does not write what steers the agent or Git, or the
+     tool itself. The participant changes those by hand.
+  3. An application file's name covers everything below it. A path through a file is refused.
+  4. `--from` was removed.
+  5. A root inside the real repository is refused.
+  6. The hook's only answers are 0 and 2, whatever fails inside it. The command it is installed with ends in
+     `|| exit 2`, and the setting that makes a failed hook block the edit is used, for what the tool cannot catch.
+  7. Folders made for a write that then fails are taken away. The path is resolved again before the temporary file is
+     made, and a test swaps a folder for a link in between.
+  8. The list of credential names is longer, and the rules say it is a list of names that misses others.
+  9. Names are compared as such a disk would compare them.
+  10. Each of those ends in a refusal that says why.
+  The rule numbers changed: there are eleven now. A file's permissions are kept. Git is asked, in a test and in a
+  record, whether the folders are tracked or ignored as the rules say. The checks it named were corrected.
+  On "no record shows the hook installed": the participant then installed it, and one refused and one allowed edit
+  in the real repository are recorded, by hand, in logs/live-hook.txt.
+  While these were being tested, one planted bug made the tool loop without end. The loop now has a stopping point,
+  and the planted-bug run gives each run of the tests three minutes.
+
+  NOT CHANGED, and stated in the rules and in PROOF.md:
+    What a shell command writes is not checked, nor what any tool but the four file-editing ones writes. That
+    includes a shell command that changes the tool or the rules.
+    The hook approves an edit and Claude Code then makes it. A path changed in that moment is not checked again.
+    The two findings that depend on this kind of disk (a file's second "fork", and the letter treated as another)
+    were closed by reading, and only the second has a test.
+    The credential rule goes by names. A secret under another name, or inside an ordinary file, passes.
+
+FOUND AFTERWARDS, BY THE ASSISTANT AND NOT BY A READER
+  A test proved the refusal of a root inside the real repository by running a real write there. Under a planted bug
+  that took the refusal out, the write went through and made a 2-byte file in the real curriculum folder. It was
+  found in `git status`, never committed, and deleted. The test no longer attempts a write. The planted-bug run now
+  asks Git whether anything outside participant/ changed. The full account is in PROOF.md. Neither reader had been
+  asked whether a TEST could write to the real repository, and neither said.
+
+NOT READ AGAIN: neither reader saw the corrected tool, tests, rules or records.
+
+==============================================================================
+SUMMARY
+  Can another person tell from the rules where a new file goes? Reader 1 placed eleven of sixteen and could not decide
+  two. Rows were added for those two and three more. The corrected page has not been read.
+  Could a write get past the first check? Yes: by another spelling of the repository's path, through the hook; and
+  the tool and the agent's settings could be rewritten through it. Both are closed, with tests.
+  Is every write the agent makes checked? No, and it cannot be by this tool: a shell command is not. What is checked is
+  each use of the four file-editing tools, once the hook is installed.
+  A person has not read any of this.

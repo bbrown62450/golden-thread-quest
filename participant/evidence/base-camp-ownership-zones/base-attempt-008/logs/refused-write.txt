@@ -1,0 +1,261 @@
+Writes that were refused. base-camp-ownership-zones, attempt base-attempt-008
+Recorded by scripts/record_evidence.py. Each block between dashed lines is what a command printed.
+Every write is aimed at a sandbox of made-up files, shown as SANDBOX. Nothing here is from a real system.
+
+
+==============================================================================
+THE SANDBOX BEFORE ANY WRITE
+Every name under SANDBOX. A link is shown with where it leads:
+  outside                                                            folder
+  outside/elsewhere.txt                                              30 bytes
+  repo                                                               folder
+  repo/.claude                                                       folder
+  repo/.claude/settings.json                                         3 bytes
+  repo/.git                                                          folder
+  repo/.git/HEAD                                                     13 bytes
+  repo/README.md                                                     19 bytes
+  repo/content                                                       folder
+  repo/content/quests                                                folder
+  repo/content/quests/sample-quest.md                                18 bytes
+  repo/docs                                                          folder
+  repo/docs/GUIDE.md                                                 18 bytes
+  repo/generated                                                     folder
+  repo/generated/index.html                                          13 bytes
+  repo/local-data                                                    folder
+  repo/local-data/raw-response.json                                  18 bytes
+  repo/participant                                                   folder
+  repo/participant/ACTIVITY.md                                       10 bytes
+  repo/participant/context                                           folder
+  repo/participant/context/link-out                                  link to SANDBOX/outside
+  repo/participant/context/link-to-curriculum                        link to SANDBOX/repo/content/quests
+  repo/participant/context/link-to-my-notes.md                       link to SANDBOX/repo/participant/context/notes.md
+  repo/participant/context/link-to-nowhere.md                        link to SANDBOX/outside/not-there-yet.txt
+  repo/participant/context/link-to-readme.md                         link to SANDBOX/repo/README.md
+  repo/participant/context/notes.md                                  10 bytes
+  repo/participant/context/second-name-of-the-guide.md               18 bytes
+  repo/participant/evidence                                          folder
+  repo/participant/evidence/a-quest                                  folder
+  repo/participant/evidence/a-quest/attempt-1                        folder
+  repo/participant/evidence/a-quest/attempt-1/PROOF.md               8 bytes
+  repo/participant/evidence/a-quest/attempt-1/manifest.yaml          14 bytes
+  repo/participant/evidence/a-quest/attempt-1/validation             folder
+  repo/participant/evidence/a-quest/attempt-1/validation/result.yaml 14 bytes
+  repo/participant/progress.yaml                                     14 bytes
+  repo/quest_app                                                     folder
+  repo/quest_app/app.py                                              27 bytes
+
+==============================================================================
+THE REFUSED WRITES
+The command is the same each time. Only the path changes.
+
+1. Into the program-owned zone: an existing curriculum file.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to content/quests/sample-quest.md --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+REFUSED by rule R10. "content/quests/sample-quest.md" resolves to `content/quests/sample-quest.md`, which is in: Program-owned. Everything listed as program-owned belongs to the program's maintainers and is not changed here.
+Nothing was written, and nothing was created.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused, with exit code 1, by rule R10: the output names the rule and gives its words in full
+  ok   and it says what this path was: Program-owned
+  ok   criterion 4: nothing was created and nothing changed: every name and every byte under SANDBOX is what it was
+
+2. Into the private-data zone: a raw response.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to local-data/raw-response.json --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+REFUSED by rule R5. "local-data/raw-response.json" resolves to `local-data/raw-response.json`, which is in: Private data. `local-data`, `.claude/settings.local.json`, `.claude/worktrees` are private data. Programs the participant runs write there; the agent's edits do not.
+Nothing was written, and nothing was created.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused, with exit code 1, by rule R5: the output names the rule and gives its words in full
+  ok   and it says what this path was: Private data
+  ok   criterion 4: nothing was created and nothing changed: every name and every byte under SANDBOX is what it was
+
+3. Using `..` to leave the allowed folder and land outside the repository.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to participant/context/../../../outside/escaped.txt --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+REFUSED by rule R1. "participant/context/../../../outside/escaped.txt" resolves to no place in the repository, which is in: outside the repository. A write must land inside the repository. The path is resolved first: `..` is worked out and symbolic links are followed. Here: it uses `..` to climb out of the repository.
+Nothing was written, and nothing was created.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused, with exit code 1, by rule R1: the output names the rule and gives its words in full
+  ok   and it says what this path was: it uses '..' to climb out of the repository
+  ok   criterion 4: nothing was created and nothing changed: every name and every byte under SANDBOX is what it was
+
+4. Using `..` to leave the allowed folder and land in the curriculum.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to participant/context/../../content/quests/new-quest.md --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+REFUSED by rule R10. "participant/context/../../content/quests/new-quest.md" resolves to `content/quests/new-quest.md`, which is in: Program-owned. Everything listed as program-owned belongs to the program's maintainers and is not changed here. Here: as written it starts in the participant zone, and its `..` leads to `content/quests/new-quest.md`.
+Nothing was written, and nothing was created.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused, with exit code 1, by rule R10: the output names the rule and gives its words in full
+  ok   and it says what this path was: its '..' leads to 'content/quests/new-quest.md'
+  ok   criterion 4: nothing was created and nothing changed: every name and every byte under SANDBOX is what it was
+
+5. Through a symbolic link, in the participant's folder, that leads out of the repository.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to participant/context/link-out/escaped.txt --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+REFUSED by rule R1. "participant/context/link-out/escaped.txt" resolves to no place in the repository, which is in: outside the repository. A write must land inside the repository. The path is resolved first: `..` is worked out and symbolic links are followed. Here: it goes through a symbolic link that leads out of the repository.
+Nothing was written, and nothing was created.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused, with exit code 1, by rule R1: the output names the rule and gives its words in full
+  ok   and it says what this path was: it goes through a symbolic link that leads out of the repository
+  ok   criterion 4: nothing was created and nothing changed: every name and every byte under SANDBOX is what it was
+
+6. Through a symbolic link, in the participant's folder, that leads into the curriculum.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to participant/context/link-to-curriculum/sample-quest.md --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+REFUSED by rule R10. "participant/context/link-to-curriculum/sample-quest.md" resolves to `content/quests/sample-quest.md`, which is in: Program-owned. Everything listed as program-owned belongs to the program's maintainers and is not changed here. Here: as written it seemed to be in the participant zone, and it resolves to `content/quests/sample-quest.md`: a symbolic link on the way leads there.
+Nothing was written, and nothing was created.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused, with exit code 1, by rule R10: the output names the rule and gives its words in full
+  ok   and it says what this path was: a symbolic link on the way leads there
+  ok   criterion 4: nothing was created and nothing changed: every name and every byte under SANDBOX is what it was
+
+7. Through a link to a file that does not exist yet, outside the repository.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to participant/context/link-to-nowhere.md --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+REFUSED by rule R1. "participant/context/link-to-nowhere.md" resolves to no place in the repository, which is in: outside the repository. A write must land inside the repository. The path is resolved first: `..` is worked out and symbolic links are followed. Here: it goes through a symbolic link that leads out of the repository.
+Nothing was written, and nothing was created.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused, with exit code 1, by rule R1: the output names the rule and gives its words in full
+  ok   and it says what this path was: symbolic link
+  ok   criterion 4: nothing was created and nothing changed: every name and every byte under SANDBOX is what it was
+
+8. A second name (a hard link), in the participant's folder, of a program file.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to participant/context/second-name-of-the-guide.md --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+REFUSED by rule R8. "participant/context/second-name-of-the-guide.md" resolves to `participant/context/second-name-of-the-guide.md`, which is in: Participant-owned. A file that already exists with more than one name on the disk (a hard link) is refused: its other name could be in any zone. Here: the file has 2 names on the disk.
+Nothing was written, and nothing was created.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused, with exit code 1, by rule R8: the output names the rule and gives its words in full
+  ok   and it says what this path was: the file has 2 names on the disk
+  ok   criterion 4: nothing was created and nothing changed: every name and every byte under SANDBOX is what it was
+
+9. A file the application writes, inside the participant's folder.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to participant/progress.yaml --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+REFUSED by rule R7. "participant/progress.yaml" resolves to `participant/progress.yaml`, which is in: Participant-owned. Inside `participant/`, what the application writes is not written by hand: `progress.yaml`, `ACTIVITY.md`, `.progress.lock`, and in each attempt folder `manifest.yaml`, `submission.yaml`, `review.yaml`, `validation`.
+Nothing was written, and nothing was created.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused, with exit code 1, by rule R7: the output names the rule and gives its words in full
+  ok   and it says what this path was: Participant-owned
+  ok   criterion 4: nothing was created and nothing changed: every name and every byte under SANDBOX is what it was
+
+10. The built site.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to generated/index.html --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+REFUSED by rule R6. "generated/index.html" resolves to `generated/index.html`, which is in: Generated and tool-managed. The built site, installed packages, caches and `.git/` are written only by the tool that makes them.
+Nothing was written, and nothing was created.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused, with exit code 1, by rule R6: the output names the rule and gives its words in full
+  ok   and it says what this path was: Generated and tool-managed
+  ok   criterion 4: nothing was created and nothing changed: every name and every byte under SANDBOX is what it was
+
+11. A credential's name, in the participant's own notes.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to participant/context/.env --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+REFUSED by rule R2. "participant/context/.env" resolves to `participant/context/.env`, which is in: Private data. A file with a credential's name is private data wherever it is. Only the participant writes it, by hand.
+Nothing was written, and nothing was created.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused, with exit code 1, by rule R2: the output names the rule and gives its words in full
+  ok   and it says what this path was: Private data
+  ok   criterion 4: nothing was created and nothing changed: every name and every byte under SANDBOX is what it was
+
+12. A path that is in no zone.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to stray-notes.txt --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+REFUSED by rule R11. "stray-notes.txt" resolves to `stray-notes.txt`, which is in: no zone. A path that fits no zone, or that is not a place a file can be, is refused. A new kind of file needs a zone before it is written.
+Nothing was written, and nothing was created.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused, with exit code 1, by rule R11: the output names the rule and gives its words in full
+  ok   and it says what this path was: no zone
+  ok   criterion 4: nothing was created and nothing changed: every name and every byte under SANDBOX is what it was
+
+13. The zone tool itself, which is in the participant's folder.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to participant/tools/zones.py --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+REFUSED by rule R3. "participant/tools/zones.py" resolves to `participant/tools/zones.py`, which is in: Participant-owned. Inside `participant/`, the agent does not write what steers the agent or Git, or this tool: `.claude`, `CLAUDE.md`, `CLAUDE.local.md`, `.mcp.json`, `.git`, `.gitattributes`, `.gitmodules`, `.pre-commit-config.yaml`, and `participant/tools/zones.py`. The participant changes those by hand.
+Nothing was written, and nothing was created.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused, with exit code 1, by rule R3: the output names the rule and gives its words in full
+  ok   and it says what this path was: Participant-owned
+  ok   criterion 4: nothing was created and nothing changed: every name and every byte under SANDBOX is what it was
+
+14. The agent's own settings, if they were put in the participant's folder.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to participant/.claude/settings.local.json --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+REFUSED by rule R3. "participant/.claude/settings.local.json" resolves to `participant/.claude/settings.local.json`, which is in: Participant-owned. Inside `participant/`, the agent does not write what steers the agent or Git, or this tool: `.claude`, `CLAUDE.md`, `CLAUDE.local.md`, `.mcp.json`, `.git`, `.gitattributes`, `.gitmodules`, `.pre-commit-config.yaml`, and `participant/tools/zones.py`. The participant changes those by hand.
+Nothing was written, and nothing was created.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused, with exit code 1, by rule R3: the output names the rule and gives its words in full
+  ok   and it says what this path was: Participant-owned
+  ok   criterion 4: nothing was created and nothing changed: every name and every byte under SANDBOX is what it was
+
+15. A path that goes inside a file the application writes.
+$ python3 participant/tools/zones.py --root SANDBOX/repo write --to participant/progress.yaml/x --text "A note written by the zone tool."
+------------------------------------------------------------------------------
+REFUSED by rule R7. "participant/progress.yaml/x" resolves to `participant/progress.yaml/x`, which is in: Participant-owned. Inside `participant/`, what the application writes is not written by hand: `progress.yaml`, `ACTIVITY.md`, `.progress.lock`, and in each attempt folder `manifest.yaml`, `submission.yaml`, `review.yaml`, `validation`.
+Nothing was written, and nothing was created.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused, with exit code 1, by rule R7: the output names the rule and gives its words in full
+  ok   and it says what this path was: Participant-owned
+  ok   criterion 4: nothing was created and nothing changed: every name and every byte under SANDBOX is what it was
+
+==============================================================================
+THE SANDBOX AFTER THE FIFTEEN REFUSED WRITES
+Every name under SANDBOX:
+  outside                                                            folder
+  outside/elsewhere.txt                                              30 bytes
+  repo                                                               folder
+  repo/.claude                                                       folder
+  repo/.claude/settings.json                                         3 bytes
+  repo/.git                                                          folder
+  repo/.git/HEAD                                                     13 bytes
+  repo/README.md                                                     19 bytes
+  repo/content                                                       folder
+  repo/content/quests                                                folder
+  repo/content/quests/sample-quest.md                                18 bytes
+  repo/docs                                                          folder
+  repo/docs/GUIDE.md                                                 18 bytes
+  repo/generated                                                     folder
+  repo/generated/index.html                                          13 bytes
+  repo/local-data                                                    folder
+  repo/local-data/raw-response.json                                  18 bytes
+  repo/participant                                                   folder
+  repo/participant/ACTIVITY.md                                       10 bytes
+  repo/participant/context                                           folder
+  repo/participant/context/link-out                                  link to SANDBOX/outside
+  repo/participant/context/link-to-curriculum                        link to SANDBOX/repo/content/quests
+  repo/participant/context/link-to-my-notes.md                       link to SANDBOX/repo/participant/context/notes.md
+  repo/participant/context/link-to-nowhere.md                        link to SANDBOX/outside/not-there-yet.txt
+  repo/participant/context/link-to-readme.md                         link to SANDBOX/repo/README.md
+  repo/participant/context/notes.md                                  10 bytes
+  repo/participant/context/second-name-of-the-guide.md               18 bytes
+  repo/participant/evidence                                          folder
+  repo/participant/evidence/a-quest                                  folder
+  repo/participant/evidence/a-quest/attempt-1                        folder
+  repo/participant/evidence/a-quest/attempt-1/PROOF.md               8 bytes
+  repo/participant/evidence/a-quest/attempt-1/manifest.yaml          14 bytes
+  repo/participant/evidence/a-quest/attempt-1/validation             folder
+  repo/participant/evidence/a-quest/attempt-1/validation/result.yaml 14 bytes
+  repo/participant/progress.yaml                                     14 bytes
+  repo/quest_app                                                     folder
+  repo/quest_app/app.py                                              27 bytes
+
+  ok   criterion 4: the listing after is the listing before, name for name and byte for byte: no file, no partial file, no temporary file, no new folder
+  ok   the file outside the repository that three of the writes aimed at does not exist
+  ok   criterion 3: the two paths using `..` (3 and 4) and the three through a symbolic link (5, 6 and 7) were each refused for where they resolve to, and the output of each says which it was
+
+RESULT: ALL CHECKS PASSED. 48 checks.

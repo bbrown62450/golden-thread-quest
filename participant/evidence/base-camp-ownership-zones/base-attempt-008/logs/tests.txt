@@ -1,0 +1,86 @@
+test_a_credential_name_anywhere_even_in_the_participants_folder (test_zones.ARefusedWrite) ... ok
+test_a_file_link_to_a_program_file (test_zones.ARefusedWrite) ... ok
+test_a_file_named_like_them_elsewhere_is_the_participants (test_zones.ARefusedWrite) ... ok
+test_a_folder_in_place_of_a_file (test_zones.ARefusedWrite) ... ok
+test_a_folder_link_that_leads_into_the_curriculum (test_zones.ARefusedWrite) ... ok
+test_a_folder_link_that_leads_out_of_the_repository (test_zones.ARefusedWrite) ... ok
+test_a_letter_that_some_disks_treat_as_another (test_zones.ARefusedWrite) ... ok
+test_a_link_that_loops (test_zones.ARefusedWrite) ... ok
+test_a_link_whose_target_does_not_exist_yet (test_zones.ARefusedWrite) ... ok
+test_a_new_file_in_the_curriculum (test_zones.ARefusedWrite) ... ok
+test_a_path_in_no_zone (test_zones.ARefusedWrite) ... ok
+test_a_path_swapped_for_a_link_between_the_check_and_the_write (test_zones.ARefusedWrite)
+The folder the write needs is replaced, as it is made, by a link out of the repository. ... ok
+test_a_path_through_a_file (test_zones.ARefusedWrite) ... ok
+test_a_relative_path_is_taken_from_the_root_whatever_folder_the_command_is_run_in (test_zones.ARefusedWrite) ... ok
+test_a_root_inside_the_real_repository_is_refused (test_zones.ARefusedWrite)
+NO WRITE IS ATTEMPTED HERE. An earlier form of this test ran a real `write` with such a root, trusting it to be ... ok
+test_a_second_name_of_a_program_file (test_zones.ARefusedWrite)
+A hard link cannot be seen by resolving the path. The file's count of names gives it away. ... ok
+test_a_temporary_name_already_taken_is_a_refusal_and_not_a_crash (test_zones.ARefusedWrite) ... ok
+test_an_absolute_path_outside (test_zones.ARefusedWrite) ... ok
+test_an_empty_path (test_zones.ARefusedWrite) ... ok
+test_dots_that_climb_out_of_the_repository (test_zones.ARefusedWrite) ... ok
+test_dots_that_start_in_the_participants_folder_and_climb_out (test_zones.ARefusedWrite) ... ok
+test_dots_that_start_in_the_participants_folder_and_land_in_the_curriculum (test_zones.ARefusedWrite) ... ok
+test_folders_made_for_a_write_that_then_fails_are_taken_away (test_zones.ARefusedWrite) ... ok
+test_gits_own_folder (test_zones.ARefusedWrite) ... ok
+test_private_data (test_zones.ARefusedWrite) ... ok
+test_the_application_and_the_documentation (test_zones.ARefusedWrite) ... ok
+test_the_built_site (test_zones.ARefusedWrite) ... ok
+test_the_check_comes_before_anything_is_created (test_zones.ARefusedWrite)
+Criterion 2: the order. The check is made with nothing yet created, so a refusal has nothing to undo. ... ok
+test_the_curriculum (test_zones.ARefusedWrite) ... ok
+test_the_example_environment_file_is_not_taken_for_a_credential (test_zones.ARefusedWrite) ... ok
+test_the_files_the_application_writes (test_zones.ARefusedWrite) ... ok
+test_the_participants_folder_in_other_capitals (test_zones.ARefusedWrite) ... ok
+test_the_proof_beside_them_is_the_participants (test_zones.ARefusedWrite) ... ok
+test_the_refusal_names_the_rule_and_quotes_it (test_zones.ARefusedWrite) ... ok
+test_the_repository_named_by_another_spelling_of_its_path_is_still_the_repository (test_zones.ARefusedWrite)
+A reader's finding. On a disk that sets capitals aside, the same folder has many spellings. ... ok
+test_tool_folders_inside_the_participants_folder (test_zones.ARefusedWrite) ... ok
+test_what_steers_the_agent_or_git_inside_the_participants_folder (test_zones.ARefusedWrite)
+A reader's finding: the guard and the agent's settings sat in the zone the agent may write. ... ok
+test_what_the_application_writes_cannot_be_reached_by_going_inside_it (test_zones.ARefusedWrite)
+A reader's finding: a path below an application file's name was allowed, and made a folder at that name. ... ok
+test_a_link_that_stays_inside_the_zone_is_followed_and_the_link_is_kept (test_zones.AnAllowedWrite) ... ok
+test_a_new_file_in_the_participants_notes_is_written (test_zones.AnAllowedWrite) ... ok
+test_an_absolute_path_and_a_path_with_dots_that_stay_inside_are_allowed (test_zones.AnAllowedWrite) ... ok
+test_an_existing_file_of_the_participants_is_replaced (test_zones.AnAllowedWrite) ... ok
+test_an_existing_files_permissions_are_kept (test_zones.AnAllowedWrite) ... ok
+test_new_folders_are_made_inside_the_zone (test_zones.AnAllowedWrite) ... ok
+test_nothing_else_changes_and_no_temporary_file_is_left (test_zones.AnAllowedWrite) ... ok
+test_there_is_no_way_to_copy_a_file_in (test_zones.AnAllowedWrite)
+A reader's finding: copying from a file would let private data be copied into the hand-in. The option is gone. ... ok
+test_a_file_outside_the_repository_altogether_is_not_its_business (test_zones.TheHook) ... ok
+test_a_link_outside_the_repository_that_leads_into_it_is_its_business (test_zones.TheHook) ... ok
+test_a_notebook_edit_is_checked_by_its_own_field (test_zones.TheHook) ... ok
+test_a_relative_path_is_taken_from_the_folder_the_agent_is_working_in (test_zones.TheHook) ... ok
+test_a_tool_that_does_not_edit_files_is_let_through (test_zones.TheHook) ... ok
+test_an_edit_call_with_no_file_is_stopped (test_zones.TheHook) ... ok
+test_an_edit_in_the_participants_folder_is_let_through (test_zones.TheHook) ... ok
+test_an_edit_of_the_curriculum_is_stopped_with_exit_code_2_and_the_rule (test_zones.TheHook) ... ok
+test_each_zone_but_the_participants_is_stopped (test_zones.TheHook) ... ok
+test_input_that_cannot_be_read_stops_the_edit (test_zones.TheHook) ... ok
+test_its_only_answers_are_0_and_2 (test_zones.TheHook) ... ok
+test_the_hook_and_the_agents_settings_cannot_be_edited_through_the_hook (test_zones.TheHook) ... ok
+test_the_hook_writes_nothing (test_zones.TheHook) ... ok
+test_the_hooks_own_answer_is_2_before_the_last_line_of_defence_sees_it (test_zones.TheHook)
+The command turns any answer but 0 into 2 at the very end. That would hide a wrong answer from the hook ... ok
+test_the_repository_by_another_spelling_of_its_path_is_stopped (test_zones.TheHook) ... ok
+test_every_file_in_the_real_repository_is_in_a_zone (test_zones.TheRealRepository) ... ok
+test_the_folders_the_rules_list_are_what_git_says_they_are (test_zones.TheRealRepository)
+The Git column of the rules is written by hand. This asks Git. ... ok
+test_the_rules_document_in_the_real_repository_is_what_the_rules_give (test_zones.TheRealRepository) ... ok
+test_this_tool_and_its_tests_are_in_the_participants_zone (test_zones.TheRealRepository) ... ok
+test_every_zone_and_every_rule_is_in_the_document (test_zones.WhereAndAudit) ... ok
+test_only_one_rule_allows_a_write (test_zones.WhereAndAudit) ... ok
+test_the_audit_fails_and_names_a_file_in_no_zone (test_zones.WhereAndAudit) ... ok
+test_the_audit_passes_when_every_file_is_in_a_zone (test_zones.WhereAndAudit) ... ok
+test_the_rules_document_is_written_and_checked (test_zones.WhereAndAudit) ... ok
+test_where_names_the_zone_the_writer_and_the_git_status (test_zones.WhereAndAudit) ... ok
+
+----------------------------------------------------------------------
+Ran 71 tests in 3.685s
+
+OK
