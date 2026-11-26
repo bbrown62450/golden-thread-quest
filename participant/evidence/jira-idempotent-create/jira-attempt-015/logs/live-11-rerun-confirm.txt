@@ -1,0 +1,6 @@
+
+REFUSED: this draft's task already exists: SCRUM-25 (issue id 10024). It is not created again.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

@@ -1,0 +1,92 @@
+Independent reads. jira-idempotent-create, attempt jira-attempt-015
+Written by hand, not by a script.
+
+WHO READ IT
+Two readers. BOTH WERE AI: fresh AI assistants started for this one job, with no knowledge of how the work was made.
+No person has read this work before hand-in. Each was given only a copy of the files, in a folder outside the
+repository, and was told in words to read only those files, to run nothing and to write nothing. Those limits were
+asked for. They were not enforced by anything.
+
+The first version of everything was finished before either reply was read. BOTH READS WERE MADE BEFORE THE REAL RUN,
+so that a flaw would be found before a real write and not after.
+
+READER 1 was given the design and the skill's instructions only, and fourteen situations to answer from them.
+READER 2 was given the workflow, the fake Jira, the tests, the three scripts, the design and the five records made
+against the fake Jira. It was asked for a way to end with two items, a write nobody confirmed, or a search failure
+read as "nothing found"; and for any check that claimed more than it tested.
+
+WHAT READER 2 FOUND, AND WHAT WAS DONE
+
+ 1. SERIOUS. The test clock worked against a real Jira. `resolve --pretend-seconds-later 61` would have released a
+    record at once, and a second item could follow.
+    DONE: that switch is refused unless the Jira is the fake one. One test, one planted bug.
+ 2. SERIOUS. The release rule was weaker than the design said. Any two empty searches counted if the later was 60
+    seconds after SENDING, so two searches half a second apart would do, and a request that hung for 30 seconds left
+    a real wait of 30. The real-run script would also have looped until the record was released, with nobody deciding.
+    DONE: two empty searches, each 60 seconds or more after the request ENDED and 30 or more apart. For a killed run
+    the request is taken to have lasted the full 30 seconds allowed. A clock that has gone backwards is refused. The
+    real-run script now searches three times in the first half minute and then stops: it cannot reach a release.
+ 3. SERIOUS. An identity that has lost its access gets empty answers, and those were counted as "not found".
+    DONE: an empty answer counts only if Jira also says this identity may see the project, and a search of the
+    project returns something. Otherwise it is a failed search. Whether real Jira answers that way for a revoked
+    token was the reader's assumption, and mine. It was not tried against the real Jira.
+ 4. SERIOUS. Two confirmations started at the same moment could both send the write.
+    DONE: a confirmation first takes a claim on the draft, a file made with "create only if absent", and reads the
+    record after taking it. Five tests, five planted bugs. It holds on one computer only, and the design says so.
+ 5. The search endpoint makes no promise to show what was just created. The fake Jira is behind only when told to be.
+    NOT A CODE CHANGE. Stated in the design. THE REAL RUN THEN SHOWED IT: two seconds after the real create, the real
+    search returned nothing; about fifteen seconds later it returned the item. See logs/live-08 and live-09.
+ 6. A renamed draft, or another state folder, makes a new key. Two drafts with one file name shared a record.
+    DONE IN PART: a record now belongs to the folder its draft was in, and another draft of the same name is
+    refused. Renaming and another state folder are stated as limits. The real-run script no longer says anything
+    that invites deleting the state folder: it reads the record and says "do not delete".
+ 7. Nothing ties a confirmation to a person: any program that can read the preview can pass the fingerprint.
+    DONE IN PART: against a real Jira a write must be started from a terminal. That keeps out a program with no
+    terminal. It does not prove who typed, and the design says so.
+ 8. `check` said "found by its key" and exited 0 when the search had found nothing, or had failed.
+    DONE: it says so only when the search returns that one item. Otherwise exit 1 and a plain line.
+ 9. The interrupted real write could not show what Jira answered, so a refusal would have been recorded as "created".
+    DONE: the answer's status is printed before the interruption, and the real-run script stops unless it is 201.
+10. Evidence checks that could not fail on the behaviour they named: two matched lines the workflow always prints;
+    one tested only the shape of the key; "record unchanged" was not true; the shortened command lines hid which
+    draft and allowlist were given.
+    DONE: the order of the run's own requests is checked (the reads and the search before the one write); labels
+    say what the condition tests; command lines show the draft and the allowlist by name.
+11. The local record was not pushed to disk at the level of its folder.               DONE.
+12. `resolve` recorded any one issue carrying the label and said "Jira had created it".
+    DONE IN PART: it must be a Task in the project the request went to, and the words now say "taken to be".
+    An issue labelled by hand with the key would still be recorded. Stated.
+13. Output safety. The result file was written before the output was searched for credentials. Issue keys from a
+    search were printed unchecked. Jira's own words about a refusal went into the saved log.
+    DONE: the result file is written after the search for credentials; a key that is not shaped like a key is shown
+    as "?"; Jira's words are shown on screen and not saved.
+    NOT CHANGED: the "site fingerprint" in saved logs is a short hash of the site's name with nothing added, so a
+    guessed name can be confirmed against it. Every earlier Jira quest of mine uses the same fingerprint.
+14. Two tests could not fail, and the wiring that gives only `confirm` a way to write was untested for a real Jira.
+    DONE: the two tests are gone or replaced; the wiring is tested for both.
+15. Two planted bugs were "caught" only because a test then tried to reach the network.
+    DONE: the test is given a stand-in for the network, and asserts that nothing was sent.
+16. The design said things the code did not do.                                        DONE: rewritten.
+
+WHAT READER 1 FOUND, AND WHAT WAS DONE (in the design and the skill's instructions)
+
+ 1. "At most once, however often it is run" promised more than the design's own limits allow.
+    DONE: the promise now states its conditions, and each limit says how a person would notice.
+ 2. The 60 seconds is a guess that decides a write.            STATED as a choice, not a measurement. See reader 2, item 2.
+ 3. "A 4xx and one empty search means nothing was written" seemed to contradict "none is not trusted at once".
+    DONE: explained. The refusal is the evidence; the search can only overturn it.
+ 4. No way out of the stuck states.                            DONE: a section on what a person does in each.
+ 5. Does a released record keep its key?                       DONE: yes, and why that helps a duplicate to be seen.
+ 6. Two runs at once on one computer.                          See reader 2, item 4.
+ 7. "Lists items with the same title" against "other people's titles are not shown".   DONE: listed by issue key only.
+ 8. "Fingerprint" was never defined, and other words were used unexplained.            DONE: a list of words.
+ 9. Renaming the draft.                                        See reader 2, item 6.
+10. "The record does not change" while empty searches are counted.                     DONE: reworded.
+11. "REFUSED: usually make a new preview" is unsafe advice when the outcome is unknown.  DONE.
+12. Missing: what the tests cover, clean-up of a real duplicate, a label rejected by the project's settings.
+    NOT DONE. The last would show as Jira answering 400 to the write. It did not happen in the real run.
+
+WHAT HAS NOT BEEN RE-READ
+Neither reader has seen the corrected version. Nobody independent has read: the corrected workflow, the new tests,
+the corrected scripts, the rewritten design, the records of the real run, or PROOF.md. The claim that each finding
+is fixed is mine, checked by the tests, the planted bugs and the records, and by no second reader.

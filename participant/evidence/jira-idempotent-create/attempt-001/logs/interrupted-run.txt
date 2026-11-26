@@ -1,0 +1,1064 @@
+A creation interrupted, and the rerun. jira-idempotent-create, attempt jira-attempt-015
+Recorded by scripts/record_evidence.py against the FAKE Jira: a file on this computer, with made-up projects and issues.
+Each block between dashed lines is what a command printed. No real Jira was contacted to make this record.
+
+The interruption is made by the test switch --interrupt-at, which ends the run at a named point as if it had been
+killed: nothing after that point is done or recorded. The lost answers in parts 4 and 5 are made by the fake Jira.
+
+==============================================================================
+1. INTERRUPTED AFTER JIRA ACCEPTED IT, BEFORE THE RESULT WAS RECORDED
+$ create_once.py preview --draft export-archive.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-0390eaf8efd85d92  (the draft's key, read from its record in the state folder)
+            It was made just now, for this draft, and saved before anything was asked of Jira.
+
+The change that would be made: one new issue.
+  Sent to Jira, and nothing else:
+    project     project id 20001 (SAND)
+    issue type  Task (issue type id 10002)
+    labels      one label, the key: gtq-key-0390eaf8efd85d92
+    summary     the title, exactly as it would be sent, between the bars. 32 characters:
+    | Archive the October export files
+  No description, assignee or other field is sent. Jira fills in its own defaults. Its reporter would be the
+  Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the draft export-archive.json, sha256 348ed839e0851882.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, words
+  that mark something as private, and 9 patterns that look like a secret. That is a search for patterns.
+  The person confirming reads the title.
+
+Permission check, asked of Jira for this project and this identity:
+  may see the project      (BROWSE_PROJECTS): yes
+  may create issues in it  (CREATE_ISSUES):   yes
+Duplicate check 1, by the key: Jira was searched for issues carrying the label gtq-key-0390eaf8efd85d92, in every project this
+  identity can see. Found: 0.
+Duplicate check 2, by the title: issues in SAND with this title, capitals and spacing aside: 0.
+Where Jira cannot check: its request to create an issue has no 'only if there is none with this label'
+  condition, and its search can be behind what it holds. The confirmation searches for the key again just
+  before writing. After a write whose outcome is not known, nothing is created without a search and a person.
+
+Snapshot before the preview: eccd419aa26340d6
+Snapshot after the preview:  eccd419aa26340d6
+The two are the same. Jira is unchanged, as far as these reads can show. A snapshot is of the newest issue in
+  the project, the issues carrying the key, and the issues with this title.
+Requests sent to Jira: 8. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/project/SAND
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+
+Fingerprint of this preview: 2b0d81a6cd2a
+Made:    2026-11-26 22:53:02 UTC
+Expires: 2026-11-26 23:08:02 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this task, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit status: 0
+$ create_once.py confirm --draft export-archive.json --allowlist fake-allowlist.json --fingerprint 2b0d81a6cd2a --confirmed-by "A made-up person" --interrupt-at after-send
+------------------------------------------------------------------------------
+CONFIRMATION for preview 2b0d81a6cd2a, given by: A made-up person (the name given with the confirmation).
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-0390eaf8efd85d92  (the draft's key, read from its record in the state folder)
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  the saved preview is unaltered and has not been used: ok
+  the draft asks for exactly what the preview showed: ok
+  the draft's record shows no earlier request whose outcome is unknown: ok
+  the project is on the sandbox allowlist for this site: ok
+  Jira says this identity may create issues in the project: ok
+  Jira, searched just before the write, returns no issue carrying the key: ok
+
+Written to the draft's record before sending: status 'sending', at 2026-11-26 22:53:02 UTC.
+The request was sent, and Jira answered 201.
+
+STOPPED ON PURPOSE by the test switch --interrupt-at after-send. The run ended here as if it had been killed.
+Nothing after this point was done, and nothing after this point was recorded.
+------------------------------------------------------------------------------
+exit status: 3
+  ok   the run ended after Jira answered 201: exit status 3, and the record says 'sending' with no issue recorded
+$ fake_jira.py show
+------------------------------------------------------------------------------
+FAKE JIRA holds 4 issues:
+  SAND-1   issue id 30001  labels: none
+  SAND-2   issue id 30002  labels: none
+  PROD-9   issue id 30003  labels: none
+  SAND-3   issue id 30004  labels: gtq-key-0390eaf8efd85d92
+------------------------------------------------------------------------------
+exit status: 0
+  ok   Jira did create the task: the fake Jira holds 4 issues, and one carries the key
+
+A second run of the workflow, begun as if nothing had happened:
+$ create_once.py preview --draft export-archive.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+
+REFUSED: a request to create this draft's task was sent at 2026-11-26 22:53:02 UTC and ITS OUTCOME IS NOT KNOWN (the record says 'sending'). It may exist in Jira. Nothing is previewed or created until that is looked into. Run `resolve` for this draft.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   criterion 2: the rerun does not preview or create: it sees an unknown outcome and says to resolve it
+$ create_once.py resolve --draft export-archive.json
+------------------------------------------------------------------------------
+RESOLVE for the draft export-archive.json. This command searches and records. It has no way to create anything.
+
+Key:    gtq-key-0390eaf8efd85d92
+Record: status 'sending', 1 request sent.
+        The last request was sent at 2026-11-26 22:53:02 UTC. What is recorded of it: sent, and no answer recorded.
+
+Jira was searched for issues carrying the label gtq-key-0390eaf8efd85d92, in every project this identity can see. Found: 1.
+FOUND BY ITS KEY: SAND-3 (issue id 30004), in project id 20001, where the request was sent.
+It is the one issue that carries the key, and it is a Task. It is taken to be the task the earlier run asked for.
+It is now recorded in the draft's record: status 'linked'. NOTHING WAS CREATED by this run.
+
+Read back from Jira just now, by its issue id 30004:
+  it exists, and its key is SAND-3: yes
+  it carries the label gtq-key-0390eaf8efd85d92: yes
+  it is in project id 20001, where it was sent: yes
+  its title is the title that was sent, character for character: yes
+  a search of Jira for the key returns 1 issue: this one, and no other
+
+RESULT RECORD
+  Issue key: SAND-3
+  Identifier of what was created: Jira issue id 30004, carrying the label gtq-key-0390eaf8efd85d92
+  Target project: SAND (project id 20001), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 738169e667642f09
+  Issue type: Task (issue type id 10002)
+  Title: 32 characters, sha256 575c8816487a83ed8a5dab67fd4097f86147c7e5920d348f59065baa0264871d, from the draft export-archive.json (file sha256 348ed839e0851882bdaa2ec7ffed44337d962294e3b0e5718c465928b2ecc7f4)
+  The request to create it was sent at: 2026-11-26 22:53:02 UTC. Attempt 1 for this draft
+  Created, by Jira's own clock: 2026-11-26T12:00:01.000+0000
+  Recorded locally at: 2026-11-26 22:53:02 UTC. How: found by its key by `resolve`, after a run that ended without recording it (the record said 'sending')
+  Confirmed by: A made-up person, at 2026-11-26 22:53:02 UTC
+  Preview: fingerprint 2b0d81a6cd2a, made 2026-11-26 22:53:02 UTC
+  To reverse: delete SAND-3 in Jira, by hand. This workflow does not delete
+
+Requests sent to Jira: 5. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/issue/30004
+------------------------------------------------------------------------------
+exit status: 0
+  ok   criterion 2: the first request resolve sends is the search for the key, and it sends no write
+  ok   criterion 3: the task found by the key is recorded locally, and nothing is created
+  ok   criterion 8: the result record names the task, the project, the times and the person who confirmed the run that was interrupted
+$ create_once.py preview --draft export-archive.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+NOTHING TO CREATE. Nothing has been written.
+
+This draft's task already exists: SAND-3 (issue id 30004), recorded here at 2026-11-26 22:53:02 UTC.
+Key: gtq-key-0390eaf8efd85d92
+Read back from Jira just now, by its issue id 30004:
+  it exists, and its key is SAND-3: yes
+  it carries the label gtq-key-0390eaf8efd85d92: yes
+  it is in project id 20001, where it was sent: yes
+  its title is the title that was sent, character for character: yes
+  a search of Jira for the key returns 1 issue: this one, and no other
+Requests sent to Jira: 2. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/search/jql
+
+No fingerprint is issued, because there is nothing to confirm, and nothing was sent.
+------------------------------------------------------------------------------
+exit status: 0
+  ok   criterion 9: run again, there is nothing to create, and the fake Jira still holds 4 issues with one key
+
+==============================================================================
+2. INTERRUPTED BEFORE THE REQUEST WENT (stretch goal: a second point)
+$ create_once.py preview --draft export-archive.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-82a25b90c5863ac3  (the draft's key, read from its record in the state folder)
+            It was made just now, for this draft, and saved before anything was asked of Jira.
+
+The change that would be made: one new issue.
+  Sent to Jira, and nothing else:
+    project     project id 20001 (SAND)
+    issue type  Task (issue type id 10002)
+    labels      one label, the key: gtq-key-82a25b90c5863ac3
+    summary     the title, exactly as it would be sent, between the bars. 32 characters:
+    | Archive the October export files
+  No description, assignee or other field is sent. Jira fills in its own defaults. Its reporter would be the
+  Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the draft export-archive.json, sha256 348ed839e0851882.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, words
+  that mark something as private, and 9 patterns that look like a secret. That is a search for patterns.
+  The person confirming reads the title.
+
+Permission check, asked of Jira for this project and this identity:
+  may see the project      (BROWSE_PROJECTS): yes
+  may create issues in it  (CREATE_ISSUES):   yes
+Duplicate check 1, by the key: Jira was searched for issues carrying the label gtq-key-82a25b90c5863ac3, in every project this
+  identity can see. Found: 0.
+Duplicate check 2, by the title: issues in SAND with this title, capitals and spacing aside: 0.
+Where Jira cannot check: its request to create an issue has no 'only if there is none with this label'
+  condition, and its search can be behind what it holds. The confirmation searches for the key again just
+  before writing. After a write whose outcome is not known, nothing is created without a search and a person.
+
+Snapshot before the preview: eccd419aa26340d6
+Snapshot after the preview:  eccd419aa26340d6
+The two are the same. Jira is unchanged, as far as these reads can show. A snapshot is of the newest issue in
+  the project, the issues carrying the key, and the issues with this title.
+Requests sent to Jira: 8. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/project/SAND
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+
+Fingerprint of this preview: c0461d56b754
+Made:    2026-11-26 22:53:02 UTC
+Expires: 2026-11-26 23:08:02 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this task, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit status: 0
+$ create_once.py confirm --draft export-archive.json --allowlist fake-allowlist.json --fingerprint c0461d56b754 --confirmed-by "A made-up person" --interrupt-at before-send
+------------------------------------------------------------------------------
+CONFIRMATION for preview c0461d56b754, given by: A made-up person (the name given with the confirmation).
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-82a25b90c5863ac3  (the draft's key, read from its record in the state folder)
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  the saved preview is unaltered and has not been used: ok
+  the draft asks for exactly what the preview showed: ok
+  the draft's record shows no earlier request whose outcome is unknown: ok
+  the project is on the sandbox allowlist for this site: ok
+  Jira says this identity may create issues in the project: ok
+  Jira, searched just before the write, returns no issue carrying the key: ok
+
+Written to the draft's record before sending: status 'sending', at 2026-11-26 22:53:02 UTC.
+
+STOPPED ON PURPOSE by the test switch --interrupt-at before-send. The run ended here as if it had been killed.
+Nothing after this point was done, and nothing after this point was recorded.
+------------------------------------------------------------------------------
+exit status: 3
+  ok   the run ended before sending: the record says 'sending', and the fake Jira holds no new issue
+$ create_once.py resolve --draft export-archive.json
+------------------------------------------------------------------------------
+RESOLVE for the draft export-archive.json. This command searches and records. It has no way to create anything.
+
+Key:    gtq-key-82a25b90c5863ac3
+Record: status 'sending', 1 request sent.
+        The last request was sent at 2026-11-26 22:53:02 UTC. What is recorded of it: sent, and no answer recorded.
+
+Jira was searched for issues carrying the label gtq-key-82a25b90c5863ac3, in every project this identity can see. Found: 0.
+NOT FOUND YET, at 2026-11-26 22:53:02 UTC. Jira's search can be behind a create, so this is not taken to mean the task does not exist.
+Nothing is created. The record stays 'sending'; the time of this empty search is noted in it.
+It takes two empty searches, each 60 seconds or more after the request ended (2026-11-26 22:53:32 UTC) and 30 seconds or more
+apart, before a new preview is allowed. Empty searches that count so far: 0. Run `resolve` again at or after 2026-11-26 22:54:32 UTC.
+Requests sent to Jira: 3. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+------------------------------------------------------------------------------
+exit status: 1
+  ok   an empty search straight away is NOT taken to mean the task does not exist: 'not found yet', nothing created, and it does not count towards the two
+
+The rule: two empty searches, each 60 seconds or more after the request ended, and 30 seconds or more apart. The run was
+killed, so when the request ended is not known: it is taken to have lasted the 30 seconds a request may wait. The test
+clock is moved on 91 seconds, then 122. Against a real Jira the test clock is refused, and the wait is waited.
+$ create_once.py resolve --draft export-archive.json --pretend-seconds-later 91
+------------------------------------------------------------------------------
+RESOLVE for the draft export-archive.json. This command searches and records. It has no way to create anything.
+
+Key:    gtq-key-82a25b90c5863ac3
+Record: status 'sending', 1 request sent.
+        The last request was sent at 2026-11-26 22:53:02 UTC. What is recorded of it: sent, and no answer recorded.
+
+Jira was searched for issues carrying the label gtq-key-82a25b90c5863ac3, in every project this identity can see. Found: 0.
+TEST CLOCK: pretending it is 91 seconds later than it is.
+NOT FOUND YET, at 2026-11-26 22:54:33 UTC. Jira's search can be behind a create, so this is not taken to mean the task does not exist.
+Nothing is created. The record stays 'sending'; the time of this empty search is noted in it.
+It takes two empty searches, each 60 seconds or more after the request ended (2026-11-26 22:53:32 UTC) and 30 seconds or more
+apart, before a new preview is allowed. Empty searches that count so far: 1. Run `resolve` again at or after 2026-11-26 22:55:03 UTC.
+Requests sent to Jira: 3. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+------------------------------------------------------------------------------
+exit status: 1
+  ok   one empty search that counts is not enough: still 'not found yet', the record still says 'sending'
+$ create_once.py resolve --draft export-archive.json --pretend-seconds-later 122
+------------------------------------------------------------------------------
+RESOLVE for the draft export-archive.json. This command searches and records. It has no way to create anything.
+
+Key:    gtq-key-82a25b90c5863ac3
+Record: status 'sending', 1 request sent.
+        The last request was sent at 2026-11-26 22:53:02 UTC. What is recorded of it: sent, and no answer recorded.
+
+Jira was searched for issues carrying the label gtq-key-82a25b90c5863ac3, in every project this identity can see. Found: 0.
+TEST CLOCK: pretending it is 122 seconds later than it is.
+NOT FOUND, at 2026-11-26 22:54:33 UTC and again at 2026-11-26 22:55:04 UTC. Both searches were 60 seconds or more after the request ended (2026-11-26 22:53:32 UTC),
+and 30 seconds or more apart. Jira says this identity can see the project, and a search there does return issues.
+As far as Jira's search shows, the task was not created. THAT IS NOT PROOF: a search can be behind, and can
+only show what this identity may see.
+To look by hand: in Jira, open the issue search and search for    labels = "gtq-key-82a25b90c5863ac3"
+The record is now 'released'. NOTHING WAS CREATED by this run, and nothing will be created by running it again.
+To create the task, make a new preview. A person reads it and confirms it. It will carry the same key.
+Requests sent to Jira: 3. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+------------------------------------------------------------------------------
+exit status: 0
+  ok   after a second empty search that counts, 31 seconds after the first, the record is released. It says this is not proof, and creates nothing
+$ create_once.py preview --draft export-archive.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-82a25b90c5863ac3  (the draft's key, read from its record in the state folder)
+            It was made at 2026-11-26 22:53:02 UTC and has not changed.
+Earlier:    this is attempt 2. A request was sent at 2026-11-26 22:53:02 UTC. What became of it: sent, and no answer recorded. Searched for by its key and not found, at 2026-11-26 22:54:33 UTC and again at 2026-11-26 22:55:04 UTC.
+
+The change that would be made: one new issue.
+  Sent to Jira, and nothing else:
+    project     project id 20001 (SAND)
+    issue type  Task (issue type id 10002)
+    labels      one label, the key: gtq-key-82a25b90c5863ac3
+    summary     the title, exactly as it would be sent, between the bars. 32 characters:
+    | Archive the October export files
+  No description, assignee or other field is sent. Jira fills in its own defaults. Its reporter would be the
+  Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the draft export-archive.json, sha256 348ed839e0851882.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, words
+  that mark something as private, and 9 patterns that look like a secret. That is a search for patterns.
+  The person confirming reads the title.
+
+Permission check, asked of Jira for this project and this identity:
+  may see the project      (BROWSE_PROJECTS): yes
+  may create issues in it  (CREATE_ISSUES):   yes
+Duplicate check 1, by the key: Jira was searched for issues carrying the label gtq-key-82a25b90c5863ac3, in every project this
+  identity can see. Found: 0.
+Duplicate check 2, by the title: issues in SAND with this title, capitals and spacing aside: 0.
+Where Jira cannot check: its request to create an issue has no 'only if there is none with this label'
+  condition, and its search can be behind what it holds. The confirmation searches for the key again just
+  before writing. After a write whose outcome is not known, nothing is created without a search and a person.
+
+Snapshot before the preview: eccd419aa26340d6
+Snapshot after the preview:  eccd419aa26340d6
+The two are the same. Jira is unchanged, as far as these reads can show. A snapshot is of the newest issue in
+  the project, the issues carrying the key, and the issues with this title.
+Requests sent to Jira: 8. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/project/SAND
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+
+Fingerprint of this preview: 4dda55a6943a
+Made:    2026-11-26 22:53:03 UTC
+Expires: 2026-11-26 23:08:03 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this task, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit status: 0
+  ok   creating now needs a NEW preview, which says it is attempt 2, and a new confirmation by a person
+$ create_once.py confirm --draft export-archive.json --allowlist fake-allowlist.json --fingerprint 4dda55a6943a --confirmed-by "A made-up person"
+------------------------------------------------------------------------------
+CONFIRMATION for preview 4dda55a6943a, given by: A made-up person (the name given with the confirmation).
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-82a25b90c5863ac3  (the draft's key, read from its record in the state folder)
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  the saved preview is unaltered and has not been used: ok
+  the draft asks for exactly what the preview showed: ok
+  the draft's record shows no earlier request whose outcome is unknown: ok
+  the project is on the sandbox allowlist for this site: ok
+  Jira says this identity may create issues in the project: ok
+  Jira, searched just before the write, returns no issue carrying the key: ok
+
+Written to the draft's record before sending: status 'sending', at 2026-11-26 22:53:03 UTC.
+The request was sent, and Jira answered 201.
+WRITTEN to Jira: one task, SAND-3 (issue id 30004), carrying the key. Jira answered 201.
+Recorded in the draft's record at once: status 'linked'.
+The confirmation and the write happened in this one run of the command.
+
+Read back from Jira just now, by its issue id 30004:
+  it exists, and its key is SAND-3: yes
+  it carries the label gtq-key-82a25b90c5863ac3: yes
+  it is in project id 20001, where it was sent: yes
+  its title is the title that was sent, character for character: yes
+  a search of Jira for the key returns 1 issue: this one, and no other
+
+RESULT RECORD
+  Issue key: SAND-3
+  Identifier of what was created: Jira issue id 30004, carrying the label gtq-key-82a25b90c5863ac3
+  Target project: SAND (project id 20001), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 738169e667642f09
+  Issue type: Task (issue type id 10002)
+  Title: 32 characters, sha256 575c8816487a83ed8a5dab67fd4097f86147c7e5920d348f59065baa0264871d, from the draft export-archive.json (file sha256 348ed839e0851882bdaa2ec7ffed44337d962294e3b0e5718c465928b2ecc7f4)
+  The request to create it was sent at: 2026-11-26 22:53:03 UTC. Attempt 2 for this draft
+  Created, by Jira's own clock: 2026-11-26T12:00:01.000+0000
+  Recorded locally at: 2026-11-26 22:53:03 UTC. How: created by the run that was confirmed, and answered by Jira
+  Confirmed by: A made-up person, at 2026-11-26 22:53:03 UTC
+  Preview: fingerprint 4dda55a6943a, made 2026-11-26 22:53:03 UTC
+  To reverse: delete SAND-3 in Jira, by hand. This workflow does not delete
+
+Requests sent to Jira: 8. Kinds: GET, POST.
+  GET /rest/api/3/project/SAND
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  POST /rest/api/3/issue
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/issue/30004
+------------------------------------------------------------------------------
+exit status: 0
+  ok   confirmed, the task is created once: the fake Jira holds 4 issues and one key
+
+==============================================================================
+3. INTERRUPTED AFTER THE TASK WAS RECORDED, BEFORE IT WAS READ BACK (stretch goal: a third point)
+$ create_once.py preview --draft export-archive.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-1a39e7b09a18e8b3  (the draft's key, read from its record in the state folder)
+            It was made just now, for this draft, and saved before anything was asked of Jira.
+
+The change that would be made: one new issue.
+  Sent to Jira, and nothing else:
+    project     project id 20001 (SAND)
+    issue type  Task (issue type id 10002)
+    labels      one label, the key: gtq-key-1a39e7b09a18e8b3
+    summary     the title, exactly as it would be sent, between the bars. 32 characters:
+    | Archive the October export files
+  No description, assignee or other field is sent. Jira fills in its own defaults. Its reporter would be the
+  Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the draft export-archive.json, sha256 348ed839e0851882.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, words
+  that mark something as private, and 9 patterns that look like a secret. That is a search for patterns.
+  The person confirming reads the title.
+
+Permission check, asked of Jira for this project and this identity:
+  may see the project      (BROWSE_PROJECTS): yes
+  may create issues in it  (CREATE_ISSUES):   yes
+Duplicate check 1, by the key: Jira was searched for issues carrying the label gtq-key-1a39e7b09a18e8b3, in every project this
+  identity can see. Found: 0.
+Duplicate check 2, by the title: issues in SAND with this title, capitals and spacing aside: 0.
+Where Jira cannot check: its request to create an issue has no 'only if there is none with this label'
+  condition, and its search can be behind what it holds. The confirmation searches for the key again just
+  before writing. After a write whose outcome is not known, nothing is created without a search and a person.
+
+Snapshot before the preview: eccd419aa26340d6
+Snapshot after the preview:  eccd419aa26340d6
+The two are the same. Jira is unchanged, as far as these reads can show. A snapshot is of the newest issue in
+  the project, the issues carrying the key, and the issues with this title.
+Requests sent to Jira: 8. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/project/SAND
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+
+Fingerprint of this preview: 11b99aca4793
+Made:    2026-11-26 22:53:03 UTC
+Expires: 2026-11-26 23:08:03 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this task, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit status: 0
+$ create_once.py confirm --draft export-archive.json --allowlist fake-allowlist.json --fingerprint 11b99aca4793 --confirmed-by "A made-up person" --interrupt-at after-record
+------------------------------------------------------------------------------
+CONFIRMATION for preview 11b99aca4793, given by: A made-up person (the name given with the confirmation).
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-1a39e7b09a18e8b3  (the draft's key, read from its record in the state folder)
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  the saved preview is unaltered and has not been used: ok
+  the draft asks for exactly what the preview showed: ok
+  the draft's record shows no earlier request whose outcome is unknown: ok
+  the project is on the sandbox allowlist for this site: ok
+  Jira says this identity may create issues in the project: ok
+  Jira, searched just before the write, returns no issue carrying the key: ok
+
+Written to the draft's record before sending: status 'sending', at 2026-11-26 22:53:03 UTC.
+The request was sent, and Jira answered 201.
+WRITTEN to Jira: one task, SAND-3 (issue id 30004), carrying the key. Jira answered 201.
+Recorded in the draft's record at once: status 'linked'.
+The confirmation and the write happened in this one run of the command.
+
+STOPPED ON PURPOSE by the test switch --interrupt-at after-record. The run ended here as if it had been killed.
+Nothing after this point was done, and nothing after this point was recorded.
+------------------------------------------------------------------------------
+exit status: 3
+  ok   the run ended after recording: the record already says 'linked'
+$ create_once.py resolve --draft export-archive.json
+------------------------------------------------------------------------------
+RESOLVE for the draft export-archive.json. This command searches and records. It has no way to create anything.
+
+Key:    gtq-key-1a39e7b09a18e8b3
+Record: status 'linked', 1 request sent.
+
+ALREADY RECORDED: SAND-3 (issue id 30004), at 2026-11-26 22:53:03 UTC. Nothing to resolve, and nothing is created.
+Read back from Jira just now, by its issue id 30004:
+  it exists, and its key is SAND-3: yes
+  it carries the label gtq-key-1a39e7b09a18e8b3: yes
+  it is in project id 20001, where it was sent: yes
+  its title is the title that was sent, character for character: yes
+  a search of Jira for the key returns 1 issue: this one, and no other
+Requests sent to Jira: 2. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/search/jql
+------------------------------------------------------------------------------
+exit status: 0
+  ok   the rerun finds it recorded, reads it back, and creates nothing: 4 issues, one key
+
+==============================================================================
+4. NO ANSWER CAME BACK, and Jira had created the task. Then the search is behind.
+$ create_once.py preview --draft export-archive.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-40e0f51f49ba19f5  (the draft's key, read from its record in the state folder)
+            It was made just now, for this draft, and saved before anything was asked of Jira.
+
+The change that would be made: one new issue.
+  Sent to Jira, and nothing else:
+    project     project id 20001 (SAND)
+    issue type  Task (issue type id 10002)
+    labels      one label, the key: gtq-key-40e0f51f49ba19f5
+    summary     the title, exactly as it would be sent, between the bars. 32 characters:
+    | Archive the October export files
+  No description, assignee or other field is sent. Jira fills in its own defaults. Its reporter would be the
+  Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the draft export-archive.json, sha256 348ed839e0851882.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, words
+  that mark something as private, and 9 patterns that look like a secret. That is a search for patterns.
+  The person confirming reads the title.
+
+Permission check, asked of Jira for this project and this identity:
+  may see the project      (BROWSE_PROJECTS): yes
+  may create issues in it  (CREATE_ISSUES):   yes
+Duplicate check 1, by the key: Jira was searched for issues carrying the label gtq-key-40e0f51f49ba19f5, in every project this
+  identity can see. Found: 0.
+Duplicate check 2, by the title: issues in SAND with this title, capitals and spacing aside: 0.
+Where Jira cannot check: its request to create an issue has no 'only if there is none with this label'
+  condition, and its search can be behind what it holds. The confirmation searches for the key again just
+  before writing. After a write whose outcome is not known, nothing is created without a search and a person.
+
+Snapshot before the preview: eccd419aa26340d6
+Snapshot after the preview:  eccd419aa26340d6
+The two are the same. Jira is unchanged, as far as these reads can show. A snapshot is of the newest issue in
+  the project, the issues carrying the key, and the issues with this title.
+Requests sent to Jira: 8. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/project/SAND
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+
+Fingerprint of this preview: 6aba4c3e78ae
+Made:    2026-11-26 22:53:03 UTC
+Expires: 2026-11-26 23:08:03 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this task, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit status: 0
+$ fake_jira.py set --fail-post applied-timeout
+------------------------------------------------------------------------------
+FAKE JIRA, set for what comes next: fail_post = applied-timeout.
+FAKE JIRA holds 3 issues:
+  SAND-1   issue id 30001  labels: none
+  SAND-2   issue id 30002  labels: none
+  PROD-9   issue id 30003  labels: none
+------------------------------------------------------------------------------
+exit status: 0
+$ create_once.py confirm --draft export-archive.json --allowlist fake-allowlist.json --fingerprint 6aba4c3e78ae --confirmed-by "A made-up person"
+------------------------------------------------------------------------------
+CONFIRMATION for preview 6aba4c3e78ae, given by: A made-up person (the name given with the confirmation).
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-40e0f51f49ba19f5  (the draft's key, read from its record in the state folder)
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  the saved preview is unaltered and has not been used: ok
+  the draft asks for exactly what the preview showed: ok
+  the draft's record shows no earlier request whose outcome is unknown: ok
+  the project is on the sandbox allowlist for this site: ok
+  Jira says this identity may create issues in the project: ok
+  Jira, searched just before the write, returns no issue carrying the key: ok
+
+Written to the draft's record before sending: status 'sending', at 2026-11-26 22:53:03 UTC.
+
+A PERSON NEEDS TO LOOK: the write was sent and no answer came back (TimeoutError). IT IS NOT KNOWN whether Jira created the task. It was not sent again.
+DO NOT CONFIRM AGAIN. Run `resolve` for this draft: it searches Jira for the key and creates nothing.
+------------------------------------------------------------------------------
+exit status: 2
+  ok   a timeout is treated as an unknown outcome, not as a failure: exit status 2, 'not known', and it says not to confirm again
+$ fake_jira.py show
+------------------------------------------------------------------------------
+FAKE JIRA holds 4 issues:
+  SAND-1   issue id 30001  labels: none
+  SAND-2   issue id 30002  labels: none
+  PROD-9   issue id 30003  labels: none
+  SAND-3   issue id 30004  labels: gtq-key-40e0f51f49ba19f5
+------------------------------------------------------------------------------
+exit status: 0
+  ok   the write was sent once and not sent again by the same run: the fake Jira created ONE issue for it, 4 in all and one key. A second send would have made two
+$ fake_jira.py set --search-lag 1
+------------------------------------------------------------------------------
+FAKE JIRA, set for what comes next: search_lag = 1.
+FAKE JIRA holds 4 issues:
+  SAND-1   issue id 30001  labels: none
+  SAND-2   issue id 30002  labels: none
+  PROD-9   issue id 30003  labels: none
+  SAND-3   issue id 30004  labels: gtq-key-40e0f51f49ba19f5
+------------------------------------------------------------------------------
+exit status: 0
+$ create_once.py resolve --draft export-archive.json
+------------------------------------------------------------------------------
+RESOLVE for the draft export-archive.json. This command searches and records. It has no way to create anything.
+
+Key:    gtq-key-40e0f51f49ba19f5
+Record: status 'uncertain', 1 request sent.
+        The last request was sent at 2026-11-26 22:53:03 UTC. What is recorded of it: sent, and no answer came back.
+
+Jira was searched for issues carrying the label gtq-key-40e0f51f49ba19f5, in every project this identity can see. Found: 0.
+NOT FOUND YET, at 2026-11-26 22:53:03 UTC. Jira's search can be behind a create, so this is not taken to mean the task does not exist.
+Nothing is created. The record stays 'uncertain'; the time of this empty search is noted in it.
+It takes two empty searches, each 60 seconds or more after the request ended (2026-11-26 22:53:03 UTC) and 30 seconds or more
+apart, before a new preview is allowed. Empty searches that count so far: 0. Run `resolve` again at or after 2026-11-26 22:54:03 UTC.
+Requests sent to Jira: 3. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+------------------------------------------------------------------------------
+exit status: 1
+  ok   with Jira's search behind, resolve says 'not found yet' and creates nothing. The task exists and is not duplicated
+$ create_once.py resolve --draft export-archive.json
+------------------------------------------------------------------------------
+RESOLVE for the draft export-archive.json. This command searches and records. It has no way to create anything.
+
+Key:    gtq-key-40e0f51f49ba19f5
+Record: status 'uncertain', 1 request sent.
+        The last request was sent at 2026-11-26 22:53:03 UTC. What is recorded of it: sent, and no answer came back.
+
+Jira was searched for issues carrying the label gtq-key-40e0f51f49ba19f5, in every project this identity can see. Found: 1.
+FOUND BY ITS KEY: SAND-3 (issue id 30004), in project id 20001, where the request was sent.
+It is the one issue that carries the key, and it is a Task. It is taken to be the task the earlier run asked for.
+It is now recorded in the draft's record: status 'linked'. NOTHING WAS CREATED by this run.
+
+Read back from Jira just now, by its issue id 30004:
+  it exists, and its key is SAND-3: yes
+  it carries the label gtq-key-40e0f51f49ba19f5: yes
+  it is in project id 20001, where it was sent: yes
+  its title is the title that was sent, character for character: yes
+  a search of Jira for the key returns 1 issue: this one, and no other
+
+RESULT RECORD
+  Issue key: SAND-3
+  Identifier of what was created: Jira issue id 30004, carrying the label gtq-key-40e0f51f49ba19f5
+  Target project: SAND (project id 20001), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 738169e667642f09
+  Issue type: Task (issue type id 10002)
+  Title: 32 characters, sha256 575c8816487a83ed8a5dab67fd4097f86147c7e5920d348f59065baa0264871d, from the draft export-archive.json (file sha256 348ed839e0851882bdaa2ec7ffed44337d962294e3b0e5718c465928b2ecc7f4)
+  The request to create it was sent at: 2026-11-26 22:53:03 UTC. Attempt 1 for this draft
+  Created, by Jira's own clock: 2026-11-26T12:00:01.000+0000
+  Recorded locally at: 2026-11-26 22:53:03 UTC. How: found by its key by `resolve`, after a run that ended without recording it (the record said 'uncertain')
+  Confirmed by: A made-up person, at 2026-11-26 22:53:03 UTC
+  Preview: fingerprint 6aba4c3e78ae, made 2026-11-26 22:53:03 UTC
+  To reverse: delete SAND-3 in Jira, by hand. This workflow does not delete
+
+Requests sent to Jira: 5. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/issue/30004
+------------------------------------------------------------------------------
+exit status: 0
+  ok   searched again, the task is found by its key and recorded
+
+==============================================================================
+5. THE SEARCH ITSELF FAILS
+$ create_once.py preview --draft export-archive.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-109a17e3f7dc1ca0  (the draft's key, read from its record in the state folder)
+            It was made just now, for this draft, and saved before anything was asked of Jira.
+
+The change that would be made: one new issue.
+  Sent to Jira, and nothing else:
+    project     project id 20001 (SAND)
+    issue type  Task (issue type id 10002)
+    labels      one label, the key: gtq-key-109a17e3f7dc1ca0
+    summary     the title, exactly as it would be sent, between the bars. 32 characters:
+    | Archive the October export files
+  No description, assignee or other field is sent. Jira fills in its own defaults. Its reporter would be the
+  Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the draft export-archive.json, sha256 348ed839e0851882.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, words
+  that mark something as private, and 9 patterns that look like a secret. That is a search for patterns.
+  The person confirming reads the title.
+
+Permission check, asked of Jira for this project and this identity:
+  may see the project      (BROWSE_PROJECTS): yes
+  may create issues in it  (CREATE_ISSUES):   yes
+Duplicate check 1, by the key: Jira was searched for issues carrying the label gtq-key-109a17e3f7dc1ca0, in every project this
+  identity can see. Found: 0.
+Duplicate check 2, by the title: issues in SAND with this title, capitals and spacing aside: 0.
+Where Jira cannot check: its request to create an issue has no 'only if there is none with this label'
+  condition, and its search can be behind what it holds. The confirmation searches for the key again just
+  before writing. After a write whose outcome is not known, nothing is created without a search and a person.
+
+Snapshot before the preview: eccd419aa26340d6
+Snapshot after the preview:  eccd419aa26340d6
+The two are the same. Jira is unchanged, as far as these reads can show. A snapshot is of the newest issue in
+  the project, the issues carrying the key, and the issues with this title.
+Requests sent to Jira: 8. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/project/SAND
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+
+Fingerprint of this preview: eea9ae632702
+Made:    2026-11-26 22:53:03 UTC
+Expires: 2026-11-26 23:08:03 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this task, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit status: 0
+$ create_once.py confirm --draft export-archive.json --allowlist fake-allowlist.json --fingerprint eea9ae632702 --confirmed-by "A made-up person" --interrupt-at after-send
+------------------------------------------------------------------------------
+CONFIRMATION for preview eea9ae632702, given by: A made-up person (the name given with the confirmation).
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-109a17e3f7dc1ca0  (the draft's key, read from its record in the state folder)
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  the saved preview is unaltered and has not been used: ok
+  the draft asks for exactly what the preview showed: ok
+  the draft's record shows no earlier request whose outcome is unknown: ok
+  the project is on the sandbox allowlist for this site: ok
+  Jira says this identity may create issues in the project: ok
+  Jira, searched just before the write, returns no issue carrying the key: ok
+
+Written to the draft's record before sending: status 'sending', at 2026-11-26 22:53:03 UTC.
+The request was sent, and Jira answered 201.
+
+STOPPED ON PURPOSE by the test switch --interrupt-at after-send. The run ended here as if it had been killed.
+Nothing after this point was done, and nothing after this point was recorded.
+------------------------------------------------------------------------------
+exit status: 3
+$ fake_jira.py set --fail-search 500
+------------------------------------------------------------------------------
+FAKE JIRA, set for what comes next: fail_search = 500.
+FAKE JIRA holds 4 issues:
+  SAND-1   issue id 30001  labels: none
+  SAND-2   issue id 30002  labels: none
+  PROD-9   issue id 30003  labels: none
+  SAND-3   issue id 30004  labels: gtq-key-109a17e3f7dc1ca0
+------------------------------------------------------------------------------
+exit status: 0
+$ create_once.py resolve --draft export-archive.json
+------------------------------------------------------------------------------
+RESOLVE for the draft export-archive.json. This command searches and records. It has no way to create anything.
+
+Key:    gtq-key-109a17e3f7dc1ca0
+Record: status 'sending', 1 request sent.
+        The last request was sent at 2026-11-26 22:53:03 UTC. What is recorded of it: sent, and no answer recorded.
+
+THE SEARCH FOR THE KEY FAILED: Jira answered 500.
+Whether the task exists is NOT KNOWN. Nothing is created and nothing is recorded: the record stays 'sending'.
+Run `resolve` again later. If it keeps failing, a person looks in Jira.
+To look by hand: in Jira, open the issue search and search for    labels = "gtq-key-109a17e3f7dc1ca0"
+Requests sent to Jira: 1. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/search/jql
+
+A PERSON NEEDS TO LOOK: the search failed, so this run cannot say whether the task exists.
+------------------------------------------------------------------------------
+exit status: 2
+  ok   the search fails (Jira answered 500): resolve stops with exit status 2, creates nothing, leaves the record exactly as it was, and says how to look by hand
+$ fake_jira.py set --fail-search timeout
+------------------------------------------------------------------------------
+FAKE JIRA, set for what comes next: fail_search = timeout.
+FAKE JIRA holds 4 issues:
+  SAND-1   issue id 30001  labels: none
+  SAND-2   issue id 30002  labels: none
+  PROD-9   issue id 30003  labels: none
+  SAND-3   issue id 30004  labels: gtq-key-109a17e3f7dc1ca0
+------------------------------------------------------------------------------
+exit status: 0
+$ create_once.py resolve --draft export-archive.json
+------------------------------------------------------------------------------
+RESOLVE for the draft export-archive.json. This command searches and records. It has no way to create anything.
+
+Key:    gtq-key-109a17e3f7dc1ca0
+Record: status 'sending', 1 request sent.
+        The last request was sent at 2026-11-26 22:53:03 UTC. What is recorded of it: sent, and no answer recorded.
+
+THE SEARCH FOR THE KEY FAILED: no answer came back (TimeoutError).
+Whether the task exists is NOT KNOWN. Nothing is created and nothing is recorded: the record stays 'sending'.
+Run `resolve` again later. If it keeps failing, a person looks in Jira.
+To look by hand: in Jira, open the issue search and search for    labels = "gtq-key-109a17e3f7dc1ca0"
+Requests sent to Jira: 1. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/search/jql
+
+A PERSON NEEDS TO LOOK: the search failed, so this run cannot say whether the task exists.
+------------------------------------------------------------------------------
+exit status: 2
+  ok   the search fails (no answer came back): resolve stops with exit status 2, creates nothing, leaves the record exactly as it was, and says how to look by hand
+$ fake_jira.py set --fail-search partial
+------------------------------------------------------------------------------
+FAKE JIRA, set for what comes next: fail_search = partial.
+FAKE JIRA holds 4 issues:
+  SAND-1   issue id 30001  labels: none
+  SAND-2   issue id 30002  labels: none
+  PROD-9   issue id 30003  labels: none
+  SAND-3   issue id 30004  labels: gtq-key-109a17e3f7dc1ca0
+------------------------------------------------------------------------------
+exit status: 0
+$ create_once.py resolve --draft export-archive.json
+------------------------------------------------------------------------------
+RESOLVE for the draft export-archive.json. This command searches and records. It has no way to create anything.
+
+Key:    gtq-key-109a17e3f7dc1ca0
+Record: status 'sending', 1 request sent.
+        The last request was sent at 2026-11-26 22:53:03 UTC. What is recorded of it: sent, and no answer recorded.
+
+THE SEARCH FOR THE KEY FAILED: Jira's answer was cut short: there are more results than it gave.
+Whether the task exists is NOT KNOWN. Nothing is created and nothing is recorded: the record stays 'sending'.
+Run `resolve` again later. If it keeps failing, a person looks in Jira.
+To look by hand: in Jira, open the issue search and search for    labels = "gtq-key-109a17e3f7dc1ca0"
+Requests sent to Jira: 1. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/search/jql
+
+A PERSON NEEDS TO LOOK: the search failed, so this run cannot say whether the task exists.
+------------------------------------------------------------------------------
+exit status: 2
+  ok   the search fails (cut short): resolve stops with exit status 2, creates nothing, leaves the record exactly as it was, and says how to look by hand
+$ create_once.py resolve --draft export-archive.json
+------------------------------------------------------------------------------
+RESOLVE for the draft export-archive.json. This command searches and records. It has no way to create anything.
+
+Key:    gtq-key-109a17e3f7dc1ca0
+Record: status 'sending', 1 request sent.
+        The last request was sent at 2026-11-26 22:53:03 UTC. What is recorded of it: sent, and no answer recorded.
+
+Jira was searched for issues carrying the label gtq-key-109a17e3f7dc1ca0, in every project this identity can see. Found: 1.
+FOUND BY ITS KEY: SAND-3 (issue id 30004), in project id 20001, where the request was sent.
+It is the one issue that carries the key, and it is a Task. It is taken to be the task the earlier run asked for.
+It is now recorded in the draft's record: status 'linked'. NOTHING WAS CREATED by this run.
+
+Read back from Jira just now, by its issue id 30004:
+  it exists, and its key is SAND-3: yes
+  it carries the label gtq-key-109a17e3f7dc1ca0: yes
+  it is in project id 20001, where it was sent: yes
+  its title is the title that was sent, character for character: yes
+  a search of Jira for the key returns 1 issue: this one, and no other
+
+RESULT RECORD
+  Issue key: SAND-3
+  Identifier of what was created: Jira issue id 30004, carrying the label gtq-key-109a17e3f7dc1ca0
+  Target project: SAND (project id 20001), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 738169e667642f09
+  Issue type: Task (issue type id 10002)
+  Title: 32 characters, sha256 575c8816487a83ed8a5dab67fd4097f86147c7e5920d348f59065baa0264871d, from the draft export-archive.json (file sha256 348ed839e0851882bdaa2ec7ffed44337d962294e3b0e5718c465928b2ecc7f4)
+  The request to create it was sent at: 2026-11-26 22:53:03 UTC. Attempt 1 for this draft
+  Created, by Jira's own clock: 2026-11-26T12:00:01.000+0000
+  Recorded locally at: 2026-11-26 22:53:03 UTC. How: found by its key by `resolve`, after a run that ended without recording it (the record said 'sending')
+  Confirmed by: A made-up person, at 2026-11-26 22:53:03 UTC
+  Preview: fingerprint eea9ae632702, made 2026-11-26 22:53:03 UTC
+  To reverse: delete SAND-3 in Jira, by hand. This workflow does not delete
+
+Requests sent to Jira: 5. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/issue/30004
+------------------------------------------------------------------------------
+exit status: 0
+  ok   when the search works again, the task is found and recorded. Nothing was created meanwhile
+
+==============================================================================
+6. MORE THAN ONE ISSUE CARRIES THE KEY
+$ create_once.py preview --draft export-archive.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-279c613bd055bc8b  (the draft's key, read from its record in the state folder)
+            It was made just now, for this draft, and saved before anything was asked of Jira.
+
+The change that would be made: one new issue.
+  Sent to Jira, and nothing else:
+    project     project id 20001 (SAND)
+    issue type  Task (issue type id 10002)
+    labels      one label, the key: gtq-key-279c613bd055bc8b
+    summary     the title, exactly as it would be sent, between the bars. 32 characters:
+    | Archive the October export files
+  No description, assignee or other field is sent. Jira fills in its own defaults. Its reporter would be the
+  Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the draft export-archive.json, sha256 348ed839e0851882.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, words
+  that mark something as private, and 9 patterns that look like a secret. That is a search for patterns.
+  The person confirming reads the title.
+
+Permission check, asked of Jira for this project and this identity:
+  may see the project      (BROWSE_PROJECTS): yes
+  may create issues in it  (CREATE_ISSUES):   yes
+Duplicate check 1, by the key: Jira was searched for issues carrying the label gtq-key-279c613bd055bc8b, in every project this
+  identity can see. Found: 0.
+Duplicate check 2, by the title: issues in SAND with this title, capitals and spacing aside: 0.
+Where Jira cannot check: its request to create an issue has no 'only if there is none with this label'
+  condition, and its search can be behind what it holds. The confirmation searches for the key again just
+  before writing. After a write whose outcome is not known, nothing is created without a search and a person.
+
+Snapshot before the preview: eccd419aa26340d6
+Snapshot after the preview:  eccd419aa26340d6
+The two are the same. Jira is unchanged, as far as these reads can show. A snapshot is of the newest issue in
+  the project, the issues carrying the key, and the issues with this title.
+Requests sent to Jira: 8. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/project/SAND
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+
+Fingerprint of this preview: 63449a1cdc77
+Made:    2026-11-26 22:53:03 UTC
+Expires: 2026-11-26 23:08:03 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this task, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit status: 0
+$ create_once.py confirm --draft export-archive.json --allowlist fake-allowlist.json --fingerprint 63449a1cdc77 --confirmed-by "A made-up person" --interrupt-at after-send
+------------------------------------------------------------------------------
+CONFIRMATION for preview 63449a1cdc77, given by: A made-up person (the name given with the confirmation).
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-279c613bd055bc8b  (the draft's key, read from its record in the state folder)
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  the saved preview is unaltered and has not been used: ok
+  the draft asks for exactly what the preview showed: ok
+  the draft's record shows no earlier request whose outcome is unknown: ok
+  the project is on the sandbox allowlist for this site: ok
+  Jira says this identity may create issues in the project: ok
+  Jira, searched just before the write, returns no issue carrying the key: ok
+
+Written to the draft's record before sending: status 'sending', at 2026-11-26 22:53:03 UTC.
+The request was sent, and Jira answered 201.
+
+STOPPED ON PURPOSE by the test switch --interrupt-at after-send. The run ended here as if it had been killed.
+Nothing after this point was done, and nothing after this point was recorded.
+------------------------------------------------------------------------------
+exit status: 3
+$ fake_jira.py other-issue --project SAND --summary "A copy made some other way" --label gtq-key-279c613bd055bc8b
+------------------------------------------------------------------------------
+FAKE JIRA: someone else created SAND-4 (issue id 30005).
+FAKE JIRA holds 5 issues:
+  SAND-1   issue id 30001  labels: none
+  SAND-2   issue id 30002  labels: none
+  PROD-9   issue id 30003  labels: none
+  SAND-3   issue id 30004  labels: gtq-key-279c613bd055bc8b
+  SAND-4   issue id 30005  labels: gtq-key-279c613bd055bc8b
+------------------------------------------------------------------------------
+exit status: 0
+$ create_once.py resolve --draft export-archive.json
+------------------------------------------------------------------------------
+RESOLVE for the draft export-archive.json. This command searches and records. It has no way to create anything.
+
+Key:    gtq-key-279c613bd055bc8b
+Record: status 'sending', 1 request sent.
+        The last request was sent at 2026-11-26 22:53:03 UTC. What is recorded of it: sent, and no answer recorded.
+
+Jira was searched for issues carrying the label gtq-key-279c613bd055bc8b, in every project this identity can see. Found: 2.
+MORE THAN ONE ISSUE CARRIES THE KEY: SAND-3 (issue id 30004), SAND-4 (issue id 30005).
+Nothing is recorded, because this workflow cannot say which one is the task. Nothing is created.
+Requests sent to Jira: 1. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/search/jql
+
+A PERSON NEEDS TO LOOK: 2 issues carry this draft's key. A person decides which to keep, and removes the others by hand.
+------------------------------------------------------------------------------
+exit status: 2
+  ok   resolve stops, lists both, and records neither: a person decides
+
+RESULT: ALL CHECKS PASSED. 24 checks.

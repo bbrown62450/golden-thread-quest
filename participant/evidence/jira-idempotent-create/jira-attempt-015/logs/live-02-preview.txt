@@ -1,0 +1,56 @@
+PREVIEW. Nothing has been written.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). On the sandbox allowlist: yes.
+            The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+Key:        gtq-key-d6c9dbb23346d0b6  (the draft's key, read from its record in the state folder)
+            It was made at 2026-11-26 22:49:09 UTC and has not changed.
+
+The change that would be made: one new issue.
+  Sent to Jira, and nothing else:
+    project     project id 10000 (SCRUM)
+    issue type  Task (issue type id 10003)
+    labels      one label, the key: gtq-key-d6c9dbb23346d0b6
+    summary     the title, exactly as it would be sent, between the bars. 74 characters:
+    | Made-up test item: check an interrupted creation is found and not repeated
+  No description, assignee or other field is sent. Jira fills in its own defaults. Its reporter would be the
+  Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the draft created-once.json, sha256 60763d9f1d994444.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, words
+  that mark something as private, and 9 patterns that look like a secret. That is a search for patterns.
+  The person confirming reads the title.
+
+Permission check, asked of Jira for this project and this identity:
+  may see the project      (BROWSE_PROJECTS): yes
+  may create issues in it  (CREATE_ISSUES):   yes
+Duplicate check 1, by the key: Jira was searched for issues carrying the label gtq-key-d6c9dbb23346d0b6, in every project this
+  identity can see. Found: 0.
+Duplicate check 2, by the title: issues in SCRUM with this title, capitals and spacing aside: 0.
+Where Jira cannot check: its request to create an issue has no 'only if there is none with this label'
+  condition, and its search can be behind what it holds. The confirmation searches for the key again just
+  before writing. After a write whose outcome is not known, nothing is created without a search and a person.
+
+Snapshot before the preview: b88dc4b87c7337bd
+Snapshot after the preview:  b88dc4b87c7337bd
+The two are the same. Jira is unchanged, as far as these reads can show. A snapshot is of the newest issue in
+  the project, the issues carrying the key, and the issues with this title.
+Requests sent to Jira: 8. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/project/SCRUM
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+
+Fingerprint of this preview: 40690ef88c31
+Made:    2026-11-26 22:49:13 UTC
+Expires: 2026-11-26 23:04:13 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this task, a person who has read this preview confirms it by its fingerprint.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

@@ -1,0 +1,77 @@
+The approved workflow, run a second time. jira-idempotent-create, attempt jira-attempt-015
+Recorded by scripts/record_evidence.py against the FAKE Jira: a file on this computer, with made-up projects and issues.
+Each block between dashed lines is what a command printed. No real Jira was contacted to make this record.
+
+This continues from the approved run in logs/confirmation.txt, against the same fake Jira: SAND-3 exists and is recorded.
+
+==============================================================================
+1. PREVIEW AGAIN
+$ create_once.py preview --draft export-archive.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+NOTHING TO CREATE. Nothing has been written.
+
+This draft's task already exists: SAND-3 (issue id 30004), recorded here at 2026-11-26 22:53:02 UTC.
+Key: gtq-key-76f96d7fde0e37cf
+Read back from Jira just now, by its issue id 30004:
+  it exists, and its key is SAND-3: yes
+  it carries the label gtq-key-76f96d7fde0e37cf: yes
+  it is in project id 20001, where it was sent: yes
+  its title is the title that was sent, character for character: yes
+  a search of Jira for the key returns 1 issue: this one, and no other
+Requests sent to Jira: 2. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/search/jql
+
+No fingerprint is issued, because there is nothing to confirm, and nothing was sent.
+------------------------------------------------------------------------------
+exit status: 0
+  ok   criterion 9: the preview says there is nothing to create, names the task, and issues no fingerprint
+
+==============================================================================
+2. CONFIRM AGAIN, with the fingerprint that was used
+$ create_once.py confirm --draft export-archive.json --allowlist fake-allowlist.json --fingerprint 61229b73666e --confirmed-by "A made-up person"
+------------------------------------------------------------------------------
+
+REFUSED: this draft's task already exists: SAND-3 (issue id 30004). It is not created again.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   criterion 9: the confirmation is refused: the task already exists
+
+==============================================================================
+3. RESOLVE AGAIN
+$ create_once.py resolve --draft export-archive.json
+------------------------------------------------------------------------------
+RESOLVE for the draft export-archive.json. This command searches and records. It has no way to create anything.
+
+Key:    gtq-key-76f96d7fde0e37cf
+Record: status 'linked', 1 request sent.
+
+ALREADY RECORDED: SAND-3 (issue id 30004), at 2026-11-26 22:53:02 UTC. Nothing to resolve, and nothing is created.
+Read back from Jira just now, by its issue id 30004:
+  it exists, and its key is SAND-3: yes
+  it carries the label gtq-key-76f96d7fde0e37cf: yes
+  it is in project id 20001, where it was sent: yes
+  its title is the title that was sent, character for character: yes
+  a search of Jira for the key returns 1 issue: this one, and no other
+Requests sent to Jira: 2. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/search/jql
+------------------------------------------------------------------------------
+exit status: 0
+  ok   criterion 3: resolve finds the task already recorded, and creates nothing
+
+==============================================================================
+4. THE FAKE JIRA, looked at directly
+$ fake_jira.py show
+------------------------------------------------------------------------------
+FAKE JIRA holds 4 issues:
+  SAND-1   issue id 30001  labels: none
+  SAND-2   issue id 30002  labels: none
+  PROD-9   issue id 30003  labels: none
+  SAND-3   issue id 30004  labels: gtq-key-76f96d7fde0e37cf
+------------------------------------------------------------------------------
+exit status: 0
+  ok   criterion 9: no duplicate: the fake Jira holds 4 issues, as after the approved run, and one carries a key
+
+RESULT: ALL CHECKS PASSED. 4 checks.

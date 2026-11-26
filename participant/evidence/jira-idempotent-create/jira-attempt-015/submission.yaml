@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261126225901-c2cce5
+quest_id: jira-idempotent-create
+quest_version: 1
+attempt_id: jira-attempt-015
+content_hash: sha256:95fb57ed90a0010ff104ec64b6971e471f239011a7363c25ac8fb3559b67c89a
+evidence_hash: sha256:a8cc370ef9fe8e9a44d5a20f4f66c18c7d84985f60a6f5db260026333ce14baf
+submitted_at: '2026-11-26T22:59:01Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/jira/idempotent/design.md
+  digest: sha256:daf6e21f55c8713822507828ed5996de892121c101ed5f07c92430ff9c2fb7ce
+- path: participant/context/jira/results/idempotent-create.md
+  digest: sha256:c31d2105b4f81396965aca6dee2f0d643265174c1d0e209717d577d7fe3406ca

@@ -1,0 +1,174 @@
+Planted bugs in a copy of participant/skills/jira-idempotent-create/create_once.py. jira-idempotent-create, attempt jira-attempt-015
+Recorded by scripts/planted_bugs.py. One bug at a time is planted in a copy of the skill, in a temporary folder, and the
+tests are run against the copy, with the fake Jira. CAUGHT means at least one test failed. The real skill is not changed.
+
+First, with no bug planted, the tests against the copy: OK
+
+ 1. CAUGHT  the key is made new at every preview
+            FAILED (failures=14): test_a_label_removed_by_hand_is_said_plainly_and_nothing_is_created, test_a_preview_from_before_an_interrupted_attempt_cannot_be_confirmed_after_it ...
+ 2. CAUGHT  the key is worked out from the title, so an edit changes it
+            FAILED (failures=1): test_two_drafts_with_the_same_words_get_different_keys
+ 3. CAUGHT  the record with the key is not saved when it is made
+            FAILED (failures=48, errors=15): test_a_change_that_differs_from_the_preview, test_a_claim_left_by_a_killed_run_can_be_taken_over_after_ten_minutes_and_not_before ...
+ 4. CAUGHT  the key is not sent to Jira
+            FAILED (failures=20): test_a_claim_left_by_a_killed_run_can_be_taken_over_after_ten_minutes_and_not_before, test_a_confirmed_run_creates_one_task_and_records_it ...
+ 5. CAUGHT  the record is not marked 'sending' before the request goes
+            FAILED (failures=18): test_a_clock_that_has_gone_backwards_is_refused, test_a_confirmation_while_the_outcome_is_unknown_is_refused ...
+ 6. CAUGHT  a run that finds an unknown outcome previews anyway
+            FAILED (failures=4): test_a_confirmation_while_the_outcome_is_unknown_is_refused, test_after_jira_accepted_and_before_anything_was_recorded ...
+ 7. CAUGHT  an unknown outcome does not stop a preview or a confirmation at all
+            FAILED (failures=4): test_a_confirmation_while_the_outcome_is_unknown_is_refused, test_after_jira_accepted_and_before_anything_was_recorded ...
+ 8. CAUGHT  a task already recorded is created again on confirmation
+            FAILED (failures=1): test_running_it_all_again_creates_nothing
+ 9. CAUGHT  no answer is recorded as nothing written
+            FAILED (failures=3): test_no_answer_and_nothing_created_is_not_known_and_is_not_sent_again, test_no_answer_and_the_task_was_created ...
+10. CAUGHT  a write with no answer is sent a second time
+            FAILED (failures=3): test_no_answer_and_nothing_created_is_not_known_and_is_not_sent_again, test_no_answer_and_the_task_was_created ...
+11. CAUGHT  a server error is taken to mean nothing was written
+            FAILED (failures=1): test_a_server_error_is_not_taken_to_mean_nothing_was_written
+12. CAUGHT  a refusal is believed without a search for the key
+            FAILED (failures=2): test_a_refusal_is_not_believed_when_an_issue_carries_the_key_after_it, test_a_refusal_is_not_believed_when_the_search_after_it_fails
+13. CAUGHT  a refusal is believed when the search after it failed
+            FAILED (failures=1): test_a_refusal_is_not_believed_when_the_search_after_it_fails
+14. CAUGHT  the new issue is not recorded until after it is read back
+            FAILED (failures=9, errors=1): test_a_confirmed_run_creates_one_task_and_records_it, test_a_label_removed_by_hand_is_said_plainly_and_nothing_is_created ...
+15. CAUGHT  one empty search that counts is enough to release the record
+            FAILED (failures=8): test_a_clock_that_has_gone_backwards_is_refused, test_a_killed_runs_request_is_taken_to_have_lasted_as_long_as_a_request_may ...
+16. CAUGHT  two empty searches release the record however close together
+            FAILED (failures=1): test_empty_searches_soon_after_sending_or_close_together_do_not_release_it
+17. CAUGHT  an empty search counts however soon after the request
+            FAILED (failures=4): test_a_killed_runs_request_is_taken_to_have_lasted_as_long_as_a_request_may, test_before_the_request_went ...
+18. CAUGHT  the wait is zero seconds
+            FAILED (failures=3): test_a_killed_runs_request_is_taken_to_have_lasted_as_long_as_a_request_may, test_empty_searches_soon_after_sending_or_close_together_do_not_release_it ...
+19. CAUGHT  a killed run's request is taken to have ended the moment it was sent
+            FAILED (failures=1): test_a_killed_runs_request_is_taken_to_have_lasted_as_long_as_a_request_may
+20. CAUGHT  the time the request ended is ignored, and the wait counted from when it was sent
+            FAILED (failures=2): test_a_killed_runs_request_is_taken_to_have_lasted_as_long_as_a_request_may, test_the_wait_is_counted_from_when_the_request_ended_if_that_is_known
+21. CAUGHT  the test clock is accepted against a real Jira
+            FAILED (failures=1): test_the_test_clock_switch_moves_now_forward_and_is_refused_against_a_real_jira
+22. CAUGHT  a clock that has gone backwards is not noticed
+            FAILED (failures=1): test_a_clock_that_has_gone_backwards_is_refused
+23. CAUGHT  an empty answer is believed without asking whether the project can still be seen
+            FAILED (failures=1): test_an_empty_answer_from_an_identity_that_can_no_longer_see_the_project_is_not_counted
+24. CAUGHT  an empty answer is believed when Jira no longer says the identity may see the project
+            FAILED (failures=1): test_an_empty_answer_needs_both_the_permission_and_something_found_in_the_project
+25. CAUGHT  an empty answer is believed when a search of the project returns no issue at all
+            FAILED (failures=1): test_an_empty_answer_needs_both_the_permission_and_something_found_in_the_project
+26. CAUGHT  two runs can hold the claim on one draft at once
+            FAILED (failures=3): test_a_claim_held_by_another_run_stops_the_confirmation_before_anything_is_asked_of_jira, test_a_claim_left_by_a_killed_run_can_be_taken_over_after_ten_minutes_and_not_before ...
+27. CAUGHT  a claim held by a running run is taken over at once
+            FAILED (failures=3): test_a_claim_held_by_another_run_stops_the_confirmation_before_anything_is_asked_of_jira, test_a_claim_left_by_a_killed_run_can_be_taken_over_after_ten_minutes_and_not_before ...
+28. CAUGHT  a claim left by a killed run is never given up
+            FAILED (failures=1): test_a_claim_left_by_a_killed_run_can_be_taken_over_after_ten_minutes_and_not_before
+29. CAUGHT  a confirmation keeps its claim after it ends
+            FAILED (failures=8): test_a_confirmation_while_the_outcome_is_unknown_is_refused, test_a_preview_from_before_an_interrupted_attempt_cannot_be_confirmed_after_it ...
+30. CAUGHT  the record is read before the claim is taken and not again
+            FAILED (failures=2): test_a_confirmation_while_the_outcome_is_unknown_is_refused, test_the_record_is_read_after_the_claim_is_taken
+31. CAUGHT  another draft with the same file name shares the record
+            FAILED (failures=1): test_another_draft_with_the_same_file_name_in_another_folder_does_not_share_the_record
+32. CAUGHT  check says 'found by its key' when the search did not find it
+            FAILED (failures=1): test_check_does_not_say_found_by_its_key_when_the_search_did_not_find_it
+33. CAUGHT  a search that is behind just after the write fails the write
+            FAILED (failures=1): test_a_search_that_is_behind_just_after_the_write_does_not_fail_the_write
+34. CAUGHT  resolve records an issue with the key that is not a task
+            FAILED (failures=1): test_an_issue_with_the_key_that_is_not_a_task_is_not_recorded
+35. CAUGHT  the interrupted run does not say what Jira answered
+            FAILED (failures=1): test_the_interrupted_run_says_what_jira_answered
+36. CAUGHT  Jira's own words about a refusal are saved in the log
+            FAILED (failures=1): test_jiras_own_words_about_a_refusal_are_shown_and_not_saved
+37. CAUGHT  a real write does not need a terminal
+            FAILED (failures=1): test_a_real_write_needs_a_terminal
+38. CAUGHT  the live connection is always given a way to write
+            FAILED (failures=1): test_against_a_real_jira_too_only_confirm_is_given_a_way_to_write
+39. CAUGHT  a failed search is counted as an empty one
+            FAILED (failures=3): test_a_failed_search_does_not_count_as_an_empty_one, test_an_empty_answer_from_an_identity_that_can_no_longer_see_the_project_is_not_counted ...
+40. CAUGHT  a failed search changes the record
+            FAILED (failures=3): test_a_failed_search_does_not_count_as_an_empty_one, test_an_empty_answer_from_an_identity_that_can_no_longer_see_the_project_is_not_counted ...
+41. CAUGHT  resolve records the first of several issues carrying the key
+            FAILED (failures=1): test_two_issues_with_the_key_are_reported_and_neither_is_recorded
+42. CAUGHT  resolve records an issue found in another project
+            FAILED (failures=1): test_an_issue_with_the_key_in_another_project_is_not_recorded
+43. CAUGHT  resolve records an issue when nothing was ever sent
+            FAILED (failures=1): test_an_issue_with_the_key_when_nothing_was_ever_sent_is_not_recorded
+44. CAUGHT  resolve finds the issue and does not record it
+            FAILED (failures=4, errors=1): test_a_task_that_shows_up_after_the_record_was_released_is_still_not_created_twice, test_a_whole_run_through_main_with_a_saved_log ...
+45. CAUGHT  resolve is given a way to write
+            FAILED (failures=2): test_against_a_real_jira_too_only_confirm_is_given_a_way_to_write, test_only_confirm_is_given_a_way_to_write
+46. CAUGHT  a search answered with an error is read as empty
+            FAILED (failures=4): test_a_failed_search_does_not_count_as_an_empty_one, test_a_preview_is_not_issued_when_the_search_fails ...
+47. CAUGHT  a search with no answer is read as empty
+            FAILED (failures=4): test_a_failed_search_does_not_count_as_an_empty_one, test_a_preview_is_not_issued_when_the_search_fails ...
+48. CAUGHT  a search answer that is not a list of issues is read as empty
+            FAILED (failures=2): test_a_preview_is_not_issued_when_the_search_fails, test_resolve_stops_creates_nothing_and_leaves_the_record_as_it_was
+49. CAUGHT  a search answer that was cut short is accepted
+            FAILED (failures=3): test_a_preview_is_not_issued_when_the_search_fails, test_a_search_answer_with_as_many_results_as_were_asked_for_is_not_trusted ...
+50. CAUGHT  a full page of results is accepted as the whole answer
+            FAILED (failures=1): test_a_search_answer_with_as_many_results_as_were_asked_for_is_not_trusted
+51. CAUGHT  an issue returned without the key among its labels is accepted
+            FAILED (failures=1): test_a_search_answer_holding_an_issue_without_the_key_is_not_trusted
+52. CAUGHT  a preview is issued when the key search fails
+            FAILED (failures=1): test_a_preview_is_not_issued_when_the_search_fails
+53. CAUGHT  a fingerprint is issued when an issue already carries the key
+            FAILED (failures=1): test_a_task_that_shows_up_after_the_record_was_released_is_still_not_created_twice
+54. CAUGHT  the write goes ahead when the search just before it fails
+            FAILED (failures=1): test_nothing_is_sent_when_the_search_just_before_the_write_fails
+55. CAUGHT  the write goes ahead when an issue carries the key by then
+            FAILED (failures=1): test_a_task_that_shows_up_between_the_preview_and_the_confirmation_stops_the_write
+56. CAUGHT  a same-titled issue that appeared after the preview is ignored
+            FAILED (failures=1): test_one_that_appears_after_the_preview_stops_the_confirmation
+57. CAUGHT  the title check calls a longer title the same title
+            FAILED (failures=1): test_a_title_with_the_same_words_in_a_longer_title_is_not_the_same_title
+58. CAUGHT  a missing fingerprint is not refused
+            FAILED (failures=1): test_a_missing_confirmation
+59. CAUGHT  a missing name is not refused
+            FAILED (failures=1): test_a_missing_confirmation
+60. CAUGHT  a changed title is not noticed
+            FAILED (failures=1): test_a_change_that_differs_from_the_preview
+61. CAUGHT  a rewritten draft file is not noticed
+            FAILED (failures=1): test_a_draft_rewritten_with_the_same_words_is_still_not_the_file_previewed
+62. CAUGHT  a changed allowlist is not noticed
+            FAILED (failures=1): test_an_allowlist_changed_after_the_preview
+63. CAUGHT  a preview never expires
+            FAILED (failures=2): test_a_preview_exactly_at_the_limit_is_accepted_and_the_test_clock_switch_works, test_a_preview_older_than_the_limit
+64. CAUGHT  a preview expires a minute early
+            FAILED (failures=1): test_a_preview_exactly_at_the_limit_is_accepted_and_the_test_clock_switch_works
+65. CAUGHT  the allowlist is not consulted
+            FAILED (failures=3): test_a_project_that_is_not_on_the_allowlist, test_an_allowlist_changed_after_the_preview ...
+66. CAUGHT  the allowlist is checked by project id alone, whatever the site
+            FAILED (failures=1): test_the_same_project_id_on_another_site_is_not_on_the_allowlist
+67. CAUGHT  the permission check is not acted on
+            FAILED (failures=2): test_a_project_where_jira_says_this_identity_may_not_create, test_permission_withdrawn_after_the_preview
+68. CAUGHT  an altered saved preview is accepted
+            FAILED (failures=1): test_a_saved_preview_that_was_altered
+69. CAUGHT  a preview from before an earlier attempt can be confirmed
+            FAILED (failures=1): test_a_preview_from_before_an_interrupted_attempt_cannot_be_confirmed_after_it
+70. CAUGHT  a preview made against another site can be confirmed
+            FAILED (failures=1): test_a_preview_made_against_another_site
+71. CAUGHT  every command is given a way to write
+            FAILED (failures=2): test_against_a_real_jira_too_only_confirm_is_given_a_way_to_write, test_only_confirm_is_given_a_way_to_write
+72. CAUGHT  the live connection sends any body it is given
+            FAILED (errors=1): test_the_live_connection_sends_no_write_but_one_new_task_with_the_key
+73. CAUGHT  the live connection accepts a label that is not the key
+            FAILED (errors=1): test_the_live_connection_sends_no_write_but_one_new_task_with_the_key
+74. CAUGHT  a title that looks like it holds a secret is sent
+            FAILED (failures=1): test_a_title_that_looks_like_it_holds_a_secret
+75. CAUGHT  a removed label is not noticed by check
+            FAILED (failures=1): test_a_label_removed_by_hand_is_said_plainly_and_nothing_is_created
+76. CAUGHT  a recorded task that Jira no longer returns is treated as fine
+            FAILED (failures=1): test_a_recorded_task_that_jira_no_longer_returns_is_not_created_again
+77. CAUGHT  the saved log keeps the site's address
+            FAILED (failures=1): test_a_whole_run_through_main_with_a_saved_log
+78. CAUGHT  the interruption after sending never happens
+            FAILED (failures=13): test_a_confirmation_while_the_outcome_is_unknown_is_refused, test_a_label_removed_before_anyone_resolved_means_not_found_and_that_is_the_stated_limit ...
+
+Last, with the copy put back as it was: OK
+The real skill is byte for byte what it was before: yes
+Git reports the same state of the whole repository as before the run: yes
+
+NOT PLANTED, because no test can tell: three places where the skill checks the same thing twice.
+  Two issues carrying the key after a write are reported by the read-back, and again by the line that ends the run.
+  A used preview is refused by its own 'used' mark, and also because the draft's record has moved on to a later attempt.
+  The saved result record has the site's address taken out, and its lines are also built without the address.
+  Removing either check of a pair alone changes nothing a test can see.
+
+RESULT: 78 OF 78 PLANTED BUGS CAUGHT.

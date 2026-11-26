@@ -1,0 +1,18 @@
+RESOLVE for the draft created-once.json. This command searches and records. It has no way to create anything.
+
+Key:    gtq-key-d6c9dbb23346d0b6
+Record: status 'sending', 1 request sent.
+        The last request was sent at 2026-11-26 22:49:52 UTC. What is recorded of it: sent, and no answer recorded.
+
+Jira was searched for issues carrying the label gtq-key-d6c9dbb23346d0b6, in every project this identity can see. Found: 0.
+NOT FOUND YET, at 2026-11-26 22:49:54 UTC. Jira's search can be behind a create, so this is not taken to mean the task does not exist.
+Nothing is created. The record stays 'sending'; the time of this empty search is noted in it.
+It takes two empty searches, each 60 seconds or more after the request ended (2026-11-26 22:50:22 UTC) and 30 seconds or more
+apart, before a new preview is allowed. Empty searches that count so far: 0. Run `resolve` again at or after 2026-11-26 22:51:22 UTC.
+Requests sent to Jira: 3. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

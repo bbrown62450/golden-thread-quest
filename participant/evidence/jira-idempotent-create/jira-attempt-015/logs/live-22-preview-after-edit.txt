@@ -1,0 +1,18 @@
+NOTHING TO CREATE. Nothing has been written.
+
+This draft's task already exists: SCRUM-25 (issue id 10024), recorded here at 2026-11-26 22:50:10 UTC.
+Key: gtq-key-d6c9dbb23346d0b6
+Read back from Jira just now, by its issue id 10024:
+  it exists, and its key is SCRUM-25: yes
+  it carries the label gtq-key-d6c9dbb23346d0b6: yes
+  it is in project id 10000, where it was sent: yes
+  its title is the title that was sent, character for character: no. It has been changed in Jira since. That does not affect the key
+  a search of Jira for the key returns 1 issue: this one, and no other
+Requests sent to Jira: 2. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/10024
+  GET /rest/api/3/search/jql
+
+No fingerprint is issued, because there is nothing to confirm, and nothing was sent.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

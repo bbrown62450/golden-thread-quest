@@ -700,4 +700,13 @@ attempts:
   updated_at: '2026-11-26T21:41:27Z'
   evidence_path: participant/evidence/base-camp-secret-handling/base-attempt-009
   submission_id: submission-20261126214127-dcb596
-updated_at: '2026-11-26T21:41:27Z'
+- attempt_id: jira-attempt-015
+  quest_id: jira-idempotent-create
+  quest_version: 1
+  content_hash: sha256:95fb57ed90a0010ff104ec64b6971e471f239011a7363c25ac8fb3559b67c89a
+  state: submitted
+  started_at: '2026-11-26T22:11:51Z'
+  updated_at: '2026-11-26T22:59:01Z'
+  evidence_path: participant/evidence/jira-idempotent-create/jira-attempt-015
+  submission_id: submission-20261126225901-c2cce5
+updated_at: '2026-11-26T22:59:01Z'

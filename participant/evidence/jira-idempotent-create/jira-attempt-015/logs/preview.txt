@@ -1,0 +1,83 @@
+The workflow stopping at a preview. jira-idempotent-create, attempt jira-attempt-015
+Recorded by scripts/record_evidence.py against the FAKE Jira: a file on this computer, with made-up projects and issues.
+Each block between dashed lines is what a command printed. No real Jira was contacted to make this record.
+
+
+==============================================================================
+THE PREVIEW
+$ create_once.py preview --draft export-archive.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-6524aee2100d6c6e  (the draft's key, read from its record in the state folder)
+            It was made just now, for this draft, and saved before anything was asked of Jira.
+
+The change that would be made: one new issue.
+  Sent to Jira, and nothing else:
+    project     project id 20001 (SAND)
+    issue type  Task (issue type id 10002)
+    labels      one label, the key: gtq-key-6524aee2100d6c6e
+    summary     the title, exactly as it would be sent, between the bars. 32 characters:
+    | Archive the October export files
+  No description, assignee or other field is sent. Jira fills in its own defaults. Its reporter would be the
+  Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the draft export-archive.json, sha256 348ed839e0851882.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, words
+  that mark something as private, and 9 patterns that look like a secret. That is a search for patterns.
+  The person confirming reads the title.
+
+Permission check, asked of Jira for this project and this identity:
+  may see the project      (BROWSE_PROJECTS): yes
+  may create issues in it  (CREATE_ISSUES):   yes
+Duplicate check 1, by the key: Jira was searched for issues carrying the label gtq-key-6524aee2100d6c6e, in every project this
+  identity can see. Found: 0.
+Duplicate check 2, by the title: issues in SAND with this title, capitals and spacing aside: 0.
+Where Jira cannot check: its request to create an issue has no 'only if there is none with this label'
+  condition, and its search can be behind what it holds. The confirmation searches for the key again just
+  before writing. After a write whose outcome is not known, nothing is created without a search and a person.
+
+Snapshot before the preview: eccd419aa26340d6
+Snapshot after the preview:  eccd419aa26340d6
+The two are the same. Jira is unchanged, as far as these reads can show. A snapshot is of the newest issue in
+  the project, the issues carrying the key, and the issues with this title.
+Requests sent to Jira: 8. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/project/SAND
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+
+Fingerprint of this preview: 7a8bbe7092fc
+Made:    2026-11-26 22:53:01 UTC
+Expires: 2026-11-26 23:08:01 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this task, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit status: 0
+  ok   criterion 4: the preview shows the Jira site, the project and the exact changes
+  ok   criterion 1: the draft's key, as saved in its local record, is shown in the preview as the one label that would be sent
+  ok   criterion 5: the permission check is recorded: may this identity create issues here
+  ok   criterion 5: the duplicate check is recorded, by the key and by the title, and where Jira cannot check is stated
+  ok   criterion 7: the preview has a fingerprint, and says when it expires
+  ok   criterion 4: nothing was written: every request was a GET, and the before and after snapshots are the same
+
+The fake Jira, looked at directly after the preview:
+$ fake_jira.py show
+------------------------------------------------------------------------------
+FAKE JIRA holds 3 issues:
+  SAND-1   issue id 30001  labels: none
+  SAND-2   issue id 30002  labels: none
+  PROD-9   issue id 30003  labels: none
+------------------------------------------------------------------------------
+exit status: 0
+  ok   the fake Jira still holds the 3 issues it began with, and none carries a key
+
+RESULT: ALL CHECKS PASSED. 7 checks.

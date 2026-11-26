@@ -1,0 +1,43 @@
+RESOLVE for the draft created-once.json. This command searches and records. It has no way to create anything.
+
+Key:    gtq-key-d6c9dbb23346d0b6
+Record: status 'sending', 1 request sent.
+        The last request was sent at 2026-11-26 22:49:52 UTC. What is recorded of it: sent, and no answer recorded.
+
+Jira was searched for issues carrying the label gtq-key-d6c9dbb23346d0b6, in every project this identity can see. Found: 1.
+FOUND BY ITS KEY: SCRUM-25 (issue id 10024), in project id 10000, where the request was sent.
+It is the one issue that carries the key, and it is a Task. It is taken to be the task the earlier run asked for.
+It is now recorded in the draft's record: status 'linked'. NOTHING WAS CREATED by this run.
+
+Read back from Jira just now, by its issue id 10024:
+  it exists, and its key is SCRUM-25: yes
+  it carries the label gtq-key-d6c9dbb23346d0b6: yes
+  it is in project id 10000, where it was sent: yes
+  its title is the title that was sent, character for character: yes
+  a search of Jira for the key returns 1 issue: this one, and no other
+
+RESULT RECORD
+  Issue key: SCRUM-25
+  Identifier of what was created: Jira issue id 10024, carrying the label gtq-key-d6c9dbb23346d0b6
+  Target project: SCRUM (project id 10000), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 4aabe3d08fbad6b1
+  Issue type: Task (issue type id 10003)
+  Title: 74 characters, sha256 82dbfb8f90dea25095368b83502c42f84ae79d60749002e7621d732b987bba14, from the draft created-once.json (file sha256 60763d9f1d994444dde54ecb99b07d67c3a1d72e19161361ee9392ef05647192)
+  The request to create it was sent at: 2026-11-26 22:49:52 UTC. Attempt 1 for this draft
+  Created, by Jira's own clock: 2026-11-26T17:49:53.071-0500
+  Recorded locally at: 2026-11-26 22:50:10 UTC. How: found by its key by `resolve`, after a run that ended without recording it (the record said 'sending')
+  Confirmed by: the participant, at 2026-11-26 22:49:51 UTC
+  Preview: fingerprint 40690ef88c31, made 2026-11-26 22:49:13 UTC
+  To reverse: delete SCRUM-25 in Jira, by hand. This workflow does not delete
+
+The result record is also saved as Markdown where --result said.
+
+Requests sent to Jira: 5. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/issue/10024
+  GET /rest/api/3/issue/10024
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/issue/10024
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

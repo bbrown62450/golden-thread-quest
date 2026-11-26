@@ -1,0 +1,184 @@
+The approved run, and four refusals. jira-idempotent-create, attempt jira-attempt-015
+Recorded by scripts/record_evidence.py against the FAKE Jira: a file on this computer, with made-up projects and issues.
+Each block between dashed lines is what a command printed. No real Jira was contacted to make this record.
+
+
+==============================================================================
+FOUR REFUSALS, each with nothing written. A preview is made first.
+$ create_once.py preview --draft export-archive.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-76f96d7fde0e37cf  (the draft's key, read from its record in the state folder)
+            It was made just now, for this draft, and saved before anything was asked of Jira.
+
+The change that would be made: one new issue.
+  Sent to Jira, and nothing else:
+    project     project id 20001 (SAND)
+    issue type  Task (issue type id 10002)
+    labels      one label, the key: gtq-key-76f96d7fde0e37cf
+    summary     the title, exactly as it would be sent, between the bars. 32 characters:
+    | Archive the October export files
+  No description, assignee or other field is sent. Jira fills in its own defaults. Its reporter would be the
+  Jira account the API token belongs to, and not the name given with the confirmation.
+  Where the title came from: the draft export-archive.json, sha256 348ed839e0851882.
+  A created issue cannot be unsent. It can be deleted afterwards, by hand.
+
+Looked for in the title and not found: email addresses, web addresses, telephone numbers, @names, words
+  that mark something as private, and 9 patterns that look like a secret. That is a search for patterns.
+  The person confirming reads the title.
+
+Permission check, asked of Jira for this project and this identity:
+  may see the project      (BROWSE_PROJECTS): yes
+  may create issues in it  (CREATE_ISSUES):   yes
+Duplicate check 1, by the key: Jira was searched for issues carrying the label gtq-key-76f96d7fde0e37cf, in every project this
+  identity can see. Found: 0.
+Duplicate check 2, by the title: issues in SAND with this title, capitals and spacing aside: 0.
+Where Jira cannot check: its request to create an issue has no 'only if there is none with this label'
+  condition, and its search can be behind what it holds. The confirmation searches for the key again just
+  before writing. After a write whose outcome is not known, nothing is created without a search and a person.
+
+Snapshot before the preview: eccd419aa26340d6
+Snapshot after the preview:  eccd419aa26340d6
+The two are the same. Jira is unchanged, as far as these reads can show. A snapshot is of the newest issue in
+  the project, the issues carrying the key, and the issues with this title.
+Requests sent to Jira: 8. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/project/SAND
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+
+Fingerprint of this preview: 61229b73666e
+Made:    2026-11-26 22:53:01 UTC
+Expires: 2026-11-26 23:08:01 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this task, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit status: 0
+
+1. A MISSING CONFIRMATION: no fingerprint is given.
+$ create_once.py confirm --draft export-archive.json --allowlist fake-allowlist.json --confirmed-by "A made-up person"
+------------------------------------------------------------------------------
+
+REFUSED: no confirmation was given. A confirmation names the fingerprint of the preview it approves, and there is no way to write without one.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   criterion 7: refused when the confirmation is missing, and nothing written
+
+2. A CHANGE THAT DIFFERS FROM THE PREVIEW: the draft's title is changed after the preview, and the fingerprint of the
+   preview is used. (The script rewrites the draft, runs the command, and puts the draft back byte for byte.)
+$ create_once.py confirm --draft export-archive.json --allowlist fake-allowlist.json --fingerprint 61229b73666e --confirmed-by "A made-up person"
+------------------------------------------------------------------------------
+
+REFUSED: the change is not the one that was previewed: the title is not the title the preview showed; the draft is not the file the preview showed. Make a new preview and read it.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   criterion 7: refused when the change differs from the preview, and nothing written
+
+3. A PREVIEW OLDER THAN THE LIMIT: the test clock is moved 16 minutes on. The limit is 15.
+$ create_once.py confirm --draft export-archive.json --allowlist fake-allowlist.json --fingerprint 61229b73666e --confirmed-by "A made-up person" --pretend-minutes-later 16
+------------------------------------------------------------------------------
+TEST CLOCK: pretending it is 16 minutes later than it is.
+
+REFUSED: this preview is too old. It was made 16 minutes ago and the limit is 15. Make a new preview and read it.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   criterion 7: refused when the preview is older than the stated limit, and nothing written
+
+4. A PROJECT THAT IS NOT ON THE SANDBOX ALLOWLIST: a draft that names PROD, where the identity MAY create issues.
+$ create_once.py preview --draft to-production.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+
+REFUSED: project PROD (project id 20002) on the Jira site with fingerprint 738169e667642f09 is not on the sandbox allowlist (fake-allowlist.json). This workflow writes only to projects listed there.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   criterion 6: refused for a project not on the allowlist, before any preview, and nothing written
+   And the same draft as before, with an allowlist that lists no project:
+$ create_once.py confirm --draft export-archive.json --allowlist empty-allowlist.json --fingerprint 61229b73666e --confirmed-by "A made-up person"
+------------------------------------------------------------------------------
+
+REFUSED: project SAND (project id 20001) on the Jira site with fingerprint 738169e667642f09 is not on the sandbox allowlist (empty-allowlist.json). This workflow writes only to projects listed there.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   criterion 6: the confirmation is refused too when the project is not on the allowlist it is given
+
+==============================================================================
+THE APPROVED RUN. The first preview is still open and unused, and is confirmed by its fingerprint.
+$ create_once.py confirm --draft export-archive.json --allowlist fake-allowlist.json --fingerprint 61229b73666e --confirmed-by "A made-up person" --result TEMP/result.md
+------------------------------------------------------------------------------
+CONFIRMATION for preview 61229b73666e, given by: A made-up person (the name given with the confirmation).
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Key:        gtq-key-76f96d7fde0e37cf  (the draft's key, read from its record in the state folder)
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  the saved preview is unaltered and has not been used: ok
+  the draft asks for exactly what the preview showed: ok
+  the draft's record shows no earlier request whose outcome is unknown: ok
+  the project is on the sandbox allowlist for this site: ok
+  Jira says this identity may create issues in the project: ok
+  Jira, searched just before the write, returns no issue carrying the key: ok
+
+Written to the draft's record before sending: status 'sending', at 2026-11-26 22:53:02 UTC.
+The request was sent, and Jira answered 201.
+WRITTEN to Jira: one task, SAND-3 (issue id 30004), carrying the key. Jira answered 201.
+Recorded in the draft's record at once: status 'linked'.
+The confirmation and the write happened in this one run of the command.
+
+Read back from Jira just now, by its issue id 30004:
+  it exists, and its key is SAND-3: yes
+  it carries the label gtq-key-76f96d7fde0e37cf: yes
+  it is in project id 20001, where it was sent: yes
+  its title is the title that was sent, character for character: yes
+  a search of Jira for the key returns 1 issue: this one, and no other
+
+RESULT RECORD
+  Issue key: SAND-3
+  Identifier of what was created: Jira issue id 30004, carrying the label gtq-key-76f96d7fde0e37cf
+  Target project: SAND (project id 20001), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 738169e667642f09
+  Issue type: Task (issue type id 10002)
+  Title: 32 characters, sha256 575c8816487a83ed8a5dab67fd4097f86147c7e5920d348f59065baa0264871d, from the draft export-archive.json (file sha256 348ed839e0851882bdaa2ec7ffed44337d962294e3b0e5718c465928b2ecc7f4)
+  The request to create it was sent at: 2026-11-26 22:53:02 UTC. Attempt 1 for this draft
+  Created, by Jira's own clock: 2026-11-26T12:00:01.000+0000
+  Recorded locally at: 2026-11-26 22:53:02 UTC. How: created by the run that was confirmed, and answered by Jira
+  Confirmed by: A made-up person, at 2026-11-26 22:53:02 UTC
+  Preview: fingerprint 61229b73666e, made 2026-11-26 22:53:01 UTC
+  To reverse: delete SAND-3 in Jira, by hand. This workflow does not delete
+
+The result record is also saved as Markdown where --result said.
+
+Requests sent to Jira: 8. Kinds: GET, POST.
+  GET /rest/api/3/project/SAND
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/search/jql
+  POST /rest/api/3/issue
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/search/jql
+  GET /rest/api/3/issue/30004
+------------------------------------------------------------------------------
+exit status: 0
+  ok   criterion 7: the confirmation names the preview's fingerprint and the person, and the write happens in the same run
+  ok   criteria 2, 5 and 6: the order of its requests shows the run read the project, asked the permission question and searched for the key BEFORE the one write
+  (That the allowlist and the search each STOP a write is shown by the refusals above and in logs/interrupted-run.txt, and by the tests.)
+  ok   criterion 1: one task was created, and it carries the key as a label on the Jira item
+  ok   criterion 8: the result record holds the issue key, the identifier of what was created, the project, the timestamp and the confirmer
+  ok   the result record saved as Markdown has the site's address taken out
+
+RESULT: ALL CHECKS PASSED. 10 checks.

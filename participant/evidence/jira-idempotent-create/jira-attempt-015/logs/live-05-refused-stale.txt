@@ -1,0 +1,7 @@
+TEST CLOCK: pretending it is 16 minutes later than it is.
+
+REFUSED: this preview is too old. It was made 16 minutes ago and the limit is 15. Make a new preview and read it.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

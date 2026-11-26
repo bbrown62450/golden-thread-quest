@@ -1,0 +1,6 @@
+
+REFUSED: a request to create this draft's task was sent at 2026-11-26 22:49:52 UTC and ITS OUTCOME IS NOT KNOWN (the record says 'sending'). It may exist in Jira. Nothing is previewed or created until that is looked into. Run `resolve` for this draft.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

@@ -1,0 +1,111 @@
+The key after a person edits the task by hand. jira-idempotent-create, attempt jira-attempt-015
+Recorded by scripts/record_evidence.py against the FAKE Jira: a file on this computer, with made-up projects and issues.
+Each block between dashed lines is what a command printed. No real Jira was contacted to make this record.
+
+Stretch goal. This continues against the same fake Jira: SAND-3 exists and is recorded.
+
+==============================================================================
+1. A PERSON CHANGES THE TITLE AND ADDS A LABEL OF THEIR OWN
+$ fake_jira.py edit --issue SAND-3 --summary "Archive the export files (retitled by hand)" --add-label team-label
+------------------------------------------------------------------------------
+FAKE JIRA: a person changed SAND-3 by hand.
+FAKE JIRA holds 4 issues:
+  SAND-1   issue id 30001  labels: none
+  SAND-2   issue id 30002  labels: none
+  PROD-9   issue id 30003  labels: none
+  SAND-3   issue id 30004  labels: gtq-key-76f96d7fde0e37cf, team-label
+------------------------------------------------------------------------------
+exit status: 0
+$ create_once.py check --draft export-archive.json
+------------------------------------------------------------------------------
+CHECK of the task recorded for the draft export-archive.json. Nothing is written by this command.
+
+Recorded: SAND-3 (issue id 30004), at 2026-11-26 22:53:02 UTC. Key: gtq-key-76f96d7fde0e37cf
+Read back from Jira just now, by its issue id 30004:
+  it exists, and its key is SAND-3: yes
+  it carries the label gtq-key-76f96d7fde0e37cf: yes
+  it is in project id 20001, where it was sent: yes
+  its title is the title that was sent, character for character: no. It has been changed in Jira since. That does not affect the key
+  a search of Jira for the key returns 1 issue: this one, and no other
+Requests sent to Jira: 2. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/search/jql
+
+AS RECORDED: the task is there, and is found by its key.
+------------------------------------------------------------------------------
+exit status: 0
+  ok   stretch goal: after the edit the task still carries the key, and a search for the key finds it and no other
+$ create_once.py preview --draft export-archive.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+NOTHING TO CREATE. Nothing has been written.
+
+This draft's task already exists: SAND-3 (issue id 30004), recorded here at 2026-11-26 22:53:02 UTC.
+Key: gtq-key-76f96d7fde0e37cf
+Read back from Jira just now, by its issue id 30004:
+  it exists, and its key is SAND-3: yes
+  it carries the label gtq-key-76f96d7fde0e37cf: yes
+  it is in project id 20001, where it was sent: yes
+  its title is the title that was sent, character for character: no. It has been changed in Jira since. That does not affect the key
+  a search of Jira for the key returns 1 issue: this one, and no other
+Requests sent to Jira: 2. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/search/jql
+
+No fingerprint is issued, because there is nothing to confirm, and nothing was sent.
+------------------------------------------------------------------------------
+exit status: 0
+  ok   and the workflow still creates nothing for this draft
+
+==============================================================================
+2. THE LIMIT: A PERSON REMOVES THE KEY'S LABEL
+$ fake_jira.py edit --issue SAND-3 --remove-label gtq-key-76f96d7fde0e37cf
+------------------------------------------------------------------------------
+FAKE JIRA: a person changed SAND-3 by hand.
+FAKE JIRA holds 4 issues:
+  SAND-1   issue id 30001  labels: none
+  SAND-2   issue id 30002  labels: none
+  PROD-9   issue id 30003  labels: none
+  SAND-3   issue id 30004  labels: team-label
+------------------------------------------------------------------------------
+exit status: 0
+$ create_once.py check --draft export-archive.json
+------------------------------------------------------------------------------
+CHECK of the task recorded for the draft export-archive.json. Nothing is written by this command.
+
+Recorded: SAND-3 (issue id 30004), at 2026-11-26 22:53:02 UTC. Key: gtq-key-76f96d7fde0e37cf
+Read back from Jira just now, by its issue id 30004:
+  it exists, and its key is SAND-3: yes
+  it carries the label gtq-key-76f96d7fde0e37cf: NO. The label has been removed. It is still the task this record names, by its issue id
+  it is in project id 20001, where it was sent: yes
+  its title is the title that was sent, character for character: no. It has been changed in Jira since. That does not affect the key
+  a search of Jira for the key returns 0 issues. IT IS NOT FOUND BY ITS KEY just now: Jira's search is behind, or the label is gone
+Requests sent to Jira: 2. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/search/jql
+
+NOT AS RECORDED: see the lines above.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   THE LIMIT, shown: with the label removed the task is no longer found by its key, and check says so plainly
+$ create_once.py preview --draft export-archive.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+NOTHING TO CREATE. Nothing has been written.
+
+This draft's task already exists: SAND-3 (issue id 30004), recorded here at 2026-11-26 22:53:02 UTC.
+Key: gtq-key-76f96d7fde0e37cf
+Read back from Jira just now, by its issue id 30004:
+  it exists, and its key is SAND-3: yes
+  it carries the label gtq-key-76f96d7fde0e37cf: NO. The label has been removed. It is still the task this record names, by its issue id
+  it is in project id 20001, where it was sent: yes
+  its title is the title that was sent, character for character: no. It has been changed in Jira since. That does not affect the key
+  a search of Jira for the key returns 0 issues. IT IS NOT FOUND BY ITS KEY just now: Jira's search is behind, or the label is gone
+Requests sent to Jira: 2. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/search/jql
+
+No fingerprint is issued, because there is nothing to confirm, and nothing was sent.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   the task is still known by the issue id in the local record, so nothing is created
+
+RESULT: ALL CHECKS PASSED. 4 checks.

@@ -1,0 +1,24 @@
+CONFIRMATION for preview 40690ef88c31, given by: the participant (the name given with the confirmation).
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). On the sandbox allowlist: yes.
+            The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+Key:        gtq-key-d6c9dbb23346d0b6  (the draft's key, read from its record in the state folder)
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  the saved preview is unaltered and has not been used: ok
+  the draft asks for exactly what the preview showed: ok
+  the draft's record shows no earlier request whose outcome is unknown: ok
+  the project is on the sandbox allowlist for this site: ok
+  Jira says this identity may create issues in the project: ok
+  Jira, searched just before the write, returns no issue carrying the key: ok
+
+Written to the draft's record before sending: status 'sending', at 2026-11-26 22:49:52 UTC.
+The request was sent, and Jira answered 201.
+
+STOPPED ON PURPOSE by the test switch --interrupt-at after-send. The run ended here as if it had been killed.
+Nothing after this point was done, and nothing after this point was recorded.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
