@@ -445,3 +445,8 @@ Every change this application made to your files, newest last.
 - `2026-11-26T13:20:38Z` playwright-test-inventory: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
 - `2026-11-26T13:21:50Z` playwright-test-inventory: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-26T13:21:50Z` Submitted playwright-test-inventory for review as submission-20261126132150-1ae060.
+- `2026-11-26T15:04:55Z` Started base-camp-interruption-recovery as attempt base-attempt-007.
+- `2026-11-26T15:51:05Z` base-camp-interruption-recovery: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-26T15:51:41Z` base-camp-interruption-recovery: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-26T16:04:53Z` base-camp-interruption-recovery: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-26T16:04:53Z` Submitted base-camp-interruption-recovery for review as submission-20261126160453-6cb3db.

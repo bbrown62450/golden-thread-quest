@@ -1,0 +1,13 @@
+schema_version: 1
+submission_id: submission-20261126160453-6cb3db
+quest_id: base-camp-interruption-recovery
+quest_version: 1
+attempt_id: base-attempt-007
+content_hash: sha256:8bd51ccd40c74b3330a467c231df998344ea5c18d8a50a5a236d2a28fef01805
+evidence_hash: sha256:751e2d1644e6b544432c985556f9895377da964ce5bdb63d5ac40d9375671377
+submitted_at: '2026-11-26T16:04:53Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/recovery-notes.md
+  digest: sha256:4a13a6ce3af749e0735005bf6d874cc6a0432c7c466464b6769aa56294fadc8e

@@ -1,0 +1,88 @@
+A run stopped partway. base-camp-interruption-recovery, attempt base-attempt-007
+Recorded by scripts/record_evidence.py. Each block between dashed lines is what a command printed. Where lines were
+left out of a block, the record says so beside it. The work items are made up. Nothing here is from a real system.
+
+
+==============================================================================
+FIRST, for comparison: a run that is never interrupted, in another folder
+$ python3 scripts/workflow.py run --items scripts/sample/items.json --out CLEAN
+------------------------------------------------------------------------------
+STARTING. No progress record is in the folder, so this is a new run of 10 items.
+  W-01  written (472 bytes), and recorded
+  W-02  written (505 bytes), and recorded
+  W-03  written (529 bytes), and recorded
+  W-04  written (589 bytes), and recorded
+  W-05  written (674 bytes), and recorded
+  W-06  written (468 bytes), and recorded
+  W-07  written (500 bytes), and recorded
+  W-08  written (540 bytes), and recorded
+  W-09  written (581 bytes), and recorded
+  W-10  written (680 bytes), and recorded
+  index  built from the 10 card files (1209 bytes), and recorded
+
+FINISHED. Skipped as already done: 0. Written in this run: 11 (W-01, W-02, W-03, W-04, W-05, W-06, W-07, W-08, W-09, W-10, index).
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the uninterrupted run finished, and wrote ten cards and an index
+
+==============================================================================
+THE RUN THAT IS STOPPED
+The workflow is started on the same ten items, in a fresh folder. It is told to wait when it is halfway through
+writing the sixth card, W-06. This script reads its output until it says it is waiting, and then kills it with SIGKILL.
+SIGKILL cannot be caught: no clean-up code runs. Only the workflow's own process is killed.
+
+$ GTQ_PAUSE_AT=W-06:mid-write python3 scripts/workflow.py run --items scripts/sample/items.json --out WORK
+------------------------------------------------------------------------------
+STARTING. No progress record is in the folder, so this is a new run of 10 items.
+  W-01  written (472 bytes), and recorded
+  W-02  written (505 bytes), and recorded
+  W-03  written (529 bytes), and recorded
+  W-04  written (589 bytes), and recorded
+  W-05  written (674 bytes), and recorded
+PAUSED AT W-06:mid-write
+------------------------------------------------------------------------------
+NO EXIT CODE: the process was killed by signal 9 (SIGKILL), sent by this script to process 27488, the workflow it had started
+  ok   the process was killed by SIGKILL and did not end by itself
+  ok   its output is whole up to the kill: five cards written and recorded, then the wait, and no word of finishing
+
+==============================================================================
+WHAT IT LEFT BEHIND
+Every file in WORK:
+  lock                            27 bytes  the lock file. It names the process that last held the lock.
+  progress.jsonl                 892 bytes  the progress record. 6 whole lines. It is the one file written in place: see the notes.
+  cards/.W-06.md.tmp-27488       234 bytes  TEMPORARY. Not under a final name: its name begins with a dot and ends in .tmp-<process id>. It is PART of a file: 234 of the 468 bytes of cards/W-06.md.
+  cards/W-01.md                  472 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-02.md                  505 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-03.md                  529 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-04.md                  589 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-05.md                  674 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+
+  ok   criterion 2: no partial or temporary file is under the final name of a card or of the index. The 5 cards under final names are each whole, and nothing unexpected is in the folder
+  ok   criterion 1, as far as this run shows it: the card that was being written, W-06, is not under its final name at all. (A file that was already there, being replaced, is in three-points.txt, point 6.)
+  ok   what was half-written is in one temporary file, whose name cannot be taken for a card's: cards/.W-06.md.tmp-27488
+
+The progress record, WORK/progress.jsonl, as the stopped run left it. Each line ends with a check of its own text:
+  {"card_format": 1, "event": "run-started", "items": 10, "items_fingerprint": "d4d3534e9a626fdca8a0728276d3492c2987ced9c426e814e03772da32cae5ab"}	61e4272e0244d802
+  {"bytes": 472, "event": "item-done", "id": "W-01", "sha256": "41d12721089c957bdab226d3da333419696f0cc282e6dd9e977f15f02372c154"}	9065e837f467cad2
+  {"bytes": 505, "event": "item-done", "id": "W-02", "sha256": "6271c9b30c5b31976fddafde3f5f4288d5c10c2a7b59fdfd4f6708203d42dfb8"}	f08c45b15ff57c56
+  {"bytes": 529, "event": "item-done", "id": "W-03", "sha256": "f96efc4e4360f3100ceeb1d4c1a3c26299dee989f94cfc2398f9eeb9f8bfe50a"}	6a209bd62463a899
+  {"bytes": 589, "event": "item-done", "id": "W-04", "sha256": "78fba2e92d19e1ec18671da9c822f3a977805e6224c6cc45e24872a4801c4ce9"}	b1d5b3ae24457562
+  {"bytes": 674, "event": "item-done", "id": "W-05", "sha256": "d78b279de201a224a7bd2da898df669f6c636bad154eb1a7566b10d7a3d53f1c"}	312dc1e0d2f84a87
+  ok   criterion 3: progress was recorded as each item finished, not at the end: after the kill the record has a line for each of W-01, W-02, W-03, W-04, W-05, and none for W-06. (This shows each line had left the program before the kill. It does not show the line was on the disk itself: a kill is not a power cut. See the notes.)
+  ok   the record has a run-started line and no run-finished line
+  ok   each of those lines holds the checksum of the card that is on disk
+
+==============================================================================
+CAN A PERSON TELL? The status command, which changes nothing
+$ python3 scripts/workflow.py status --out WORK
+------------------------------------------------------------------------------
+INTERRUPTED: the progress record does not end with a run-finished line. A run stopped partway.
+  Items in the run: 10. Recorded as done: 5 (W-01, W-02, W-03, W-04, W-05).
+  Index recorded as done: no. Times this run was resumed: 0. Times it was reopened after finishing: 0.
+  Temporary files left in the folder: 1 cards/.W-06.md.tmp-27488 (234 bytes).
+  To recover: run the same `run` command again, with the same items file and this folder. Do not delete the progress record.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   criterion 6: it says the run was interrupted, how far it got, what was left, and how to recover
+
+RESULT: ALL CHECKS PASSED. 10 checks.

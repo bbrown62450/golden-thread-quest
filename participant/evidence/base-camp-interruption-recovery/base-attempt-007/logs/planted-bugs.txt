@@ -1,0 +1,263 @@
+Do the tests notice a broken workflow? base-camp-interruption-recovery, attempt base-attempt-007
+Recorded by scripts/planted_bugs.py.
+
+Each bug below was put into scripts/workflow.py, every test was run, and the bug was taken out again.
+
+Before any bug: OK
+
+PLANTED BUG A. A file is written straight under its final name (criteria 1 and 2)
+  tests that failed: 11
+    Resuming.test_a_resume_interrupted_while_writing_its_own_lines_recovers
+    TheLock.test_a_run_killed_from_outside_leaves_no_lock_and_resumes
+    TheLock.test_a_second_run_in_the_same_folder_is_refused_while_the_first_lives
+    WhatAStopLeaves.test_an_existing_whole_file_is_never_replaced_by_part_of_a_new_one
+    TheStatus.test_an_interrupted_run_is_called_interrupted_with_what_it_left
+    WhatAStopLeaves.test_before_rename_leaves_a_whole_temporary_file_that_is_still_not_under_the_final_name
+    ... and 5 more
+
+PLANTED BUG B. The temporary file is renamed before its second half is written (criterion 2)
+  tests that failed: 10
+    Resuming.test_a_resume_interrupted_while_writing_its_own_lines_recovers
+    TheLock.test_a_run_killed_from_outside_leaves_no_lock_and_resumes
+    TheLock.test_a_second_run_in_the_same_folder_is_refused_while_the_first_lives
+    WhatAStopLeaves.test_an_existing_whole_file_is_never_replaced_by_part_of_a_new_one
+    TheStatus.test_an_interrupted_run_is_called_interrupted_with_what_it_left
+    WhatAStopLeaves.test_before_rename_leaves_a_whole_temporary_file_that_is_still_not_under_the_final_name
+    ... and 4 more
+
+PLANTED BUG C. The temporary file is made in another folder (criterion 1: a rename across folders is not one step)
+  tests that failed: 3
+    TheStatus.test_an_interrupted_run_is_called_interrupted_with_what_it_left
+    Resuming.test_the_resumed_run_says_it_was_interrupted_where_and_what_it_did
+    WhatAStopLeaves.test_write_whole_uses_a_temporary_name_in_the_same_folder
+
+PLANTED BUG D. Progress is recorded before the file is in place (criterion 3)
+  tests that failed: 16
+    TheStatus.test_a_card_with_no_record_is_pointed_out
+    Resuming.test_a_repair_of_a_finished_run_that_is_itself_interrupted_is_seen_and_recovered
+    Resuming.test_a_resume_interrupted_while_writing_its_own_lines_recovers
+    Resuming.test_a_resume_that_is_itself_interrupted_while_closing_a_cut_short_line_recovers
+    Resuming.test_a_run_interrupted_three_times_still_gives_the_same_result
+    TheLock.test_a_second_run_in_the_same_folder_is_refused_while_the_first_lives
+    ... and 10 more
+
+PLANTED BUG E. An item is said to be recorded, and no line is written for it (criterion 3)
+  tests that failed: 22
+    TheStatus.test_a_card_with_no_record_is_pointed_out
+    Resuming.test_a_finished_run_run_again_writes_nothing
+    Resuming.test_a_finished_run_with_a_card_damaged_since_is_put_right_and_the_index_built_again
+    Resuming.test_a_record_damaged_in_the_middle_is_refused_and_left
+    Resuming.test_a_record_line_changed_by_hand_fails_its_own_check
+    Resuming.test_a_repair_of_a_finished_run_that_is_itself_interrupted_is_seen_and_recovered
+    ... and 16 more
+
+PLANTED BUG F. A resumed run skips nothing: it does every item again (criterion 4)
+  tests that failed: 9
+    Resuming.test_a_finished_run_run_again_writes_nothing
+    Resuming.test_a_finished_run_with_a_card_damaged_since_is_put_right_and_the_index_built_again
+    Resuming.test_a_run_interrupted_three_times_still_gives_the_same_result
+    Resuming.test_a_whole_last_line_that_only_lacks_its_line_end_is_believed
+    StoppedAtEveryPoint.test_after_rename
+    StoppedAtEveryPoint.test_before_rename
+    ... and 3 more
+
+PLANTED BUG G. A resumed run trusts the record without looking at the file (criterion 4, decision 2)
+  tests that failed: 5
+    Resuming.test_a_finished_run_with_a_card_damaged_since_is_put_right_and_the_index_built_again
+    Resuming.test_a_repair_of_a_finished_run_that_is_itself_interrupted_is_seen_and_recovered
+    WhatAStopLeaves.test_an_existing_whole_file_is_never_replaced_by_part_of_a_new_one
+    Resuming.test_an_item_recorded_as_done_whose_card_is_missing_is_written_again
+    Resuming.test_an_item_recorded_as_done_whose_card_was_cut_short_afterwards_is_written_again
+
+PLANTED BUG H. A resumed run checks that the file is there and not what is in it (decision 2)
+  tests that failed: 4
+    Resuming.test_a_finished_run_with_a_card_damaged_since_is_put_right_and_the_index_built_again
+    Resuming.test_a_repair_of_a_finished_run_that_is_itself_interrupted_is_seen_and_recovered
+    WhatAStopLeaves.test_an_existing_whole_file_is_never_replaced_by_part_of_a_new_one
+    Resuming.test_an_item_recorded_as_done_whose_card_was_cut_short_afterwards_is_written_again
+
+PLANTED BUG I. A card found with no record is taken as done (criterion 4)
+  tests that failed: 4
+    Resuming.test_a_resume_that_is_itself_interrupted_while_closing_a_cut_short_line_recovers
+    StoppedAtEveryPoint.test_after_rename
+    StoppedAtEveryPoint.test_mid_record
+    WhatAStopLeaves.test_mid_record_leaves_a_last_line_cut_short_which_is_reported_and_not_believed
+
+PLANTED BUG J. A line of the record that fails its own check is believed (criterion 3)
+  tests that failed: 1
+    Resuming.test_a_record_line_changed_by_hand_fails_its_own_check
+
+PLANTED BUG K. A cut-short last line makes the whole record unreadable: the run refuses (criterion 4)
+  tests that failed: 8
+    Resuming.test_a_repair_of_a_finished_run_that_is_itself_interrupted_is_seen_and_recovered
+    Resuming.test_a_resume_interrupted_while_writing_its_own_lines_recovers
+    Resuming.test_a_resume_that_is_itself_interrupted_while_closing_a_cut_short_line_recovers
+    Resuming.test_a_run_interrupted_three_times_still_gives_the_same_result
+    StoppedAtEveryPoint.test_mid_record
+    WhatAStopLeaves.test_mid_record_leaves_a_last_line_cut_short_which_is_reported_and_not_believed
+    ... and 2 more
+
+PLANTED BUG L. A cut-short line is not closed off, so the next line runs into it (criterion 4)
+  tests that failed: 5
+    Resuming.test_a_repair_of_a_finished_run_that_is_itself_interrupted_is_seen_and_recovered
+    Resuming.test_a_resume_interrupted_while_writing_its_own_lines_recovers
+    Resuming.test_a_resume_that_is_itself_interrupted_while_closing_a_cut_short_line_recovers
+    Resuming.test_a_run_interrupted_three_times_still_gives_the_same_result
+    Resuming.test_two_cut_short_lines_in_a_row_at_the_end_are_closed_off_and_not_refused
+
+PLANTED BUG M. A record damaged in the middle is read past (the record)
+  tests that failed: 2
+    Resuming.test_a_record_damaged_in_the_middle_is_refused_and_left
+    Resuming.test_a_record_line_changed_by_hand_fails_its_own_check
+
+PLANTED BUG M2. An empty record, left by a kill at the first write, is refused for ever (a reader's finding)
+  tests that failed: 2
+    Resuming.test_a_resume_interrupted_while_writing_its_own_lines_recovers
+    Resuming.test_the_first_lines_of_the_record_can_be_interrupted_too
+
+PLANTED BUG M3. The closing line is written without the line end that must come before it (a reader's finding)
+  tests that failed: 6
+    Resuming.test_a_repair_of_a_finished_run_that_is_itself_interrupted_is_seen_and_recovered
+    Resuming.test_a_resume_interrupted_while_writing_its_own_lines_recovers
+    Resuming.test_a_resume_that_is_itself_interrupted_while_closing_a_cut_short_line_recovers
+    Resuming.test_a_run_interrupted_three_times_still_gives_the_same_result
+    Resuming.test_the_first_lines_of_the_record_can_be_interrupted_too
+    Resuming.test_two_cut_short_lines_in_a_row_at_the_end_are_closed_off_and_not_refused
+
+PLANTED BUG M4. A write that the system cuts short is taken as done (a reader's finding)
+  tests that failed: 1
+    PushedToTheDisk.test_a_short_write_is_finished_and_a_write_of_nothing_is_an_error
+
+PLANTED BUG M5. A finished run that is being put right still looks finished if it is stopped (a reader's finding)
+  tests that failed: 2
+    Resuming.test_a_finished_run_with_a_card_damaged_since_is_put_right_and_the_index_built_again
+    Resuming.test_a_repair_of_a_finished_run_that_is_itself_interrupted_is_seen_and_recovered
+
+PLANTED BUG M6. A finished run is judged by any run-finished line, not by the last line (a reader's finding)
+  tests that failed: 1
+    Resuming.test_a_repair_of_a_finished_run_that_is_itself_interrupted_is_seen_and_recovered
+
+PLANTED BUG M7. With no record, the run starts over on top of the cards that are there (a safety rule)
+  tests that failed: 1
+    Resuming.test_cards_with_no_progress_record_are_not_started_over_on
+
+PLANTED BUG M8. A run started with another card format is resumed (criterion 5)
+  tests that failed: 1
+    Resuming.test_a_run_started_with_another_card_format_is_refused
+
+PLANTED BUG M9. A card is not pushed to the disk before it is renamed (criterion 3)
+  tests that failed: 1
+    PushedToTheDisk.test_every_card_the_index_every_record_line_and_every_folder_change_is_pushed_to_the_disk
+
+PLANTED BUG M10. A line of the record is not pushed to the disk (criterion 3)
+  tests that failed: 1
+    PushedToTheDisk.test_every_card_the_index_every_record_line_and_every_folder_change_is_pushed_to_the_disk
+
+PLANTED BUG M11. The folder is not pushed to the disk after a rename (criterion 3)
+  tests that failed: 1
+    PushedToTheDisk.test_every_card_the_index_every_record_line_and_every_folder_change_is_pushed_to_the_disk
+
+PLANTED BUG M12. An error from the system is reported as a refusal (exit codes)
+  tests that failed: 1
+    PushedToTheDisk.test_an_error_from_the_system_ends_with_exit_code_3_and_can_be_resumed
+
+PLANTED BUG M13. Status does not say that a run is still working (criterion 6)
+  tests that failed: 1
+    TheStatus.test_a_run_that_is_still_working_is_not_just_called_interrupted
+
+PLANTED BUG N. A resume starts by deleting the progress record (a safety rule)
+  tests that failed: 11
+    Resuming.test_a_run_interrupted_three_times_still_gives_the_same_result
+    Resuming.test_a_whole_last_line_that_only_lacks_its_line_end_is_believed
+    StoppedAtEveryPoint.test_after_rename
+    Resuming.test_an_item_recorded_as_done_whose_card_is_missing_is_written_again
+    Resuming.test_an_item_recorded_as_done_whose_card_was_cut_short_afterwards_is_written_again
+    StoppedAtEveryPoint.test_before_rename
+    ... and 5 more
+
+PLANTED BUG O. Temporary files left by the stopped run are kept (criterion 2)
+  tests that failed: 10
+    Resuming.test_a_repair_of_a_finished_run_that_is_itself_interrupted_is_seen_and_recovered
+    Resuming.test_a_resume_interrupted_while_writing_its_own_lines_recovers
+    Resuming.test_a_run_interrupted_three_times_still_gives_the_same_result
+    TheLock.test_a_run_killed_from_outside_leaves_no_lock_and_resumes
+    WhatAStopLeaves.test_an_existing_whole_file_is_never_replaced_by_part_of_a_new_one
+    Resuming.test_an_item_recorded_as_done_whose_card_is_missing_is_written_again
+    ... and 4 more
+
+PLANTED BUG P. A temporary file left by the stopped run is finished off and used (criterion 2)
+  tests that failed: 1
+    WhatAStopLeaves.test_an_existing_whole_file_is_never_replaced_by_part_of_a_new_one
+
+PLANTED BUG Q. The resumed run does not say it is resuming (criterion 6)
+  tests that failed: 6
+    TheLock.test_a_run_killed_from_outside_leaves_no_lock_and_resumes
+    StoppedAtEveryPoint.test_after_rename
+    StoppedAtEveryPoint.test_before_rename
+    StoppedAtEveryPoint.test_mid_record
+    StoppedAtEveryPoint.test_mid_write
+    Resuming.test_the_resumed_run_says_it_was_interrupted_where_and_what_it_did
+
+PLANTED BUG R. The resumed run does not say what the stopped run left behind (criterion 6)
+  tests that failed: 1
+    Resuming.test_the_resumed_run_says_it_was_interrupted_where_and_what_it_did
+
+PLANTED BUG S. The resume is not written into the record (criterion 6)
+  tests that failed: 3
+    Resuming.test_a_resume_interrupted_while_writing_its_own_lines_recovers
+    Resuming.test_a_run_interrupted_three_times_still_gives_the_same_result
+    Resuming.test_the_record_keeps_the_history_of_the_interruption
+
+PLANTED BUG T. Status calls an interrupted run finished (criterion 6)
+  tests that failed: 3
+    Resuming.test_a_repair_of_a_finished_run_that_is_itself_interrupted_is_seen_and_recovered
+    TheStatus.test_an_interrupted_run_is_called_interrupted_with_what_it_left
+    Resuming.test_the_first_lines_of_the_record_can_be_interrupted_too
+
+PLANTED BUG U. Another input is accepted on resume (criterion 5)
+  tests that failed: 1
+    Resuming.test_another_input_is_refused_and_the_record_is_left
+
+PLANTED BUG V. The index is not built again after a card was rewritten (criterion 5)
+  tests that failed: 2
+    Resuming.test_a_finished_run_with_a_card_damaged_since_is_put_right_and_the_index_built_again
+    Resuming.test_a_repair_of_a_finished_run_that_is_itself_interrupted_is_seen_and_recovered
+
+PLANTED BUG W. The index is built from memory, not from the card files (the scenario)
+  tests that failed: 1
+    AnUninterruptedRun.test_the_index_shows_what_is_in_a_card_file_and_not_what_should_be
+
+PLANTED BUG X. A second run does not check the lock (stretch goal)
+  tests that failed: 2
+    TheStatus.test_a_run_that_is_still_working_is_not_just_called_interrupted
+    TheLock.test_a_second_run_in_the_same_folder_is_refused_while_the_first_lives
+
+PLANTED BUG Y. Output is not sent line by line, so a killed run loses what it had said (criterion 6)
+  tests that failed: 3
+    TheLock.test_a_run_killed_from_outside_leaves_no_lock_and_resumes
+    TheStatus.test_a_run_that_is_still_working_is_not_just_called_interrupted
+    TheLock.test_a_second_run_in_the_same_folder_is_refused_while_the_first_lives
+
+PLANTED BUG Z. A finished run that is run again writes every file again (criterion 4)
+  tests that failed: 2
+    Resuming.test_a_finished_run_run_again_writes_nothing
+    Resuming.test_a_finished_run_with_a_card_damaged_since_is_put_right_and_the_index_built_again
+
+PLANTED BUG AA. Two items with one id are accepted (the input)
+  tests that failed: 2
+    TheInput.test_two_ids_that_differ_only_in_capitals
+    TheInput.test_two_items_with_one_id
+
+PLANTED BUG AB. The stop hook does nothing, so no run is ever stopped (the tests themselves)
+  tests that failed: 32
+    TheStatus.test_a_card_with_no_record_is_pointed_out
+    Resuming.test_a_record_damaged_in_the_middle_is_refused_and_left
+    Resuming.test_a_record_line_changed_by_hand_fails_its_own_check
+    Resuming.test_a_repair_of_a_finished_run_that_is_itself_interrupted_is_seen_and_recovered
+    Resuming.test_a_resume_interrupted_while_writing_its_own_lines_recovers
+    Resuming.test_a_resume_that_is_itself_interrupted_while_closing_a_cut_short_line_recovers
+    ... and 26 more
+
+After the last bug was taken out: workflow.py is byte for byte what it was at the start. OK
+
+RESULT: all 40 planted bugs were caught by at least one test, and the file was restored.

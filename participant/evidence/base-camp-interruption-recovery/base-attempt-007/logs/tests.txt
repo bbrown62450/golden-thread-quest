@@ -1,0 +1,67 @@
+test_each_record_line_holds_the_checksum_of_the_card_on_disk (test_workflow.AnUninterruptedRun) ... ok
+test_it_writes_ten_cards_and_an_index_and_says_so (test_workflow.AnUninterruptedRun) ... ok
+test_the_index_is_built_from_the_card_files (test_workflow.AnUninterruptedRun) ... ok
+test_the_index_shows_what_is_in_a_card_file_and_not_what_should_be (test_workflow.AnUninterruptedRun)
+The scenario: a later step builds on a file. If a card were cut short, the index built from it would show it. ... ok
+test_the_record_has_a_line_for_each_item_in_order_then_the_index_then_the_end (test_workflow.AnUninterruptedRun) ... ok
+test_two_uninterrupted_runs_give_the_same_files (test_workflow.AnUninterruptedRun) ... ok
+test_a_short_write_is_finished_and_a_write_of_nothing_is_an_error (test_workflow.PushedToTheDisk) ... ok
+test_an_error_from_the_system_ends_with_exit_code_3_and_can_be_resumed (test_workflow.PushedToTheDisk) ... ok
+test_every_card_the_index_every_record_line_and_every_folder_change_is_pushed_to_the_disk (test_workflow.PushedToTheDisk) ... ok
+test_a_finished_run_run_again_writes_nothing (test_workflow.Resuming) ... ok
+test_a_finished_run_with_a_card_damaged_since_is_put_right_and_the_index_built_again (test_workflow.Resuming) ... ok
+test_a_record_damaged_in_the_middle_is_refused_and_left (test_workflow.Resuming) ... ok
+test_a_record_line_changed_by_hand_fails_its_own_check (test_workflow.Resuming) ... ok
+test_a_repair_of_a_finished_run_that_is_itself_interrupted_is_seen_and_recovered (test_workflow.Resuming)
+Reader's finding: a kill while a finished run is being put right must not leave it looking finished. ... ok
+test_a_resume_interrupted_while_writing_its_own_lines_recovers (test_workflow.Resuming) ... ok
+test_a_resume_that_is_itself_interrupted_while_closing_a_cut_short_line_recovers (test_workflow.Resuming) ... ok
+test_a_run_interrupted_three_times_still_gives_the_same_result (test_workflow.Resuming) ... ok
+test_a_run_started_with_another_card_format_is_refused (test_workflow.Resuming) ... ok
+test_a_whole_last_line_that_only_lacks_its_line_end_is_believed (test_workflow.Resuming) ... ok
+test_an_item_recorded_as_done_whose_card_is_missing_is_written_again (test_workflow.Resuming) ... ok
+test_an_item_recorded_as_done_whose_card_was_cut_short_afterwards_is_written_again (test_workflow.Resuming)
+The quest's scenario: a file that looks complete and is not. The checksum in the record shows it. ... ok
+test_another_input_is_refused_and_the_record_is_left (test_workflow.Resuming) ... ok
+test_cards_with_no_progress_record_are_not_started_over_on (test_workflow.Resuming)
+The safety rule: no recovering by deleting the record. Without a record the workflow refuses, and says why. ... ok
+test_progress_is_on_disk_as_each_item_finishes_not_at_the_end (test_workflow.Resuming) ... ok
+test_the_first_lines_of_the_record_can_be_interrupted_too (test_workflow.Resuming)
+Reader's finding: a kill while the record is created, or while its first line is written, must not leave a ... ok
+test_the_progress_record_is_never_deleted_or_made_shorter (test_workflow.Resuming) ... ok
+test_the_record_keeps_the_history_of_the_interruption (test_workflow.Resuming) ... ok
+test_the_resumed_run_says_it_was_interrupted_where_and_what_it_did (test_workflow.Resuming) ... ok
+test_the_same_items_laid_out_differently_are_the_same_input (test_workflow.Resuming) ... ok
+test_two_cut_short_lines_in_a_row_at_the_end_are_closed_off_and_not_refused (test_workflow.Resuming)
+A power cut could keep only part of the line that closes a cut-short line. Made here by hand. ... ok
+test_after_rename (test_workflow.StoppedAtEveryPoint) ... ok
+test_before_rename (test_workflow.StoppedAtEveryPoint) ... ok
+test_mid_record (test_workflow.StoppedAtEveryPoint) ... ok
+test_mid_write (test_workflow.StoppedAtEveryPoint) ... ok
+test_an_id_that_is_a_path (test_workflow.TheInput) ... ok
+test_no_file (test_workflow.TheInput) ... ok
+test_no_items (test_workflow.TheInput) ... ok
+test_not_json (test_workflow.TheInput) ... ok
+test_two_ids_that_differ_only_in_capitals (test_workflow.TheInput) ... ok
+test_two_items_with_one_id (test_workflow.TheInput) ... ok
+test_a_run_killed_from_outside_leaves_no_lock_and_resumes (test_workflow.TheLock) ... ok
+test_a_second_run_in_the_same_folder_is_refused_while_the_first_lives (test_workflow.TheLock) ... ok
+test_a_card_with_no_record_is_pointed_out (test_workflow.TheStatus) ... ok
+test_a_finished_run_is_called_finished (test_workflow.TheStatus) ... ok
+test_a_run_that_is_still_working_is_not_just_called_interrupted (test_workflow.TheStatus) ... ok
+test_an_interrupted_run_is_called_interrupted_with_what_it_left (test_workflow.TheStatus) ... ok
+test_no_run (test_workflow.TheStatus) ... ok
+test_status_changes_nothing (test_workflow.TheStatus) ... ok
+test_after_rename_leaves_the_whole_card_and_no_record_of_it (test_workflow.WhatAStopLeaves) ... ok
+test_an_existing_whole_file_is_never_replaced_by_part_of_a_new_one (test_workflow.WhatAStopLeaves)
+Criterion 1, where a file is already there: the old whole file stays until the new whole file replaces it. ... ok
+test_before_rename_leaves_a_whole_temporary_file_that_is_still_not_under_the_final_name (test_workflow.WhatAStopLeaves) ... ok
+test_mid_record_leaves_a_last_line_cut_short_which_is_reported_and_not_believed (test_workflow.WhatAStopLeaves) ... ok
+test_mid_write_leaves_a_temporary_file_and_nothing_under_the_final_name (test_workflow.WhatAStopLeaves) ... ok
+test_the_output_of_a_killed_run_is_whole_up_to_the_kill (test_workflow.WhatAStopLeaves) ... ok
+test_write_whole_uses_a_temporary_name_in_the_same_folder (test_workflow.WhatAStopLeaves) ... ok
+
+----------------------------------------------------------------------
+Ran 55 tests in 15.980s
+
+OK

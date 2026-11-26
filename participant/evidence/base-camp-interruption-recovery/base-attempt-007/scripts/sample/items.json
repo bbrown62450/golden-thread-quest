@@ -1,0 +1,65 @@
+{
+  "about": "Ten made-up work items. Nothing here is real.",
+  "items": [
+    {
+      "id": "W-01",
+      "title": "Export the monthly report",
+      "points": 1,
+      "owner_role": "developer"
+    },
+    {
+      "id": "W-02",
+      "title": "Add a column for the export date",
+      "points": 2,
+      "owner_role": "tester"
+    },
+    {
+      "id": "W-03",
+      "title": "Let a customer change plan",
+      "points": 3,
+      "owner_role": "analyst"
+    },
+    {
+      "id": "W-04",
+      "title": "Show the last sign-in time",
+      "points": 5,
+      "owner_role": "developer"
+    },
+    {
+      "id": "W-05",
+      "title": "Archive last year's reports",
+      "points": 8,
+      "owner_role": "tester"
+    },
+    {
+      "id": "W-06",
+      "title": "Send a receipt by email",
+      "points": 1,
+      "owner_role": "analyst"
+    },
+    {
+      "id": "W-07",
+      "title": "Search customers by name",
+      "points": 2,
+      "owner_role": "developer"
+    },
+    {
+      "id": "W-08",
+      "title": "Lock an account after five wrong tries",
+      "points": 3,
+      "owner_role": "tester"
+    },
+    {
+      "id": "W-09",
+      "title": "Print a packing slip",
+      "points": 5,
+      "owner_role": "analyst"
+    },
+    {
+      "id": "W-10",
+      "title": "Remind about an unpaid invoice",
+      "points": 8,
+      "owner_role": "developer"
+    }
+  ]
+}

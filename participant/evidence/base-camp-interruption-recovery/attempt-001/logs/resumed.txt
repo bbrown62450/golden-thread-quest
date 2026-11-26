@@ -1,0 +1,154 @@
+The same run, resumed. base-camp-interruption-recovery, attempt base-attempt-007
+Recorded by scripts/record_evidence.py. Each block between dashed lines is what a command printed. Where lines were
+left out of a block, the record says so beside it. The work items are made up. Nothing here is from a real system.
+
+WORK is the folder the stopped run left, exactly as interrupted.txt shows it. Nothing in it was deleted or edited:
+the progress record is the one the stopped run wrote. The command is the same command, given again.
+
+==============================================================================
+THE RESUMED RUN
+$ python3 scripts/workflow.py run --items scripts/sample/items.json --out WORK
+------------------------------------------------------------------------------
+RESUMING AN INTERRUPTED RUN. The progress record does not end with a run-finished line.
+  It was interrupted after 5 of 10 items were recorded as done. The last whole line recorded: item-done W-05.
+  This is resume number 1 of this run.
+  LEFT BY THE RUN THAT STOPPED: temporary file cards/.W-06.md.tmp-27488, 234 bytes. Removed. It was never under a final name and is not used.
+  W-01  skipped: recorded as done, and its card is there with the checksum recorded
+  W-02  skipped: recorded as done, and its card is there with the checksum recorded
+  W-03  skipped: recorded as done, and its card is there with the checksum recorded
+  W-04  skipped: recorded as done, and its card is there with the checksum recorded
+  W-05  skipped: recorded as done, and its card is there with the checksum recorded
+  W-06  written (468 bytes), and recorded
+  W-07  written (500 bytes), and recorded
+  W-08  written (540 bytes), and recorded
+  W-09  written (581 bytes), and recorded
+  W-10  written (680 bytes), and recorded
+  index  built from the 10 card files (1209 bytes), and recorded
+
+FINISHED. Skipped as already done: 5 (W-01, W-02, W-03, W-04, W-05). Written in this run: 6 (W-06, W-07, W-08, W-09, W-10, index).
+------------------------------------------------------------------------------
+exit code: 0
+  ok   it finished
+  ok   criterion 6: it says it is resuming an interrupted run, and where that run had got to
+  ok   criterion 6: it says what the stopped run left behind and what was done with it
+  ok   criterion 4: it skipped the five items that were finished: W-01 to W-05
+  ok   criterion 4: it completed the rest: W-06 to W-10, and the index
+  ok   criterion 4: the five finished cards were not written again: each is the same file on the disk (the same inode), last changed when it was before the resume
+  ok   and the five cards the resume wrote are new files
+  ok   the progress record was added to and not replaced: it still begins with every byte the stopped run wrote
+
+==============================================================================
+THE RESULT, AGAINST AN UNINTERRUPTED RUN'S (criterion 5)
+CLEAN is the folder of the run that was never interrupted. sha256 of each file, in both:
+
+  cards/W-01.md  same
+      resumed       41d12721089c957bdab226d3da333419696f0cc282e6dd9e977f15f02372c154
+      uninterrupted 41d12721089c957bdab226d3da333419696f0cc282e6dd9e977f15f02372c154
+  cards/W-02.md  same
+      resumed       6271c9b30c5b31976fddafde3f5f4288d5c10c2a7b59fdfd4f6708203d42dfb8
+      uninterrupted 6271c9b30c5b31976fddafde3f5f4288d5c10c2a7b59fdfd4f6708203d42dfb8
+  cards/W-03.md  same
+      resumed       f96efc4e4360f3100ceeb1d4c1a3c26299dee989f94cfc2398f9eeb9f8bfe50a
+      uninterrupted f96efc4e4360f3100ceeb1d4c1a3c26299dee989f94cfc2398f9eeb9f8bfe50a
+  cards/W-04.md  same
+      resumed       78fba2e92d19e1ec18671da9c822f3a977805e6224c6cc45e24872a4801c4ce9
+      uninterrupted 78fba2e92d19e1ec18671da9c822f3a977805e6224c6cc45e24872a4801c4ce9
+  cards/W-05.md  same
+      resumed       d78b279de201a224a7bd2da898df669f6c636bad154eb1a7566b10d7a3d53f1c
+      uninterrupted d78b279de201a224a7bd2da898df669f6c636bad154eb1a7566b10d7a3d53f1c
+  cards/W-06.md  same
+      resumed       77fff157faa5dc70c9b3cddba31591220e2beaea0eaad8c27245e94e29f98ce1
+      uninterrupted 77fff157faa5dc70c9b3cddba31591220e2beaea0eaad8c27245e94e29f98ce1
+  cards/W-07.md  same
+      resumed       d679981878cbf3be6331704a9b95eb3bc1b03bbede96a5354fa8049f0eec29d0
+      uninterrupted d679981878cbf3be6331704a9b95eb3bc1b03bbede96a5354fa8049f0eec29d0
+  cards/W-08.md  same
+      resumed       cf16cc508f3dae8c96d6553e663256b2f0c59cfe5c46df64c3160b08ac015869
+      uninterrupted cf16cc508f3dae8c96d6553e663256b2f0c59cfe5c46df64c3160b08ac015869
+  cards/W-09.md  same
+      resumed       da706ad9a3df45cfe54dfb78e7a1d0979e0ff29fd23cdb4509f50f6dcc901fb7
+      uninterrupted da706ad9a3df45cfe54dfb78e7a1d0979e0ff29fd23cdb4509f50f6dcc901fb7
+  cards/W-10.md  same
+      resumed       4046a415f4fa834d2e8bbf32292fcc404712438410e7008ba5ce4b65063a7d0a
+      uninterrupted 4046a415f4fa834d2e8bbf32292fcc404712438410e7008ba5ce4b65063a7d0a
+  index.md       same
+      resumed       ef060d42f527ede7f3e4660cba8249313f7e97e5d8ce5cf18ef435b0def831cf
+      uninterrupted ef060d42f527ede7f3e4660cba8249313f7e97e5d8ce5cf18ef435b0def831cf
+
+  one checksum over all eleven names and checksums:
+    resumed       6a2fa99ca8aeb13994caa4f4c3daa0b9ed6a4dd06cc94c97bf2e3834831fd08d
+    uninterrupted 6a2fa99ca8aeb13994caa4f4c3daa0b9ed6a4dd06cc94c97bf2e3834831fd08d
+
+  ok   criterion 5: every card and the index are, byte for byte, those of the uninterrupted run
+Every file in WORK:
+  index.md                      1209 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  lock                            27 bytes  the lock file. It names the process that last held the lock.
+  progress.jsonl                1893 bytes  the progress record. 14 whole lines. It is the one file written in place: see the notes.
+  cards/W-01.md                  472 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-02.md                  505 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-03.md                  529 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-04.md                  589 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-05.md                  674 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-06.md                  468 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-07.md                  500 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-08.md                  540 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-09.md                  581 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-10.md                  680 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+
+  ok   no temporary file is left, and every file under a final name is whole
+
+WHAT THIS COMPARISON CAN AND CANNOT SHOW. The same item always gives the same card, so equal checksums show that no file is
+missing, cut short or mixed. They cannot show that no work was repeated: a card written twice is the same card. That is
+shown above, by the skipped cards being the same files as before.
+
+The progress records are NOT the same, and are not meant to be. The resumed run's keeps the history:
+  {"card_format": 1, "event": "run-started", "items": 10, "items_fingerprint": "d4d3534e9a626fdca8a0728276d3492c2987ced9c4...
+  {"bytes": 472, "event": "item-done", "id": "W-01", "sha256": "41d12721089c957bdab226d3da333419696f0cc282e6dd9e977f15f023...
+  {"bytes": 505, "event": "item-done", "id": "W-02", "sha256": "6271c9b30c5b31976fddafde3f5f4288d5c10c2a7b59fdfd4f6708203d...
+  {"bytes": 529, "event": "item-done", "id": "W-03", "sha256": "f96efc4e4360f3100ceeb1d4c1a3c26299dee989f94cfc2398f9eeb9f8...
+  {"bytes": 589, "event": "item-done", "id": "W-04", "sha256": "78fba2e92d19e1ec18671da9c822f3a977805e6224c6cc45e24872a480...
+  {"bytes": 674, "event": "item-done", "id": "W-05", "sha256": "d78b279de201a224a7bd2da898df669f6c636bad154eb1a7566b10d7a3...
+  {"event": "run-resumed", "items_recorded_done": 5, "number": 1}	a61fa819c2bb9e37
+  {"bytes": 468, "event": "item-done", "id": "W-06", "sha256": "77fff157faa5dc70c9b3cddba31591220e2beaea0eaad8c27245e94e29...
+  {"bytes": 500, "event": "item-done", "id": "W-07", "sha256": "d679981878cbf3be6331704a9b95eb3bc1b03bbede96a5354fa8049f0e...
+  {"bytes": 540, "event": "item-done", "id": "W-08", "sha256": "cf16cc508f3dae8c96d6553e663256b2f0c59cfe5c46df64c3160b08ac...
+  {"bytes": 581, "event": "item-done", "id": "W-09", "sha256": "da706ad9a3df45cfe54dfb78e7a1d0979e0ff29fd23cdb4509f50f6dcc...
+  {"bytes": 680, "event": "item-done", "id": "W-10", "sha256": "4046a415f4fa834d2e8bbf32292fcc404712438410e7008ba5ce4b6506...
+  {"bytes": 1209, "event": "index-done", "sha256": "ef060d42f527ede7f3e4660cba8249313f7e97e5d8ce5cf18ef435b0def831cf"}	a58...
+  {"event": "run-finished", "items": 10}	3ffe24c078258ed4
+  ok   criterion 6: the record shows one start, W-01 to W-05, one resume, W-06 to W-10, the index and the finish, with each item recorded once
+
+==============================================================================
+AFTERWARDS
+$ python3 scripts/workflow.py status --out WORK
+------------------------------------------------------------------------------
+FINISHED: the last line of the progress record is run-finished.
+  Items in the run: 10. Recorded as done: 10 (W-01, W-02, W-03, W-04, W-05, W-06, W-07, W-08, W-09, W-10).
+  Index recorded as done: yes. Times this run was resumed: 1. Times it was reopened after finishing: 0.
+  Temporary files left in the folder: 0.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the status now says finished, and that the run was resumed once
+
+The same command a third time:
+$ python3 scripts/workflow.py run --items scripts/sample/items.json --out WORK
+------------------------------------------------------------------------------
+ALREADY FINISHED. The last line of the progress record is run-finished. Each file is checked against the record.
+  W-01  skipped: recorded as done, and its card is there with the checksum recorded
+  W-02  skipped: recorded as done, and its card is there with the checksum recorded
+  W-03  skipped: recorded as done, and its card is there with the checksum recorded
+  W-04  skipped: recorded as done, and its card is there with the checksum recorded
+  W-05  skipped: recorded as done, and its card is there with the checksum recorded
+  W-06  skipped: recorded as done, and its card is there with the checksum recorded
+  W-07  skipped: recorded as done, and its card is there with the checksum recorded
+  W-08  skipped: recorded as done, and its card is there with the checksum recorded
+  W-09  skipped: recorded as done, and its card is there with the checksum recorded
+  W-10  skipped: recorded as done, and its card is there with the checksum recorded
+  index  skipped: recorded as done, it is there with the checksum recorded, and the cards give the same index
+
+FINISHED. Skipped as already done: 10 (W-01, W-02, W-03, W-04, W-05, W-06, W-07, W-08, W-09, W-10). Written in this run: 0.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   run again, it finds the run finished, checks each file, and writes no card, no index and no line of the record: each is the same file with the same bytes. (It does take the lock, and writes its process id in the lock file.)
+
+RESULT: ALL CHECKS PASSED. 13 checks.

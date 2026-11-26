@@ -1,0 +1,362 @@
+Stopped at each point, and with two runs at once. base-camp-interruption-recovery, attempt base-attempt-007
+Recorded by scripts/record_evidence.py. Each block between dashed lines is what a command printed. Where lines were
+left out of a block, the record says so beside it. The work items are made up. Nothing here is from a real system.
+
+The stretch goals. Each run below is in a fresh folder. The workflow kills itself with SIGKILL at the point named.
+THE BLOCKS IN THIS RECORD ARE SHORTENED: of a stopped run only the last two lines are kept, after '...', and of a resumed
+run the lines saying an item was skipped are left out. The tests make these stops, and others in the record's own
+lines, for the first card, a middle card, the last card and the index: see logs/tests.txt.
+
+==============================================================================
+POINT 1. Stopped at W-04:mid-write: half of the card is in the temporary file
+$ GTQ_STOP_AT=W-04:mid-write python3 scripts/workflow.py run --items scripts/sample/items.json --out POINT-1
+------------------------------------------------------------------------------
+  ...
+  W-02  written (505 bytes), and recorded
+  W-03  written (529 bytes), and recorded
+------------------------------------------------------------------------------
+NO EXIT CODE: the process was killed by signal 9 (SIGKILL), sent by itself at the point named
+Every file in POINT-1:
+  lock                            27 bytes  the lock file. It names the process that last held the lock.
+  progress.jsonl                 600 bytes  the progress record. 4 whole lines. It is the one file written in place: see the notes.
+  cards/.W-04.md.tmp-27493       294 bytes  TEMPORARY. Not under a final name: its name begins with a dot and ends in .tmp-<process id>. It is PART of a file: 294 of the 589 bytes of cards/W-04.md.
+  cards/W-01.md                  472 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-02.md                  505 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-03.md                  529 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  ok   killed at that point, and what it left is as expected: the temporary file holds part of W-04
+  ok   criteria 1 and 2: every card, and the index if it is there, is whole, and nothing unexpected is in the folder
+
+Resumed:
+$ python3 scripts/workflow.py run --items scripts/sample/items.json --out POINT-1
+------------------------------------------------------------------------------
+RESUMING AN INTERRUPTED RUN. The progress record does not end with a run-finished line.
+  It was interrupted after 3 of 10 items were recorded as done. The last whole line recorded: item-done W-03.
+  This is resume number 1 of this run.
+  LEFT BY THE RUN THAT STOPPED: temporary file cards/.W-04.md.tmp-27493, 294 bytes. Removed. It was never under a final name and is not used.
+  W-04  written (589 bytes), and recorded
+  W-05  written (674 bytes), and recorded
+  W-06  written (468 bytes), and recorded
+  W-07  written (500 bytes), and recorded
+  W-08  written (540 bytes), and recorded
+  W-09  written (581 bytes), and recorded
+  W-10  written (680 bytes), and recorded
+  index  built from the 10 card files (1209 bytes), and recorded
+
+FINISHED. Skipped as already done: 3 (W-01, W-02, W-03). Written in this run: 8 (W-04, W-05, W-06, W-07, W-08, W-09, W-10, index).
+------------------------------------------------------------------------------
+exit code: 0
+(lines saying an item was skipped are left out of the block above)
+  ok   the resumed run finished, said it was resuming, left no temporary file, and its eleven files equal the uninterrupted run's
+
+==============================================================================
+POINT 2. Stopped at W-04:before-rename: the whole card is in the temporary file, which is not renamed
+$ GTQ_STOP_AT=W-04:before-rename python3 scripts/workflow.py run --items scripts/sample/items.json --out POINT-2
+------------------------------------------------------------------------------
+  ...
+  W-02  written (505 bytes), and recorded
+  W-03  written (529 bytes), and recorded
+------------------------------------------------------------------------------
+NO EXIT CODE: the process was killed by signal 9 (SIGKILL), sent by itself at the point named
+Every file in POINT-2:
+  lock                            27 bytes  the lock file. It names the process that last held the lock.
+  progress.jsonl                 600 bytes  the progress record. 4 whole lines. It is the one file written in place: see the notes.
+  cards/.W-04.md.tmp-27495       589 bytes  TEMPORARY. Not under a final name: its name begins with a dot and ends in .tmp-<process id>. It holds all 589 bytes of cards/W-04.md (same checksum), and was not renamed.
+  cards/W-01.md                  472 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-02.md                  505 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-03.md                  529 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  ok   killed at that point, and what it left is as expected: the temporary file holds all of W-04, and is still not a card
+  ok   criteria 1 and 2: every card, and the index if it is there, is whole, and nothing unexpected is in the folder
+
+Resumed:
+$ python3 scripts/workflow.py run --items scripts/sample/items.json --out POINT-2
+------------------------------------------------------------------------------
+RESUMING AN INTERRUPTED RUN. The progress record does not end with a run-finished line.
+  It was interrupted after 3 of 10 items were recorded as done. The last whole line recorded: item-done W-03.
+  This is resume number 1 of this run.
+  LEFT BY THE RUN THAT STOPPED: temporary file cards/.W-04.md.tmp-27495, 589 bytes. Removed. It was never under a final name and is not used.
+  W-04  written (589 bytes), and recorded
+  W-05  written (674 bytes), and recorded
+  W-06  written (468 bytes), and recorded
+  W-07  written (500 bytes), and recorded
+  W-08  written (540 bytes), and recorded
+  W-09  written (581 bytes), and recorded
+  W-10  written (680 bytes), and recorded
+  index  built from the 10 card files (1209 bytes), and recorded
+
+FINISHED. Skipped as already done: 3 (W-01, W-02, W-03). Written in this run: 8 (W-04, W-05, W-06, W-07, W-08, W-09, W-10, index).
+------------------------------------------------------------------------------
+exit code: 0
+(lines saying an item was skipped are left out of the block above)
+  ok   the resumed run finished, said it was resuming, left no temporary file, and its eleven files equal the uninterrupted run's
+
+==============================================================================
+POINT 3. Stopped at W-04:after-rename: the card is under its final name, and its progress line is not written
+$ GTQ_STOP_AT=W-04:after-rename python3 scripts/workflow.py run --items scripts/sample/items.json --out POINT-3
+------------------------------------------------------------------------------
+  ...
+  W-02  written (505 bytes), and recorded
+  W-03  written (529 bytes), and recorded
+------------------------------------------------------------------------------
+NO EXIT CODE: the process was killed by signal 9 (SIGKILL), sent by itself at the point named
+Every file in POINT-3:
+  lock                            27 bytes  the lock file. It names the process that last held the lock.
+  progress.jsonl                 600 bytes  the progress record. 4 whole lines. It is the one file written in place: see the notes.
+  cards/W-01.md                  472 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-02.md                  505 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-03.md                  529 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-04.md                  589 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  ok   killed at that point, and what it left is as expected: W-04 is under its final name, whole, with no record
+  ok   criteria 1 and 2: every card, and the index if it is there, is whole, and nothing unexpected is in the folder
+
+Resumed:
+$ python3 scripts/workflow.py run --items scripts/sample/items.json --out POINT-3
+------------------------------------------------------------------------------
+RESUMING AN INTERRUPTED RUN. The progress record does not end with a run-finished line.
+  It was interrupted after 3 of 10 items were recorded as done. The last whole line recorded: item-done W-03.
+  This is resume number 1 of this run.
+  No temporary file was left behind.
+  W-04  a card is under its final name with no whole record of it: the run stopped after the rename and before its record was complete. Written again.
+  W-04  written (589 bytes), and recorded
+  W-05  written (674 bytes), and recorded
+  W-06  written (468 bytes), and recorded
+  W-07  written (500 bytes), and recorded
+  W-08  written (540 bytes), and recorded
+  W-09  written (581 bytes), and recorded
+  W-10  written (680 bytes), and recorded
+  index  built from the 10 card files (1209 bytes), and recorded
+
+FINISHED. Skipped as already done: 3 (W-01, W-02, W-03). Written in this run: 8 (W-04, W-05, W-06, W-07, W-08, W-09, W-10, index).
+------------------------------------------------------------------------------
+exit code: 0
+(lines saying an item was skipped are left out of the block above)
+  ok   the resumed run finished, said it was resuming, left no temporary file, and its eleven files equal the uninterrupted run's
+
+==============================================================================
+POINT 4. Stopped at W-04:mid-record: half of the card's progress line is written
+$ GTQ_STOP_AT=W-04:mid-record python3 scripts/workflow.py run --items scripts/sample/items.json --out POINT-4
+------------------------------------------------------------------------------
+  ...
+  W-02  written (505 bytes), and recorded
+  W-03  written (529 bytes), and recorded
+------------------------------------------------------------------------------
+NO EXIT CODE: the process was killed by signal 9 (SIGKILL), sent by itself at the point named
+Every file in POINT-4:
+  lock                            27 bytes  the lock file. It names the process that last held the lock.
+  progress.jsonl                 673 bytes  the progress record. 4 whole lines, and then 73 bytes of a line that was cut short. It is the one file written in place: see the notes.
+  cards/W-01.md                  472 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-02.md                  505 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-03.md                  529 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-04.md                  589 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  ok   killed at that point, and what it left is as expected: the last line of the record is cut short
+  ok   criteria 1 and 2: every card, and the index if it is there, is whole, and nothing unexpected is in the folder
+
+Resumed:
+$ python3 scripts/workflow.py run --items scripts/sample/items.json --out POINT-4
+------------------------------------------------------------------------------
+RESUMING AN INTERRUPTED RUN. The progress record does not end with a run-finished line.
+  It was interrupted after 3 of 10 items were recorded as done. The last whole line recorded: item-done W-03.
+  This is resume number 1 of this run.
+  THE PROGRESS RECORD: line 5, the last, is cut short or fails the check (73 bytes). Ignored: what was being recorded is done again.
+  No temporary file was left behind.
+  W-04  a card is under its final name with no whole record of it: the run stopped after the rename and before its record was complete. Written again.
+  W-04  written (589 bytes), and recorded
+  W-05  written (674 bytes), and recorded
+  W-06  written (468 bytes), and recorded
+  W-07  written (500 bytes), and recorded
+  W-08  written (540 bytes), and recorded
+  W-09  written (581 bytes), and recorded
+  W-10  written (680 bytes), and recorded
+  index  built from the 10 card files (1209 bytes), and recorded
+
+FINISHED. Skipped as already done: 3 (W-01, W-02, W-03). Written in this run: 8 (W-04, W-05, W-06, W-07, W-08, W-09, W-10, index).
+------------------------------------------------------------------------------
+exit code: 0
+(lines saying an item was skipped are left out of the block above)
+  ok   the resumed run finished, said it was resuming, left no temporary file, and its eleven files equal the uninterrupted run's
+
+==============================================================================
+POINT 5. Stopped at index:mid-write: every card is done, and half of the index is in a temporary file
+$ GTQ_STOP_AT=index:mid-write python3 scripts/workflow.py run --items scripts/sample/items.json --out POINT-5
+------------------------------------------------------------------------------
+  ...
+  W-09  written (581 bytes), and recorded
+  W-10  written (680 bytes), and recorded
+------------------------------------------------------------------------------
+NO EXIT CODE: the process was killed by signal 9 (SIGKILL), sent by itself at the point named
+Every file in POINT-5:
+  .index.md.tmp-27502            604 bytes  TEMPORARY. Not under a final name: its name begins with a dot and ends in .tmp-<process id>. It is PART of a file: 604 of the 1209 bytes of index.md.
+  lock                            27 bytes  the lock file. It names the process that last held the lock.
+  progress.jsonl                1622 bytes  the progress record. 11 whole lines. It is the one file written in place: see the notes.
+  cards/W-01.md                  472 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-02.md                  505 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-03.md                  529 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-04.md                  589 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-05.md                  674 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-06.md                  468 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-07.md                  500 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-08.md                  540 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-09.md                  581 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-10.md                  680 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  ok   killed at that point, and what it left is as expected: all ten cards are recorded, and there is no index
+  ok   criteria 1 and 2: every card, and the index if it is there, is whole, and nothing unexpected is in the folder
+
+Resumed:
+$ python3 scripts/workflow.py run --items scripts/sample/items.json --out POINT-5
+------------------------------------------------------------------------------
+RESUMING AN INTERRUPTED RUN. The progress record does not end with a run-finished line.
+  It was interrupted after 10 of 10 items were recorded as done. The last whole line recorded: item-done W-10.
+  This is resume number 1 of this run.
+  LEFT BY THE RUN THAT STOPPED: temporary file .index.md.tmp-27502, 604 bytes. Removed. It was never under a final name and is not used.
+  index  built from the 10 card files (1209 bytes), and recorded
+
+FINISHED. Skipped as already done: 10 (W-01, W-02, W-03, W-04, W-05, W-06, W-07, W-08, W-09, W-10). Written in this run: 1 (index).
+------------------------------------------------------------------------------
+exit code: 0
+(lines saying an item was skipped are left out of the block above)
+  ok   the resumed run finished, said it was resuming, left no temporary file, and its eleven files equal the uninterrupted run's
+
+==============================================================================
+POINT 6. A file that is already there, being replaced: the previous whole file stays until the new whole file takes its place (criterion 1)
+A run is finished in a fresh folder. Then the card W-04 is replaced, by this script, with an older version: a whole file
+with other text. That makes the next run write W-04 again, over a file that exists. That run is stopped halfway through.
+
+Stopped halfway through writing the new W-04:
+$ GTQ_STOP_AT=W-04:mid-write python3 scripts/workflow.py run --items scripts/sample/items.json --out POINT-6
+------------------------------------------------------------------------------
+ALREADY FINISHED. The last line of the progress record is run-finished. Each file is checked against the record.
+  W-04  RECORDED AS DONE, and its card is not the file that was recorded. Written again.
+------------------------------------------------------------------------------
+NO EXIT CODE: the process was killed by signal 9 (SIGKILL), sent by itself at the point named
+(lines saying an item was skipped are left out of the block above)
+Every file in POINT-6:
+  index.md                      1209 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  lock                            27 bytes  the lock file. It names the process that last held the lock.
+  progress.jsonl                1928 bytes  the progress record. 14 whole lines. It is the one file written in place: see the notes.
+  cards/.W-04.md.tmp-27505       294 bytes  TEMPORARY. Not under a final name: its name begins with a dot and ends in .tmp-<process id>. It is PART of a file: 294 of the 589 bytes of cards/W-04.md.
+  cards/W-01.md                  472 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-02.md                  505 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-03.md                  529 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-04.md                  114 bytes  final name. WHOLE, AND THE OLDER VERSION: its checksum is that of the file that was there before the run that stopped.
+  cards/W-05.md                  674 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-06.md                  468 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-07.md                  500 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-08.md                  540 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-09.md                  581 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-10.md                  680 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  ok   criterion 1: stopped halfway through writing the new W-04, the name W-04.md still holds the previous whole file, byte for byte, and not part of the new one
+
+Stopped again, when the new W-04 is whole in its temporary file and not yet renamed:
+$ GTQ_STOP_AT=W-04:before-rename python3 scripts/workflow.py run --items scripts/sample/items.json --out POINT-6
+------------------------------------------------------------------------------
+RESUMING AN INTERRUPTED RUN. The progress record does not end with a run-finished line.
+  It was interrupted after 10 of 10 items were recorded as done. The last whole line recorded: run-reopened.
+  This is resume number 1 of this run.
+  LEFT BY THE RUN THAT STOPPED: temporary file cards/.W-04.md.tmp-27505, 294 bytes. Removed. It was never under a final name and is not used.
+  W-04  RECORDED AS DONE, and its card is not the file that was recorded. Written again.
+------------------------------------------------------------------------------
+NO EXIT CODE: the process was killed by signal 9 (SIGKILL), sent by itself at the point named
+(lines saying an item was skipped are left out of the block above)
+Every file in POINT-6:
+  index.md                      1209 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  lock                            27 bytes  the lock file. It names the process that last held the lock.
+  progress.jsonl                2010 bytes  the progress record. 15 whole lines. It is the one file written in place: see the notes.
+  cards/.W-04.md.tmp-27506       589 bytes  TEMPORARY. Not under a final name: its name begins with a dot and ends in .tmp-<process id>. It holds all 589 bytes of cards/W-04.md (same checksum), and was not renamed.
+  cards/W-01.md                  472 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-02.md                  505 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-03.md                  529 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-04.md                  114 bytes  final name. WHOLE, AND THE OLDER VERSION: its checksum is that of the file that was there before the run that stopped.
+  cards/W-05.md                  674 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-06.md                  468 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-07.md                  500 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-08.md                  540 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-09.md                  581 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  cards/W-10.md                  680 bytes  final name. WHOLE: its checksum is that of the same file from an uninterrupted run.
+  ok   criterion 1: stopped again, when the new W-04 is whole in its temporary file and not yet renamed, the name W-04.md still holds the previous whole file, byte for byte, and not part of the new one
+
+$ python3 scripts/workflow.py status --out POINT-6
+------------------------------------------------------------------------------
+INTERRUPTED: the progress record does not end with a run-finished line. A run stopped partway.
+  Items in the run: 10. Recorded as done: 10 (W-01, W-02, W-03, W-04, W-05, W-06, W-07, W-08, W-09, W-10).
+  Index recorded as done: yes. Times this run was resumed: 1. Times it was reopened after finishing: 1.
+  Temporary files left in the folder: 1 cards/.W-04.md.tmp-27506 (589 bytes).
+  To recover: run the same `run` command again, with the same items file and this folder. Do not delete the progress record.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the status calls this interrupted, though the run had once finished: the record has a run-reopened line after its run-finished line
+
+Resumed:
+$ python3 scripts/workflow.py run --items scripts/sample/items.json --out POINT-6
+------------------------------------------------------------------------------
+RESUMING AN INTERRUPTED RUN. The progress record does not end with a run-finished line.
+  It was interrupted after 10 of 10 items were recorded as done. The last whole line recorded: run-resumed.
+  This is resume number 2 of this run.
+  LEFT BY THE RUN THAT STOPPED: temporary file cards/.W-04.md.tmp-27506, 589 bytes. Removed. It was never under a final name and is not used.
+  W-04  RECORDED AS DONE, and its card is not the file that was recorded. Written again.
+  W-04  written (589 bytes), and recorded
+  index  recorded as done, and cards were written again since. Built again.
+  index  built from the 10 card files (1209 bytes), and recorded
+
+FINISHED. Skipped as already done: 9 (W-01, W-02, W-03, W-05, W-06, W-07, W-08, W-09, W-10). Written in this run: 2 (W-04, index).
+------------------------------------------------------------------------------
+exit code: 0
+(lines saying an item was skipped are left out of the block above)
+  ok   criterion 1: after the resume the name holds the new whole file, and all eleven files equal the uninterrupted run's
+
+==============================================================================
+TWO RUNS AT ONCE. The lock
+A run is started and made to wait while writing its third card:
+
+$ GTQ_PAUSE_AT=W-03:mid-write python3 scripts/workflow.py run --items scripts/sample/items.json --out LOCKED
+------------------------------------------------------------------------------
+STARTING. No progress record is in the folder, so this is a new run of 10 items.
+  W-01  written (472 bytes), and recorded
+  W-02  written (505 bytes), and recorded
+PAUSED AT W-03:mid-write
+------------------------------------------------------------------------------
+(still running, as process 27509, and waiting)
+
+While it waits, a second run is started in the same folder:
+$ python3 scripts/workflow.py run --items scripts/sample/items.json --out LOCKED
+------------------------------------------------------------------------------
+
+REFUSED: another run is working in this folder now: it holds the lock. Two runs at once would write over each other. This run wrote no card, no index and no line of the progress record.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   stretch goal: the second run is refused while the first holds the lock, and every file in the folder but the lock file has the bytes it had
+$ python3 scripts/workflow.py status --out LOCKED
+------------------------------------------------------------------------------
+A RUN IS WORKING IN THIS FOLDER NOW: it holds the lock. What follows is how far it has got, and may be out of date at once.
+INTERRUPTED: the progress record does not end with a run-finished line. A run stopped partway.
+  Items in the run: 10. Recorded as done: 2 (W-01, W-02).
+  Index recorded as done: no. Times this run was resumed: 0. Times it was reopened after finishing: 0.
+  Temporary files left in the folder: 1 cards/.W-03.md.tmp-27509 (264 bytes).
+  To recover: run the same `run` command again, with the same items file and this folder. Do not delete the progress record.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the status says a run is working there now
+
+The first run is then killed with SIGKILL by this script (process 27509, signal 9). It could not release the lock itself.
+The same command again:
+$ python3 scripts/workflow.py run --items scripts/sample/items.json --out LOCKED
+------------------------------------------------------------------------------
+RESUMING AN INTERRUPTED RUN. The progress record does not end with a run-finished line.
+  It was interrupted after 2 of 10 items were recorded as done. The last whole line recorded: item-done W-02.
+  This is resume number 1 of this run.
+  LEFT BY THE RUN THAT STOPPED: temporary file cards/.W-03.md.tmp-27509, 264 bytes. Removed. It was never under a final name and is not used.
+  W-03  written (529 bytes), and recorded
+  W-04  written (589 bytes), and recorded
+  W-05  written (674 bytes), and recorded
+  W-06  written (468 bytes), and recorded
+  W-07  written (500 bytes), and recorded
+  W-08  written (540 bytes), and recorded
+  W-09  written (581 bytes), and recorded
+  W-10  written (680 bytes), and recorded
+  index  built from the 10 card files (1209 bytes), and recorded
+
+FINISHED. Skipped as already done: 2 (W-01, W-02). Written in this run: 9 (W-03, W-04, W-05, W-06, W-07, W-08, W-09, W-10, index).
+------------------------------------------------------------------------------
+exit code: 0
+(lines saying an item was skipped are left out of the block above)
+  ok   stretch goal: a killed run leaves no lock behind: the next run is not refused, resumes, and gives the uninterrupted run's files
+
+RESULT: ALL CHECKS PASSED. 22 checks.

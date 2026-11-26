@@ -1,0 +1,111 @@
+Independent reads of the workflow, its notes and its evidence. base-camp-interruption-recovery, attempt base-attempt-007
+Copied by hand, and shortened, from the readers' replies by the assistant that built this quest. No program wrote this file.
+
+Who the readers were: two separate AI assistants (Claude), each started fresh. No person read the work. Each was given a
+copy of the files and told to read only those, to run nothing, to write nothing and to contact nothing. Those limits were
+given in words and not enforced. Neither saw the other's reply. The first version of everything was finished before
+either reply was read: 42 tests and 28 planted bugs passing, and the three records passing with 10, 12 and 17 checks.
+
+  Reader 1   Given the workflow, the notes and the tests. Asked to trace, by reading, what is on disk and what the next
+             run does if the process is killed between any two steps, and then the same for a power cut.
+  Reader 2   Given the three records, the script that made them, the workflow and the notes. Asked whether the records
+             show each criterion, whether they agree with themselves, and where a check says more than it tests.
+
+==============================================================================
+READER 1: where a stop could still hurt
+
+It found no stop that leaves a wrong file accepted in silence at the four points the tests used. It found these:
+  1. MOST SERIOUS. A kill while the progress record was being created left it empty. Every later run then refused,
+     "does not begin with a run-started line", and the status advised running the same command, which refused again.
+     "The only exits are editing or deleting the record, which the rules forbid." The same for a first line cut short.
+     The notes said a refusal comes only from what an interruption cannot do. "False here."
+  2. What the system reports it wrote was never looked at. On a nearly full disk a line could be written in part, the
+     run go on, print FINISHED, and every later run refuse.
+  3. Two cut-short lines in a row at the end were refused. It could build that only with a power cut.
+  4. The folder holding the record was never pushed to the disk, so a power cut could lose the record's own name. The
+     next run would then say STARTING and write everything again, with no sign of an interruption and no check of the
+     input. The notes claimed every folder change was pushed. "Untrue."
+  5. A finished run that was being put right, if stopped, was left looking finished to `run` and interrupted to
+     `status`, for ever.
+  6. The record fingerprinted the items file and not the workflow. A resume after the card format changed would mix old
+     cards with new, and accept them.
+  7. Two ids differing only in capitals are one file on this kind of disk. The later card would write over the earlier.
+  8. A resume stopped before it recorded itself leaves no trace, so the count of resumes can be one too low.
+  9. A whole last line missing only its line end was announced as ignored and then, after repair, believed.
+  10. Smaller: an error from the system gave the same exit code as a refusal. Any failure to lock was called "another
+      run". "Nothing was read or written" was not true of a refused second run. Tidying the items file refused.
+  The tests: taking out every push to the disk "would, as far as I can trace, leave every test passing." Only two kinds
+  of record line were ever cut short. The "not written again" tests relied on the time a file was last changed.
+  The reflection question: "Rename: answered correctly. Writing the progress record: not answered honestly."
+
+WHAT WAS CHANGED AFTER READER 1
+  An empty record, or one whose first line is cut short, is now resumed from, and says so. What the system reports it
+  wrote is checked, and a write is carried on until it is whole. Any run of cut-short lines at the end is closed off.
+  The folder is pushed to the disk when it is made and when the record is made. A run is finished only if the LAST
+  line says so; a finished run that needs a file written again records "run-reopened" first. The record holds the
+  number of the card format, and a resume with another number is refused. Ids that differ only in capitals are
+  refused. A whole line missing its line end is believed and given one. An error from the system ends with exit code
+  3 and can be resumed. The lock messages say what is true. The fingerprint is of what the items say, not of the
+  file's layout. With cards in the folder and no record, the run refuses to start over.
+  New stop points were added in the record's own lines: when the file is created, and in the start, resume, reopen,
+  finish and closing lines. Tests went from 42 to 55, planted bugs from 28 to 40. One test checks that the workflow
+  asks for each card, each record line and each folder change to be pushed to the disk. "Not written again" is now
+  judged by the file being the same file on the disk, not only by its time.
+  The notes have a new section answering the reflection question, including the one refusal a stop alone can cause.
+  NOT CHANGED, and stated in the notes: nothing cuts the power. A change to the workflow's code that does not change
+  the format number is not noticed. The count of resumes can be one too low. Lines removed from the end of the
+  record by hand are not noticed.
+
+==============================================================================
+READER 2: what the records show
+
+The records against themselves: "Nothing inconsistent in the numbers." It recomputed the sizes of the progress record
+from its lines, and checked the checksums across the three records, the process ids and the counts.
+By criterion, as the records then stood:
+   1  old whole file or new whole file     PARTLY. "Only 'nothing, or the new whole file' is shown." No file that
+                                           already existed was being replaced when a run was stopped
+   2  nothing partial under a final name   SHOWN for cards and the index. Not true of the progress record, which is
+                                           written in place and was left with half a line at one point
+   3  progress recorded durably            PARTLY. Lines are there after a kill. "On disk" is asserted
+   4  skips finished, completes the rest   SHOWN. At two points one card is written a second time, and the notes say so
+   5  equals an uninterrupted run          SHOWN
+   6  a person can tell                    SHOWN
+Checks that said more than they tested:
+  - "Left no temporary file" looked only in the cards folder. At the index's stop point the temporary file was beside
+    the index, so the check could not fail there.
+  - "Every file under a final name is whole" passed with a stray file in the folder, and passed while the progress
+    record held half a line.
+  - "Holds all 589 bytes" compared sizes and not contents.
+  - "Progress was on disk" tested that lines could be read after a kill. "That shows they were handed to the system,
+    not that they were on the disk."
+  - The third run "writes nothing" compared the cards only. The refused second run "touches nothing" compared names.
+  - "Each item recorded once" tested the kinds of line, not the items.
+  - A block had lines left out with no note, and the first locked run's output was never shown.
+  - The comparison with an uninterrupted run "can only detect truncation or absence. It cannot detect repeated work."
+The notes: "A file is never written under its final name" is contradicted by the progress record. "Any one of which is
+enough" is wrong for the missing FINISHED line. The status called a run that was still working interrupted. Four terms
+were not explained.
+
+WHAT WAS CHANGED AFTER READER 2
+  A sixth point was added to three-points.txt: a card that is already there is being replaced when the run is stopped,
+  twice, and the name still holds the previous whole file each time.
+  The listing now fails on any file it does not expect, compares a whole temporary file by checksum, and says of the
+  progress record that it is written in place and whether its last line is cut short. Temporary files are looked for
+  in the whole folder. The third run and the refused second run are compared file by file. Items are checked by id.
+  The criterion 3 label now says what it does not show. The comparison says what it cannot show. Every shortened block
+  says so, and the first locked run is shown. The status says when a run is still working.
+  The notes say that the progress record is the exception and how it is protected, and explain their terms.
+  The three records went from 39 checks to 45.
+
+NOT READ AGAIN: neither reader saw the corrected workflow, tests, records or notes.
+
+==============================================================================
+SUMMARY
+  Does a hard kill leave a half-written card under a final name? Neither reader found a way, and the tests stop the run
+  at ten kinds of point.
+  Could a stop leave a folder that cannot be resumed? Yes, in the first version: a kill at the very first write. Fixed.
+  One such case is left on purpose and stated: a record lost altogether is refused, not started over.
+  Is "durably" shown? No. A kill is not a power cut. The workflow asks the disk to keep each write, a test checks that
+  it asks, and nothing here shows the disk obeys.
+  Did the checks say more than they tested? Several did. They were corrected.
+  A person has not read any of this.
