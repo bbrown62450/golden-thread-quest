@@ -1,0 +1,31 @@
+schema_version: 1
+review_id: review-20261126012253-8a696f
+quest_id: playwright-tagging
+quest_version: 1
+attempt_id: playwright-attempt-009
+evidence_hash: sha256:3866cbc3752799bfddf178211104989d535c1e5849204be8f41546068595d58d
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-26T01:22:53Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/playwright/tag-scheme.md
+  digest: sha256:fcdc1fa09d67897c342a9932998459ea16f76ae731ef426728ae5e65976f8af2
+- path: participant/tests/playwright/tagged.spec.ts
+  digest: sha256:d044d92101a6228f46edf74e3e00f54e9c56ba8d9653e0889ddcd7320409109a
+- path: participant/tests/playwright/tools/tagging-check.ts
+  digest: sha256:3982a22f1fea90e7b809d1b57451f72e170a182f9d47924cbef6310db2d44f24
+verification_statement: 'Automated review. I read the scheme, the tagged spec, the
+  check script, the check log, the independent-read log and PROOF.md. The script''s
+  rule functions (tagProblems, behaviourProblems, schemeProblems) produce the PROBLEM
+  wording that appears in the log, and the parts and trials run in the same order
+  as the log. I counted the checks by hand (5+9+6+4+32+3) and got 59, which matches
+  the RESULT line. The tags in tagged.spec.ts match the Part 2 listing. The scheme
+  defines 13 tags across five dimensions and states limits for @fast (2 s) and @slow
+  (10 s). PROOF.md explains the duration limits as measured times rounded up and the
+  removal of @smoke, citing criteria 1 to 7. One small difference: the evidence folder
+  is playwright-attempt-009 rather than the attempt-001 path the quest names, but
+  the automatic pre-check reported the required files present. No text in the evidence
+  addresses the reviewer. Each of the 7 acceptance criteria was matched to text quoted
+  word for word from the evidence.'
