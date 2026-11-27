@@ -1,0 +1,51 @@
+NOTHING TO CREATE. Nothing has been written.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). On the sandbox allowlist: yes.
+            The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+Request:    link-request.json, sha256 ad63716eecbd5153. It asks for 1 link. To create: 0. Already there: 1.
+
+LINK 1 of 1.  ALREADY THERE. It is not created again
+  IN WORDS:                        SCRUM-1 blocks SCRUM-25.
+  The same link, from the other item: SCRUM-25 is blocked by SCRUM-1.
+  That is: SCRUM-1 comes first, and SCRUM-25 waits for it.
+  READ IT ALOUD. If the sentence is backwards, so is the link. The sentence is what you are confirming.
+  Link type:  "Blocks" (link type id 10000). On this site its phrases are "blocks" and "is blocked by".
+  The items, each found by the reference in the request and by nothing else. The issue id is what the fingerprint is tied to:
+    SCRUM-1 (issue id 10000), in project SCRUM (project id 10000). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | [the title was shown on screen and is not saved: 6 characters]
+    SCRUM-25 (issue id 10024), in project SCRUM (project id 10000). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | [the title was shown on screen and is not saved: 83 characters]
+  Permission check, asked of Jira for each item and this identity (may see it / may link issues):
+    SCRUM-1: yes / yes
+    SCRUM-25: yes / yes
+  Duplicate check, made against Jira just now: SCRUM-1 lists 1 link and SCRUM-25 lists 1 link that this identity can see.
+    This same link, the same type and the same way round: 1 (link id 10000).
+    The opposite link, which would be a conflict: 0.
+
+Where Jira cannot check: this workflow relies on no 'only if there is none like it' condition in Jira's request to
+  create a link. The confirmation reads both items of each link again just before writing it, and stops if the link,
+  or its opposite, is there by then.
+
+Snapshot of the items named, as Jira returned them, before the preview: e4f7c3683ff45135
+Snapshot of the items named, as Jira returned them, after the preview:  e4f7c3683ff45135
+The two are the same. Jira is unchanged, as far as two reads of each item can show. A snapshot is of each item's
+  last-updated time and of every link it lists.
+Requests sent to Jira: 10. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SCRUM-1
+  GET /rest/api/3/issue/SCRUM-25
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SCRUM-1
+  GET /rest/api/3/issue/SCRUM-25
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+
+Every link asked for is already there. No fingerprint is issued, because there is nothing to confirm, and nothing was sent.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

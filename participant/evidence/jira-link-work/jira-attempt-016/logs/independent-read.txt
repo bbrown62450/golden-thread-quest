@@ -1,0 +1,91 @@
+Independent reads. jira-link-work, attempt jira-attempt-016
+Written by hand, not by a script.
+
+WHO READ IT
+Two readers. BOTH WERE AI: fresh AI assistants started for this one job, with no knowledge of how the work was made.
+No person has read this work before hand-in. Each was given only a copy of the files, in a folder outside the
+repository, and was told in words to read only those files, to run nothing and to write nothing. Those limits were
+asked for. They were not enforced by anything.
+
+The first version of everything was finished before either reply was read. BOTH READS WERE MADE BEFORE THE REAL RUN.
+
+READER 1 was given the skill's instructions and two records, and was asked to read the preview as the person who has
+to confirm it: which item waits for which, and what could lead a careful person to confirm a backwards link.
+READER 2 was given the workflow, the fake Jira, the tests, the three scripts, the instructions and the records made
+against the fake Jira. It was asked for a path to a backwards link reported as right, a duplicate, a link nobody
+confirmed, a link of a refused type or outside the sandbox; and for any check that claimed more than it tested.
+
+Neither reader found a path to a wrong, duplicate or unconfirmed link. What they found:
+
+WHAT READER 2 FOUND, AND WHAT WAS DONE
+
+ 1. THE WORKFLOW CANNOT PROVE ITS OWN DIRECTION. The write and the read-back share one understanding of Jira's two
+    slots. If the understanding of how an item LISTS a link were wrong, every check would say "yes" about a
+    backwards link. My records said the real run "settles" direction. It does not, by itself.
+    DONE: the claim is taken back in the workflow's notes, the instructions and the record. The real run now ends
+    by asking a person to look at the item in Jira's own screen. I did, and PROOF.md says what I saw.
+ 2. The real-run script judged each step by its exit status alone. A preview that failed to find the link would
+    have passed as "nothing to create", and any refusal passed as the refusal expected.
+    DONE: each step must also say the words expected, or the sequence stops.
+ 3. One step that is "expected to be refused" rewrote my real request file to the OPPOSITE link and then ran the
+    command that can write. Had that refusal failed, the opposite link would have been written; and a kill at that
+    moment would have left the request file reversed.
+    DONE: that step uses a turned-round COPY in a temporary folder. The real request file is not touched. The
+    script's notes now say what a failed refusal at that step would send.
+ 4. In a real run the script showed the last two lines of each step, which are the note about credentials, never
+    the refusal.                                             DONE: it shows the line that says what happened.
+ 5. A title holding the words "Fingerprint of this preview" could confuse the script.
+    DONE: it takes the last such line that stands alone.
+ 6. A real Jira probably ignores a second identical link and still answers that the write succeeded. The workflow
+    would then say "written" of a link someone else made in the same moment.
+    DONE IN PART: the output now says the link is "the one new link of this kind on both items", found by reading,
+    and the limit is stated. Whether real Jira does this was not tried.
+ 7. If Jira is slow to list a new link, the run would end "a person needs to look" with the link made.
+    DONE: after an accepted write the two items are read again, up to three times. The write is never sent again.
+    It was not needed in the real run: the link was listed at the first read.
+ 8. The live connection's own handling of answers is first exercised by a real Jira.     NOT CHANGED. The real run
+    exercised it once: a refusal-free path, with one write.
+ 9. A slow batch could lose its claim after ten minutes, and a run ending would delete whichever claim file was there.
+    DONE: a claim carries a mark of its run, is renewed before each write, and a run removes only its own. Two runs
+    taking over an abandoned claim in the same instant could still both proceed. Stated.
+10. The claim covers one request file name in one state folder.                           STATED as a limit.
+11. "The saved preview is unaltered" claimed more than the fingerprint covers: the "used" mark is outside it.
+    DONE: the line is reworded, the request's name is now covered, and a test shows that a preview marked unused by
+    hand is stopped by what Jira holds.
+12. No check of the items' projects just before the write.                                DONE.
+13. A result file that could not be saved ended the run with an error after the writes.   DONE.
+14. An opposite link made by someone else, while Jira refused the write, was called this workflow's mistake.   DONE.
+15. The circle check's limit counted items reached, and its words said "chain".           DONE: the words are right.
+16. A link type's name and phrases are the site's own text, and are saved.                STATED. They are the sentence.
+    The "site fingerprint" is a short hash of the site's name, so a guessed name can be confirmed.   NOT CHANGED.
+17, 18. Check labels that claimed more than they tested: "titles left out of this saved record" passed only if the
+    titles were IN the record; a part headed "a batch that stops partway" showed a refusal before any write; "the
+    limit, shown" did not show the limit it named.
+    DONE: the saved log is now made and looked at; a batch really is stopped at its second write; the circle limit
+    is shown with a real chain.
+19. Several planted bugs are "caught" only because a refusal gave another reason, while a second check still
+    refused. Two are caught by tests that share the fake Jira's own belief about the slots.
+    DONE: logs/planted-bugs.txt now says so, and names them.
+20. A test did not test what its name said.                                                DONE.
+
+WHAT READER 1 FOUND, AND WHAT WAS DONE
+
+ 1. The "reads backwards" message said "written in this run: none" while a wrong link sat in Jira.
+    DONE: it says the link IS in Jira, names it, and keeps its id in the record.
+ 2. The same message said both "do not use this workflow" and "preview again".           DONE: one instruction.
+ 3. The lines with Jira's two slot names can talk a careful person into a backwards link: to someone who knows
+    Jira, the right link looks wrong there.
+    DONE: they are marked "for the record", and say in capitals not to judge the link by them.
+ 4. "How direction was tested" claimed too much.                                          See reader 2, item 1.
+ 5. Three labels claimed more than the output above them showed.                          See reader 2, items 17 and 18.
+ 6. The preview never said in plain words who waits for whom.
+    DONE, for a link whose phrase is "blocks": "X comes first, and Y waits for it".
+ 7 to 13. The instructions left cases unanswered: a batch that stops partway, a deleted link, circles of "relates
+    to", the 15 minutes, a phrase such as "depends on", a link and its opposite in one request.     DONE.
+14. The preview is cluttered: five codes, the same sentence three times.
+    NOT DONE, beyond moving the sentence up. Every line is there because a criterion asks for it.
+
+WHAT HAS NOT BEEN RE-READ
+Neither reader has seen the corrected version. Nobody independent has read: the corrected workflow, the new tests,
+the corrected scripts, the records of the real run, or PROOF.md. The claim that each finding is fixed is mine,
+checked by the tests, the planted bugs and the records, and by no second reader.

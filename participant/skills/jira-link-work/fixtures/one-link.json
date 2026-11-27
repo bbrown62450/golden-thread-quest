@@ -1,0 +1,9 @@
+{
+  "links": [
+    {
+      "from": "SAND-1",
+      "phrase": "blocks",
+      "to": "SAND-2"
+    }
+  ]
+}

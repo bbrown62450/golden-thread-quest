@@ -1,0 +1,89 @@
+test_a_link_made_by_someone_else_while_the_batch_is_running_is_not_sent (tests.test_link_work.Batches) ... ok
+test_each_link_is_read_back_before_the_next_is_sent (tests.test_link_work.Batches) ... ok
+test_more_than_five_links_or_the_same_link_twice_is_refused (tests.test_link_work.Batches) ... ok
+test_several_links_under_one_fingerprint_and_one_already_there (tests.test_link_work.Batches) ... ok
+test_the_record_says_sending_at_the_moment_each_request_goes (tests.test_link_work.Batches) ... ok
+test_when_jira_refuses_one_the_run_stops_and_says_which_were_written (tests.test_link_work.Batches) ... ok
+test_a_chain_that_does_not_come_back_is_allowed (tests.test_link_work.Circles) ... ok
+test_a_chain_through_an_item_that_cannot_be_read_is_refused (tests.test_link_work.Circles) ... ok
+test_a_chain_too_long_to_follow_is_refused_and_not_assumed_clear (tests.test_link_work.Circles) ... ok
+test_a_circle_made_by_the_links_of_one_request_is_refused (tests.test_link_work.Circles) ... ok
+test_a_link_that_would_close_a_circle_is_refused (tests.test_link_work.Circles) ... ok
+test_links_of_another_type_do_not_make_a_circle (tests.test_link_work.Circles) ... ok
+test_a_blocks_b_is_sent_with_the_blocker_as_the_source (tests.test_link_work.Direction) ... ok
+test_a_link_of_the_wrong_type_between_the_same_items_is_not_taken_for_the_link (tests.test_link_work.Direction) ... ok
+test_a_link_that_jira_stores_the_other_way_round_is_noticed_and_named (tests.test_link_work.Direction)
+The one thing the fake cannot prove is which of Jira's two slots is which. If the workflow has it wrong, it must say so. ... ok
+test_a_link_type_with_one_phrase_has_no_direction (tests.test_link_work.Direction) ... ok
+test_an_opposite_link_that_appears_while_jira_refuses_the_write_is_not_called_this_workflows_mistake (tests.test_link_work.Direction) ... ok
+test_b_is_blocked_by_a_is_the_same_link_and_is_sent_the_same_way (tests.test_link_work.Direction) ... ok
+test_reading_an_item_takes_outward_issue_to_mean_this_item_is_the_source (tests.test_link_work.Direction) ... ok
+test_the_link_is_read_back_from_both_items_in_words (tests.test_link_work.Direction) ... ok
+test_the_preview_says_the_link_in_words_from_both_items (tests.test_link_work.Direction) ... ok
+test_the_same_link_and_the_opposite_link_are_told_apart (tests.test_link_work.Direction) ... ok
+test_a_link_made_by_someone_else_after_the_preview_stops_the_confirmation (tests.test_link_work.ExistingLinks) ... ok
+test_a_link_made_in_the_last_moment_before_the_write_is_reported_as_a_double (tests.test_link_work.ExistingLinks)
+Jira has no 'only if absent'. The count after the write is what reports this. ... ok
+test_an_identical_link_is_detected_and_not_created_again (tests.test_link_work.ExistingLinks) ... ok
+test_it_is_detected_when_asked_for_from_the_other_item (tests.test_link_work.ExistingLinks) ... ok
+test_items_that_do_not_agree_about_their_links_stop_the_preview (tests.test_link_work.ExistingLinks) ... ok
+test_running_the_approved_workflow_again_creates_nothing (tests.test_link_work.ExistingLinks) ... ok
+test_the_opposite_link_is_a_conflict_and_nothing_is_created (tests.test_link_work.ExistingLinks) ... ok
+test_the_opposite_link_made_after_the_preview_stops_the_confirmation (tests.test_link_work.ExistingLinks) ... ok
+test_a_held_claim_stops_a_confirmation_and_an_old_one_can_be_taken_over (tests.test_link_work.OneRunAtATime) ... ok
+test_a_run_whose_claim_was_taken_sends_nothing_and_does_not_remove_the_other_runs_claim (tests.test_link_work.OneRunAtATime) ... ok
+test_the_claim_is_renewed_before_each_write (tests.test_link_work.OneRunAtATime) ... ok
+test_the_saved_preview_is_read_after_the_claim_is_taken (tests.test_link_work.OneRunAtATime) ... ok
+test_while_one_run_is_confirming_another_is_refused (tests.test_link_work.OneRunAtATime) ... ok
+test_a_change_that_differs_from_the_preview (tests.test_link_work.Refusals) ... ok
+test_a_fingerprint_that_names_no_preview_or_is_not_one (tests.test_link_work.Refusals) ... ok
+test_a_missing_confirmation (tests.test_link_work.Refusals) ... ok
+test_a_preview_exactly_at_the_limit_is_accepted (tests.test_link_work.Refusals) ... ok
+test_a_preview_made_against_another_site_or_for_another_request_file (tests.test_link_work.Refusals) ... ok
+test_a_preview_older_than_the_limit (tests.test_link_work.Refusals) ... ok
+test_a_reference_that_now_leads_to_another_item (tests.test_link_work.Refusals) ... ok
+test_a_saved_preview_marked_unused_by_hand_is_stopped_by_what_jira_holds (tests.test_link_work.Refusals)
+The 'used' mark is not covered by the fingerprint. What stops a second write is the read of both items. ... ok
+test_a_saved_preview_that_was_altered (tests.test_link_work.Refusals) ... ok
+test_a_site_whose_words_for_the_type_changed_after_the_preview (tests.test_link_work.Refusals) ... ok
+test_an_allowlist_changed_after_the_preview (tests.test_link_work.Refusals) ... ok
+test_an_item_that_moved_to_another_project_just_before_the_write (tests.test_link_work.Refusals) ... ok
+test_permission_withdrawn_after_the_preview (tests.test_link_work.Refusals) ... ok
+test_check_reads_each_link_back_from_both_items (tests.test_link_work.TheCheck) ... ok
+test_check_says_so_when_the_link_has_been_removed_or_doubled_or_opposed (tests.test_link_work.TheCheck) ... ok
+test_check_says_so_when_the_link_with_that_id_now_runs_the_other_way (tests.test_link_work.TheCheck) ... ok
+test_the_link_read_by_its_own_id_must_agree_with_what_was_sent (tests.test_link_work.TheCheck) ... ok
+test_the_result_record_names_the_link_its_id_the_project_the_time_and_the_confirmer (tests.test_link_work.TheCheck) ... ok
+test_a_real_write_needs_a_terminal (tests.test_link_work.TheCommandLine) ... ok
+test_a_result_record_that_cannot_be_saved_does_not_change_what_happened (tests.test_link_work.TheCommandLine) ... ok
+test_a_whole_run_through_main_with_a_saved_log (tests.test_link_work.TheCommandLine) ... ok
+test_only_confirm_is_given_a_way_to_write_whatever_the_source (tests.test_link_work.TheCommandLine) ... ok
+test_the_live_connection_sends_no_write_but_one_new_link (tests.test_link_work.TheCommandLine) ... ok
+test_a_link_jira_is_slow_to_show_is_read_again_and_the_write_is_not_sent_again (tests.test_link_work.WhenNoAnswerComes) ... ok
+test_a_link_that_never_shows_needs_a_person_after_three_more_reads (tests.test_link_work.WhenNoAnswerComes) ... ok
+test_a_read_that_fails_after_the_write_needs_a_person (tests.test_link_work.WhenNoAnswerComes) ... ok
+test_a_refusal_by_jira_with_nothing_read_back_means_nothing_was_written (tests.test_link_work.WhenNoAnswerComes) ... ok
+test_a_refusal_is_not_believed_when_the_link_is_there_afterwards (tests.test_link_work.WhenNoAnswerComes) ... ok
+test_a_server_error_is_not_taken_to_mean_nothing_was_written (tests.test_link_work.WhenNoAnswerComes) ... ok
+test_no_answer_and_no_link_is_not_known_and_is_not_sent_again (tests.test_link_work.WhenNoAnswerComes) ... ok
+test_no_answer_and_the_link_was_made_is_found_by_reading_both_items (tests.test_link_work.WhenNoAnswerComes) ... ok
+test_reads_are_not_repeated_when_jira_gave_no_answer_or_refused (tests.test_link_work.WhenNoAnswerComes) ... ok
+test_a_title_is_not_accepted_as_a_reference (tests.test_link_work.WhichItems) ... ok
+test_an_item_jira_does_not_return_is_refused (tests.test_link_work.WhichItems) ... ok
+test_an_item_linked_to_itself_is_refused_however_it_is_named (tests.test_link_work.WhichItems) ... ok
+test_an_item_this_identity_may_not_link_is_refused (tests.test_link_work.WhichItems) ... ok
+test_either_item_in_a_project_off_the_allowlist_is_refused (tests.test_link_work.WhichItems) ... ok
+test_the_same_project_id_on_another_site_is_not_on_the_allowlist (tests.test_link_work.WhichItems) ... ok
+test_titles_are_shown_on_screen_and_not_saved (tests.test_link_work.WhichItems) ... ok
+test_a_phrase_is_matched_exactly (tests.test_link_work.WhichLinks) ... ok
+test_a_phrase_of_a_type_this_workflow_does_not_create_is_refused (tests.test_link_work.WhichLinks) ... ok
+test_a_phrase_that_two_link_types_share_is_refused (tests.test_link_work.WhichLinks) ... ok
+test_a_phrase_the_site_does_not_use_is_refused_and_the_sites_phrases_are_listed (tests.test_link_work.WhichLinks) ... ok
+test_a_site_type_named_blocks_with_its_phrases_the_other_way_round_is_followed_as_the_site_has_it (tests.test_link_work.WhichLinks)
+The direction comes from the site's own phrases, not from the type's name. ... ok
+test_a_site_with_no_link_types_is_refused (tests.test_link_work.WhichLinks) ... ok
+
+----------------------------------------------------------------------
+Ran 80 tests in 0.201s
+
+OK

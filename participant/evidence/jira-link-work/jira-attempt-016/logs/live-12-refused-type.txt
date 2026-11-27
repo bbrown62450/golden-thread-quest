@@ -1,0 +1,6 @@
+
+REFUSED: link 1: "duplicates" is a phrase of the link type "Duplicate", which this workflow does not create. It creates links of the types Blocks and Relates only. Make this link by hand in Jira if it is right.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

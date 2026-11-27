@@ -1,0 +1,9 @@
+{
+  "links": [
+    {
+      "from": "SCRUM-1",
+      "phrase": "blocks",
+      "to": "SCRUM-25"
+    }
+  ]
+}

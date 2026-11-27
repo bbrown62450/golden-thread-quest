@@ -1,0 +1,13 @@
+schema_version: 1
+submission_id: submission-20261127010519-cd9860
+quest_id: jira-link-work
+quest_version: 1
+attempt_id: jira-attempt-016
+content_hash: sha256:d822c5da5be591aa06e8771aaf660cd4db3e933af6aac8b0243514c413cfacd3
+evidence_hash: sha256:143281bf3027f1b3c9faf91efb81df4dd2efe6b37742f2497e5159400401058e
+submitted_at: '2026-11-27T01:05:19Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/jira/results/link-work.md
+  digest: sha256:87451eb1a513bd4090e73d6048aa1cb919d6b0612617eb283f070044fd37484f

@@ -1,0 +1,6 @@
+
+REFUSED: link 1: SCRUM-1 is in project SCRUM (project id 10000), which on the Jira site with fingerprint 4aabe3d08fbad6b1 is not on the sandbox allowlist (empty-allowlist.json). A link changes both items, so both must be in a project listed there.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

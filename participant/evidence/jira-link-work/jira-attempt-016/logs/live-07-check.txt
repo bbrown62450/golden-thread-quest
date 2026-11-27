@@ -1,0 +1,19 @@
+LINK CHECK for the write of preview db2fb41bb781. Nothing is written by this command.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+
+LINK 1: SCRUM-1 blocks SCRUM-25. From the other item: SCRUM-25 is blocked by SCRUM-1.
+  read from SCRUM-1: it lists link id 10000 as: SCRUM-1 blocks SCRUM-25. Wanted: SCRUM-1 blocks SCRUM-25. Type "Blocks": yes
+  read from SCRUM-25: it lists link id 10000 as: SCRUM-25 is blocked by SCRUM-1. Wanted: SCRUM-25 is blocked by SCRUM-1. Type "Blocks": yes
+  the link read by its own id: Jira's `inwardIssue` is issue id 10000 and `outwardIssue` is issue id 10024, as sent: yes
+  links between these two items of this type and this way round, counted on each: 1 and 1. One is wanted: yes
+
+Requests sent to Jira: 3. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/10000
+  GET /rest/api/3/issue/10024
+  GET /rest/api/3/issueLink/10000
+
+FOUND: every link is there, with the right type and the right way round, on both items.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

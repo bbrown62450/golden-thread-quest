@@ -709,4 +709,13 @@ attempts:
   updated_at: '2026-11-26T22:59:01Z'
   evidence_path: participant/evidence/jira-idempotent-create/jira-attempt-015
   submission_id: submission-20261126225901-c2cce5
-updated_at: '2026-11-26T22:59:01Z'
+- attempt_id: jira-attempt-016
+  quest_id: jira-link-work
+  quest_version: 1
+  content_hash: sha256:d822c5da5be591aa06e8771aaf660cd4db3e933af6aac8b0243514c413cfacd3
+  state: submitted
+  started_at: '2026-11-27T00:32:51Z'
+  updated_at: '2026-11-27T01:05:19Z'
+  evidence_path: participant/evidence/jira-link-work/jira-attempt-016
+  submission_id: submission-20261127010519-cd9860
+updated_at: '2026-11-27T01:05:19Z'

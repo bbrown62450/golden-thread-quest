@@ -1,0 +1,59 @@
+CONFIRMATION for preview db2fb41bb781, given by: the participant (the name given with the confirmation).
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). On the sandbox allowlist: yes.
+            The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  what the saved preview holds still matches its fingerprint, and it is marked as not used: ok
+  the request asks for exactly what the preview showed, link for link: ok
+  every item is in a project on the sandbox allowlist for this site: ok
+  Jira says this identity may link issues for every item: ok
+  no link asked for has appeared since the preview, the same way round or the opposite: ok
+
+The confirmation and the writes happen in this one run of the command.
+
+LINK 1 of 1: SCRUM-1 blocks SCRUM-25.
+  WRITTEN to Jira: link id 10000. Jira answered 201.
+  (It is the one new link of this kind on both items. Jira's answer to a write does not name the link, so this is found by reading.)
+  Read back from Jira after the write:
+    read from SCRUM-1: it lists link id 10000 as: SCRUM-1 blocks SCRUM-25. Wanted: SCRUM-1 blocks SCRUM-25. Type "Blocks": yes
+    read from SCRUM-25: it lists link id 10000 as: SCRUM-25 is blocked by SCRUM-1. Wanted: SCRUM-25 is blocked by SCRUM-1. Type "Blocks": yes
+    the link read by its own id: Jira's `inwardIssue` is issue id 10000 and `outwardIssue` is issue id 10024, as sent: yes
+    links between these two items of this type and this way round, counted on each: 1 and 1. One is wanted: yes
+
+ALL DONE: 1 link written, 0 already there.
+
+RESULT RECORD
+  Jira site: [site address removed], site fingerprint 4aabe3d08fbad6b1
+  Request: link-request.json (file sha256 ad63716eecbd515398dd7f3bc354d333be9c411ca891df3fd213b5026b8abec7)
+  Confirmed by: the participant, at 2026-11-27 00:56:57 UTC
+  Preview: fingerprint db2fb41bb781, made 2026-11-27 00:56:02 UTC
+  Link 1. Issue keys: SCRUM-1 and SCRUM-25
+  Link 1. In words: SCRUM-1 blocks SCRUM-25. From the other item: SCRUM-25 is blocked by SCRUM-1
+  Link 1. Identifier of what was created: Jira issue link id 10000. Status: written
+  Link 1. Link type: "Blocks" (link type id 10000)
+  Link 1. Items by issue id: SCRUM-1 is 10000, SCRUM-25 is 10024
+  Link 1. Target project: SCRUM (project id 10000), on the sandbox allowlist
+  Link 1. Written at: 2026-11-27 00:57:00 UTC
+  Link 1. Read back from both items after the write: as asked: the right type and the right way round on each
+  Link 1. To reverse: remove link id 10000 in Jira, by hand. This workflow does not remove links
+
+The result record is also saved as Markdown where --result said.
+
+Requests sent to Jira: 11. Kinds: GET, POST.
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SCRUM-1
+  GET /rest/api/3/issue/SCRUM-25
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/10000
+  GET /rest/api/3/issue/10024
+  POST /rest/api/3/issueLink
+  GET /rest/api/3/issue/10000
+  GET /rest/api/3/issue/10024
+  GET /rest/api/3/issueLink/10000
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

@@ -1,0 +1,6 @@
+
+REFUSED: link 1: THE OPPOSITE LINK ALREADY EXISTS (link id 10000): SCRUM-1 blocks SCRUM-25. The request says: SCRUM-25 blocks SCRUM-1. Both cannot be meant. Nothing is created. A person decides which way round is right, and removes the wrong one by hand.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

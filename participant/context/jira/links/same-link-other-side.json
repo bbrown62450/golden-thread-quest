@@ -1,0 +1,9 @@
+{
+  "links": [
+    {
+      "from": "SCRUM-25",
+      "phrase": "is blocked by",
+      "to": "SCRUM-1"
+    }
+  ]
+}

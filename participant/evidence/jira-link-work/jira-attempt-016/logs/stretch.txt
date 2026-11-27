@@ -1,0 +1,791 @@
+A circle refused, and several links in one confirmed batch. jira-link-work, attempt jira-attempt-016
+Recorded by scripts/record_evidence.py against the FAKE Jira: a file on this computer, with made-up projects and issues.
+Each block between dashed lines is what a command printed. No real Jira was contacted to make this record.
+The fake Jira begins with one link: SAND-3 blocks SAND-4 (link id 40001).
+
+
+==============================================================================
+1. A LINK THAT WOULD CLOSE A CIRCLE (stretch goal)
+$ fake_jira.py other-link --source SAND-4 --type Blocks --target SAND-5
+------------------------------------------------------------------------------
+FAKE JIRA: someone else created link id 40002.
+FAKE JIRA holds 2 links:
+  link id 40001: SAND-3 blocks SAND-4
+  link id 40002: SAND-4 blocks SAND-5
+------------------------------------------------------------------------------
+exit status: 0
+The fake Jira now holds: SAND-3 blocks SAND-4, and SAND-4 blocks SAND-5.
+
+The request file links.json now says: SAND-5 blocks SAND-3.
+$ link_work.py preview --request links.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+
+REFUSED: link 1: THIS LINK WOULD CLOSE A CIRCLE. Followed from SAND-3, existing "blocks" links lead back to SAND-5. With this link, each item in the circle would wait for the next, for ever. Nothing is created.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   stretch goal: the link is refused: followed from SAND-3, the existing links lead back to SAND-5. No fingerprint, nothing written
+
+The request file links.json now says: SAND-1 blocks SAND-2; SAND-2 blocks SAND-6; SAND-6 blocks SAND-1.
+$ link_work.py preview --request links.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+
+REFUSED: link 3: THIS LINK WOULD CLOSE A CIRCLE. Followed from SAND-1, existing "blocks" links lead back to SAND-6. With this link, each item in the circle would wait for the next, for ever. Nothing is created.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   a circle made only by the links of one request is refused too, at the link that would close it
+$ fake_jira.py other-link --source SAND-5 --type Relates --target SAND-2
+------------------------------------------------------------------------------
+FAKE JIRA: someone else created link id 40003.
+FAKE JIRA holds 3 links:
+  link id 40001: SAND-3 blocks SAND-4
+  link id 40002: SAND-4 blocks SAND-5
+  link id 40003: SAND-5 relates to SAND-2
+------------------------------------------------------------------------------
+exit status: 0
+The fake Jira now also holds: SAND-5 relates to SAND-2.
+
+The request file links.json now says: SAND-2 blocks SAND-3.
+$ link_work.py preview --request links.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Request:    links.json, sha256 6d03bd060c45884a. It asks for 1 link. To create: 1. Already there: 0.
+
+LINK 1 of 1.  TO CREATE
+  IN WORDS:                        SAND-2 blocks SAND-3.
+  The same link, from the other item: SAND-3 is blocked by SAND-2.
+  That is: SAND-2 comes first, and SAND-3 waits for it.
+  READ IT ALOUD. If the sentence is backwards, so is the link. The sentence is what you are confirming.
+  Link type:  "Blocks" (link type id 10000). On this site its phrases are "blocks" and "is blocked by".
+  The items, each found by the reference in the request and by nothing else. The issue id is what the fingerprint is tied to:
+    SAND-2 (issue id 30002), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Write the export query
+    SAND-3 (issue id 30003), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Design the report layout
+  For the record, exactly what is sent to Jira, and nothing else:
+    type          link type id 10000 ("Blocks")
+    inwardIssue   issue id 30002 (SAND-2), the item that "blocks"
+    outwardIssue  issue id 30003 (SAND-3), the item that "is blocked by"
+    DO NOT JUDGE THE LINK BY THESE TWO SLOT NAMES. They are Jira's, and they read the wrong way round to many people,
+    people who know Jira included. Judge the sentence. The workflow filled the slots in from it, and after the write
+    it reads the link back from BOTH items and compares what each shows with the sentence.
+  Permission check, asked of Jira for each item and this identity (may see it / may link issues):
+    SAND-2: yes / yes
+    SAND-3: yes / yes
+  Duplicate check, made against Jira just now: SAND-2 lists 1 link and SAND-3 lists 1 link that this identity can see.
+    This same link, the same type and the same way round: 0.
+    The opposite link, which would be a conflict: 0.
+    Circle check: "blocks" links were followed onward from SAND-3. Items reached, SAND-3 included: 3. None is SAND-2.
+
+Where Jira cannot check: this workflow relies on no 'only if there is none like it' condition in Jira's request to
+  create a link. The confirmation reads both items of each link again just before writing it, and stops if the link,
+  or its opposite, is there by then.
+
+Snapshot of the items named, as Jira returned them, before the preview: 2ca4cd1387530fc8
+Snapshot of the items named, as Jira returned them, after the preview:  2ca4cd1387530fc8
+The two are the same. Jira is unchanged, as far as two reads of each item can show. A snapshot is of each item's
+  last-updated time and of every link it lists.
+Requests sent to Jira: 14. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SAND-2
+  GET /rest/api/3/issue/SAND-3
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/issue/30005
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SAND-2
+  GET /rest/api/3/issue/SAND-3
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30004
+  GET /rest/api/3/issue/30005
+
+Fingerprint of this preview: 226cc12d5619
+Made:    2026-11-27 01:00:53 UTC
+Expires: 2026-11-27 01:15:53 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this link, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit status: 0
+  ok   THE LIMIT, shown: the check follows links of ONE type. SAND-2 blocks SAND-3 blocks SAND-4 blocks SAND-5, and SAND-5 relates to SAND-2: that is not counted as a circle, and the link is offered
+
+==============================================================================
+2. SEVERAL LINKS IN ONE CONFIRMED BATCH (stretch goal)
+
+The request file links.json now says: SAND-3 blocks SAND-4; SAND-1 blocks SAND-2; SAND-2 relates to SAND-6.
+$ link_work.py preview --request links.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Request:    links.json, sha256 612b288bdbba31dd. It asks for 3 links. To create: 2. Already there: 1.
+
+LINK 1 of 3.  ALREADY THERE. It is not created again
+  IN WORDS:                        SAND-3 blocks SAND-4.
+  The same link, from the other item: SAND-4 is blocked by SAND-3.
+  That is: SAND-3 comes first, and SAND-4 waits for it.
+  READ IT ALOUD. If the sentence is backwards, so is the link. The sentence is what you are confirming.
+  Link type:  "Blocks" (link type id 10000). On this site its phrases are "blocks" and "is blocked by".
+  The items, each found by the reference in the request and by nothing else. The issue id is what the fingerprint is tied to:
+    SAND-3 (issue id 30003), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Design the report layout
+    SAND-4 (issue id 30004), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Build the report page
+  Permission check, asked of Jira for each item and this identity (may see it / may link issues):
+    SAND-3: yes / yes
+    SAND-4: yes / yes
+  Duplicate check, made against Jira just now: SAND-3 lists 1 link and SAND-4 lists 2 links that this identity can see.
+    This same link, the same type and the same way round: 1 (link id 40001).
+    The opposite link, which would be a conflict: 0.
+
+LINK 2 of 3.  TO CREATE
+  IN WORDS:                        SAND-1 blocks SAND-2.
+  The same link, from the other item: SAND-2 is blocked by SAND-1.
+  That is: SAND-1 comes first, and SAND-2 waits for it.
+  READ IT ALOUD. If the sentence is backwards, so is the link. The sentence is what you are confirming.
+  Link type:  "Blocks" (link type id 10000). On this site its phrases are "blocks" and "is blocked by".
+  The items, each found by the reference in the request and by nothing else. The issue id is what the fingerprint is tied to:
+    SAND-1 (issue id 30001), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Collect the export requirements
+    SAND-2 (issue id 30002), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Write the export query
+  For the record, exactly what is sent to Jira, and nothing else:
+    type          link type id 10000 ("Blocks")
+    inwardIssue   issue id 30001 (SAND-1), the item that "blocks"
+    outwardIssue  issue id 30002 (SAND-2), the item that "is blocked by"
+    DO NOT JUDGE THE LINK BY THESE TWO SLOT NAMES. They are Jira's, and they read the wrong way round to many people,
+    people who know Jira included. Judge the sentence. The workflow filled the slots in from it, and after the write
+    it reads the link back from BOTH items and compares what each shows with the sentence.
+  Permission check, asked of Jira for each item and this identity (may see it / may link issues):
+    SAND-1: yes / yes
+    SAND-2: yes / yes
+  Duplicate check, made against Jira just now: SAND-1 lists 0 links and SAND-2 lists 1 link that this identity can see.
+    This same link, the same type and the same way round: 0.
+    The opposite link, which would be a conflict: 0.
+    Circle check: "blocks" links were followed onward from SAND-2. Items reached, SAND-2 included: 1. None is SAND-1.
+
+LINK 3 of 3.  TO CREATE
+  IN WORDS:                        SAND-2 relates to SAND-6.
+  The same link, from the other item: SAND-6 relates to SAND-2.
+  READ IT ALOUD. If the sentence is backwards, so is the link. The sentence is what you are confirming.
+  This link type has one phrase for both items, so it has no direction: either order is the same link.
+  Link type:  "Relates" (link type id 10003). On this site its phrases are "relates to" and "relates to".
+  The items, each found by the reference in the request and by nothing else. The issue id is what the fingerprint is tied to:
+    SAND-2 (issue id 30002), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Write the export query
+    SAND-6 (issue id 30006), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Review the export with the team
+  For the record, exactly what is sent to Jira, and nothing else:
+    type          link type id 10003 ("Relates")
+    inwardIssue   issue id 30002 (SAND-2), the item that "relates to"
+    outwardIssue  issue id 30006 (SAND-6), the item that "relates to"
+    DO NOT JUDGE THE LINK BY THESE TWO SLOT NAMES. They are Jira's, and they read the wrong way round to many people,
+    people who know Jira included. Judge the sentence. The workflow filled the slots in from it, and after the write
+    it reads the link back from BOTH items and compares what each shows with the sentence.
+  Permission check, asked of Jira for each item and this identity (may see it / may link issues):
+    SAND-2: yes / yes
+    SAND-6: yes / yes
+  Duplicate check, made against Jira just now: SAND-2 lists 1 link and SAND-6 lists 0 links that this identity can see.
+    This same link, the same type and the same way round: 0.
+
+Where Jira cannot check: this workflow relies on no 'only if there is none like it' condition in Jira's request to
+  create a link. The confirmation reads both items of each link again just before writing it, and stops if the link,
+  or its opposite, is there by then.
+
+Snapshot of the items named, as Jira returned them, before the preview: 59cfe72e24f0aa7f
+Snapshot of the items named, as Jira returned them, after the preview:  59cfe72e24f0aa7f
+The two are the same. Jira is unchanged, as far as two reads of each item can show. A snapshot is of each item's
+  last-updated time and of every link it lists.
+Requests sent to Jira: 22. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SAND-3
+  GET /rest/api/3/issue/SAND-4
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/issue/SAND-2
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/SAND-6
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SAND-3
+  GET /rest/api/3/issue/SAND-4
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/issue/SAND-2
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/SAND-6
+  GET /rest/api/3/mypermissions
+
+Fingerprint of this preview: ab8545ef37ce
+Made:    2026-11-27 01:00:53 UTC
+Expires: 2026-11-27 01:15:53 UTC (15 minutes after it was made)
+
+Nothing has been written. To create these 2 links, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit status: 0
+  ok   stretch goal: three links, one preview, one fingerprint. Each is said in words. One is already there
+$ link_work.py confirm --request links.json --allowlist fake-allowlist.json --fingerprint ab8545ef37ce --confirmed-by "A made-up person"
+------------------------------------------------------------------------------
+CONFIRMATION for preview ab8545ef37ce, given by: A made-up person (the name given with the confirmation).
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  what the saved preview holds still matches its fingerprint, and it is marked as not used: ok
+  the request asks for exactly what the preview showed, link for link: ok
+  every item is in a project on the sandbox allowlist for this site: ok
+  Jira says this identity may link issues for every item: ok
+  no link asked for has appeared since the preview, the same way round or the opposite: ok
+
+The confirmation and the writes happen in this one run of the command.
+
+LINK 1 of 3: SAND-3 blocks SAND-4. ALREADY THERE (link id 40001). Not sent.
+
+LINK 2 of 3: SAND-1 blocks SAND-2.
+  WRITTEN to Jira: link id 40004. Jira answered 201.
+  (It is the one new link of this kind on both items. Jira's answer to a write does not name the link, so this is found by reading.)
+  Read back from Jira after the write:
+    read from SAND-1: it lists link id 40004 as: SAND-1 blocks SAND-2. Wanted: SAND-1 blocks SAND-2. Type "Blocks": yes
+    read from SAND-2: it lists link id 40004 as: SAND-2 is blocked by SAND-1. Wanted: SAND-2 is blocked by SAND-1. Type "Blocks": yes
+    the link read by its own id: Jira's `inwardIssue` is issue id 30001 and `outwardIssue` is issue id 30002, as sent: yes
+    links between these two items of this type and this way round, counted on each: 1 and 1. One is wanted: yes
+
+LINK 3 of 3: SAND-2 relates to SAND-6.
+  WRITTEN to Jira: link id 40005. Jira answered 201.
+  (It is the one new link of this kind on both items. Jira's answer to a write does not name the link, so this is found by reading.)
+  Read back from Jira after the write:
+    read from SAND-2: it lists link id 40005 as: SAND-2 relates to SAND-6. Wanted: SAND-2 relates to SAND-6. Type "Relates": yes
+    read from SAND-6: it lists link id 40005 as: SAND-6 relates to SAND-2. Wanted: SAND-6 relates to SAND-2. Type "Relates": yes
+    the link read by its own id: Jira's `inwardIssue` is issue id 30002 and `outwardIssue` is issue id 30006, as sent: yes
+    links between these two items of this type and this way round, counted on each: 1 and 1. One is wanted: yes
+
+ALL DONE: 2 links written, 1 already there.
+
+RESULT RECORD
+  Jira site: [site address removed], site fingerprint 738169e667642f09
+  Request: links.json (file sha256 612b288bdbba31dd26a48be89066f68df118a0bbc259271b12a2821257dacf0f)
+  Confirmed by: A made-up person, at 2026-11-27 01:00:53 UTC
+  Preview: fingerprint ab8545ef37ce, made 2026-11-27 01:00:53 UTC
+  Link 1. Issue keys: SAND-3 and SAND-4
+  Link 1. In words: SAND-3 blocks SAND-4. From the other item: SAND-4 is blocked by SAND-3
+  Link 1. Identifier of what was created: Jira issue link id 40001. Status: already there
+  Link 1. Link type: "Blocks" (link type id 10000)
+  Link 1. Items by issue id: SAND-3 is 30003, SAND-4 is 30004
+  Link 1. Target project: SAND (project id 20001), on the sandbox allowlist
+  Link 1. Written at: not written by this run
+  Link 1. Read back from both items after the write: not read back by this run
+  Link 1. To reverse: remove link id 40001 in Jira, by hand. This workflow does not remove links
+  Link 2. Issue keys: SAND-1 and SAND-2
+  Link 2. In words: SAND-1 blocks SAND-2. From the other item: SAND-2 is blocked by SAND-1
+  Link 2. Identifier of what was created: Jira issue link id 40004. Status: written
+  Link 2. Link type: "Blocks" (link type id 10000)
+  Link 2. Items by issue id: SAND-1 is 30001, SAND-2 is 30002
+  Link 2. Target project: SAND (project id 20001), on the sandbox allowlist
+  Link 2. Written at: 2026-11-27 01:00:53 UTC
+  Link 2. Read back from both items after the write: as asked: the right type and the right way round on each
+  Link 2. To reverse: remove link id 40004 in Jira, by hand. This workflow does not remove links
+  Link 3. Issue keys: SAND-2 and SAND-6
+  Link 3. In words: SAND-2 relates to SAND-6. From the other item: SAND-6 relates to SAND-2
+  Link 3. Identifier of what was created: Jira issue link id 40005. Status: written
+  Link 3. Link type: "Relates" (link type id 10003)
+  Link 3. Items by issue id: SAND-2 is 30002, SAND-6 is 30006
+  Link 3. Target project: SAND (project id 20001), on the sandbox allowlist
+  Link 3. Written at: 2026-11-27 01:00:53 UTC
+  Link 3. Read back from both items after the write: as asked: the right type and the right way round on each
+  Link 3. To reverse: remove link id 40005 in Jira, by hand. This workflow does not remove links
+
+Requests sent to Jira: 23. Kinds: GET, POST.
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SAND-3
+  GET /rest/api/3/issue/SAND-4
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/issue/SAND-2
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/SAND-6
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30001
+  GET /rest/api/3/issue/30002
+  POST /rest/api/3/issueLink
+  GET /rest/api/3/issue/30001
+  GET /rest/api/3/issue/30002
+  GET /rest/api/3/issueLink/40004
+  GET /rest/api/3/issue/30002
+  GET /rest/api/3/issue/30006
+  POST /rest/api/3/issueLink
+  GET /rest/api/3/issue/30002
+  GET /rest/api/3/issue/30006
+  GET /rest/api/3/issueLink/40005
+------------------------------------------------------------------------------
+exit status: 0
+  ok   one confirmation creates the two that were missing, and does not send the one that was there
+  ok   the first new link is read back, from both of its items and by its own id, before the second is sent
+$ fake_jira.py show
+------------------------------------------------------------------------------
+FAKE JIRA holds 5 links:
+  link id 40001: SAND-3 blocks SAND-4
+  link id 40002: SAND-4 blocks SAND-5
+  link id 40003: SAND-5 relates to SAND-2
+  link id 40004: SAND-1 blocks SAND-2
+  link id 40005: SAND-2 relates to SAND-6
+------------------------------------------------------------------------------
+exit status: 0
+  ok   the fake Jira holds each of the three once
+
+==============================================================================
+3. A BATCH THAT STOPS PARTWAY: JIRA REFUSES THE SECOND WRITE
+
+The request file links.json now says: SAND-1 blocks SAND-2; SAND-2 relates to SAND-6.
+$ link_work.py preview --request links.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Request:    links.json, sha256 8238338d457f5f6c. It asks for 2 links. To create: 2. Already there: 0.
+
+LINK 1 of 2.  TO CREATE
+  IN WORDS:                        SAND-1 blocks SAND-2.
+  The same link, from the other item: SAND-2 is blocked by SAND-1.
+  That is: SAND-1 comes first, and SAND-2 waits for it.
+  READ IT ALOUD. If the sentence is backwards, so is the link. The sentence is what you are confirming.
+  Link type:  "Blocks" (link type id 10000). On this site its phrases are "blocks" and "is blocked by".
+  The items, each found by the reference in the request and by nothing else. The issue id is what the fingerprint is tied to:
+    SAND-1 (issue id 30001), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Collect the export requirements
+    SAND-2 (issue id 30002), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Write the export query
+  For the record, exactly what is sent to Jira, and nothing else:
+    type          link type id 10000 ("Blocks")
+    inwardIssue   issue id 30001 (SAND-1), the item that "blocks"
+    outwardIssue  issue id 30002 (SAND-2), the item that "is blocked by"
+    DO NOT JUDGE THE LINK BY THESE TWO SLOT NAMES. They are Jira's, and they read the wrong way round to many people,
+    people who know Jira included. Judge the sentence. The workflow filled the slots in from it, and after the write
+    it reads the link back from BOTH items and compares what each shows with the sentence.
+  Permission check, asked of Jira for each item and this identity (may see it / may link issues):
+    SAND-1: yes / yes
+    SAND-2: yes / yes
+  Duplicate check, made against Jira just now: SAND-1 lists 0 links and SAND-2 lists 0 links that this identity can see.
+    This same link, the same type and the same way round: 0.
+    The opposite link, which would be a conflict: 0.
+    Circle check: "blocks" links were followed onward from SAND-2. Items reached, SAND-2 included: 1. None is SAND-1.
+
+LINK 2 of 2.  TO CREATE
+  IN WORDS:                        SAND-2 relates to SAND-6.
+  The same link, from the other item: SAND-6 relates to SAND-2.
+  READ IT ALOUD. If the sentence is backwards, so is the link. The sentence is what you are confirming.
+  This link type has one phrase for both items, so it has no direction: either order is the same link.
+  Link type:  "Relates" (link type id 10003). On this site its phrases are "relates to" and "relates to".
+  The items, each found by the reference in the request and by nothing else. The issue id is what the fingerprint is tied to:
+    SAND-2 (issue id 30002), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Write the export query
+    SAND-6 (issue id 30006), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Review the export with the team
+  For the record, exactly what is sent to Jira, and nothing else:
+    type          link type id 10003 ("Relates")
+    inwardIssue   issue id 30002 (SAND-2), the item that "relates to"
+    outwardIssue  issue id 30006 (SAND-6), the item that "relates to"
+    DO NOT JUDGE THE LINK BY THESE TWO SLOT NAMES. They are Jira's, and they read the wrong way round to many people,
+    people who know Jira included. Judge the sentence. The workflow filled the slots in from it, and after the write
+    it reads the link back from BOTH items and compares what each shows with the sentence.
+  Permission check, asked of Jira for each item and this identity (may see it / may link issues):
+    SAND-2: yes / yes
+    SAND-6: yes / yes
+  Duplicate check, made against Jira just now: SAND-2 lists 0 links and SAND-6 lists 0 links that this identity can see.
+    This same link, the same type and the same way round: 0.
+
+Where Jira cannot check: this workflow relies on no 'only if there is none like it' condition in Jira's request to
+  create a link. The confirmation reads both items of each link again just before writing it, and stops if the link,
+  or its opposite, is there by then.
+
+Snapshot of the items named, as Jira returned them, before the preview: 7ec26efa761e813e
+Snapshot of the items named, as Jira returned them, after the preview:  7ec26efa761e813e
+The two are the same. Jira is unchanged, as far as two reads of each item can show. A snapshot is of each item's
+  last-updated time and of every link it lists.
+Requests sent to Jira: 14. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/issue/SAND-2
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/SAND-6
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/issue/SAND-2
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/SAND-6
+  GET /rest/api/3/mypermissions
+
+Fingerprint of this preview: 8fea3534db01
+Made:    2026-11-27 01:00:53 UTC
+Expires: 2026-11-27 01:15:53 UTC (15 minutes after it was made)
+
+Nothing has been written. To create these 2 links, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit status: 0
+$ fake_jira.py set --fail-post 400 --after 1
+------------------------------------------------------------------------------
+FAKE JIRA, set for what comes next: fail_post = 400, reverse_next = False.
+FAKE JIRA holds 1 link:
+  link id 40001: SAND-3 blocks SAND-4
+------------------------------------------------------------------------------
+exit status: 0
+$ link_work.py confirm --request links.json --allowlist fake-allowlist.json --fingerprint 8fea3534db01 --confirmed-by "A made-up person"
+------------------------------------------------------------------------------
+CONFIRMATION for preview 8fea3534db01, given by: A made-up person (the name given with the confirmation).
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  what the saved preview holds still matches its fingerprint, and it is marked as not used: ok
+  the request asks for exactly what the preview showed, link for link: ok
+  every item is in a project on the sandbox allowlist for this site: ok
+  Jira says this identity may link issues for every item: ok
+  no link asked for has appeared since the preview, the same way round or the opposite: ok
+
+The confirmation and the writes happen in this one run of the command.
+
+LINK 1 of 2: SAND-1 blocks SAND-2.
+  WRITTEN to Jira: link id 40002. Jira answered 201.
+  (It is the one new link of this kind on both items. Jira's answer to a write does not name the link, so this is found by reading.)
+  Read back from Jira after the write:
+    read from SAND-1: it lists link id 40002 as: SAND-1 blocks SAND-2. Wanted: SAND-1 blocks SAND-2. Type "Blocks": yes
+    read from SAND-2: it lists link id 40002 as: SAND-2 is blocked by SAND-1. Wanted: SAND-2 is blocked by SAND-1. Type "Blocks": yes
+    the link read by its own id: Jira's `inwardIssue` is issue id 30001 and `outwardIssue` is issue id 30002, as sent: yes
+    links between these two items of this type and this way round, counted on each: 1 and 1. One is wanted: yes
+
+LINK 2 of 2: SAND-2 relates to SAND-6.
+  Jira's own words, which are not this workflow's: "the fake was told to refuse"
+
+REFUSED: link 2 (SAND-2 relates to SAND-6): Jira answered 400 to the write, and read back afterwards neither item shows the link, so it was not written. Written in this run before it stopped: link 1 (link id 40002). Not sent: none.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   the run stops at the link Jira refused, and says which link was written and that none is left unsent. Nothing is undone
+$ link_work.py preview --request links.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Request:    links.json, sha256 8238338d457f5f6c. It asks for 2 links. To create: 1. Already there: 1.
+
+LINK 1 of 2.  ALREADY THERE. It is not created again
+  IN WORDS:                        SAND-1 blocks SAND-2.
+  The same link, from the other item: SAND-2 is blocked by SAND-1.
+  That is: SAND-1 comes first, and SAND-2 waits for it.
+  READ IT ALOUD. If the sentence is backwards, so is the link. The sentence is what you are confirming.
+  Link type:  "Blocks" (link type id 10000). On this site its phrases are "blocks" and "is blocked by".
+  The items, each found by the reference in the request and by nothing else. The issue id is what the fingerprint is tied to:
+    SAND-1 (issue id 30001), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Collect the export requirements
+    SAND-2 (issue id 30002), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Write the export query
+  Permission check, asked of Jira for each item and this identity (may see it / may link issues):
+    SAND-1: yes / yes
+    SAND-2: yes / yes
+  Duplicate check, made against Jira just now: SAND-1 lists 1 link and SAND-2 lists 1 link that this identity can see.
+    This same link, the same type and the same way round: 1 (link id 40002).
+    The opposite link, which would be a conflict: 0.
+
+LINK 2 of 2.  TO CREATE
+  IN WORDS:                        SAND-2 relates to SAND-6.
+  The same link, from the other item: SAND-6 relates to SAND-2.
+  READ IT ALOUD. If the sentence is backwards, so is the link. The sentence is what you are confirming.
+  This link type has one phrase for both items, so it has no direction: either order is the same link.
+  Link type:  "Relates" (link type id 10003). On this site its phrases are "relates to" and "relates to".
+  The items, each found by the reference in the request and by nothing else. The issue id is what the fingerprint is tied to:
+    SAND-2 (issue id 30002), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Write the export query
+    SAND-6 (issue id 30006), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Review the export with the team
+  For the record, exactly what is sent to Jira, and nothing else:
+    type          link type id 10003 ("Relates")
+    inwardIssue   issue id 30002 (SAND-2), the item that "relates to"
+    outwardIssue  issue id 30006 (SAND-6), the item that "relates to"
+    DO NOT JUDGE THE LINK BY THESE TWO SLOT NAMES. They are Jira's, and they read the wrong way round to many people,
+    people who know Jira included. Judge the sentence. The workflow filled the slots in from it, and after the write
+    it reads the link back from BOTH items and compares what each shows with the sentence.
+  Permission check, asked of Jira for each item and this identity (may see it / may link issues):
+    SAND-2: yes / yes
+    SAND-6: yes / yes
+  Duplicate check, made against Jira just now: SAND-2 lists 1 link and SAND-6 lists 0 links that this identity can see.
+    This same link, the same type and the same way round: 0.
+
+Where Jira cannot check: this workflow relies on no 'only if there is none like it' condition in Jira's request to
+  create a link. The confirmation reads both items of each link again just before writing it, and stops if the link,
+  or its opposite, is there by then.
+
+Snapshot of the items named, as Jira returned them, before the preview: 9415abcb3ce63a63
+Snapshot of the items named, as Jira returned them, after the preview:  9415abcb3ce63a63
+The two are the same. Jira is unchanged, as far as two reads of each item can show. A snapshot is of each item's
+  last-updated time and of every link it lists.
+Requests sent to Jira: 14. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/issue/SAND-2
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/SAND-6
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/issue/SAND-2
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/SAND-6
+  GET /rest/api/3/mypermissions
+
+Fingerprint of this preview: 9da6a464f0cf
+Made:    2026-11-27 01:00:53 UTC
+Expires: 2026-11-27 01:15:53 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this link, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit status: 0
+  ok   a new preview finds the link that was made and offers only the one that was not
+
+==============================================================================
+4. A BATCH OVERTAKEN BEFORE IT IS CONFIRMED
+
+The request file links.json now says: SAND-1 blocks SAND-2; SAND-2 relates to SAND-6.
+$ link_work.py preview --request links.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Request:    links.json, sha256 8238338d457f5f6c. It asks for 2 links. To create: 2. Already there: 0.
+
+LINK 1 of 2.  TO CREATE
+  IN WORDS:                        SAND-1 blocks SAND-2.
+  The same link, from the other item: SAND-2 is blocked by SAND-1.
+  That is: SAND-1 comes first, and SAND-2 waits for it.
+  READ IT ALOUD. If the sentence is backwards, so is the link. The sentence is what you are confirming.
+  Link type:  "Blocks" (link type id 10000). On this site its phrases are "blocks" and "is blocked by".
+  The items, each found by the reference in the request and by nothing else. The issue id is what the fingerprint is tied to:
+    SAND-1 (issue id 30001), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Collect the export requirements
+    SAND-2 (issue id 30002), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Write the export query
+  For the record, exactly what is sent to Jira, and nothing else:
+    type          link type id 10000 ("Blocks")
+    inwardIssue   issue id 30001 (SAND-1), the item that "blocks"
+    outwardIssue  issue id 30002 (SAND-2), the item that "is blocked by"
+    DO NOT JUDGE THE LINK BY THESE TWO SLOT NAMES. They are Jira's, and they read the wrong way round to many people,
+    people who know Jira included. Judge the sentence. The workflow filled the slots in from it, and after the write
+    it reads the link back from BOTH items and compares what each shows with the sentence.
+  Permission check, asked of Jira for each item and this identity (may see it / may link issues):
+    SAND-1: yes / yes
+    SAND-2: yes / yes
+  Duplicate check, made against Jira just now: SAND-1 lists 0 links and SAND-2 lists 0 links that this identity can see.
+    This same link, the same type and the same way round: 0.
+    The opposite link, which would be a conflict: 0.
+    Circle check: "blocks" links were followed onward from SAND-2. Items reached, SAND-2 included: 1. None is SAND-1.
+
+LINK 2 of 2.  TO CREATE
+  IN WORDS:                        SAND-2 relates to SAND-6.
+  The same link, from the other item: SAND-6 relates to SAND-2.
+  READ IT ALOUD. If the sentence is backwards, so is the link. The sentence is what you are confirming.
+  This link type has one phrase for both items, so it has no direction: either order is the same link.
+  Link type:  "Relates" (link type id 10003). On this site its phrases are "relates to" and "relates to".
+  The items, each found by the reference in the request and by nothing else. The issue id is what the fingerprint is tied to:
+    SAND-2 (issue id 30002), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Write the export query
+    SAND-6 (issue id 30006), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Review the export with the team
+  For the record, exactly what is sent to Jira, and nothing else:
+    type          link type id 10003 ("Relates")
+    inwardIssue   issue id 30002 (SAND-2), the item that "relates to"
+    outwardIssue  issue id 30006 (SAND-6), the item that "relates to"
+    DO NOT JUDGE THE LINK BY THESE TWO SLOT NAMES. They are Jira's, and they read the wrong way round to many people,
+    people who know Jira included. Judge the sentence. The workflow filled the slots in from it, and after the write
+    it reads the link back from BOTH items and compares what each shows with the sentence.
+  Permission check, asked of Jira for each item and this identity (may see it / may link issues):
+    SAND-2: yes / yes
+    SAND-6: yes / yes
+  Duplicate check, made against Jira just now: SAND-2 lists 0 links and SAND-6 lists 0 links that this identity can see.
+    This same link, the same type and the same way round: 0.
+
+Where Jira cannot check: this workflow relies on no 'only if there is none like it' condition in Jira's request to
+  create a link. The confirmation reads both items of each link again just before writing it, and stops if the link,
+  or its opposite, is there by then.
+
+Snapshot of the items named, as Jira returned them, before the preview: 7ec26efa761e813e
+Snapshot of the items named, as Jira returned them, after the preview:  7ec26efa761e813e
+The two are the same. Jira is unchanged, as far as two reads of each item can show. A snapshot is of each item's
+  last-updated time and of every link it lists.
+Requests sent to Jira: 14. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/issue/SAND-2
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/SAND-6
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/issue/SAND-2
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/SAND-6
+  GET /rest/api/3/mypermissions
+
+Fingerprint of this preview: 8fea3534db01
+Made:    2026-11-27 01:00:53 UTC
+Expires: 2026-11-27 01:15:53 UTC (15 minutes after it was made)
+
+Nothing has been written. To create these 2 links, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit status: 0
+Someone else makes the second link while the batch is waiting to be confirmed... and the confirmation is given.
+$ fake_jira.py other-link --source SAND-6 --type Relates --target SAND-2
+------------------------------------------------------------------------------
+FAKE JIRA: someone else created link id 40002.
+FAKE JIRA holds 2 links:
+  link id 40001: SAND-3 blocks SAND-4
+  link id 40002: SAND-6 relates to SAND-2
+------------------------------------------------------------------------------
+exit status: 0
+$ link_work.py confirm --request links.json --allowlist fake-allowlist.json --fingerprint 8fea3534db01 --confirmed-by "A made-up person"
+------------------------------------------------------------------------------
+
+REFUSED: the change is not the one that was previewed: link 2: it was to be created when previewed, and is already there now (link id 40002). Make a new preview and read it.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   the confirmation is refused whole, before anything is sent: what was previewed is no longer what would happen
+$ link_work.py preview --request links.json --allowlist fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Request:    links.json, sha256 8238338d457f5f6c. It asks for 2 links. To create: 1. Already there: 1.
+
+LINK 1 of 2.  TO CREATE
+  IN WORDS:                        SAND-1 blocks SAND-2.
+  The same link, from the other item: SAND-2 is blocked by SAND-1.
+  That is: SAND-1 comes first, and SAND-2 waits for it.
+  READ IT ALOUD. If the sentence is backwards, so is the link. The sentence is what you are confirming.
+  Link type:  "Blocks" (link type id 10000). On this site its phrases are "blocks" and "is blocked by".
+  The items, each found by the reference in the request and by nothing else. The issue id is what the fingerprint is tied to:
+    SAND-1 (issue id 30001), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Collect the export requirements
+    SAND-2 (issue id 30002), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Write the export query
+  For the record, exactly what is sent to Jira, and nothing else:
+    type          link type id 10000 ("Blocks")
+    inwardIssue   issue id 30001 (SAND-1), the item that "blocks"
+    outwardIssue  issue id 30002 (SAND-2), the item that "is blocked by"
+    DO NOT JUDGE THE LINK BY THESE TWO SLOT NAMES. They are Jira's, and they read the wrong way round to many people,
+    people who know Jira included. Judge the sentence. The workflow filled the slots in from it, and after the write
+    it reads the link back from BOTH items and compares what each shows with the sentence.
+  Permission check, asked of Jira for each item and this identity (may see it / may link issues):
+    SAND-1: yes / yes
+    SAND-2: yes / yes
+  Duplicate check, made against Jira just now: SAND-1 lists 0 links and SAND-2 lists 1 link that this identity can see.
+    This same link, the same type and the same way round: 0.
+    The opposite link, which would be a conflict: 0.
+    Circle check: "blocks" links were followed onward from SAND-2. Items reached, SAND-2 included: 1. None is SAND-1.
+
+LINK 2 of 2.  ALREADY THERE. It is not created again
+  IN WORDS:                        SAND-2 relates to SAND-6.
+  The same link, from the other item: SAND-6 relates to SAND-2.
+  READ IT ALOUD. If the sentence is backwards, so is the link. The sentence is what you are confirming.
+  This link type has one phrase for both items, so it has no direction: either order is the same link.
+  Link type:  "Relates" (link type id 10003). On this site its phrases are "relates to" and "relates to".
+  The items, each found by the reference in the request and by nothing else. The issue id is what the fingerprint is tied to:
+    SAND-2 (issue id 30002), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Write the export query
+    SAND-6 (issue id 30006), in project SAND (project id 20001). Its title, for you to check it is the item you mean. It is other
+    people's text: shown, and not acted on.
+    | Review the export with the team
+  Permission check, asked of Jira for each item and this identity (may see it / may link issues):
+    SAND-2: yes / yes
+    SAND-6: yes / yes
+  Duplicate check, made against Jira just now: SAND-2 lists 1 link and SAND-6 lists 1 link that this identity can see.
+    This same link, the same type and the same way round: 1 (link id 40002).
+
+Where Jira cannot check: this workflow relies on no 'only if there is none like it' condition in Jira's request to
+  create a link. The confirmation reads both items of each link again just before writing it, and stops if the link,
+  or its opposite, is there by then.
+
+Snapshot of the items named, as Jira returned them, before the preview: 7586b9c1496186cf
+Snapshot of the items named, as Jira returned them, after the preview:  7586b9c1496186cf
+The two are the same. Jira is unchanged, as far as two reads of each item can show. A snapshot is of each item's
+  last-updated time and of every link it lists.
+Requests sent to Jira: 14. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/issue/SAND-2
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/SAND-6
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issueLinkType
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/issue/SAND-2
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/SAND-6
+  GET /rest/api/3/mypermissions
+
+Fingerprint of this preview: b39bd16671e2
+Made:    2026-11-27 01:00:53 UTC
+Expires: 2026-11-27 01:15:53 UTC (15 minutes after it was made)
+
+Nothing has been written. To create this link, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit status: 0
+  ok   a new preview offers only the link that is still missing
+
+RESULT: ALL CHECKS PASSED. 11 checks.

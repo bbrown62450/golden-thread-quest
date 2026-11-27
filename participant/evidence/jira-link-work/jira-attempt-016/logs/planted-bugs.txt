@@ -1,0 +1,165 @@
+Planted bugs in a copy of participant/skills/jira-link-work/link_work.py. jira-link-work, attempt jira-attempt-016
+Recorded by scripts/planted_bugs.py. One bug at a time is planted in a copy of the skill, in a temporary folder, and the
+tests are run against the copy, with the fake Jira. CAUGHT means at least one test failed. The real skill is not changed.
+
+First, with no bug planted, the tests against the copy: OK
+
+ 1. CAUGHT  the two items are put in Jira's slots the other way round
+            FAILED (failures=28, errors=2): test_a_blocks_b_is_sent_with_the_blocker_as_the_source, test_a_chain_that_does_not_come_back_is_allowed ...
+ 2. CAUGHT  an inward phrase, such as 'is blocked by', is read as if it were the outward one
+            FAILED (failures=5): test_a_link_that_would_close_a_circle_is_refused, test_a_site_type_named_blocks_with_its_phrases_the_other_way_round_is_followed_as_the_site_has_it ...
+ 3. CAUGHT  the item named first is always taken as the source
+            FAILED (failures=5): test_a_link_that_would_close_a_circle_is_refused, test_a_site_type_named_blocks_with_its_phrases_the_other_way_round_is_followed_as_the_site_has_it ...
+ 4. CAUGHT  reading an item, `outwardIssue` is taken to mean the OTHER item is the source
+            FAILED (failures=41, errors=2): test_a_blocks_b_is_sent_with_the_blocker_as_the_source, test_a_chain_that_does_not_come_back_is_allowed ...
+ 5. CAUGHT  a link the other way round counts as the same link
+            FAILED (failures=2): test_an_opposite_link_that_appears_while_jira_refuses_the_write_is_not_called_this_workflows_mistake, test_the_same_link_and_the_opposite_link_are_told_apart
+ 6. CAUGHT  a link of another type between the same items counts as the same link
+            FAILED (failures=2): test_a_link_of_the_wrong_type_between_the_same_items_is_not_taken_for_the_link, test_the_same_link_and_the_opposite_link_are_told_apart
+ 7. CAUGHT  the opposite link is never recognised
+            FAILED (failures=6): test_a_link_that_jira_stores_the_other_way_round_is_noticed_and_named, test_an_opposite_link_that_appears_while_jira_refuses_the_write_is_not_called_this_workflows_mistake ...
+ 8. CAUGHT  a type with one phrase is treated as having a direction
+            FAILED (failures=1): test_a_link_type_with_one_phrase_has_no_direction
+ 9. CAUGHT  what an item shows is not compared with the sentence wanted
+            FAILED (failures=1): test_check_says_so_when_the_link_with_that_id_now_runs_the_other_way
+10. CAUGHT  the link read by its own id is not compared with what was sent
+            FAILED (failures=1): test_the_link_read_by_its_own_id_must_agree_with_what_was_sent
+11. CAUGHT  a link that reads backwards after the write is not noticed
+            FAILED (failures=1): test_a_link_that_jira_stores_the_other_way_round_is_noticed_and_named
+12. CAUGHT  an opposite link is called this workflow's mistake even when Jira refused the write
+            FAILED (failures=1): test_an_opposite_link_that_appears_while_jira_refuses_the_write_is_not_called_this_workflows_mistake
+13. CAUGHT  the id of a backwards link is not kept in the record
+            FAILED (failures=1): test_a_link_that_jira_stores_the_other_way_round_is_noticed_and_named
+14. CAUGHT  after a backwards link the advice is still to preview again
+            FAILED (failures=1): test_a_link_that_jira_stores_the_other_way_round_is_noticed_and_named
+15. CAUGHT  any link type the site has may be created
+            FAILED (failures=1): test_a_phrase_of_a_type_this_workflow_does_not_create_is_refused
+16. CAUGHT  Duplicate links may be created
+            FAILED (failures=2): test_a_phrase_of_a_type_this_workflow_does_not_create_is_refused, test_a_phrase_the_site_does_not_use_is_refused_and_the_sites_phrases_are_listed
+17. CAUGHT  a phrase shared by two link types is accepted
+            FAILED (failures=1): test_a_phrase_that_two_link_types_share_is_refused
+18. CAUGHT  an item may be linked to itself
+            FAILED (failures=1): test_an_item_linked_to_itself_is_refused_however_it_is_named
+19. CAUGHT  only the first item is checked against the allowlist and for permission
+            FAILED (failures=50, errors=5): test_a_blocks_b_is_sent_with_the_blocker_as_the_source, test_a_chain_that_does_not_come_back_is_allowed ...
+20. CAUGHT  the allowlist is not consulted
+            FAILED (failures=3): test_an_allowlist_changed_after_the_preview, test_either_item_in_a_project_off_the_allowlist_is_refused ...
+21. CAUGHT  the allowlist is checked by project id alone, whatever the site
+            FAILED (failures=1): test_the_same_project_id_on_another_site_is_not_on_the_allowlist
+22. CAUGHT  the permission check is not acted on
+            FAILED (failures=2): test_an_item_this_identity_may_not_link_is_refused, test_permission_withdrawn_after_the_preview
+23. CAUGHT  a link that is already there is created again
+            FAILED (failures=9, errors=1): test_a_link_made_by_someone_else_after_the_preview_stops_the_confirmation, test_a_link_type_with_one_phrase_has_no_direction ...
+24. CAUGHT  the opposite link already there is not a conflict
+            FAILED (failures=2): test_the_opposite_link_is_a_conflict_and_nothing_is_created, test_the_opposite_link_made_after_the_preview_stops_the_confirmation
+25. CAUGHT  two items that disagree about their links are accepted
+            FAILED (failures=1): test_items_that_do_not_agree_about_their_links_stop_the_preview
+26. CAUGHT  the same link twice in one request is accepted
+            FAILED (failures=1): test_more_than_five_links_or_the_same_link_twice_is_refused
+27. CAUGHT  more than five links are accepted
+            FAILED (failures=1): test_more_than_five_links_or_the_same_link_twice_is_refused
+28. CAUGHT  a link that closes a circle is created
+            FAILED (failures=50, errors=5): test_a_blocks_b_is_sent_with_the_blocker_as_the_source, test_a_chain_that_does_not_come_back_is_allowed ...
+29. CAUGHT  the circle check ignores the other links of the same request
+            FAILED (failures=1): test_a_circle_made_by_the_links_of_one_request_is_refused
+30. CAUGHT  the circle check follows links of every type
+            FAILED (failures=1): test_links_of_another_type_do_not_make_a_circle
+31. CAUGHT  the circle check follows links backwards
+            FAILED (failures=3): test_a_chain_through_an_item_that_cannot_be_read_is_refused, test_a_chain_too_long_to_follow_is_refused_and_not_assumed_clear ...
+32. CAUGHT  a chain too long to follow is assumed clear
+            FAILED (failures=1): test_a_chain_too_long_to_follow_is_refused_and_not_assumed_clear
+33. CAUGHT  a missing fingerprint is not refused
+            FAILED (failures=1): test_a_missing_confirmation
+34. CAUGHT  a missing name is not refused
+            FAILED (failures=1): test_a_missing_confirmation
+35. CAUGHT  a preview never expires
+            FAILED (failures=1): test_a_preview_older_than_the_limit
+36. CAUGHT  a preview expires a minute early
+            FAILED (failures=1): test_a_preview_exactly_at_the_limit_is_accepted
+37. CAUGHT  a rewritten request file is not noticed as such
+            FAILED (failures=1): test_a_change_that_differs_from_the_preview
+38. CAUGHT  a changed allowlist is not noticed
+            FAILED (failures=1): test_an_allowlist_changed_after_the_preview
+39. CAUGHT  a reference that now leads to another item is not noticed as such
+            FAILED (failures=1): test_a_reference_that_now_leads_to_another_item
+40. CAUGHT  a link that appeared since the preview is not noticed when the request is compared
+            FAILED (failures=2): test_a_link_made_by_someone_else_after_the_preview_stops_the_confirmation, test_a_saved_preview_marked_unused_by_hand_is_stopped_by_what_jira_holds
+41. CAUGHT  the read just before each write is not acted on
+            FAILED (failures=1): test_a_link_made_by_someone_else_while_the_batch_is_running_is_not_sent
+42. CAUGHT  an altered saved preview is accepted
+            FAILED (failures=1): test_a_saved_preview_that_was_altered
+43. CAUGHT  a used preview can be confirmed again
+            FAILED (failures=3): test_no_answer_and_no_link_is_not_known_and_is_not_sent_again, test_running_the_approved_workflow_again_creates_nothing ...
+44. CAUGHT  a preview made against another site can be confirmed
+            FAILED (failures=1): test_a_preview_made_against_another_site_or_for_another_request_file
+45. CAUGHT  a preview made for another request file can be confirmed as such
+            FAILED (failures=1): test_a_preview_made_against_another_site_or_for_another_request_file
+46. CAUGHT  a change in the site's words for the link type is not noticed
+            FAILED (failures=1): test_a_site_whose_words_for_the_type_changed_after_the_preview
+47. CAUGHT  an item that moved project just before the write is not noticed
+            FAILED (failures=1): test_an_item_that_moved_to_another_project_just_before_the_write
+48. CAUGHT  a link Jira is slow to show is not read again
+            FAILED (failures=2): test_a_link_jira_is_slow_to_show_is_read_again_and_the_write_is_not_sent_again, test_a_link_that_never_shows_needs_a_person_after_three_more_reads
+49. CAUGHT  the reads are repeated even when Jira refused or gave no answer
+            FAILED (failures=1): test_reads_are_not_repeated_when_jira_gave_no_answer_or_refused
+50. CAUGHT  the record is not marked 'sending' before the request goes
+            FAILED (failures=1): test_the_record_says_sending_at_the_moment_each_request_goes
+51. CAUGHT  a write with no answer is sent a second time
+            FAILED (failures=2): test_no_answer_and_no_link_is_not_known_and_is_not_sent_again, test_no_answer_and_the_link_was_made_is_found_by_reading_both_items
+52. CAUGHT  a server error is taken to mean nothing was written
+            FAILED (failures=3): test_a_refusal_by_jira_with_nothing_read_back_means_nothing_was_written, test_a_server_error_is_not_taken_to_mean_nothing_was_written ...
+53. CAUGHT  a refusal is believed without reading the items back
+            FAILED (failures=1): test_a_refusal_is_not_believed_when_the_link_is_there_afterwards
+54. CAUGHT  two new links where one was wanted are not noticed as such
+            FAILED (failures=1): test_a_link_made_in_the_last_moment_before_the_write_is_reported_as_a_double
+55. CAUGHT  the count of links after the write is not checked
+            FAILED (failures=1): test_check_says_so_when_the_link_has_been_removed_or_doubled_or_opposed
+56. CAUGHT  check does not report an opposite link
+            FAILED (failures=1): test_check_says_so_when_the_link_has_been_removed_or_doubled_or_opposed
+57. CAUGHT  two runs can hold the claim on one request at once
+            FAILED (failures=2): test_a_held_claim_stops_a_confirmation_and_an_old_one_can_be_taken_over, test_while_one_run_is_confirming_another_is_refused
+58. CAUGHT  a claim held by a running run is taken over at once
+            FAILED (failures=2): test_a_held_claim_stops_a_confirmation_and_an_old_one_can_be_taken_over, test_while_one_run_is_confirming_another_is_refused
+59. CAUGHT  a claim left by a killed run is never given up
+            FAILED (failures=1): test_a_held_claim_stops_a_confirmation_and_an_old_one_can_be_taken_over
+60. CAUGHT  a confirmation keeps its claim after it ends
+            FAILED (failures=6): test_a_saved_preview_marked_unused_by_hand_is_stopped_by_what_jira_holds, test_a_site_whose_words_for_the_type_changed_after_the_preview ...
+61. CAUGHT  a confirmation removes another run's claim when it ends
+            FAILED (errors=1): test_a_run_whose_claim_was_taken_sends_nothing_and_does_not_remove_the_other_runs_claim
+62. CAUGHT  a run whose claim was taken goes on to write
+            FAILED (failures=1): test_a_run_whose_claim_was_taken_sends_nothing_and_does_not_remove_the_other_runs_claim
+63. CAUGHT  the claim is not renewed before each write
+            FAILED (failures=2): test_a_run_whose_claim_was_taken_sends_nothing_and_does_not_remove_the_other_runs_claim, test_the_claim_is_renewed_before_each_write
+64. CAUGHT  a result record that cannot be saved ends the run with an error
+            FAILED (errors=1): test_a_result_record_that_cannot_be_saved_does_not_change_what_happened
+65. CAUGHT  every command is given a way to write
+            FAILED (failures=1): test_only_confirm_is_given_a_way_to_write_whatever_the_source
+66. CAUGHT  the live connection is always given a way to write
+            FAILED (failures=1): test_only_confirm_is_given_a_way_to_write_whatever_the_source
+67. CAUGHT  a real write does not need a terminal
+            FAILED (failures=1): test_a_real_write_needs_a_terminal
+68. CAUGHT  the live connection sends any body it is given
+            FAILED (errors=1): test_the_live_connection_sends_no_write_but_one_new_link
+69. CAUGHT  the items' titles are saved in the log
+            FAILED (failures=3): test_a_chain_that_does_not_come_back_is_allowed, test_a_whole_run_through_main_with_a_saved_log ...
+70. CAUGHT  the saved log keeps the site's address
+            FAILED (failures=1): test_a_whole_run_through_main_with_a_saved_log
+71. CAUGHT  Jira's own words about a refusal are saved in the log
+            FAILED (failures=1): test_a_refusal_by_jira_with_nothing_read_back_means_nothing_was_written
+
+Last, with the copy put back as it was: OK
+The real skill is byte for byte what it was before: yes
+Git reports the same state of the whole repository as before the run: yes
+
+HOW TO READ 'CAUGHT'. A test failed. For some bugs the run was STILL REFUSED, by a second check, and the test failed
+  because the refusal gave another reason than the one it looks for. Those show that the first check is the one that
+  speaks, and not that the behaviour would have gone wrong without it. They are the bugs about: a missing fingerprint,
+  the opposite link, an altered preview, a preview for another site or another request file, a rewritten request,
+  a reference that leads elsewhere, a link that appeared since the preview, and two new links where one was wanted.
+  Two bugs about Jira's slots are caught by tests that share the fake Jira's own belief about those slots: they show
+  the workflow is consistent with the fake, and say nothing about a real Jira.
+
+NOT PLANTED, because no test can tell: a phrase with capitals is refused by the shape a phrase must have, and again
+  because it is not, letter for letter, one of the site's phrases. Removing either check alone changes nothing.
+
+RESULT: 71 OF 71 PLANTED BUGS CAUGHT.
