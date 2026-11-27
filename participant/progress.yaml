@@ -688,12 +688,12 @@ attempts:
   quest_id: base-camp-ownership-zones
   quest_version: 1
   content_hash: sha256:066c692bb7f87a56c7b802669e47cecf1449ea6eccc1e9a0fb007e8535b5a405
-  state: submitted
+  state: verified
   started_at: '2026-11-26T16:24:38Z'
-  updated_at: '2026-11-27T15:48:03Z'
+  updated_at: '2026-11-27T15:59:59Z'
   evidence_path: participant/evidence/base-camp-ownership-zones/base-attempt-008
   submission_id: submission-20261127154803-b6d4a3
-  review_id: review-20261127040444-c7547d
+  review_id: review-20261127155959-73d7ee
 - attempt_id: base-attempt-009
   quest_id: base-camp-secret-handling
   quest_version: 1
@@ -734,4 +734,4 @@ attempts:
   evidence_path: participant/evidence/jira-next-work/jira-attempt-017
   submission_id: submission-20261127145424-fdd4b0
   review_id: review-20261127150602-bc3532
-updated_at: '2026-11-27T15:48:03Z'
+updated_at: '2026-11-27T15:59:59Z'
