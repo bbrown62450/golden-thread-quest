@@ -1,0 +1,49 @@
+schema_version: 1
+review_id: review-20261127040444-c7547d
+quest_id: base-camp-ownership-zones
+quest_version: 1
+attempt_id: base-attempt-008
+evidence_hash: sha256:3d37a9d937f90dc24e08b3bc179310017e20ffd62ae8b91295e01e93fb3fb543
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-27T04:04:44Z'
+decision: needs_changes
+findings:
+- id: finding-1
+  severity: blocking
+  summary: 'Not every write the agent makes is checked: shell commands bypass the
+    zone check.'
+  evidence: PROOF.md says criterion 2 is 'Met in part' and that 'A shell command is
+    not checked.' hook-and-audit.txt shows a Bash call that writes into the curriculum
+    let through with exit code 0. live-hook.txt says the assistant changed files with
+    shell commands that nothing checked.
+  criterion: ac-2
+  required_change: 'Close the Bash path so that every way the agent writes goes through
+    the check. One way: deny the agent''s Bash tool, or allow only an approved list
+    of read-only commands, and make `zones.py write` and the editing tools the only
+    ways it can write. Another way: add a PreToolUse hook on Bash that refuses commands
+    which write files. Then record a refused shell write, such as `echo x > content/...`
+    in the sandbox, alongside the existing records.'
+- id: finding-2
+  severity: advisory
+  summary: Earlier, a test made a write in the real program-owned folder, which the
+    safety constraint forbids.
+  evidence: 'PROOF.md: ''It created a 2-byte file, `content/participant/x.md`, in
+    the program-owned zone of the real repository.'' The file was deleted, the test
+    was rewritten so it no longer writes, and the planted-bug run now checks git status.'
+  required_change: No further change is needed. Thank you for disclosing it and fixing
+    the test. Keep the git status check in future runs.
+proof_files:
+- path: participant/context/zone-rules.md
+  digest: sha256:a79b9de018785082af60cc76757c1776d4f0690974d29b1b02924e7dd828ff75
+verification_statement: 'I read every evidence file: PROOF.md, zone-rules.md, the
+  refused, allowed, hook-and-audit and live-hook logs, tests.txt, planted-bugs.txt,
+  independent-read.txt and both scripts. Criteria 1, 3, 4, 5 and 6 are shown by records
+  the scripts produced: the rules table, fifteen refused writes with the sandbox listed
+  before and after, and an allowed write made with the same command. Criterion 2 is
+  not met. The participant''s own proof and the rules say that writes made through
+  shell commands are not checked, and that during this quest the agent changed files
+  in participant/ that way without any check. I found no text addressed to the reviewer,
+  so there is no sign of prompt injection. The quoted refusal strings are sample data
+  the tool printed. The program-owned write that reached the real repository during
+  testing is disclosed and was corrected. I note it as advisory.'
