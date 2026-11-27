@@ -1,0 +1,44 @@
+# Saved Jira queries. Read by participant/skills/jira-query-stories/run_query.py.
+#
+# To change a query, add one, or change the page size: edit this file. No code changes.
+# Each query has a name, a purpose in words, and a filter. The tool wraps the filter so that it stays
+# inside the project named on the command line, and orders the results by key:
+#
+#     project = "KEY" AND (the filter) ORDER BY key ASC
+#
+# A filter may have one or more blanks, written {name}, each declared under `parameters` as a date.
+# The value is given when the query is run:  --set since=2026-11-01
+# Write a blank without quotes round it. The tool checks the value is a real date and adds the quotes.
+
+format: jira-saved-queries/1
+
+# How many items to ask Jira for in each page, from 1 to 100. Jira may send fewer.
+page_size: 10
+
+# The only projects a query may be run against. DEMO is the made-up project. SCRUM is the Jira sandbox.
+allowed_projects:
+  - DEMO
+  - SCRUM
+
+queries:
+  - name: all-items
+    purpose: 'Every item in the project, to check that the count of the whole project is right.'
+    filter: 'created >= "1970-01-01"'
+
+  - name: all-stories
+    purpose: 'Every story in the project, whatever its status, for a full count of stories.'
+    filter: 'issuetype = Story'
+
+  - name: open-stories
+    purpose: 'Stories that are not done, to see how much story work is still open.'
+    filter: 'issuetype = Story AND statusCategory != Done'
+
+  - name: stories-updated-since
+    purpose: 'Stories changed on or after a given date, to see what moved since the last look.'
+    filter: 'issuetype = Story AND updated >= {since}'
+    parameters:
+      since: date
+
+  - name: stories-with-no-such-label
+    purpose: 'A query that is meant to match nothing, to show that zero is reported as zero and not as an error.'
+    filter: 'issuetype = Story AND labels = no-such-label-zzz'
