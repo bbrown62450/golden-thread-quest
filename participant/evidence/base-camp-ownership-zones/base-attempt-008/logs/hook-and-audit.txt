@@ -197,9 +197,9 @@ exit code: 1
 THE REAL REPOSITORY. Read only: nothing is written
 $ python3 participant/tools/zones.py audit
 ------------------------------------------------------------------------------
-Looked at 2886 files and tool-managed or private folders under the root.
+Looked at 3035 files and tool-managed or private folders under the root.
   Program-owned:               495
-  Participant-owned:           2381
+  Participant-owned:           2530
   Generated and tool-managed:  8
   Private data:                2
   IN NO ZONE:                  0

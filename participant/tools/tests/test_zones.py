@@ -4,6 +4,7 @@ import contextlib
 import io
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -557,6 +558,216 @@ class TheRealRepository(unittest.TestCase):
         self.assertIn("participant", tracked)
         for name in ("generated", "generated.lock", "local-data", ".venv", ".claude/settings.local.json", ".env", "participant/node_modules"):
             self.assertEqual(git("check-ignore", "-q", name).returncode, 0, "%s is not ignored by Git" % name)
+
+
+def model_refuses(relative, patterns):
+    """A MODEL of what the sandbox refuses, for tests: the behaviour seen when it was tried on made-up files. A plain path
+    refuses itself and everything under it. In a pattern `**/` is any folders or none, `*` and `?` stay inside one name,
+    a bracket lists characters; capitals and small letters are the same; and a match refuses everything under it too.
+    It is a model. Whether the real sandbox refuses a write is shown by trying, in logs/shell-sandbox.txt."""
+    for pattern in patterns:
+        if not any(ch in pattern for ch in "*?["):
+            if relative.lower() == pattern.lower() or relative.lower().startswith(pattern.lower() + "/"):
+                return True
+            continue
+        out, i = "", 0
+        while i < len(pattern):
+            if pattern.startswith("**/", i):
+                out, i = out + "(?:.*/)?", i + 3
+            elif pattern[i] == "*":
+                out, i = out + "[^/]*", i + 1
+            elif pattern[i] == "?":
+                out, i = out + "[^/]", i + 1
+            elif pattern[i] == "[":
+                end = pattern.index("]", i)
+                out, i = out + "[" + re.escape(pattern[i + 1:end]).replace(r"\-", "-") + "]", end + 1
+            else:
+                out, i = out + re.escape(pattern[i]), i + 1
+        if re.fullmatch(out + "(?:/.*)?", relative, re.IGNORECASE):
+            return True
+    return False
+
+
+class TheShellSandbox(unittest.TestCase):
+    """The settings that make the operating system refuse the shell's writes are worked out from the zone lists. These
+    tests compare the list with the RULES, through a model of the sandbox. Whether a write is REALLY refused is shown
+    by trying, not here."""
+
+    def setUp(self):
+        self.folder = tempfile.mkdtemp(prefix="gtq-zones-test-")
+        self.repo, self.outside = make_sandbox(self.folder)
+        self.repo = os.path.realpath(self.repo)
+        self.denied = zones.sandbox_denied(self.repo)
+
+    def tearDown(self):
+        shutil.rmtree(self.folder, ignore_errors=True)
+
+    def settings(self):
+        return json.loads(json.dumps(zones.sandbox_settings(self.repo)))
+
+    def refuses(self, relative):
+        return model_refuses(relative, self.denied)
+
+    def test_whatever_the_rules_refuse_inside_the_repository_the_list_refuses_too(self):
+        """Each path is judged by the rules, and then by the list. This is the test that would have caught the first
+        version, which left the steering names inside participant/ off the list."""
+        paths = ["content/quests/new.md", "quest_app/app.py", "docs/GUIDE.md", "README.md", "tools/x.py", "CLAUDE.md", ".claude/settings.json", ".claude/settings.local.json",
+                 ".git/HEAD", ".git/hooks/pre-commit", ".gitattributes", ".mcp.json", "generated/index.html", "generated.lock", ".venv/bin/python3", "dist/x.whl",
+                 "x.egg-info/PKG-INFO", ".pytest_cache/x", "local-data/raw.json", "local-data/q/state.json",
+                 "participant/progress.yaml", "participant/ACTIVITY.md", "participant/.progress.lock", "participant/tools/zones.py",
+                 "participant/evidence/a-quest/attempt-1/manifest.yaml", "participant/evidence/a-quest/attempt-1/submission.yaml", "participant/evidence/a-quest/attempt-1/review.yaml",
+                 "participant/evidence/a-quest/attempt-1/validation/result.yaml", "participant/evidence/new-quest/new-attempt/review.yaml",
+                 "participant/CLAUDE.md", "participant/context/CLAUDE.md", "participant/skills/x/CLAUDE.local.md", "participant/.claude/settings.json", "participant/.mcp.json",
+                 "participant/x/.git/config", "participant/.gitattributes", "participant/a/b/.gitmodules", "participant/.pre-commit-config.yaml",
+                 "participant/context/.env", "participant/.env.local", "participant/x/key.pem", "participant/x/id_rsa", "participant/x/credentials.json", "participant/x/secrets.yaml",
+                 ".env", "participant/context/.ENV", "participant/x/KEY.PEM",
+                 "participant/tests/node_modules/x.js", "participant/tools/__pycache__/x.pyc", "participant/.DS_Store", "participant/context/.DS_Store",
+                 "a-new-folder/x.md", "notes.txt", "conftest.py", "sitecustomize.py", "pytest.ini", "Participant2/x.md", "participant.bak", "participant-old/x.md", "p", "pa/x", "participan",
+                 "_private/x", "-dash", "9lives.md"]
+        allowed_by_rules = []
+        for relative in paths:
+            verdict = zones.judge(os.path.join(self.repo, relative), self.repo)
+            if verdict.allowed:
+                allowed_by_rules.append(relative)
+            else:
+                self.assertTrue(self.refuses(relative), "the rules refuse `%s` (%s) and the list does not" % (relative, verdict.rule))
+        self.assertEqual(allowed_by_rules, [], "these were meant to be paths the rules refuse")
+
+    def test_the_places_the_rules_name_are_on_the_list_by_their_own_names(self):
+        """Not only through the patterns for "everything but participant". Those patterns failed once on the real
+        sandbox, while this file's model of them passed. A place the rules name must not depend on them."""
+        named = list(zones.PROGRAM_TOP) + [name for name in zones.GENERATED_TOP if "*" not in name] + [name for name in zones.PRIVATE_TOP if "/" not in name]
+        for name in named:
+            self.assertIn(name, self.denied, "`%s` is refused only through a pattern, if at all" % name)
+        self.assertGreater(len(named), 40)
+
+    def test_whatever_the_rules_allow_the_list_leaves_alone(self):
+        for relative in ("participant/context/notes.md", "participant/context/new/deep/note.md", "participant/tools/new_tool.py", "participant/tools/tests/test_x.py",
+                         "participant/skills/a-skill/SKILL.md", "participant/evidence/a-quest/attempt-1/PROOF.md", "participant/evidence/a-quest/attempt-1/logs/run.txt",
+                         "participant/evidence/a-quest/attempt-1/scripts/record.py", "participant/tests/playwright/a.spec.ts", "participant/context/environment.md",
+                         "participant/context/claude-notes.md", "participant/context/progress.yaml.md"):
+            self.assertTrue(zones.judge(os.path.join(self.repo, relative), self.repo).allowed, relative)
+            self.assertFalse(self.refuses(relative), "the rules allow `%s` and the list refuses it" % relative)
+
+    def test_where_the_list_is_stricter_than_the_rules_is_known(self):
+        """The list refuses by name. Two places the rules allow, it refuses. Both are said in the rules document."""
+        for relative in ("participant/context/.env.example", "participant/evidence/a-quest/attempt-1/logs/manifest.yaml"):
+            self.assertTrue(self.refuses(relative), relative)
+
+    def test_every_attempt_folder_on_the_disk_has_its_four_files_listed_by_exact_path(self):
+        self.assertEqual(zones.attempt_folders(self.repo), ["participant/evidence/a-quest/attempt-1"])
+        for name in zones.APPLICATION_IN_AN_ATTEMPT:
+            self.assertIn("participant/evidence/a-quest/attempt-1/" + name, self.denied)
+            self.assertIn("participant/evidence/**/" + name, self.denied)
+        made_before = self.settings()                                # the settings as they are before a new quest is started
+        os.makedirs(os.path.join(self.repo, "participant", "evidence", "b-quest", "attempt-2"))
+        later = zones.sandbox_denied(self.repo)
+        self.assertIn("participant/evidence/b-quest/attempt-2/review.yaml", later)
+        said = zones.check_sandbox(made_before, self.repo)
+        self.assertTrue(any("lacks 4 of the" in sentence and "b-quest/attempt-2/manifest.yaml" in sentence for sentence in said), said)
+
+    def test_only_participant_is_left_at_the_top(self):
+        patterns = zones.all_but(["participant"])
+        self.assertFalse(any("[" in pattern or "?" in pattern for pattern in patterns))        # square brackets were tried on the real sandbox and match nothing
+        self.assertTrue(all(pattern.endswith("*") or pattern in ("p", "pa", "par", "part", "parti", "partic", "partici", "particip", "participa", "participan") for pattern in patterns))
+        for name in ("content", "zzz", "Zebra", "p", "pa", "participan", "participants", "participant2", "participant.bak", "PARTICIPANT_OLD", "q", "9", "_x", ".x", "-x", "part", "particle"):
+            self.assertTrue(model_refuses(name, patterns), name)
+            self.assertTrue(model_refuses(name + "/inside.md", patterns), name)
+        for name in ("participant", "participant/a.md", "participant/tools/x.py"):
+            self.assertFalse(model_refuses(name, patterns), name)
+        two = zones.all_but(["participant", "generated"])
+        for name, wanted in (("participant/x", False), ("generated/x", False), ("generate", True), ("generated2", True), ("gone", True), ("part", True), ("content", True)):
+            self.assertEqual(model_refuses(name, two), wanted, name)
+
+    def test_a_program_owned_folder_added_to_the_rules_is_added_to_the_list(self):
+        before = self.settings()
+        zones.PROGRAM_TOP.append("a-new-program-folder")
+        try:
+            self.assertIn("a-new-program-folder", zones.sandbox_denied(self.repo))
+            self.assertTrue(any("a-new-program-folder" in said for said in zones.check_sandbox(before, self.repo)))
+        finally:
+            zones.PROGRAM_TOP.remove("a-new-program-folder")
+
+    def test_the_settings_turn_the_sandbox_on_leave_no_way_out_and_deny_the_tools_that_run_elsewhere(self):
+        settings = self.settings()
+        box = settings["sandbox"]
+        self.assertEqual((box["enabled"], box["failIfUnavailable"], box["allowUnsandboxedCommands"]), (True, True, False))
+        self.assertTrue(all(path.startswith(self.repo + "/") for path in box["filesystem"]["denyWrite"]))
+        self.assertEqual(settings["permissions"]["deny"], zones.UNSANDBOXED_TOOLS)
+        self.assertEqual(zones.check_sandbox(settings, self.repo), [])
+        self.assertEqual(len(self.denied), len(set(self.denied)))
+
+    def test_the_check_says_what_is_wrong_with_settings_that_are_off_open_or_short(self):
+        deny = lambda s: s["sandbox"]["filesystem"]["denyWrite"]       # noqa: E731
+        cases = ((lambda s: s.pop("sandbox"), "no `sandbox` block"),
+                 (lambda s: s["sandbox"].update(enabled=False), "the sandbox is not turned on"),
+                 (lambda s: s["sandbox"].pop("failIfUnavailable"), "would still run if the sandbox could not start"),
+                 (lambda s: s["sandbox"].update(allowUnsandboxedCommands=True), "may be run outside the sandbox"),
+                 (lambda s: s["sandbox"].pop("allowUnsandboxedCommands"), "may be run outside the sandbox"),
+                 (lambda s: s["sandbox"].update(excludedCommands=["git"]), "`excludedCommands`"),
+                 (lambda s: s["sandbox"].update(enableWeakerNestedSandbox=True), "`enableWeakerNestedSandbox`"),
+                 (lambda s: s["sandbox"]["filesystem"].update(somethingNew=[]), "`somethingNew`"),
+                 (lambda s: deny(s).remove(self.repo + "/content"), "lacks 1 of the"),
+                 (lambda s: deny(s).remove(self.repo + "/participant/progress.yaml"), "`participant/progress.yaml`"),
+                 (lambda s: deny(s).remove(self.repo + "/participant/evidence/a-quest/attempt-1/review.yaml"), "attempt-1/review.yaml"),
+                 (lambda s: deny(s).remove(self.repo + "/participant/**/CLAUDE.md"), "`participant/**/CLAUDE.md`"),
+                 (lambda s: s["sandbox"]["filesystem"].update(denyWrite=[]), "lacks %d of the %d places" % (len(self.denied), len(self.denied))),
+                 (lambda s: s["sandbox"]["filesystem"].update(allowWrite=[self.repo + "/content"]), "names a place inside the repository: `content`"),
+                 (lambda s: s["sandbox"]["filesystem"].update(allowWrite=[os.path.dirname(self.repo)]), "names a folder the repository is inside"),
+                 (lambda s: s["sandbox"]["filesystem"].update(allowWrite=["/"]), "names a folder the repository is inside"),
+                 (lambda s: s["sandbox"]["filesystem"].update(allowWrite=["relative/place"]), "not one full path"),
+                 (lambda s: s["sandbox"]["filesystem"].update(allowWrite=["/somewhere/*"]), "not one full path"),
+                 (lambda s: s["sandbox"]["filesystem"].update(allowWrite=["~/anywhere"]), "not one full path"),
+                 (lambda s: s["sandbox"].update(filesystem="nothing"), "lacks"),
+                 (lambda s: s.pop("permissions"), "does not deny the agent `mcp__terminal__run_in_terminal`"),
+                 (lambda s: s["permissions"]["deny"].remove("mcp__terminal__open_terminal_tab"), "`mcp__terminal__open_terminal_tab`"))
+        for change, words in cases:
+            settings = self.settings()
+            change(settings)
+            wrong = zones.check_sandbox(settings, self.repo)
+            self.assertTrue(any(words in said for said in wrong), (words, wrong))
+
+    def test_a_temporary_folder_outside_the_repository_may_be_allowed(self):
+        settings = self.settings()
+        settings["sandbox"]["filesystem"]["allowWrite"] = [self.outside, "/somewhere/temporary"]
+        self.assertEqual(zones.check_sandbox(settings, self.repo), [])
+
+    def test_another_spelling_of_the_repositorys_path_gives_the_same_settings(self):
+        link = os.path.join(self.folder, "another-route")
+        os.symlink(self.repo, link)
+        self.assertEqual(zones.sandbox_settings(link), zones.sandbox_settings(self.repo))
+        self.assertEqual(zones.check_sandbox(self.settings(), link), [])
+
+    def test_the_command_prints_the_settings_and_checks_a_file(self):
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            code = zones.main(["--root", self.repo, "sandbox"])
+        printed = json.loads(out.getvalue())
+        self.assertEqual((code, printed), (0, zones.sandbox_settings(self.repo)))
+        good, bad = os.path.join(self.folder, "good.json"), os.path.join(self.folder, "bad.json")
+        with open(good, "w", encoding="utf-8") as f:
+            json.dump(printed, f)
+        printed["sandbox"]["enabled"] = False
+        with open(bad, "w", encoding="utf-8") as f:
+            json.dump(printed, f)
+        for path, wanted, words in ((good, 0, "THIS FILE HAS EVERY PLACE"), (bad, 1, "THE SHELL IS NOT FULLY SANDBOXED"), (os.path.join(self.folder, "none.json"), 1, "could not be read")):
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                code = zones.main(["--root", self.repo, "sandbox", "--check", path])
+            self.assertEqual(code, wanted)
+            self.assertIn(words, out.getvalue())
+            if wanted == 0:
+                self.assertIn("It does not read other settings files, and it does not show that Claude Code is honouring this one", out.getvalue())
+
+    def test_the_rules_document_says_how_the_shell_is_covered_rule_by_rule_and_what_the_sandbox_does_not_do(self):
+        text = zones.rules_document()
+        for wanted in ("## The agent's shell: refused by the operating system", "| R9 the participant's | **Allowed** | What is left |", "| R11 no zone | Refused, at the top |",
+                       "each by its exact path", "It does not apply the rules; it refuses places", "A new attempt folder is half protected", "It restricts writing, not reading",
+                       "mcp__terminal__run_in_terminal", "one file on one computer", "zones.py sandbox --check"):
+            self.assertIn(wanted, text)
+        section = text.split("## The agent's shell: refused by the operating system")[1].split("## What the tool does not see")[0]
+        named = sorted(line.split(" ")[1] for line in section.split("\n") if line.startswith("| R") and not line.startswith("| Rule"))
+        self.assertEqual(named, sorted(rule for rule, _, _ in zones.RULES))           # every rule has its line, and says what the shell gets
 
 
 if __name__ == "__main__":

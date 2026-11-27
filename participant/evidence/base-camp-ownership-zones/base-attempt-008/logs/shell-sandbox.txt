@@ -1,0 +1,266 @@
+The agent's shell, and what the operating system lets it write. base-camp-ownership-zones, attempt base-attempt-008
+Recorded by scripts/record_shell_sandbox.py, run by the AI agent in its own shell, against the real repository.
+Each block between dashed lines is what a command printed. REPO stands for the repository's top folder.
+Every command is run from REPO.
+
+==============================================================================
+1. THE SETTINGS, compared with the list the zone rules give
+$ python3 participant/tools/zones.py sandbox --check .claude/settings.local.json
+------------------------------------------------------------------------------
+THIS FILE HAS EVERY PLACE: it turns the sandbox on, gives no way to run a command outside it, and lists all 1063 places and patterns the rules give.
+This compares ONE file with a list. It does not read other settings files, and it does not show that Claude Code is honouring this one. A refused write shows that.
+------------------------------------------------------------------------------
+exit status: 0
+  ok   this one settings file turns the sandbox on, has none of the settings that let a command out of it, denies the two tools that run a command elsewhere, and lists every place the rules give
+  That compares a file with a list. Whether the settings are HONOURED is what the rest of this record shows.
+
+==============================================================================
+2. A QUESTION THAT CHANGES NOTHING: may a program started by this shell open these files for writing?
+participant/tools/zone_probe.py opens each file for reading and writing, writes nothing, closes it, and compares the file's
+checksum and last-changed time before and after. These 17 files are ones the rules say the agent may not write.
+$ python3 participant/tools/zone_probe.py quest_app/cli.py content/site.yaml docs/PARKING-LOT.md tools/secret_scan.py tests/unit/test_secret_patterns.py CLAUDE.md Makefile .gitignore .git/HEAD generated/build-manifest.json .venv/pyvenv.cfg participant/progress.yaml participant/ACTIVITY.md participant/tools/zones.py participant/evidence/base-camp-ownership-zones/base-attempt-008/manifest.yaml participant/evidence/base-camp-ownership-zones/base-attempt-008/review.yaml participant/evidence/base-camp-ownership-zones/base-attempt-008/submission.yaml
+------------------------------------------------------------------------------
+REFUSED BY THE OPERATING SYSTEM  quest_app/cli.py   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  content/site.yaml   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  docs/PARKING-LOT.md   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  tools/secret_scan.py   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  tests/unit/test_secret_patterns.py   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  CLAUDE.md   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  Makefile   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  .gitignore   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  .git/HEAD   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  generated/build-manifest.json   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  .venv/pyvenv.cfg   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  participant/progress.yaml   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  participant/ACTIVITY.md   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  participant/tools/zones.py   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  participant/evidence/base-camp-ownership-zones/base-attempt-008/manifest.yaml   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  participant/evidence/base-camp-ownership-zones/base-attempt-008/review.yaml   (the file is unchanged: yes)
+REFUSED BY THE OPERATING SYSTEM  participant/evidence/base-camp-ownership-zones/base-attempt-008/submission.yaml   (the file is unchanged: yes)
+17 refused, 0 opened for writing, 0 read-only by their own settings, 0 not there. This program wrote nothing.
+------------------------------------------------------------------------------
+exit status: 0
+  ok   the operating system refuses all 17 with "operation not permitted", and every file is unchanged
+
+The same question about files the agent MAY write. If these were refused too, the answers above would mean nothing.
+$ python3 participant/tools/zone_probe.py participant/tools/zone_probe.py participant/context/zone-rules.md participant/evidence/base-camp-ownership-zones/base-attempt-008/PROOF.md
+------------------------------------------------------------------------------
+OPENED FOR WRITING               participant/tools/zone_probe.py   (the file is unchanged: yes)
+OPENED FOR WRITING               participant/context/zone-rules.md   (the file is unchanged: yes)
+OPENED FOR WRITING               participant/evidence/base-camp-ownership-zones/base-attempt-008/PROOF.md   (the file is unchanged: yes)
+0 refused, 3 opened for writing, 0 read-only by their own settings, 0 not there. This program wrote nothing.
+------------------------------------------------------------------------------
+exit status: 1
+  ok   the check can come out the other way: all 3 files in the participant's zone open for writing, and are unchanged
+
+==============================================================================
+3. REAL WRITES: a shell command, or a program it starts, tries to CREATE something where the agent may not
+Reached only because every file in part 2 was refused. Each attempt makes a new, plainly named file or folder, and changes
+nothing that exists. After each, the script looks whether the thing is there.
+
+A redirection into the curriculum, the reviewer's own example:
+$ echo x > content/zone-probe-not-a-real-file.txt
+------------------------------------------------------------------------------
+/bin/sh: content/zone-probe-not-a-real-file.txt: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+Is `content/zone-probe-not-a-real-file.txt` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a redirection into the curriculum, the reviewer's own example
+
+A PROGRAM started by the shell, writing into the application. No reading of the command's text could see this:
+$ python3 -c "open('quest_app/zone_probe_not_a_real_file.py', 'w').write('x')"
+------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+PermissionError: [Errno 1] Operation not permitted: 'quest_app/zone_probe_not_a_real_file.py'
+------------------------------------------------------------------------------
+exit status: 1
+Is `quest_app/zone_probe_not_a_real_file.py` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a PROGRAM started by the shell, writing into the application
+
+Touch, in the program's documentation:
+$ touch docs/zone-probe-not-a-real-file.md
+------------------------------------------------------------------------------
+touch: docs/zone-probe-not-a-real-file.md: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+Is `docs/zone-probe-not-a-real-file.md` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: touch, in the program's documentation
+
+A new folder, among the program's tools:
+$ mkdir tools/zone-probe-not-a-real-folder
+------------------------------------------------------------------------------
+mkdir: tools/zone-probe-not-a-real-folder: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+Is `tools/zone-probe-not-a-real-folder` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a new folder, among the program's tools
+
+A copy of a participant's file into the curriculum:
+$ cp participant/context/zone-rules.md content/zone-probe-not-a-real-copy.md
+------------------------------------------------------------------------------
+cp: content/zone-probe-not-a-real-copy.md: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+Is `content/zone-probe-not-a-real-copy.md` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a copy of a participant's file into the curriculum
+
+A new file at the top of Git's own folder:
+$ echo x > .git/zone-probe-not-a-real-file
+------------------------------------------------------------------------------
+/bin/sh: .git/zone-probe-not-a-real-file: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+Is `.git/zone-probe-not-a-real-file` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a new file at the top of Git's own folder
+
+A new file in the private-data folder:
+$ echo x > local-data/zone-probe-not-a-real-file.txt
+------------------------------------------------------------------------------
+/bin/sh: local-data/zone-probe-not-a-real-file.txt: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+Is `local-data/zone-probe-not-a-real-file.txt` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a new file in the private-data folder
+
+A new file where the application keeps an attempt's validation results:
+$ echo x > participant/evidence/base-camp-ownership-zones/base-attempt-008/validation/zone-probe-not-a-real-file
+------------------------------------------------------------------------------
+/bin/sh: participant/evidence/base-camp-ownership-zones/base-attempt-008/validation/zone-probe-not-a-real-file: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+Is `participant/evidence/base-camp-ownership-zones/base-attempt-008/validation/zone-probe-not-a-real-file` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a new file where the application keeps an attempt's validation results
+
+A file with a credential's name, inside the participant's own folder:
+$ echo x > participant/context/.env
+------------------------------------------------------------------------------
+/bin/sh: participant/context/.env: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+Is `participant/context/.env` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a file with a credential's name, inside the participant's own folder
+
+A file with a key file's name, by a program:
+$ python3 -c "open('participant/context/zone-probe-not-a-real.pem', 'w').write('x')"
+------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+PermissionError: [Errno 1] Operation not permitted: 'participant/context/zone-probe-not-a-real.pem'
+------------------------------------------------------------------------------
+exit status: 1
+Is `participant/context/zone-probe-not-a-real.pem` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a file with a key file's name, by a program
+
+A file named CLAUDE.md, which steers the agent, inside the participant's own folder. The first version of the list missed this; a reader found it:
+$ echo x > participant/context/CLAUDE.md
+------------------------------------------------------------------------------
+/bin/sh: participant/context/CLAUDE.md: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+Is `participant/context/CLAUDE.md` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a file named CLAUDE.md, which steers the agent, inside the participant's own folder
+
+A folder named .claude inside the participant's folder:
+$ mkdir participant/context/.claude
+------------------------------------------------------------------------------
+mkdir: participant/context/.claude: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+Is `participant/context/.claude` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a folder named .claude inside the participant's folder
+
+A NEW file at the top of the repository, in no zone. The second version of the list let this through; my own check found it:
+$ echo x > zone-probe-not-a-real-file.txt
+------------------------------------------------------------------------------
+/bin/sh: zone-probe-not-a-real-file.txt: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+Is `zone-probe-not-a-real-file.txt` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a NEW file at the top of the repository, in no zone
+
+A new folder at the top of the repository:
+$ mkdir zone-probe-not-a-real-folder
+------------------------------------------------------------------------------
+mkdir: zone-probe-not-a-real-folder: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+Is `zone-probe-not-a-real-folder` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a new folder at the top of the repository
+
+A file a test runner would load from the top of the repository:
+$ python3 -c "open('conftest.py', 'w').write('x')"
+------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+PermissionError: [Errno 1] Operation not permitted: 'conftest.py'
+------------------------------------------------------------------------------
+exit status: 1
+Is `conftest.py` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a file a test runner would load from the top of the repository
+
+A neighbour of `participant` with a longer name:
+$ mkdir participant-zone-probe
+------------------------------------------------------------------------------
+mkdir: participant-zone-probe: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+Is `participant-zone-probe` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a neighbour of `participant` with a longer name
+
+A new file in the built site:
+$ echo x > generated/zone-probe-not-a-real-file.html
+------------------------------------------------------------------------------
+/bin/sh: generated/zone-probe-not-a-real-file.html: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+Is `generated/zone-probe-not-a-real-file.html` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a new file in the built site
+
+A new file among the installed packages, where the participant's own commands would run it:
+$ echo x > .venv/zone-probe-not-a-real-file.pth
+------------------------------------------------------------------------------
+/bin/sh: .venv/zone-probe-not-a-real-file.pth: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+Is `.venv/zone-probe-not-a-real-file.pth` there afterwards: no
+  ok   refused with "operation not permitted". The command failed, and nothing was created: a new file among the installed packages, where the participant's own commands would run it
+
+==============================================================================
+4. MOVING A FOLDER: the way round that a reader found
+A file refused by a PATTERN can still be reached if the folder above it can be renamed: the pattern then no longer fits. Tried on made-up
+files, that worked (logs/sandbox-trials.txt). So this attempt folder's four application files are in the settings by their EXACT paths.
+This tries to rename THIS attempt folder. If the rename went through, the script would rename it straight back and fail the check.
+$ mv participant/evidence/base-camp-ownership-zones/base-attempt-008 participant/evidence/base-camp-ownership-zones/base-attempt-008-moved
+------------------------------------------------------------------------------
+mv: rename participant/evidence/base-camp-ownership-zones/base-attempt-008 to participant/evidence/base-camp-ownership-zones/base-attempt-008-moved: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+  ok   refused: the attempt folder that holds a review cannot be renamed by the shell, so its review cannot be moved out from under its protection
+$ mv participant/evidence/base-camp-ownership-zones participant/evidence/base-camp-ownership-zones-moved
+------------------------------------------------------------------------------
+mv: rename participant/evidence/base-camp-ownership-zones to participant/evidence/base-camp-ownership-zones-moved: Operation not permitted
+------------------------------------------------------------------------------
+exit status: 1
+  ok   refused: nor can the quest's folder above it
+
+==============================================================================
+5. WHERE THE SHELL MAY WRITE, IT STILL CAN
+$ echo x > participant/evidence/base-camp-ownership-zones/base-attempt-008/logs/zone-probe-allowed-write.tmp && cat participant/evidence/base-camp-ownership-zones/base-attempt-008/logs/zone-probe-allowed-write.tmp && rm participant/evidence/base-camp-ownership-zones/base-attempt-008/logs/zone-probe-allowed-write.tmp
+------------------------------------------------------------------------------
+x
+------------------------------------------------------------------------------
+exit status: 0
+  ok   a shell command writes a file in this attempt's own folder, reads it back and removes it
+
+WHAT THIS RECORD DOES NOT SHOW. That a write is judged by the zone rules: it is not. The operating system refuses listed places.
+It was not tried here: deleting or overwriting a real protected file (the harmless question in part 2 stands in for that, and the
+made-up files in logs/sandbox-trials.txt were deleted and renamed for real); a name at the top beginning with a character other
+than a letter, a digit or one of . _ -; and an attempt folder made after the settings were.
+
+==============================================================================
+6. WHAT GIT SAYS CHANGED OUTSIDE participant/
+Lines Git gives for files outside participant/, ignored ones included. Before this script: 9. After: 9.
+  ok   Git lists the same changed, new and ignored files outside participant/ as before. (It compares names, not contents. Each attempt above was also looked for directly.)
+
+RESULT: ALL CHECKS PASSED. 25 checks.

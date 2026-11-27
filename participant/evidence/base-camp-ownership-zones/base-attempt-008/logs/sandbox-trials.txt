@@ -1,0 +1,106 @@
+Trials of the shell's sandbox, and the two lists that failed. base-camp-ownership-zones, attempt base-attempt-008
+Written by hand by the AI assistant, on 2026-11-27, from what it did and saw in the session. No script made this file,
+and the commands' output was not saved at the time. It is an account, not a recording. The recording is
+logs/shell-sandbox.txt, which a script made against the final settings.
+
+WHY THESE TRIALS WERE MADE
+  The sandbox is a feature of Claude Code. Its settings take a list of places the shell may not write. What a pattern
+  in that list matches, and what a refusal covers (writing only, or deleting and renaming too), I did not know and
+  did not want to take from memory. So it was tried, on made-up files, before any list was trusted.
+
+WHO DID WHAT
+  The assistant prepared each settings file in a temporary folder outside the repository. The participant copied it
+  into place by hand, each time. The assistant cannot write the settings file: the sandbox itself refuses that. The
+  assistant then ran the commands below in its own shell.
+
+==============================================================================
+TRIAL 1. DOES THE SANDBOX WORK HERE AT ALL
+  With the participant's permission ("Yes, try it"), one real shell write was aimed at a NEW file in content/, a
+  program-owned folder: a redirection, as the reviewer suggested. It was refused with "operation not permitted". No
+  file was made. Git showed nothing changed. No existing file was aimed at.
+
+==============================================================================
+TRIAL 2. WHAT A REFUSAL COVERS, ON MADE-UP FILES
+  A folder of made-up files, in the temporary folder outside the repository, was put on the list in different ways.
+  These files were written, deleted, renamed and linked for real, which no real protected file was.
+
+  A file listed by its exact path
+    writing to it                                        refused
+    deleting it                                          refused
+    renaming it                                          refused
+    renaming any folder above it                         refused
+
+  A file matched by a pattern (a path with * in it)
+    writing to it                                        refused
+    deleting it                                          refused
+    renaming it                                          refused
+    renaming a folder above it                           WENT THROUGH
+
+  That last line is a real hole. A review file matched only by a pattern could be taken out from under its protection
+  by renaming its attempt folder, and a folder of the old name made in its place with a forged review in it. I made
+  that move on the made-up files and it worked. So the list now gives each existing attempt folder's four files by
+  exact path, and the pattern is kept only for an attempt folder made later.
+
+  Other things tried
+    a symbolic link to a refused file, written through   refused
+    making a hard link to a refused file                 refused
+    a name in other capitals                             refused: matching ignores case
+    `**/name` for a file directly in the folder          matches: ** may stand for no folders at all
+    a pattern with * for a folder (a/*/*)                refuses everything below, not only the entries. It cannot
+                                                         be used to guard a folder's entries and leave the rest
+    square brackets, as in [!p]* for "not p"             NOT SUPPORTED. See the second failure below
+
+==============================================================================
+THE FIRST LIST, AND WHAT A READER FOUND IN IT
+  The first list refused the program-owned folders, Git's folder, the private-data folder, the application's files
+  and the tool. An independent AI reader, given the tool and the settings and asked to get past them, found:
+    1. Rule R3's names (CLAUDE.md, a .claude folder and the like) were refused at the top only. Inside participant/
+       the shell could make them.
+    2. .venv/ was writable. The hook runs Python. A shell that can rewrite the Python the hook runs can switch the
+       hook off. An escape, not a gap.
+    3. Renaming and deleting had not been tried.
+    4. The check of a settings file passed files it should not have: an unknown setting, an extra allowed place.
+    5. Labels in the record claimed more than the conditions tested.
+    6. Two tools of the desktop app run a command in the participant's own terminal, outside the sandbox.
+  Each was changed: the names are refused inside participant/ too; the hook runs the system's Python, with `-I`, and
+  .venv/ is refused; trial 2 above was made; the check is stricter; the labels were rewritten; the two tools are
+  denied in the settings, and the participant accepted that the assistant loses them.
+  The participant also decided that only participant/ is writable at the top, and not generated/ or .git/. So
+  `make build` and `git fetch` are now the participant's to run.
+
+==============================================================================
+THE SECOND LIST FAILED, AND MY CHECK OF IT WROTE TO THE REAL REPOSITORY
+  "Everything at the top but participant" has to be said in patterns. The second list said it with square brackets:
+  a name beginning with any character but p, and so on. The tests passed, because the tests held MY model of how a
+  pattern matches, and my model had brackets in it. The real sandbox does not: a short bracket pattern was read as
+  plain characters, and a long one matched nothing at all.
+
+  I found that by trying. The check created new files with made-up names at the top of the real repository, expecting
+  each to be refused. About eleven were created. I removed each one at once, and Git then showed nothing new outside
+  participant/. None was committed. No existing file was touched.
+
+  This is the second time in this quest that a check of mine wrote where it should not have, by trusting a refusal
+  before it had been seen. The first is in PROOF.md, from before the review. What I changed this time:
+    - The patterns use * only. For each way a name can leave the word "participant", one pattern: a*, b*, ... pa*
+      is not one of them, pb* is, and so on, and the short names p, pa, ... on their own. 467 patterns.
+    - The recording script asks a harmless question first: can each of 18 protected files be OPENED for writing,
+      with nothing written? If any opens, it stops and attempts nothing.
+    - Only then does it try to create anything, and each attempt is looked for and removed if it was made.
+    - The test's model of matching no longer knows brackets, and a test fails if a pattern has one.
+
+==============================================================================
+THE THIRD LIST
+  After the participant copied the third settings file, 19 new names at the top were tried, among them names
+  beginning with each kind of character, names that start like "participant" and leave it, and names longer and
+  shorter than it. All 19 were refused, and none was created. A file inside participant/ was still writable.
+  `zones.py sandbox --check` on the installed file says it has every place: 1,063 places and patterns.
+  The script's record against this list is logs/shell-sandbox.txt: 25 checks, all passed.
+
+==============================================================================
+WHAT THESE TRIALS DO NOT SHOW
+  They were made on one computer, with one version of the app, on this kind of disk.
+  They are trials: they show what happened for the cases tried, not what the sandbox does in every case.
+  A name at the top beginning with a character outside letters, digits and . _ - is matched by no pattern.
+  An attempt folder made after the settings has the pattern's protection only, so it can be renamed, until the
+  settings are made again and the participant copies them.
+  Reading is not restricted by any of this.

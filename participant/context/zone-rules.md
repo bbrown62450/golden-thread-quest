@@ -92,14 +92,58 @@ Deleting, renaming and moving a file are writes: the same table says who may. Th
 - **Hook**: a command Claude Code runs before one of its tools, which can stop that tool.
 - **Hard link**: a second name for the same file on the disk. Writing to either name changes both.
 
+## The agent's shell: refused by the operating system
+
+The rules above are applied by the tool to the agent's file edits. A shell command is different: no check that reads the text of a command can know
+what a program does once it is running. So the shell is not checked by reading it. **It is run inside a sandbox kept by the operating system,**
+which refuses a write to a listed place whatever program makes it. That is not the same as being judged by the rules above, and this section says where the two differ.
+
+**What the sandbox is made to do: leave `participant/` as the one place at the top where the shell may write.** It starts from "anywhere in the project
+folder" and takes places away. `zones.py sandbox` works the list out from the lists on this page:
+
+| Rule | For the shell | How |
+|---|---|---|
+| R10 program-owned | Refused | Every program-owned folder and file, by name |
+| R6 generated and tool-managed | Refused | `generated/` and its neighbours, `.venv/`, the caches and `.git/`, by name. So the agent's shell cannot run `make build` or `git fetch`: the participant does |
+| R5 private data | Refused | `local-data/`, and `.claude/` whole |
+| R11 no zone | Refused, at the top | Every other name a file or folder could have at the top, by patterns that match any name but `participant` |
+| R7 the application's files | Refused | `progress.yaml`, `ACTIVITY.md`, `.progress.lock`; and in each attempt folder its four files, **each by its exact path** |
+| R3 what steers the agent | Refused | The names, anywhere inside `participant/`; and this tool |
+| R2 a credential's name | Refused | The names, anywhere |
+| R4 tool-managed names | Refused | `node_modules`, `__pycache__`, `.DS_Store`, anywhere |
+| R8 a hard link | Partly | A hard link TO a refused file cannot be made. A file that already has two names is not noticed |
+| R1 outside the repository | Refused, except two temporary folders | The sandbox itself allows writing only in the project folder and the temporary folders the settings name |
+| R9 the participant's | **Allowed** | What is left |
+
+- **Deleting, renaming and moving are refused too,** for every listed place. Tried on made-up files.
+- **Why each attempt folder's files are listed by exact path.** A file refused by a pattern cannot be written, deleted or renamed, but the folder above it can
+  be renamed, and then the pattern no longer fits. A file refused by its exact path protects every folder above it. A pattern is kept as well, for an attempt
+  folder made after the settings: its files cannot be written, but the folder can be moved, until the settings are made again.
+- **Where it is set:** in `.claude/settings.local.json`, by the participant, by hand. The agent does not write its own settings, and with the sandbox on it
+  cannot. If the sandbox cannot start, the command does not run, and there is no setting that lets a command run outside it.
+- **How to make the settings again:** `python3 participant/tools/zones.py sandbox`. Do it after a quest is started, because that makes a new attempt folder.
+- **How to check the settings file:** `python3 participant/tools/zones.py sandbox --check .claude/settings.local.json`.
+- **How to check that it is working:** `python3 participant/tools/zone_probe.py FILE`, run by the agent. It opens the file for writing and writes nothing.
+
+**What the sandbox does not do.**
+
+- **It does not apply the rules; it refuses places.** A path is not resolved and judged as on this page. What it gives is the table above.
+- **A new attempt folder is half protected** until the settings are made again. The check says so.
+- **A name at the top beginning with a character other than a letter, a digit or one of `.` `_` `-`** (a space, a plus sign, an accented letter) is not matched by the patterns.
+- **It restricts writing, not reading.** The shell can still read `local-data/` and a file named `.env`.
+- **It covers the agent's shell and every program the shell starts.** It does not cover the participant's own terminal. It does not cover a tool that runs
+  a command somewhere else: the settings deny the agent `mcp__terminal__run_in_terminal` and `mcp__terminal__open_terminal_tab` by name. Other tools added to the agent from outside are covered by nothing here.
+- **It is one file on one computer, with full paths in it.** A fresh copy of the repository, or the same one moved, has no sandbox until the settings are made there.
+- **It was tried on a Mac.** The settings are Claude Code's; what enforces them differs by system.
+
 ## What the tool does not see
 
-- **A write made by a shell command, or by any tool but the file-editing ones.** The check covers `zones.py write` and, where the hook is installed,
-  Claude Code's Edit, Write, MultiEdit and NotebookEdit. A command such as `echo x > file`, a program the agent runs, and tools added to the agent
-  from outside are not checked. That includes a shell command that changes this tool or these rules.
+- **A write made by a tool added to the agent from outside.** The tool checks `zones.py write` and, where the hook is installed, Claude Code's Edit,
+  Write, MultiEdit and NotebookEdit. The sandbox covers the shell and every program it starts. Other tools are covered by neither.
 - **Deletes, renames and moves,** and what Git itself changes: a pull, a merge, `git add -f` of an ignored file.
 - **What a person does in an editor.**
 - **Whether the hook is installed.** It is, if `.claude/settings.local.json` has a `PreToolUse` entry that runs `zones.py hook`. The tool cannot tell.
+- **Whether the sandbox is working.** `zones.py sandbox --check` compares a settings file with the list. Only a refused write shows that it is honoured.
 - **What a file contains.** A raw response pasted into a note in `participant/context/` is in the right zone and is still private data. So is a
   screenshot with a real name in it. The rule for names catches `.env` and key files. It cannot catch a secret inside an ordinary file, and
   `gtq hand-in` commits everything in `participant/`. A person reads `git status` and the changed files before a hand-in.

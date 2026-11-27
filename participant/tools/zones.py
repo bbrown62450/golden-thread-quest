@@ -6,6 +6,8 @@
     zones.py audit                            list every file that is in no zone. Exit 1 if there is one
     zones.py rules --write | --check          write participant/context/zone-rules.md from the rules below, or compare
     zones.py hook                             the same check, for Claude Code to run before each of its file edits
+    zones.py sandbox                          print the settings that make the operating system refuse the shell's writes
+    zones.py sandbox --check SETTINGS.json    compare a settings file with them. Exit 1 if a path is missing or it is off
 
 --root DIR makes any command work on another folder laid out like the repository, such as a sandbox copy for tests.
 A root that is a folder inside the real repository is refused: it would let a write into `content/` pass as a write
@@ -32,14 +34,49 @@ THE HOOK. Claude Code can run a command before each use of its file-editing tool
 command exits with 2. `zones.py hook` reads the tool's input and applies the same rules. It covers Edit, Write,
 MultiEdit and NotebookEdit. A path that is not in the repository, as written or as resolved, is not the repository's
 business and is let through.
-    IT DOES NOT COVER what a shell command writes, or what any other tool writes. A command such as `echo x > file`
-    is not a file edit to Claude Code and never reaches this check.
+    IT DOES NOT COVER what a shell command writes. A command such as `echo x > file` is not a file edit to Claude
+    Code and never reaches this check. Nor does a program the shell starts. THE SHELL IS COVERED ANOTHER WAY: see next.
     The hook only APPROVES an edit. Claude Code then makes it, a moment later and in its own way. If the path is
     changed in that moment, the check has been made of something else.
     If the hook fails in any way it can catch, it refuses. The command it is installed with ends in `|| exit 2`, so
     that a failure it cannot catch, such as this file being broken, refuses too.
 
-Exit codes: 0 allowed, written, or nothing found. 1 refused, or something found. 2 (hook only) refused.
+THE SHELL. No check that reads the text of a command can know what a program does once it is running, so this tool
+does not try. Claude Code can run every shell command inside a sandbox kept by the operating system, which refuses a
+write to a listed place whatever program makes it, and whatever that program was started by. `zones.py sandbox`
+prints the settings for it, WORKED OUT FROM THE SAME LISTS AS THE RULES. The participant puts them in
+`.claude/settings.local.json` by hand. The agent does not write its own settings, and with the sandbox on it cannot.
+
+    The sandbox starts from "the shell may write anywhere in the project folder" and takes places away. So the list
+    is built to take away EVERYTHING BUT `participant/`, and then the places inside `participant/` that are not the
+    agent's:
+      at the top of the repository   every program-owned, generated, tool-managed and private name, by name; and
+                                     then every OTHER name a file or folder could have there, by one plain
+                                     pattern for each way a name can differ from `participant`. A new folder at
+                                     the top is refused too.
+      inside `participant/`          the application's record files; this tool; in every attempt folder that exists,
+                                     the application's files, EACH BY ITS EXACT PATH; and, at any depth, the names
+                                     that steer the agent, a credential's name, and the tool-managed names.
+    WHY EXACT PATHS for the attempt folders. Tried on made-up files: a file refused by a PATTERN cannot be written,
+    deleted or renamed, but the folder above it can be renamed, and then the pattern no longer fits the file. A file
+    refused by its EXACT PATH protects every folder above it from being renamed as well. A pattern for attempt
+    folders is kept too, for one made after the settings: it is refused for writing, and can be moved, until the
+    settings are made again. `--check` says when an attempt folder on the disk is not in the settings.
+
+    WHAT THE SANDBOX IS NOT.
+      It is not the rules. It refuses places. It does not judge a path the way `judge` does.
+      A name at the top that begins with, or leaves `participant` at, a character other than a letter, a digit or
+      one of . _ - is not matched by the patterns.
+      It restricts WRITING. The shell can still read `local-data/` and a `.env` file.
+      It covers the agent's shell and every program the shell starts. It does not cover a tool that runs a command
+      somewhere else, such as one that types into the participant's own terminal: the settings deny the agent those
+      tools by name, and `--check` looks for that.
+      The settings are one file on one computer, with full paths in it. Another copy of the repository has none.
+      `--check` compares a settings file with the list. It cannot say whether Claude Code is honouring the file, or
+      what another settings file adds. Only a refused write shows that.
+
+Exit codes: 0 allowed, written, nothing found, or the settings have every path. 1 refused, something found, or the
+settings are off or short. 2 (hook only) refused.
 """
 import argparse
 import fnmatch
@@ -410,13 +447,50 @@ def rules_document():
             "- **Redacted**: with names, addresses, identifiers and credentials taken out.",
             "- **Hook**: a command Claude Code runs before one of its tools, which can stop that tool.",
             "- **Hard link**: a second name for the same file on the disk. Writing to either name changes both.", "",
+            "## The agent's shell: refused by the operating system", "",
+            "The rules above are applied by the tool to the agent's file edits. A shell command is different: no check that reads the text of a command can know",
+            "what a program does once it is running. So the shell is not checked by reading it. **It is run inside a sandbox kept by the operating system,**",
+            "which refuses a write to a listed place whatever program makes it. That is not the same as being judged by the rules above, and this section says where the two differ.", "",
+            "**What the sandbox is made to do: leave `participant/` as the one place at the top where the shell may write.** It starts from \"anywhere in the project",
+            "folder\" and takes places away. `zones.py sandbox` works the list out from the lists on this page:", "",
+            "| Rule | For the shell | How |",
+            "|---|---|---|",
+            "| R10 program-owned | Refused | Every program-owned folder and file, by name |",
+            "| R6 generated and tool-managed | Refused | `generated/` and its neighbours, `.venv/`, the caches and `.git/`, by name. So the agent's shell cannot run `make build` or `git fetch`: the participant does |",
+            "| R5 private data | Refused | `local-data/`, and `.claude/` whole |",
+            "| R11 no zone | Refused, at the top | Every other name a file or folder could have at the top, by patterns that match any name but `participant` |",
+            "| R7 the application's files | Refused | `progress.yaml`, `ACTIVITY.md`, `.progress.lock`; and in each attempt folder its four files, **each by its exact path** |",
+            "| R3 what steers the agent | Refused | The names, anywhere inside `participant/`; and this tool |",
+            "| R2 a credential's name | Refused | The names, anywhere |",
+            "| R4 tool-managed names | Refused | `node_modules`, `__pycache__`, `.DS_Store`, anywhere |",
+            "| R8 a hard link | Partly | A hard link TO a refused file cannot be made. A file that already has two names is not noticed |",
+            "| R1 outside the repository | Refused, except two temporary folders | The sandbox itself allows writing only in the project folder and the temporary folders the settings name |",
+            "| R9 the participant's | **Allowed** | What is left |", "",
+            "- **Deleting, renaming and moving are refused too,** for every listed place. Tried on made-up files.",
+            "- **Why each attempt folder's files are listed by exact path.** A file refused by a pattern cannot be written, deleted or renamed, but the folder above it can",
+            "  be renamed, and then the pattern no longer fits. A file refused by its exact path protects every folder above it. A pattern is kept as well, for an attempt",
+            "  folder made after the settings: its files cannot be written, but the folder can be moved, until the settings are made again.",
+            "- **Where it is set:** in `.claude/settings.local.json`, by the participant, by hand. The agent does not write its own settings, and with the sandbox on it",
+            "  cannot. If the sandbox cannot start, the command does not run, and there is no setting that lets a command run outside it.",
+            "- **How to make the settings again:** `python3 participant/tools/zones.py sandbox`. Do it after a quest is started, because that makes a new attempt folder.",
+            "- **How to check the settings file:** `python3 participant/tools/zones.py sandbox --check .claude/settings.local.json`.",
+            "- **How to check that it is working:** `python3 participant/tools/zone_probe.py FILE`, run by the agent. It opens the file for writing and writes nothing.", "",
+            "**What the sandbox does not do.**", "",
+            "- **It does not apply the rules; it refuses places.** A path is not resolved and judged as on this page. What it gives is the table above.",
+            "- **A new attempt folder is half protected** until the settings are made again. The check says so.",
+            "- **A name at the top beginning with a character other than a letter, a digit or one of `.` `_` `-`** (a space, a plus sign, an accented letter) is not matched by the patterns.",
+            "- **It restricts writing, not reading.** The shell can still read `local-data/` and a file named `.env`.",
+            "- **It covers the agent's shell and every program the shell starts.** It does not cover the participant's own terminal. It does not cover a tool that runs",
+            "  a command somewhere else: the settings deny the agent `%s` by name. Other tools added to the agent from outside are covered by nothing here." % "` and `".join(UNSANDBOXED_TOOLS),
+            "- **It is one file on one computer, with full paths in it.** A fresh copy of the repository, or the same one moved, has no sandbox until the settings are made there.",
+            "- **It was tried on a Mac.** The settings are Claude Code's; what enforces them differs by system.", "",
             "## What the tool does not see", "",
-            "- **A write made by a shell command, or by any tool but the file-editing ones.** The check covers `zones.py write` and, where the hook is installed,",
-            "  Claude Code's Edit, Write, MultiEdit and NotebookEdit. A command such as `echo x > file`, a program the agent runs, and tools added to the agent",
-            "  from outside are not checked. That includes a shell command that changes this tool or these rules.",
+            "- **A write made by a tool added to the agent from outside.** The tool checks `zones.py write` and, where the hook is installed, Claude Code's Edit,",
+            "  Write, MultiEdit and NotebookEdit. The sandbox covers the shell and every program it starts. Other tools are covered by neither.",
             "- **Deletes, renames and moves,** and what Git itself changes: a pull, a merge, `git add -f` of an ignored file.",
             "- **What a person does in an editor.**",
             "- **Whether the hook is installed.** It is, if `.claude/settings.local.json` has a `PreToolUse` entry that runs `zones.py hook`. The tool cannot tell.",
+            "- **Whether the sandbox is working.** `zones.py sandbox --check` compares a settings file with the list. Only a refused write shows that it is honoured.",
             "- **What a file contains.** A raw response pasted into a note in `participant/context/` is in the right zone and is still private data. So is a",
             "  screenshot with a real name in it. The rule for names catches `.env` and key files. It cannot catch a secret inside an ordinary file, and",
             "  `gtq hand-in` commits everything in `participant/`. A person reads `git status` and the changed files before a hand-in.",
@@ -424,6 +498,128 @@ def rules_document():
             "- **The moment between the hook's approval and the edit.** The hook approves; Claude Code then writes. A path changed in between is not re-checked.",
             "- **Whether a write the participant asked for was wise.** The zone says who may write. It does not say the write is right.", ""]
     return "\n".join(out)
+
+
+TOP_ALLOWED = ["participant"]          # the only names at the top of the repository the agent's shell may write under
+NAME_CHARACTERS = "abcdefghijklmnopqrstuvwxyz0123456789._-"      # what a top-level name may begin or continue with. `-` is last
+UNSANDBOXED_TOOLS = ["mcp__terminal__run_in_terminal", "mcp__terminal__open_terminal_tab"]      # they run a command outside the agent's shell
+KNOWN_SANDBOX_KEYS = {"enabled", "failIfUnavailable", "allowUnsandboxedCommands", "filesystem", "network"}
+KNOWN_FILESYSTEM_KEYS = {"allowWrite", "denyWrite", "allowRead", "denyRead"}
+
+
+def all_but(allowed):
+    """Patterns that match every name EXCEPT the ones allowed. The sandbox has no "everything but", and a pattern that
+    lists characters in square brackets was TRIED AND DOES NOT WORK when the list is long: it is accepted and matches
+    nothing. A star does work. So the allowed names are followed letter by letter, and at each step there is one
+    plain pattern for every character that would LEAVE them: `a*`, `b*`, ... but not `p*`; then `pb*`, `pc*`, ... but
+    not `pa*`; and so on. Tried: the sandbox takes capitals and small letters as the same."""
+    allowed = [name.lower() for name in allowed]
+    prefixes = sorted(set(name[:n] for name in allowed for n in range(len(name) + 1)))
+    patterns = []
+    for prefix in prefixes:
+        goes_on = set(name[len(prefix)] for name in allowed if name.startswith(prefix) and len(name) > len(prefix))
+        patterns += [prefix + ch + "*" for ch in NAME_CHARACTERS if ch not in goes_on]      # leaves the allowed names here, whatever follows
+        if prefix and prefix not in allowed:
+            patterns.append(prefix)                                                        # stops short: "p", "pa", ... "participan"
+    return patterns
+
+
+def attempt_folders(root):
+    """Every attempt folder on the disk, as a path from the top: participant/evidence/<quest>/<attempt>."""
+    found, evidence = [], os.path.join(root, "participant", "evidence")
+    for quest in sorted(os.listdir(evidence)) if os.path.isdir(evidence) else []:
+        inside = os.path.join(evidence, quest)
+        for attempt in sorted(os.listdir(inside)) if os.path.isdir(inside) and not os.path.islink(inside) else []:
+            if os.path.isdir(os.path.join(inside, attempt)) and not os.path.islink(os.path.join(inside, attempt)):
+                found.append("participant/evidence/%s/%s" % (quest, attempt))
+    return found
+
+
+def sandbox_denied(root=REPO):
+    """Every place the agent's shell must not write, as paths and patterns from the top of the repository."""
+    denied = list(PROGRAM_TOP)                                                     # R10: program-owned, by name
+    denied += [name for name in CONTROL_NAMES if name not in denied]               # what steers the agent and Git, at the top
+    denied += [name for name in GENERATED_TOP if name not in denied]               # R6: generated and tool-managed. `.git` is among them
+    denied += [name for name in PRIVATE_TOP if "/" not in name]                    # R5: private data. `.claude/` is already listed whole
+    denied += [pattern for pattern in all_but(TOP_ALLOWED) if pattern not in denied]      # R11: every other name at the top
+    denied += ["participant/" + name for name in APPLICATION_TOP]                  # R7: what the application writes
+    denied += [THE_TOOL]                                                           # R3: this tool
+    for folder in attempt_folders(root):                                           # R7, by exact path: see the notes at the top
+        denied += ["%s/%s" % (folder, name) for name in APPLICATION_IN_AN_ATTEMPT]
+    denied += ["participant/evidence/**/" + name for name in APPLICATION_IN_AN_ATTEMPT]   # and by pattern, for a folder made later
+    denied += ["participant/**/" + name for name in CONTROL_NAMES]                 # R3: what steers the agent, anywhere inside participant/
+    denied += ["**/" + name for name in CREDENTIAL_NAMES]                          # R2: a credential's name, anywhere
+    denied += ["**/" + name for name in TOOL_NAMES_ANYWHERE]                       # R4: tool-managed names, anywhere
+    return denied
+
+
+def sandbox_settings(root):
+    root = os.path.realpath(root)
+    return {"sandbox": {"enabled": True, "failIfUnavailable": True, "allowUnsandboxedCommands": False,
+                        "filesystem": {"denyWrite": [os.path.join(root, path) for path in sandbox_denied(root)]}},
+            "permissions": {"deny": list(UNSANDBOXED_TOOLS)}}
+
+
+def check_sandbox(settings, root):
+    """What is wrong with ONE settings file as a sandbox for this repository: a list of sentences, empty if nothing is."""
+    root = os.path.realpath(root)
+    box = settings.get("sandbox") if isinstance(settings, dict) else None
+    if not isinstance(box, dict):
+        return ["the settings have no `sandbox` block, so the shell is not sandboxed by them"]
+    wrong = []
+    for key, wanted, why in (("enabled", True, "the sandbox is not turned on"), ("failIfUnavailable", True, "a command would still run if the sandbox could not start"),
+                             ("allowUnsandboxedCommands", False, "a command may be run outside the sandbox")):
+        if box.get(key) is not wanted:
+            wrong.append("`sandbox.%s` is not %s: %s" % (key, json.dumps(wanted), why))
+    extra = sorted(set(box) - KNOWN_SANDBOX_KEYS)
+    if extra:
+        wrong.append("`sandbox` has %s this check does not know: %s. One of them may exempt commands from the sandbox, as `excludedCommands` does"
+                     % ("a setting" if len(extra) == 1 else "settings", ", ".join("`%s`" % key for key in extra)))
+    files = box.get("filesystem") if isinstance(box.get("filesystem"), dict) else {}
+    extra = sorted(set(files) - KNOWN_FILESYSTEM_KEYS)
+    if extra:
+        wrong.append("`sandbox.filesystem` has a setting this check does not know: %s" % ", ".join("`%s`" % key for key in extra))
+    have = files.get("denyWrite") if isinstance(files.get("denyWrite"), list) else []
+    wanted = sandbox_denied(root)
+    missing = [path for path in wanted if os.path.join(root, path) not in have]
+    if missing:
+        wrong.append("`sandbox.filesystem.denyWrite` lacks %d of the %d places: %s" % (len(missing), len(wanted), ", ".join("`%s`" % path for path in missing[:8]) + (" ..." if len(missing) > 8 else "")))
+    for path in files.get("allowWrite") if isinstance(files.get("allowWrite"), list) else []:
+        if not isinstance(path, str) or not os.path.isabs(path) or any(ch in path for ch in "*?[~"):
+            wrong.append("`sandbox.filesystem.allowWrite` has an entry that is not one full path: %s" % json.dumps(path)[:80])
+            continue
+        real = os.path.realpath(path)
+        if (real + os.sep).startswith(root + os.sep):
+            wrong.append("`sandbox.filesystem.allowWrite` names a place inside the repository: `%s`" % (os.path.relpath(real, root)))
+        elif (root + os.sep).startswith(real.rstrip(os.sep) + os.sep):
+            wrong.append("`sandbox.filesystem.allowWrite` names a folder the repository is inside: %s" % json.dumps(path)[:80])
+    denied_tools = (settings.get("permissions") or {}).get("deny") if isinstance(settings.get("permissions"), dict) else None
+    lacking = [tool for tool in UNSANDBOXED_TOOLS if tool not in (denied_tools if isinstance(denied_tools, list) else [])]
+    if lacking:
+        wrong.append("`permissions.deny` does not deny the agent %s, which run%s a command outside the agent's shell" % (", ".join("`%s`" % tool for tool in lacking), "s" if len(lacking) == 1 else ""))
+    return wrong
+
+
+def cmd_sandbox(args):
+    if not args.check:
+        print(json.dumps(sandbox_settings(args.root), indent=2))
+        return 0
+    try:
+        with open(args.check, encoding="utf-8") as f:
+            settings = json.load(f)
+    except (OSError, ValueError):
+        print("NOT CHECKED: the settings file could not be read as JSON.")
+        return 1
+    wrong = check_sandbox(settings, args.root)
+    if wrong:
+        print("THE SHELL IS NOT FULLY SANDBOXED by these settings:")
+        for sentence in wrong:
+            print("  " + sentence + ".")
+        print("Make them again with `zones.py sandbox`. The participant puts them in place, by hand.")
+        return 1
+    print("THIS FILE HAS EVERY PLACE: it turns the sandbox on, gives no way to run a command outside it, and lists all %d places and patterns the rules give." % len(sandbox_denied(args.root)))
+    print("This compares ONE file with a list. It does not read other settings files, and it does not show that Claude Code is honouring this one. A refused write shows that.")
+    return 0
 
 
 def cmd_rules(args):
@@ -487,12 +683,14 @@ def main(argv=None):
     mode.add_argument("--write", action="store_true")
     mode.add_argument("--check", action="store_true")
     commands.add_parser("hook")
+    sandbox = commands.add_parser("sandbox")
+    sandbox.add_argument("--check", metavar="SETTINGS.json", help="compare this settings file with the settings the rules give")
     args = parser.parse_args(argv)
     problem = root_problem(args.root)
     if problem:
         (sys.stderr if args.command == "hook" else sys.stdout).write("REFUSED: %s.\n" % problem)
         return 2 if args.command == "hook" else 1
-    return {"where": cmd_where, "write": cmd_write, "audit": cmd_audit, "rules": cmd_rules, "hook": cmd_hook}[args.command](args)
+    return {"where": cmd_where, "write": cmd_write, "audit": cmd_audit, "rules": cmd_rules, "hook": cmd_hook, "sandbox": cmd_sandbox}[args.command](args)
 
 
 if __name__ == "__main__":

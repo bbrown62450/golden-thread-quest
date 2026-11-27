@@ -1,0 +1,90 @@
+Planted bugs in a copy of participant/tools/zones.py: the settings for the shell's sandbox. base-camp-ownership-zones, attempt base-attempt-008
+Recorded by scripts/planted_bugs_sandbox.py. One bug at a time is planted in a copy of the tool, in a temporary folder, and the tests
+of that part (tests.test_zones.TheShellSandbox) are run against the copy. CAUGHT means at least one test failed. The real tool is not changed.
+
+First, with no bug planted, the tests against the copy: OK
+
+ 1. CAUGHT  the program-owned folders are left off the list
+            FAILED (failures=2, errors=1): test_a_program_owned_folder_added_to_the_rules_is_added_to_the_list, test_the_check_says_what_is_wrong_with_settings_that_are_off_open_or_short ...
+ 2. CAUGHT  the generated and tool-managed places, `.venv/` and `.git/` among them, are left off
+            FAILED (failures=1): test_the_places_the_rules_name_are_on_the_list_by_their_own_names
+ 3. CAUGHT  the private-data folder is left off the list
+            FAILED (failures=1): test_the_places_the_rules_name_are_on_the_list_by_their_own_names
+ 4. CAUGHT  every other name at the top is left off: a new top-level folder is writable
+            FAILED (failures=1): test_whatever_the_rules_refuse_inside_the_repository_the_list_refuses_too
+ 5. CAUGHT  the application's record files are left off the list
+            FAILED (failures=1, errors=1): test_the_check_says_what_is_wrong_with_settings_that_are_off_open_or_short, test_whatever_the_rules_refuse_inside_the_repository_the_list_refuses_too
+ 6. CAUGHT  the zone tool itself is left off the list
+            FAILED (failures=1): test_whatever_the_rules_refuse_inside_the_repository_the_list_refuses_too
+ 7. CAUGHT  the attempt folders' files are listed by pattern only, so a folder can be moved from under them: a reader's find
+            FAILED (failures=1, errors=1): test_every_attempt_folder_on_the_disk_has_its_four_files_listed_by_exact_path, test_the_check_says_what_is_wrong_with_settings_that_are_off_open_or_short
+ 8. CAUGHT  the pattern for an attempt folder made later is left off
+            FAILED (failures=3): test_every_attempt_folder_on_the_disk_has_its_four_files_listed_by_exact_path, test_whatever_the_rules_refuse_inside_the_repository_the_list_refuses_too ...
+ 9. CAUGHT  the names that steer the agent are refused at the top only, not inside participant/: a reader's find
+            FAILED (failures=1, errors=1): test_the_check_says_what_is_wrong_with_settings_that_are_off_open_or_short, test_whatever_the_rules_refuse_inside_the_repository_the_list_refuses_too
+10. CAUGHT  files with a credential's name are left off the list
+            FAILED (failures=2): test_whatever_the_rules_refuse_inside_the_repository_the_list_refuses_too, test_where_the_list_is_stricter_than_the_rules_is_known
+11. CAUGHT  the tool-managed names are left off the list
+            FAILED (failures=1): test_whatever_the_rules_refuse_inside_the_repository_the_list_refuses_too
+12. CAUGHT  the participant's whole folder is put on the list
+            FAILED (failures=1): test_whatever_the_rules_allow_the_list_leaves_alone
+13. CAUGHT  the patterns for the top use square brackets, which the real sandbox does not match: what my own check found
+            FAILED (failures=1): test_only_participant_is_left_at_the_top
+14. CAUGHT  a name that leaves `participant` partway is not matched (part..., particle)
+            FAILED (failures=2): test_only_participant_is_left_at_the_top, test_whatever_the_rules_refuse_inside_the_repository_the_list_refuses_too
+15. CAUGHT  a name longer than `participant` is not matched (participant2)
+            FAILED (failures=2): test_only_participant_is_left_at_the_top, test_whatever_the_rules_refuse_inside_the_repository_the_list_refuses_too
+16. CAUGHT  a name that stops short of `participant` is not matched (p, pa)
+            FAILED (failures=2): test_only_participant_is_left_at_the_top, test_whatever_the_rules_refuse_inside_the_repository_the_list_refuses_too
+17. CAUGHT  names beginning with a digit, a dot, an underscore or a dash are not matched
+            FAILED (failures=2): test_only_participant_is_left_at_the_top, test_whatever_the_rules_refuse_inside_the_repository_the_list_refuses_too
+18. CAUGHT  `participant` itself is matched and refused
+            FAILED (failures=2): test_only_participant_is_left_at_the_top, test_whatever_the_rules_allow_the_list_leaves_alone
+19. CAUGHT  the settings leave the sandbox off
+            FAILED (failures=4): test_a_temporary_folder_outside_the_repository_may_be_allowed, test_another_spelling_of_the_repositorys_path_gives_the_same_settings ...
+20. CAUGHT  the settings let a command run when the sandbox cannot start
+            FAILED (failures=4): test_a_temporary_folder_outside_the_repository_may_be_allowed, test_another_spelling_of_the_repositorys_path_gives_the_same_settings ...
+21. CAUGHT  the settings let a command be run outside the sandbox
+            FAILED (failures=4): test_a_temporary_folder_outside_the_repository_may_be_allowed, test_another_spelling_of_the_repositorys_path_gives_the_same_settings ...
+22. CAUGHT  the settings do not deny the tools that run a command elsewhere
+            FAILED (failures=4, errors=1): test_a_temporary_folder_outside_the_repository_may_be_allowed, test_another_spelling_of_the_repositorys_path_gives_the_same_settings ...
+23. CAUGHT  the settings are made for the path as it was typed, not the real one
+            stopped after 120 seconds
+24. CAUGHT  the check accepts settings with no sandbox block
+            FAILED (failures=1): test_the_check_says_what_is_wrong_with_settings_that_are_off_open_or_short
+25. CAUGHT  the check does not look at the three switches
+            FAILED (failures=2): test_the_check_says_what_is_wrong_with_settings_that_are_off_open_or_short, test_the_command_prints_the_settings_and_checks_a_file
+26. CAUGHT  the check takes a missing switch for one that is set right
+            FAILED (failures=1): test_the_check_says_what_is_wrong_with_settings_that_are_off_open_or_short
+27. CAUGHT  the check accepts a setting it does not know, such as one that exempts commands
+            FAILED (failures=1): test_the_check_says_what_is_wrong_with_settings_that_are_off_open_or_short
+28. CAUGHT  the check accepts an unknown setting about files
+            FAILED (failures=1): test_the_check_says_what_is_wrong_with_settings_that_are_off_open_or_short
+29. CAUGHT  the check does not notice a place missing from the list
+            FAILED (failures=3): test_a_program_owned_folder_added_to_the_rules_is_added_to_the_list, test_every_attempt_folder_on_the_disk_has_its_four_files_listed_by_exact_path ...
+30. CAUGHT  the check does not look at the disk for attempt folders, so a new one is not missed
+            FAILED (failures=2): test_every_attempt_folder_on_the_disk_has_its_four_files_listed_by_exact_path, test_the_check_says_what_is_wrong_with_settings_that_are_off_open_or_short
+31. CAUGHT  the check accepts an allowed place that is not one full path
+            FAILED (failures=1): test_the_check_says_what_is_wrong_with_settings_that_are_off_open_or_short
+32. CAUGHT  the check does not notice an allowed place inside the repository
+            FAILED (failures=1): test_the_check_says_what_is_wrong_with_settings_that_are_off_open_or_short
+33. CAUGHT  the check does not notice an allowed folder that the repository is inside
+            FAILED (failures=1): test_the_check_says_what_is_wrong_with_settings_that_are_off_open_or_short
+34. CAUGHT  the check does not look for the denial of the tools that run a command elsewhere
+            FAILED (failures=1): test_the_check_says_what_is_wrong_with_settings_that_are_off_open_or_short
+35. CAUGHT  the command says the settings are fine when they are not
+            FAILED (failures=1): test_the_command_prints_the_settings_and_checks_a_file
+36. CAUGHT  a settings file that cannot be read passes
+            FAILED (failures=1): test_the_command_prints_the_settings_and_checks_a_file
+37. CAUGHT  the rules document does not say how the shell is covered
+            FAILED (failures=1): test_the_rules_document_says_how_the_shell_is_covered_rule_by_rule_and_what_the_sandbox_does_not_do
+38. CAUGHT  the rules document leaves a rule out of the table for the shell
+            FAILED (failures=1): test_the_rules_document_says_how_the_shell_is_covered_rule_by_rule_and_what_the_sandbox_does_not_do
+39. CAUGHT  the rules document does not say that the sandbox is not the rules
+            FAILED (failures=1): test_the_rules_document_says_how_the_shell_is_covered_rule_by_rule_and_what_the_sandbox_does_not_do
+
+Last, with the copy put back as it was: OK
+The real tool is byte for byte what it was before: yes
+Git reports the same state of the whole repository as before the run: yes
+
+RESULT: 39 OF 39 PLANTED BUGS CAUGHT.

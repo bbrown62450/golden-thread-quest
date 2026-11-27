@@ -120,3 +120,53 @@ SUMMARY
   Is every write the agent makes checked? No, and it cannot be by this tool: a shell command is not. What is checked is
   each use of the four file-editing tools, once the hook is installed.
   A person has not read any of this.
+
+==============================================================================
+ADDED AFTER THE REVIEW, 2026-11-27: READER 3, AND THE SHELL
+Everything above this line is as it was handed in the first time. The summary above says a shell command is not
+checked. That was true then and is not now. This part says what changed.
+
+WHAT THE READER WAS GIVEN
+  A third AI assistant, started fresh, with copies in a temporary folder of: the tool with its new `sandbox` part, the
+  first list of refused places, the probe, the recording script and its first record. It was asked to find a way for
+  the agent's shell to write where the rules refuse, and to say where a label claimed more than was tested. It could
+  read only. My first version was finished before I read its reply.
+
+WHAT IT FOUND
+  1. Rule R3's names (CLAUDE.md, a .claude folder, .mcp.json and the like) were refused at the top only. Inside
+     participant/ the shell could create them.
+  2. .venv/ was writable by the shell, and the hook ran that Python. A shell command could change what the hook runs.
+  3. Only writing had been tried. Deleting, renaming and moving had not.
+  4. The check of a settings file was too lenient: it passed a file with an unknown setting, and one with an extra
+     allowed place.
+  5. Labels in the record said "every" and "cannot" where the conditions tested a few cases.
+  6. Two tools of the desktop app run a command in the participant's own terminal, which is outside the sandbox.
+
+WHAT WAS CHANGED
+  1. The names are refused anywhere inside participant/. A test judges about sixty paths by the rules and then by the
+     list, and fails where the rules refuse and the list does not.
+  2. The hook is installed with the system's Python, started with -I. .venv/ is on the list.
+  3. Deleting and renaming were tried on made-up files: logs/sandbox-trials.txt. That found a further hole the
+     reader had not: a file refused by a pattern can lose its protection when the folder above it is renamed. Each
+     attempt folder's files are now listed by exact path. The record tries to rename this attempt folder.
+  4. The check refuses unknown settings, an allowed place that is relative, has a pattern in it, is inside the
+     repository or holds it, and a missing denial of the two tools.
+  5. The labels were rewritten to say what was tried.
+  6. The settings deny the two tools by name. The participant decided this, and that only participant/ is writable.
+
+FOUND AFTERWARDS, BY THE ASSISTANT AND NOT BY A READER
+  The second list said "every name at the top but participant" with square brackets. The real sandbox does not match
+  them. My tests passed, because their model of matching was mine. My check of the real thing created about eleven
+  stray files at the top of the repository, which I removed at once. The full account is in logs/sandbox-trials.txt
+  and PROOF.md. The reader had not been asked whether the patterns match as the tests assume. I had not asked myself.
+  Two planted bugs were missed by the tests of the third list, and a test was added: logs/planted-bugs-sandbox.txt.
+
+NOT READ AGAIN
+  No reader saw the second list, the third list, the stricter check, the final recording script, the trials account,
+  or the corrected PROOF.md. They were checked by the assistant: by tests, by planted bugs, and by trying.
+
+THE SUMMARY, AS IT STANDS NOW
+  Is every write the agent makes checked? Its file edits are judged by the rules before they happen. Its shell
+  writes are refused by the operating system, for a list of places worked out from the rules, and are not judged by
+  the rules. A tool added from outside is covered by neither.
+  A person has not read any of this.
