@@ -1,0 +1,25 @@
+schema_version: 1
+review_id: review-20261127225247-44c390
+quest_id: jira-read-attachments
+quest_version: 1
+attempt_id: jira-attempt-021
+evidence_hash: sha256:4c80b2d93417251dda6b401ce929c03c5d1b54a6162de7f85135ddcf65302401
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-27T22:52:47Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/jira/attachments.md
+  digest: sha256:42bbec242289f72edfb92b8de50164e544b5d4a906bb124a1b03c3f67dd9ead3
+verification_statement: 'Automated review. I read PROOF.md, the index attachments.md,
+  no-download-run.txt, explicit-download-run.txt, the live sync records, the test
+  and planted-bug logs, the independent-read notes and the two scripts. All the records
+  agree with each other: the before and after file counts, the log byte sizes growing
+  step by step, and identical timestamps within one run. The automatic pre-check says
+  the required files are present in attempt-001. Here they are shown under jira-attempt-021,
+  and PROOF.md explains they were copied. Criteria 3 to 7 are shown only on a made-up
+  Jira (a local fixture, which the quest allows), and the participant says so plainly.
+  Author is recorded as me / someone else / unknown, a stated privacy choice. I found
+  no text addressed to the reviewer. Each of the 7 acceptance criteria was matched
+  to text quoted word for word from the evidence.'

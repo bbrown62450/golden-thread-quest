@@ -768,9 +768,10 @@ attempts:
   quest_id: jira-read-attachments
   quest_version: 1
   content_hash: sha256:9755e890e8f9208172e4307cef04ba5f01060e2b51dabda50add1d1c3f261d63
-  state: submitted
+  state: verified
   started_at: '2026-11-27T21:58:54Z'
-  updated_at: '2026-11-27T22:39:37Z'
+  updated_at: '2026-11-27T22:52:47Z'
   evidence_path: participant/evidence/jira-read-attachments/jira-attempt-021
   submission_id: submission-20261127223937-55a5f0
-updated_at: '2026-11-27T22:39:37Z'
+  review_id: review-20261127225247-44c390
+updated_at: '2026-11-27T22:52:47Z'
