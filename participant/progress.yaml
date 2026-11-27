@@ -718,9 +718,10 @@ attempts:
   quest_id: jira-link-work
   quest_version: 1
   content_hash: sha256:d822c5da5be591aa06e8771aaf660cd4db3e933af6aac8b0243514c413cfacd3
-  state: submitted
+  state: verified
   started_at: '2026-11-27T00:32:51Z'
-  updated_at: '2026-11-27T01:05:19Z'
+  updated_at: '2026-11-27T04:39:54Z'
   evidence_path: participant/evidence/jira-link-work/jira-attempt-016
   submission_id: submission-20261127010519-cd9860
-updated_at: '2026-11-27T04:28:04Z'
+  review_id: review-20261127043954-f62238
+updated_at: '2026-11-27T04:39:54Z'

@@ -1,0 +1,29 @@
+schema_version: 1
+review_id: review-20261127043954-f62238
+quest_id: jira-link-work
+quest_version: 1
+attempt_id: jira-attempt-016
+evidence_hash: sha256:143281bf3027f1b3c9faf91efb81df4dd2efe6b37742f2497e5159400401058e
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-27T04:39:54Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/jira/results/link-work.md
+  digest: sha256:87451eb1a513bd4090e73d6048aa1cb919d6b0612617eb283f070044fd37484f
+verification_statement: 'Automated review. I read all evidence in jira-attempt-016:
+  PROOF.md, the four quest records (all made against the fake Jira), the live-01 to
+  live-12 records from the real sandbox, independent-read.txt, the tests and planted-bugs
+  logs, the scripts and the result record. The real-run timestamps agree with each
+  other. The preview was at 00:56:02 UTC, the confirmation at 00:56:57 and the write
+  at 00:57:00, all inside the 15-minute window. The fake-Jira runs are at 01:00:52.
+  The fingerprint db2fb41bb781 matches across live-02, live-06, live-09 and the result
+  record. The real run shows the preview, three refusals before the write, one confirmed
+  write of link id 10000 read back from both items, a rerun that finds the link already
+  there, a refusal of the used fingerprint, and the opposite link refused as a conflict.
+  Allowlist refusals appear for the real run (empty allowlist) and the fake one (PROD-9).
+  The evidence sits in jira-attempt-016 rather than the attempt-001 paths the quest
+  names; PROOF.md says copies are in attempt-001, and the automatic check found the
+  required files. No text addresses the reviewer and I found no secrets. Each of the
+  9 acceptance criteria was matched to text quoted word for word from the evidence.'
