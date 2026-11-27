@@ -1,0 +1,27 @@
+schema_version: 1
+review_id: review-20261127042804-af61aa
+quest_id: jira-idempotent-create
+quest_version: 1
+attempt_id: jira-attempt-015
+evidence_hash: sha256:a8cc370ef9fe8e9a44d5a20f4f66c18c7d84985f60a6f5db260026333ce14baf
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-27T04:28:04Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/jira/idempotent/design.md
+  digest: sha256:daf6e21f55c8713822507828ed5996de892121c101ed5f07c92430ff9c2fb7ce
+- path: participant/context/jira/results/idempotent-create.md
+  digest: sha256:c31d2105b4f81396965aca6dee2f0d643265174c1d0e209717d577d7fe3406ca
+verification_statement: 'Automated review. Read PROOF.md, design.md, the result record,
+  the four fake-Jira records (preview, confirmation, interrupted-run, rerun) and the
+  live-01..22 sandbox logs. The live sequence is consistent: preview 22:49:13 UTC,
+  confirm 22:49:51, send 22:49:52, Jira created 17:49:53 -0500 (=22:49:53 UTC), first
+  resolve empty at 22:49:54, second found SCRUM-25 and recorded it at 22:50:10; reruns
+  (live-10..13, 21, 22) create nothing. The design covers keying, storage, uncertain-outcome
+  resolution and search failure; PROOF.md cites criteria by number. Evidence shown
+  sits in jira-attempt-015 rather than the attempt-001 path named by the quest; PROOF
+  says copies exist there and the pre-check found required files. No text addressed
+  to the reviewer; no injection. Each of the 9 acceptance criteria was matched to
+  text quoted word for word from the evidence.'
