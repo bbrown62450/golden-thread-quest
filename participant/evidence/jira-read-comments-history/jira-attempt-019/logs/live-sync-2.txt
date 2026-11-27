@@ -1,0 +1,32 @@
+Story: SCRUM-1
+Read from: a real Jira, site fingerprint 4aabe3d08fbad6b1
+This sync's clock: 2026-11-27T20:16:04Z
+A copy was already there. It was brought up to date.
+
+COMMENTS. Jira lists 1. Matched by Jira's identifier, and by nothing else.
+  added:                          0
+  edited in Jira, updated in place: 0
+  unchanged:                      1
+  NOT RETURNED BY JIRA ANY MORE, marked now and kept: 0
+  comments in the copy now:       1 (0 of them marked as not returned)
+
+HISTORY. Jira lists 6 changes in the story's history.
+  material, by the rules:         4, of which new to the copy: 0
+  noise, left out:                2 (labels x1, sprint x1)
+  UNLISTED, on neither list, not kept: 0
+  material changes in the copy now: 4
+
+FILES, in the folder given with --out-dir.
+  the copy  scrum-1-v2.json              before 888358662a3b1493   after 888358662a3b1493   not written: byte for byte the same
+  the page  scrum-1-v2.md                before 7caf929c616714c4   after 7caf929c616714c4   not written: byte for byte the same
+  the notes scrum-1-v2.notes.md          before not there   after not there   UNCHANGED. This tool never writes it
+
+RESULT: NOTHING TO DO. Jira shows nothing the copy does not have, and nothing was written.
+
+Requests sent to Jira: 3. Every one was a GET with no body, which reads and cannot change anything.
+  GET /rest/api/3/issue/{key}  x1
+  GET /rest/api/3/issue/{key}/changelog  x1
+  GET /rest/api/3/issue/{key}/comment  x1
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

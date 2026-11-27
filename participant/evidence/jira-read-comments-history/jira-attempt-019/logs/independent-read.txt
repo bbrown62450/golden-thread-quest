@@ -1,0 +1,119 @@
+Independent reads of the work. jira-read-comments-history, attempt jira-attempt-019
+Written by hand by the AI assistant, 2026-11-27, from the two readers' replies. The readers were AI assistants, not people.
+
+HOW THE READS WERE MADE
+  Two fresh AI assistants, each started with no knowledge of this session. Each was given a copy, in a temporary folder
+  outside the repository, of: the quest text, the tool, the made-up Jira, the tests, the rules, the sample, the records
+  and the scripts. Each was told to read only, to contact no network service, and to write only in a temporary folder.
+  The first version of everything was finished, with 73 tests passing and 56 of 56 planted bugs caught, before either
+  reply was read. The first real run had been made by then as well. PROOF.md had not been written, and neither saw it.
+  Reader 1 was asked to break the tool. Reader 2 was asked whether the records, tests and rules show what they say.
+
+==============================================================================
+READER 1: TRYING TO BREAK THE TOOL
+  It reproduced most of what follows by running the copy.
+
+  HIGH
+  1. The notes file can be overwritten through --log and through `rules --write`.
+       --log naming the notes in other capitals: on this kind of disk that is the same file. The sync finished, said
+       the notes were UNCHANGED, and then saved its log over them.
+       --log naming a second name (a hard link) of the notes: the same.
+       `rules --write` naming the notes: no check at all.
+       The same trick in capitals overwrote the copy.
+     CHANGED: the tool asks the disk whether two paths are one file. It refuses a place named like a notes file, a
+     link, or a file with a second name, for any file of its own. `rules --write` refuses a file that is not a rules
+     document. The notes' checksum is taken again after the log is written. Tests and planted bugs for each.
+
+  MEDIUM
+  2. A comment that is still there is marked "not returned" when the list shifts between pages: one comment deleted
+     and one added while the pages are read. Every count agrees.
+     CHANGED: a comment missing from the list is asked for by its own identifier. Jira answering 200 refuses the sync;
+     only 404 marks the comment; anything else refuses. This is a fourth kind of request, still a GET.
+  3. History rules match on the field's display name. A custom field named "Status" holding "Waiting on" and a
+     person's name was kept as a status change. Keys were picked out of any sentence.
+     CHANGED: a field Jira marks custom is never material. A key is kept only when Jira gives exactly a key.
+     NOT CHANGED: the name of an unlisted field is printed, cleaned. It is in the limitations.
+  4. The line "Already edited when first copied" showed the comment's latest edit time.
+     CHANGED: it keeps the time it describes. A change with the same words now leaves a note on the page as well.
+  5. Some content of a comment is lost without a word: a date, a status badge, an emoji, a card.
+     CHANGED: a badge and an emoji keep their words. The rest is kept by kind, and the page says the comment is not
+     whole and what is missing.
+
+  LOW
+  6. An "edit" was noted when the visible words had not changed.   CHANGED: it is noted as a change of another kind.
+  7. One comment the tool cannot read stopped every sync.           CHANGED: it is kept, flagged. Half a character
+     in a comment is replaced.
+  8. Lines inside a comment's fence could start like a heading, a mark or a table row of the page.
+     CHANGED: every line of a comment is set in by four spaces. A limit remains and is stated.
+  9. Reasoned, not run: no lock against two syncs at once; the unsalted site fingerprint; a temporary file left by a
+     killed sync; "To Do -> To Do" in the real run.
+     CHANGED: a same-name change says so. The rest are NOT CHANGED and are in the limitations.
+
+  WHAT IT LOOKED FOR AND DID NOT FIND
+    A way to add a comment or a change twice. A silent removal. A missed edit where the body differs. A write when
+    nothing changed. A way to the notes through --name, --out-dir or a link on the two written files. A request
+    other than the reads. A bad answer that did not refuse. A credential or the site's address in the output.
+  WHAT IT SAID IT COULD NOT VERIFY
+    Whether a real Jira's count of comments includes comments hidden from the account. Nor can I. It is a limitation.
+
+==============================================================================
+READER 2: DO THE RECORDS, TESTS AND RULES SHOW WHAT THEY SAY
+  ON THE CRITERIA. It found each criterion shown by a record, with line numbers, and said plainly that criteria 3, 4, 6
+  and 7 are shown on the made-up Jira only. That is true and is in PROOF.md. It confirmed the sample files' checksums
+  against the record. It also reproduced, by itself, the overwriting of the notes through --log.
+
+  CHECKS IN THE RECORDS THAT CLAIMED MORE THAN THEY TESTED
+    "No temporary file was left": could not fail; the listing left out the names temporary files have.   CHANGED.
+    "still second in order": could not fail; the copy is sorted every time.   CHANGED: it now requires that the entry
+        is the one first copied by sync 1.
+    "in the copy once", "ADDED ONCE": looked at the first match, or through a table that hides repeats.   CHANGED:
+        identifiers are counted, and the added text is compared.
+    "the change is noted under it": read the copy, not the page.   CHANGED: both.
+    "each under its Jira identifier": tested the list of identifiers only.   CHANGED: the text under each identifier
+        is compared with the made-up Jira's text for that identifier.
+    "(criterion 5)": compared with a list typed into the script.   CHANGED: compared with the names in the rules
+        document's own table.
+    Two checks that follow from the checksum check above them.   CHANGED: labelled as that.
+    A header in one record named the wrong skill.   CHANGED.
+
+  TESTS THAT WERE WEAK
+    "The notes are never opened for writing" watched one way of opening a file, on one sync.   CHANGED: a second
+        test watches every way to open for writing, replace, rename or remove, through four syncs and two logs.
+    The live path through the command as a person runs it was never run.   CHANGED: a class of tests runs it, with
+        the network stood in for where the library builds its opener.
+
+  MISTAKES IT MADE IN A COPY THAT NO TEST NOTICED
+    Redirects followed. An address with a path or port accepted. Times labelled UTC without being converted. The
+    method reported as a fixed word. Jira's count changing mid-read accepted. More pages than the tool reads giving
+    a shorter list. A history entry without a time skipped. An unknown editor called the author. Titles kept for a
+    parent. An unlisted field's name printed raw. The check for a link dropped. The encoded credential not searched.
+    CHANGED: a test for each, and each is a planted bug now, except the check for a link, which a second check
+    covers and which is listed as not planted.
+
+  THE RULES DOCUMENT
+    From the document alone it could place some changes and not others. It showed the document never said that names
+    are compared without regard to capitals; that the one-sentence rule did not produce status, priority or link;
+    that five phrases left out a case the code has ("unknown", "changed", "a link changed", a comment coming back,
+    text that is cut or replaced); and that "the notes file is never written" was untrue.
+    CHANGED: each, in the lists the document is written from. The sentence is rewritten. Fix version, component,
+    reporter and flag are named as undecided. The defence of leaving out rank now says what it costs.
+    It found rank "plausible as volume noise" and the claim that it "says nothing about the work" overstated. Agreed.
+
+  PERSONAL DATA. It found none in the records or the sample. It named the real keys, the times and the site
+  fingerprint as what remains.
+
+  THE REAL RUN. It asked for "To Do -> To Do" to be explained, whether times were converted from another offset,
+  and whether a real move under another parent arrives under the name the tool expects. The first now says what it
+  is. The second has a test. The third I do not know, and it is in the limitations.
+
+==============================================================================
+AFTER THE CHANGES
+  113 tests pass. 80 of 80 planted bugs are caught, 24 of them added because of these reports. The two records were
+  made again. The participant ran the real sync again, twice, with the changed tool. The first real run's records
+  are kept in logs/before-readers/.
+
+NOT READ AGAIN
+  Neither reader saw the corrected tool, tests, records, rules, sample, SKILL.md or PROOF.md. The changes were checked
+  by the assistant: by tests and by planted bugs.
+
+A person has not read any of this.

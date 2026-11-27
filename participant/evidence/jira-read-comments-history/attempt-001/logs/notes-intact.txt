@@ -1,0 +1,40 @@
+The local notes file, before and after every sync
+jira-read-comments-history, attempt jira-attempt-019. Recorded by scripts/record_syncs.py.
+Read from the made-up Jira (skills/jira-read-comments-history/fake_jira.py): one made-up story with made-up comments. No real Jira was contacted.
+Commands are run from the `participant` folder. JIRA is a temporary folder that holds the made-up Jira, deleted afterwards.
+
+The notes file is context/jira/comments-sample.notes.md. It is the participant's. Neither the sync nor this script writes it.
+This script takes its sha256 itself, with Python's hashlib, before anything and after each sync. The sync prints the same
+checksum on its own line, before and after; those lines are quoted too, so the two can be compared.
+
+Before any sync:   sha256 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   301 bytes
+
+After sync 1:      sha256 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   301 bytes
+  the sync's own line: the notes comments-sample.notes.md     before 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   after 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   UNCHANGED. This tool never writes it
+  ok   after sync 1 the notes file has the same checksum, the same size and the same last-written time as before any sync
+  ok   the sync's own line gives that same checksum twice, before and after, and says UNCHANGED
+
+After sync 2:      sha256 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   301 bytes
+  the sync's own line: the notes comments-sample.notes.md     before 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   after 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   UNCHANGED. This tool never writes it
+  ok   after sync 2 the notes file has the same checksum, the same size and the same last-written time as before any sync
+  ok   the sync's own line gives that same checksum twice, before and after, and says UNCHANGED
+
+After sync 3:      sha256 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   301 bytes
+  the sync's own line: the notes comments-sample.notes.md     before 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   after 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   UNCHANGED. This tool never writes it
+  ok   after sync 3 the notes file has the same checksum, the same size and the same last-written time as before any sync
+  ok   the sync's own line gives that same checksum twice, before and after, and says UNCHANGED
+
+After sync 4:      sha256 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   301 bytes
+  the sync's own line: the notes comments-sample.notes.md     before 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   after 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   UNCHANGED. This tool never writes it
+  ok   after sync 4 the notes file has the same checksum, the same size and the same last-written time as before any sync
+  ok   the sync's own line gives that same checksum twice, before and after, and says UNCHANGED
+
+After every sync:  sha256 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   301 bytes
+  ok   at the end the notes file has the checksum, size and last-written time it had at the start (criterion 6)
+  ok   the folder holds three files of this name: the copy, the page and the notes
+  ok   and no temporary file of the tool's (their names begin .sync-) is left in the folder
+
+WHAT THIS DOES NOT SHOW. That nothing else on the computer could change the notes. It shows that four syncs by this tool did not.
+That the tool never OPENS the notes for writing is a test, which watches every open.
+
+RESULT: ALL CHECKS PASSED. 11 checks.

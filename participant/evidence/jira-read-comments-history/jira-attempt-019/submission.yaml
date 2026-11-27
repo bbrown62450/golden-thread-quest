@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261127202232-ebcf26
+quest_id: jira-read-comments-history
+quest_version: 1
+attempt_id: jira-attempt-019
+content_hash: sha256:282455ae6129904e43100d198bc012ee8c37df4df9e1674c621ca7dd2276e482
+evidence_hash: sha256:37cb70f4c174c4765f21fdacf2701f8715d09530dab2775f3c7b77da1141d70d
+submitted_at: '2026-11-27T20:22:32Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/jira/comments-sample.md
+  digest: sha256:29b9ffd25e4d3cb73395767699eca4c198c7bbdb114fd829fee0682b089f56af
+- path: participant/context/jira/history-rules.md
+  digest: sha256:e7f290aac7df20a82c7b6b5db38547597cc8b0922fc9ac86a5d4edd3f2a99b5d

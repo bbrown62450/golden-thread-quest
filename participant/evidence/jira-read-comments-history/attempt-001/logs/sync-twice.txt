@@ -1,0 +1,245 @@
+Syncing a story's comments and material history: twice from unchanged data, then after an edit, an addition and a deletion
+jira-read-comments-history, attempt jira-attempt-019. Recorded by scripts/record_syncs.py.
+Read from the made-up Jira (skills/jira-read-comments-history/fake_jira.py): one made-up story with made-up comments. No real Jira was contacted.
+Commands are run from the `participant` folder. JIRA is a temporary folder that holds the made-up Jira, deleted afterwards.
+
+==============================================================================
+0. A FRESH MADE-UP STORY. The two files a sync writes were deleted first, so the first sync below is a first sync.
+$ python3 skills/jira-read-comments-history/fake_jira.py new --state JIRA
+------------------------------------------------------------------------------
+The made-up Jira has a fresh made-up story, DEMO-7, with 5 comments and 10 entries in its change history.
+------------------------------------------------------------------------------
+exit code: 0
+
+==============================================================================
+1. THE FIRST SYNC
+$ python3 skills/jira-read-comments-history/sync_comments.py sync --source fake --issue DEMO-7 --out-dir context/jira --name comments-sample --state JIRA --pretend-now 2026-11-07T09:00:00Z
+------------------------------------------------------------------------------
+Story: DEMO-7
+Read from: the made-up Jira. No real Jira was contacted
+This sync's clock: 2026-11-07T09:00:00Z
+FIRST SYNC: there was no copy yet.
+
+COMMENTS. Jira lists 5. Matched by Jira's identifier, and by nothing else.
+  added:                          5  [31001, 31002, 31003, 31004, 31005]
+  edited in Jira, updated in place: 0
+  unchanged:                      0
+  NOT RETURNED BY JIRA ANY MORE, marked now and kept: 0
+  comments in the copy now:       5 (0 of them marked as not returned)
+
+HISTORY. Jira lists 14 changes in the story's history.
+  material, by the rules:         7, of which new to the copy: 7  [41001:0, 41003:0, 41004:0, 41006:0, 41007:0, 41008:0, 41010:1]
+      2026-11-01T10:00:00Z  status: To Do -> In Progress. Noticed 5 days 23 hours later.
+      2026-11-02T09:00:00Z  assignee: reassigned. Noticed 5 days later.
+      2026-11-03T12:00:00Z  priority: Medium -> High. Noticed 3 days 21 hours later.
+      2026-11-04T15:00:00Z  duedate: 2026-11-18 -> 2026-11-25. Noticed 2 days 18 hours later.
+      2026-11-05T09:30:00Z  summary: changed. Noticed 1 day 23 hours later.
+      2026-11-05T17:00:00Z  link: link added: DEMO-9. Noticed 1 day 16 hours later.
+      2026-11-06T12:00:00Z  description: changed. Noticed 21 hours later.
+  noise, left out:                6 (attachment x1, labels x1, rank x2, sprint x1, timespent x1)
+  UNLISTED, on neither list, not kept: 1 (Story Points x1)
+  material changes in the copy now: 7
+
+FILES, in the folder given with --out-dir.
+  the copy  comments-sample.json         before not there   after 9d5a5d495d3c4022   WRITTEN
+  the page  comments-sample.md           before not there   after 04af337d0fc6e755   WRITTEN
+  the notes comments-sample.notes.md     before 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   after 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   UNCHANGED. This tool never writes it
+
+RESULT: UP TO DATE. 5 added, 0 edited in place, 0 marked as not returned, 7 material changes added.
+
+Requests sent to Jira: 3. Every one was a GET with no body, which reads and cannot change anything.
+  GET (the made-up Jira) /rest/api/3/issue/{key}  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}/changelog  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}/comment  x1
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the output says it is a first sync
+  ok   the copy holds five comments, and under each Jira identifier is the text the made-up Jira has for that identifier (criterion 1)
+  ok   the page has one heading for each of the five identifiers, and no other comment heading
+  ok   seven changes are kept from the history, of the kinds: status, assignee, priority, duedate, summary, link, description. Every one is a name in the Material table of history-rules.md, which this script reads (criterion 5)
+  ok   the output counts six changes left out as noise and names one field on neither list
+  ok   nothing of the noise, no person and no title is in the copy or the page: nine words from the made-up Jira were looked for
+
+==============================================================================
+2. THE SECOND SYNC, FROM UNCHANGED DATA
+$ python3 skills/jira-read-comments-history/sync_comments.py sync --source fake --issue DEMO-7 --out-dir context/jira --name comments-sample --state JIRA --pretend-now 2026-11-07T10:00:00Z
+------------------------------------------------------------------------------
+Story: DEMO-7
+Read from: the made-up Jira. No real Jira was contacted
+This sync's clock: 2026-11-07T10:00:00Z
+A copy was already there. It was brought up to date.
+
+COMMENTS. Jira lists 5. Matched by Jira's identifier, and by nothing else.
+  added:                          0
+  edited in Jira, updated in place: 0
+  unchanged:                      5
+  NOT RETURNED BY JIRA ANY MORE, marked now and kept: 0
+  comments in the copy now:       5 (0 of them marked as not returned)
+
+HISTORY. Jira lists 14 changes in the story's history.
+  material, by the rules:         7, of which new to the copy: 0
+  noise, left out:                6 (attachment x1, labels x1, rank x2, sprint x1, timespent x1)
+  UNLISTED, on neither list, not kept: 1 (Story Points x1)
+  material changes in the copy now: 7
+
+FILES, in the folder given with --out-dir.
+  the copy  comments-sample.json         before 9d5a5d495d3c4022   after 9d5a5d495d3c4022   not written: byte for byte the same
+  the page  comments-sample.md           before 04af337d0fc6e755   after 04af337d0fc6e755   not written: byte for byte the same
+  the notes comments-sample.notes.md     before 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   after 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   UNCHANGED. This tool never writes it
+
+RESULT: NOTHING TO DO. Jira shows nothing the copy does not have, and nothing was written.
+
+Requests sent to Jira: 3. Every one was a GET with no body, which reads and cannot change anything.
+  GET (the made-up Jira) /rest/api/3/issue/{key}  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}/changelog  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}/comment  x1
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the output says there was nothing to do
+  ok   the copy and the page have the same sha256 as after the first sync, taken by this script (criterion 2)
+  ok   counted directly as well, though it follows from the checksums: still five comments, each once
+  ok   and still seven material changes, each once
+
+==============================================================================
+3. THE STORY CHANGES IN THE MADE-UP JIRA. These are the made-up Jira's own commands. The sync tool has no such commands.
+$ python3 skills/jira-read-comments-history/fake_jira.py edit --state JIRA --id 31002 --text "Made-up comment, corrected: archived orders are in a separate table. It is about two days, not one." --by other --at 2026-11-08T08:00:00.000+0000
+------------------------------------------------------------------------------
+In the made-up Jira: comment 31002 was edited by someone else.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 skills/jira-read-comments-history/fake_jira.py add --state JIRA --text "Made-up comment: two days is still fine." --at 2026-11-08T09:30:00.000+0000
+------------------------------------------------------------------------------
+In the made-up Jira: comment 31006 was added.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 skills/jira-read-comments-history/fake_jira.py delete --state JIRA --id 31004
+------------------------------------------------------------------------------
+In the made-up Jira: comment 31004 was deleted.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 skills/jira-read-comments-history/fake_jira.py change --state JIRA --field status --from "In Progress" --to "In Review" --at 2026-11-08T10:00:00.000+0000
+------------------------------------------------------------------------------
+In the made-up Jira: history entry 41011, status changed.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 skills/jira-read-comments-history/fake_jira.py change --state JIRA --field Rank --from  --to "Ranked higher" --at 2026-11-08T10:05:00.000+0000
+------------------------------------------------------------------------------
+In the made-up Jira: history entry 41012, Rank changed.
+------------------------------------------------------------------------------
+exit code: 0
+
+==============================================================================
+4. THE THIRD SYNC, AFTER THOSE CHANGES
+$ python3 skills/jira-read-comments-history/sync_comments.py sync --source fake --issue DEMO-7 --out-dir context/jira --name comments-sample --state JIRA --pretend-now 2026-11-08T12:00:00Z
+------------------------------------------------------------------------------
+Story: DEMO-7
+Read from: the made-up Jira. No real Jira was contacted
+This sync's clock: 2026-11-08T12:00:00Z
+A copy was already there. It was brought up to date.
+
+COMMENTS. Jira lists 5. Matched by Jira's identifier, and by nothing else.
+  added:                          1  [31006]
+  edited in Jira, updated in place: 1  [31002]
+      31002: edited by someone else at 2026-11-08T08:00:00Z, noticed 4 hours later. The text was replaced; the old text's checksum is kept: ece0f00c121661c4
+  unchanged:                      3
+  NOT RETURNED BY JIRA ANY MORE, marked now and kept: 1  [31004]
+      Each was asked for by its own identifier, and Jira answered 404. Deleted in Jira, or hidden from the account
+      that reads: this tool cannot tell which. The last text is kept.
+  comments in the copy now:       6 (1 of them marked as not returned)
+
+HISTORY. Jira lists 16 changes in the story's history.
+  material, by the rules:         8, of which new to the copy: 1  [41011:0]
+      2026-11-08T10:00:00Z  status: In Progress -> In Review. Noticed 2 hours later.
+  noise, left out:                7 (attachment x1, labels x1, rank x3, sprint x1, timespent x1)
+  UNLISTED, on neither list, not kept: 1 (Story Points x1)
+  material changes in the copy now: 8
+
+FILES, in the folder given with --out-dir.
+  the copy  comments-sample.json         before 9d5a5d495d3c4022   after f8942fd2d825e521   WRITTEN
+  the page  comments-sample.md           before 04af337d0fc6e755   after 6754d58e7852ec9c   WRITTEN
+  the notes comments-sample.notes.md     before 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   after 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   UNCHANGED. This tool never writes it
+
+RESULT: UP TO DATE. 1 added, 1 edited in place, 1 marked as not returned, 1 material change added.
+
+Requests sent to Jira: 4. Every one was a GET with no body, which reads and cannot change anything.
+  GET (the made-up Jira) /rest/api/3/issue/{key}  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}/changelog  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}/comment  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}/comment/31004  x1
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the output reports one added, one edited in place, one marked, one material change
+  ok   EDITED IN PLACE (criterion 3): comment 31002 is in the copy once and on the page once, and is still the entry first copied by sync 1, not a new one
+  ok   its text is the new text, and the old text is nowhere in the copy or the page
+  ok   the change is noted, in the copy and under the comment on the page: edited by someone else, noticed 4 hours later, with a checksum that this script confirms is the old text's
+  ok   ADDED ONCE (criterion 4): the new comment 31006 is in the copy once and on the page once, with the text that was added
+  ok   FLAGGED, NOT REMOVED (criterion 7): comment 31004 is still in the copy and on the page, marked, with its last text
+  ok   no other comment is marked
+  ok   six comments in all, each once
+  ok   the status change was kept and the rank change was not (criterion 5)
+
+What the page now shows for the edited comment and the deleted one. All of it is made up.
+------------------------------------------------------------------------------
+### Comment 31002
+
+- Written: 2026-11-03T14:40:00Z. First copied: 2026-11-07T09:00:00Z.
+- **Edited in Jira** at 2026-11-08T08:00:00Z, by someone else. Noticed by the sync of 2026-11-08T12:00:00Z, 4 hours later. The text below replaced the text with checksum `ece0f00c121661c4`.
+
+~~~text
+    Made-up comment, corrected: archived orders are in a separate table. It is about two days, not one.
+~~~
+
+### Comment 31004
+
+**NOT RETURNED BY JIRA ANY MORE. First found missing by the sync of 2026-11-08T12:00:00Z.** It was deleted, or hidden from the account
+that reads. The text below is the last this copy had. It is kept, and is not taken out by a later sync.
+
+- Written: 2026-11-05T16:20:00Z. First copied: 2026-11-07T09:00:00Z.
+
+~~~text
+    Made-up comment: reminder that the finance review is on the 20th.
+~~~
+------------------------------------------------------------------------------
+
+==============================================================================
+5. A FOURTH SYNC, FROM UNCHANGED DATA AGAIN
+$ python3 skills/jira-read-comments-history/sync_comments.py sync --source fake --issue DEMO-7 --out-dir context/jira --name comments-sample --state JIRA --pretend-now 2026-11-09T12:00:00Z
+------------------------------------------------------------------------------
+Story: DEMO-7
+Read from: the made-up Jira. No real Jira was contacted
+This sync's clock: 2026-11-09T12:00:00Z
+A copy was already there. It was brought up to date.
+
+COMMENTS. Jira lists 5. Matched by Jira's identifier, and by nothing else.
+  added:                          0
+  edited in Jira, updated in place: 0
+  unchanged:                      5
+  NOT RETURNED BY JIRA ANY MORE, marked now and kept: 0
+  marked by an earlier sync, still kept: 1  [31004]
+  comments in the copy now:       6 (1 of them marked as not returned)
+
+HISTORY. Jira lists 16 changes in the story's history.
+  material, by the rules:         8, of which new to the copy: 0
+  noise, left out:                7 (attachment x1, labels x1, rank x3, sprint x1, timespent x1)
+  UNLISTED, on neither list, not kept: 1 (Story Points x1)
+  material changes in the copy now: 8
+
+FILES, in the folder given with --out-dir.
+  the copy  comments-sample.json         before f8942fd2d825e521   after f8942fd2d825e521   not written: byte for byte the same
+  the page  comments-sample.md           before 6754d58e7852ec9c   after 6754d58e7852ec9c   not written: byte for byte the same
+  the notes comments-sample.notes.md     before 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   after 36032fe3da79010d43edefb92ae4f3bd37404d0c0a51897f6bc1b8554257c1bd   UNCHANGED. This tool never writes it
+
+RESULT: NOTHING TO DO. Jira shows nothing the copy does not have, and nothing was written.
+
+Requests sent to Jira: 3. Every one was a GET with no body, which reads and cannot change anything.
+  GET (the made-up Jira) /rest/api/3/issue/{key}  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}/changelog  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}/comment  x1
+------------------------------------------------------------------------------
+exit code: 0
+  ok   nothing to do, and both files have the same sha256 as after the third sync
+  ok   the deleted comment is still there, still marked with the sync that first found it gone, and was not marked again
+
+WHAT THIS DOES NOT SHOW. That a real Jira reports an edit or a deletion this way. No change was made in a real Jira.
+
+RESULT: ALL CHECKS PASSED. 21 checks.

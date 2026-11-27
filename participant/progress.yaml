@@ -744,4 +744,13 @@ attempts:
   evidence_path: participant/evidence/jira-query-stories/jira-attempt-018
   submission_id: submission-20261127192847-30f780
   review_id: review-20261127194050-0c39a6
-updated_at: '2026-11-27T19:40:50Z'
+- attempt_id: jira-attempt-019
+  quest_id: jira-read-comments-history
+  quest_version: 1
+  content_hash: sha256:282455ae6129904e43100d198bc012ee8c37df4df9e1674c621ca7dd2276e482
+  state: submitted
+  started_at: '2026-11-27T19:46:35Z'
+  updated_at: '2026-11-27T20:22:32Z'
+  evidence_path: participant/evidence/jira-read-comments-history/jira-attempt-019
+  submission_id: submission-20261127202232-ebcf26
+updated_at: '2026-11-27T20:22:32Z'

@@ -1,0 +1,182 @@
+{
+ "comments": [
+  {
+   "body_checksum": "21df92b9c8f6fdbb",
+   "created": "2026-11-02T09:15:00Z",
+   "edited_before_first_sync": null,
+   "edits": [],
+   "first_synced": "2026-11-07T09:00:00Z",
+   "id": "31001",
+   "in_jira": true,
+   "not_all_text": [],
+   "other_changes": [],
+   "text": "Made-up comment: the export should include archived orders too.",
+   "text_cut": false,
+   "updated": "2026-11-02T09:15:00Z"
+  },
+  {
+   "body_checksum": "eac9ec054b812fec",
+   "created": "2026-11-03T14:40:00Z",
+   "edited_before_first_sync": null,
+   "edits": [
+    {
+     "by": "someone else",
+     "jira_says_edited": "2026-11-08T08:00:00Z",
+     "noticed": "2026-11-08T12:00:00Z",
+     "replaced_text_checksum": "ece0f00c121661c4",
+     "seconds_until_noticed": 14400
+    }
+   ],
+   "first_synced": "2026-11-07T09:00:00Z",
+   "id": "31002",
+   "in_jira": true,
+   "not_all_text": [],
+   "other_changes": [],
+   "text": "Made-up comment, corrected: archived orders are in a separate table. It is about two days, not one.",
+   "text_cut": false,
+   "updated": "2026-11-08T08:00:00Z"
+  },
+  {
+   "body_checksum": "f69085fef17bac38",
+   "created": "2026-11-04T08:05:00Z",
+   "edited_before_first_sync": null,
+   "edits": [],
+   "first_synced": "2026-11-07T09:00:00Z",
+   "id": "31003",
+   "in_jira": true,
+   "not_all_text": [],
+   "other_changes": [],
+   "text": "Made-up comment: a day is fine. Please keep the column order the same.",
+   "text_cut": false,
+   "updated": "2026-11-04T08:05:00Z"
+  },
+  {
+   "body_checksum": "9eb1306ab60967a5",
+   "created": "2026-11-05T16:20:00Z",
+   "edited_before_first_sync": null,
+   "edits": [],
+   "first_synced": "2026-11-07T09:00:00Z",
+   "id": "31004",
+   "in_jira": false,
+   "not_all_text": [],
+   "not_returned_since": "2026-11-08T12:00:00Z",
+   "other_changes": [],
+   "text": "Made-up comment: reminder that the finance review is on the 20th.",
+   "text_cut": false,
+   "updated": "2026-11-05T16:20:00Z"
+  },
+  {
+   "body_checksum": "45e7fceac917d2fe",
+   "created": "2026-11-06T11:00:00Z",
+   "edited_before_first_sync": null,
+   "edits": [],
+   "first_synced": "2026-11-07T09:00:00Z",
+   "id": "31005",
+   "in_jira": true,
+   "not_all_text": [],
+   "other_changes": [],
+   "text": "Made-up comment: first version is on the test site.",
+   "text_cut": false,
+   "updated": "2026-11-06T11:00:00Z"
+  },
+  {
+   "body_checksum": "271b78f744b36801",
+   "created": "2026-11-08T09:30:00Z",
+   "edited_before_first_sync": null,
+   "edits": [],
+   "first_synced": "2026-11-08T12:00:00Z",
+   "id": "31006",
+   "in_jira": true,
+   "not_all_text": [],
+   "other_changes": [],
+   "text": "Made-up comment: two days is still fine.",
+   "text_cut": false,
+   "updated": "2026-11-08T09:30:00Z"
+  }
+ ],
+ "files": {
+  "copy": "comments-sample.json",
+  "page": "comments-sample.md"
+ },
+ "format": "jira-comments-history/1",
+ "history": [
+  {
+   "at": "2026-11-01T10:00:00Z",
+   "from": "To Do",
+   "id": "41001:0",
+   "kind": "status",
+   "noticed": "2026-11-07T09:00:00Z",
+   "seconds_until_noticed": 514800,
+   "to": "In Progress"
+  },
+  {
+   "at": "2026-11-02T09:00:00Z",
+   "from": "",
+   "id": "41003:0",
+   "kind": "assignee",
+   "noticed": "2026-11-07T09:00:00Z",
+   "seconds_until_noticed": 432000,
+   "to": "reassigned"
+  },
+  {
+   "at": "2026-11-03T12:00:00Z",
+   "from": "Medium",
+   "id": "41004:0",
+   "kind": "priority",
+   "noticed": "2026-11-07T09:00:00Z",
+   "seconds_until_noticed": 334800,
+   "to": "High"
+  },
+  {
+   "at": "2026-11-04T15:00:00Z",
+   "from": "2026-11-18",
+   "id": "41006:0",
+   "kind": "duedate",
+   "noticed": "2026-11-07T09:00:00Z",
+   "seconds_until_noticed": 237600,
+   "to": "2026-11-25"
+  },
+  {
+   "at": "2026-11-05T09:30:00Z",
+   "from": "",
+   "id": "41007:0",
+   "kind": "summary",
+   "noticed": "2026-11-07T09:00:00Z",
+   "seconds_until_noticed": 171000,
+   "to": "changed"
+  },
+  {
+   "at": "2026-11-05T17:00:00Z",
+   "from": "",
+   "id": "41008:0",
+   "kind": "link",
+   "noticed": "2026-11-07T09:00:00Z",
+   "seconds_until_noticed": 144000,
+   "to": "link added: DEMO-9"
+  },
+  {
+   "at": "2026-11-06T12:00:00Z",
+   "from": "",
+   "id": "41010:1",
+   "kind": "description",
+   "noticed": "2026-11-07T09:00:00Z",
+   "seconds_until_noticed": 75600,
+   "to": "changed"
+  },
+  {
+   "at": "2026-11-08T10:00:00Z",
+   "from": "In Progress",
+   "id": "41011:0",
+   "kind": "status",
+   "noticed": "2026-11-08T12:00:00Z",
+   "seconds_until_noticed": 7200,
+   "to": "In Review"
+  }
+ ],
+ "site_fingerprint": null,
+ "source": "fake",
+ "story": {
+  "id": "20007",
+  "key": "DEMO-7"
+ }
+}
