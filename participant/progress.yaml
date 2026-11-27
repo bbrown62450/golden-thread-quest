@@ -734,4 +734,13 @@ attempts:
   evidence_path: participant/evidence/jira-next-work/jira-attempt-017
   submission_id: submission-20261127145424-fdd4b0
   review_id: review-20261127150602-bc3532
-updated_at: '2026-11-27T15:59:59Z'
+- attempt_id: jira-attempt-018
+  quest_id: jira-query-stories
+  quest_version: 1
+  content_hash: sha256:42dabd0fd369b3c6363909bdb84af800ad21c4d935b35b59be7b5e1567af5c9e
+  state: submitted
+  started_at: '2026-11-27T16:03:25Z'
+  updated_at: '2026-11-27T19:28:47Z'
+  evidence_path: participant/evidence/jira-query-stories/jira-attempt-018
+  submission_id: submission-20261127192847-30f780
+updated_at: '2026-11-27T19:28:47Z'

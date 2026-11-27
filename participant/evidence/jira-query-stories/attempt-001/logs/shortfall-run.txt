@@ -1,0 +1,171 @@
+Runs that are not complete: a page fails partway, and the pages end early
+jira-query-stories, attempt jira-attempt-018. Recorded by scripts/record_runs.py.
+Asked of the made-up Jira (skills/jira-query-stories/fake_jira.py) with made-up items. No real Jira was contacted.
+Commands are run from the `participant` folder. RESULTS is a temporary folder, deleted afterwards.
+
+==============================================================================
+1. THE THIRD PAGE FAILS. The made-up Jira answers the third page with status 500.
+$ python3 skills/jira-query-stories/run_query.py run --config context/jira/queries.yaml --project DEMO --source fake --fixture skills/jira-query-stories/fixtures/demo.json --out RESULTS/result.json --query all-stories --fault fail_page=3
+------------------------------------------------------------------------------
+Query: all-stories
+Purpose: Every story in the project, whatever its status, for a full count of stories.
+Asked of: the made-up Jira. No real Jira was contacted
+The query as sent: project = "DEMO" AND (issuetype = Story) ORDER BY key ASC
+Page size asked for: 10
+
+Jira's count before the pages: 28
+  Page 1: 10 items. Jira gave a marker for a further page.
+  Page 2: 10 items. Jira gave a marker for a further page.
+
+Total Jira stated:  28
+Items received:     20   (in pages that were answered in full. NOT SAVED)
+Pages answered:     2
+Items saved locally: 0
+
+RESULT: INCOMPLETE. page 3: Jira did not answer with a page of items (status 500). Before it, 2 pages and 20 items had arrived. They are not saved.
+No result file was written by this run, so nothing of it can be taken for a whole result.
+SHORTFALL: Jira stated 28 and 20 arrived. 8 did not.
+
+Requests sent to Jira: 4. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x3
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x1
+------------------------------------------------------------------------------
+exit code: 2
+What is in RESULTS now: nothing
+  ok   the exit code is 2, which is this tool's code for an incomplete run
+  ok   the output has one RESULT line, it begins RESULT: INCOMPLETE, and the paragraph that explains COMPLETE is absent
+  ok   the shortfall is reported in numbers: 28 stated, 20 arrived, 8 did not
+  ok   the output says 0 items were saved
+  ok   the results folder is empty: no result file, and no temporary file
+
+==============================================================================
+2. THE SAME FAILURE WHEN AN OLDER, COMPLETE RESULT IS ALREADY THERE. First a complete run, then the failing one.
+$ python3 skills/jira-query-stories/run_query.py run --config context/jira/queries.yaml --project DEMO --source fake --fixture skills/jira-query-stories/fixtures/demo.json --out RESULTS/result.json --query all-stories
+------------------------------------------------------------------------------
+Query: all-stories
+Purpose: Every story in the project, whatever its status, for a full count of stories.
+Asked of: the made-up Jira. No real Jira was contacted
+The query as sent: project = "DEMO" AND (issuetype = Story) ORDER BY key ASC
+Page size asked for: 10
+
+Jira's count before the pages: 28
+  Page 1: 10 items. Jira gave a marker for a further page.
+  Page 2: 10 items. Jira gave a marker for a further page.
+  Page 3: 8 items. Jira gave no marker for a further page.
+Jira's count after the pages:  28
+
+Total Jira stated:  28
+Items received:     28
+Pages answered:     3
+Items saved locally: 28, in the file given with --out: result.json
+
+RESULT: COMPLETE. Jira stated 28, 28 were saved, in 3 pages, and the last page said it was the last.
+COMPLETE means: every page was answered, no item came twice, every item is in the project, and the number
+saved equals Jira's count before and after. It does not mean nothing changed in Jira during the run: one item
+leaving the query while another joins it would leave every one of those checks passing.
+
+Requests sent to Jira: 5. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x3
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x2
+------------------------------------------------------------------------------
+exit code: 0
+What is in RESULTS now: result.json
+  ok   the first run is complete and leaves its result
+$ python3 skills/jira-query-stories/run_query.py run --config context/jira/queries.yaml --project DEMO --source fake --fixture skills/jira-query-stories/fixtures/demo.json --out RESULTS/result.json --query all-stories --fault fail_page=2
+------------------------------------------------------------------------------
+Query: all-stories
+Purpose: Every story in the project, whatever its status, for a full count of stories.
+Asked of: the made-up Jira. No real Jira was contacted
+The query as sent: project = "DEMO" AND (issuetype = Story) ORDER BY key ASC
+Page size asked for: 10
+
+Jira's count before the pages: 28
+  Page 1: 10 items. Jira gave a marker for a further page.
+
+Total Jira stated:  28
+Items received:     10   (in pages that were answered in full. NOT SAVED)
+Pages answered:     1
+Items saved locally: 0
+
+RESULT: INCOMPLETE. page 2: Jira did not answer with a page of items (status 500). Before it, 1 page and 10 items had arrived. They are not saved.
+No result file was written by this run, so nothing of it can be taken for a whole result.
+SHORTFALL: Jira stated 28 and 10 arrived. 18 did not.
+A file is already at the place given with --out, from a run at 2026-11-27T19:02:50Z. It was left as it was. IT IS NOT THIS RUN'S RESULT.
+
+Requests sent to Jira: 3. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x2
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x1
+------------------------------------------------------------------------------
+exit code: 2
+What is in RESULTS now: result.json
+  ok   the second run is INCOMPLETE, with exit code 2
+  ok   the older file is byte for byte what it was, and nothing was added beside it
+  ok   the output says the file at that place is older and is not this run's
+
+==============================================================================
+3. THE QUEST'S SCENARIO. The first page says it is the last. Ten items arrive. There are 28.
+$ python3 skills/jira-query-stories/run_query.py run --config context/jira/queries.yaml --project DEMO --source fake --fixture skills/jira-query-stories/fixtures/demo.json --out RESULTS/result.json --query all-stories --fault early_last=1
+------------------------------------------------------------------------------
+Query: all-stories
+Purpose: Every story in the project, whatever its status, for a full count of stories.
+Asked of: the made-up Jira. No real Jira was contacted
+The query as sent: project = "DEMO" AND (issuetype = Story) ORDER BY key ASC
+Page size asked for: 10
+
+Jira's count before the pages: 28
+  Page 1: 10 items. Jira gave no marker for a further page.
+Jira's count after the pages:  28
+
+Total Jira stated:  28
+Items received:     10   (in pages that were answered in full. NOT SAVED)
+Pages answered:     1
+Items saved locally: 0
+
+RESULT: INCOMPLETE. MISMATCH: Jira stated 28 and 10 arrived, 18 short. Every page was answered and the last said it was the last, so the pages do not explain it.
+No result file was written by this run, so nothing of it can be taken for a whole result.
+SHORTFALL: Jira stated 28 and 10 arrived. 18 did not.
+
+Requests sent to Jira: 3. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x1
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x2
+------------------------------------------------------------------------------
+exit code: 2
+What is in RESULTS now: nothing
+  ok   the mismatch between the total stated and the number that arrived is reported as a failure
+  ok   the results folder is empty
+
+==============================================================================
+4. THE RIGHT NUMBER OF WRONG ITEMS. The second page starts one item early: one item comes twice, another never comes.
+   28 would arrive and Jira states 28. Comparing the two numbers would pass this.
+$ python3 skills/jira-query-stories/run_query.py run --config context/jira/queries.yaml --project DEMO --source fake --fixture skills/jira-query-stories/fixtures/demo.json --out RESULTS/result.json --query all-stories --fault repeat_on_page=2
+------------------------------------------------------------------------------
+Query: all-stories
+Purpose: Every story in the project, whatever its status, for a full count of stories.
+Asked of: the made-up Jira. No real Jira was contacted
+The query as sent: project = "DEMO" AND (issuetype = Story) ORDER BY key ASC
+Page size asked for: 10
+
+Jira's count before the pages: 28
+  Page 1: 10 items. Jira gave a marker for a further page.
+
+Total Jira stated:  28
+Items received:     10   (in pages that were answered in full. NOT SAVED)
+Pages answered:     1
+Items saved locally: 0
+
+RESULT: INCOMPLETE. page 2: the item DEMO-14 came a second time, so another item may have been pushed out of the pages. Before it, 1 page and 10 items had arrived. They are not saved.
+No result file was written by this run, so nothing of it can be taken for a whole result.
+SHORTFALL: Jira stated 28 and 10 arrived. 18 did not.
+
+Requests sent to Jira: 3. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x2
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x1
+------------------------------------------------------------------------------
+exit code: 2
+What is in RESULTS now: nothing
+  ok   the repeated item is noticed, and the run is INCOMPLETE
+  ok   the results folder is empty
+
+WHAT THIS DOES NOT SHOW. How a real Jira fails. These failures are the made-up Jira's, switched on with --fault.
+
+RESULT: ALL CHECKS PASSED. 13 checks.

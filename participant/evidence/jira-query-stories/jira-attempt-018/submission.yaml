@@ -1,0 +1,13 @@
+schema_version: 1
+submission_id: submission-20261127192847-30f780
+quest_id: jira-query-stories
+quest_version: 1
+attempt_id: jira-attempt-018
+content_hash: sha256:42dabd0fd369b3c6363909bdb84af800ad21c4d935b35b59be7b5e1567af5c9e
+evidence_hash: sha256:ea07f73581f778b8b0f1a1150e48d501aa37d6a179c898b59e738f5d45f5d04c
+submitted_at: '2026-11-27T19:28:47Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/jira/queries.yaml
+  digest: sha256:fc84a173de2c2e86d8c70c747a5fe3be137e3cfd0bf17ed83bcb715b1c563488

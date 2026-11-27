@@ -1,0 +1,25 @@
+Query: all-items
+Purpose: Every item in the project, to check that the count of the whole project is right.
+Asked of: a real Jira, site fingerprint 4aabe3d08fbad6b1
+The query as sent: project = "SCRUM" AND (created >= "1970-01-01") ORDER BY key ASC
+Page size asked for: 10
+
+Jira's count before the pages: 25
+  Page 1: 10 items. Jira gave a marker for a further page.
+  Page 2: 10 items. Jira gave a marker for a further page.
+  Page 3: 5 items. Jira gave no marker for a further page.
+Jira's count after the pages:  25
+
+Total Jira stated:  25
+Items received:     25
+Pages answered:     3
+Items saved locally: 25, in the file given with --out: result-sandbox-all-items.json
+
+RESULT: COMPLETE. Jira stated 25, 25 were saved, in 3 pages, and the last page said it was the last.
+
+Requests sent to Jira: 5. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET /rest/api/3/search/jql  x3
+  POST /rest/api/3/search/approximate-count  x2
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

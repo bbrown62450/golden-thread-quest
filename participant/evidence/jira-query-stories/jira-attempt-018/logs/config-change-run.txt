@@ -1,0 +1,186 @@
+The saved queries; a query changed with no code change; a query that matches nothing
+jira-query-stories, attempt jira-attempt-018. Recorded by scripts/record_runs.py.
+Asked of the made-up Jira (skills/jira-query-stories/fake_jira.py) with made-up items. No real Jira was contacted.
+Commands are run from the `participant` folder. RESULTS is a temporary folder, deleted afterwards.
+
+==============================================================================
+1. THE SAVED QUERIES, each with its name and purpose, as the tool reads them from context/jira/queries.yaml
+$ python3 skills/jira-query-stories/run_query.py list --config context/jira/queries.yaml
+------------------------------------------------------------------------------
+Saved queries in the configuration: 5. Page size: 10. Projects allowed: DEMO, SCRUM.
+
+  all-items
+      purpose:    Every item in the project, to check that the count of the whole project is right.
+      filter:     created >= "1970-01-01"
+
+  all-stories
+      purpose:    Every story in the project, whatever its status, for a full count of stories.
+      filter:     issuetype = Story
+
+  open-stories
+      purpose:    Stories that are not done, to see how much story work is still open.
+      filter:     issuetype = Story AND statusCategory != Done
+
+  stories-updated-since
+      purpose:    Stories changed on or after a given date, to see what moved since the last look.
+      filter:     issuetype = Story AND updated >= {since}
+      parameters: since (a date)
+
+  stories-with-no-such-label
+      purpose:    A query that is meant to match nothing, to show that zero is reported as zero and not as an error.
+      filter:     issuetype = Story AND labels = no-such-label-zzz
+------------------------------------------------------------------------------
+exit code: 0
+  ok   each of the 5 names this script finds in the configuration file is listed, in order, with a purpose and a filter
+
+==============================================================================
+2. A QUERY CHANGED, AND NO CODE CHANGED. The configuration is copied to TEMP/queries.yaml, so that the real one is not edited.
+sha256 of run_query.py and fake_jira.py together, before: e7c2970b9b42dfbc3e64bce0bdc71cb083629f7c23894ab9201d2633c8ace26b
+
+Before the change:
+$ python3 skills/jira-query-stories/run_query.py run --config TEMP/queries.yaml --project DEMO --source fake --fixture skills/jira-query-stories/fixtures/demo.json --out RESULTS/result.json --query open-stories
+------------------------------------------------------------------------------
+Query: open-stories
+Purpose: Stories that are not done, to see how much story work is still open.
+Asked of: the made-up Jira. No real Jira was contacted
+The query as sent: project = "DEMO" AND (issuetype = Story AND statusCategory != Done) ORDER BY key ASC
+Page size asked for: 10
+
+Jira's count before the pages: 20
+  Page 1: 10 items. Jira gave a marker for a further page.
+  Page 2: 10 items. Jira gave no marker for a further page.
+Jira's count after the pages:  20
+
+Total Jira stated:  20
+Items received:     20
+Pages answered:     2
+Items saved locally: 20, in the file given with --out: result.json
+
+RESULT: COMPLETE. Jira stated 20, 20 were saved, in 2 pages, and the last page said it was the last.
+COMPLETE means: every page was answered, no item came twice, every item is in the project, and the number
+saved equals Jira's count before and after. It does not mean nothing changed in Jira during the run: one item
+leaving the query while another joins it would leave every one of those checks passing.
+
+Requests sent to Jira: 4. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x2
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x2
+------------------------------------------------------------------------------
+exit code: 0
+
+The change, made in TEMP/queries.yaml and nowhere else. One line:
+    was:  filter: 'issuetype = Story AND statusCategory != Done'
+    now:  filter: 'issuetype = Story AND status = "In Review"'
+  ok   the line to change is in the configuration exactly once
+
+After the change, the same command:
+$ python3 skills/jira-query-stories/run_query.py run --config TEMP/queries.yaml --project DEMO --source fake --fixture skills/jira-query-stories/fixtures/demo.json --out RESULTS/result.json --query open-stories
+------------------------------------------------------------------------------
+Query: open-stories
+Purpose: Stories that are not done, to see how much story work is still open.
+Asked of: the made-up Jira. No real Jira was contacted
+The query as sent: project = "DEMO" AND (issuetype = Story AND status = "In Review") ORDER BY key ASC
+Page size asked for: 10
+
+Jira's count before the pages: 4
+  Page 1: 4 items. Jira gave no marker for a further page.
+Jira's count after the pages:  4
+
+Total Jira stated:  4
+Items received:     4
+Pages answered:     1
+Items saved locally: 4, in the file given with --out: result.json
+
+RESULT: COMPLETE. Jira stated 4, 4 were saved, in 1 page, and the last page said it was the last.
+COMPLETE means: every page was answered, no item came twice, every item is in the project, and the number
+saved equals Jira's count before and after. It does not mean nothing changed in Jira during the run: one item
+leaving the query while another joins it would leave every one of those checks passing.
+
+Requests sent to Jira: 3. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x1
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x2
+------------------------------------------------------------------------------
+exit code: 0
+sha256 of run_query.py and fake_jira.py together, after:  e7c2970b9b42dfbc3e64bce0bdc71cb083629f7c23894ab9201d2633c8ace26b
+  ok   both runs are complete
+  ok   the query sent is the changed one
+  ok   the result changed with it: 20 items before, 4 after, every one In Review
+  note The two checksums are equal: yes. This is not counted as a check. Nothing in this script writes those files, so it
+       could not have come out otherwise. What shows that no code change was needed is that the only thing edited
+       between the two runs was one line of TEMP/queries.yaml, and the result changed.
+
+==============================================================================
+3. A QUERY THAT MATCHES NOTHING
+$ python3 skills/jira-query-stories/run_query.py run --config context/jira/queries.yaml --project DEMO --source fake --fixture skills/jira-query-stories/fixtures/demo.json --out RESULTS/result.json --query stories-with-no-such-label
+------------------------------------------------------------------------------
+Query: stories-with-no-such-label
+Purpose: A query that is meant to match nothing, to show that zero is reported as zero and not as an error.
+Asked of: the made-up Jira. No real Jira was contacted
+The query as sent: project = "DEMO" AND (issuetype = Story AND labels = no-such-label-zzz) ORDER BY key ASC
+Page size asked for: 10
+
+Jira's count before the pages: 0
+  Page 1: 0 items. Jira gave no marker for a further page.
+Jira's count after the pages:  0
+
+Total Jira stated:  0
+Items received:     0
+Pages answered:     1
+Items saved locally: 0, in the file given with --out: result.json
+
+RESULT: COMPLETE. The query matches nothing: Jira stated 0 and 0 items were saved. That is an answer, not an error.
+COMPLETE means: every page was answered, no item came twice, every item is in the project, and the number
+saved equals Jira's count before and after. It does not mean nothing changed in Jira during the run: one item
+leaving the query while another joins it would leave every one of those checks passing.
+
+Requests sent to Jira: 3. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x1
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x2
+------------------------------------------------------------------------------
+exit code: 0
+What is in RESULTS now: result.json
+  ok   the exit code is 0: it is not an error
+  ok   it reports zero stated and zero saved
+  ok   nothing in the output calls it a failure
+  ok   a result file is written, complete, with no items
+
+==============================================================================
+4. A QUERY WITH A DATE GIVEN ON THE COMMAND LINE, and a value that is not a date
+$ python3 skills/jira-query-stories/run_query.py run --config context/jira/queries.yaml --project DEMO --source fake --fixture skills/jira-query-stories/fixtures/demo.json --out RESULTS/result.json --query stories-updated-since --set since=2026-11-15
+------------------------------------------------------------------------------
+Query: stories-updated-since
+Purpose: Stories changed on or after a given date, to see what moved since the last look.
+Asked of: the made-up Jira. No real Jira was contacted
+The query as sent: project = "DEMO" AND (issuetype = Story AND updated >= "2026-11-15") ORDER BY key ASC
+Page size asked for: 10
+
+Jira's count before the pages: 10
+  Page 1: 10 items. Jira gave no marker for a further page.
+Jira's count after the pages:  10
+
+Total Jira stated:  10
+Items received:     10
+Pages answered:     1
+Items saved locally: 10, in the file given with --out: result.json
+
+RESULT: COMPLETE. Jira stated 10, 10 were saved, in 1 page, and the last page said it was the last.
+COMPLETE means: every page was answered, no item came twice, every item is in the project, and the number
+saved equals Jira's count before and after. It does not mean nothing changed in Jira during the run: one item
+leaving the query while another joins it would leave every one of those checks passing.
+
+Requests sent to Jira: 3. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x1
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x2
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the date is put into the query, quoted
+$ python3 skills/jira-query-stories/run_query.py run --config context/jira/queries.yaml --project DEMO --source fake --fixture skills/jira-query-stories/fixtures/demo.json --out RESULTS/result.json --query stories-updated-since --set since=2026-02-30
+------------------------------------------------------------------------------
+
+REFUSED: the value for `since` must be a real date written as 2026-11-01.
+Nothing was asked of Jira and no result was written.
+------------------------------------------------------------------------------
+exit code: 1
+What is in RESULTS now: nothing
+  ok   a date that is not on the calendar is refused with exit code 1, the output lists no requests, and nothing is written. (That no request is MADE is a test, which puts a tripwire where the made-up Jira is. This check reads the output.)
+
+RESULT: ALL CHECKS PASSED. 11 checks.

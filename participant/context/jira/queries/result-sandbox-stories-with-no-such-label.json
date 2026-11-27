@@ -1,0 +1,17 @@
+{
+ "complete": true,
+ "format": "jira-query-stories/1",
+ "items": [],
+ "page_size": 10,
+ "pages": 1,
+ "parameters": {},
+ "project": "SCRUM",
+ "purpose": "A query that is meant to match nothing, to show that zero is reported as zero and not as an error.",
+ "query": "stories-with-no-such-label",
+ "query_as_sent": "project = \"SCRUM\" AND (issuetype = Story AND labels = no-such-label-zzz) ORDER BY key ASC",
+ "saved": 0,
+ "site_fingerprint": "4aabe3d08fbad6b1",
+ "source": "live",
+ "taken_at": "2026-11-27T19:00:24Z",
+ "total_jira_stated": 0
+}

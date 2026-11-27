@@ -1,0 +1,111 @@
+Independent reads of the work. jira-query-stories, attempt jira-attempt-018
+Written by hand by the AI assistant, 2026-11-27, from the two readers' replies. The readers were AI assistants, not people.
+
+HOW THE READS WERE MADE
+  Two fresh AI assistants, each started with no knowledge of this session. Each was given a copy, in a temporary folder
+  outside the repository, of: the quest text, the tool, the made-up Jira, the tests, the configuration, the records and
+  the scripts. Each was told to read only, to contact no network service, and to write only in a temporary folder. The
+  first version of everything was finished, with 48 tests passing and 36 of 36 planted bugs caught, before either
+  reply was read. The first real run had been made by then as well.
+  Reader 1 was asked to break the tool: to make it call a result complete that was not.
+  Reader 2 was asked whether the records and tests show what they say.
+
+==============================================================================
+READER 1: TRYING TO BREAK THE TOOL
+  It said it found no blocking fault, two high, the rest medium or low. It reproduced most by running the copy.
+
+  HIGH
+  1. A saved filter can leave the project. My check for paired quotes did not know that JQL reads a backslash before a
+     quote as part of the text. A filter with \" in it was accepted and closed the bracket early.
+     CHANGED: a backslash in a filter is refused. The tool's description no longer says "cannot". A test and a
+     planted bug cover it.
+  2. COMPLETE with the wrong set, when changes cancel out: one item leaves the query during the run and another joins.
+     NOT FIXED. I do not think it can be, from outside Jira. CHANGED: the output says so under every complete
+     result, and so do the tool's description, SKILL.md and PROOF.md.
+
+  MEDIUM
+  3. --log and --out naming the same file: the log was written over the result.
+     CHANGED: refused before Jira is asked, and the log is not written.
+  4. The search for credentials came after the result file was written.
+     CHANGED: the search is made before the write, over the output so far and the result.
+  5. Wrong numbers when a page fails in its middle: that page's items were counted as arrived.
+     CHANGED: a page is judged whole before any of it is counted.
+  6. Values saved as blanks or question marks under COMPLETE, with no warning.
+     CHANGED: an item without its type, status or time fails the run. Letters and digits of any script are kept. The
+     output says how many names were changed by cleaning.
+
+  LOW
+  7. A moved count was also called a shortfall.                         CHANGED.
+  8. Two items with one key and different ids were both saved.          CHANGED: keys are compared as well as ids.
+  9. Two inputs made the tool crash with a traceback.                   CHANGED: both are handled, and anything
+     unforeseen is an incomplete run with no result.
+  10. `isLast` as the text "false" was taken for the end.               CHANGED: it must be true, or absent.
+  11. A file name or a setting's name was printed as it came.           CHANGED: unseen characters are replaced.
+  12. My reading of the configuration differed from YAML in five places, and refused some valid YAML.
+      CHANGED where the two would read a file differently: `parameters` twice, a leading zero, no space after a
+      colon, and words YAML reads as true, false or nothing are refused. NOT CHANGED: valid YAML that is refused
+      stays refused (a `---`, a comment after a value). The file's header now says how to write it.
+  13. A base address in capitals was refused with a misleading message. CHANGED: it is the same site.
+  14. The site fingerprint is an unsalted hash.                         NOT CHANGED. Earlier quests use the same
+      one. It is in the limitations.
+
+  WHAT IT LOOKED FOR AND DID NOT FIND
+    The token, email, encoded form or site address in the output, the log or the result. Text from Jira in the output.
+    Any request beyond the two reads. A way to change the query through --set, --project or --query. A status or
+    body oddity that did not fail closed. A temporary file left behind.
+
+==============================================================================
+READER 2: DO THE RECORDS SHOW WHAT THEY SAY
+  ON THE CRITERIA. It found each criterion shown by a record, and said plainly that criteria 4, 5 and 7 are shown on
+  the made-up Jira only, and that the real run showed the pages only when nothing goes wrong. That is true and is in
+  PROOF.md. After its report the real run was made again with a query that matches nothing and a query with a date.
+
+  CHECKS IN THE RECORDS THAT CLAIMED MORE THAN THEY TESTED
+    "run_query.py is byte for byte the same": could not fail, since nothing in the script writes the tool.
+        CHANGED: it is a note now, not a check, and says why. The made-up Jira's file is in the checksum too.
+    "no title is in the file: titles are not asked for": tested the file only.          CHANGED: the label says so.
+    "refused before Jira is asked": tested the tool's own sentence.                     CHANGED: it reads that no
+        requests are listed, and says that no request being made is a test.
+    "every query listed has a purpose and a filter": counted words.                     CHANGED: each name the script
+        finds in the file must be listed, in order, with both.
+    "nowhere says COMPLETE": tested one phrase.                                         CHANGED: one RESULT line.
+    A first run's exit code was not looked at.                                          CHANGED.
+    "40 items" was typed, not counted.                                                  CHANGED: counted.
+
+  TESTS THAT WERE WEAK
+    The comparison with a full YAML reader was skipped in the saved test log.   CHANGED: the log is made with the
+        project's own Python, which has the reader. The comparison ran.
+    A date test allowed the day before.                                         CHANGED.
+    The connection's error branches were never run: the stand-in for the network always answered 200.
+        CHANGED: a second stand-in refuses as a real server does, at each of the five requests, with seven statuses.
+    "The query sent keeps to the project" only looks at how it starts and ends. NOT CHANGED. The refusals of what
+        breaks it are tested one by one instead.
+
+  MISTAKES IT MADE IN A COPY THAT NO TEST NOTICED
+    More arriving than stated; only the token searched for; redirects followed; a server's refusal not read; a status
+    other than 200 taken as an answer; the sign-in not sent; an answer that is not JSON; an item's id not checked.
+    CHANGED: a test for each, and each is a planted bug now.
+
+  MY REASONS FOR NOT PLANTING A BUG
+    Two were false: "a page that could not be reached, taken for the end" is not caught by the count when the query
+    matches nothing, and "a count of true taken for 1" is not caught when one item matches. A third was true only
+    because of how the made-up Jira misbehaves. CHANGED: tests added, and all three are planted and caught.
+
+  COULD A PERSON ADD A QUERY FROM THE FILE AND SKILL.md ALONE
+    By copying one, yes. It listed six rules written nowhere, and that the made-up Jira cannot read much of JQL, so a
+    newcomer cannot try a real query without a real run. CHANGED: the file's header gives the rules and says so.
+    Two things I had written were untrue of the code: an error message, and the claim about the project. CHANGED.
+
+  PERSONAL DATA. It found none in any record. It named the project key, the site fingerprint and a time as what
+  remains.
+
+==============================================================================
+AFTER THE CHANGES
+  80 tests pass. 66 of 66 planted bugs are caught, 30 of them added because of these reports. The three records were
+  made again. The participant ran the real sandbox again, three queries, with the changed tool.
+
+NOT READ AGAIN
+  Neither reader saw the corrected tool, tests, records, configuration, SKILL.md or PROOF.md. The changes were checked
+  by the assistant: by tests and by planted bugs.
+
+A person has not read any of this.

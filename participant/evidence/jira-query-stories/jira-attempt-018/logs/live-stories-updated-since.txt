@@ -1,0 +1,26 @@
+Query: stories-updated-since
+Purpose: Stories changed on or after a given date, to see what moved since the last look.
+Asked of: a real Jira, site fingerprint 4aabe3d08fbad6b1
+The query as sent: project = "SCRUM" AND (issuetype = Story AND updated >= "2026-11-20") ORDER BY key ASC
+Page size asked for: 10
+
+Jira's count before the pages: 0
+  Page 1: 0 items. Jira gave no marker for a further page.
+Jira's count after the pages:  0
+
+Total Jira stated:  0
+Items received:     0
+Pages answered:     1
+Items saved locally: 0, in the file given with --out: result-sandbox-stories-updated-since.json
+
+RESULT: COMPLETE. The query matches nothing: Jira stated 0 and 0 items were saved. That is an answer, not an error.
+COMPLETE means: every page was answered, no item came twice, every item is in the project, and the number
+saved equals Jira's count before and after. It does not mean nothing changed in Jira during the run: one item
+leaving the query while another joins it would leave every one of those checks passing.
+
+Requests sent to Jira: 3. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET /rest/api/3/search/jql  x1
+  POST /rest/api/3/search/approximate-count  x2
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

@@ -29,14 +29,23 @@ to a temporary file beside the place it is going and moved there in one step, on
 already at that place it is left as it was, and the output says it is older and is not this run's.
 
 WHAT IS SAVED FOR EACH ITEM, and nothing else: key, id, the type's name, the status's name and category, and the
-last-updated time in UTC. Titles, descriptions, comments and people are not asked for.
+last-updated time in UTC. Titles, descriptions, comments and people are not asked for. An item that lacks any of
+these makes the run incomplete. Type and status names are other people's text: each is cut to 40 characters, and a
+character that is not a letter or digit or one of a few marks is replaced by a question mark. The output says how
+many names that changed.
+
+WHAT "COMPLETE" DOES NOT MEAN. It does not mean nothing changed in Jira while the pages were read. If one item left
+the query and another joined it, the count would be the same before and after and the number saved would match it,
+with one item missing and one extra. Jira also calls its count approximate.
 
 THE QUERY THAT IS SENT is built here, so that a saved query cannot reach outside the project named on the command line:
 
     project = "KEY" AND (THE SAVED FILTER) ORDER BY key ASC
 
-A saved filter is refused if its brackets or quotes do not pair up, or if it has ORDER BY in it. --project must be
-one of the configuration's `allowed_projects`.
+A saved filter is refused if its brackets or quotes do not pair up, if it has a backslash in it, or if it has the
+words ORDER BY anywhere in it, a quoted value included. --project must be one of the configuration's
+`allowed_projects`. This keeps a filter inside the project as far as this tool reads JQL the way Jira does; and
+every item that comes back is checked to be in the project too, whatever the query did.
 
 PARAMETERS. A saved filter may have a blank, written {name}, declared under `parameters` with a kind. The only
 kind is `date`. A value is given with --set name=2026-11-01, is checked to be a real date, and is put in quoted.
@@ -55,7 +64,8 @@ For a live run the connection comes from the environment variables JIRA_BASE_URL
 is stored. The output is searched for the token, the email address and their encoded form before it is shown.
 
 Exit codes: 0 complete, and the result was written (a query that matches nothing is complete, with zero items);
-1 refused before anything was asked of Jira, or a credential was found in the output; 2 INCOMPLETE, no result written.
+1 refused before anything was asked of Jira, or a credential was found in the output (no result is written then
+either); 2 INCOMPLETE, no result written.
 """
 import argparse
 import base64
@@ -73,6 +83,7 @@ import urllib.request
 
 FORMAT = "jira-query-stories/1"
 CONFIG_FORMAT = "jira-saved-queries/1"
+NOT_TEXT_IN_YAML = ("null", "~", "true", "false", "yes", "no", "on", "off", "y", "n")
 REF = re.compile(r"([A-Za-z][A-Za-z0-9_]{0,30})-[0-9]{1,9}")
 PROJECT = re.compile(r"[A-Za-z][A-Za-z0-9_]{0,30}")
 NAME = re.compile(r"[a-z][a-z0-9-]{0,40}")
@@ -83,7 +94,7 @@ SEARCH_PATH = "/rest/api/3/search/jql"
 COUNT_PATH = "/rest/api/3/search/approximate-count"
 MAX_PAGES = 500
 KINDS = ("date",)
-SAFE = re.compile(r"[^A-Za-z0-9 ._/()'-]")
+KEPT_MARKS = " ._/()'-"
 UNSEEN = re.compile("[\\x00-\\x1f\\x7f-\\xa0\\u00ad\\u034f\\u061c\\u115f\\u1160\\u200b-\\u200f\\u2028\\u2029\\u202a-\\u202e\\u2060-\\u2069\\u2800\\u3164\\ufeff\\U000e0000-\\U000e007f]")
 
 LINES = []
@@ -107,8 +118,16 @@ def say(text=""):
 
 
 def word(value, limit=40):
-    """A name the site's administrators chose (a status, a type): cut short, unseen characters out."""
-    return SAFE.sub("?", UNSEEN.sub("?", value))[:limit].strip() or None if isinstance(value, str) and value.strip() else None
+    """A name the site's administrators chose (a status, a type): cut short, and every character that is not a letter or
+    digit of some script, or one of the marks kept, replaced by a question mark. None if there is nothing to keep."""
+    if not isinstance(value, str) or not value.strip():
+        return None
+    return "".join(ch if (ch.isalnum() or ch in KEPT_MARKS) and not UNSEEN.match(ch) else "?" for ch in value)[:limit].strip() or None
+
+
+def shown(text, limit=60):
+    """Text from a file name or a file's contents, made safe to print on one line."""
+    return "".join("?" if UNSEEN.match(ch) else ch for ch in str(text))[:limit]
 
 
 def in_utc(value):
@@ -120,7 +139,10 @@ def in_utc(value):
             moment = datetime.datetime.strptime(value, shape)
         except ValueError:
             continue
-        return moment.astimezone(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        try:
+            return moment.astimezone(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        except (OverflowError, ValueError):
+            return None
     return None
 
 
@@ -140,7 +162,17 @@ def scalar(text, where):
         return text[1:-1]
     if not text or text[0] in "[{&*!|>%@`#,-?:" or " #" in text or ": " in text or text.endswith(":"):
         raise Refused("%s: put this value in quotes" % where)
+    if text.lower() in NOT_TEXT_IN_YAML or re.fullmatch(r"[-+.0-9][-+.0-9eEx_:a-fA-F]*", text) and not re.fullmatch(r"[1-9][0-9]*", text):
+        raise Refused("%s: YAML would not read this value as text. Put it in quotes" % where)
     return text
+
+
+def split_key(body, where):
+    """`key: value` or `key:`. A colon with text straight after it is not YAML's `key: value`."""
+    key, colon, rest = body.partition(":")
+    if not colon or rest[:1] not in ("", " "):
+        raise Refused("%s: expected `key: value`, with a space after the colon" % where)
+    return key, rest
 
 
 def load_config(path):
@@ -153,7 +185,7 @@ def load_config(path):
         queries:
           - name: open-stories
             purpose: 'What it is for'
-            filter: 'issuetype = Story'
+            filter: 'labels = example AND updated >= {since}'
             parameters:
               since: date
     """
@@ -164,6 +196,8 @@ def load_config(path):
         raise Refused("the configuration file could not be read")
     if "\t" in raw:
         raise Refused("the configuration file has a tab in it. Indent with spaces")
+    if raw.startswith("\ufeff") or raw.lstrip().startswith(("---", "%")):
+        raise Refused("the configuration file starts with a mark this tool does not read (---, % or a byte-order mark). Take it out")
     top, queries, projects, section, current, in_parameters = {}, [], [], None, None, False
     for number, line in enumerate(raw.split("\n"), 1):
         where = "line %d of the configuration" % number
@@ -172,9 +206,9 @@ def load_config(path):
         indent = len(line) - len(line.lstrip(" "))
         body = line.strip()
         if indent == 0:
-            key, colon, rest = body.partition(":")
-            if not colon or key in top or key in ("allowed_projects", "queries") and (section == key or key in top):
-                raise Refused("%s: expected `key: value`, once" % where)
+            key, rest = split_key(body, where)
+            if key in top:
+                raise Refused("%s: `%s` is set twice" % (where, shown(key)))
             in_parameters, current = False, None
             if key in ("allowed_projects", "queries"):
                 if rest.strip() or key in top:
@@ -183,39 +217,39 @@ def load_config(path):
             elif key in ("format", "page_size"):
                 top[key], section = scalar(rest, where), None
             else:
-                raise Refused("%s: `%s` is not a setting this tool knows" % (where, key))
+                raise Refused("%s: `%s` is not a setting this tool knows" % (where, shown(key)))
         elif section == "allowed_projects" and indent == 2 and body.startswith("- "):
             projects.append(scalar(body[2:], where))
         elif section == "queries" and indent == 2 and body.startswith("- "):
             current, in_parameters = {"parameters": {}, "line": number}, False
             queries.append(current)
-            key, colon, rest = body[2:].partition(":")
-            if key != "name" or not colon:
+            key, rest = split_key(body[2:], where)
+            if key != "name":
                 raise Refused("%s: each query starts with `- name:`" % where)
             current["name"] = scalar(rest, where)
         elif section == "queries" and current is not None and indent == 4:
-            key, colon, rest = body.partition(":")
-            if not colon or key in current and key != "parameters" or key == "parameters" and in_parameters:
-                raise Refused("%s: expected `key: value`, once for each query" % where)
+            key, rest = split_key(body, where)
+            if key in current and key != "parameters" or key == "parameters" and current.get("has_parameters"):
+                raise Refused("%s: `%s` is set twice in this query" % (where, shown(key)))
             if key == "parameters":
                 if rest.strip():
                     raise Refused("%s: `parameters:` is followed by its names on the lines below it" % where)
-                in_parameters = True
+                in_parameters = current["has_parameters"] = True
             elif key in ("purpose", "filter"):
                 current[key], in_parameters = scalar(rest, where), False
             else:
-                raise Refused("%s: `%s` is not a setting of a query" % (where, key))
+                raise Refused("%s: `%s` is not a setting of a query" % (where, shown(key)))
         elif section == "queries" and current is not None and in_parameters and indent == 6:
-            key, colon, rest = body.partition(":")
-            if not colon or key in current["parameters"]:
+            key, rest = split_key(body, where)
+            if key in current["parameters"]:
                 raise Refused("%s: expected `name: kind`, once" % where)
             current["parameters"][key] = scalar(rest, where)
         else:
             raise Refused("%s: this line is not where the tool expects anything" % where)
     if top.get("format") != CONFIG_FORMAT:
-        raise Refused("the configuration's first setting must be `format: %s`" % CONFIG_FORMAT)
+        raise Refused("the configuration must have the setting `format: %s`" % CONFIG_FORMAT)
     size = top.get("page_size", "")
-    if not (size.isascii() and size.isdigit() and 1 <= int(size) <= 100):
+    if not (re.fullmatch(r"[1-9][0-9]{0,2}", size) and 1 <= int(size) <= 100):
         raise Refused("`page_size` must be a whole number from 1 to 100")
     if not projects or any(not PROJECT.fullmatch(p) for p in projects):
         raise Refused("`allowed_projects` must list at least one project key")
@@ -236,6 +270,10 @@ def load_config(path):
 def check_filter(text, parameters, where):
     if not text.strip() or UNSEEN.search(text):
         raise Refused("%s: it needs a `filter`, on one line, with no unseen characters" % where)
+    if "\\" in text:
+        # JQL reads a backslash before a quote as part of the text. This check reads quotes plainly. So that the two
+        # can never disagree about where a quoted value ends, a backslash is not allowed at all.
+        raise Refused("%s: the filter has a backslash in it. This tool does not allow one, because it could hide where a quoted value ends" % where)
     depth, quote = 0, None
     for ch in text:
         if quote:
@@ -271,7 +309,7 @@ def build_jql(query, project, given):
             query["name"], ", ".join(sorted(query["parameters"])) or "no parameters", ", ".join(sorted(given)) or "none"))
     for name, value in given.items():
         try:
-            if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+            if not re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", value):      # not \d: that takes digits of other scripts too
                 raise ValueError
             datetime.date(int(value[:4]), int(value[5:7]), int(value[8:]))
         except ValueError:
@@ -322,8 +360,9 @@ def make_live(opener=None):
         if not value:
             raise Refused("the environment variable %s is not set" % name)
     host = urllib.parse.urlparse(base).hostname or ""
-    if not host or base != "https://" + host:
+    if not host or base.lower() != "https://" + host:
         raise Refused("JIRA_BASE_URL must be https:// and the site's name, with no port, path or sign-in in it")
+    base = "https://" + host
     encoded = base64.b64encode(("%s:%s" % (email, token)).encode("utf-8")).decode("ascii")
     opener = opener or urllib.request.build_opener(NoRedirect)
 
@@ -335,11 +374,12 @@ def make_live(opener=None):
                 status, headers, raw = response.status, dict(response.headers), response.read()
         except urllib.error.HTTPError as err:
             status, headers, raw = err.code, dict(err.headers), err.read()
+            err.close()
         except http.client.HTTPException as err:
             raise OSError(type(err).__name__)
         try:
             parsed = json.loads(raw.decode("utf-8")) if raw.strip() else {}
-        except ValueError:
+        except (ValueError, RecursionError):
             parsed = {}
         return status, headers, parsed, request.get_method()
 
@@ -389,14 +429,18 @@ def one_item(raw, project):
     status = fields.get("status") if isinstance(fields.get("status"), dict) else {}
     category = status.get("statusCategory", {}).get("key") if isinstance(status.get("statusCategory"), dict) else None
     kind = fields.get("issuetype", {}).get("name") if isinstance(fields.get("issuetype"), dict) else None
-    return {"key": key.upper(), "id": ident, "issuetype": word(kind), "status": word(status.get("name")),
+    item = {"key": key.upper(), "id": ident, "issuetype": word(kind), "status": word(status.get("name")),
             "status_category": category if category in ("new", "indeterminate", "done", "undefined") else None,
-            "updated": in_utc(fields.get("updated"))}, None
+            "updated": in_utc(fields.get("updated"))}
+    if None in (item["issuetype"], item["status"], item["updated"]):
+        return None, "an item without the type, status or last-updated time that was asked for"
+    item["cleaned"] = item["issuetype"] != kind or item["status"] != status.get("name")
+    return item, None
 
 
 def fetch_pages(conn, jql, project, size):
     """Every item, page by page. Raises Incomplete, saying how far it got, unless Jira's last page says it is the last."""
-    items, seen, token, page_sizes = [], set(), None, []
+    items, seen, marker, page_sizes = [], set(), None, []       # seen: every id and every key so far
 
     def stop(reason):
         got = "%d page%s and %d item%s had arrived" % (len(page_sizes), "" if len(page_sizes) == 1 else "s", len(items), "" if len(items) == 1 else "s")
@@ -404,8 +448,8 @@ def fetch_pages(conn, jql, project, size):
 
     while True:
         params = {"jql": jql, "fields": FIELDS, "maxResults": size}
-        if token:
-            params["nextPageToken"] = token
+        if marker:
+            params["nextPageToken"] = marker
         try:
             status, body = conn.pages(params)
         except Incomplete as failure:
@@ -420,26 +464,30 @@ def fetch_pages(conn, jql, project, size):
             raise stop("Jira's marker for the next page could not be used")
         if not page and following:
             raise stop("Jira sent an empty page and said there was more")
-        if following and following == token:
+        if following and following == marker:
             raise stop("Jira gave back the same marker it was asked with, so the next page would be this one again")
+        fresh, fresh_seen = [], set()          # nothing of a page is counted until the whole page has been judged
         for raw in page:
             item, problem = one_item(raw, project)
             if problem:
                 raise stop("Jira sent %s" % problem)
-            if item["id"] in seen:
+            marks = {"id " + item["id"], "key " + item["key"]}
+            if marks & (seen | fresh_seen):
                 raise stop("the item %s came a second time, so another item may have been pushed out of the pages" % item["key"])
-            seen.add(item["id"])
-            items.append(item)
+            fresh_seen |= marks
+            fresh.append(item)
+        seen |= fresh_seen
+        items += fresh
         page_sizes.append(len(page))
         say("  Page %d: %d item%s. %s" % (len(page_sizes), len(page), "" if len(page) == 1 else "s",
                                        "Jira gave a marker for a further page." if following else "Jira gave no marker for a further page."))
         if not following:
-            if body.get("isLast") is False:
-                raise Incomplete("page %d: Jira said there was more and gave no way to ask for it. %d items had arrived. They are not saved" % (len(page_sizes), len(items)), (len(items), len(page_sizes)))
+            if body.get("isLast", True) is not True:
+                raise Incomplete("page %d: Jira did not say this was the last page, and gave no way to ask for another. %d items had arrived. They are not saved" % (len(page_sizes), len(items)), (len(items), len(page_sizes)))
             return items, page_sizes
         if len(page_sizes) >= MAX_PAGES:
             raise Incomplete("stopped after %d pages, which is this tool's limit. %d items had arrived. They are not saved" % (MAX_PAGES, len(items)), (len(items), len(page_sizes)))
-        token = following
+        marker = following
 
 
 def older_result(path):
@@ -488,7 +536,7 @@ def cmd_list(config):
     return 0
 
 
-def cmd_run(args, config, conn, live):
+def cmd_run(args, config, conn, live, secrets=()):
     query = next((q for q in config["queries"] if q["name"] == args.query), None)
     if query is None:
         raise Refused("the configuration has no query named `%s`. It has: %s" % (args.query if NAME.fullmatch(args.query) else "that", ", ".join(q["name"] for q in config["queries"])))
@@ -502,6 +550,8 @@ def cmd_run(args, config, conn, live):
             raise Refused("--set takes name=value, once for each name")
         given[name] = value
     jql = build_jql(query, project, given)
+    if getattr(args, "log", None) and os.path.realpath(args.log) == os.path.realpath(args.out):
+        raise Refused("--log and --out name the same file. The saved output would be written over the result")
     size = config["page_size"]
     say("Query: %s" % query["name"])
     say("Purpose: %s" % query["purpose"])
@@ -510,7 +560,7 @@ def cmd_run(args, config, conn, live):
     say("Page size asked for: %d" % size)
     say("")
     before = after = None
-    items, page_sizes, failure, arrived = [], [], None, (0, 0)
+    items, page_sizes, failure, arrived, count_moved = [], [], None, (0, 0), False
     try:
         before = ask_count(conn, jql, "before")
         say("Jira's count before the pages: %d" % before)
@@ -519,6 +569,7 @@ def cmd_run(args, config, conn, live):
         after = ask_count(conn, jql, "after")
         say("Jira's count after the pages:  %d" % after)
         if before != after:
+            count_moved = True
             raise Incomplete("Jira's own count changed while the pages were being read, from %d to %d: items were added, removed or changed "
                              "during the run. %d items arrived. Which count they belong to cannot be told. Run it again" % (before, after, len(items)))
         if len(items) != before:
@@ -530,31 +581,40 @@ def cmd_run(args, config, conn, live):
     say("Total Jira stated:  %s" % (before if before is not None else "not stated"))
     say("Items received:     %d%s" % (arrived[0], "" if failure is None else "   (in pages that were answered in full. NOT SAVED)"))
     say("Pages answered:     %d" % arrived[1])
+    cleaned = sum(1 for item in items if item.pop("cleaned", False))
     if failure is None:
         result = {"format": FORMAT, "complete": True, "query": query["name"], "purpose": query["purpose"], "query_as_sent": jql,
                   "parameters": given, "project": project, "source": "live" if live else "fake",
                   "site_fingerprint": site_fingerprint(conn.host) if live else None, "page_size": size, "pages": len(page_sizes),
                   "total_jira_stated": before, "saved": len(items), "taken_at": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
                   "items": items}
-        try:
-            write_result(args.out, result)
-        except OSError:
-            failure = "the result file could not be written where --out said"
+        if any(secret and secret in "\n".join(LINES) + json.dumps(result) for secret in secrets):
+            failure = "a credential was found in what would be shown or saved, so the result was not written"
+        else:
+            try:
+                write_result(args.out, result)
+            except OSError:
+                failure = "the result file could not be written where --out said"
     if failure is None:
-        say("Items saved locally: %d, in the file given with --out: %s" % (len(items), os.path.basename(args.out)))
+        say("Items saved locally: %d, in the file given with --out: %s" % (len(items), shown(os.path.basename(args.out))))
+        if cleaned:
+            say("In %d of them a status or type name had characters replaced by a question mark, or was cut to 40 characters." % cleaned)
         say("")
         if before == 0:
             say("RESULT: COMPLETE. The query matches nothing: Jira stated 0 and 0 items were saved. That is an answer, not an error.")
         else:
             say("RESULT: COMPLETE. Jira stated %d, %d were saved, in %d page%s, and the last page said it was the last." % (
                 before, len(items), len(page_sizes), "" if len(page_sizes) == 1 else "s"))
+        say("COMPLETE means: every page was answered, no item came twice, every item is in the project, and the number")
+        say("saved equals Jira's count before and after. It does not mean nothing changed in Jira during the run: one item")
+        say("leaving the query while another joins it would leave every one of those checks passing.")
         code = 0
     else:
         say("Items saved locally: 0")
         say("")
         say("RESULT: INCOMPLETE. %s." % failure)
         say("No result file was written by this run, so nothing of it can be taken for a whole result.")
-        if before is not None and arrived[0] < before:
+        if before is not None and arrived[0] < before and not count_moved:
             say("SHORTFALL: Jira stated %d and %d arrived. %d did not." % (before, arrived[0], before - arrived[0]))
         older = older_result(args.out)
         if older:
@@ -607,12 +667,17 @@ def main(argv=None):
             if args.fixture or args.fault:
                 raise Refused("--fixture and --fault are for the made-up Jira only")
             conn, secrets = make_live()
-            code = cmd_run(args, config, conn, live=True)
+            code = cmd_run(args, config, conn, live=True, secrets=secrets)
     except Refused as refusal:
         say("")
         say("REFUSED: %s." % refusal)
         say("Nothing was asked of Jira and no result was written.")
         code = 1
+    except Exception as surprise:           # anything unforeseen. The result is written last, so none was written
+        say("")
+        say("RESULT: INCOMPLETE. The tool stopped on something it did not foresee (%s)." % type(surprise).__name__)
+        say("No result file was written by this run.")
+        code = 2
     text = "\n".join(LINES)
     if any(secret and secret in text for secret in secrets):
         print("STOPPED: a credential was found in the output, so the output was not shown or saved.")
@@ -623,7 +688,7 @@ def main(argv=None):
         note = "\nThe output above was searched for the API token, the account's email address and their encoded\nform: none found."
         print(note)
         kept += "\n" + note
-    if getattr(args, "log", None):
+    if getattr(args, "log", None) and not (getattr(args, "out", None) and os.path.realpath(args.log) == os.path.realpath(args.out)):
         host = conn.host if conn else ""
         kept = kept.replace("https://" + host, SITE_MARK).replace(host, SITE_MARK) if host else kept
         try:

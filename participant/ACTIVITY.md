@@ -488,3 +488,8 @@ Every change this application made to your files, newest last.
 - `2026-11-27T15:48:03Z` base-camp-ownership-zones: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-27T15:48:03Z` Submitted base-camp-ownership-zones for review as submission-20261127154803-b6d4a3.
 - `2026-11-27T15:59:59Z` Review of base-camp-ownership-zones: approved by Claude (automated reviewer).
+- `2026-11-27T16:03:25Z` Started jira-query-stories as attempt jira-attempt-018.
+- `2026-11-27T19:27:27Z` jira-query-stories: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-27T19:28:05Z` jira-query-stories: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-27T19:28:47Z` jira-query-stories: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-27T19:28:47Z` Submitted jira-query-stories for review as submission-20261127192847-30f780.

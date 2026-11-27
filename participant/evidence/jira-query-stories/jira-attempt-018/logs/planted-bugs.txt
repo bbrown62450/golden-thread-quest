@@ -1,0 +1,150 @@
+Planted bugs in a copy of participant/skills/jira-query-stories/run_query.py. jira-query-stories, attempt jira-attempt-018
+Recorded by scripts/planted_bugs.py. One bug at a time is planted in a copy of the tool, in a temporary folder, and the tests are run
+against the copy. CAUGHT means at least one test failed. The real tool is not changed.
+
+First, with no bug planted, the tests against the copy: OK (skipped=1)
+
+ 1. CAUGHT  a page shorter than was asked for is taken for the last
+            FAILED (failures=11, skipped=1): test_a_failure_in_the_middle_of_a_page_counts_only_the_pages_before_it, test_an_empty_page_that_says_there_is_more_fails_even_when_nothing_is_skipped ...
+ 2. CAUGHT  Jira saying there is more, with no marker, is taken for the end
+            FAILED (failures=6, skipped=1): test_is_last_must_be_true_or_absent_when_there_is_no_marker, test_jira_saying_there_is_more_with_no_marker_is_not_an_end
+ 3. CAUGHT  the marker for the next page is not sent, so page 1 is asked for again
+            FAILED (failures=23, errors=1, skipped=1): test_a_complete_run_replaces_an_older_result, test_a_count_that_moves_during_the_run_is_said_to_be_that ...
+ 4. CAUGHT  there is no limit to the number of pages
+            FAILED (failures=1, skipped=1): test_there_is_a_limit_to_the_pages
+ 5. CAUGHT  a different number arriving than Jira stated is not a failure
+            FAILED (failures=17, skipped=1): test_an_item_left_out_of_a_page_is_a_mismatch, test_each_way_the_pages_can_go_wrong_leaves_nothing_that_looks_like_a_result ...
+ 6. CAUGHT  Jira's count moving during the run is not noticed
+            FAILED (failures=4, skipped=1): test_a_count_that_moves_during_the_run_is_said_to_be_that, test_a_moved_count_is_not_also_called_a_shortfall ...
+ 7. CAUGHT  the count is not asked for again after the pages
+            FAILED (failures=37, skipped=1): test_a_count_that_moves_during_the_run_is_said_to_be_that, test_a_moved_count_is_not_also_called_a_shortfall ...
+ 8. CAUGHT  an item that comes twice is counted twice
+            FAILED (failures=12, skipped=1): test_each_way_the_pages_can_go_wrong_leaves_nothing_that_looks_like_a_result, test_the_right_number_of_wrong_items_is_caught ...
+ 9. CAUGHT  an item of another project is kept
+            FAILED (failures=5, skipped=1): test_each_way_the_pages_can_go_wrong_leaves_nothing_that_looks_like_a_result
+10. CAUGHT  a count of zero is treated as no count
+            FAILED (failures=2, errors=1, skipped=1): test_a_complete_run_replaces_an_older_result, test_a_query_that_matches_nothing_reports_zero_and_is_not_an_error ...
+11. CAUGHT  the result file is written whether or not the run was complete
+            FAILED (failures=88, skipped=1): test_a_connection_that_drops_is_an_incomplete_run, test_a_count_of_true_is_not_one ...
+12. CAUGHT  an incomplete run exits with 0
+            FAILED (failures=98, skipped=1): test_a_connection_that_drops_is_an_incomplete_run, test_a_count_of_true_is_not_one ...
+13. CAUGHT  a result that could not be written is still called complete
+            FAILED (failures=2, skipped=1): test_a_result_that_cannot_be_written_is_not_called_complete, test_a_write_that_fails_halfway_leaves_no_temporary_file
+14. CAUGHT  a write that fails halfway leaves its temporary file
+            FAILED (failures=1, skipped=1): test_a_write_that_fails_halfway_leaves_no_temporary_file
+15. CAUGHT  the shortfall is given as the whole total
+            FAILED (failures=3, skipped=1): test_a_failure_in_the_middle_of_a_page_counts_only_the_pages_before_it, test_a_page_that_fails_partway_reports_the_shortfall ...
+16. CAUGHT  the items that arrived before a failure are reported as none
+            FAILED (failures=2, skipped=1): test_a_failure_in_the_middle_of_a_page_counts_only_the_pages_before_it, test_a_page_that_fails_partway_reports_the_shortfall
+17. CAUGHT  the page size in the configuration is ignored
+            FAILED (failures=64, skipped=1): test_a_page_that_fails_partway_reports_the_shortfall, test_a_real_servers_refusals_are_incomplete_runs_and_not_crashes ...
+18. CAUGHT  a filter may close the bracket that keeps it in the project
+            FAILED (failures=1, skipped=1): test_what_is_wrong_in_a_file_is_refused
+19. CAUGHT  a filter may carry its own ORDER BY
+            FAILED (failures=1, skipped=1): test_what_is_wrong_in_a_file_is_refused
+20. CAUGHT  a query needs no purpose
+            FAILED (failures=2, skipped=1): test_what_is_wrong_in_a_file_is_refused
+21. CAUGHT  a blank may sit inside quotes, and be quoted twice
+            FAILED (failures=1, skipped=1): test_what_is_wrong_in_a_file_is_refused
+22. CAUGHT  an unknown setting in the configuration is ignored
+            FAILED (failures=2, skipped=1): test_the_words_of_a_refusal_do_not_carry_unseen_characters_from_the_file, test_what_is_wrong_in_a_file_is_refused
+23. CAUGHT  a project that is not on the allowed list is accepted
+            FAILED (failures=1, skipped=1): test_a_project_that_is_not_allowed
+24. CAUGHT  the shape of a date is not checked
+            FAILED (failures=3, skipped=1): test_a_date_that_is_not_a_date
+25. CAUGHT  digits of other scripts pass for a date: the bug the tests found in the first version
+            FAILED (failures=1, skipped=1): test_a_date_that_is_not_a_date
+26. CAUGHT  a date that is not on the calendar is accepted
+            FAILED (failures=1, skipped=1): test_a_date_that_is_not_a_date
+27. CAUGHT  a parameter may be left out or added
+            FAILED (failures=1, skipped=1): test_a_parameter_missing_extra_or_given_twice
+28. CAUGHT  titles are asked for
+            FAILED (failures=1, skipped=1): test_titles_are_never_asked_for_or_saved
+29. CAUGHT  the connection will send a POST anywhere
+            FAILED (failures=2, skipped=1): test_the_connection_refuses_to_build_anything_else
+30. CAUGHT  the connection will send a GET anywhere
+            FAILED (failures=2, skipped=1): test_the_connection_refuses_to_build_anything_else
+31. CAUGHT  any request is reported as one of the two reads
+            FAILED (failures=2, skipped=1): test_a_request_that_is_not_one_of_the_two_is_not_called_one
+32. CAUGHT  the made-up Jira's switches are accepted for a real Jira
+            FAILED (failures=1, skipped=1): test_the_made_up_jiras_switches_are_refused_for_a_real_one
+33. CAUGHT  the output is not searched for the credentials
+            FAILED (failures=2, skipped=1): test_a_credential_in_the_output_stops_the_output
+34. CAUGHT  the site's address is left in the saved output
+            FAILED (failures=2, skipped=1): test_the_saved_output_has_the_sites_address_taken_out
+35. CAUGHT  names chosen by the site's administrators are saved as they come
+            FAILED (failures=2, skipped=1): test_names_in_other_scripts_are_kept_and_changed_names_are_counted, test_times_are_saved_in_utc_and_names_are_cleaned
+36. CAUGHT  an address with a path or without https is accepted
+            FAILED (failures=8, skipped=1): test_a_base_address_with_a_path_or_without_https_is_refused
+37. CAUGHT  a backslash is allowed in a filter, so a hidden quote can take it out of the project: found by both readers
+            FAILED (failures=2, skipped=1): test_what_the_readers_found_wrong_in_the_reading_of_a_file_is_refused
+38. CAUGHT  more arriving than Jira stated is not a failure
+            FAILED (failures=1, skipped=1): test_more_arriving_than_jira_stated_is_a_mismatch_too
+39. CAUGHT  a page with a status other than 200 is read as a page
+            FAILED (failures=1, skipped=1): test_a_status_that_is_not_200_is_not_a_page_or_a_count_whatever_its_body
+40. CAUGHT  a count with a status other than 200 is read as a count
+            FAILED (failures=1, skipped=1): test_a_status_that_is_not_200_is_not_a_page_or_a_count_whatever_its_body
+41. CAUGHT  a count of `true` is taken for 1
+            FAILED (failures=1, skipped=1): test_a_count_of_true_is_not_one
+42. CAUGHT  an empty page that says there is more is accepted
+            FAILED (failures=2, skipped=1): test_a_failure_on_a_query_that_matches_nothing_is_not_zero, test_an_empty_page_that_says_there_is_more_fails_even_when_nothing_is_skipped
+43. CAUGHT  the same marker given back is accepted
+            FAILED (failures=1, skipped=1): test_the_same_marker_given_back_fails_even_when_the_items_differ
+44. CAUGHT  a page that could not be reached is taken for the end of the pages
+            FAILED (failures=3, skipped=1): test_a_connection_that_drops_is_an_incomplete_run, test_a_failure_on_a_query_that_matches_nothing_is_not_zero
+45. CAUGHT  the last page is believed unless it says exactly `false`
+            FAILED (failures=4, skipped=1): test_is_last_must_be_true_or_absent_when_there_is_no_marker
+46. CAUGHT  two items with one key and different ids are both kept
+            FAILED (failures=1, skipped=1): test_two_items_with_one_key_are_one_item_twice
+47. CAUGHT  an item's id is not checked
+            FAILED (failures=1, errors=1, skipped=1): test_an_item_missing_what_was_asked_for_is_not_saved_as_blanks
+48. CAUGHT  an item missing what was asked for is saved with blanks
+            FAILED (failures=6, skipped=1): test_an_item_missing_what_was_asked_for_is_not_saved_as_blanks
+49. CAUGHT  the items of a page that fails in its middle are counted as arrived
+            FAILED (failures=29, errors=1, skipped=1): test_a_complete_run_replaces_an_older_result, test_a_failure_in_the_middle_of_a_page_counts_only_the_pages_before_it ...
+50. CAUGHT  a count that moved is also called a shortfall
+            FAILED (failures=1, skipped=1): test_a_moved_count_is_not_also_called_a_shortfall
+51. CAUGHT  --log may name the result file, and the result is asked for anyway
+            FAILED (failures=3, skipped=1): test_the_log_and_the_result_cannot_be_the_same_file
+52. CAUGHT  --log may name the result file, and is written over it
+            FAILED (failures=2, skipped=1): test_the_log_and_the_result_cannot_be_the_same_file
+53. CAUGHT  the result is written before the search for credentials
+            FAILED (failures=1, skipped=1): test_a_query_that_names_the_runners_own_email_writes_no_result
+54. CAUGHT  a file name is printed as it comes, line breaks and all
+            FAILED (failures=1, skipped=1): test_a_file_name_with_a_line_break_cannot_forge_a_result_line
+55. CAUGHT  something unforeseen is a crash, not an incomplete run
+            FAILED (errors=1, skipped=1): test_something_unforeseen_is_incomplete_and_not_a_crash
+56. CAUGHT  a real server's refusal is not read for its status
+            FAILED (failures=36, skipped=1): test_a_real_servers_refusals_are_incomplete_runs_and_not_crashes, test_rejected_credentials_are_named
+57. CAUGHT  an answer that is not JSON is a crash
+            FAILED (errors=1, skipped=1): test_an_answer_that_is_not_json_is_not_a_page
+58. CAUGHT  only the token is searched for, not the email address or the encoded form
+            FAILED (failures=2, skipped=1): test_a_query_that_names_the_runners_own_email_writes_no_result, test_every_request_carries_the_sign_in_and_all_three_forms_are_searched_for
+59. CAUGHT  redirects are followed
+            FAILED (failures=1, skipped=1): test_a_redirect_is_not_followed
+60. CAUGHT  the sign-in is not sent
+            FAILED (failures=1, skipped=1): test_every_request_carries_the_sign_in_and_all_three_forms_are_searched_for
+61. CAUGHT  a base address in capitals is refused
+            FAILED (errors=1, skipped=1): test_a_base_address_in_capitals_is_the_same_site
+62. CAUGHT  `parameters` may be given twice in one query
+            FAILED (failures=1, skipped=1): test_what_the_readers_found_wrong_in_the_reading_of_a_file_is_refused
+63. CAUGHT  a value YAML would read as true, false or nothing is taken as text
+            FAILED (failures=2, skipped=1): test_what_the_readers_found_wrong_in_the_reading_of_a_file_is_refused
+64. CAUGHT  `key:value` with no space is read as a setting
+            FAILED (failures=1, skipped=1): test_what_the_readers_found_wrong_in_the_reading_of_a_file_is_refused
+65. CAUGHT  names in other scripts are turned into question marks
+            FAILED (failures=1, skipped=1): test_names_in_other_scripts_are_kept_and_changed_names_are_counted
+66. CAUGHT  unseen characters from the configuration are printed in a refusal
+            FAILED (failures=2, skipped=1): test_a_file_name_with_a_line_break_cannot_forge_a_result_line, test_the_words_of_a_refusal_do_not_carry_unseen_characters_from_the_file
+
+Last, with the copy put back as it was: OK (skipped=1)
+The real tool is byte for byte what it was before: yes
+Git reports the same state of the whole repository as before the run: yes
+
+NOT PLANTED, AND WHY
+  A marker for the next page that is not text, accepted: Jira's answer then comes again and its items are seen to come twice.
+  A page size written 010, accepted by the size check: the reading of the value has already refused it as a number YAML reads differently.
+  A `---` at the top, accepted by its own check: the line is then refused as not being `key: value`.
+  In each, a second check catches what the first lets through, so no test can tell from the outside which one did.
+
+RESULT: 66 OF 66 PLANTED BUGS CAUGHT.

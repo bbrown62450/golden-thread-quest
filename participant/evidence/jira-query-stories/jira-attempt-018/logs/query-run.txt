@@ -1,0 +1,49 @@
+A saved query that spans three pages
+jira-query-stories, attempt jira-attempt-018. Recorded by scripts/record_runs.py.
+Asked of the made-up Jira (skills/jira-query-stories/fake_jira.py) with made-up items. No real Jira was contacted.
+Commands are run from the `participant` folder. RESULTS is a temporary folder, deleted afterwards.
+
+The made-up project's fixture has 40 items, 28 of them stories, counted by this script. The configuration's page size is 10.
+
+$ python3 skills/jira-query-stories/run_query.py run --config context/jira/queries.yaml --project DEMO --source fake --fixture skills/jira-query-stories/fixtures/demo.json --out RESULTS/result.json --query all-stories
+------------------------------------------------------------------------------
+Query: all-stories
+Purpose: Every story in the project, whatever its status, for a full count of stories.
+Asked of: the made-up Jira. No real Jira was contacted
+The query as sent: project = "DEMO" AND (issuetype = Story) ORDER BY key ASC
+Page size asked for: 10
+
+Jira's count before the pages: 28
+  Page 1: 10 items. Jira gave a marker for a further page.
+  Page 2: 10 items. Jira gave a marker for a further page.
+  Page 3: 8 items. Jira gave no marker for a further page.
+Jira's count after the pages:  28
+
+Total Jira stated:  28
+Items received:     28
+Pages answered:     3
+Items saved locally: 28, in the file given with --out: result.json
+
+RESULT: COMPLETE. Jira stated 28, 28 were saved, in 3 pages, and the last page said it was the last.
+COMPLETE means: every page was answered, no item came twice, every item is in the project, and the number
+saved equals Jira's count before and after. It does not mean nothing changed in Jira during the run: one item
+leaving the query while another joins it would leave every one of those checks passing.
+
+Requests sent to Jira: 5. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x3
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x2
+------------------------------------------------------------------------------
+exit code: 0
+What is in RESULTS now: result.json
+  ok   the exit code is 0
+  ok   the output gives the page count: 3
+  ok   the output gives the total Jira stated: 28
+  ok   the output gives the number saved locally: 28
+  ok   the results folder holds the result file and nothing else
+  ok   the file holds every story of the made-up project, each once, read from the fixture and compared key by key
+  ok   the file itself records 3 pages, the total stated and the number saved
+  ok   the file has no `summary` field and none of the fixture's made-up titles. (That titles are not ASKED for is a test, not this check.)
+
+WHAT THIS DOES NOT SHOW. That a real Jira pages this way. The made-up Jira is a model of it.
+
+RESULT: ALL CHECKS PASSED. 8 checks.

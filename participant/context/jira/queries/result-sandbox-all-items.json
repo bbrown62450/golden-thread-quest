@@ -1,0 +1,218 @@
+{
+ "complete": true,
+ "format": "jira-query-stories/1",
+ "items": [
+  {
+   "id": "10000",
+   "issuetype": "Task",
+   "key": "SCRUM-1",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-27T00:56:59Z"
+  },
+  {
+   "id": "10001",
+   "issuetype": "Story",
+   "key": "SCRUM-2",
+   "status": "In Progress",
+   "status_category": "indeterminate",
+   "updated": "2026-11-10T20:02:32Z"
+  },
+  {
+   "id": "10002",
+   "issuetype": "Task",
+   "key": "SCRUM-3",
+   "status": "In Progress",
+   "status_category": "indeterminate",
+   "updated": "2026-11-10T20:02:31Z"
+  },
+  {
+   "id": "10003",
+   "issuetype": "Subtask",
+   "key": "SCRUM-4",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T20:02:31Z"
+  },
+  {
+   "id": "10004",
+   "issuetype": "Story",
+   "key": "SCRUM-5",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T20:36:35Z"
+  },
+  {
+   "id": "10005",
+   "issuetype": "Story",
+   "key": "SCRUM-6",
+   "status": "In Progress",
+   "status_category": "indeterminate",
+   "updated": "2026-11-10T20:36:34Z"
+  },
+  {
+   "id": "10006",
+   "issuetype": "Story",
+   "key": "SCRUM-7",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T20:36:34Z"
+  },
+  {
+   "id": "10007",
+   "issuetype": "Story",
+   "key": "SCRUM-8",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T20:15:07Z"
+  },
+  {
+   "id": "10008",
+   "issuetype": "Story",
+   "key": "SCRUM-9",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T20:36:33Z"
+  },
+  {
+   "id": "10009",
+   "issuetype": "Story",
+   "key": "SCRUM-10",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T20:36:33Z"
+  },
+  {
+   "id": "10010",
+   "issuetype": "Story",
+   "key": "SCRUM-11",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T21:02:39Z"
+  },
+  {
+   "id": "10011",
+   "issuetype": "Story",
+   "key": "SCRUM-12",
+   "status": "In Progress",
+   "status_category": "indeterminate",
+   "updated": "2026-11-10T21:02:38Z"
+  },
+  {
+   "id": "10012",
+   "issuetype": "Story",
+   "key": "SCRUM-13",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T21:02:37Z"
+  },
+  {
+   "id": "10013",
+   "issuetype": "Story",
+   "key": "SCRUM-14",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T20:44:15Z"
+  },
+  {
+   "id": "10014",
+   "issuetype": "Story",
+   "key": "SCRUM-15",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T21:02:37Z"
+  },
+  {
+   "id": "10015",
+   "issuetype": "Story",
+   "key": "SCRUM-16",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T21:02:36Z"
+  },
+  {
+   "id": "10016",
+   "issuetype": "Story",
+   "key": "SCRUM-17",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T21:09:12Z"
+  },
+  {
+   "id": "10017",
+   "issuetype": "Story",
+   "key": "SCRUM-18",
+   "status": "In Progress",
+   "status_category": "indeterminate",
+   "updated": "2026-11-10T21:09:13Z"
+  },
+  {
+   "id": "10018",
+   "issuetype": "Story",
+   "key": "SCRUM-19",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T21:02:41Z"
+  },
+  {
+   "id": "10019",
+   "issuetype": "Story",
+   "key": "SCRUM-20",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T21:09:14Z"
+  },
+  {
+   "id": "10020",
+   "issuetype": "Story",
+   "key": "SCRUM-21",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T21:08:13Z"
+  },
+  {
+   "id": "10021",
+   "issuetype": "Story",
+   "key": "SCRUM-22",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-10T21:09:14Z"
+  },
+  {
+   "id": "10022",
+   "issuetype": "Story",
+   "key": "SCRUM-23",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-19T21:34:26Z"
+  },
+  {
+   "id": "10023",
+   "issuetype": "Subtask",
+   "key": "SCRUM-24",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-26T02:11:53Z"
+  },
+  {
+   "id": "10024",
+   "issuetype": "Task",
+   "key": "SCRUM-25",
+   "status": "To Do",
+   "status_category": "new",
+   "updated": "2026-11-27T00:56:59Z"
+  }
+ ],
+ "page_size": 10,
+ "pages": 3,
+ "parameters": {},
+ "project": "SCRUM",
+ "purpose": "Every item in the project, to check that the count of the whole project is right.",
+ "query": "all-items",
+ "query_as_sent": "project = \"SCRUM\" AND (created >= \"1970-01-01\") ORDER BY key ASC",
+ "saved": 25,
+ "site_fingerprint": "4aabe3d08fbad6b1",
+ "source": "live",
+ "taken_at": "2026-11-27T19:00:23Z",
+ "total_jira_stated": 25
+}
