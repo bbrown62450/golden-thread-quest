@@ -728,9 +728,10 @@ attempts:
   quest_id: jira-next-work
   quest_version: 1
   content_hash: sha256:06f87b0ccf0c3d715af793ace01c13c9494244cea786a140f4cb55ab3ec803e8
-  state: submitted
+  state: verified
   started_at: '2026-11-27T01:16:45Z'
-  updated_at: '2026-11-27T14:54:24Z'
+  updated_at: '2026-11-27T15:06:02Z'
   evidence_path: participant/evidence/jira-next-work/jira-attempt-017
   submission_id: submission-20261127145424-fdd4b0
-updated_at: '2026-11-27T14:54:24Z'
+  review_id: review-20261127150602-bc3532
+updated_at: '2026-11-27T15:06:02Z'
