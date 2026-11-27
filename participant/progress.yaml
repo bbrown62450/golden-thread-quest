@@ -748,9 +748,10 @@ attempts:
   quest_id: jira-read-comments-history
   quest_version: 1
   content_hash: sha256:282455ae6129904e43100d198bc012ee8c37df4df9e1674c621ca7dd2276e482
-  state: submitted
+  state: verified
   started_at: '2026-11-27T19:46:35Z'
-  updated_at: '2026-11-27T20:22:32Z'
+  updated_at: '2026-11-27T20:34:40Z'
   evidence_path: participant/evidence/jira-read-comments-history/jira-attempt-019
   submission_id: submission-20261127202232-ebcf26
-updated_at: '2026-11-27T20:22:32Z'
+  review_id: review-20261127203440-f72b2c
+updated_at: '2026-11-27T20:34:40Z'

@@ -1,0 +1,31 @@
+schema_version: 1
+review_id: review-20261127203440-f72b2c
+quest_id: jira-read-comments-history
+quest_version: 1
+attempt_id: jira-attempt-019
+evidence_hash: sha256:37cb70f4c174c4765f21fdacf2701f8715d09530dab2775f3c7b77da1141d70d
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-27T20:34:40Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/jira/comments-sample.md
+  digest: sha256:29b9ffd25e4d3cb73395767699eca4c198c7bbdb114fd829fee0682b089f56af
+- path: participant/context/jira/history-rules.md
+  digest: sha256:e7f290aac7df20a82c7b6b5db38547597cc8b0922fc9ac86a5d4edd3f2a99b5d
+verification_statement: 'Automated review. I read PROOF.md, history-rules.md, comments-sample.md,
+  sync-twice.txt, notes-intact.txt, the live-sync records, the tests and planted-bug
+  records, and the record_syncs.py script. The records agree with each other: - **Comment
+  counts:** there are 5 comments. After one is added and one is deleted, Jira lists
+  5 and the copy holds 6, one of them marked. - **History counts:** 14 entries become
+  16, material changes go from 7 to 8, and rank goes from x2 to x3. - **File checksums:**
+  the copy and the page keep the same checksum between syncs 1 and 2 (9d5a…, 04af…)
+  and between syncs 3 and 4 (f894…, 6754…). - **Notes checksum:** the notes sha256
+  (36032fe3…) is the same everywhere. - **The sample page:** comments-sample.md matches
+  the final state after sync 3. The tested behaviour ran against a made-up Jira, which
+  is a local fixture the quest allows. The quest names the folder attempt-001, but
+  the files shown are in jira-attempt-019. PROOF.md says the required files were copied
+  to attempt-001, and the automatic pre-check found every required file present. Nothing
+  in the evidence addresses the reviewer. Each of the 7 acceptance criteria was matched
+  to text quoted word for word from the evidence.'
