@@ -1,0 +1,151 @@
+{
+ "files": {
+  "page": "hierarchy.md",
+  "records": "hierarchy.json"
+ },
+ "format": "jira-hierarchy/1",
+ "items": [
+  {
+   "estimate_seconds": null,
+   "id": "30001",
+   "key": "DEMO-1",
+   "level": 1,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Epic"
+  },
+  {
+   "estimate_seconds": 28800,
+   "id": "30002",
+   "key": "DEMO-2",
+   "level": 0,
+   "parent_id": "30001",
+   "parent_key": "DEMO-1",
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": 18000,
+   "id": "30003",
+   "key": "DEMO-3",
+   "level": 0,
+   "parent_id": "30001",
+   "parent_key": "DEMO-1",
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": 10800,
+   "id": "30004",
+   "key": "DEMO-4",
+   "level": 0,
+   "parent_id": "30001",
+   "parent_key": "DEMO-1",
+   "subtask": false,
+   "type": "Task"
+  },
+  {
+   "estimate_seconds": 7200,
+   "id": "30005",
+   "key": "DEMO-5",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Task"
+  },
+  {
+   "estimate_seconds": 10800,
+   "id": "30006",
+   "key": "DEMO-6",
+   "level": -1,
+   "parent_id": "30002",
+   "parent_key": "DEMO-2",
+   "subtask": true,
+   "type": "Subtask"
+  },
+  {
+   "estimate_seconds": 7200,
+   "id": "30007",
+   "key": "DEMO-70",
+   "level": -1,
+   "parent_id": "30003",
+   "parent_key": "DEMO-3",
+   "subtask": true,
+   "type": "Subtask"
+  },
+  {
+   "estimate_seconds": 14400,
+   "id": "30008",
+   "key": "DEMO-8",
+   "level": -1,
+   "parent_id": "30003",
+   "parent_key": "DEMO-3",
+   "subtask": true,
+   "type": "Subtask"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "30009",
+   "key": "DEMO-9",
+   "level": -1,
+   "parent_id": "30004",
+   "parent_key": "DEMO-4",
+   "subtask": true,
+   "type": "Subtask"
+  },
+  {
+   "estimate_seconds": 21600,
+   "id": "30010",
+   "key": "DEMO-10",
+   "level": 0,
+   "parent_id": "40003",
+   "parent_key": "OTHER-3",
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": 3600,
+   "id": "30011",
+   "key": "DEMO-11",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Bug"
+  }
+ ],
+ "links": [
+  {
+   "from_id": "30003",
+   "from_key": "DEMO-3",
+   "id": "50001",
+   "phrase": "blocks",
+   "to_id": "30005",
+   "to_key": "DEMO-5",
+   "type": "Blocks"
+  },
+  {
+   "from_id": "30002",
+   "from_key": "DEMO-2",
+   "id": "50002",
+   "phrase": "relates to",
+   "to_id": "30011",
+   "to_key": "DEMO-11",
+   "type": "Relates"
+  },
+  {
+   "from_id": "30008",
+   "from_key": "DEMO-8",
+   "id": "50003",
+   "phrase": "blocks",
+   "to_id": "40009",
+   "to_key": "OTHER-9",
+   "type": "Blocks"
+  }
+ ],
+ "project": "DEMO",
+ "site_fingerprint": null,
+ "source": "fake"
+}

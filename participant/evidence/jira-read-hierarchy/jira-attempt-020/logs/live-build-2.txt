@@ -1,0 +1,60 @@
+Project: SCRUM
+Read from: a real Jira, site fingerprint 4aabe3d08fbad6b1
+The project was read twice, 1 page each time, and the two readings agree. Jira's own count, before and after: 25. Items read: 25.
+
+ITEMS: 25. By type: 20 Story, 2 Subtask, 3 Task.
+Of epic, story, task and subtask: here are story, task, subtask; NOT here: epic.
+  (An epic and a subtask are known by Jira's own mark for them. A story and a task are known by those two English names.)
+Each item's parent is recorded by the parent's number. Jira names a parent for 1, and names none for 24.
+
+UNRESOLVED LINKS: 0.
+
+SHAPES JIRA DOES NOT USUALLY ALLOW, kept as given: 1.
+  SCRUM-4 [10003] is a Subtask, and Jira names no parent for it. It is shown with no parent because none was given, not because it is known to have none
+
+THE TREE, built from the numbers alone:
+  SCRUM-1 [10000] Task. Own estimate: no estimate; with all 1 beneath: no estimate on any of the 2
+    SCRUM-24 [10023] Subtask. Own estimate: no estimate
+  SCRUM-2 [10001] Story. Own estimate: no estimate
+  SCRUM-3 [10002] Task. Own estimate: no estimate
+  SCRUM-4 [10003] Subtask. Own estimate: no estimate
+  SCRUM-5 [10004] Story. Own estimate: no estimate
+  SCRUM-6 [10005] Story. Own estimate: no estimate
+  SCRUM-7 [10006] Story. Own estimate: no estimate
+  SCRUM-8 [10007] Story. Own estimate: no estimate
+  SCRUM-9 [10008] Story. Own estimate: no estimate
+  SCRUM-10 [10009] Story. Own estimate: no estimate
+  SCRUM-11 [10010] Story. Own estimate: no estimate
+  SCRUM-12 [10011] Story. Own estimate: no estimate
+  SCRUM-13 [10012] Story. Own estimate: no estimate
+  SCRUM-14 [10013] Story. Own estimate: no estimate
+  SCRUM-15 [10014] Story. Own estimate: no estimate
+  SCRUM-16 [10015] Story. Own estimate: no estimate
+  SCRUM-17 [10016] Story. Own estimate: no estimate
+  SCRUM-18 [10017] Story. Own estimate: no estimate
+  SCRUM-19 [10018] Story. Own estimate: no estimate
+  SCRUM-20 [10019] Story. Own estimate: no estimate
+  SCRUM-21 [10020] Story. Own estimate: no estimate
+  SCRUM-22 [10021] Story. Own estimate: no estimate
+  SCRUM-23 [10022] Story. Own estimate: no estimate
+  SCRUM-25 [10024] Task. Own estimate: no estimate
+Estimates, added up by this tool. Under retrieved parents or under none: no estimate on any of the 25. Under parents not retrieved, added to no one: no items.
+Checksum of the tree: 3e77c66de28fcfa5
+
+LINKS THAT ARE NOT PARENT LINKS: 1. Not used to build the tree.
+  SCRUM-1 [10000] blocks SCRUM-25 [10024]
+
+COMPARED WITH THE RECORDS ON DISK, by number: 0 moved, 0 with a new key, 0 new, 0 no longer returned, 0 of another type.
+
+FILES, in the folder given with --out-dir.
+  the records  hierarchy-sandbox.json   before 78a22644b5d7c112   after 78a22644b5d7c112   not written: byte for byte the same
+  the page     hierarchy-sandbox.md     before eb9714e1425b985a   after eb9714e1425b985a   not written: byte for byte the same
+
+RESULT: BUILT. 25 items, 0 unresolved links, tree checksum 3e77c66de28fcfa5. The files are the same as before: nothing was written.
+
+Requests sent to Jira: 4. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET /rest/api/3/search/jql  x2
+  POST /rest/api/3/search/approximate-count  x2
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

@@ -1,0 +1,115 @@
+test_a_long_chain_with_no_loop_is_a_tree (tests.test_hierarchy.ALoopOrASelfParentIsRejected) ... ok
+test_a_loop_met_from_outside_it_is_written_the_same_way_starting_at_its_lowest_number (tests.test_hierarchy.ALoopOrASelfParentIsRejected) ... ok
+test_a_loop_of_three_names_every_item_in_it (tests.test_hierarchy.ALoopOrASelfParentIsRejected) ... ok
+test_a_number_or_a_key_held_by_two_items (tests.test_hierarchy.ALoopOrASelfParentIsRejected) ... ok
+test_an_item_that_is_its_own_parent (tests.test_hierarchy.ALoopOrASelfParentIsRejected) ... ok
+test_an_older_build_is_left_as_it_was_and_called_older (tests.test_hierarchy.ALoopOrASelfParentIsRejected) ... ok
+test_loops_of_every_size_and_two_at_once (tests.test_hierarchy.ALoopOrASelfParentIsRejected) ... ok
+test_the_tree_command_rejects_them_too_from_a_records_file (tests.test_hierarchy.ALoopOrASelfParentIsRejected) ... ok
+test_a_new_item_an_item_gone_and_a_change_of_type_are_printed (tests.test_hierarchy.AMovedItem) ... ok
+test_it_is_matched_by_its_number_and_the_move_is_printed (tests.test_hierarchy.AMovedItem) ... ok
+test_it_is_under_its_new_parent_and_not_under_the_old (tests.test_hierarchy.AMovedItem) ... ok
+test_its_estimate_is_counted_once_the_scenario (tests.test_hierarchy.AMovedItem) ... ok
+test_moved_and_given_a_new_key_at_once_is_still_the_same_item (tests.test_hierarchy.AMovedItem) ... ok
+test_moved_to_no_parent_and_moved_under_a_parent_not_retrieved (tests.test_hierarchy.AMovedItem) ... ok
+test_it_is_not_shown_as_an_item_with_no_parent (tests.test_hierarchy.AParentThatWasNotRetrieved) ... ok
+test_none_says_none (tests.test_hierarchy.AParentThatWasNotRetrieved) ... ok
+test_the_item_is_kept_and_listed_as_an_unresolved_link (tests.test_hierarchy.AParentThatWasNotRetrieved) ... ok
+test_when_a_parent_stops_being_returned_its_children_are_kept_as_unresolved (tests.test_hierarchy.AParentThatWasNotRetrieved) ... ok
+test_an_item_given_a_new_key_keeps_its_children (tests.test_hierarchy.BuiltFromIdentifiers) ... ok
+test_the_children_of_each_item_are_those_whose_parent_number_is_its_number (tests.test_hierarchy.BuiltFromIdentifiers) ... ok
+test_the_tree_does_not_look_at_keys_or_at_the_parents_key (tests.test_hierarchy.BuiltFromIdentifiers) ... ok
+test_two_items_with_the_same_type_and_estimate_are_two_items (tests.test_hierarchy.BuiltFromIdentifiers) ... ok
+test_a_total_of_nothing_is_not_shown_as_zero_hours (tests.test_hierarchy.Estimates)
+Found on the real project: no item had an estimate, and the first version printed 0 h for each total. ... ok
+test_each_item_shows_its_own_and_the_total_of_all_beneath (tests.test_hierarchy.Estimates) ... ok
+test_no_estimate_is_not_zero (tests.test_hierarchy.Estimates) ... ok
+test_what_is_under_a_parent_not_retrieved_is_totalled_apart (tests.test_hierarchy.Estimates) ... ok
+test_a_link_does_not_change_the_tree (tests.test_hierarchy.LinksThatAreNotParentLinks) ... ok
+test_each_link_is_listed_once_though_jira_gives_it_at_both_ends (tests.test_hierarchy.LinksThatAreNotParentLinks) ... ok
+test_the_direction_is_the_same_whichever_end_it_is_read_from (tests.test_hierarchy.LinksThatAreNotParentLinks) ... ok
+test_a_count_that_differs_before_or_after (tests.test_hierarchy.NothingIsWrittenUnlessTheWholeProjectWasRead) ... ok
+test_a_last_page_that_does_not_say_it_is_the_last_with_every_item_there (tests.test_hierarchy.NothingIsWrittenUnlessTheWholeProjectWasRead)
+Every item arrives and the count agrees. Jira still has not said the pages ended. ... ok
+test_a_page_that_fails_in_either_reading (tests.test_hierarchy.NothingIsWrittenUnlessTheWholeProjectWasRead) ... ok
+test_a_status_that_is_not_200_whatever_its_body (tests.test_hierarchy.NothingIsWrittenUnlessTheWholeProjectWasRead) ... ok
+test_an_item_moved_between_the_two_readings (tests.test_hierarchy.NothingIsWrittenUnlessTheWholeProjectWasRead) ... ok
+test_an_item_of_another_project_with_no_links_and_no_children (tests.test_hierarchy.NothingIsWrittenUnlessTheWholeProjectWasRead) ... ok
+test_an_item_that_comes_twice (tests.test_hierarchy.NothingIsWrittenUnlessTheWholeProjectWasRead) ... ok
+test_answers_that_are_not_pages (tests.test_hierarchy.NothingIsWrittenUnlessTheWholeProjectWasRead) ... ok
+test_both_readings_stopping_early_the_same_way_is_caught_by_jiras_count (tests.test_hierarchy.NothingIsWrittenUnlessTheWholeProjectWasRead)
+Three items read twice, the same three. Their children would all be unresolved links, and nothing would say why. ... ok
+test_items_that_cannot_be_read_are_not_guessed_at (tests.test_hierarchy.NothingIsWrittenUnlessTheWholeProjectWasRead) ... ok
+test_jira_that_cannot_be_reached (tests.test_hierarchy.NothingIsWrittenUnlessTheWholeProjectWasRead) ... ok
+test_no_count_or_a_count_that_is_not_a_number (tests.test_hierarchy.NothingIsWrittenUnlessTheWholeProjectWasRead) ... ok
+test_one_reading_that_stops_early (tests.test_hierarchy.NothingIsWrittenUnlessTheWholeProjectWasRead) ... ok
+test_pages_are_all_read (tests.test_hierarchy.NothingIsWrittenUnlessTheWholeProjectWasRead) ... ok
+test_the_same_marker_given_back_and_too_many_pages (tests.test_hierarchy.NothingIsWrittenUnlessTheWholeProjectWasRead) ... ok
+test_a_parent_link_jira_does_not_usually_allow_is_kept_and_pointed_out (tests.test_hierarchy.OtherPeoplesText) ... ok
+test_a_subtask_for_which_jira_names_no_parent_is_pointed_out (tests.test_hierarchy.OtherPeoplesText)
+Found on the real project: a subtask came with no parent. It may have one that Jira did not send. ... ok
+test_a_type_name_with_markup_or_a_table_bar_is_cleaned (tests.test_hierarchy.OtherPeoplesText) ... ok
+test_a_records_file_that_is_a_link_or_has_a_second_name_is_not_written_through (tests.test_hierarchy.TheFilesOnDisk)
+The files linked to are ones this tool wrote, kept elsewhere, so that only the check for a link can refuse. ... ok
+test_a_write_that_fails_leaves_no_temporary_file_and_does_not_say_built (tests.test_hierarchy.TheFilesOnDisk) ... ok
+test_names_and_folders_that_are_not_allowed (tests.test_hierarchy.TheFilesOnDisk) ... ok
+test_records_changed_into_something_else_are_left_alone (tests.test_hierarchy.TheFilesOnDisk) ... ok
+test_records_of_another_project_or_another_jira_are_not_written_over (tests.test_hierarchy.TheFilesOnDisk) ... ok
+test_something_unforeseen_is_a_refusal_and_not_a_crash (tests.test_hierarchy.TheFilesOnDisk) ... ok
+test_the_log_cannot_be_one_of_the_two_files_under_any_spelling_or_name (tests.test_hierarchy.TheFilesOnDisk) ... ok
+test_the_tree_command_with_no_file (tests.test_hierarchy.TheFilesOnDisk) ... ok
+test_a_base_address_that_is_not_https_and_the_sites_name_only (tests.test_hierarchy.TheLiveCommandAsAPersonRunsIt) ... ok
+test_a_credential_in_any_output_stops_the_output_whatever_put_it_there (tests.test_hierarchy.TheLiveCommandAsAPersonRunsIt) ... ok
+test_a_real_servers_refusals_write_nothing (tests.test_hierarchy.TheLiveCommandAsAPersonRunsIt) ... ok
+test_a_token_that_reaches_the_output_stops_the_output (tests.test_hierarchy.TheLiveCommandAsAPersonRunsIt) ... ok
+test_no_credential_or_site_address_is_in_the_output_the_log_or_the_files (tests.test_hierarchy.TheLiveCommandAsAPersonRunsIt) ... ok
+test_only_the_two_reads_are_sent_and_redirects_are_not_followed (tests.test_hierarchy.TheLiveCommandAsAPersonRunsIt) ... ok
+test_the_connection_builds_nothing_else (tests.test_hierarchy.TheLiveCommandAsAPersonRunsIt) ... ok
+test_the_made_up_jiras_folder_is_refused_for_a_real_one_and_no_variables_means_no_request (tests.test_hierarchy.TheLiveCommandAsAPersonRunsIt) ... ok
+test_the_method_reported_is_the_one_the_request_was_built_with (tests.test_hierarchy.TheLiveCommandAsAPersonRunsIt) ... ok
+test_the_saved_output_has_the_sites_address_taken_out (tests.test_hierarchy.TheLiveCommandAsAPersonRunsIt) ... ok
+test_its_own_commands_change_it (tests.test_hierarchy.TheMadeUpJiraItself) ... ok
+test_the_hierarchy_tool_cannot_change_it (tests.test_hierarchy.TheMadeUpJiraItself) ... ok
+test_a_second_build_writes_nothing_and_the_files_are_byte_for_byte_the_same (tests.test_hierarchy.TheSameAcrossTwoRuns) ... ok
+test_no_time_is_written_into_either_file (tests.test_hierarchy.TheSameAcrossTwoRuns) ... ok
+test_the_order_jira_sends_the_items_in_does_not_matter (tests.test_hierarchy.TheSameAcrossTwoRuns) ... ok
+test_the_page_is_put_right_from_the_records_if_it_was_changed (tests.test_hierarchy.TheSameAcrossTwoRuns) ... ok
+test_the_tree_command_gives_the_same_output_twice_and_the_builds_checksum (tests.test_hierarchy.TheSameAcrossTwoRuns) ... ok
+test_all_four_kinds_are_there_and_a_missing_one_is_named (tests.test_hierarchy.TypeAndParentByIdentifier) ... ok
+test_each_item_has_its_type_and_its_parents_number_as_jira_gave_them (tests.test_hierarchy.TypeAndParentByIdentifier) ... ok
+test_no_title_is_asked_for_or_kept (tests.test_hierarchy.TypeAndParentByIdentifier) ... ok
+test_the_four_kinds_are_known_by_jiras_mark_or_by_name (tests.test_hierarchy.TypeAndParentByIdentifier) ... ok
+test_the_index_has_a_row_for_every_item_with_identifier_type_and_parent_identifier (tests.test_hierarchy.TypeAndParentByIdentifier) ... ok
+test_a_chain_far_deeper_than_any_real_project_is_still_a_tree (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_a_link_described_differently_at_its_two_ends_or_naming_two_items (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_a_link_that_changes_between_the_two_readings (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_a_new_key_on_a_parent_is_not_a_move_of_its_children (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_a_number_with_a_leading_zero_is_not_another_number_and_is_refused (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_a_page_name_that_is_already_someone_elses_file_is_refused (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_a_page_that_cannot_be_written_after_the_records_were_does_not_say_nothing_was_written (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_a_project_that_is_not_a_key_is_refused_before_jira_is_asked (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_a_request_is_given_thirty_seconds_and_no_longer (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_a_type_that_looks_like_an_address_does_not_come_out_as_one (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_after_a_move_the_printed_tree_has_the_item_under_the_new_parent_only (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_an_empty_page_that_says_there_is_more_when_every_item_still_arrives (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_an_estimate_that_is_a_fraction_is_refused (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_children_are_in_the_order_of_their_numbers_not_of_their_text (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_hours_are_written_as_plain_numbers_however_large (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_many_items_are_checked_in_a_time_that_does_not_square (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_names_of_links_are_other_peoples_text_too_and_a_key_that_is_not_a_key_is_not_kept (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_records_with_text_that_could_forge_a_line_are_refused_by_tree_and_by_build (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_the_files_can_be_read_by_others_as_ordinary_files_can (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_the_four_kinds_go_by_jiras_mark_where_there_is_one (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_the_log_will_not_be_written_over_a_file_that_is_not_one_of_its_outputs (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_the_marker_given_back_is_refused_for_that_reason (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_the_output_says_for_how_many_items_jira_names_a_parent (tests.test_hierarchy.WhatTheReadersFound) ... ok
+test_the_printed_tree_is_the_same_when_every_key_is_another_key (tests.test_hierarchy.WhatTheReadersFound)
+Criterion 2, on what is printed: the nesting, read by the numbers, does not move when the keys do. ... ok
+test_the_printed_tree_sets_each_item_in_under_its_parent (tests.test_hierarchy.WhatTheReadersFound)
+The tests looked at the tree as the tool holds it. A tree printed flat would have passed them all. ... ok
+test_the_tree_command_will_not_read_a_folder_or_a_pipe (tests.test_hierarchy.WhatTheReadersFound) ... ok
+
+----------------------------------------------------------------------
+Ran 103 tests in 0.322s
+
+OK

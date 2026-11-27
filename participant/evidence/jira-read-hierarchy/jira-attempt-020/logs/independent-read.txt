@@ -1,0 +1,125 @@
+Independent reads of the work. jira-read-hierarchy, attempt jira-attempt-020
+Written by hand by the AI assistant, 2026-11-27, from the two readers' replies. The readers were AI assistants, not people.
+
+HOW THE READS WERE MADE
+  Two fresh AI assistants, each started with no knowledge of this session. Each was given a copy, in a temporary folder
+  outside the repository, of: the quest text, the tool, the made-up Jira, the tests, the two samples, the records and
+  the scripts. Each was told to read only, to contact no network service, and to write only in a temporary folder.
+  The version they read had 74 tests passing and 56 of 56 planted bugs caught. It already had the two changes made
+  after the first real run (a subtask with no parent pointed out; a total of nothing not printed as 0 h). The real
+  run's records in their copy were from before those two changes, and both readers said so. PROOF.md had not been
+  written, and neither saw it.
+  Reader 1 was asked to break the tool. Reader 2 was asked whether the records and tests show what they say.
+
+==============================================================================
+READER 1: TRYING TO BREAK THE TOOL
+  It said it found no blocking defect. It reproduced most of what follows by running the copy.
+
+  HIGHER
+  1. NAME.md is written over with no check that it is the tool's own. In a folder holding someone's README.md,
+     `--name readme` replaced that file. The records file beside it was checked; the page was not.
+     CHANGED: a page of that name with no records beside it must begin as this tool's pages begin, or the build is
+     refused before Jira is asked.
+  2. The real sample and the live records did not match the tool as it then was.
+     TRUE. They were made before the two changes named above. The participant ran the real build again with the
+     final tool. The earlier records are kept in logs/before-readers/.
+  3. `tree` printed the key, type and link names from a records file as they came. A key with a line break in it put
+     a forged RESULT line and an escape sequence into the output. A records file changed on disk did the same to
+     `build`, through the comparison with earlier records.
+     CHANGED: every field of every item and link in a records file is checked to be what the tool writes, before
+     anything is printed. A file that fails is refused whole.
+  4. A missing estimate was still shown as 0 h in the summary line, when one of its two groups had none.
+     CHANGED: each group is totalled with the same words as the tree: "no estimate on any of the N", or "no items".
+  5. The site fingerprint is an unsalted hash.            NOT CHANGED. Earlier quests use the same. A limitation.
+
+  LOWER
+  6. A chain deeper than about 990 could not be built.    CHANGED: the tree is added up and printed without one
+     function calling itself. A test builds a chain of 3,000.
+  7. Numbers with leading zeros: compared as text, sorted as numbers. "7" with parent "07" was accepted as an
+     unresolved link.                                     CHANGED: a number is accepted only as a number is written.
+  8. Negative estimates accepted by `tree`; large totals printed with an exponent.   CHANGED: both.
+  9. A link described differently at its two ends kept as first seen; a link naming two items read as naming one.
+                                                          CHANGED: both refuse the build.
+  10. "All four are here" for a type merely named Epic at the level of a story.
+                                                          CHANGED: where Jira gives its own mark, the mark decides.
+      A site whose story and task have other names gets a false "NOT here".   NOT CHANGED. The output now says how
+      each kind is known. A limitation.
+  11. A type named like a web address came out as one on the page.   CHANGED: dots and slashes are replaced, and
+      type and link names are set as code on the page.
+  12. --log wrote over any plain file, the made-up Jira's own file among them.   CHANGED: a file already there is
+      written over only if it begins as an output of this tool begins.
+  13. `tree --records` given a pipe waited for ever.      CHANGED: refused unless it is a plain file.
+  14. Records that passed the check and lacked a field ended as "did not foresee", with advice that did not fit.
+                                                          CHANGED by 3, and the advice now fits the command.
+  15. If the page could not be written after the records were, the refusal also said nothing was written.   CHANGED.
+  16. The files were readable by their owner only; and with the made-up Jira a third file is saved.
+                                                          CHANGED: ordinary permissions; the description says so.
+  17. The check for loops took four seconds at 20,000 items.   CHANGED: it no longer grows with the square.
+
+  ON THE READINGS AND THE COUNT, reasoned only: an item hidden from the account, archived, or not yet indexed is
+  missed by all four requests alike. A parent left out of an answer cannot be told from no parent.
+  NOT CHANGED. Both are limitations, and the second is why a subtask with no parent is pointed out.
+
+  WHAT IT LOOKED FOR AND DID NOT FIND
+    A loop or self-parent accepted. An item in two places, or dropped. A missing parent shown as a root. Output that
+    differs between runs. A total counted twice, or items under a missing parent leaking into the main total. A link
+    used for the tree, or turned round. A title, person, credential or the site's address in the files or the log.
+    A third kind of request, or a way to change the query. A way past the checks for links and second names.
+
+==============================================================================
+READER 2: DO THE RECORDS AND TESTS SHOW WHAT THEY SAY
+  ON THE CRITERIA. It found criteria 1, 3, 4, 5, 6 and 7 shown, most of them on the made-up Jira only, which is true
+  and is in PROOF.md. It found CRITERION 2 ASSERTED AND NOT SHOWN: in the made-up project the keys and the numbers
+  run in step, so a tool that built the tree from keys would have printed the same; and the moved item kept its key,
+  so the record could not tell matching by number from matching by key.
+  CHANGED: the record now makes a copy of the records with every key replaced, builds the tree from it, and compares
+  the nesting read from the printed tree. The moved item is also given a new key.
+
+  CHECKS IN THE RECORD THAT CLAIMED MORE THAN THEY TESTED
+    "BUILT FROM IDENTIFIERS": a check that page and records agree; it could not fail for a tree built from keys.
+        CHANGED: relabelled as what it is, and the scrambled-key check added beside it.
+    "UNDER ITS NEW PARENT": placement was tested on the records, not on the page.
+        CHANGED: read from the indentation of the tree on the page.
+    "MATCHED BY ITS IDENTIFIER": tested the tool's own sentence, with an unchanged key.   CHANGED: the key changes.
+    "AN UNRESOLVED LINK ... is not among the items read": never checked that the number is absent.   CHANGED.
+    "THE SCENARIO (13 h to 11 h)": the before figures were typed into the label.   CHANGED: read from the page
+        before the move.
+    A header said "attempt jira-attempt-020" where the quest says attempt-001.   NOT CHANGED: that is the folder
+        the application made. The copies folder has a note.
+
+  TESTS THAT WERE WEAK
+    The tree was tested as the tool holds it, never as it is printed.   CHANGED: tests read the printed tree back.
+    The index test looked at 2 rows of 11.                               CHANGED: all 11.
+    A test of a new key never required "0 moved".                        CHANGED.
+    "A token that reaches the output stops the output" did not look at the files, and by reading the code they were
+    written before the search.                                           CHANGED: the search is first; the test looks.
+
+  MISTAKES IT MADE IN A COPY THAT NO TEST NOTICED
+    The tree printed flat. A move judged by the parent's key. Links that differ between the readings accepted. Link
+    names and keys not cleaned or checked. The check of --project removed. The check for an empty page or a marker
+    given back removed. Jira's mark for a subtask ignored. A fraction accepted as an estimate. The count of items
+    with no parent wrong. Numbers ordered as text. No limit on how long a request may wait.
+    CHANGED: a test for each, and each is a planted bug now.
+
+  THE SAMPLE PAGE. It checked the 11 rows, the tree, the totals, the links and the checksum against the records
+  beside it, and found nothing on the page untrue. It noted the page shows the project after the move.
+
+  THE REAL RUN. It listed what a real Jira has never shown this tool: more than one page, an epic, an unresolved
+  parent, a move, an estimate, any refusal. It asked for SCRUM-4, a subtask with no parent, to be explained, and
+  said that if Jira can leave a parent out, "with none: 24" may be wrong.
+  CHANGED: the line now says "Jira names a parent for 1, and names none for 24". I cannot explain SCRUM-4.
+
+  PERSONAL DATA. It found none. It named the project key, the 25 keys and numbers, and the site fingerprint as what
+  remains.
+
+==============================================================================
+AFTER THE CHANGES
+  103 tests pass. 81 of 81 planted bugs are caught, 25 of them added because of these reports. After the changes four
+  bugs that had been caught were missed, because a new check had come to stand in front of an older one; a sharper
+  test was written for each. The record was made again. The participant ran the real build again, twice.
+
+NOT READ AGAIN
+  Neither reader saw the corrected tool, tests, record, samples, SKILL.md or PROOF.md. The changes were checked by the
+  assistant: by tests and by planted bugs.
+
+A person has not read any of this.

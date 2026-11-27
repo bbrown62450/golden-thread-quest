@@ -1,0 +1,13 @@
+schema_version: 1
+submission_id: submission-20261127213956-908839
+quest_id: jira-read-hierarchy
+quest_version: 1
+attempt_id: jira-attempt-020
+content_hash: sha256:e625c09e746ca10f686b0b36c245ea458a06f4b16be3dfef08d835e2159c2401
+evidence_hash: sha256:98454e6b26226400852d6315aaf2e3a3efecfec1ffbb952cee618f60356c8167
+submitted_at: '2026-11-27T21:39:56Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/jira/hierarchy.md
+  digest: sha256:529867f693c2bebfb63c2a324b6a5ef33779a32e75f77934f4af68ea9705595a

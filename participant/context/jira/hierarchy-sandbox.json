@@ -1,0 +1,273 @@
+{
+ "files": {
+  "page": "hierarchy-sandbox.md",
+  "records": "hierarchy-sandbox.json"
+ },
+ "format": "jira-hierarchy/1",
+ "items": [
+  {
+   "estimate_seconds": null,
+   "id": "10000",
+   "key": "SCRUM-1",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Task"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10001",
+   "key": "SCRUM-2",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10002",
+   "key": "SCRUM-3",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Task"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10003",
+   "key": "SCRUM-4",
+   "level": -1,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": true,
+   "type": "Subtask"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10004",
+   "key": "SCRUM-5",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10005",
+   "key": "SCRUM-6",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10006",
+   "key": "SCRUM-7",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10007",
+   "key": "SCRUM-8",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10008",
+   "key": "SCRUM-9",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10009",
+   "key": "SCRUM-10",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10010",
+   "key": "SCRUM-11",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10011",
+   "key": "SCRUM-12",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10012",
+   "key": "SCRUM-13",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10013",
+   "key": "SCRUM-14",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10014",
+   "key": "SCRUM-15",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10015",
+   "key": "SCRUM-16",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10016",
+   "key": "SCRUM-17",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10017",
+   "key": "SCRUM-18",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10018",
+   "key": "SCRUM-19",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10019",
+   "key": "SCRUM-20",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10020",
+   "key": "SCRUM-21",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10021",
+   "key": "SCRUM-22",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10022",
+   "key": "SCRUM-23",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Story"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10023",
+   "key": "SCRUM-24",
+   "level": -1,
+   "parent_id": "10000",
+   "parent_key": "SCRUM-1",
+   "subtask": true,
+   "type": "Subtask"
+  },
+  {
+   "estimate_seconds": null,
+   "id": "10024",
+   "key": "SCRUM-25",
+   "level": 0,
+   "parent_id": null,
+   "parent_key": null,
+   "subtask": false,
+   "type": "Task"
+  }
+ ],
+ "links": [
+  {
+   "from_id": "10000",
+   "from_key": "SCRUM-1",
+   "id": "10000",
+   "phrase": "blocks",
+   "to_id": "10024",
+   "to_key": "SCRUM-25",
+   "type": "Blocks"
+  }
+ ],
+ "project": "SCRUM",
+ "site_fingerprint": "4aabe3d08fbad6b1",
+ "source": "live"
+}

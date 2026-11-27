@@ -1,0 +1,422 @@
+Building the tree of a project: twice the same, a self-parent and a loop rejected, an unresolved link kept, a moved item matched by its number
+jira-read-hierarchy, attempt jira-attempt-020. Recorded by scripts/record_tree.py.
+Read from the made-up Jira (skills/jira-read-hierarchy/fake_jira.py): one made-up project of 11 made-up items. No real Jira was contacted.
+Commands are run from the `participant` folder. JIRA, JIRA-SELF and JIRA-LOOP are temporary folders that hold made-up Jiras, deleted afterwards.
+
+
+==============================================================================
+0. A FRESH MADE-UP PROJECT. The two files a build writes were deleted first, so the first build below is a first build.
+$ python3 skills/jira-read-hierarchy/fake_jira.py new --state JIRA
+------------------------------------------------------------------------------
+The made-up Jira has a fresh made-up project, DEMO, with 11 items.
+------------------------------------------------------------------------------
+exit code: 0
+
+==============================================================================
+1. THE FIRST BUILD
+$ python3 skills/jira-read-hierarchy/hierarchy.py build --source fake --project DEMO --out-dir context/jira --name hierarchy --state JIRA
+------------------------------------------------------------------------------
+Project: DEMO
+Read from: the made-up Jira. No real Jira was contacted
+The project was read twice, 1 page each time, and the two readings agree. Jira's own count, before and after: 11. Items read: 11.
+
+ITEMS: 11. By type: 1 Bug, 1 Epic, 3 Story, 4 Subtask, 2 Task.
+Of epic, story, task and subtask: all four are here.
+Each item's parent is recorded by the parent's number. Jira names a parent for 8, and names none for 3.
+
+UNRESOLVED LINKS: 1.
+  DEMO-10 [30010] names the parent number 40003 (OTHER-3), which is not among the items read. The item is kept, under that number.
+
+THE TREE, built from the numbers alone:
+  DEMO-1 [30001] Epic. Own estimate: no estimate; with all 7 beneath: 25 h (2 of the 8 without an estimate)
+    DEMO-2 [30002] Story. Own estimate: 8 h; with all 2 beneath: 13 h
+      DEMO-6 [30006] Subtask. Own estimate: 3 h
+      DEMO-7 [30007] Subtask. Own estimate: 2 h
+    DEMO-3 [30003] Story. Own estimate: 5 h; with all 1 beneath: 9 h
+      DEMO-8 [30008] Subtask. Own estimate: 4 h
+    DEMO-4 [30004] Task. Own estimate: 3 h; with all 1 beneath: 3 h (1 of the 2 without an estimate)
+      DEMO-9 [30009] Subtask. Own estimate: no estimate
+  DEMO-5 [30005] Task. Own estimate: 2 h
+  DEMO-11 [30011] Bug. Own estimate: 1 h
+  PARENT NOT RETRIEVED: number 40003 (Jira names it OTHER-3). It is not in what was read. Under it:
+    DEMO-10 [30010] Story. Own estimate: 6 h
+Estimates, added up by this tool. Under retrieved parents or under none: 28 h (2 of the 10 without an estimate). Under parents not retrieved, added to no one: 6 h.
+Checksum of the tree: 0770feb7444bed20
+
+LINKS THAT ARE NOT PARENT LINKS: 3. Not used to build the tree.
+  DEMO-3 [30003] blocks DEMO-5 [30005]
+  DEMO-2 [30002] relates to DEMO-11 [30011]
+  DEMO-8 [30008] blocks OTHER-9 [40009]
+
+COMPARED WITH THE RECORDS ON DISK: there were none. This is the first build.
+
+FILES, in the folder given with --out-dir.
+  the records  hierarchy.json           before not there   after 7c63a9f3bf8e6a57   WRITTEN
+  the page     hierarchy.md             before not there   after 6ee9270310b16f69   WRITTEN
+
+RESULT: BUILT. 11 items, 1 unresolved link, tree checksum 0770feb7444bed20. Written.
+
+Requests sent to Jira: 4. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x2
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x2
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the output says 11 items were built into a tree
+  ok   for each of the 11 items the records hold the number, the type and the PARENT'S NUMBER that the made-up Jira has for it, compared item by item (criterion 1)
+  ok   the index on the page has a row for each item with its identifier, key, type and parent identifier
+  ok   an epic, a story, a task and a subtask are all among them (criterion 5)
+  ok   AN UNRESOLVED LINK (criterion 3): no item in the records has the number 40003, which DEMO-10 gives as its parent. DEMO-10 is still in the records and the index, with that parent number, and is listed under Unresolved links
+  ok   in the tree it stands once, set in under a line naming the parent that is missing, and not among the items that have no parent
+  ok   no title is in the records, the page or the output
+
+==============================================================================
+2. BUILT AGAIN FROM UNCHANGED DATA, AND REBUILT TWICE FROM THE RECORDS ALONE
+$ python3 skills/jira-read-hierarchy/hierarchy.py build --source fake --project DEMO --out-dir context/jira --name hierarchy --state JIRA
+------------------------------------------------------------------------------
+Project: DEMO
+Read from: the made-up Jira. No real Jira was contacted
+The project was read twice, 1 page each time, and the two readings agree. Jira's own count, before and after: 11. Items read: 11.
+
+ITEMS: 11. By type: 1 Bug, 1 Epic, 3 Story, 4 Subtask, 2 Task.
+Of epic, story, task and subtask: all four are here.
+Each item's parent is recorded by the parent's number. Jira names a parent for 8, and names none for 3.
+
+UNRESOLVED LINKS: 1.
+  DEMO-10 [30010] names the parent number 40003 (OTHER-3), which is not among the items read. The item is kept, under that number.
+
+THE TREE, built from the numbers alone:
+  DEMO-1 [30001] Epic. Own estimate: no estimate; with all 7 beneath: 25 h (2 of the 8 without an estimate)
+    DEMO-2 [30002] Story. Own estimate: 8 h; with all 2 beneath: 13 h
+      DEMO-6 [30006] Subtask. Own estimate: 3 h
+      DEMO-7 [30007] Subtask. Own estimate: 2 h
+    DEMO-3 [30003] Story. Own estimate: 5 h; with all 1 beneath: 9 h
+      DEMO-8 [30008] Subtask. Own estimate: 4 h
+    DEMO-4 [30004] Task. Own estimate: 3 h; with all 1 beneath: 3 h (1 of the 2 without an estimate)
+      DEMO-9 [30009] Subtask. Own estimate: no estimate
+  DEMO-5 [30005] Task. Own estimate: 2 h
+  DEMO-11 [30011] Bug. Own estimate: 1 h
+  PARENT NOT RETRIEVED: number 40003 (Jira names it OTHER-3). It is not in what was read. Under it:
+    DEMO-10 [30010] Story. Own estimate: 6 h
+Estimates, added up by this tool. Under retrieved parents or under none: 28 h (2 of the 10 without an estimate). Under parents not retrieved, added to no one: 6 h.
+Checksum of the tree: 0770feb7444bed20
+
+LINKS THAT ARE NOT PARENT LINKS: 3. Not used to build the tree.
+  DEMO-3 [30003] blocks DEMO-5 [30005]
+  DEMO-2 [30002] relates to DEMO-11 [30011]
+  DEMO-8 [30008] blocks OTHER-9 [40009]
+
+COMPARED WITH THE RECORDS ON DISK, by number: 0 moved, 0 with a new key, 0 new, 0 no longer returned, 0 of another type.
+
+FILES, in the folder given with --out-dir.
+  the records  hierarchy.json           before 7c63a9f3bf8e6a57   after 7c63a9f3bf8e6a57   not written: byte for byte the same
+  the page     hierarchy.md             before 6ee9270310b16f69   after 6ee9270310b16f69   not written: byte for byte the same
+
+RESULT: BUILT. 11 items, 1 unresolved link, tree checksum 0770feb7444bed20. The files are the same as before: nothing was written.
+
+Requests sent to Jira: 4. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x2
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x2
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the records and the page have the same sha256 after the second build as after the first, taken by this script (criterion 7)
+  ok   both builds print the same checksum of the tree: 0770feb7444bed20
+$ python3 skills/jira-read-hierarchy/hierarchy.py tree --records context/jira/hierarchy.json
+------------------------------------------------------------------------------
+Records: the file given with --records, hierarchy.json. Project DEMO. Nothing is contacted.
+
+ITEMS: 11. By type: 1 Bug, 1 Epic, 3 Story, 4 Subtask, 2 Task.
+Of epic, story, task and subtask: all four are here.
+Each item's parent is recorded by the parent's number. Jira names a parent for 8, and names none for 3.
+
+UNRESOLVED LINKS: 1.
+  DEMO-10 [30010] names the parent number 40003 (OTHER-3), which is not among the items read. The item is kept, under that number.
+
+THE TREE, built from the numbers alone:
+  DEMO-1 [30001] Epic. Own estimate: no estimate; with all 7 beneath: 25 h (2 of the 8 without an estimate)
+    DEMO-2 [30002] Story. Own estimate: 8 h; with all 2 beneath: 13 h
+      DEMO-6 [30006] Subtask. Own estimate: 3 h
+      DEMO-7 [30007] Subtask. Own estimate: 2 h
+    DEMO-3 [30003] Story. Own estimate: 5 h; with all 1 beneath: 9 h
+      DEMO-8 [30008] Subtask. Own estimate: 4 h
+    DEMO-4 [30004] Task. Own estimate: 3 h; with all 1 beneath: 3 h (1 of the 2 without an estimate)
+      DEMO-9 [30009] Subtask. Own estimate: no estimate
+  DEMO-5 [30005] Task. Own estimate: 2 h
+  DEMO-11 [30011] Bug. Own estimate: 1 h
+  PARENT NOT RETRIEVED: number 40003 (Jira names it OTHER-3). It is not in what was read. Under it:
+    DEMO-10 [30010] Story. Own estimate: 6 h
+Estimates, added up by this tool. Under retrieved parents or under none: 28 h (2 of the 10 without an estimate). Under parents not retrieved, added to no one: 6 h.
+Checksum of the tree: 0770feb7444bed20
+
+LINKS THAT ARE NOT PARENT LINKS: 3. Not used to build the tree.
+  DEMO-3 [30003] blocks DEMO-5 [30005]
+  DEMO-2 [30002] relates to DEMO-11 [30011]
+  DEMO-8 [30008] blocks OTHER-9 [40009]
+
+RESULT: THE TREE WAS BUILT from the records. Nothing was written.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 skills/jira-read-hierarchy/hierarchy.py tree --records context/jira/hierarchy.json
+------------------------------------------------------------------------------
+Records: the file given with --records, hierarchy.json. Project DEMO. Nothing is contacted.
+
+ITEMS: 11. By type: 1 Bug, 1 Epic, 3 Story, 4 Subtask, 2 Task.
+Of epic, story, task and subtask: all four are here.
+Each item's parent is recorded by the parent's number. Jira names a parent for 8, and names none for 3.
+
+UNRESOLVED LINKS: 1.
+  DEMO-10 [30010] names the parent number 40003 (OTHER-3), which is not among the items read. The item is kept, under that number.
+
+THE TREE, built from the numbers alone:
+  DEMO-1 [30001] Epic. Own estimate: no estimate; with all 7 beneath: 25 h (2 of the 8 without an estimate)
+    DEMO-2 [30002] Story. Own estimate: 8 h; with all 2 beneath: 13 h
+      DEMO-6 [30006] Subtask. Own estimate: 3 h
+      DEMO-7 [30007] Subtask. Own estimate: 2 h
+    DEMO-3 [30003] Story. Own estimate: 5 h; with all 1 beneath: 9 h
+      DEMO-8 [30008] Subtask. Own estimate: 4 h
+    DEMO-4 [30004] Task. Own estimate: 3 h; with all 1 beneath: 3 h (1 of the 2 without an estimate)
+      DEMO-9 [30009] Subtask. Own estimate: no estimate
+  DEMO-5 [30005] Task. Own estimate: 2 h
+  DEMO-11 [30011] Bug. Own estimate: 1 h
+  PARENT NOT RETRIEVED: number 40003 (Jira names it OTHER-3). It is not in what was read. Under it:
+    DEMO-10 [30010] Story. Own estimate: 6 h
+Estimates, added up by this tool. Under retrieved parents or under none: 28 h (2 of the 10 without an estimate). Under parents not retrieved, added to no one: 6 h.
+Checksum of the tree: 0770feb7444bed20
+
+LINKS THAT ARE NOT PARENT LINKS: 3. Not used to build the tree.
+  DEMO-3 [30003] blocks DEMO-5 [30005]
+  DEMO-2 [30002] relates to DEMO-11 [30011]
+  DEMO-8 [30008] blocks OTHER-9 [40009]
+
+RESULT: THE TREE WAS BUILT from the records. Nothing was written.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the tree rebuilt twice from the records, with no Jira, gives the same output twice, character for character
+  ok   and its checksum is the one the builds printed
+  ok   the tree on the page agrees with the records: under each item are exactly the items whose parent number is its number. This script works that out again from the records and reads the page's indentation, for 5 parents, one of them the parent that is missing
+
+The same records with EVERY KEY CHANGED: each item's key replaced by another, and each parent's key by a wrong one. The numbers are left alone.
+This script makes that copy, in a temporary folder shown as JIRA/scrambled.json. The made-up project's keys and numbers run in step,
+so without this a tree built from keys would look the same as one built from numbers.
+$ python3 skills/jira-read-hierarchy/hierarchy.py tree --records JIRA/scrambled.json
+------------------------------------------------------------------------------
+Records: the file given with --records, scrambled.json. Project DEMO. Nothing is contacted.
+
+ITEMS: 11. By type: 1 Bug, 1 Epic, 3 Story, 4 Subtask, 2 Task.
+Of epic, story, task and subtask: all four are here.
+Each item's parent is recorded by the parent's number. Jira names a parent for 8, and names none for 3.
+
+UNRESOLVED LINKS: 1.
+  ZZ-891 [30010] names the parent number 40003 (QQ-1), which is not among the items read. The item is kept, under that number.
+
+THE TREE, built from the numbers alone:
+  ZZ-900 [30001] Epic. Own estimate: no estimate; with all 7 beneath: 25 h (2 of the 8 without an estimate)
+    ZZ-899 [30002] Story. Own estimate: 8 h; with all 2 beneath: 13 h
+      ZZ-895 [30006] Subtask. Own estimate: 3 h
+      ZZ-894 [30007] Subtask. Own estimate: 2 h
+    ZZ-898 [30003] Story. Own estimate: 5 h; with all 1 beneath: 9 h
+      ZZ-893 [30008] Subtask. Own estimate: 4 h
+    ZZ-897 [30004] Task. Own estimate: 3 h; with all 1 beneath: 3 h (1 of the 2 without an estimate)
+      ZZ-892 [30009] Subtask. Own estimate: no estimate
+  ZZ-896 [30005] Task. Own estimate: 2 h
+  ZZ-890 [30011] Bug. Own estimate: 1 h
+  PARENT NOT RETRIEVED: number 40003 (Jira names it QQ-1). It is not in what was read. Under it:
+    ZZ-891 [30010] Story. Own estimate: 6 h
+Estimates, added up by this tool. Under retrieved parents or under none: 28 h (2 of the 10 without an estimate). Under parents not retrieved, added to no one: 6 h.
+Checksum of the tree: 70a1c6870075aeab
+
+LINKS THAT ARE NOT PARENT LINKS: 3. Not used to build the tree.
+  ZZ-1 [30003] blocks ZZ-2 [30005]
+  ZZ-1 [30002] relates to ZZ-2 [30011]
+  ZZ-1 [30008] blocks ZZ-2 [40009]
+
+RESULT: THE TREE WAS BUILT from the records. Nothing was written.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   BUILT FROM IDENTIFIERS, NOT FROM KEYS OR TITLES (criterion 2): with every key changed, the printed tree nests the same numbers under the same numbers as before
+
+==============================================================================
+3. AN ITEM THAT IS ITS OWN PARENT. A second made-up Jira, JIRA-SELF, the same project with DEMO-5 made its own parent.
+$ python3 skills/jira-read-hierarchy/fake_jira.py new --state JIRA-SELF
+------------------------------------------------------------------------------
+The made-up Jira has a fresh made-up project, DEMO, with 11 items.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 skills/jira-read-hierarchy/fake_jira.py break --state JIRA-SELF --how self
+------------------------------------------------------------------------------
+In the made-up Jira: DEMO-5 was made its own parent.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 skills/jira-read-hierarchy/hierarchy.py build --source fake --project DEMO --out-dir context/jira --name hierarchy --state JIRA-SELF
+------------------------------------------------------------------------------
+Project: DEMO
+Read from: the made-up Jira. No real Jira was contacted
+The project was read twice, 1 page each time, and the two readings agree. Jira's own count, before and after: 11. Items read: 11.
+
+REJECTED: these items do not make a tree.
+  DEMO-5 [30005] is its own parent.
+Nothing was written. A tree with the loop cut out of it would look like a whole tree.
+The records already on disk are from an earlier build. They were left as they were. THEY ARE NOT THIS BUILD'S.
+
+Requests sent to Jira: 4. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x2
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x2
+------------------------------------------------------------------------------
+exit code: 2
+  ok   REJECTED (criterion 6): exit code 2, the item is named, and there is no RESULT line
+  ok   the files from the earlier build are byte for byte what they were, and the output says they are not this build's
+
+==============================================================================
+4. A LOOP. A third made-up Jira, JIRA-LOOP: the epic DEMO-1 put under the subtask DEMO-6, which is under the story DEMO-2, which is under DEMO-1.
+$ python3 skills/jira-read-hierarchy/fake_jira.py new --state JIRA-LOOP
+------------------------------------------------------------------------------
+The made-up Jira has a fresh made-up project, DEMO, with 11 items.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 skills/jira-read-hierarchy/fake_jira.py break --state JIRA-LOOP --how loop
+------------------------------------------------------------------------------
+In the made-up Jira: DEMO-1 was put under DEMO-6, which is under DEMO-2, which is under DEMO-1: a loop.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 skills/jira-read-hierarchy/hierarchy.py build --source fake --project DEMO --out-dir context/jira --name hierarchy --state JIRA-LOOP
+------------------------------------------------------------------------------
+Project: DEMO
+Read from: the made-up Jira. No real Jira was contacted
+The project was read twice, 1 page each time, and the two readings agree. Jira's own count, before and after: 11. Items read: 11.
+
+REJECTED: these items do not make a tree.
+  a loop: DEMO-1 [30001], which is under DEMO-6 [30006], which is under DEMO-2 [30002], which is under DEMO-1 [30001].
+Nothing was written. A tree with the loop cut out of it would look like a whole tree.
+The records already on disk are from an earlier build. They were left as they were. THEY ARE NOT THIS BUILD'S.
+
+Requests sent to Jira: 4. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x2
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x2
+------------------------------------------------------------------------------
+exit code: 2
+  ok   REJECTED (criterion 6): exit code 2, and the loop is named once with all three items in it
+  ok   the files from the earlier build are byte for byte what they were
+
+==============================================================================
+5. AN ITEM IS MOVED IN THE MADE-UP JIRA, AND GIVEN ANOTHER KEY: the subtask DEMO-7, from under the story DEMO-2 to under the story DEMO-3, and now called DEMO-70.
+$ python3 skills/jira-read-hierarchy/fake_jira.py move --state JIRA --key DEMO-7 --under DEMO-3
+------------------------------------------------------------------------------
+In the made-up Jira: DEMO-7 was moved under DEMO-3.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 skills/jira-read-hierarchy/fake_jira.py rekey --state JIRA --key DEMO-7 --to DEMO-70
+------------------------------------------------------------------------------
+In the made-up Jira: DEMO-7 now has the key DEMO-70. Its internal number is the same.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 skills/jira-read-hierarchy/hierarchy.py build --source fake --project DEMO --out-dir context/jira --name hierarchy --state JIRA
+------------------------------------------------------------------------------
+Project: DEMO
+Read from: the made-up Jira. No real Jira was contacted
+The project was read twice, 1 page each time, and the two readings agree. Jira's own count, before and after: 11. Items read: 11.
+
+ITEMS: 11. By type: 1 Bug, 1 Epic, 3 Story, 4 Subtask, 2 Task.
+Of epic, story, task and subtask: all four are here.
+Each item's parent is recorded by the parent's number. Jira names a parent for 8, and names none for 3.
+
+UNRESOLVED LINKS: 1.
+  DEMO-10 [30010] names the parent number 40003 (OTHER-3), which is not among the items read. The item is kept, under that number.
+
+THE TREE, built from the numbers alone:
+  DEMO-1 [30001] Epic. Own estimate: no estimate; with all 7 beneath: 25 h (2 of the 8 without an estimate)
+    DEMO-2 [30002] Story. Own estimate: 8 h; with all 1 beneath: 11 h
+      DEMO-6 [30006] Subtask. Own estimate: 3 h
+    DEMO-3 [30003] Story. Own estimate: 5 h; with all 2 beneath: 11 h
+      DEMO-70 [30007] Subtask. Own estimate: 2 h
+      DEMO-8 [30008] Subtask. Own estimate: 4 h
+    DEMO-4 [30004] Task. Own estimate: 3 h; with all 1 beneath: 3 h (1 of the 2 without an estimate)
+      DEMO-9 [30009] Subtask. Own estimate: no estimate
+  DEMO-5 [30005] Task. Own estimate: 2 h
+  DEMO-11 [30011] Bug. Own estimate: 1 h
+  PARENT NOT RETRIEVED: number 40003 (Jira names it OTHER-3). It is not in what was read. Under it:
+    DEMO-10 [30010] Story. Own estimate: 6 h
+Estimates, added up by this tool. Under retrieved parents or under none: 28 h (2 of the 10 without an estimate). Under parents not retrieved, added to no one: 6 h.
+Checksum of the tree: 62f0e73530c3d305
+
+LINKS THAT ARE NOT PARENT LINKS: 3. Not used to build the tree.
+  DEMO-3 [30003] blocks DEMO-5 [30005]
+  DEMO-2 [30002] relates to DEMO-11 [30011]
+  DEMO-8 [30008] blocks OTHER-9 [40009]
+
+COMPARED WITH THE RECORDS ON DISK, by number: 1 moved, 1 with a new key, 0 new, 0 no longer returned, 0 of another type.
+  MOVED: DEMO-70 [30007] was under DEMO-2 [30002], and is now under DEMO-3 [30003].
+  NEW KEY: the item with the number 30007 had the key DEMO-7 and now has DEMO-70. It is the same item.
+
+FILES, in the folder given with --out-dir.
+  the records  hierarchy.json           before 7c63a9f3bf8e6a57   after 35c9a8ee49c7e3e6   WRITTEN
+  the page     hierarchy.md             before 6ee9270310b16f69   after ab7790c8212b833c   WRITTEN
+
+RESULT: BUILT. 11 items, 1 unresolved link, tree checksum 62f0e73530c3d305. Written.
+
+Requests sent to Jira: 4. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x2
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x2
+------------------------------------------------------------------------------
+exit code: 0
+  ok   MATCHED BY ITS IDENTIFIER: the key DEMO-7 is gone and DEMO-70 is new, and the output does not call either an item gone or an item new. It says the item with the number 30007 moved and has a new key
+  ok   the records agree: the same 11 numbers before and after, and under the number 30007 the key and the parent number both changed
+  ok   UNDER ITS NEW PARENT (criterion 4): read from the indentation of the tree on the page, 30007 is set in under 30003, is no longer under 30002, and is in the tree once
+  note Totals of the epic and the two stories, read from the index before the move: 25 h (2 of the 8 without an estimate), 13 h, 9 h. After: 25 h (2 of the 8 without an estimate), 11 h, 11 h.
+  ok   THE SCENARIO: its 2 hours left the old parent (13 h to 11 h) and joined the new (9 h to 11 h), and the epic above both is 25 h before and after. Nothing is counted twice
+  ok   the checksum of the tree changed, as it should when the tree does
+
+==============================================================================
+6. BUILT ONCE MORE FROM UNCHANGED DATA
+$ python3 skills/jira-read-hierarchy/hierarchy.py build --source fake --project DEMO --out-dir context/jira --name hierarchy --state JIRA
+------------------------------------------------------------------------------
+Project: DEMO
+Read from: the made-up Jira. No real Jira was contacted
+The project was read twice, 1 page each time, and the two readings agree. Jira's own count, before and after: 11. Items read: 11.
+
+ITEMS: 11. By type: 1 Bug, 1 Epic, 3 Story, 4 Subtask, 2 Task.
+Of epic, story, task and subtask: all four are here.
+Each item's parent is recorded by the parent's number. Jira names a parent for 8, and names none for 3.
+
+UNRESOLVED LINKS: 1.
+  DEMO-10 [30010] names the parent number 40003 (OTHER-3), which is not among the items read. The item is kept, under that number.
+
+THE TREE, built from the numbers alone:
+  DEMO-1 [30001] Epic. Own estimate: no estimate; with all 7 beneath: 25 h (2 of the 8 without an estimate)
+    DEMO-2 [30002] Story. Own estimate: 8 h; with all 1 beneath: 11 h
+      DEMO-6 [30006] Subtask. Own estimate: 3 h
+    DEMO-3 [30003] Story. Own estimate: 5 h; with all 2 beneath: 11 h
+      DEMO-70 [30007] Subtask. Own estimate: 2 h
+      DEMO-8 [30008] Subtask. Own estimate: 4 h
+    DEMO-4 [30004] Task. Own estimate: 3 h; with all 1 beneath: 3 h (1 of the 2 without an estimate)
+      DEMO-9 [30009] Subtask. Own estimate: no estimate
+  DEMO-5 [30005] Task. Own estimate: 2 h
+  DEMO-11 [30011] Bug. Own estimate: 1 h
+  PARENT NOT RETRIEVED: number 40003 (Jira names it OTHER-3). It is not in what was read. Under it:
+    DEMO-10 [30010] Story. Own estimate: 6 h
+Estimates, added up by this tool. Under retrieved parents or under none: 28 h (2 of the 10 without an estimate). Under parents not retrieved, added to no one: 6 h.
+Checksum of the tree: 62f0e73530c3d305
+
+LINKS THAT ARE NOT PARENT LINKS: 3. Not used to build the tree.
+  DEMO-3 [30003] blocks DEMO-5 [30005]
+  DEMO-2 [30002] relates to DEMO-11 [30011]
+  DEMO-8 [30008] blocks OTHER-9 [40009]
+
+COMPARED WITH THE RECORDS ON DISK, by number: 0 moved, 0 with a new key, 0 new, 0 no longer returned, 0 of another type.
+
+FILES, in the folder given with --out-dir.
+  the records  hierarchy.json           before 35c9a8ee49c7e3e6   after 35c9a8ee49c7e3e6   not written: byte for byte the same
+  the page     hierarchy.md             before ab7790c8212b833c   after ab7790c8212b833c   not written: byte for byte the same
+
+RESULT: BUILT. 11 items, 1 unresolved link, tree checksum 62f0e73530c3d305. The files are the same as before: nothing was written.
+
+Requests sent to Jira: 4. Each was one of the two this tool can build, and neither changes anything in Jira:
+  GET (the made-up Jira) /rest/api/3/search/jql  x2
+  POST (the made-up Jira) /rest/api/3/search/approximate-count  x2
+------------------------------------------------------------------------------
+exit code: 0
+  ok   nothing was written, both files have the same sha256, and the tree's checksum is the same
+  ok   and nothing is reported as moved this time
+
+WHAT THIS DOES NOT SHOW. That a real Jira reports a parent this way, or what it sends when an item is moved. No change was made in a real Jira.
+A real Jira is not supposed to allow a loop or an item that is its own parent; parts 3 and 4 show what the tool does if it is ever sent one.
+
+RESULT: ALL CHECKS PASSED. 24 checks.

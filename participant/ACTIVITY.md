@@ -500,3 +500,8 @@ Every change this application made to your files, newest last.
 - `2026-11-27T20:22:32Z` jira-read-comments-history: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-27T20:22:32Z` Submitted jira-read-comments-history for review as submission-20261127202232-ebcf26.
 - `2026-11-27T20:34:40Z` Review of jira-read-comments-history: approved by Claude (automated reviewer).
+- `2026-11-27T21:05:56Z` Started jira-read-hierarchy as attempt jira-attempt-020.
+- `2026-11-27T21:07:00Z` jira-read-hierarchy: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-27T21:39:15Z` jira-read-hierarchy: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-27T21:39:56Z` jira-read-hierarchy: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-27T21:39:56Z` Submitted jira-read-hierarchy for review as submission-20261127213956-908839.

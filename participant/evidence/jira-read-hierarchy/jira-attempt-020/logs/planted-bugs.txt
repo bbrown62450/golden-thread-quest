@@ -1,0 +1,182 @@
+Planted bugs in a copy of participant/skills/jira-read-hierarchy/hierarchy.py. jira-read-hierarchy, attempt jira-attempt-020
+Recorded by scripts/planted_bugs.py. One bug at a time is planted in a copy of the tool, in a temporary folder, and the tests are run
+against the copy. CAUGHT means at least one test failed. The real tool is not changed.
+
+First, with no bug planted, the tests against the copy: OK
+
+ 1. CAUGHT  an item whose parent was not retrieved is shown as an item with no parent
+            FAILED (failures=9, errors=1): test_a_total_of_nothing_is_not_shown_as_zero_hours, test_it_is_not_shown_as_an_item_with_no_parent ...
+ 2. CAUGHT  an item whose parent was not retrieved is dropped from the tree
+            FAILED (failures=26, errors=30): test_a_base_address_that_is_not_https_and_the_sites_name_only, test_a_link_does_not_change_the_tree ...
+ 3. CAUGHT  children are put in order by key, so the tree depends on keys
+            FAILED (failures=5): test_children_are_in_the_order_of_their_numbers_not_of_their_text, test_moved_to_no_parent_and_moved_under_a_parent_not_retrieved ...
+ 4. CAUGHT  a parent Jira names without a number is taken for no parent
+            FAILED (failures=13): test_a_number_with_a_leading_zero_is_not_another_number_and_is_refused, test_items_that_cannot_be_read_are_not_guessed_at
+ 5. CAUGHT  an item that is its own parent is not rejected
+            FAILED (failures=3): test_an_item_that_is_its_own_parent, test_loops_of_every_size_and_two_at_once ...
+ 6. CAUGHT  a loop is not rejected
+            FAILED (failures=6): test_a_loop_met_from_outside_it_is_written_the_same_way_starting_at_its_lowest_number, test_a_loop_of_three_names_every_item_in_it ...
+ 7. CAUGHT  a loop is named once for every item it is met from
+            FAILED (failures=1): test_a_loop_met_from_outside_it_is_written_the_same_way_starting_at_its_lowest_number
+ 8. CAUGHT  a number or key held by two items is accepted
+            FAILED (failures=1): test_a_number_or_a_key_held_by_two_items
+ 9. CAUGHT  a rejected build exits with 0
+            FAILED (failures=5): test_a_loop_of_three_names_every_item_in_it, test_an_item_that_is_its_own_parent ...
+10. CAUGHT  a rejected build does not say the files on disk are older
+            FAILED (failures=1): test_an_older_build_is_left_as_it_was_and_called_older
+11. CAUGHT  a moved item is not reported
+            FAILED (failures=4): test_it_is_matched_by_its_number_and_the_move_is_printed, test_its_own_commands_change_it ...
+12. CAUGHT  items are matched with the earlier records by key, so one given a new key is a new item and a gone one
+            FAILED (failures=17): test_a_link_does_not_change_the_tree, test_a_new_item_an_item_gone_and_a_change_of_type_are_printed ...
+13. CAUGHT  an estimate is counted twice on the way up: the scenario
+            FAILED (failures=6): test_a_chain_far_deeper_than_any_real_project_is_still_a_tree, test_each_item_shows_its_own_and_the_total_of_all_beneath ...
+14. CAUGHT  an item with no estimate is not counted as lacking one
+            FAILED (failures=5): test_a_total_of_nothing_is_not_shown_as_zero_hours, test_each_item_shows_its_own_and_the_total_of_all_beneath ...
+15. CAUGHT  no estimate is shown as zero hours
+            FAILED (failures=4): test_a_total_of_nothing_is_not_shown_as_zero_hours, test_each_item_shows_its_own_and_the_total_of_all_beneath ...
+16. CAUGHT  what is under a parent not retrieved is added to the main total
+            FAILED (failures=2): test_a_total_of_nothing_is_not_shown_as_zero_hours, test_what_is_under_a_parent_not_retrieved_is_totalled_apart
+17. CAUGHT  an estimate below zero is accepted
+            FAILED (failures=8): test_an_estimate_that_is_a_fraction_is_refused, test_items_that_cannot_be_read_are_not_guessed_at
+18. CAUGHT  a link is listed once for each end it is read from
+            FAILED (failures=3): test_a_link_described_differently_at_its_two_ends_or_naming_two_items, test_a_link_does_not_change_the_tree ...
+19. CAUGHT  a link read from its far end is turned round
+            FAILED (failures=39, errors=30): test_a_base_address_that_is_not_https_and_the_sites_name_only, test_a_last_page_that_does_not_say_it_is_the_last_with_every_item_there ...
+20. CAUGHT  the items are kept in the order Jira sent them
+            FAILED (failures=1): test_the_order_jira_sends_the_items_in_does_not_matter
+21. CAUGHT  the files are written even when nothing changed
+            FAILED (failures=1): test_a_second_build_writes_nothing_and_the_files_are_byte_for_byte_the_same
+22. CAUGHT  a page that was changed is not put right
+            FAILED (failures=2): test_a_page_that_cannot_be_written_after_the_records_were_does_not_say_nothing_was_written, test_the_page_is_put_right_from_the_records_if_it_was_changed
+23. CAUGHT  the project is read once, not twice
+            FAILED (failures=28): test_a_link_that_changes_between_the_two_readings, test_a_page_that_fails_in_either_reading ...
+24. CAUGHT  Jira's count is not compared with what was read
+            FAILED (failures=4): test_a_count_that_differs_before_or_after, test_both_readings_stopping_early_the_same_way_is_caught_by_jiras_count
+25. CAUGHT  the count is not asked for again after the readings
+            FAILED (failures=24): test_a_count_that_differs_before_or_after, test_a_real_servers_refusals_write_nothing ...
+26. CAUGHT  an item that comes twice in the pages is accepted
+            FAILED (failures=1): test_an_item_that_comes_twice
+27. CAUGHT  the last page is believed whatever it says about being the last
+            FAILED (failures=4): test_a_last_page_that_does_not_say_it_is_the_last_with_every_item_there
+28. CAUGHT  the marker for the next page is not sent
+            FAILED (failures=4): test_an_item_that_comes_twice, test_one_reading_that_stops_early ...
+29. CAUGHT  there is no limit to the pages
+            FAILED (failures=1): test_the_same_marker_given_back_and_too_many_pages
+30. CAUGHT  a page with a status other than 200 is read as a page
+            FAILED (failures=1): test_a_status_that_is_not_200_whatever_its_body
+31. CAUGHT  a count with a status other than 200 is read as a count
+            FAILED (failures=1): test_a_status_that_is_not_200_whatever_its_body
+32. CAUGHT  an item of another project is kept
+            FAILED (failures=1): test_an_item_of_another_project_with_no_links_and_no_children
+33. CAUGHT  titles are asked for
+            FAILED (failures=1): test_no_title_is_asked_for_or_kept
+34. CAUGHT  a type's name is kept as it comes
+            FAILED (failures=5): test_a_type_name_with_markup_or_a_table_bar_is_cleaned, test_a_type_that_looks_like_an_address_does_not_come_out_as_one ...
+35. CAUGHT  an epic is known only by the word epic
+            FAILED (failures=2): test_all_four_kinds_are_there_and_a_missing_one_is_named, test_the_four_kinds_are_known_by_jiras_mark_or_by_name
+36. CAUGHT  a parent link Jira does not usually allow is not pointed out
+            FAILED (failures=1): test_a_parent_link_jira_does_not_usually_allow_is_kept_and_pointed_out
+37. CAUGHT  a subtask for which Jira names no parent is not pointed out: seen on the real project
+            FAILED (failures=1): test_a_subtask_for_which_jira_names_no_parent_is_pointed_out
+38. CAUGHT  a total over items that have no estimate is shown as 0 h: seen on the real project
+            FAILED (failures=2): test_a_total_of_nothing_is_not_shown_as_zero_hours, test_what_is_under_a_parent_not_retrieved_is_totalled_apart
+39. CAUGHT  records of another project, or from another Jira, are written over
+            FAILED (failures=3): test_records_of_another_project_or_another_jira_are_not_written_over
+40. CAUGHT  a records file this tool did not write is used anyway
+            FAILED (failures=15): test_a_number_with_a_leading_zero_is_not_another_number_and_is_refused, test_records_changed_into_something_else_are_left_alone ...
+41. CAUGHT  --log is compared with the two files by its spelling, so the same file in other capitals is written
+            FAILED (failures=2): test_the_log_cannot_be_one_of_the_two_files_under_any_spelling_or_name
+42. CAUGHT  a refusal is saved over the file --log was refused for
+            FAILED (failures=1): test_the_log_cannot_be_one_of_the_two_files_under_any_spelling_or_name
+43. CAUGHT  a records file or page that is a link, or has a second name, is written through
+            FAILED (failures=1): test_a_records_file_that_is_a_link_or_has_a_second_name_is_not_written_through
+44. CAUGHT  a write that fails halfway leaves its temporary file
+            FAILED (failures=1): test_a_write_that_fails_leaves_no_temporary_file_and_does_not_say_built
+45. CAUGHT  something unforeseen is a crash
+            FAILED (errors=1): test_something_unforeseen_is_a_refusal_and_not_a_crash
+46. CAUGHT  the connection will send a GET anywhere
+            FAILED (errors=1): test_the_connection_builds_nothing_else
+47. CAUGHT  the connection will send a POST anywhere
+            FAILED (errors=1): test_the_connection_builds_nothing_else
+48. CAUGHT  any request is reported as one of the two reads
+            FAILED (failures=2): test_the_connection_builds_nothing_else, test_the_method_reported_is_the_one_the_request_was_built_with
+49. CAUGHT  the method reported is the word GET, not the request's own
+            FAILED (failures=1): test_only_the_two_reads_are_sent_and_redirects_are_not_followed
+50. CAUGHT  the made-up Jira's folder is accepted for a real Jira
+            FAILED (failures=1): test_the_made_up_jiras_folder_is_refused_for_a_real_one_and_no_variables_means_no_request
+51. CAUGHT  the output is not searched for the credentials
+            FAILED (failures=1): test_a_credential_in_any_output_stops_the_output_whatever_put_it_there
+52. CAUGHT  only the token is searched for
+            FAILED (failures=1): test_no_credential_or_site_address_is_in_the_output_the_log_or_the_files
+53. CAUGHT  the site's address is left in the saved output
+            FAILED (failures=1): test_the_saved_output_has_the_sites_address_taken_out
+54. CAUGHT  a real server's refusal is not read for its status
+            FAILED (failures=1): test_a_real_servers_refusals_write_nothing
+55. CAUGHT  redirects are followed
+            FAILED (failures=1): test_only_the_two_reads_are_sent_and_redirects_are_not_followed
+56. CAUGHT  an address with a path or a port, or without https, is accepted
+            FAILED (failures=4): test_a_base_address_that_is_not_https_and_the_sites_name_only
+57. CAUGHT  the tree is printed flat: every item at one depth
+            FAILED (failures=1, errors=1): test_after_a_move_the_printed_tree_has_the_item_under_the_new_parent_only, test_the_printed_tree_sets_each_item_in_under_its_parent
+58. CAUGHT  a move is judged by the parent's key, so a new key on a parent looks like a move of its children
+            FAILED (failures=1): test_a_new_key_on_a_parent_is_not_a_move_of_its_children
+59. CAUGHT  children are put in order by the text of their numbers, so 100 comes before 9
+            FAILED (failures=1): test_children_are_in_the_order_of_their_numbers_not_of_their_text
+60. CAUGHT  a page of the same name that is someone else's file is written over
+            FAILED (failures=1): test_a_page_name_that_is_already_someone_elses_file_is_refused
+61. CAUGHT  a records file is taken on trust, so text in it can forge a line of the output
+            FAILED (failures=12): test_a_number_with_a_leading_zero_is_not_another_number_and_is_refused, test_records_with_text_that_could_forge_a_line_are_refused_by_tree_and_by_build
+62. CAUGHT  a number with a leading zero is taken as another number
+            FAILED (failures=1): test_a_number_with_a_leading_zero_is_not_another_number_and_is_refused
+63. CAUGHT  large totals are printed in a form with an exponent
+            FAILED (failures=1): test_hours_are_written_as_plain_numbers_however_large
+64. CAUGHT  a link that names two other items is read as naming one
+            FAILED (failures=1): test_a_link_described_differently_at_its_two_ends_or_naming_two_items
+65. CAUGHT  a link described differently at its two ends is kept as first seen
+            FAILED (failures=1): test_a_link_described_differently_at_its_two_ends_or_naming_two_items
+66. CAUGHT  links that differ between the two readings are accepted
+            FAILED (failures=1): test_a_link_that_changes_between_the_two_readings
+67. CAUGHT  a link's name is kept as it comes
+            FAILED (failures=1): test_names_of_links_are_other_peoples_text_too_and_a_key_that_is_not_a_key_is_not_kept
+68. CAUGHT  a parent's key that is not a key is kept
+            FAILED (failures=1): test_names_of_links_are_other_peoples_text_too_and_a_key_that_is_not_a_key_is_not_kept
+69. CAUGHT  --log is written over a file that is not an output of the tool
+            FAILED (failures=4): test_the_log_will_not_be_written_over_a_file_that_is_not_one_of_its_outputs
+70. CAUGHT  a page that could not be written is reported with the words nothing was written
+            FAILED (failures=1): test_a_page_that_cannot_be_written_after_the_records_were_does_not_say_nothing_was_written
+71. CAUGHT  the files are left readable by their owner only
+            FAILED (failures=1): test_the_files_can_be_read_by_others_as_ordinary_files_can
+72. CAUGHT  the files are written before the search for credentials
+            FAILED (failures=1): test_a_token_that_reaches_the_output_stops_the_output
+73. CAUGHT  a project that is not a key is sent to Jira
+            FAILED (failures=1): test_a_project_that_is_not_a_key_is_refused_before_jira_is_asked
+74. CAUGHT  an empty page that says there is more is accepted
+            FAILED (failures=1): test_an_empty_page_that_says_there_is_more_when_every_item_still_arrives
+75. CAUGHT  the marker given back is accepted
+            FAILED (failures=1): test_the_marker_given_back_is_refused_for_that_reason
+76. CAUGHT  Jira's own mark for a subtask is ignored
+            FAILED (failures=1): test_the_four_kinds_go_by_jiras_mark_where_there_is_one
+77. CAUGHT  a type merely named Epic is an epic, whatever Jira's mark says
+            FAILED (failures=1): test_the_four_kinds_go_by_jiras_mark_where_there_is_one
+78. CAUGHT  an estimate that is a fraction is accepted
+            FAILED (failures=7): test_an_estimate_that_is_a_fraction_is_refused, test_items_that_cannot_be_read_are_not_guessed_at
+79. CAUGHT  the count of items with no parent named is wrong
+            FAILED (failures=1): test_the_output_says_for_how_many_items_jira_names_a_parent
+80. CAUGHT  a request may wait for ever
+            FAILED (failures=1): test_a_request_is_given_thirty_seconds_and_no_longer
+81. CAUGHT  a group with no estimates at all is totalled as 0 h
+            FAILED (failures=2): test_a_total_of_nothing_is_not_shown_as_zero_hours, test_what_is_under_a_parent_not_retrieved_is_totalled_apart
+
+Last, with the copy put back as it was: OK
+The real tool is byte for byte what it was before: yes
+Git reports the same state of the whole repository as before the run: yes
+
+NOT PLANTED, AND WHY
+  A count of `true` taken for 1: it then differs from the number of items read, unless exactly one item was read.
+  An estimate in words accepted: adding it up then fails, and the build is refused as something unforeseen. Nothing is written either way.
+  Links used to build the tree: there is no single line to change that would do it. A test adds a link and requires the tree's checksum not to move.
+  The check that a records file is a plain file, taken out: the test that feeds it a pipe would then wait for ever, and so would this run.
+  Adding up the tree by a function that calls itself: not one line to change. A test builds a chain of 3,000 and requires a tree.
+  In the first two a second check stops what the first lets through, so no test can tell from the outside which one did.
+
+RESULT: 81 OF 81 PLANTED BUGS CAUGHT.
