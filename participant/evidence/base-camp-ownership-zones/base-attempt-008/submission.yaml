@@ -1,13 +1,13 @@
 schema_version: 1
-submission_id: submission-20261126172505-106d10
+submission_id: submission-20261127154803-b6d4a3
 quest_id: base-camp-ownership-zones
 quest_version: 1
 attempt_id: base-attempt-008
 content_hash: sha256:066c692bb7f87a56c7b802669e47cecf1449ea6eccc1e9a0fb007e8535b5a405
-evidence_hash: sha256:3d37a9d937f90dc24e08b3bc179310017e20ffd62ae8b91295e01e93fb3fb543
-submitted_at: '2026-11-26T17:25:05Z'
+evidence_hash: sha256:e0dbed86019b1a2c467bab55f0b41b7bbda3aea77f35f054c3cfc358e209124e
+submitted_at: '2026-11-27T15:48:03Z'
 submitted_by: beaubrown
 secret_scan_clean: true
 proof_files:
 - path: participant/context/zone-rules.md
-  digest: sha256:a79b9de018785082af60cc76757c1776d4f0690974d29b1b02924e7dd828ff75
+  digest: sha256:9ab1b0028a0bfc38812dc2d9b17548f46bf52ad2ceb88e5ca4dc5844526413e5

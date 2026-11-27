@@ -482,3 +482,8 @@ Every change this application made to your files, newest last.
 - `2026-11-27T14:54:24Z` jira-next-work: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-27T14:54:24Z` Submitted jira-next-work for review as submission-20261127145424-fdd4b0.
 - `2026-11-27T15:06:02Z` Review of jira-next-work: approved by Claude (automated reviewer).
+- `2026-11-27T15:45:34Z` base-camp-ownership-zones: needs_changes → in_progress (Resume after a reviewer asked for changes.)
+- `2026-11-27T15:46:13Z` base-camp-ownership-zones: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-27T15:47:21Z` base-camp-ownership-zones: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-27T15:48:03Z` base-camp-ownership-zones: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-27T15:48:03Z` Submitted base-camp-ownership-zones for review as submission-20261127154803-b6d4a3.
