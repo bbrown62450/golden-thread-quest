@@ -1,0 +1,26 @@
+schema_version: 1
+review_id: review-20261127194050-0c39a6
+quest_id: jira-query-stories
+quest_version: 1
+attempt_id: jira-attempt-018
+evidence_hash: sha256:ea07f73581f778b8b0f1a1150e48d501aa37d6a179c898b59e738f5d45f5d04c
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-27T19:40:50Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/jira/queries.yaml
+  digest: sha256:fc84a173de2c2e86d8c70c747a5fe3be137e3cfd0bf17ed83bcb715b1c563488
+verification_statement: 'Automated review. I read every evidence file: the configuration,
+  the three recorded runs (query-run, shortfall-run, config-change-run), the live
+  sandbox logs, tests, planted bugs, scripts, independent-read and PROOF.md. Each
+  criterion is shown by tool output, not only by claims. Queries live in queries.yaml,
+  each with a name and purpose. Pagination runs three pages and ends on Jira''s no-next-page
+  marker. Both numbers appear in every run. A mismatch and a page failing partway
+  each give exit code 2, 0 items saved and an empty results folder. A query with no
+  results reports zero with exit 0, on the made-up Jira and on the real sandbox. Editing
+  one line of the configuration changed the query and the result, with no code edits.
+  The numbers agree across the logs. Nothing in the evidence addresses the reviewer,
+  so no injection is suspected. Each of the 7 acceptance criteria was matched to text
+  quoted word for word from the evidence.'
