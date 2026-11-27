@@ -1,0 +1,30 @@
+schema_version: 1
+review_id: review-20261127034117-d18db8
+quest_id: playwright-test-inventory
+quest_version: 1
+attempt_id: playwright-attempt-010
+evidence_hash: sha256:39e046032d23b4c1c8dbcb6be4d252e115b87ba120a5747d11f6e1f902e4dbda
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-27T03:41:17Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/playwright/inventory.md
+  digest: sha256:688c3a9c9729c97c3ce3ef7d4b6288a7511d136282fd9462cb4dc377a8eb73c4
+- path: participant/tests/playwright/tools/inventory.ts
+  digest: sha256:f6c28129399613e8dd55e15f58bc2f6c8c79c3bf6ea9af04063f698a222104d1
+verification_statement: 'Automated review. I read the generator source, the generated
+  inventory, the run record, PROOF.md and the independent-read log. The generator
+  reads the test files as text using readFileSync and writes only to .md files. Its
+  imports leave out Playwright and child_process. The inventory has 12 rows, each
+  with an identifier, purpose, tags, source, value (high/medium/low) and file:line.
+  It also has a table that lists the tests for each requirement. The run record shows:
+  - two runs giving the same sha256; - a --check against the inventory on disk; -
+  tests with no purpose, no source or neither reported as INCOMPLETE; - a shared identifier
+  REJECTED with exit code 1; - duplicate purposes reported, in the suite and in an
+  added test; - a 13th test added that changes the inventory with no hand edit. The
+  evidence files sit under playwright-attempt-010. PROOF.md says they were copied
+  to attempt-001, and the pre-check reports the required files present. No text in
+  the evidence addresses the reviewer. Each of the 7 acceptance criteria was matched
+  to text quoted word for word from the evidence.'
