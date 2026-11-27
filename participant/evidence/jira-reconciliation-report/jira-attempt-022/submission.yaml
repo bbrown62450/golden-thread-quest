@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261127235708-9ea845
+quest_id: jira-reconciliation-report
+quest_version: 1
+attempt_id: jira-attempt-022
+content_hash: sha256:f190757d84d8be852bbec51593ed303395f040012ce5563b3aed58bb162443dc
+evidence_hash: sha256:47ab1c259c0d4a7b5495a4c26e735999990bd310d52a04eaa006377eac2c7267
+submitted_at: '2026-11-27T23:57:08Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/jira/reconciliation/fixture.md
+  digest: sha256:7bfd58a6e39c5722c3ea44011c121845d0a725f06210d4180c6a5951c8a2df79
+- path: participant/context/jira/reconciliation/report.md
+  digest: sha256:877ac747a23d482d829376be466df97aab4727079bf73e3e95142cb236618d4a

@@ -1,0 +1,248 @@
+{
+ "format": "jira-reconcile-copy/1",
+ "items": [
+  {
+   "as_copied": {
+    "issuetype": "Story",
+    "key": "DEMO-1",
+    "names_checksum": "8250726532d53c18",
+    "status": "To Do",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Story",
+    "status": "To Do"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30001"
+  },
+  {
+   "as_copied": {
+    "issuetype": "Task",
+    "key": "DEMO-2",
+    "names_checksum": "9a4024640f852d6f",
+    "status": "In Progress",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Task",
+    "status": "In Progress"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30002"
+  },
+  {
+   "as_copied": {
+    "issuetype": "Bug",
+    "key": "DEMO-3",
+    "names_checksum": "8f53fd950a684eb4",
+    "status": "Done",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Bug",
+    "status": "Done"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30003"
+  },
+  {
+   "as_copied": {
+    "issuetype": "Story",
+    "key": "DEMO-4",
+    "names_checksum": "8250726532d53c18",
+    "status": "To Do",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Story",
+    "status": "To Do"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30004"
+  },
+  {
+   "as_copied": {
+    "issuetype": "Story",
+    "key": "DEMO-5",
+    "names_checksum": "e760b0af53141a37",
+    "status": "In Progress",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Story",
+    "status": "Done"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30005"
+  },
+  {
+   "as_copied": {
+    "issuetype": "Story",
+    "key": "DEMO-6",
+    "names_checksum": "8250726532d53c18",
+    "status": "To Do",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Story",
+    "status": "To Do"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30006"
+  },
+  {
+   "as_copied": {
+    "issuetype": "Task",
+    "key": "DEMO-7",
+    "names_checksum": "f1d361e2303c04bc",
+    "status": "To Do",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Task",
+    "status": "To Do"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30007"
+  },
+  {
+   "as_copied": {
+    "issuetype": "Story",
+    "key": "DEMO-8",
+    "names_checksum": "8250726532d53c18",
+    "status": "To Do",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Story",
+    "status": "In Review"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30008"
+  },
+  {
+   "as_copied": {
+    "issuetype": "Bug",
+    "key": "DEMO-9",
+    "names_checksum": "752699f1389da70f",
+    "status": "In Progress",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Bug",
+    "status": "To Do"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30009"
+  },
+  {
+   "as_copied": {
+    "issuetype": "Story",
+    "key": "DEMO-10",
+    "names_checksum": "8250726532d53c18",
+    "status": "To Do",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Story",
+    "status": "To Do"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30010"
+  },
+  {
+   "as_copied": {
+    "issuetype": "Task",
+    "key": "DEMO-11",
+    "names_checksum": "f1d361e2303c04bc",
+    "status": "To Do",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Task",
+    "status": "Done"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30011"
+  },
+  {
+   "as_copied": {
+    "issuetype": "Story",
+    "key": "DEMO-12",
+    "names_checksum": "e760b0af53141a37",
+    "status": "In Progress",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Story",
+    "status": "In Progress"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30012"
+  },
+  {
+   "as_copied": {
+    "issuetype": "Story",
+    "key": "DEMO-13",
+    "names_checksum": "8250726532d53c18",
+    "status": "To Do",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Story",
+    "status": "In Progress"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30013"
+  },
+  {
+   "as_copied": {
+    "issuetype": "Task",
+    "key": "DEMO-14",
+    "names_checksum": "9a1352c58d358c5e",
+    "status": "Done",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Task",
+    "status": "Done"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30014"
+  },
+  {
+   "as_copied": {
+    "issuetype": "Story",
+    "key": "DEMO-17",
+    "names_checksum": "8250726532d53c18",
+    "status": "To Do",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Story",
+    "status": "To Do"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30017"
+  },
+  {
+   "as_copied": {
+    "issuetype": "Story",
+    "key": "DEMO-18",
+    "names_checksum": "8250726532d53c18",
+    "status": "To Do",
+    "updated": "2026-11-17T08:00:00Z"
+   },
+   "as_held": {
+    "issuetype": "Story",
+    "status": "To Do"
+   },
+   "copied_at": "2026-11-18T09:00:00Z",
+   "id": "30018"
+  }
+ ],
+ "project": "DEMO",
+ "site_fingerprint": null,
+ "source": "fake"
+}

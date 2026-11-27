@@ -1,0 +1,174 @@
+Planted bugs in a copy of participant/skills/jira-reconciliation-report/reconcile.py. jira-reconciliation-report, attempt jira-attempt-022
+Recorded by scripts/planted_bugs.py. One bug at a time is planted in a copy of the tool, in a temporary folder, and the tests are run
+against the copy. CAUGHT means at least one test failed. The real tool is not changed.
+
+First, with no bug planted, the tests against the copy: OK
+
+ 1. CAUGHT  an item changed on both sides is not called conflicted
+            FAILED (failures=22, errors=18): test_a_copy_with_no_checksum_of_names_is_compared_by_cleaned_names_and_the_report_says_so, test_a_failed_item_names_its_error_class_from_a_fixed_list ...
+ 2. CAUGHT  an item changed locally only is called synchronized
+            FAILED (failures=22, errors=18): test_a_copy_with_no_checksum_of_names_is_compared_by_cleaned_names_and_the_report_says_so, test_a_failed_item_names_its_error_class_from_a_fixed_list ...
+ 3. CAUGHT  an item Jira has changed is called synchronized: the stale ones hide in the largest number
+            FAILED (failures=25, errors=18): test_a_copy_with_no_checksum_of_names_is_compared_by_cleaned_names_and_the_report_says_so, test_a_failed_item_names_its_error_class_from_a_fixed_list ...
+ 4. CAUGHT  a failed fetch gives way to a local change
+            FAILED (failures=15, errors=33): test_a_copy_with_no_checksum_of_names_is_compared_by_cleaned_names_and_the_report_says_so, test_a_failed_fetch_is_never_called_anything_else_whatever_the_copy_holds ...
+ 5. CAUGHT  an item Jira no longer has gives way to a local change
+            FAILED (failures=15, errors=31): test_a_copy_with_no_checksum_of_names_is_compared_by_cleaned_names_and_the_report_says_so, test_a_failed_item_names_its_error_class_from_a_fixed_list ...
+ 6. CAUGHT  items Jira has that were never copied are not counted: the quest's scenario
+            FAILED (failures=23, errors=18): test_a_copy_with_no_checksum_of_names_is_compared_by_cleaned_names_and_the_report_says_so, test_a_failed_item_names_its_error_class_from_a_fixed_list ...
+ 7. CAUGHT  a new key, or a new last-changed time, is not taken as a change in Jira
+            FAILED (failures=13): test_a_failed_item_names_its_error_class_from_a_fixed_list, test_a_live_report_gives_the_same_states_and_sends_only_gets ...
+ 8. CAUGHT  an item that fits a second state does not say so
+            FAILED (failures=3): test_every_combination_of_what_jira_and_the_copy_can_say_gets_the_state_the_order_gives, test_it_is_given_the_earlier_state_and_says_what_else_it_fits ...
+ 9. CAUGHT  the tool's own check is not acted on
+            FAILED (failures=1): test_if_the_check_fails_no_report_is_written
+10. CAUGHT  the check does not look for an item given two states
+            FAILED (failures=1): test_the_tools_own_check_finds_an_item_in_two_states_in_none_or_in_no_real_state
+11. CAUGHT  the check does not compare the sum of the counts with the total
+            FAILED (failures=1): test_the_tools_own_check_finds_an_item_in_two_states_in_none_or_in_no_real_state
+12. CAUGHT  the check does not look for an item given no state
+            FAILED (failures=2): test_the_check_is_not_only_the_tool_agreeing_with_itself, test_the_tools_own_check_finds_an_item_in_two_states_in_none_or_in_no_real_state
+13. CAUGHT  the total leaves out the items that are in Jira only
+            FAILED (failures=18, errors=19): test_a_copy_with_no_checksum_of_names_is_compared_by_cleaned_names_and_the_report_says_so, test_a_failed_item_names_its_error_class_from_a_fixed_list ...
+14. CAUGHT  the check counts what the tool itself made, and not the numbers the copy and Jira's list gave
+            FAILED (failures=2): test_the_check_is_not_only_the_tool_agreeing_with_itself, test_the_tools_own_check_finds_an_item_in_two_states_in_none_or_in_no_real_state
+15. CAUGHT  the check does not compare an item's state with what was found for it
+            FAILED (failures=1): test_the_check_is_not_only_the_tool_agreeing_with_itself
+16. CAUGHT  two names that clean to the same thing are called the same
+            FAILED (failures=1): test_names_that_differ_only_in_what_cleaning_removes_are_not_called_the_same
+17. CAUGHT  the checksum of the names is taken after they are cleaned
+            FAILED (failures=1): test_names_that_differ_only_in_what_cleaning_removes_are_not_called_the_same
+18. CAUGHT  an item now in another project is taken as still in this one
+            FAILED (failures=1): test_a_new_key_or_another_project_is_said
+19. CAUGHT  an item exactly at the limit is over it
+            FAILED (failures=1): test_the_age_is_from_jiras_change_to_the_time_the_report_is_as_of
+20. CAUGHT  a stale item's age is counted from when it was copied, not from when Jira changed it
+            FAILED (failures=6): test_a_reader_can_tell_what_to_do_next_for_each_kind_of_exception, test_a_stale_item_names_its_age_and_the_limit_and_which_side_it_is_on ...
+21. CAUGHT  the limit is 48 hours
+            FAILED (failures=6): test_a_stale_item_names_its_age_and_the_limit_and_which_side_it_is_on, test_it_is_given_the_earlier_state_and_says_what_else_it_fits ...
+22. CAUGHT  an item over the limit is told to wait for the next sync
+            FAILED (failures=2): test_a_reader_can_tell_what_to_do_next_for_each_kind_of_exception, test_a_stale_item_names_its_age_and_the_limit_and_which_side_it_is_on
+23. CAUGHT  a failed item repeats what Jira said in refusing
+            FAILED (failures=6): test_a_failed_item_names_its_error_class_from_a_fixed_list, test_a_reader_can_tell_what_to_do_next_for_each_kind_of_exception ...
+24. CAUGHT  an item Jira will not show (403) is called missing
+            FAILED (failures=10): test_a_failed_item_names_its_error_class_from_a_fixed_list, test_a_live_report_gives_the_same_states_and_sends_only_gets ...
+25. CAUGHT  an answer for another item is taken as this item's
+            FAILED (failures=1): test_answers_that_are_not_an_item_are_failures_and_not_guesses
+26. CAUGHT  rejected credentials are counted as a failed item each
+            FAILED (failures=1): test_rejected_credentials_refuse_the_whole_run
+27. CAUGHT  a request that times out is called a network error
+            FAILED (failures=3): test_a_failed_item_names_its_error_class_from_a_fixed_list, test_each_exception_cites_the_line_of_the_request_that_put_it_in_its_state ...
+28. CAUGHT  a server error is called an unexpected status
+            FAILED (failures=3): test_a_failed_item_names_its_error_class_from_a_fixed_list, test_every_class_of_failure ...
+29. CAUGHT  a report that could not count Jira's own items exits with 0
+            FAILED (failures=2): test_the_report_is_written_says_incomplete_and_counts_only_what_the_copy_holds, test_with_nothing_in_the_copy_and_no_list_the_report_says_nothing_was_considered
+30. CAUGHT  a report that could not count Jira's own items does not say so
+            FAILED (failures=1): test_the_report_is_written_says_incomplete_and_counts_only_what_the_copy_holds
+31. CAUGHT  an item listed twice is accepted
+            FAILED (failures=1): test_a_list_that_cannot_be_trusted_is_a_list_that_could_not_be_read
+32. CAUGHT  the last page of the list is believed whatever it says
+            FAILED (failures=1): test_a_list_that_cannot_be_trusted_is_a_list_that_could_not_be_read
+33. CAUGHT  the marker for the next page of the list is not sent
+            FAILED (failures=1): test_the_list_comes_in_pages_and_every_page_is_read
+34. CAUGHT  there is no limit to the pages of the list
+            FAILED (failures=1): test_the_list_comes_in_pages_and_every_page_is_read
+35. CAUGHT  the items are asked about in the order the copy holds them
+            FAILED (failures=1): test_the_order_of_the_items_in_the_copy_does_not_matter
+36. CAUGHT  a run is added to the history every time
+            FAILED (failures=2): test_a_run_is_added_once_for_each_distinct_input_and_the_last_five_are_shown, test_twice_gives_the_same_three_files_and_the_second_time_writes_none
+37. CAUGHT  the order of the items in the copy's file is part of the input
+            FAILED (failures=1): test_the_order_of_the_items_in_the_copy_does_not_matter
+38. CAUGHT  the history is in the order the reports were run, not the order of their times
+            FAILED (failures=1): test_the_trend_is_in_order_of_time_whatever_order_the_reports_were_run_in_and_the_history_is_capped
+39. CAUGHT  the history grows without limit
+            FAILED (failures=1): test_the_trend_is_in_order_of_time_whatever_order_the_reports_were_run_in_and_the_history_is_capped
+40. CAUGHT  a report is made as of a time before the copy was taken
+            FAILED (failures=1): test_a_report_as_of_a_time_before_the_copy_was_taken_is_refused
+41. CAUGHT  a span of days drops its minutes
+            FAILED (failures=1): test_times_and_spans
+42. CAUGHT  an incomplete run shows a count of not-yet-copied in the trend
+            FAILED (failures=1): test_the_report_is_written_says_incomplete_and_counts_only_what_the_copy_holds
+43. CAUGHT  an incomplete report shows 0 not yet copied in its table
+            FAILED (failures=1): test_the_report_is_written_says_incomplete_and_counts_only_what_the_copy_holds
+44. CAUGHT  the copy's file name goes into the report as it is
+            FAILED (failures=1): test_the_copys_file_name_is_made_safe_before_it_is_in_the_report
+45. CAUGHT  a write that fails part way says nothing was written
+            FAILED (failures=1): test_a_write_that_fails_part_way_says_which_files_were_written
+46. CAUGHT  the trend shows every run, not the last five
+            FAILED (failures=1): test_a_run_is_added_once_for_each_distinct_input_and_the_last_five_are_shown
+47. CAUGHT  the files are written even when nothing changed
+            FAILED (failures=1): test_twice_gives_the_same_three_files_and_the_second_time_writes_none
+48. CAUGHT  a made-up run takes the time from the clock
+            FAILED (failures=1): test_a_made_up_run_needs_the_time_and_a_time_must_be_a_time
+49. CAUGHT  every exception cites the first line of the log
+            FAILED (failures=2): test_each_exception_cites_the_line_of_the_request_that_put_it_in_its_state, test_what_is_printed_lists_every_exception_and_the_synchronized_are_listed_in_the_report
+50. CAUGHT  titles are asked for
+            FAILED (failures=2): test_a_live_report_gives_the_same_states_and_sends_only_gets, test_no_title_is_asked_for
+51. CAUGHT  a status or type name is kept as it comes
+            FAILED (failures=4): test_a_copy_that_is_not_in_the_form_the_tool_reads_is_not_used, test_a_status_or_type_with_markup_is_cleaned_before_it_reaches_the_report ...
+52. CAUGHT  a local copy that is not in the form the tool reads is used anyway
+            FAILED (failures=2): test_a_copy_that_is_not_in_the_form_the_tool_reads_is_not_used, test_nothing_is_adopted_that_the_report_would_then_refuse
+53. CAUGHT  a number or key held twice in the copy is accepted
+            FAILED (failures=2): test_a_copy_that_is_not_in_the_form_the_tool_reads_is_not_used, test_nothing_is_adopted_that_the_report_would_then_refuse
+54. CAUGHT  a copy made from another Jira is compared
+            FAILED (failures=1): test_a_copy_from_another_jira_is_not_compared
+55. CAUGHT  a file of the same name that is someone else's is written over
+            FAILED (failures=1): test_a_file_of_the_same_name_that_is_someone_elses_is_refused
+56. CAUGHT  one of the report's files may be the local copy itself
+            FAILED (failures=1): test_links_second_names_and_the_copy_itself_are_not_written
+57. CAUGHT  a file that is a link, or has a second name, is written through
+            FAILED (failures=1): test_links_second_names_and_the_copy_itself_are_not_written
+58. CAUGHT  a history this tool did not write is used anyway
+            FAILED (failures=1): test_a_history_that_is_not_the_tools_is_left_alone
+59. CAUGHT  a write that fails halfway leaves its temporary file
+            FAILED (failures=2): test_a_write_that_fails_part_way_says_which_files_were_written, test_names_and_folders_that_are_not_allowed_and_a_write_that_fails
+60. CAUGHT  --log is written over a file that is not an output of the tool
+            FAILED (failures=1): test_the_log_option_cannot_name_the_tools_files_the_copy_or_a_strangers_file
+61. CAUGHT  --log is written over anything that begins with the first word of an output
+            FAILED (failures=1): test_the_log_option_cannot_name_the_tools_files_the_copy_or_a_strangers_file
+62. CAUGHT  --log may name a place in a folder that is not there
+            FAILED (failures=1): test_the_log_option_cannot_name_the_tools_files_the_copy_or_a_strangers_file
+63. CAUGHT  something unforeseen is a crash
+            FAILED (errors=1): test_something_unforeseen_is_a_refusal_and_not_a_crash
+64. CAUGHT  a result that was not complete is adopted
+            FAILED (failures=1): test_what_is_not_a_complete_result_is_not_adopted
+65. CAUGHT  adopting writes a copy without checking that the report would read it
+            FAILED (failures=1): test_nothing_is_adopted_that_the_report_would_then_refuse
+66. CAUGHT  a copy may say anything about which Jira it came from
+            FAILED (failures=1): test_nothing_is_adopted_that_the_report_would_then_refuse
+67. CAUGHT  adopting writes over what is there
+            FAILED (failures=1): test_a_saved_query_result_becomes_a_copy_the_tool_reads
+68. CAUGHT  the files are written before the search for credentials
+            FAILED (failures=1): test_a_token_that_would_reach_a_file_stops_the_run_before_anything_is_written
+69. CAUGHT  the connection will send a GET anywhere
+            FAILED (errors=1): test_the_connection_builds_nothing_else_and_reports_the_method_it_built
+70. CAUGHT  any request is reported as a plain GET
+            FAILED (failures=1): test_the_connection_builds_nothing_else_and_reports_the_method_it_built
+71. CAUGHT  the method reported is the word GET, not the request's own
+            FAILED (failures=1): test_the_connection_builds_nothing_else_and_reports_the_method_it_built
+72. CAUGHT  the output is not searched for the credentials
+            FAILED (failures=1): test_a_credential_in_any_output_stops_the_output_and_the_sites_address_is_taken_out_of_a_saved_one
+73. CAUGHT  only the token is searched for
+            FAILED (failures=1): test_no_credential_or_site_address_is_in_the_output_the_log_or_the_files
+74. CAUGHT  the site's address is left in the saved output
+            FAILED (failures=1): test_a_credential_in_any_output_stops_the_output_and_the_sites_address_is_taken_out_of_a_saved_one
+75. CAUGHT  a real server's refusal is not read for its status
+            FAILED (failures=2): test_a_live_report_gives_the_same_states_and_sends_only_gets, test_a_real_servers_refusal_is_read_for_its_status_and_not_for_what_it_says
+76. CAUGHT  redirects are followed
+            FAILED (failures=1): test_a_live_report_gives_the_same_states_and_sends_only_gets
+77. CAUGHT  an address with a path or a port, or without https, is accepted
+            FAILED (failures=1): test_a_base_address_that_is_not_https_and_the_sites_name_only_and_no_variables
+78. CAUGHT  a request may wait for ever
+            FAILED (failures=1): test_a_live_report_gives_the_same_states_and_sends_only_gets
+
+Last, with the copy put back as it was: OK
+The real tool is byte for byte what it was before: yes
+Git reports the same state of the whole repository as before the run: yes
+
+NOT PLANTED, AND WHY
+  --log allowed to name one of the tool's own files or the copy: none of those begins as an output of this tool begins, so the next check refuses it for that.
+  The body of a real server's refusal read after all: it is then parsed and still never used, because only the status of a refusal is looked at.
+  In those two a second check stops what the first lets through, so no test can tell from the outside which one did.
+  The states tried in another order altogether: not one line to change. A test works out, for each combination of what Jira and the copy can say, which state the order gives, and compares.
+
+RESULT: 78 OF 78 PLANTED BUGS CAUGHT.

@@ -512,3 +512,8 @@ Every change this application made to your files, newest last.
 - `2026-11-27T22:39:37Z` jira-read-attachments: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-27T22:39:37Z` Submitted jira-read-attachments for review as submission-20261127223937-55a5f0.
 - `2026-11-27T22:52:47Z` Review of jira-read-attachments: approved by Claude (automated reviewer).
+- `2026-11-27T22:56:23Z` Started jira-reconciliation-report as attempt jira-attempt-022.
+- `2026-11-27T23:55:42Z` jira-reconciliation-report: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-27T23:56:27Z` jira-reconciliation-report: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-27T23:57:08Z` jira-reconciliation-report: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-27T23:57:08Z` Submitted jira-reconciliation-report for review as submission-20261127235708-9ea845.

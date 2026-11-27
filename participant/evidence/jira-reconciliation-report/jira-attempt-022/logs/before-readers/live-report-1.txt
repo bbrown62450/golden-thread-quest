@@ -1,0 +1,36 @@
+Project: SCRUM
+Compared: the local copy given with --copy (25 items) with a real Jira, site fingerprint 4aabe3d08fbad6b1.
+As of: 2026-11-27T23:18:02Z. A stale item's limit: 24 hours.
+
+THE CHECK THAT COMES FIRST
+  Items considered: 25 (25 in the local copy, 0 more in Jira only).
+  The counts of the states: 0 + 0 + 0 + 0 + 0 + 0 + 25 = 25.
+  CHECK: 25 = 25. PASSED. Every item considered is in exactly one state.
+
+THE COUNT OF EACH STATE
+  1. failed to fetch        0
+  2. missing from Jira      0
+  3. conflicted             0
+  4. changed locally only   0
+  5. stale                  0
+  6. not yet copied         0
+  7. synchronized           25
+     ALL                    25
+
+EVERY ITEM THAT IS NOT SIMPLY IN SYNC: 0
+  The reason and the next action for each are in the report.
+
+FILES, in the folder given with --out-dir.
+  the report    sandbox-report.md            before not there   after f36a0606b352170b   WRITTEN
+  the fetch log sandbox-report.log.md        before not there   after fbe7b120f5733e90   WRITTEN
+  the history   sandbox-report.history.json  before not there   after 86f64fc8d1fcd2be   WRITTEN
+  Runs in the history: 1. This input was added.
+
+RESULT: REPORT WRITTEN. 25 items considered, 0 not simply in sync.
+
+Requests sent to Jira: 26. Every one was a GET with no body, which reads and cannot change anything.
+  GET /rest/api/3/issue/{number}  x25
+  GET /rest/api/3/search/jql  x1
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

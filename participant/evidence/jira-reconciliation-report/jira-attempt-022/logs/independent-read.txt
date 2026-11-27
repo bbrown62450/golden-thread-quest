@@ -1,0 +1,125 @@
+Independent reads of the work. jira-reconciliation-report, attempt jira-attempt-022
+Written by hand by the AI assistant, 2026-11-27, from the two readers' replies. The readers were AI assistants, not people.
+
+HOW THE READS WERE MADE
+  Two fresh AI assistants, each started with no knowledge of this session. Each was given a copy, in a temporary folder
+  outside the repository, of: the quest text, the tool, the made-up Jira, the tests, the fixture, the report, the
+  records, the scripts and the saved output of the first real run. Each was told to read only, to contact no network
+  service, and to write only in a temporary folder. The version they read had 58 tests passing and 60 of 60 planted
+  bugs caught. PROOF.md had not been written, and neither saw it.
+  Reader 1 was asked to read the tool as an adversary: to get an item counted twice or not at all, called
+  synchronized when it is not, or to get something into the report that should not be there.
+  Reader 2 was asked whether the records and tests show what they say. It classified the fixture's items itself,
+  with its own logic, before looking at the report.
+
+==============================================================================
+READER 1: THE ADVERSARIAL READ
+  It reproduced what follows by running the copy, except where marked "reasoned".
+
+  HIGH
+  1. An item was called synchronized when Jira's status or type differed. Names were compared after they were
+     cleaned, and cleaning turns every mark into a question mark and cuts at 40 characters. A copy holding
+     `QA?Review` against a Jira answering `QA/Review`, with the same last-changed time: synchronized. An admin
+     renaming a status does not change an item's last-changed time, so this can happen. The report did not say so.
+     CHANGED: a copy can carry, for each item, a short checksum of its type and status names as Jira wrote them, and
+     the tool compares that with the same checksum of what Jira answers. A difference the cleaned names do not show
+     makes the item stale or conflicted, and the reason says so. The fixture's copy carries the checksums.
+     NOT CHANGED, AND NOW SAID: a copy with no checksums is still compared by cleaned names. The copy adopted from
+     the saved-query result is one, because that result holds cleaned names only. Section 6 of the report says how
+     many items that applies to: for the real run, all 25.
+     ALSO CHANGED: `adopt` refused a whole result if any status held a mark. It now cleans the name and says how
+     many it cleaned.
+
+  MEDIUM
+  2. The tool's own check agreed with itself. The numbers of the items "in Jira only" were taken from the tool's own
+     entries, not from Jira's list. With two of three such entries dropped it printed "CHECK: 2 = 2. PASSED". With
+     every item called synchronized it also passed. "Every item considered is in exactly one state" overstated it.
+     CHANGED: the check is given the numbers Jira's list returned, straight from the list. It also holds the rule
+     for each state a second time, as a table, and compares every item's state with what was found for that item.
+     Both of the reader's faults now fail the check. The report says the check tests the tool against itself and
+     not Jira's answers.
+  3. The mark "(incomplete)" on a trend row sat in a tenth cell under nine headings, which a rendered table drops.
+     On an incomplete run the table still printed "not yet copied 0".
+     CHANGED: the trend has a "Complete" column. On an incomplete run "not yet copied" reads NOT KNOWN in the table,
+     the trend and the output, the total says "(the local copy only)", and section 1 cites the log line.
+  4. The copy's file name reached the report as it was. A file name holding a line break and a heading forged a
+     heading in the report.                              CHANGED: letters, digits, dot, dash and underscore only.
+     The same input under another file name rewrites the report.   NOT CHANGED: the name is in the report.
+  5. --log wrote over a person's file that began "Project: ...", and made folders.
+     CHANGED: an existing file must begin exactly as this tool's output begins, with the project line and the line
+     after it, or as its own refusal. No folder is made.    NOT CHANGED: the write of the log is not atomic.
+  6. A write failing part way left files of two runs side by side, with nothing in the files to say so.
+     CHANGED: the report and the fetch log carry a run mark, the same for one run. The refusal names the files
+     written before the failure and says to run again.
+  7. `adopt` wrote a copy that `report` then refused: duplicates, an item of another project, no site fingerprint.
+     CHANGED: what would be written is put through the same check `report` uses, before it is written.
+
+  LOW
+  8. A copy with no word of which Jira it came from stopped the tool on something unforeseen.    CHANGED: refused.
+     An item moved to another project printed the other project's key, and its next action still said "deleted,
+     moved or hidden".                                   CHANGED: its own reason and action; the key is not printed.
+     A type-only local change printed "status `To Do` to `To Do`".   CHANGED: only what changed is named.
+     An age of 24 hours 30 minutes printed "1 day ... Over the limit".   CHANGED: minutes are kept.
+     A report as of a time before the copy was taken was accepted.   CHANGED: refused.
+     As of a time before Jira's own change: accepted, "no time".     NOT CHANGED. Said in the output.
+     The trend was in the order reports were run.        CHANGED: in order of the time each is as of.
+     The history grew without limit.                     CHANGED: the last 50 distinct inputs.
+     A valid history in other formatting is rewritten.   NOT CHANGED.
+     Empty copy: "Every item considered is synchronized".   CHANGED: "None: no items were considered."
+     "The reason and the next action are in the report" printed with no exceptions.   CHANGED.
+     Reading a refusal's body could stop the whole run.  CHANGED: the body of a refusal is not read at all.
+     Two entries can show one key.                       NOT CHANGED. Section 6 says so; numbers tell them apart.
+     Sub-second times are cut to the second (reasoned). The site fingerprint is an unsalted hash (reasoned).
+                                                         NOT CHANGED. Limitations.
+
+  LOOKED FOR AND NOT FOUND
+     An item counted twice or in no state, or sums not matching, including an item hidden from the list that
+     answers, one that fails and is listed, a key reused, a moved project. "Synchronized" after a failed read or a
+     local change. A wrong order of states. A refusal's words, a token or a page marker in any output. A status
+     name forging a line. Any request other than the two GETs. A link, second name or case trick on the three files.
+
+==============================================================================
+READER 2: DO THE RECORDS AND TESTS SHOW WHAT THEY SAY
+  Its own classification of the 16 copy items and the list agreed with the fixture and the report on every state,
+  count and age.
+
+  1. The two added states were explained only in a comment in the code. The fixture, the report and the skill page
+     showed seven states with no word that the quest names five.
+     CHANGED: all three say so, with the reason.
+  2. Only failed items had an "Error class" line.        CHANGED: every exception has one. For the others it reads
+     "none. Jira answered; this is not a failure to fetch."
+  3. Labels in the run record that claimed more than they tested:
+     - "every item in exactly one state" used a set, so an item listed twice under one state was not seen; headings'
+       counts were never compared with the items under them.          CHANGED: lists; headings compared.
+     - "the same input gives the same report" compared files the tool had chosen not to rewrite.
+       CHANGED: a third generation into an empty folder, where all three must be written, compared byte for byte.
+     - a stale age was never tied to its item, and 21 hours was unchecked; error classes were only counted; a log
+       line was only checked to exist; "fit two states" was only a count of four.
+       CHANGED: the script works each out from the fixture's rows and looks for it on the item's own lines.
+     - "what to do next" tests only that a line of 20 characters is there.   NOT CHANGED. Criterion 7 is a claim
+       about a reader; the record shows the lines exist, and the report is there to be read.
+  4. Tests: the every-combination test had 8 cases and restated the tool; the thousand-projects test passed with
+     every item called synchronized; one assertion looped over an empty list.
+     CHANGED: 32 combinations including key-only, type-only, time-only and a local type change; the
+     thousand-projects test works out each item's state itself; the empty assertion is gone.
+     NOT CHANGED: the test of next actions looks for a phrase in each, so a swapped text holding it would pass.
+  5. Sixteen mistakes the 58 tests did not notice, each of which it ran: the synchronized list wrong three ways; a
+     wrong reason line; one fixed error class printed for all; stale items left out of the output; a history mark
+     ignoring the time or made of counts only; type, key and time-only changes not seen; a time zone dropped;
+     minutes dropped; a 401 on the list not refused; the check's total taken from the entries.
+     CHANGED: there is now a test that fails for each. Planted bugs went from 60 to 78, each caught.
+  6. The real run alone is not convincing: a tool that called everything synchronized would print the same, and the
+     number of items Jira's list returned was recorded nowhere.
+     CHANGED: the list's count is printed and is in the report. NOT CHANGED: the real project has nothing out of
+     step, so no exception state has met a real Jira. Said in PROOF.
+  7. The same author wrote the fixture's expected states and the tool. Choices such as "a 403 is failed, not
+     missing" and "a new key is stale" are tested by neither against the other.   NOT CHANGED. Said in PROOF.
+  8. Private content: none found in any record or sample. Present: the project key, item numbers, a short hash of
+     the site's name, and the real status and type names.
+
+==============================================================================
+AFTER THE READS
+  73 tests pass. 78 of 78 planted bugs are caught. The run record has 22 checks, all passing.
+  The real outputs made before the fixes are kept as they were in logs/before-readers/. The real report was made
+  again with the final tool: logs/live-report-1.txt.
+  NEITHER READER SAW THE CORRECTED VERSION. Nobody has re-read it.

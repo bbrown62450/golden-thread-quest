@@ -1,0 +1,20 @@
+{
+ "format": "jira-reconcile-history/1",
+ "runs": [
+  {
+   "as_of": "2026-11-27T23:18:02Z",
+   "counts": {
+    "changed locally only": 0,
+    "conflicted": 0,
+    "failed to fetch": 0,
+    "missing from Jira": 0,
+    "not yet copied": 0,
+    "stale": 0,
+    "synchronized": 25
+   },
+   "incomplete": false,
+   "input": "19c8f2d1b67002bd",
+   "total": 25
+  }
+ ]
+}

@@ -1,0 +1,190 @@
+Generating the reconciliation report twice, and checking that the counts of the states add up to the total
+jira-reconciliation-report, attempt jira-attempt-022. Recorded by scripts/record_run.py.
+Compared with the made-up Jira (skills/jira-reconciliation-report/fake_jira.py). Every item is made up. No real Jira was contacted.
+Commands are run from the `participant` folder.
+
+
+==============================================================================
+0. THE FIXTURE. A made-up local copy, and the page that says, item by item, what state each should be given and why.
+$ python3 skills/jira-reconciliation-report/fake_jira.py fixture --copy context/jira/reconciliation/fixture-copy.json --describe context/jira/reconciliation/fixture.md
+------------------------------------------------------------------------------
+The fixture was written: a local copy of 16 made-up items, and the page that describes it. 2 more items are in the made-up Jira only.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the fixture's page has items it says should be synchronized, missing from Jira, stale, conflicted and failed to fetch: the five the quest names
+  note What the fixture says the counts should be, in the order of the states: failed to fetch 5, missing from Jira 2, conflicted 2, changed locally only 1, stale 3, not yet copied 2, synchronized 3. All: 18.
+
+==============================================================================
+1. THE STATES, as the tool states them
+$ python3 skills/jira-reconciliation-report/reconcile.py states
+------------------------------------------------------------------------------
+The states, in the order they are tried. An item is given the first that fits, and no other.
+
+  1. failed to fetch        Jira could not be asked about it, or did not answer with an item. Nothing else can be said about it.
+  2. missing from Jira      Jira answered that it is not there.
+  3. conflicted             Jira has changed it since it was copied, and the copy was changed locally.
+  4. changed locally only   The copy was changed locally. Jira has not changed.
+  5. stale                  Jira has changed it since it was copied. The copy has not been changed locally.
+  6. not yet copied         Jira lists it. The local copy does not hold it.
+  7. synchronized           None of the above: Jira has what the copy has.  (not an exception)
+
+A stale item gives its age, which is how long the copy has been behind Jira, and the limit, which is 24 hours.
+A failed item gives one of these classes, and nothing Jira said: forbidden (403); network error; rate limited (429); server error (5xx); timed out; unexpected status; unreadable answer.
+------------------------------------------------------------------------------
+exit code: 0
+
+==============================================================================
+2. THE REPORT, generated
+$ python3 skills/jira-reconciliation-report/reconcile.py report --source fake --copy context/jira/reconciliation/fixture-copy.json --out-dir context/jira/reconciliation --name report --as-of 2026-11-20T12:00:00Z
+------------------------------------------------------------------------------
+Project: DEMO
+Compared: the local copy given with --copy (16 items) with the made-up Jira. No real Jira was contacted.
+As of: 2026-11-20T12:00:00Z. A stale item's limit: 24 hours.
+
+THE CHECK THAT COMES FIRST
+  Jira's list of the project: 16 items.
+  Items considered: 18 (16 in the local copy, 2 more in Jira only).
+  The counts of the states: 5 + 2 + 2 + 1 + 3 + 2 + 3 = 18.
+  CHECK: 18 = 18. PASSED. Every number in the copy and in Jira's list has one state and no other, and each state agrees with what was found.
+
+THE COUNT OF EACH STATE
+  1. failed to fetch        5
+  2. missing from Jira      2
+  3. conflicted             2
+  4. changed locally only   1
+  5. stale                  3
+  6. not yet copied         2
+  7. synchronized           3
+     ALL                    18
+
+EVERY ITEM THAT IS NOT SIMPLY IN SYNC: 15
+  DEMO-4    [30004]  MISSING FROM JIRA.  (log L004)
+  DEMO-5    [30005]  MISSING FROM JIRA. ALSO: changed locally (status `In Progress` to `Done`). That change has nowhere to go.  (log L005)
+  DEMO-6    [30006]  STALE. Age 3 hours, limit 24 hours, within.  (log L006)
+  DEMO-7    [30007]  STALE. Age 2 days 2 hours, limit 24 hours, OVER.  (log L007)
+  DEMO-8    [30008]  CONFLICTED. ALSO: stale: behind by 5 hours; the limit is 24 hours: within the limit.  (log L008)
+  DEMO-9    [30009]  CONFLICTED. ALSO: stale: behind by 2 days; the limit is 24 hours: OVER THE LIMIT.  (log L009)
+  DEMO-10   [30010]  FAILED TO FETCH. Error class: rate limited (429).  (log L010)
+  DEMO-11   [30011]  FAILED TO FETCH. Error class: server error (5xx). ALSO: changed locally (status `To Do` to `Done`). Whether Jira changed too is not known.  (log L011)
+  DEMO-12   [30012]  FAILED TO FETCH. Error class: forbidden (403).  (log L012)
+  DEMO-13   [30013]  CHANGED LOCALLY ONLY.  (log L013)
+  DEMO-14   [30014]  FAILED TO FETCH. Error class: unreadable answer.  (log L014)
+  DEMO-15   [30015]  NOT YET COPIED.  (log L017)
+  DEMO-16   [30016]  NOT YET COPIED.  (log L017)
+  DEMO-17   [30017]  FAILED TO FETCH. Error class: timed out.  (log L015)
+  DEMO-18   [30018]  STALE. Age 21 hours, limit 24 hours, within.  (log L016)
+  The reason and the next action for each are in the report.
+
+FILES, in the folder given with --out-dir. Run mark: 9ab274c46817ec38.
+  the report    report.md                    before not there   after 6f0ed1e7ac21dc8b   WRITTEN
+  the fetch log report.log.md                before not there   after b210937133565cbf   WRITTEN
+  the history   report.history.json          before not there   after b61c8450cc833e9c   WRITTEN
+  Runs in the history: 1. This input was added.
+
+RESULT: REPORT WRITTEN. 18 items considered, 15 not simply in sync.
+
+Requests sent to Jira: 17. Every one was a GET with no body, which reads and cannot change anything.
+  GET /rest/api/3/issue/{number}  x16
+  GET /rest/api/3/search/jql  x1
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the output says the report was written: 18 considered, 15 not simply in sync
+  ok   the check is the first section of the report, before any count
+  note Listed in the report, counted by this script: 18 numbers, in 18 places.
+  ok   EVERY ITEM IN EXACTLY ONE STATE (criterion 1): this script read the report and found each of the fixture's 18 numbers listed once, under one state
+  ok   and it is the state the FIXTURE says it should be, for all 18, compared one by one
+  ok   each state's heading gives the number of items this script counted under it, and the number the fixture says: failed to fetch 5, missing from Jira 2, conflicted 2, changed locally only 1, stale 3, not yet copied 2, synchronized 3
+  ok   EACH LISTED WITH A REASON (criterion 3) AND WHAT TO DO NEXT (criterion 7): each of the 15 items not in sync has a Reason line, a Next line and a Log line under its state
+  ok   A STALE ITEM NAMES ITS AGE AND THE LIMIT (criterion 4): each of the 3 has, on its own lines, the age this script worked out from the fixture, the limit of 24 hours, and the right side of it: DEMO-6 3 hours, within; DEMO-7 2 days 2 hours, over; DEMO-18 21 hours, within
+  ok   A FAILED ITEM NAMES ITS ERROR CLASS (criterion 5): each of the 5 has, on its own lines, the class that follows from what the fixture has Jira answer: DEMO-10 rate limited (429); DEMO-11 server error (5xx); DEMO-12 forbidden (403); DEMO-14 unreadable answer; DEMO-17 timed out. No other item names one
+  ok   WITHOUT PRIVATE CONTENT: the made-up Jira's refusals carry a made-up title and email address (this script asked it and looked). None of five such words is in the output, the report, the fetch log or the history
+  ok   the four items the fixture makes fit two states (30005, 30008, 30009, 30011) each say what else they fit, on their own lines, and no other item does
+  ok   each of the 15 items cites the line of the fetch log on which ITS OWN number was asked for (for the two not yet copied, the line of the list), and that line says what the fixture has Jira answer
+  ok   the report and the fetch log carry the same run mark
+
+==============================================================================
+3. THE REPORT, generated again from the same input
+$ python3 skills/jira-reconciliation-report/reconcile.py report --source fake --copy context/jira/reconciliation/fixture-copy.json --out-dir context/jira/reconciliation --name report --as-of 2026-11-20T12:00:00Z
+------------------------------------------------------------------------------
+Project: DEMO
+Compared: the local copy given with --copy (16 items) with the made-up Jira. No real Jira was contacted.
+As of: 2026-11-20T12:00:00Z. A stale item's limit: 24 hours.
+
+THE CHECK THAT COMES FIRST
+  Jira's list of the project: 16 items.
+  Items considered: 18 (16 in the local copy, 2 more in Jira only).
+  The counts of the states: 5 + 2 + 2 + 1 + 3 + 2 + 3 = 18.
+  CHECK: 18 = 18. PASSED. Every number in the copy and in Jira's list has one state and no other, and each state agrees with what was found.
+
+THE COUNT OF EACH STATE
+  1. failed to fetch        5
+  2. missing from Jira      2
+  3. conflicted             2
+  4. changed locally only   1
+  5. stale                  3
+  6. not yet copied         2
+  7. synchronized           3
+     ALL                    18
+
+EVERY ITEM THAT IS NOT SIMPLY IN SYNC: 15
+  DEMO-4    [30004]  MISSING FROM JIRA.  (log L004)
+  DEMO-5    [30005]  MISSING FROM JIRA. ALSO: changed locally (status `In Progress` to `Done`). That change has nowhere to go.  (log L005)
+  DEMO-6    [30006]  STALE. Age 3 hours, limit 24 hours, within.  (log L006)
+  DEMO-7    [30007]  STALE. Age 2 days 2 hours, limit 24 hours, OVER.  (log L007)
+  DEMO-8    [30008]  CONFLICTED. ALSO: stale: behind by 5 hours; the limit is 24 hours: within the limit.  (log L008)
+  DEMO-9    [30009]  CONFLICTED. ALSO: stale: behind by 2 days; the limit is 24 hours: OVER THE LIMIT.  (log L009)
+  DEMO-10   [30010]  FAILED TO FETCH. Error class: rate limited (429).  (log L010)
+  DEMO-11   [30011]  FAILED TO FETCH. Error class: server error (5xx). ALSO: changed locally (status `To Do` to `Done`). Whether Jira changed too is not known.  (log L011)
+  DEMO-12   [30012]  FAILED TO FETCH. Error class: forbidden (403).  (log L012)
+  DEMO-13   [30013]  CHANGED LOCALLY ONLY.  (log L013)
+  DEMO-14   [30014]  FAILED TO FETCH. Error class: unreadable answer.  (log L014)
+  DEMO-15   [30015]  NOT YET COPIED.  (log L017)
+  DEMO-16   [30016]  NOT YET COPIED.  (log L017)
+  DEMO-17   [30017]  FAILED TO FETCH. Error class: timed out.  (log L015)
+  DEMO-18   [30018]  STALE. Age 21 hours, limit 24 hours, within.  (log L016)
+  The reason and the next action for each are in the report.
+
+FILES, in the folder given with --out-dir. Run mark: 9ab274c46817ec38.
+  the report    report.md                    before 6f0ed1e7ac21dc8b   after 6f0ed1e7ac21dc8b   not written: byte for byte the same
+  the fetch log report.log.md                before b210937133565cbf   after b210937133565cbf   not written: byte for byte the same
+  the history   report.history.json          before b61c8450cc833e9c   after b61c8450cc833e9c   not written: byte for byte the same
+  Runs in the history: 1. This input was already there.
+
+RESULT: REPORT UNCHANGED: the same input gave the same report. 18 items considered, 15 not simply in sync.
+
+Requests sent to Jira: 17. Every one was a GET with no body, which reads and cannot change anything.
+  GET /rest/api/3/issue/{number}  x16
+  GET /rest/api/3/search/jql  x1
+------------------------------------------------------------------------------
+exit code: 0
+sha256, taken by this script, after the first run and after the second:
+  report.history.json    b61c8450cc833e9cf91fa30951522d73   b61c8450cc833e9cf91fa30951522d73
+  report.log.md          b210937133565cbf7ea6974a4e14bb98   b210937133565cbf7ea6974a4e14bb98
+  report.md              6f0ed1e7ac21dc8bd3f5871dbc5227f7   6f0ed1e7ac21dc8bd3f5871dbc5227f7
+  ok   THE SAME INPUT GIVES THE SAME REPORT (criterion 6): the report, the fetch log and the history have the same sha256 after the second run as after the first
+  ok   the tool says it wrote none of the three
+A third time, into an empty temporary folder, so that all three files HAD to be written afresh (the folder's path is left out of this record):
+  |   the report    report.md                    before not there   after 6f0ed1e7ac21dc8b   WRITTEN
+  |   the fetch log report.log.md                before not there   after b210937133565cbf   WRITTEN
+  |   the history   report.history.json          before not there   after b61c8450cc833e9c   WRITTEN
+  | RESULT: REPORT WRITTEN. 18 items considered, 15 not simply in sync.
+  report.history.json    b61c8450cc833e9cf91fa30951522d73
+  report.log.md          b210937133565cbf7ea6974a4e14bb98
+  report.md              6f0ed1e7ac21dc8bd3f5871dbc5227f7
+  ok   written afresh in another folder, all three files are byte for byte what they are here. So the second run above wrote nothing because nothing differed, not because it did not look
+  ok   and the two outputs are the same, line for line, apart from the lines that say whether a file was written
+
+==============================================================================
+4. THE COUNTS ADDED UP BY THIS SCRIPT, from the report's own table
+The report's table: failed to fetch 5, missing from Jira 2, conflicted 2, changed locally only 1, stale 3, not yet copied 2, synchronized 3. All: 18.
+Added up here: 5 + 2 + 2 + 1 + 3 + 2 + 3 = 18.
+  ok   the table has the seven states, in their order, and no other row
+  ok   THE COUNTS SUM TO THE TOTAL (criterion 2): the seven counts in the report add up to the figure in its All row
+  ok   and that total is the number of items considered: the 16 the local copy holds and the 2 the made-up Jira has besides, counted from the fixture
+  ok   each count is the count the fixture says it should be
+  ok   the number of places this script found items listed in the report is the same number
+
+WHAT THIS DOES NOT SHOW. A real Jira: that is one real run, of a project in which little is out of step.
+What happens when Jira's list of the project cannot be read, or the tool's own check fails: those are tests, not this record.
+
+RESULT: ALL CHECKS PASSED. 22 checks.
