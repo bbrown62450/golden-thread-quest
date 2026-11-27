@@ -1,0 +1,27 @@
+schema_version: 1
+review_id: review-20261127214852-ef99a7
+quest_id: jira-read-hierarchy
+quest_version: 1
+attempt_id: jira-attempt-020
+evidence_hash: sha256:98454e6b26226400852d6315aaf2e3a3efecfec1ffbb952cee618f60356c8167
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-27T21:48:52Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/jira/hierarchy.md
+  digest: sha256:529867f693c2bebfb63c2a324b6a5ef33779a32e75f77934f4af68ea9705595a
+verification_statement: Automated review. I read hierarchy.md, tree-run.txt, PROOF.md,
+  the two live builds, tests.txt, planted-bugs.txt and the two scripts. The evidence
+  agrees with itself in four places. (1) The checksum on hierarchy.md, 62f0e73530c3d305,
+  matches parts 5 and 6 of tree-run.txt. (2) The index totals on the page match the
+  tree after the move. (3) In parts 1 and 2 the files have the same before and after
+  hashes, and the checksum 0770feb7444bed20 is the same. (4) In live-build-2 the file
+  hashes chain on from live-build-1. With every key scrambled, the tree has a different
+  checksum but nests the same numbers under the same numbers. That is expected, because
+  the printed lines include the keys. The files are in jira-attempt-020 rather than
+  the attempt-001 paths the quest names. PROOF.md says copies are in attempt-001 with
+  a note, and the automatic pre-check found the required files present. No text in
+  the evidence is addressed to the reviewer, so I found no injection. Each of the
+  7 acceptance criteria was matched to text quoted word for word from the evidence.

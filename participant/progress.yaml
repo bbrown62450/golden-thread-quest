@@ -758,9 +758,10 @@ attempts:
   quest_id: jira-read-hierarchy
   quest_version: 1
   content_hash: sha256:e625c09e746ca10f686b0b36c245ea458a06f4b16be3dfef08d835e2159c2401
-  state: submitted
+  state: verified
   started_at: '2026-11-27T21:05:56Z'
-  updated_at: '2026-11-27T21:39:56Z'
+  updated_at: '2026-11-27T21:48:52Z'
   evidence_path: participant/evidence/jira-read-hierarchy/jira-attempt-020
   submission_id: submission-20261127213956-908839
-updated_at: '2026-11-27T21:39:56Z'
+  review_id: review-20261127214852-ef99a7
+updated_at: '2026-11-27T21:48:52Z'
