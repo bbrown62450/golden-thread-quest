@@ -1,0 +1,29 @@
+COPIED from Jira into local records. Jira was only read.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000)
+Copied at:  2026-11-27T14:46:44Z, by this computer's clock
+Items in the records now: 25
+  by Jira's status category: new 20, indeterminate 5, done 0
+  who has them: me 5, someone else 0, nobody 20
+  with no priority: 3. With no due date: 22. With links: 2
+The site's priorities, in the order Jira lists them, which is taken to be highest first: Highest, High, Medium, Low, Lowest
+The site's link types: Blocks (blocks / is blocked by); Cloners (clones / is cloned by); Duplicate (duplicates / is duplicated by); Relates (relates to / relates to)
+NOT copied: titles, descriptions, comments, people's names, account ids. Who has an item is kept as one of three words.
+
+Snapshot of Jira before the copy: bda67e77740c8862 (25 items)
+Snapshot of Jira after the copy:  bda67e77740c8862 (25 items)
+The two are the same: the two listings of the project agree, so no change to an item shows between them.
+A snapshot is of every item's key and last-updated time, as a search lists them. A search can be behind.
+Requests sent to Jira: 7. Every one was a GET with no body, which reads and cannot change anything.
+  (That is read back from each request as it was built, not assumed.)
+  GET /rest/api/3/issueLinkType  x1
+  GET /rest/api/3/myself  x1
+  GET /rest/api/3/priority  x1
+  GET /rest/api/3/project/SCRUM  x1
+  GET /rest/api/3/search/jql  x3
+
+Records written to the file given with --out: records-sandbox.json
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

@@ -718,4 +718,13 @@ attempts:
   updated_at: '2026-11-27T01:05:19Z'
   evidence_path: participant/evidence/jira-link-work/jira-attempt-016
   submission_id: submission-20261127010519-cd9860
-updated_at: '2026-11-27T01:05:19Z'
+- attempt_id: jira-attempt-017
+  quest_id: jira-next-work
+  quest_version: 1
+  content_hash: sha256:06f87b0ccf0c3d715af793ace01c13c9494244cea786a140f4cb55ab3ec803e8
+  state: submitted
+  started_at: '2026-11-27T01:16:45Z'
+  updated_at: '2026-11-27T14:54:24Z'
+  evidence_path: participant/evidence/jira-next-work/jira-attempt-017
+  submission_id: submission-20261127145424-fdd4b0
+updated_at: '2026-11-27T14:54:24Z'

@@ -1,0 +1,389 @@
+The ranking run. jira-next-work, attempt jira-attempt-017
+Recorded by scripts/record_evidence.py against the FAKE Jira: a file on this computer holding thirteen made-up items, DEMO-1 to
+DEMO-13. Each block between dashed lines is what a command printed. No real Jira was contacted to make this record.
+Every time below is made up and fixed, so that the run can be repeated and gives the same result.
+
+
+==============================================================================
+1. THE FIRST COPY, on 20 November
+$ sync.py copy --out records.json --pretend-now 2026-11-20T09:00:00Z
+------------------------------------------------------------------------------
+COPIED from Jira into local records. Jira was only read.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    DEMO (project id 20000)
+Copied at:  2026-11-20T09:00:00Z, by this computer's clock (a made-up time, set by --pretend-now)
+Items in the records now: 13
+  by Jira's status category: new 10, indeterminate 2, done 1
+  who has them: me 2, someone else 1, nobody 10
+  with no priority: 1. With no due date: 6. With links: 8
+The site's priorities, in the order Jira lists them, which is taken to be highest first: Highest, High, Medium, Low, Lowest
+The site's link types: Blocks (blocks / is blocked by); Relates (relates to / relates to)
+NOT copied: titles, descriptions, comments, people's names, account ids. Who has an item is kept as one of three words.
+
+Snapshot of Jira before the copy: 3c91fd92a78e47d0 (13 items)
+Snapshot of Jira after the copy:  3c91fd92a78e47d0 (13 items)
+The two are the same: the two listings of the project agree, so no change to an item shows between them.
+A snapshot is of every item's key and last-updated time, as a search lists them. A search can be behind.
+Requests sent to Jira: 7. Every one was a GET with no body, which reads and cannot change anything.
+  (This is the fake Jira, which can only be read. For a real Jira the line above is read back from each request as built.)
+  GET /rest/api/3/issueLinkType  x1
+  GET /rest/api/3/myself  x1
+  GET /rest/api/3/priority  x1
+  GET /rest/api/3/project/DEMO  x1
+  GET /rest/api/3/search/jql  x3
+
+Records written to the file given with --out: records.json
+------------------------------------------------------------------------------
+exit status: 0
+  ok   the copy reads all 13 items
+  ok   the copy's two listings of the project, before and after, agree
+  ok   the records file and the output hold no title, no person's name, no account id and no email address: 8 made-up ones that the fake Jira sends were looked for
+
+ABOUT 'Every one was a GET'. Against the fake Jira that line proves little: the fake can only be read. What guards a real
+copy is that the one function that builds a request builds a GET with no body, which a test checks on the request itself,
+and that for a real Jira the line is read back from each request as it was built. See logs/tests.txt and logs/live-01.
+
+==============================================================================
+2. ELEVEN DAYS PASS. Other people change Jira. Most of the copy is refreshed on 1 December, and two items are not.
+$ fake_jira.py assign --issue DEMO-7 --to other      (ANOTHER PERSON changes Jira)
+------------------------------------------------------------------------------
+FAKE JIRA: another person changed who has DEMO-7.
+FAKE JIRA holds 13 items:
+  DEMO-1   To Do        priority High     has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-2   To Do        priority High     has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-3   In Progress  priority Medium   has it: someone else updated 2026-11-19T12:00:00.000+0000
+  DEMO-4   To Do        priority Medium   has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-5   To Do        priority Highest  has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-6   Done         priority Low      has it: me           updated 2026-11-19T12:00:00.000+0000
+  DEMO-7   To Do        priority Highest  has it: someone else updated 2026-11-30T10:01:00.000+0000
+  DEMO-8   To Do        priority None     has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-9   In Progress  priority Medium   has it: me           updated 2026-11-19T12:00:00.000+0000
+  DEMO-10  To Do        priority Low      has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-11  To Do        priority Medium   has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-12  To Do        priority Medium   has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-13  To Do        priority Low      has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  link 40001: DEMO-3 blocks DEMO-5
+  link 40002: DEMO-9 blocks DEMO-10
+  link 40003: DEMO-1 blocks DEMO-4
+  link 40004: DEMO-2 relates to DEMO-11
+------------------------------------------------------------------------------
+exit status: 0
+$ fake_jira.py block --issue DEMO-12 --by DEMO-9      (ANOTHER PERSON changes Jira)
+------------------------------------------------------------------------------
+FAKE JIRA: another person added the link: DEMO-9 blocks DEMO-12.
+FAKE JIRA holds 13 items:
+  DEMO-1   To Do        priority High     has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-2   To Do        priority High     has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-3   In Progress  priority Medium   has it: someone else updated 2026-11-19T12:00:00.000+0000
+  DEMO-4   To Do        priority Medium   has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-5   To Do        priority Highest  has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-6   Done         priority Low      has it: me           updated 2026-11-19T12:00:00.000+0000
+  DEMO-7   To Do        priority Highest  has it: someone else updated 2026-11-30T10:01:00.000+0000
+  DEMO-8   To Do        priority None     has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-9   In Progress  priority Medium   has it: me           updated 2026-11-30T10:03:00.000+0000
+  DEMO-10  To Do        priority Low      has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-11  To Do        priority Medium   has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-12  To Do        priority Medium   has it: nobody       updated 2026-11-30T10:02:00.000+0000
+  DEMO-13  To Do        priority Low      has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  link 40001: DEMO-3 blocks DEMO-5
+  link 40002: DEMO-9 blocks DEMO-10
+  link 40003: DEMO-1 blocks DEMO-4
+  link 40004: DEMO-2 relates to DEMO-11
+  link 40005: DEMO-9 blocks DEMO-12
+------------------------------------------------------------------------------
+exit status: 0
+
+So in Jira, DEMO-7 (priority Highest) has now been taken by someone else, and DEMO-12 is now blocked by DEMO-9.
+The copy is refreshed for eleven items. DEMO-7 and DEMO-12 are left out, so their copies stay as they were on 20 November.
+$ sync.py copy --out records.json --pretend-now 2026-12-01T08:00:00Z --refresh DEMO-1 DEMO-2 DEMO-3 DEMO-4 DEMO-5 DEMO-6 DEMO-8 DEMO-9 DEMO-10 DEMO-11 DEMO-13
+------------------------------------------------------------------------------
+COPIED from Jira into local records. Jira was only read.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    DEMO (project id 20000)
+Copied at:  2026-12-01T08:00:00Z, by this computer's clock (a made-up time, set by --pretend-now)
+Refreshed:  11 named, 11 copied again: DEMO-1, DEMO-2, DEMO-3, DEMO-4, DEMO-5, DEMO-6, DEMO-8, DEMO-9, DEMO-10, DEMO-11, DEMO-13
+            CHANGED IN JIRA SINCE THEIR COPY, and not copied again: DEMO-7, DEMO-12
+            The other 2 items keep the copy they had, taken at: 2026-11-20T09:00:00Z
+Items in the records now: 13
+  by Jira's status category: new 10, indeterminate 2, done 1
+  who has them: me 2, someone else 1, nobody 10
+  with no priority: 1. With no due date: 6. With links: 8
+The site's priorities, in the order Jira lists them, which is taken to be highest first: Highest, High, Medium, Low, Lowest
+The site's link types: Blocks (blocks / is blocked by); Relates (relates to / relates to)
+NOT copied: titles, descriptions, comments, people's names, account ids. Who has an item is kept as one of three words.
+
+Snapshot of Jira before the copy: 5707f9b05da068e4 (13 items)
+Snapshot of Jira after the copy:  5707f9b05da068e4 (13 items)
+The two are the same: the two listings of the project agree, so no change to an item shows between them.
+A snapshot is of every item's key and last-updated time, as a search lists them. A search can be behind.
+Requests sent to Jira: 17. Every one was a GET with no body, which reads and cannot change anything.
+  (This is the fake Jira, which can only be read. For a real Jira the line above is read back from each request as built.)
+  GET /rest/api/3/issue/{key}  x11
+  GET /rest/api/3/issueLinkType  x1
+  GET /rest/api/3/myself  x1
+  GET /rest/api/3/priority  x1
+  GET /rest/api/3/project/DEMO  x1
+  GET /rest/api/3/search/jql  x2
+
+Records written to the file given with --out: records.json
+------------------------------------------------------------------------------
+exit status: 0
+  ok   eleven items are copied again and two keep their older copy
+  ok   the refresh says which items have changed in Jira since their copy and were not copied again: DEMO-7 and DEMO-12
+  ok   the fake Jira holds the same items and links after the copy as before it. (It has no way to be written to, so this shows only that)
+
+==============================================================================
+3. THE RANKING, TWICE, from the same records and the same clock value
+$ rank.py rank --records records.json --now 2026-12-01T09:00:00Z --also-rule due-first --out participant/context/jira/next-work/recommendation.md
+------------------------------------------------------------------------------
+RANKING under the rule priority-first, clock value 2026-12-01T09:00:00Z. Nothing was changed anywhere but the recommendation file.
+Start here: DEMO-1
+   1. DEMO-7     confidence in the data medium STALE
+   2. DEMO-1     confidence in the data high   
+   3. DEMO-2     confidence in the data high   
+   4. DEMO-9     confidence in the data medium 
+   5. DEMO-11    confidence in the data low    
+   6. DEMO-13    confidence in the data high   
+   7. DEMO-8     confidence in the data low    
+  blocked      DEMO-5     by DEMO-3
+  blocked      DEMO-4     by DEMO-1
+  blocked      DEMO-12    by DEMO-9
+  blocked      DEMO-10    by DEMO-9
+  not offered  DEMO-3     someone else has it
+  not offered  DEMO-6     done
+sha256 of the recommendation: 916dab0fba31bf5641fedd4f4dd3a24fe5911af2a3946fea7bef43dad96a5ac8
+sha256 of the records file:   f4f26bd4b7fb24eef73e8316199d891161dacb1ae8bed087b433bdd2f0051343
+------------------------------------------------------------------------------
+exit status: 0
+$ rank.py rank --records records.json --now 2026-12-01T09:00:00Z --also-rule due-first --out participant/context/jira/next-work/recommendation.md
+------------------------------------------------------------------------------
+RANKING under the rule priority-first, clock value 2026-12-01T09:00:00Z. Nothing was changed anywhere but the recommendation file.
+Start here: DEMO-1
+   1. DEMO-7     confidence in the data medium STALE
+   2. DEMO-1     confidence in the data high   
+   3. DEMO-2     confidence in the data high   
+   4. DEMO-9     confidence in the data medium 
+   5. DEMO-11    confidence in the data low    
+   6. DEMO-13    confidence in the data high   
+   7. DEMO-8     confidence in the data low    
+  blocked      DEMO-5     by DEMO-3
+  blocked      DEMO-4     by DEMO-1
+  blocked      DEMO-12    by DEMO-9
+  blocked      DEMO-10    by DEMO-9
+  not offered  DEMO-3     someone else has it
+  not offered  DEMO-6     done
+sha256 of the recommendation: 916dab0fba31bf5641fedd4f4dd3a24fe5911af2a3946fea7bef43dad96a5ac8
+sha256 of the records file:   f4f26bd4b7fb24eef73e8316199d891161dacb1ae8bed087b433bdd2f0051343
+------------------------------------------------------------------------------
+exit status: 0
+  ok   criterion 6: the two runs print the same thing, line for line
+  ok   criterion 6: the two recommendation files are identical, byte for byte (sha256 916dab0fba31bf56...)
+  ok   criterion 7, as far as the ranking goes: it is given only the records file, which is byte for byte unchanged after both runs. It has no network code: a test reads its source for that
+  ok   criterion 2: DEMO-5, with the highest priority and the earliest due date of the open items, is not ranked: it is listed as blocked, with its blocker and the blocker's status named
+  ok   criterion 2, the case a reader found: DEMO-12's own copy is older than the link. Its blocker's fresher record shows the link, and DEMO-12 is listed as blocked
+  ok   criterion 3: DEMO-7's copy is 11 days old, over the 24 hour limit: it keeps place 1 with a warning, and is NOT the item to start
+  ok   criterion 4: DEMO-1 and DEMO-2 tie on priority and on due date, and the recommendation says which rule broke the tie
+  ok   criterion 5: missing fields lower confidence and are reported: DEMO-8 has no priority and no due date, and its confidence is low
+  ok   criterion 1: every line that gives a reason names a recorded field: 80 lines of 12 kinds looked at, 0 without one
+  ok   the item started by me is listed at the top without changing its place, and the blocked item that would outrank the start is pointed out with its blocker
+  ok   a due date already past is marked: DEMO-13 was due the day before the clock value
+  ok   stretch goal: the recommendation says why the item to start beat the next one
+  ok   stretch goal: under the rule due-first the order changes: DEMO-13, low priority and due first, moves from place 6 to place 1, and the recommendation says why
+$ rank.py rules --out participant/context/jira/next-work/rules.md
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+exit status: 0
+  ok   the rules are written by the same file that ranks
+
+The recommendation is saved as participant/context/jira/next-work/recommendation.md, the records it was worked out from as
+records-demo.json beside it, and the rules as rules.md.
+
+==============================================================================
+4. A BLOCKER IS RESOLVED: another person marks DEMO-3 as Done. The two items are copied again, and the ranking is run again.
+$ fake_jira.py resolve --issue DEMO-3      (ANOTHER PERSON changes Jira)
+------------------------------------------------------------------------------
+FAKE JIRA: another person marked DEMO-3 as Done.
+FAKE JIRA holds 13 items:
+  DEMO-1   To Do        priority High     has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-2   To Do        priority High     has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-3   Done         priority Medium   has it: someone else updated 2026-11-30T10:04:00.000+0000
+  DEMO-4   To Do        priority Medium   has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-5   To Do        priority Highest  has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-6   Done         priority Low      has it: me           updated 2026-11-19T12:00:00.000+0000
+  DEMO-7   To Do        priority Highest  has it: someone else updated 2026-11-30T10:01:00.000+0000
+  DEMO-8   To Do        priority None     has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-9   In Progress  priority Medium   has it: me           updated 2026-11-30T10:03:00.000+0000
+  DEMO-10  To Do        priority Low      has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-11  To Do        priority Medium   has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  DEMO-12  To Do        priority Medium   has it: nobody       updated 2026-11-30T10:02:00.000+0000
+  DEMO-13  To Do        priority Low      has it: nobody       updated 2026-11-19T12:00:00.000+0000
+  link 40001: DEMO-3 blocks DEMO-5
+  link 40002: DEMO-9 blocks DEMO-10
+  link 40003: DEMO-1 blocks DEMO-4
+  link 40004: DEMO-2 relates to DEMO-11
+  link 40005: DEMO-9 blocks DEMO-12
+------------------------------------------------------------------------------
+exit status: 0
+$ sync.py copy --out records.json --pretend-now 2026-12-01T10:00:00Z --refresh DEMO-3 DEMO-5
+------------------------------------------------------------------------------
+COPIED from Jira into local records. Jira was only read.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    DEMO (project id 20000)
+Copied at:  2026-12-01T10:00:00Z, by this computer's clock (a made-up time, set by --pretend-now)
+Refreshed:  2 named, 2 copied again: DEMO-3, DEMO-5
+            CHANGED IN JIRA SINCE THEIR COPY, and not copied again: DEMO-7, DEMO-12
+            The other 11 items keep the copy they had, taken at: 2026-11-20T09:00:00Z, 2026-12-01T08:00:00Z
+Items in the records now: 13
+  by Jira's status category: new 10, indeterminate 1, done 2
+  who has them: me 2, someone else 1, nobody 10
+  with no priority: 1. With no due date: 6. With links: 8
+The site's priorities, in the order Jira lists them, which is taken to be highest first: Highest, High, Medium, Low, Lowest
+The site's link types: Blocks (blocks / is blocked by); Relates (relates to / relates to)
+NOT copied: titles, descriptions, comments, people's names, account ids. Who has an item is kept as one of three words.
+
+Snapshot of Jira before the copy: 6f3331307230739a (13 items)
+Snapshot of Jira after the copy:  6f3331307230739a (13 items)
+The two are the same: the two listings of the project agree, so no change to an item shows between them.
+A snapshot is of every item's key and last-updated time, as a search lists them. A search can be behind.
+Requests sent to Jira: 8. Every one was a GET with no body, which reads and cannot change anything.
+  (This is the fake Jira, which can only be read. For a real Jira the line above is read back from each request as built.)
+  GET /rest/api/3/issue/{key}  x2
+  GET /rest/api/3/issueLinkType  x1
+  GET /rest/api/3/myself  x1
+  GET /rest/api/3/priority  x1
+  GET /rest/api/3/project/DEMO  x1
+  GET /rest/api/3/search/jql  x2
+
+Records written to the file given with --out: records.json
+------------------------------------------------------------------------------
+exit status: 0
+  ok   the copy's two listings agree, and the fake Jira holds the same items and links after the copy as before it
+$ rank.py rank --records records.json --now 2026-12-01T10:30:00Z
+------------------------------------------------------------------------------
+RANKING under the rule priority-first, clock value 2026-12-01T10:30:00Z. Nothing was changed anywhere but the recommendation file.
+Start here: DEMO-5
+   1. DEMO-5     confidence in the data high   
+   2. DEMO-7     confidence in the data medium STALE
+   3. DEMO-1     confidence in the data high   
+   4. DEMO-2     confidence in the data high   
+   5. DEMO-9     confidence in the data medium 
+   6. DEMO-11    confidence in the data low    
+   7. DEMO-13    confidence in the data high   
+   8. DEMO-8     confidence in the data low    
+  blocked      DEMO-4     by DEMO-1
+  blocked      DEMO-12    by DEMO-9
+  blocked      DEMO-10    by DEMO-9
+  not offered  DEMO-3     done
+  not offered  DEMO-6     done
+sha256 of the recommendation: c4d26681dc73bd2f646d018251bfcbdb8d142ebd65a4c6a4c0e99b086144e418
+sha256 of the records file:   e6ff3c1956bc9937e416704b6d04f71aae597cea9b2248773e0f06d40d732a9c
+------------------------------------------------------------------------------
+exit status: 0
+  ok   the ranking changes: DEMO-5 is no longer blocked. It is ranked first, and it is the item to start
+$ rank.py diff --before records-before.json --now-before 2026-12-01T09:00:00Z --after records.json --now-after 2026-12-01T10:30:00Z
+------------------------------------------------------------------------------
+WHAT CHANGED between two rankings, under the rule priority-first. This reads two records files and changes nothing.
+Start here, before: DEMO-1. After: DEMO-5.
+
+DEMO-1: was ranked, place 2. Now ranked, place 3.
+  why: none of its own fields changed. Its place changed because an item around it moved, or because its copy is now stale or fresh.
+
+DEMO-2: was ranked, place 3. Now ranked, place 4.
+  why: none of its own fields changed. Its place changed because an item around it moved, or because its copy is now stale or fresh.
+
+DEMO-3: was assignee is someone else. Now status is Done, which Jira puts in its "done" category.
+  why: in the record of DEMO-3, `status` was "In Progress" and is now "Done".
+  why: in the record of DEMO-3, `copied_at` was "2026-12-01T08:00:00Z" and is now "2026-12-01T10:00:00Z".
+
+DEMO-5: was blocked by DEMO-3. Now ranked, place 1.
+  why: in the record of DEMO-5, `copied_at` was "2026-12-01T08:00:00Z" and is now "2026-12-01T10:00:00Z".
+  why: in the record of DEMO-3, `status` was "In Progress" and is now "Done".
+  why: in the record of DEMO-3, `copied_at` was "2026-12-01T08:00:00Z" and is now "2026-12-01T10:00:00Z".
+
+DEMO-7: was ranked, place 1. Now ranked, place 2.
+  why: none of its own fields changed. Its place changed because an item around it moved, or because its copy is now stale or fresh.
+
+DEMO-8: was ranked, place 7. Now ranked, place 8.
+  why: none of its own fields changed. Its place changed because an item around it moved, or because its copy is now stale or fresh.
+
+DEMO-9: was ranked, place 4. Now ranked, place 5.
+  why: none of its own fields changed. Its place changed because an item around it moved, or because its copy is now stale or fresh.
+
+DEMO-11: was ranked, place 5. Now ranked, place 6.
+  why: none of its own fields changed. Its place changed because an item around it moved, or because its copy is now stale or fresh.
+
+DEMO-13: was ranked, place 6. Now ranked, place 7.
+  why: none of its own fields changed. Its place changed because an item around it moved, or because its copy is now stale or fresh.
+
+9 items changed list or place. 4 did not.
+------------------------------------------------------------------------------
+exit status: 0
+  ok   and why: DEMO-5 was blocked by DEMO-3, and in DEMO-3's record `status` was "In Progress" and is now "Done"
+  ok   the items that only moved down a place are said to have changed no field of their own
+
+==============================================================================
+5. THE RECOMMENDATION NOT TO TRUST: DEMO-7 is copied again
+All through parts 3 and 4, DEMO-7 stood at or near the top on fields that were 11 days old. Copied again now:
+$ sync.py copy --out records.json --pretend-now 2026-12-01T11:00:00Z --refresh DEMO-7 DEMO-12
+------------------------------------------------------------------------------
+COPIED from Jira into local records. Jira was only read.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    DEMO (project id 20000)
+Copied at:  2026-12-01T11:00:00Z, by this computer's clock (a made-up time, set by --pretend-now)
+Refreshed:  2 named, 2 copied again: DEMO-7, DEMO-12
+            CHANGED IN JIRA SINCE THEIR COPY, and not copied again: none that the listing shows
+            The other 11 items keep the copy they had, taken at: 2026-12-01T08:00:00Z, 2026-12-01T10:00:00Z
+Items in the records now: 13
+  by Jira's status category: new 10, indeterminate 1, done 2
+  who has them: me 2, someone else 2, nobody 9
+  with no priority: 1. With no due date: 6. With links: 9
+The site's priorities, in the order Jira lists them, which is taken to be highest first: Highest, High, Medium, Low, Lowest
+The site's link types: Blocks (blocks / is blocked by); Relates (relates to / relates to)
+NOT copied: titles, descriptions, comments, people's names, account ids. Who has an item is kept as one of three words.
+
+Snapshot of Jira before the copy: 6f3331307230739a (13 items)
+Snapshot of Jira after the copy:  6f3331307230739a (13 items)
+The two are the same: the two listings of the project agree, so no change to an item shows between them.
+A snapshot is of every item's key and last-updated time, as a search lists them. A search can be behind.
+Requests sent to Jira: 8. Every one was a GET with no body, which reads and cannot change anything.
+  (This is the fake Jira, which can only be read. For a real Jira the line above is read back from each request as built.)
+  GET /rest/api/3/issue/{key}  x2
+  GET /rest/api/3/issueLinkType  x1
+  GET /rest/api/3/myself  x1
+  GET /rest/api/3/priority  x1
+  GET /rest/api/3/project/DEMO  x1
+  GET /rest/api/3/search/jql  x2
+
+Records written to the file given with --out: records.json
+------------------------------------------------------------------------------
+exit status: 0
+$ rank.py rank --records records.json --now 2026-12-01T11:30:00Z
+------------------------------------------------------------------------------
+RANKING under the rule priority-first, clock value 2026-12-01T11:30:00Z. Nothing was changed anywhere but the recommendation file.
+Start here: DEMO-5
+   1. DEMO-5     confidence in the data high   
+   2. DEMO-1     confidence in the data high   
+   3. DEMO-2     confidence in the data high   
+   4. DEMO-9     confidence in the data medium 
+   5. DEMO-11    confidence in the data low    
+   6. DEMO-13    confidence in the data high   
+   7. DEMO-8     confidence in the data low    
+  blocked      DEMO-4     by DEMO-1
+  blocked      DEMO-12    by DEMO-9
+  blocked      DEMO-10    by DEMO-9
+  not offered  DEMO-3     done
+  not offered  DEMO-6     done
+  not offered  DEMO-7     someone else has it
+sha256 of the recommendation: 4756660c6be91309dd59daa9ee861224ede29c7e35f004e57d91d23681144d3a
+sha256 of the records file:   256be5c86639730562cf8054bd11314642a8164e1aa40aa55f599cfd64c1fc42
+------------------------------------------------------------------------------
+exit status: 0
+  ok   with a fresh copy DEMO-7 is not offered at all: someone else has it. The warning was right not to let it be the item to start
+  ok   nothing private is in anything these commands printed
+
+RESULT: ALL CHECKS PASSED. 26 checks.

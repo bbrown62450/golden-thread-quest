@@ -1,0 +1,464 @@
+{
+ "format": "jira-next-work/1",
+ "items": [
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:02:29Z",
+   "duedate": "2026-12-15",
+   "id": "10000",
+   "issuetype": "Task",
+   "key": "SCRUM-1",
+   "links": [
+    {
+     "other": "SCRUM-25",
+     "other_id": "10024",
+     "other_status": {
+      "category": "new",
+      "name": "To Do"
+     },
+     "says": "blocks",
+     "this_item_is": "source",
+     "type": "Blocks"
+    }
+   ],
+   "priority": "Low",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-27T00:56:59Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:02:29Z",
+   "duedate": "2026-11-20",
+   "id": "10001",
+   "issuetype": "Story",
+   "key": "SCRUM-2",
+   "links": [],
+   "priority": null,
+   "status": {
+    "category": "indeterminate",
+    "name": "In Progress"
+   },
+   "updated": "2026-11-10T20:02:32Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:02:30Z",
+   "duedate": null,
+   "id": "10002",
+   "issuetype": "Task",
+   "key": "SCRUM-3",
+   "links": [],
+   "priority": null,
+   "status": {
+    "category": "indeterminate",
+    "name": "In Progress"
+   },
+   "updated": "2026-11-10T20:02:31Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:02:31Z",
+   "duedate": null,
+   "id": "10003",
+   "issuetype": "Subtask",
+   "key": "SCRUM-4",
+   "links": [],
+   "priority": null,
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T20:02:31Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:08:59Z",
+   "duedate": null,
+   "id": "10004",
+   "issuetype": "Story",
+   "key": "SCRUM-5",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T20:36:35Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:09:00Z",
+   "duedate": null,
+   "id": "10005",
+   "issuetype": "Story",
+   "key": "SCRUM-6",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "indeterminate",
+    "name": "In Progress"
+   },
+   "updated": "2026-11-10T20:36:34Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:09:01Z",
+   "duedate": null,
+   "id": "10006",
+   "issuetype": "Story",
+   "key": "SCRUM-7",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T20:36:34Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:09:02Z",
+   "duedate": null,
+   "id": "10007",
+   "issuetype": "Story",
+   "key": "SCRUM-8",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T20:15:07Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:10:48Z",
+   "duedate": null,
+   "id": "10008",
+   "issuetype": "Story",
+   "key": "SCRUM-9",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T20:36:33Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:15:06Z",
+   "duedate": null,
+   "id": "10009",
+   "issuetype": "Story",
+   "key": "SCRUM-10",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T20:36:33Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:36:36Z",
+   "duedate": null,
+   "id": "10010",
+   "issuetype": "Story",
+   "key": "SCRUM-11",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T21:02:39Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:36:36Z",
+   "duedate": null,
+   "id": "10011",
+   "issuetype": "Story",
+   "key": "SCRUM-12",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "indeterminate",
+    "name": "In Progress"
+   },
+   "updated": "2026-11-10T21:02:38Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:36:37Z",
+   "duedate": null,
+   "id": "10012",
+   "issuetype": "Story",
+   "key": "SCRUM-13",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T21:02:37Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:36:38Z",
+   "duedate": null,
+   "id": "10013",
+   "issuetype": "Story",
+   "key": "SCRUM-14",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T20:44:15Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:42:09Z",
+   "duedate": null,
+   "id": "10014",
+   "issuetype": "Story",
+   "key": "SCRUM-15",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T21:02:37Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T20:44:14Z",
+   "duedate": null,
+   "id": "10015",
+   "issuetype": "Story",
+   "key": "SCRUM-16",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T21:02:36Z"
+  },
+  {
+   "assignee": "me",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T21:02:39Z",
+   "duedate": null,
+   "id": "10016",
+   "issuetype": "Story",
+   "key": "SCRUM-17",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T21:09:12Z"
+  },
+  {
+   "assignee": "me",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T21:02:40Z",
+   "duedate": null,
+   "id": "10017",
+   "issuetype": "Story",
+   "key": "SCRUM-18",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "indeterminate",
+    "name": "In Progress"
+   },
+   "updated": "2026-11-10T21:09:13Z"
+  },
+  {
+   "assignee": "me",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T21:02:41Z",
+   "duedate": null,
+   "id": "10018",
+   "issuetype": "Story",
+   "key": "SCRUM-19",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T21:02:41Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T21:02:42Z",
+   "duedate": null,
+   "id": "10019",
+   "issuetype": "Story",
+   "key": "SCRUM-20",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T21:09:14Z"
+  },
+  {
+   "assignee": "me",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T21:08:13Z",
+   "duedate": null,
+   "id": "10020",
+   "issuetype": "Story",
+   "key": "SCRUM-21",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T21:08:13Z"
+  },
+  {
+   "assignee": "me",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-10T21:09:14Z",
+   "duedate": null,
+   "id": "10021",
+   "issuetype": "Story",
+   "key": "SCRUM-22",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-10T21:09:14Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-19T21:34:26Z",
+   "duedate": "2027-01-15",
+   "id": "10022",
+   "issuetype": "Story",
+   "key": "SCRUM-23",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-19T21:34:26Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-26T02:11:53Z",
+   "duedate": null,
+   "id": "10023",
+   "issuetype": "Subtask",
+   "key": "SCRUM-24",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-26T02:11:53Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-27T14:46:44Z",
+   "created": "2026-11-26T22:49:53Z",
+   "duedate": null,
+   "id": "10024",
+   "issuetype": "Task",
+   "key": "SCRUM-25",
+   "links": [
+    {
+     "other": "SCRUM-1",
+     "other_id": "10000",
+     "other_status": {
+      "category": "new",
+      "name": "To Do"
+     },
+     "says": "is blocked by",
+     "this_item_is": "target",
+     "type": "Blocks"
+    }
+   ],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-27T00:56:59Z"
+  }
+ ],
+ "link_types": [
+  {
+   "inward": "is blocked by",
+   "name": "Blocks",
+   "outward": "blocks"
+  },
+  {
+   "inward": "is cloned by",
+   "name": "Cloners",
+   "outward": "clones"
+  },
+  {
+   "inward": "is duplicated by",
+   "name": "Duplicate",
+   "outward": "duplicates"
+  },
+  {
+   "inward": "relates to",
+   "name": "Relates",
+   "outward": "relates to"
+  }
+ ],
+ "note": "Copied by sync.py. No titles, descriptions or people. `assignee` is one of: me, someone else, nobody.",
+ "priorities": [
+  "Highest",
+  "High",
+  "Medium",
+  "Low",
+  "Lowest"
+ ],
+ "project": {
+  "id": "10000",
+  "key": "SCRUM"
+ },
+ "site_fingerprint": "4aabe3d08fbad6b1"
+}

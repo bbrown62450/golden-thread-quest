@@ -1,0 +1,4 @@
+The four snapshots of Jira, before and after each of the two copies: bda67e77740c8862, bda67e77740c8862, bda67e77740c8862, bda67e77740c8862
+They are all the same: the four listings of the project agree, from the first read to the last.
+A snapshot is of every item's key and last-updated time, as a search lists them. It is not proof that nothing changed: a search can be behind.
+The records that were ranked are the ones from the first copy. The second copy went to a temporary file and was deleted.

@@ -1,0 +1,157 @@
+Planted bugs in a copy of participant/skills/jira-next-work. jira-next-work, attempt jira-attempt-017
+Recorded by scripts/planted_bugs.py. One bug at a time is planted in a copy of rank.py or sync.py, in a temporary folder,
+and the tests are run against the copy, with the fake Jira. CAUGHT means at least one test failed. The real skill is not changed.
+
+First, with no bug planted, the tests against the copy: OK
+
+ 1. CAUGHT  rank.py: a done item is ranked
+            FAILED (failures=3): test_a_done_item_and_someone_elses_item_are_not_offered_and_the_field_is_named, test_diff_says_which_items_moved_and_names_the_field_that_changed ...
+ 2. CAUGHT  rank.py: an item someone else has is offered
+            FAILED (failures=5): test_a_done_item_and_someone_elses_item_are_not_offered_and_the_field_is_named, test_diff_says_which_items_moved_and_names_the_field_that_changed ...
+ 3. CAUGHT  rank.py: a blocked item is ranked
+            FAILED (failures=17): test_a_blocked_item_is_not_ranked_and_its_blocker_is_named_with_its_status, test_a_blocked_item_that_would_outrank_the_start_is_pointed_out_with_its_blocker ...
+ 4. CAUGHT  rank.py: an item is taken as blocked by the items IT blocks
+            FAILED (failures=11, errors=1): test_a_stale_item_keeps_its_place_and_is_never_start_here, test_a_status_with_no_category_is_copied_as_open ...
+ 5. CAUGHT  rank.py: a link of any type blocks
+            FAILED (failures=1, errors=1): test_a_missing_field_puts_the_item_last_on_that_criterion_and_lowers_confidence_a_step_each, test_every_item_is_in_exactly_one_list
+ 6. CAUGHT  rank.py: only the item's own record is read for its blockers: the reader's find
+            FAILED (failures=2): test_a_link_that_only_the_older_record_shows_still_blocks_and_is_in_doubt, test_an_item_is_blocked_when_only_the_blockers_record_shows_the_link
+ 7. CAUGHT  rank.py: a blocker that is done still blocks
+            FAILED (failures=3): test_a_blocker_that_is_done_in_every_copy_no_longer_blocks_and_the_reason_says_so, test_a_blocker_with_no_record_of_its_own_is_read_from_the_blocked_items_record ...
+ 8. CAUGHT  rank.py: a blocker whose status is not recorded does not block
+            FAILED (failures=1): test_a_blocker_whose_status_is_recorded_nowhere_still_blocks_and_lowers_confidence
+ 9. CAUGHT  rank.py: when the copies of a blocker's status disagree, the newest is simply believed
+            FAILED (failures=1): test_when_the_two_copies_of_a_blockers_status_disagree_the_item_stays_blocked_whichever_says_done
+10. CAUGHT  rank.py: the blocker's own record is not read for its status
+            FAILED (failures=3): test_a_blocked_item_is_not_ranked_and_its_blocker_is_named_with_its_status, test_an_item_is_blocked_when_only_the_blockers_record_shows_the_link ...
+11. CAUGHT  rank.py: what the blocked item showed of its blocker is not read
+            FAILED (failures=3): test_a_blocked_item_is_not_ranked_and_its_blocker_is_named_with_its_status, test_a_blocker_with_no_record_of_its_own_is_read_from_the_blocked_items_record ...
+12. CAUGHT  rank.py: a link only the OLDER record shows is not put in doubt
+            FAILED (failures=1): test_a_link_the_blockers_newer_record_no_longer_shows_still_blocks_and_is_in_doubt
+13. CAUGHT  rank.py: a stale blocker record puts nothing in doubt
+            FAILED (failures=1): test_a_stale_blocker_is_said_to_be_stale
+14. CAUGHT  rank.py: doubt about a blocker does not lower confidence
+            FAILED (failures=5): test_a_blocker_whose_status_is_recorded_nowhere_still_blocks_and_lowers_confidence, test_a_link_that_only_the_older_record_shows_still_blocks_and_is_in_doubt ...
+15. CAUGHT  rank.py: a site with no link type named Blocks is treated as if it had one
+            FAILED (failures=1): test_a_site_with_no_link_type_named_blocks_gets_a_warning_and_not_an_empty_blocked_list_in_silence
+16. CAUGHT  rank.py: started work is not listed
+            FAILED (failures=1): test_started_work_is_listed_at_the_top_and_keeps_its_place
+17. CAUGHT  rank.py: a blocked item that would outrank the start is not pointed out
+            FAILED (failures=1): test_a_blocked_item_that_would_outrank_the_start_is_pointed_out_with_its_blocker
+18. CAUGHT  rank.py: an overdue date is not marked
+            FAILED (failures=1): test_a_due_date_already_past_says_before
+19. CAUGHT  rank.py: a due date of the wrong shape is let through
+            FAILED (errors=1): test_records_with_a_value_of_the_wrong_shape_stop_the_ranking_cleanly
+20. CAUGHT  rank.py: a name with characters that break a Markdown table is let through
+            FAILED (failures=1): test_records_with_a_value_of_the_wrong_shape_stop_the_ranking_cleanly
+21. CAUGHT  rank.py: two keys that differ by a leading zero are left in the order of the file
+            FAILED (failures=1): test_two_keys_that_differ_only_by_a_leading_zero_are_still_ordered_by_a_rule
+22. CAUGHT  rank.py: the stale limit is ten days
+            FAILED (failures=2): test_a_copy_older_than_the_limit_carries_a_warning_and_one_just_inside_it_does_not, test_every_reason_names_a_recorded_field
+23. CAUGHT  rank.py: a copy exactly at the limit is called stale
+            FAILED (failures=1): test_a_copy_older_than_the_limit_carries_a_warning_and_one_just_inside_it_does_not
+24. CAUGHT  rank.py: a stale item is offered as the thing to start
+            FAILED (failures=3): test_a_stale_item_keeps_its_place_and_is_never_start_here, test_the_item_the_scenario_describes_is_not_recommended ...
+25. CAUGHT  rank.py: a stale copy does not lower confidence
+            FAILED (failures=1): test_a_stale_item_keeps_its_place_and_is_never_start_here
+26. CAUGHT  rank.py: the ranked table does not mark a stale item
+            FAILED (failures=1): test_a_stale_item_keeps_its_place_and_is_never_start_here
+27. CAUGHT  rank.py: a ranked item's stale warning is not written
+            FAILED (failures=1): test_a_stale_item_keeps_its_place_and_is_never_start_here
+28. CAUGHT  rank.py: missing fields do not lower confidence
+            FAILED (failures=3): test_a_missing_field_puts_the_item_last_on_that_criterion_and_lowers_confidence_a_step_each, test_a_priority_name_the_site_does_not_list_is_treated_as_missing_and_said ...
+29. CAUGHT  rank.py: an item with no priority is ranked first
+            FAILED (failures=9): test_a_blocked_item_that_would_outrank_the_start_is_pointed_out_with_its_blocker, test_a_missing_field_puts_the_item_last_on_that_criterion_and_lowers_confidence_a_step_each ...
+30. CAUGHT  rank.py: an item with no due date is ranked first on due
+            FAILED (failures=1): test_the_other_rule_puts_due_before_priority
+31. CAUGHT  rank.py: an item with no created date is ranked first on created
+            FAILED (failures=2): test_a_missing_field_puts_the_item_last_on_that_criterion_and_lowers_confidence_a_step_each, test_every_item_is_in_exactly_one_list
+32. CAUGHT  rank.py: a priority name the site does not list is not reported as missing
+            FAILED (failures=1): test_a_priority_name_the_site_does_not_list_is_treated_as_missing_and_said
+33. CAUGHT  rank.py: priorities are ordered by the alphabet
+            FAILED (failures=7): test_a_blocked_item_that_would_outrank_the_start_is_pointed_out_with_its_blocker, test_a_stale_item_keeps_its_place_and_is_never_start_here ...
+34. CAUGHT  rank.py: the item that blocks the FEWEST comes first
+            FAILED (failures=5): test_a_stale_item_keeps_its_place_and_is_never_start_here, test_a_tie_on_priority_and_due_is_broken_by_waiters_and_the_reason_says_tie_break ...
+35. CAUGHT  rank.py: a done item counts as waiting
+            FAILED (failures=1): test_waiters_counts_open_items_from_either_record
+36. CAUGHT  rank.py: waiters named only in the other item's record are not counted
+            FAILED (failures=1): test_waiters_counts_open_items_from_either_record
+37. CAUGHT  rank.py: keys are ordered as text, so DEMO-12 comes before DEMO-2
+            FAILED (failures=2): test_an_item_is_blocked_when_only_the_blockers_record_shows_the_link, test_items_equal_on_everything_are_ordered_by_key_by_number_not_by_text
+38. CAUGHT  rank.py: created is compared as text, whatever its offset
+            FAILED (failures=1): test_created_is_compared_as_a_moment_whatever_offset_jira_wrote_it_with
+39. CAUGHT  rank.py: the rule due-first is the same as priority-first
+            FAILED (failures=1): test_the_other_rule_puts_due_before_priority
+40. CAUGHT  rank.py: a reason is written without naming its field
+            FAILED (failures=2): test_a_blocked_item_that_would_outrank_the_start_is_pointed_out_with_its_blocker, test_every_reason_names_a_recorded_field
+41. CAUGHT  rank.py: with no clock value, a made-up one is used
+            FAILED (failures=1): test_a_clock_value_is_required_and_cannot_be_earlier_than_a_copy
+42. CAUGHT  rank.py: a clock value earlier than a copy is accepted
+            FAILED (failures=1): test_a_clock_value_is_required_and_cannot_be_earlier_than_a_copy
+43. CAUGHT  rank.py: the recommendation may be written over the records file
+            FAILED (failures=1): test_ranking_leaves_the_records_file_as_it_was_and_refuses_to_write_over_it
+44. CAUGHT  rank.py: records holding one key twice are accepted
+            FAILED (failures=1): test_records_that_cannot_be_read_or_hold_a_key_twice_stop_the_ranking
+45. CAUGHT  sync.py: the copy can send something other than a read
+            FAILED (failures=2): test_every_request_is_a_get_and_the_connection_has_no_way_to_send_anything_else, test_the_live_connection_sends_get_with_no_body
+46. CAUGHT  sync.py: titles are asked for
+            FAILED (failures=1): test_no_title_no_person_and_no_account_id_reaches_the_records_or_the_output
+47. CAUGHT  sync.py: the account id of whoever has an item is kept
+            FAILED (failures=6, errors=37): test_a_blocked_item_is_not_ranked_and_its_blocker_is_named_with_its_status, test_a_blocked_item_that_would_outrank_the_start_is_pointed_out_with_its_blocker ...
+48. CAUGHT  sync.py: 'me' and 'someone else' are exchanged
+            FAILED (failures=8): test_a_done_item_and_someone_elses_item_are_not_offered_and_the_field_is_named, test_an_item_assigned_to_me_is_ranked ...
+49. CAUGHT  sync.py: a link's source and target are exchanged
+            FAILED (failures=25, errors=1): test_a_blocked_item_is_not_ranked_and_its_blocker_is_named_with_its_status, test_a_blocked_item_that_would_outrank_the_start_is_pointed_out_with_its_blocker ...
+50. CAUGHT  sync.py: a link's phrase is the other item's
+            FAILED (failures=1): test_a_link_is_kept_with_its_phrase_and_which_end_this_item_is
+51. CAUGHT  sync.py: only the first page of a long answer is read
+            FAILED (failures=1): test_every_page_of_a_long_answer_is_read
+52. CAUGHT  sync.py: an answer that says there is more is taken as whole
+            FAILED (failures=1): test_an_answer_that_says_there_is_more_and_gives_no_way_to_ask_is_refused
+53. CAUGHT  sync.py: a copy that is not whole is written
+            FAILED (failures=1): test_a_copy_that_would_not_be_whole_is_refused
+54. CAUGHT  sync.py: a refresh throws the other items away
+            FAILED (failures=11, errors=1): test_a_link_that_only_the_older_record_shows_still_blocks_and_is_in_doubt, test_a_link_the_blockers_newer_record_no_longer_shows_still_blocks_and_is_in_doubt ...
+55. CAUGHT  sync.py: a refresh keeps an item Jira no longer returns
+            FAILED (failures=1): test_an_item_jira_no_longer_returns_is_taken_out_and_said
+56. CAUGHT  sync.py: a refresh keeps an item Jira now returns under another key
+            FAILED (failures=1): test_an_item_jira_now_returns_under_another_key_is_taken_out_and_said
+57. CAUGHT  sync.py: an item answered under another key is copied as if it were the one asked for
+            FAILED (failures=1): test_an_item_jira_now_returns_under_another_key_is_taken_out_and_said
+58. CAUGHT  sync.py: a refresh keeps the old copy beside the new one
+            FAILED (failures=2, errors=7): test_a_link_that_only_the_older_record_shows_still_blocks_and_is_in_doubt, test_a_link_the_blockers_newer_record_no_longer_shows_still_blocks_and_is_in_doubt ...
+59. CAUGHT  sync.py: a refresh does not say what else has changed in Jira
+            FAILED (failures=1): test_a_refresh_says_which_other_items_have_changed_in_jira_since_their_copy
+60. CAUGHT  sync.py: times keep the site's own offset
+            FAILED (failures=2): test_a_refresh_says_which_other_items_have_changed_in_jira_since_their_copy, test_times_are_kept_in_utc_and_names_the_site_chose_are_made_safe_for_a_markdown_file
+61. CAUGHT  sync.py: names the site chose are copied as they are
+            FAILED (failures=1): test_times_are_kept_in_utc_and_names_the_site_chose_are_made_safe_for_a_markdown_file
+62. CAUGHT  sync.py: what the output says about the requests is assumed, not read back
+            FAILED (failures=1): test_the_live_connection_sends_get_with_no_body
+63. CAUGHT  sync.py: a request with a body still counts as a read
+            FAILED (failures=1): test_the_live_connection_sends_get_with_no_body
+64. CAUGHT  sync.py: an empty page that says there is more is followed for ever
+            stopped after 120 seconds
+65. CAUGHT  sync.py: the site's link types are not copied
+            FAILED (failures=4, errors=38): test_a_blocked_item_is_not_ranked_and_its_blocker_is_named_with_its_status, test_a_blocked_item_that_would_outrank_the_start_is_pointed_out_with_its_blocker ...
+66. CAUGHT  sync.py: a refresh may name an item of another project
+            FAILED (failures=1): test_refresh_is_refused_without_records_or_for_another_project_or_a_bad_key
+67. CAUGHT  sync.py: the test clock is accepted against a real Jira
+            FAILED (failures=1): test_the_test_clock_is_refused_against_a_real_jira
+68. CAUGHT  sync.py: a change during the copy is not reported
+            FAILED (failures=1): test_a_change_by_someone_else_during_the_copy_is_noticed
+69. CAUGHT  sync.py: the saved log keeps the site's address
+            FAILED (failures=1): test_a_whole_run_through_main_with_a_saved_log
+70. CAUGHT  sync.py: the time of the copy ignores the clock it was given
+            FAILED (failures=7, errors=32): test_a_blocked_item_is_not_ranked_and_its_blocker_is_named_with_its_status, test_a_blocked_item_that_would_outrank_the_start_is_pointed_out_with_its_blocker ...
+71. CAUGHT  sync.py: an item whose links cannot be read is copied as having none
+            FAILED (failures=1): test_an_item_whose_status_or_links_cannot_be_read_stops_the_copy
+
+Last, with the copy put back as it was: OK
+The real skill is byte for byte what it was before: yes
+Git reports the same state of the whole repository as before the run: yes
+
+NOT PLANTED, because no test can tell: leaving the key out of the sort. The items are sorted by key before they are
+  ranked, and the sort keeps equal items in the order it found them, so the key decides ties either way.
+
+RESULT: 71 OF 71 PLANTED BUGS CAUGHT.

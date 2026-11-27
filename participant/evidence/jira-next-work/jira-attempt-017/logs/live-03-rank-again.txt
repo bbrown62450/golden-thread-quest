@@ -1,0 +1,29 @@
+RANKING under the rule priority-first, clock value 2026-11-27T14:46:44Z. Nothing was changed anywhere but the recommendation file.
+Start here: SCRUM-23
+   1. SCRUM-23   confidence in the data high   
+   2. SCRUM-5    confidence in the data medium 
+   3. SCRUM-6    confidence in the data medium 
+   4. SCRUM-7    confidence in the data medium 
+   5. SCRUM-8    confidence in the data medium 
+   6. SCRUM-9    confidence in the data medium 
+   7. SCRUM-10   confidence in the data medium 
+   8. SCRUM-11   confidence in the data medium 
+   9. SCRUM-12   confidence in the data medium 
+  10. SCRUM-13   confidence in the data medium 
+  11. SCRUM-14   confidence in the data medium 
+  12. SCRUM-15   confidence in the data medium 
+  13. SCRUM-16   confidence in the data medium 
+  14. SCRUM-17   confidence in the data medium 
+  15. SCRUM-18   confidence in the data medium 
+  16. SCRUM-19   confidence in the data medium 
+  17. SCRUM-20   confidence in the data medium 
+  18. SCRUM-21   confidence in the data medium 
+  19. SCRUM-22   confidence in the data medium 
+  20. SCRUM-24   confidence in the data medium 
+  21. SCRUM-1    confidence in the data high   
+  22. SCRUM-2    confidence in the data medium 
+  23. SCRUM-3    confidence in the data low    
+  24. SCRUM-4    confidence in the data low    
+  blocked      SCRUM-25   by SCRUM-1
+sha256 of the recommendation: d9a362d0f9e5d687e1d28180e16d3799784919622d0eecb493688464a354a0cb
+sha256 of the records file:   7d6352b9c2ffa2af583bac02a51174adfda2aab87ea9f91c4884d30138334f03

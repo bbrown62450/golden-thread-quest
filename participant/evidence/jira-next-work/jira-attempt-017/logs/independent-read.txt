@@ -1,0 +1,98 @@
+Independent reads. jira-next-work, attempt jira-attempt-017
+Written by hand, not by a script.
+
+WHO READ IT
+Two readers. BOTH WERE AI: fresh AI assistants started for this one job, with no knowledge of how the work was made.
+No person has read this work before hand-in. Each was given only a copy of the files, in a folder outside the
+repository, and was told in words to read only those files, to run nothing and to write nothing. Those limits were
+asked for. They were not enforced by anything.
+
+The first version of everything was finished before either reply was read. BOTH READS WERE MADE BEFORE THE REAL RUN.
+
+READER 1 was given the rules and the recommendation only. It was asked to check the recommendation against the rules
+by hand, item by item, and then to read it as the person who has to act on it.
+READER 2 was given the two programs, the fake Jira, the tests, the scripts, the rules, the recommendation, the records
+and the run record. It was asked for anything that could change Jira, anything private that could be saved, and any
+input that makes the ranking contradict its own rules.
+
+THE ONE THAT MATTERED MOST: BOTH READERS FOUND IT
+
+ 1. THE RECOMMENDATION CONTRADICTED ITSELF. In the first version DEMO-7 was ranked FIRST, under "open, not blocked".
+    A few lines below, DEMO-9's reasons said: "issuelinks shows 2 open items waiting on it: DEMO-7, DEMO-10".
+    The cause: whether an item is blocked was decided from the item's OWN record only. DEMO-7's copy was 11 days
+    old and did not hold the link yet. DEMO-9's fresher record did. Which items WAIT on an item was read from both
+    ends; which items BLOCK it was not. Only the stale warning kept DEMO-7 from being "start here". Had its copy
+    been two hours older than DEMO-9's instead of eleven days, it would have been offered as the item to start,
+    with confidence high, while a fresher record said it was blocked.
+    Reader 1 found it by checking the printed facts against the rules by hand. No test of mine had: every test
+    made the two ends of a link agree.
+    DONE: both ends of a link are read. An item is blocked if either record says so, and the reason says which
+    record showed the link. Four tests and four planted bugs. The run now shows the case with DEMO-12.
+
+WHAT ELSE READER 2 FOUND, AND WHAT WAS DONE
+
+ 2. A blocker's own record was always believed, even when it was OLDER than what the blocked item showed of it.
+    DONE: if the two copies of a blocker's status disagree about whether it is done, the item stays blocked,
+    confidence falls, and the reason gives both copies with their times.
+ 3. A link was taken to block only if its type is named exactly "Blocks". On a site where that type is renamed,
+    nothing would ever be blocked, and the recommendation would say "Blocked: none" in silence.
+    DONE IN PART: the site's link types are copied. If none is named "Blocks", the recommendation says in capitals,
+    at the top, that nothing can be shown as blocked. It still does not recognise a renamed type.
+ 4. The real-run script copied a second time OVER the records it had just ranked, so the saved recommendation would
+    not have matched the saved records. It also printed "DONE" when the snapshots differed.
+    DONE: the second copy goes to a temporary file. The script stops if the snapshots differ, and saves them.
+ 5. "Every one was a GET" COULD NOT BE FALSE. The line was written from a list my own code filled with the word
+    "GET". So the log line, a check in the run record and a test were all saying nothing.
+    DONE: for a real Jira the method, and whether the request carried a body, are read back from each request as it
+    was built. A test changes how a request is built and sees the line change. For the fake Jira the output says
+    plainly that the line proves little there.
+ 6. Refreshing against a real Jira: a deleted key would have made the whole refresh fail, an item moved to another
+    project would have been merged under its new key, and records were matched by key, not by Jira's id.
+    DONE: each named item is asked for by itself; "not found" means gone; an item answered under another key is
+    reported and taken out; records are matched by id. Tested on the fake Jira only. NOT TRIED ON THE REAL ONE.
+ 7. The snapshot claims said more than two listings can show, and a refresh was silent about other items that had
+    changed in Jira.
+    DONE: the wording says the two listings agree, and that a search can be behind. A refresh now lists the items
+    whose last-updated time in Jira is no longer the one in their copy.
+ 8. Privacy. Names chosen by a site's administrators could carry characters that break a Markdown table; times
+    kept the site's time zone; my notes said titles were "not asked for" when Jira sends linked items' titles anyway.
+    DONE: those names are stripped to plain characters, times are rewritten in UTC, and the notes say what Jira
+    sends and what is dropped.
+    NOT CHANGED: the "site fingerprint" in the records is a short hash of the site's name, so a guessed name can be
+    confirmed. Every earlier Jira quest of mine keeps the same fingerprint.
+ 9. Checks in the run record that could not fail: the fake Jira's file compared before and after a ranking that is
+    never given that file; "no title is copied" tested only that the program printed that sentence; the check that
+    every reason names a field looked at four kinds of line out of a dozen.
+    DONE: the records file and everything printed are searched for the fake Jira's titles, names and account ids;
+    the reason check covers twelve kinds of line; what the fake Jira can and cannot show is said in the record.
+10. Tests: the byte-for-byte test ran twice in one process; a few behaviours were untested.
+    DONE: it now runs in separate processes with different hash seeds. Tests were added for the rest.
+    NOT DONE: no test for a redirect being refused, or for the search of the output for credentials.
+11. Things about a real Jira that are assumed: that it lists priorities highest first; that a token with limited
+    scope uses the same address.
+    PARTLY ANSWERED BY THE REAL RUN: my site listed Highest, High, Medium, Low, Lowest, in that order. The rest stands.
+12. Smaller ones, all done: a due date is now said to be compared with the UTC date; two keys differing by a
+    leading zero are ordered by a rule; a records file with a value of the wrong shape stops the ranking cleanly;
+    a blocked item's confidence gives its reason; an empty page that claims more is refused and cannot loop.
+
+WHAT ELSE READER 1 FOUND, AND WHAT WAS DONE
+
+ 2. "Confidence high" beside "Start here" reads as "we are sure this is right".
+    DONE: it is "confidence in the data", and the recommendation says it is not a judgement of the advice.
+ 3. "Not to be started without a fresh copy" did not say the obvious next step.   DONE: "Copy these again first".
+ 4. Work that is mine and in progress was ranked below untouched items, and the rules were silent about it.
+    MY DECISION: status stays out of the order. Started work is listed at the top so it is seen, and keeps its place.
+ 5. The most urgent item, blocked, was buried.
+    DONE: blocked items that would outrank "start here" are named there, with their blockers.
+ 6. The table under the other rule showed nothing, because both rules gave one order on those records.
+    DONE: the made-up records now hold an item the two rules place differently.
+ 7. Sentences with no field behind them.                       DONE: reworded or removed.
+ 8, 9. Wording of "missing fields"; an overdue item had no mark.   DONE: overdue items are marked OVERDUE.
+10. Cases the rules left unsaid.                               DONE for most: the rules now have sections on blockers
+    and due dates. NOT DONE: two lists of priorities on one site.
+
+WHAT HAS NOT BEEN RE-READ
+Neither reader has seen the corrected version. Nobody independent has read: the corrected programs, the new tests,
+the corrected scripts, the rewritten rules, the new recommendation, the records of the real run, or PROOF.md. The
+claim that each finding is fixed is mine, checked by the tests, the planted bugs and the run record, and by no
+second reader.

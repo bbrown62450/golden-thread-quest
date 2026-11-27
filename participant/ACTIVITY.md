@@ -470,3 +470,8 @@ Every change this application made to your files, newest last.
 - `2026-11-27T01:03:49Z` jira-link-work: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
 - `2026-11-27T01:05:19Z` jira-link-work: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-27T01:05:19Z` Submitted jira-link-work for review as submission-20261127010519-cd9860.
+- `2026-11-27T01:16:45Z` Started jira-next-work as attempt jira-attempt-017.
+- `2026-11-27T14:52:27Z` jira-next-work: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-27T14:53:05Z` jira-next-work: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-27T14:54:24Z` jira-next-work: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-27T14:54:24Z` Submitted jira-next-work for review as submission-20261127145424-fdd4b0.

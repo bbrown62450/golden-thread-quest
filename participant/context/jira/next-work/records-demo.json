@@ -1,0 +1,345 @@
+{
+ "format": "jira-next-work/1",
+ "items": [
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-12-01T08:00:00Z",
+   "created": "2026-11-02T09:00:00Z",
+   "duedate": "2026-12-04",
+   "id": "30001",
+   "issuetype": "Task",
+   "key": "DEMO-1",
+   "links": [
+    {
+     "other": "DEMO-4",
+     "other_id": "30004",
+     "other_status": {
+      "category": "new",
+      "name": "To Do"
+     },
+     "says": "blocks",
+     "this_item_is": "source",
+     "type": "Blocks"
+    }
+   ],
+   "priority": "High",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-19T12:00:00Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-12-01T08:00:00Z",
+   "created": "2026-11-03T09:00:00Z",
+   "duedate": "2026-12-04",
+   "id": "30002",
+   "issuetype": "Task",
+   "key": "DEMO-2",
+   "links": [
+    {
+     "other": "DEMO-11",
+     "other_id": "30011",
+     "other_status": {
+      "category": "new",
+      "name": "To Do"
+     },
+     "says": "relates to",
+     "this_item_is": "source",
+     "type": "Relates"
+    }
+   ],
+   "priority": "High",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-19T12:00:00Z"
+  },
+  {
+   "assignee": "someone else",
+   "copied_at": "2026-12-01T08:00:00Z",
+   "created": "2026-11-04T09:00:00Z",
+   "duedate": null,
+   "id": "30003",
+   "issuetype": "Task",
+   "key": "DEMO-3",
+   "links": [
+    {
+     "other": "DEMO-5",
+     "other_id": "30005",
+     "other_status": {
+      "category": "new",
+      "name": "To Do"
+     },
+     "says": "blocks",
+     "this_item_is": "source",
+     "type": "Blocks"
+    }
+   ],
+   "priority": "Medium",
+   "status": {
+    "category": "indeterminate",
+    "name": "In Progress"
+   },
+   "updated": "2026-11-19T12:00:00Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-12-01T08:00:00Z",
+   "created": "2026-11-05T09:00:00Z",
+   "duedate": "2026-12-10",
+   "id": "30004",
+   "issuetype": "Task",
+   "key": "DEMO-4",
+   "links": [
+    {
+     "other": "DEMO-1",
+     "other_id": "30001",
+     "other_status": {
+      "category": "new",
+      "name": "To Do"
+     },
+     "says": "is blocked by",
+     "this_item_is": "target",
+     "type": "Blocks"
+    }
+   ],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-19T12:00:00Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-12-01T08:00:00Z",
+   "created": "2026-11-06T09:00:00Z",
+   "duedate": "2026-12-02",
+   "id": "30005",
+   "issuetype": "Task",
+   "key": "DEMO-5",
+   "links": [
+    {
+     "other": "DEMO-3",
+     "other_id": "30003",
+     "other_status": {
+      "category": "indeterminate",
+      "name": "In Progress"
+     },
+     "says": "is blocked by",
+     "this_item_is": "target",
+     "type": "Blocks"
+    }
+   ],
+   "priority": "Highest",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-19T12:00:00Z"
+  },
+  {
+   "assignee": "me",
+   "copied_at": "2026-12-01T08:00:00Z",
+   "created": "2026-11-07T09:00:00Z",
+   "duedate": null,
+   "id": "30006",
+   "issuetype": "Task",
+   "key": "DEMO-6",
+   "links": [],
+   "priority": "Low",
+   "status": {
+    "category": "done",
+    "name": "Done"
+   },
+   "updated": "2026-11-19T12:00:00Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-20T09:00:00Z",
+   "created": "2026-11-08T09:00:00Z",
+   "duedate": "2026-12-03",
+   "id": "30007",
+   "issuetype": "Task",
+   "key": "DEMO-7",
+   "links": [],
+   "priority": "Highest",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-19T12:00:00Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-12-01T08:00:00Z",
+   "created": "2026-11-09T09:00:00Z",
+   "duedate": null,
+   "id": "30008",
+   "issuetype": "Task",
+   "key": "DEMO-8",
+   "links": [],
+   "priority": null,
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-19T12:00:00Z"
+  },
+  {
+   "assignee": "me",
+   "copied_at": "2026-12-01T08:00:00Z",
+   "created": "2026-11-10T09:00:00Z",
+   "duedate": null,
+   "id": "30009",
+   "issuetype": "Task",
+   "key": "DEMO-9",
+   "links": [
+    {
+     "other": "DEMO-10",
+     "other_id": "30010",
+     "other_status": {
+      "category": "new",
+      "name": "To Do"
+     },
+     "says": "blocks",
+     "this_item_is": "source",
+     "type": "Blocks"
+    },
+    {
+     "other": "DEMO-12",
+     "other_id": "30012",
+     "other_status": {
+      "category": "new",
+      "name": "To Do"
+     },
+     "says": "blocks",
+     "this_item_is": "source",
+     "type": "Blocks"
+    }
+   ],
+   "priority": "Medium",
+   "status": {
+    "category": "indeterminate",
+    "name": "In Progress"
+   },
+   "updated": "2026-11-30T10:03:00Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-12-01T08:00:00Z",
+   "created": "2026-11-11T09:00:00Z",
+   "duedate": "2026-12-20",
+   "id": "30010",
+   "issuetype": "Task",
+   "key": "DEMO-10",
+   "links": [
+    {
+     "other": "DEMO-9",
+     "other_id": "30009",
+     "other_status": {
+      "category": "indeterminate",
+      "name": "In Progress"
+     },
+     "says": "is blocked by",
+     "this_item_is": "target",
+     "type": "Blocks"
+    }
+   ],
+   "priority": "Low",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-19T12:00:00Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-12-01T08:00:00Z",
+   "created": null,
+   "duedate": null,
+   "id": "30011",
+   "issuetype": "Task",
+   "key": "DEMO-11",
+   "links": [
+    {
+     "other": "DEMO-2",
+     "other_id": "30002",
+     "other_status": {
+      "category": "new",
+      "name": "To Do"
+     },
+     "says": "relates to",
+     "this_item_is": "target",
+     "type": "Relates"
+    }
+   ],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-19T12:00:00Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-11-20T09:00:00Z",
+   "created": "2026-11-13T09:00:00Z",
+   "duedate": null,
+   "id": "30012",
+   "issuetype": "Task",
+   "key": "DEMO-12",
+   "links": [],
+   "priority": "Medium",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-19T12:00:00Z"
+  },
+  {
+   "assignee": "nobody",
+   "copied_at": "2026-12-01T08:00:00Z",
+   "created": "2026-11-14T09:00:00Z",
+   "duedate": "2026-11-30",
+   "id": "30013",
+   "issuetype": "Task",
+   "key": "DEMO-13",
+   "links": [],
+   "priority": "Low",
+   "status": {
+    "category": "new",
+    "name": "To Do"
+   },
+   "updated": "2026-11-19T12:00:00Z"
+  }
+ ],
+ "link_types": [
+  {
+   "inward": "is blocked by",
+   "name": "Blocks",
+   "outward": "blocks"
+  },
+  {
+   "inward": "relates to",
+   "name": "Relates",
+   "outward": "relates to"
+  }
+ ],
+ "note": "Copied by sync.py. No titles, descriptions or people. `assignee` is one of: me, someone else, nobody.",
+ "priorities": [
+  "Highest",
+  "High",
+  "Medium",
+  "Low",
+  "Lowest"
+ ],
+ "project": {
+  "id": "20000",
+  "key": "DEMO"
+ },
+ "site_fingerprint": "738169e667642f09"
+}

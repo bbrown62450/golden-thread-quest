@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261127145424-fdd4b0
+quest_id: jira-next-work
+quest_version: 1
+attempt_id: jira-attempt-017
+content_hash: sha256:06f87b0ccf0c3d715af793ace01c13c9494244cea786a140f4cb55ab3ec803e8
+evidence_hash: sha256:0102e799ead8a5cc31fe814d0572d1e1775f48a8b67266e3feba90ee44c26097
+submitted_at: '2026-11-27T14:54:24Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/jira/next-work/recommendation.md
+  digest: sha256:207b68261225bf910cf8beff414c229982179f20854f1bcbed8963e9b1159082
+- path: participant/context/jira/next-work/rules.md
+  digest: sha256:fd778460fc21106a21c3d9ee053905d44a5bd757f45fedef9cef1b0a38973418
