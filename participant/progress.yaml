@@ -678,11 +678,12 @@ attempts:
   quest_id: base-camp-interruption-recovery
   quest_version: 1
   content_hash: sha256:8bd51ccd40c74b3330a467c231df998344ea5c18d8a50a5a236d2a28fef01805
-  state: submitted
+  state: verified
   started_at: '2026-11-26T15:04:55Z'
-  updated_at: '2026-11-26T16:04:53Z'
+  updated_at: '2026-11-27T03:52:50Z'
   evidence_path: participant/evidence/base-camp-interruption-recovery/base-attempt-007
   submission_id: submission-20261126160453-6cb3db
+  review_id: review-20261127035249-733410
 - attempt_id: base-attempt-008
   quest_id: base-camp-ownership-zones
   quest_version: 1
@@ -719,4 +720,4 @@ attempts:
   updated_at: '2026-11-27T01:05:19Z'
   evidence_path: participant/evidence/jira-link-work/jira-attempt-016
   submission_id: submission-20261127010519-cd9860
-updated_at: '2026-11-27T03:41:17Z'
+updated_at: '2026-11-27T03:52:50Z'
