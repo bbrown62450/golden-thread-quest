@@ -1,0 +1,188 @@
+Planted bugs in a copy of participant/skills/jira-read-attachments/attachments.py. jira-read-attachments, attempt jira-attempt-021
+Recorded by scripts/planted_bugs.py. One bug at a time is planted in a copy of the tool, in a temporary folder, and the tests are run
+against the copy. CAUGHT means at least one test failed. The real tool is not changed.
+
+First, with no bug planted, the tests against the copy: OK
+
+ 1. CAUGHT  a sync fetches a file: the quest's scenario
+            FAILED (failures=12): test_a_base_address_that_is_not_https_and_the_sites_name_only, test_a_live_index_does_not_say_an_attachment_could_be_asked_for ...
+ 2. CAUGHT  a sync asks for one attachment's details
+            FAILED (failures=11): test_a_base_address_that_is_not_https_and_the_sites_name_only, test_a_live_index_does_not_say_an_attachment_could_be_asked_for ...
+ 3. CAUGHT  a story with no list of attachments is recorded as having none
+            FAILED (failures=8): test_what_cannot_be_read_is_refused_and_nothing_is_written
+ 4. CAUGHT  an attachment listed twice is accepted
+            FAILED (failures=2): test_what_cannot_be_read_is_refused_and_nothing_is_written
+ 5. CAUGHT  me and someone else are the wrong way round
+            FAILED (failures=2): test_the_index_has_each_attachments_identifier_name_type_size_author_and_date, test_the_page_has_a_row_for_each_with_all_six
+ 6. CAUGHT  an author Jira does not name is called someone else
+            FAILED (failures=1): test_an_author_jira_does_not_name_is_unknown
+ 7. CAUGHT  a sync prints the names of the attachments
+            FAILED (failures=3): test_names_are_in_the_index_and_are_not_printed, test_no_credential_site_address_name_or_person_is_in_the_output_or_the_log
+ 8. CAUGHT  Jira's times are labelled UTC without being turned into UTC
+            FAILED (failures=2): test_the_index_has_each_attachments_identifier_name_type_size_author_and_date, test_the_page_has_a_row_for_each_with_all_six
+ 9. CAUGHT  a size Jira does not state is recorded as stated
+            FAILED (failures=1): test_a_size_jira_does_not_state_is_not_stated_and_not_zero
+10. CAUGHT  characters that cannot be seen are kept in a name
+            FAILED (failures=1): test_a_name_cannot_break_the_page_and_unseen_characters_are_replaced
+11. CAUGHT  a name can break out of its place on the page
+            FAILED (failures=1): test_a_name_cannot_break_the_page_and_unseen_characters_are_replaced
+12. CAUGHT  the files are written even when nothing changed
+            FAILED (failures=1): test_a_second_sync_of_unchanged_data_writes_nothing
+13. CAUGHT  an identifier that is not one of the story's is asked for anyway
+            FAILED (failures=1): test_an_identifier_that_is_not_one_of_the_storys_is_refused_and_logged
+14. CAUGHT  the attachment described is not checked to be the one asked for
+            FAILED (failures=1): test_jira_not_sending_the_file_or_not_describing_it
+15. CAUGHT  a name with a slash in it passes the name check
+            FAILED (failures=6): test_a_hostile_name_from_jira_writes_nothing_anywhere, test_each_is_refused_with_the_check_and_the_reason_and_nothing_is_saved ...
+16. CAUGHT  a name with `..` in it passes
+            FAILED (failures=3): test_a_hostile_name_from_jira_writes_nothing_anywhere, test_hostile_names_are_refused_by_the_name_check
+17. CAUGHT  a name with a character that cannot be seen passes
+            FAILED (failures=3): test_a_hostile_name_from_jira_writes_nothing_anywhere, test_hostile_names_are_refused_by_the_name_check
+18. CAUGHT  a name that ends in a space or a dot passes
+            FAILED (failures=1): test_hostile_names_are_refused_by_the_name_check
+19. CAUGHT  the file is saved under the name Jira gave it
+            FAILED (failures=9, errors=1): test_a_link_or_a_file_that_appears_under_the_saved_name_is_never_written_over, test_a_name_that_points_at_a_folder_that_really_is_there_writes_nothing_in_it ...
+20. CAUGHT  the saved name does not carry the identifier, so two attachments of one name share a file
+            FAILED (failures=9, errors=1): test_a_link_or_a_file_that_appears_under_the_saved_name_is_never_written_over, test_a_name_that_points_at_a_folder_that_really_is_there_writes_nothing_in_it ...
+21. CAUGHT  the letters taken from Jira's name are not cleaned
+            FAILED (failures=3): test_a_name_that_points_at_a_folder_that_really_is_there_writes_nothing_in_it, test_each_honest_kind_can_be_saved ...
+22. CAUGHT  the FIRST extension of the name is taken, so invoice.pdf.exe is a PDF
+            FAILED (failures=4): test_each_is_refused_with_the_check_and_the_reason_and_nothing_is_saved, test_types_that_are_never_allowed ...
+23. CAUGHT  the type Jira states is not compared with the extension
+            FAILED (failures=6): test_the_type_jira_states_must_go_with_the_extension
+24. CAUGHT  an archive is on the allowed list
+            FAILED (failures=4): test_each_is_refused_with_the_check_and_the_reason_and_nothing_is_saved, test_it_prints_the_size_and_every_allowed_type_from_the_lists_the_checks_use ...
+25. CAUGHT  the size Jira states is not compared with the limit before the file is asked for
+            FAILED (failures=4): test_a_file_exactly_at_the_limit_passes_and_one_byte_more_does_not, test_each_is_refused_with_the_check_and_the_reason_and_nothing_is_saved ...
+26. CAUGHT  the bytes are not counted as they arrive, so a file is read to its end however large
+            FAILED (failures=3): test_a_file_exactly_at_the_limit_passes_and_one_byte_more_does_not, test_a_file_that_runs_past_the_limit_is_stopped_and_not_read_to_its_end ...
+27. CAUGHT  a file of another size than Jira stated is accepted
+            FAILED (failures=2): test_each_is_refused_with_the_check_and_the_reason_and_nothing_is_saved, test_nothing_of_a_refused_file_touches_the_disk_even_for_a_moment
+28. CAUGHT  a size that is not a whole number is accepted
+            FAILED (errors=1): test_a_size_that_is_not_a_whole_number_of_bytes
+29. CAUGHT  the bytes are not looked at
+            FAILED (failures=6): test_each_is_refused_with_the_check_and_the_reason_and_nothing_is_saved, test_every_refusal_once_the_folder_is_accepted_is_in_the_log ...
+30. CAUGHT  a picture or PDF need not begin as one does
+            FAILED (failures=5): test_each_is_refused_with_the_check_and_the_reason_and_nothing_is_saved, test_nothing_of_a_refused_file_touches_the_disk_even_for_a_moment ...
+31. CAUGHT  text may have a zero byte in it
+            FAILED (failures=2): test_a_zero_byte_far_into_a_text_file_is_found, test_text_must_be_text
+32. CAUGHT  text may begin the way an archive or a program begins
+            FAILED (failures=3): test_text_must_be_text
+33. CAUGHT  a file named .json need not be JSON
+            FAILED (failures=3): test_each_is_refused_with_the_check_and_the_reason_and_nothing_is_saved, test_nothing_of_a_refused_file_touches_the_disk_even_for_a_moment
+34. CAUGHT  the scan is not run
+            FAILED (failures=6): test_each_is_refused_with_the_check_and_the_reason_and_nothing_is_saved, test_nothing_of_a_refused_file_touches_the_disk_even_for_a_moment
+35. CAUGHT  the scan misses the antivirus test string
+            FAILED (failures=7, errors=2): test_each_is_refused_with_the_check_and_the_reason_and_nothing_is_saved, test_nothing_of_a_refused_file_touches_the_disk_even_for_a_moment ...
+36. CAUGHT  the scan misses everything in a PDF
+            FAILED (failures=8, errors=2): test_each_is_refused_with_the_check_and_the_reason_and_nothing_is_saved, test_nothing_of_a_refused_file_touches_the_disk_even_for_a_moment ...
+37. CAUGHT  the scan takes any word that starts like a PDF's marks for one
+            FAILED (errors=1): test_the_scan_passes_what_is_ordinary
+38. CAUGHT  the scan misses a private key
+            FAILED (failures=2, errors=2): test_the_scan_finds_each_of_its_patterns, test_what_the_scan_missed_in_its_first_version
+39. CAUGHT  the scan misses a script's first line
+            FAILED (failures=2, errors=2): test_the_scan_finds_each_of_its_patterns, test_what_the_scan_missed_in_its_first_version
+40. CAUGHT  the scan misses a script tag
+            FAILED (failures=1, errors=1): test_the_scan_finds_each_of_its_patterns
+41. CAUGHT  the scan misses a formula in a CSV
+            FAILED (failures=2, errors=2): test_the_scan_finds_each_of_its_patterns, test_what_the_scan_missed_in_its_first_version
+42. CAUGHT  the scan misses a program inside a file
+            FAILED (failures=2, errors=2): test_the_scan_finds_each_of_its_patterns, test_what_the_scan_missed_in_its_first_version
+43. CAUGHT  the scan misses an archive inside a file
+            FAILED (failures=2, errors=2): test_the_scan_finds_each_of_its_patterns, test_what_the_scan_missed_in_its_first_version
+44. CAUGHT  a downloads folder Git would commit from is accepted
+            FAILED (failures=8): test_a_folder_git_would_commit_from_is_refused_before_jira_is_asked, test_a_folder_whose_contents_are_ignored_by_a_pattern_is_not_enough ...
+45. CAUGHT  when Git cannot be asked, a folder inside a repository is accepted
+            FAILED (failures=1): test_when_git_cannot_be_asked_a_folder_inside_a_repository_is_refused
+46. CAUGHT  a saved file is marked as a program
+            FAILED (failures=1): test_the_saved_file_is_private_and_not_a_program_and_no_temporary_file_is_left
+47. CAUGHT  a save that fails leaves its temporary file
+            FAILED (failures=1): test_a_save_that_fails_at_the_last_moment_is_logged_and_leaves_nothing
+48. CAUGHT  a save that fails is not logged
+            FAILED (failures=1): test_a_save_that_fails_at_the_last_moment_is_logged_and_leaves_nothing
+49. CAUGHT  no line is added to the log
+            FAILED (failures=4, errors=15): test_a_file_already_saved_is_not_written_over, test_a_line_that_cannot_be_written_after_the_save_takes_the_file_away_again ...
+50. CAUGHT  the log has no time
+            FAILED (errors=2): test_the_download_is_in_the_log_with_identifier_time_name_size_and_checksum, test_the_time_in_the_log_is_the_time_of_the_attempt
+51. CAUGHT  the log has no checksum
+            FAILED (failures=1): test_the_download_is_in_the_log_with_identifier_time_name_size_and_checksum
+52. CAUGHT  a download from a real Jira is not refused
+            FAILED (failures=2): test_a_download_from_a_real_jira_is_refused_before_anything_is_asked
+53. CAUGHT  a real connection will send a GET for an attachment or a file
+            FAILED (failures=2): test_a_real_connection_has_no_way_to_ask_for_a_file_or_for_one_attachment
+54. CAUGHT  a live sync may write anywhere
+            FAILED (failures=2): test_a_live_sync_writes_only_inside_local_data
+55. CAUGHT  the index is written before the search for credentials
+            FAILED (failures=2): test_a_token_that_would_reach_a_file_stops_the_sync_before_anything_is_written
+56. CAUGHT  any request is reported as a plain GET
+            FAILED (failures=2): test_the_method_reported_is_the_one_the_request_was_built_with
+57. CAUGHT  the method reported is the word GET, not the request's own
+            FAILED (failures=2): test_the_method_reported_is_the_one_the_request_was_built_with
+58. CAUGHT  the made-up Jira's folder is accepted for a real Jira
+            FAILED (failures=2): test_the_made_up_jiras_folder_is_refused_for_a_real_one_and_no_variables_means_no_request
+59. CAUGHT  the output is not searched for the credentials
+            FAILED (failures=2): test_a_credential_in_any_output_stops_the_output
+60. CAUGHT  only the token is searched for
+            FAILED (failures=2): test_no_credential_site_address_name_or_person_is_in_the_output_or_the_log
+61. CAUGHT  the site's address is left in the saved output
+            FAILED (failures=2): test_the_saved_output_has_the_sites_address_taken_out
+62. CAUGHT  a real server's refusal is not read for its status
+            FAILED (failures=2): test_a_real_servers_refusals_write_nothing
+63. CAUGHT  redirects are followed
+            FAILED (failures=2): test_a_live_sync_sends_two_gets_follows_no_redirect_and_fetches_no_file
+64. CAUGHT  an address with a path or a port, or without https, is accepted
+            FAILED (failures=2): test_a_base_address_that_is_not_https_and_the_sites_name_only
+65. CAUGHT  a request may wait for ever
+            FAILED (failures=2): test_a_live_sync_sends_two_gets_follows_no_redirect_and_fetches_no_file
+66. CAUGHT  an index this tool did not write is used anyway
+            FAILED (failures=1): test_an_index_that_is_not_the_tools_is_left_alone
+67. CAUGHT  a page of the same name that is someone else's file is written over
+            FAILED (failures=1): test_a_page_name_that_is_someone_elses_file_is_refused
+68. CAUGHT  --log may be a place in the downloads folder
+            FAILED (failures=1): test_the_log_option_cannot_name_the_tools_own_files_or_a_strangers
+69. CAUGHT  --log is written over a file that is not an output of the tool
+            FAILED (failures=1): test_the_log_option_cannot_name_the_tools_own_files_or_a_strangers
+70. CAUGHT  something unforeseen is a crash
+            FAILED (errors=1): test_something_unforeseen_is_a_refusal_and_not_a_crash
+71. CAUGHT  a file that was saved stays when its line cannot be written to the log: found by both readers
+            FAILED (failures=1): test_a_line_that_cannot_be_written_after_the_save_takes_the_file_away_again
+72. CAUGHT  Git is asked about a made-up file name in the folder, not about the folder: a reader's find
+            FAILED (failures=4): test_a_folder_whose_contents_are_ignored_by_a_pattern_is_not_enough
+73. CAUGHT  Git's settings in the environment are left to change its answer
+            FAILED (failures=2): test_gits_settings_in_the_environment_do_not_change_the_answer
+74. CAUGHT  a repository of another kind is not looked for
+            FAILED (failures=1): test_a_repository_of_another_kind_a_deep_folder_and_a_link_into_a_repository
+75. CAUGHT  a file that appears under the saved name while the fetch runs is written over
+            FAILED (failures=2): test_a_link_or_a_file_that_appears_under_the_saved_name_is_never_written_over, test_a_save_that_fails_at_the_last_moment_is_logged_and_leaves_nothing
+76. CAUGHT  a PDF's hidden marks are not undone before they are looked for
+            FAILED (failures=1, errors=1): test_what_the_scan_missed_in_its_first_version
+77. CAUGHT  the scan misses a frame or a javascript address
+            FAILED (failures=1, errors=1): test_what_the_scan_missed_in_its_first_version
+78. CAUGHT  a name of any length is accepted
+            FAILED (failures=1): test_an_extension_must_be_plain_letters_and_a_name_has_a_longest_length
+79. CAUGHT  a live index says an attachment could be asked for
+            FAILED (failures=1): test_a_live_index_does_not_say_an_attachment_could_be_asked_for
+80. CAUGHT  something unforeseen during a download leaves no line in the log
+            FAILED (failures=1): test_every_refusal_once_the_folder_is_accepted_is_in_the_log
+81. CAUGHT  a real connection is given a way to ask for a file
+            FAILED (failures=2): test_a_real_connection_has_no_way_to_ask_for_a_file_or_for_one_attachment
+82. CAUGHT  the type Jira states must match to the letter, capitals and all
+            FAILED (errors=1): test_the_type_jira_states_may_carry_capitals_or_a_character_set
+83. CAUGHT  a live sync asks Jira for every field of the story
+            FAILED (failures=1): test_a_live_sync_asks_for_the_attachment_field_and_nothing_more
+84. CAUGHT  the address Jira gives for a file's contents is kept in the index
+            FAILED (failures=1): test_a_sync_does_not_reach_a_files_bytes_by_any_road
+
+Last, with the copy put back as it was: OK
+The real tool is byte for byte what it was before: yes
+Git reports the same state of the whole repository as before the run: yes
+
+NOT PLANTED, AND WHY
+  An identifier that is not a number, accepted: it is then not one of the story's attachments, and is refused for that.
+  An extension with letters of another alphabet, accepted by its own check: it is then on no list, and is refused for that.
+  The check that the log is a plain file, taken out: a test that makes the log a pipe would then wait for ever, and so would this run.
+  The limit on how many pieces a file may arrive in, taken out: the test that sends pieces without end would run without end.
+  The look for a file already under the saved name, taken out: giving the file its name then fails, because the name is taken, and it is refused for that.
+  In the first two and the last a second check stops what the first lets through, so no test can tell from the outside which one did.
+
+RESULT: 84 OF 84 PLANTED BUGS CAUGHT.

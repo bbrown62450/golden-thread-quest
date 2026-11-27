@@ -1,0 +1,13 @@
+schema_version: 1
+submission_id: submission-20261127223937-55a5f0
+quest_id: jira-read-attachments
+quest_version: 1
+attempt_id: jira-attempt-021
+content_hash: sha256:9755e890e8f9208172e4307cef04ba5f01060e2b51dabda50add1d1c3f261d63
+evidence_hash: sha256:4c80b2d93417251dda6b401ce929c03c5d1b54a6162de7f85135ddcf65302401
+submitted_at: '2026-11-27T22:39:37Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/jira/attachments.md
+  digest: sha256:42bbec242289f72edfb92b8de50164e544b5d4a906bb124a1b03c3f67dd9ead3

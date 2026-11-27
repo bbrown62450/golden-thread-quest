@@ -506,3 +506,8 @@ Every change this application made to your files, newest last.
 - `2026-11-27T21:39:56Z` jira-read-hierarchy: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-27T21:39:56Z` Submitted jira-read-hierarchy for review as submission-20261127213956-908839.
 - `2026-11-27T21:48:52Z` Review of jira-read-hierarchy: approved by Claude (automated reviewer).
+- `2026-11-27T21:58:54Z` Started jira-read-attachments as attempt jira-attempt-021.
+- `2026-11-27T22:35:43Z` jira-read-attachments: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-27T22:36:57Z` jira-read-attachments: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-27T22:39:37Z` jira-read-attachments: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-27T22:39:37Z` Submitted jira-read-attachments for review as submission-20261127223937-55a5f0.

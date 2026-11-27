@@ -1,0 +1,21 @@
+Story: SCRUM-1
+Read from: a real Jira, site fingerprint 4aabe3d08fbad6b1
+
+ATTACHMENTS LISTED BY JIRA: 0. For each, the index now holds its identifier, name, stated type, stated size, who attached it and when.
+  attached by me: 0; by someone else: 0; unknown: 0
+  by name, stated type and stated size alone: 0 could be asked for, 0 would be refused. NONE WAS ASKED FOR.
+  Names are in the index and are not printed here: a name is other people's text.
+
+NO FILE WAS DOWNLOADED.
+  Requests that ask for a file's contents: 0. This command has no code that makes one.
+  Files in the folder given with --out-dir, before: 0. After: 2. New: scrum-1.json, scrum-1.md.
+  The only files this command writes are the index and its page: scrum-1.json, scrum-1.md written.
+
+RESULT: INDEX WRITTEN. 0 attachments recorded. No attachment was fetched.
+
+Requests sent to Jira: 2. Every one was a GET with no body, which reads and cannot change anything.
+  GET /rest/api/3/issue/{key}  x1
+  GET /rest/api/3/myself  x1
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

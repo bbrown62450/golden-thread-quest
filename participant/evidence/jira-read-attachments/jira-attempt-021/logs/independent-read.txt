@@ -1,0 +1,148 @@
+Independent reads of the work. jira-read-attachments, attempt jira-attempt-021
+Written by hand by the AI assistant, 2026-11-27, from the two readers' replies. The readers were AI assistants, not people.
+
+HOW THE READS WERE MADE
+  Two fresh AI assistants, each started with no knowledge of this session. Each was given a copy, in a temporary folder
+  outside the repository, of: the quest text, the tool, the made-up Jira, the tests, the sample index, the records and
+  the scripts. Each was told to read only, to contact no network service, to fetch nothing real, and to write only in
+  a temporary folder. The version they read had 69 tests passing and 72 of 72 planted bugs caught. The first real
+  run had been made. PROOF.md had not been written, and neither saw it.
+  Reader 1 was asked to read the tool as a security review: to get a file written where it should not be, saved
+  when it should not be, or saved without the checks meaning what they say.
+  Reader 2 was asked whether the records and tests show what they say.
+
+==============================================================================
+READER 1: THE SECURITY REVIEW
+  It reproduced most of what follows by running the copy with a made-up Jira of its own.
+
+  HIGH
+  1. A file can be saved with no line in the log, and the output then says nothing was written. The line was written
+     after the file. With the log already there as a link, a folder, a pipe, a file with a second name or a
+     read-only file, the file was saved, no line was added, and four of the five printed "Nothing was written".
+     CHANGED: the log is opened before anything is asked of Jira. If it cannot be opened nothing is fetched. If the
+     line cannot be written after a file was saved, the file is taken away again and the output says so. The words
+     "nothing was written by this run" are gone from the general refusal.
+  2. The check for "outside source control" asked Git about one made-up name, `probe`. A .gitignore of `dl/probe`,
+     or of `dl/*` then `!dl/*.txt`, passed it, and `git add -A` then staged the downloaded file. Settings from the
+     environment (another repository's ignore list) passed it too. A Mercurial folder was "not in a Git
+     repository", and the output still said "outside source control".
+     CHANGED: Git is asked about the folder itself, which no other pattern can take a file back from. Git's
+     settings from the environment are set aside for the question. Folders above are searched for the marks of six
+     other kinds of repository, and one found is a refusal. The output says what was found, in those words.
+
+  MEDIUM
+  3. Something unforeseen during a download left no line in the log: a CSV with bare returns, a very wide cell, a
+     piece of the file that is not bytes. So did an --id that is not a number.
+     CHANGED: all of these are logged. The description names the three refusals that are not, and why.
+  4. The CSV formula check was dodged: a digit after the sign, semicolons or tabs between cells, a full-width equals
+     sign, a space before the quote.
+     CHANGED: a cell is found whatever separates the cells, with spaces and quotes taken off its front, and is
+     refused if it begins with = + - or @ in either width and is not a plain number. This refuses some harmless
+     cells. NOT CHANGED: the same text in a .txt file is not looked at.
+  5. "passed: they are what a .png file is" overclaims. The check is the first 3 to 8 bytes. It saved a three-byte
+     "JPEG", a PNG header followed by a script, a PDF with its marks written in hex, a PDF holding a private key.
+     CHANGED: the output says the file BEGINS as such a file begins and that only its beginning was looked at. A
+     PDF's hex-written marks are undone before they are looked for. Four more PDF marks are on the list. A private
+     key, a program and a zip archive are looked for through the whole of any file.
+     NOT CHANGED: other kinds of archive after a picture; a web page saved as text. Listed as known misses.
+  6. The index column "if a person asked for it" said "could be asked for" for a real Jira, where a download is
+     always refused.                                     CHANGED.
+
+  LOW
+  7. Gaps in the text scan: a PGP key, a PuTTY key, a byte-order mark or blank line before `#!`, a frame, a
+     `javascript:` address.                              CHANGED: each is on the list.
+     A full web page as .txt; other script-carrying tags in a .md.   NOT CHANGED. Known misses.
+  8. Text beginning `MZ` or `BZh` is refused as a program.   NOT CHANGED. A stated cost.
+  9. An extension in letters of another alphabet (a long s) passed as csv.   CHANGED: plain letters and digits only.
+  10. The fetch was not bounded by the number of pieces; three million empty pieces were all read. It stopped at
+      5 MB and not at the size stated.                   CHANGED: a limit on pieces, and it stops at the stated size.
+      One very large piece is in memory before it is counted.   NOT CHANGED. A limitation.
+  11. --log made folders and wrote over a hand-written file that began as an output does.   NOT CHANGED: it is
+      refused for a file that does not begin so, a link, a second name, or a place in the downloads folder.
+  12. A dangling link in a folder stopped the tool.      CHANGED.
+  13. `lexists` then `replace` would write over a file made in between.   CHANGED: a download is given its name by a
+      step that fails if the name is taken.
+  14. A backtick in a name is shown as ' on the page with no note; the log has no protection beyond being added to;
+      the made-up Jira's own file follows a link when saved; the site fingerprint is unsalted; for a live sync
+      `local-data` is matched by name and Git is not asked.   NOT CHANGED. In the limitations where they matter.
+
+  WHAT IT LOOKED FOR AND DID NOT FIND
+    A way out of the downloads folder through a name or an identifier: sixteen hostile names all came out as
+    <identifier>-<letters>.<extension>. A way for a sync to fetch a file's contents. A way for a real connection to
+    reach an attachment or a file. A forged line in the log. A name or type that breaks the page.
+
+==============================================================================
+READER 2: DO THE RECORDS AND TESTS SHOW WHAT THEY SAY
+  It found the same fault as reader 1's first, by itself: a saved file with no log line.
+  It also found that "Jira's name for a file is never printed by this tool" was untrue in substance: the saved name
+  carries up to 40 characters of it, and is printed and logged.   CHANGED: the description says so.
+
+  ON THE CRITERIA. It found each shown by a record, on the made-up Jira only apart from the real sync of a story with
+  no attachments. It noted that the refusal of "all" and of no --id was in tests only.
+  CHANGED: the record has a part for both.
+  ON "AUTHOR": it found the choice of "me / someone else" stated on the page and in SKILL.md, and called it lossy:
+  two different made-up people both become "someone else". TRUE. It is the participant's decision, and is in PROOF.md.
+
+  CHECKS IN THE RECORDS THAT CLAIMED MORE THAN THEY TESTED
+    "NO FILE WAS FETCHED ... its count, not the tool's word": the counter is moved only by one function of the
+        made-up Jira. A sync that got bytes another way would not move it.
+        CHANGED: relabelled as what it is; the made-up Jira now writes down which identifiers it was asked for; the
+        temporary folder is watched too; and the label says the rest of the disk is not.
+    "OUTSIDE SOURCE CONTROL": tested a folder the script itself made. It could not fail.
+        CHANGED: it is a note now. The tool's own refusals of a folder in a repository are two parts of the record.
+    "THE HOSTILE NAME WROTE NOTHING ANYWHERE": the folder that name pointed at did not exist, so a write there would
+        have failed anyway.   CHANGED: a second hostile name points at a folder that is really there.
+    "AN EXPLICIT REQUEST ... for the one identifier named": the count held no identifier.   CHANGED: it does now.
+    "its name is the identifier, plain letters ...": a pattern matched against text typed in the script. Always true.
+        CHANGED: the name is read from the folder.
+    "five checks say passed, the sixth being the save itself": wrong; two checks shared one line.
+        CHANGED: each of the six says passed, and the label says so.
+    "the log does not hold the names Jira gave": looked for one name never saved and one in capitals.   CHANGED.
+    "one row for each ... identifier and name": left one name out of the comparison.   CHANGED.
+    "REFUSED WITH THE REASON": tested the check's name, not the reason.   CHANGED.
+
+  TESTS THAT WERE WEAK
+    "The tool never opens or runs what it saved" watched three ways of doing so.   CHANGED: a second test watches
+        the ways a file can be opened and a program started.
+    Three tests read the tool's source text for a property. It showed how each could be got round.
+        NOT CHANGED: they stay, beside tests of the behaviour. A sync is now also run with the made-up Jira's
+        file-making function replaced by a tripwire.
+
+  MISTAKES IT MADE IN A COPY THAT NO TEST NOTICED
+    A sync writing bytes outside the watched folders. The saved file opened or run. The log's time a constant. The
+    downloads folder not resolved before it is judged. `.git` looked for one level up only. Attachments past the
+    twentieth dropped. Refused bytes written to disk and deleted. A dangling link at the saved name written
+    through. The test string and a zero byte looked for near the start only. The stated type compared to the
+    letter. Names over 255 accepted. A live sync asking for every field.
+    CHANGED: a test for each. Those that are one line to change are planted bugs now.
+
+  MY REASONS FOR NOT PLANTING A BUG. One was false: "a real connection given a way to ask for a file: not one line
+  to change". It is one line, and a test catches it.   CHANGED: it is planted.
+
+  SKILL.md. It left `.md` and `.log` off the allowed list; said "there is no code in it that could" where the truth
+  is that nothing in the sync asks; did not say what to do when a real download is refused; and its rule against
+  getting round a refusal covered one exit code only. It pointed out that nothing tells a person from an agent.
+  CHANGED: each. The last is a rule in SKILL.md and a limitation in PROOF.md, because the code cannot enforce it.
+
+  PERSONAL DATA. It found the home folder's path, with the user's name in it, four times in the saved test log, in
+  warnings about files the tests had left open.
+  CHANGED: the tests close their files, and the log was made again. This script's author searched it afterwards:
+  no path, and no warning.
+  It found no email address, account, site address or credential anywhere, and the antivirus test string in no
+  record or sample.
+
+  THE REAL RUN. It shows that signing in worked, that the story's list of attachments arrives and can be empty, and
+  that a second sync changes nothing. Every name of a field of a real attachment has never met a real Jira.
+
+==============================================================================
+AFTER THE CHANGES
+  104 tests pass. 84 of 84 planted bugs are caught. Both records were made again. The participant ran the real
+  metadata-only sync again, twice, with the changed tool. The first real run's records are in logs/before-readers/.
+
+NOT READ AGAIN
+  Neither reader saw the corrected tool, tests, records, sample, SKILL.md or PROOF.md. The changes were checked by the
+  assistant: by tests and by planted bugs. This matters more here than in the other quests: the two serious faults
+  were in the part of the tool that writes a fetched file to disk, and the fixes to that part have had no second
+  reader.
+
+A person has not read any of this.

@@ -1,0 +1,175 @@
+{
+ "attachments": [
+  {
+   "attached": "2026-11-02T09:15:00Z",
+   "attached_by": "someone else",
+   "id": "41001",
+   "if_asked_for": "could be asked for: its name, stated type and stated size pass the first three checks",
+   "name": "release-notes.txt",
+   "name_cut_or_changed": false,
+   "stated_size": 57,
+   "stated_type": "text/plain"
+  },
+  {
+   "attached": "2026-11-03T13:40:00Z",
+   "attached_by": "me",
+   "id": "41002",
+   "if_asked_for": "could be asked for: its name, stated type and stated size pass the first three checks",
+   "name": "export.csv",
+   "name_cut_or_changed": false,
+   "stated_size": 45,
+   "stated_type": "text/csv"
+  },
+  {
+   "attached": "2026-11-04T08:05:00Z",
+   "attached_by": "someone else",
+   "id": "41003",
+   "if_asked_for": "could be asked for: its name, stated type and stated size pass the first three checks",
+   "name": "diagram.png",
+   "name_cut_or_changed": false,
+   "stated_size": 67,
+   "stated_type": "image/png"
+  },
+  {
+   "attached": "2026-11-05T16:20:00Z",
+   "attached_by": "someone else",
+   "id": "41004",
+   "if_asked_for": "would be refused by the type: the name ends in an extension that is not on the allowed list. Allowed: csv, jpeg, jpg, json, log, md, pdf, png, txt",
+   "name": "backup.zip",
+   "name_cut_or_changed": false,
+   "stated_size": 1258291,
+   "stated_type": "application/zip"
+  },
+  {
+   "attached": "2026-11-06T11:00:00Z",
+   "attached_by": "someone else",
+   "id": "41005",
+   "if_asked_for": "would be refused by the size: Jira states a size of 9.0 MB, and the limit is 5.0 MB",
+   "name": "huge-log.txt",
+   "name_cut_or_changed": false,
+   "stated_size": 9437184,
+   "stated_type": "text/plain"
+  },
+  {
+   "attached": "2026-11-06T12:00:00Z",
+   "attached_by": "someone else",
+   "id": "41006",
+   "if_asked_for": "would be refused by the name: the name has a path in it (a slash). A name is not a place",
+   "name": "../../.ssh/authorized_keys.txt",
+   "name_cut_or_changed": false,
+   "stated_size": 33,
+   "stated_type": "text/plain"
+  },
+  {
+   "attached": "2026-11-06T13:00:00Z",
+   "attached_by": "someone else",
+   "id": "41007",
+   "if_asked_for": "could be asked for: its name, stated type and stated size pass the first three checks",
+   "name": "notes.txt",
+   "name_cut_or_changed": false,
+   "stated_size": 107,
+   "stated_type": "text/plain"
+  },
+  {
+   "attached": "2026-11-06T14:00:00Z",
+   "attached_by": "someone else",
+   "id": "41008",
+   "if_asked_for": "could be asked for: its name, stated type and stated size pass the first three checks",
+   "name": "small.txt",
+   "name_cut_or_changed": false,
+   "stated_size": 200,
+   "stated_type": "text/plain"
+  },
+  {
+   "attached": "2026-11-07T09:00:00Z",
+   "attached_by": "someone else",
+   "id": "41009",
+   "if_asked_for": "could be asked for: its name, stated type and stated size pass the first three checks",
+   "name": "report.pdf",
+   "name_cut_or_changed": false,
+   "stated_size": 203,
+   "stated_type": "application/pdf"
+  },
+  {
+   "attached": "2026-11-07T10:00:00Z",
+   "attached_by": "someone else",
+   "id": "41010",
+   "if_asked_for": "would be refused by the type: the name ends in an extension that is not on the allowed list. Allowed: csv, jpeg, jpg, json, log, md, pdf, png, txt",
+   "name": "invoice.pdf.exe",
+   "name_cut_or_changed": false,
+   "stated_size": 109,
+   "stated_type": "application/pdf"
+  },
+  {
+   "attached": "2026-11-07T11:00:00Z",
+   "attached_by": "someone else",
+   "id": "41011",
+   "if_asked_for": "could be asked for: its name, stated type and stated size pass the first three checks",
+   "name": "readme.txt",
+   "name_cut_or_changed": false,
+   "stated_size": 87,
+   "stated_type": "text/plain"
+  },
+  {
+   "attached": "2026-11-07T12:00:00Z",
+   "attached_by": "me",
+   "id": "41012",
+   "if_asked_for": "could be asked for: its name, stated type and stated size pass the first three checks",
+   "name": "Quarterly Report (final) v2!.PDF",
+   "name_cut_or_changed": false,
+   "stated_size": 142,
+   "stated_type": "application/pdf"
+  },
+  {
+   "attached": "2026-11-07T13:00:00Z",
+   "attached_by": "someone else",
+   "id": "41013",
+   "if_asked_for": "could be asked for: its name, stated type and stated size pass the first three checks",
+   "name": "photo.jpg",
+   "name_cut_or_changed": false,
+   "stated_size": 67,
+   "stated_type": "image/jpeg"
+  },
+  {
+   "attached": "2026-11-07T14:00:00Z",
+   "attached_by": "someone else",
+   "id": "41014",
+   "if_asked_for": "could be asked for: its name, stated type and stated size pass the first three checks",
+   "name": "data.json",
+   "name_cut_or_changed": false,
+   "stated_size": 26,
+   "stated_type": "application/json"
+  },
+  {
+   "attached": "2026-11-07T15:00:00Z",
+   "attached_by": "someone else",
+   "id": "41015",
+   "if_asked_for": "could be asked for: its name, stated type and stated size pass the first three checks",
+   "name": "short.txt",
+   "name_cut_or_changed": false,
+   "stated_size": 500,
+   "stated_type": "text/plain"
+  },
+  {
+   "attached": "2026-11-07T16:00:00Z",
+   "attached_by": "someone else",
+   "id": "41016",
+   "if_asked_for": "would be refused by the name: the name has a path in it (a slash). A name is not a place",
+   "name": "../JIRA/planted.txt",
+   "name_cut_or_changed": false,
+   "stated_size": 61,
+   "stated_type": "text/plain"
+  }
+ ],
+ "files": {
+  "index": "attachments.json",
+  "page": "attachments.md"
+ },
+ "format": "jira-attachments/1",
+ "site_fingerprint": null,
+ "source": "fake",
+ "story": {
+  "id": "20007",
+  "key": "DEMO-7"
+ }
+}

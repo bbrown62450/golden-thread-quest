@@ -1,0 +1,515 @@
+Explicit downloads: one that passes every check, and others that are refused
+jira-read-attachments, attempt jira-attempt-021. Recorded by scripts/record_runs.py.
+Read from the made-up Jira (skills/jira-read-attachments/fake_jira.py): one made-up story with 16 made-up attachments. No real Jira was contacted.
+Commands are run from the `participant` folder. JIRA and DOWNLOADS are temporary folders outside the repository, deleted afterwards.
+
+
+==============================================================================
+0. THE LIMITS, as the tool states them
+$ python3 skills/jira-read-attachments/attachments.py limits
+------------------------------------------------------------------------------
+The limits this tool applies before it saves an attachment.
+
+SIZE: at most 5.0 MB, by what Jira states and again by counting the bytes as they arrive.
+
+TYPE: only these. The last extension of the name, the type Jira states, and how the file's own bytes begin must all agree.
+  .csv   Jira may state text/csv or text/plain;      the bytes must be text: readable as UTF-8, no zero byte, not beginning as another kind of file
+  .jpeg  Jira may state image/jpeg;                  the bytes must begin as that kind of file begins
+  .jpg   Jira may state image/jpeg;                  the bytes must begin as that kind of file begins
+  .json  Jira may state application/json;            the bytes must be JSON, readable as UTF-8 text
+  .log   Jira may state text/plain;                  the bytes must be text: readable as UTF-8, no zero byte, not beginning as another kind of file
+  .md    Jira may state text/plain or text/markdown; the bytes must be text: readable as UTF-8, no zero byte, not beginning as another kind of file
+  .pdf   Jira may state application/pdf;             the bytes must begin as that kind of file begins
+  .png   Jira may state image/png;                   the bytes must begin as that kind of file begins
+  .txt   Jira may state text/plain;                  the bytes must be text: readable as UTF-8, no zero byte, not beginning as another kind of file
+  Anything else is refused: archives, programs, scripts, office documents, web pages, SVG pictures, and a name with no extension.
+
+NAME: refused if it has a slash, a `..`, a character that cannot be seen, or a space or dot at its end. It is never used as a path.
+
+THE SCAN, a short list of patterns and NOT antivirus: the published antivirus test string; a program or archive inside the file; in a PDF, a script
+or something set to run; in text, a private key, a script's first line or a script tag; in a CSV, a cell a spreadsheet would run as a formula.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the size limit and the allowed types are printed
+
+==============================================================================
+1. WHERE DOWNLOADS GO. DOWNLOADS is a temporary folder. This script asks Git about it, itself.
+$ git -C DOWNLOADS rev-parse --show-toplevel
+  exit code 128: Git says this folder is in no repository
+  note This is about the folder this script made, and could not have come out otherwise. It shows where the files below are saved (criterion 5).
+       That the TOOL refuses a folder inside a repository is parts 12 and 13.
+  ok   DOWNLOADS is empty to begin with
+
+==============================================================================
+2. ONE EXPLICIT DOWNLOAD THAT PASSES: attachment 41001, named by its identifier.
+$ python3 skills/jira-read-attachments/attachments.py download --source fake --issue DEMO-7 --id 41001 --downloads DOWNLOADS --state JIRA
+------------------------------------------------------------------------------
+Download asked for: attachment 41001 of DEMO-7. One attachment, named by its identifier.
+Asked of: the made-up Jira. No real Jira was contacted. Every file it serves is made up.
+The downloads folder is outside source control: no repository was found in it or in any folder above it.
+The download log was opened before anything was asked of Jira.
+
+1. THE NAME. Looked at, never used as a path.
+     passed: no path, no `..`, nothing that cannot be seen.
+2. THE TYPE. The name's last extension is .txt, and Jira states text/plain.
+     passed: the extension is on the allowed list, and the stated type goes with it.
+3. THE SIZE. Jira states 57 bytes. The limit is 5.0 MB.
+     passed: the stated size is within the limit.
+4. THE BYTES, counted as they arrive.
+     passed: 57 bytes arrived, which is what Jira stated.
+5. HOW THE BYTES BEGIN.
+     passed: the file is text all through: readable as UTF-8, no zero byte, and not beginning as another kind of file does.
+6. THE SCAN, a short list of known patterns. Not antivirus.
+     passed: none of the patterns was found. That does not make the file safe.
+
+SAVED as 41001-release-notes.txt, in the folder given with --downloads. That name was built by this tool: the identifier, letters and digits taken from Jira's name, and the allowed extension.
+  57 bytes. SHA-256 abadd7985fa72c926619440a670c7039b974a4e079552a4139ed9301a26029a9.
+  Readable and writable by its owner only, and not marked as a program. THIS TOOL DID NOT OPEN OR RUN IT, AND NEVER DOES.
+
+THE LOG. One line was added to download-log.jsonl in the downloads folder:
+  {"attachment": "41001", "bytes": 57, "check": null, "outcome": "saved", "reason": null, "saved_as": "41001-release-notes.txt", "sha256": "abadd7985fa72c926619440a670c7039b974a4e079552a4139ed9301a26029a9", "stated_size": 57, "stated_type": "text/plain", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+
+FILES IN THE DOWNLOADS FOLDER. Before: 1. After: 2.
+  41001-release-notes.txt                                              57 bytes   NEW
+  download-log.jsonl                                                  304 bytes
+
+RESULT: SAVED. One file, after six checks, and its line is in the log.
+
+Requests sent to Jira: 3. Every one was a GET with no body, which reads and cannot change anything.
+  GET (the made-up Jira) /rest/api/3/attachment/content/{id}  x1
+  GET (the made-up Jira) /rest/api/3/attachment/{id}  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}  x1
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0; each of the six numbered checks says passed (the size and the type among them)
+  ok   SAVED: DOWNLOADS now holds one file besides the log, and its SHA-256 is that of the bytes the made-up Jira serves for 41001, taken by this script
+  ok   the name of the file found in DOWNLOADS is the identifier, plain small letters and dashes, and the allowed extension; it is readable by its owner only and is not marked as a program
+  ok   THE LOG (criterion 7): its last line has the identifier 41001, a time, the outcome, the name on disk, the size and the same checksum
+  ok   AN EXPLICIT REQUEST (criterion 3): the made-up Jira wrote down which identifiers it was asked for the contents of. The list is: 41001, once, the one named
+
+==============================================================================
+3. AN AWKWARD NAME, SANITIZED: attachment 41012, which Jira calls "Quarterly Report (final) v2!.PDF".
+$ python3 skills/jira-read-attachments/attachments.py download --source fake --issue DEMO-7 --id 41012 --downloads DOWNLOADS --state JIRA
+------------------------------------------------------------------------------
+Download asked for: attachment 41012 of DEMO-7. One attachment, named by its identifier.
+Asked of: the made-up Jira. No real Jira was contacted. Every file it serves is made up.
+The downloads folder is outside source control: no repository was found in it or in any folder above it.
+The download log was opened before anything was asked of Jira.
+
+1. THE NAME. Looked at, never used as a path.
+     passed: no path, no `..`, nothing that cannot be seen.
+2. THE TYPE. The name's last extension is .pdf, and Jira states application/pdf.
+     passed: the extension is on the allowed list, and the stated type goes with it.
+3. THE SIZE. Jira states 142 bytes. The limit is 5.0 MB.
+     passed: the stated size is within the limit.
+4. THE BYTES, counted as they arrive.
+     passed: 142 bytes arrived, which is what Jira stated.
+5. HOW THE BYTES BEGIN.
+     passed: the file BEGINS the way a .pdf file begins. Only its beginning was looked at: what follows is not examined by this check.
+6. THE SCAN, a short list of known patterns. Not antivirus.
+     passed: none of the patterns was found. That does not make the file safe.
+
+SAVED as 41012-quarterly-report-final-v2.pdf, in the folder given with --downloads. That name was built by this tool: the identifier, letters and digits taken from Jira's name, and the allowed extension.
+  142 bytes. SHA-256 554f5147984d75fe7e43c6f15d08e3d52097907a122299c06613e84b3b4c8749.
+  Readable and writable by its owner only, and not marked as a program. THIS TOOL DID NOT OPEN OR RUN IT, AND NEVER DOES.
+
+THE LOG. One line was added to download-log.jsonl in the downloads folder:
+  {"attachment": "41012", "bytes": 142, "check": null, "outcome": "saved", "reason": null, "saved_as": "41012-quarterly-report-final-v2.pdf", "sha256": "554f5147984d75fe7e43c6f15d08e3d52097907a122299c06613e84b3b4c8749", "stated_size": 142, "stated_type": "application/pdf", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+
+FILES IN THE DOWNLOADS FOLDER. Before: 2. After: 3.
+  41001-release-notes.txt                                              57 bytes
+  41012-quarterly-report-final-v2.pdf                                 142 bytes   NEW
+  download-log.jsonl                                                  627 bytes
+
+RESULT: SAVED. One file, after six checks, and its line is in the log.
+
+Requests sent to Jira: 3. Every one was a GET with no body, which reads and cannot change anything.
+  GET (the made-up Jira) /rest/api/3/attachment/content/{id}  x1
+  GET (the made-up Jira) /rest/api/3/attachment/{id}  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}  x1
+------------------------------------------------------------------------------
+exit code: 0
+  ok   saved as 41012-quarterly-report-final-v2.pdf: no space, bracket, capital or mark from the name Jira gave (criterion 6)
+  ok   the output says the fifth check looked at how the file begins, and no further
+
+==============================================================================
+4. A TYPE THAT IS NOT ALLOWED: attachment 41004, an archive.
+$ python3 skills/jira-read-attachments/attachments.py download --source fake --issue DEMO-7 --id 41004 --downloads DOWNLOADS --state JIRA
+------------------------------------------------------------------------------
+Download asked for: attachment 41004 of DEMO-7. One attachment, named by its identifier.
+Asked of: the made-up Jira. No real Jira was contacted. Every file it serves is made up.
+The downloads folder is outside source control: no repository was found in it or in any folder above it.
+The download log was opened before anything was asked of Jira.
+
+1. THE NAME. Looked at, never used as a path.
+     passed: no path, no `..`, nothing that cannot be seen.
+2. THE TYPE. The name's last extension is .zip, and Jira states application/zip.
+     REFUSED BY THIS CHECK.
+
+REFUSED by the type: the name ends in an extension that is not on the allowed list. Allowed: csv, jpeg, jpg, json, log, md, pdf, png, txt.
+Nothing was saved. The checks after this one were not made.
+
+THE LOG. One line was added to download-log.jsonl in the downloads folder:
+  {"attachment": "41004", "bytes": null, "check": "the type", "outcome": "refused", "reason": "the name ends in an extension that is not on the allowed list. Allowed: csv, jpeg, jpg, json, log, md, pdf, png, txt", "saved_as": null, "sha256": null, "stated_size": 1258291, "stated_type": "application/zip", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+
+FILES IN THE DOWNLOADS FOLDER. Before: 3. After: 3.
+  41001-release-notes.txt                                              57 bytes
+  41012-quarterly-report-final-v2.pdf                                 142 bytes
+  download-log.jsonl                                                  982 bytes
+
+RESULT: NOT SAVED. Refused, and the reason is above and in the log.
+
+Requests sent to Jira: 2. Every one was a GET with no body, which reads and cannot change anything.
+  GET (the made-up Jira) /rest/api/3/attachment/{id}  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}  x1
+------------------------------------------------------------------------------
+exit code: 2
+  ok   REFUSED WITH THE REASON (criterion 4): exit code 2, refused by the type, and the output gives the reason: "not on the allowed list"
+  ok   nothing was saved: DOWNLOADS holds the same files as before, with the same checksums, apart from one more line in the log
+  ok   the refusal is in the log, with the identifier, a time, the check that refused it and the reason
+  ok   the made-up Jira was NOT asked for the file's contents: what it stated was enough to refuse
+
+==============================================================================
+5. TOO LARGE BY ITS OWN ACCOUNT: attachment 41005, which Jira states is 9 MB.
+$ python3 skills/jira-read-attachments/attachments.py download --source fake --issue DEMO-7 --id 41005 --downloads DOWNLOADS --state JIRA
+------------------------------------------------------------------------------
+Download asked for: attachment 41005 of DEMO-7. One attachment, named by its identifier.
+Asked of: the made-up Jira. No real Jira was contacted. Every file it serves is made up.
+The downloads folder is outside source control: no repository was found in it or in any folder above it.
+The download log was opened before anything was asked of Jira.
+
+1. THE NAME. Looked at, never used as a path.
+     passed: no path, no `..`, nothing that cannot be seen.
+2. THE TYPE. The name's last extension is .txt, and Jira states text/plain.
+     passed: the extension is on the allowed list, and the stated type goes with it.
+3. THE SIZE. Jira states 9437184 bytes. The limit is 5.0 MB.
+     REFUSED BY THIS CHECK.
+
+REFUSED by the size: Jira states a size of 9.0 MB, and the limit is 5.0 MB.
+Nothing was saved. The checks after this one were not made.
+
+THE LOG. One line was added to download-log.jsonl in the downloads folder:
+  {"attachment": "41005", "bytes": null, "check": "the size", "outcome": "refused", "reason": "Jira states a size of 9.0 MB, and the limit is 5.0 MB", "saved_as": null, "sha256": null, "stated_size": 9437184, "stated_type": "text/plain", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+
+FILES IN THE DOWNLOADS FOLDER. Before: 3. After: 3.
+  41001-release-notes.txt                                              57 bytes
+  41012-quarterly-report-final-v2.pdf                                 142 bytes
+  download-log.jsonl                                                 1269 bytes
+
+RESULT: NOT SAVED. Refused, and the reason is above and in the log.
+
+Requests sent to Jira: 2. Every one was a GET with no body, which reads and cannot change anything.
+  GET (the made-up Jira) /rest/api/3/attachment/{id}  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}  x1
+------------------------------------------------------------------------------
+exit code: 2
+  ok   REFUSED WITH THE REASON (criterion 4): exit code 2, refused by the size, and the output gives the reason: "Jira states a size of 9.0 MB, and the limit is 5.0 MB"
+  ok   nothing was saved: DOWNLOADS holds the same files as before, with the same checksums, apart from one more line in the log
+  ok   the refusal is in the log, with the identifier, a time, the check that refused it and the reason
+  ok   the made-up Jira was NOT asked for the file's contents: what it stated was enough to refuse
+
+==============================================================================
+6. A HOSTILE NAME: attachment 41006, which Jira calls "../../.ssh/authorized_keys.txt".
+$ python3 skills/jira-read-attachments/attachments.py download --source fake --issue DEMO-7 --id 41006 --downloads DOWNLOADS --state JIRA
+------------------------------------------------------------------------------
+Download asked for: attachment 41006 of DEMO-7. One attachment, named by its identifier.
+Asked of: the made-up Jira. No real Jira was contacted. Every file it serves is made up.
+The downloads folder is outside source control: no repository was found in it or in any folder above it.
+The download log was opened before anything was asked of Jira.
+
+1. THE NAME. Looked at, never used as a path.
+     REFUSED BY THIS CHECK.
+
+REFUSED by the name: the name has a path in it (a slash). A name is not a place.
+Nothing was saved. The checks after this one were not made.
+
+THE LOG. One line was added to download-log.jsonl in the downloads folder:
+  {"attachment": "41006", "bytes": null, "check": "the name", "outcome": "refused", "reason": "the name has a path in it (a slash). A name is not a place", "saved_as": null, "sha256": null, "stated_size": 33, "stated_type": "text/plain", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+
+FILES IN THE DOWNLOADS FOLDER. Before: 3. After: 3.
+  41001-release-notes.txt                                              57 bytes
+  41012-quarterly-report-final-v2.pdf                                 142 bytes
+  download-log.jsonl                                                 1556 bytes
+
+RESULT: NOT SAVED. Refused, and the reason is above and in the log.
+
+Requests sent to Jira: 2. Every one was a GET with no body, which reads and cannot change anything.
+  GET (the made-up Jira) /rest/api/3/attachment/{id}  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}  x1
+------------------------------------------------------------------------------
+exit code: 2
+  ok   REFUSED WITH THE REASON (criterion 4): exit code 2, refused by the name, and the output gives the reason: "the name has a path in it"
+  ok   nothing was saved: DOWNLOADS holds the same files as before, with the same checksums, apart from one more line in the log
+  ok   the refusal is in the log, with the identifier, a time, the check that refused it and the reason
+  ok   the made-up Jira was NOT asked for the file's contents: what it stated was enough to refuse
+
+==============================================================================
+7. A HOSTILE NAME THAT POINTS AT A FOLDER WHICH IS REALLY THERE: attachment 41016, called "../JIRA/planted.txt". JIRA is beside DOWNLOADS.
+$ python3 skills/jira-read-attachments/attachments.py download --source fake --issue DEMO-7 --id 41016 --downloads DOWNLOADS --state JIRA
+------------------------------------------------------------------------------
+Download asked for: attachment 41016 of DEMO-7. One attachment, named by its identifier.
+Asked of: the made-up Jira. No real Jira was contacted. Every file it serves is made up.
+The downloads folder is outside source control: no repository was found in it or in any folder above it.
+The download log was opened before anything was asked of Jira.
+
+1. THE NAME. Looked at, never used as a path.
+     REFUSED BY THIS CHECK.
+
+REFUSED by the name: the name has a path in it (a slash). A name is not a place.
+Nothing was saved. The checks after this one were not made.
+
+THE LOG. One line was added to download-log.jsonl in the downloads folder:
+  {"attachment": "41016", "bytes": null, "check": "the name", "outcome": "refused", "reason": "the name has a path in it (a slash). A name is not a place", "saved_as": null, "sha256": null, "stated_size": 61, "stated_type": "text/plain", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+
+FILES IN THE DOWNLOADS FOLDER. Before: 3. After: 3.
+  41001-release-notes.txt                                              57 bytes
+  41012-quarterly-report-final-v2.pdf                                 142 bytes
+  download-log.jsonl                                                 1843 bytes
+
+RESULT: NOT SAVED. Refused, and the reason is above and in the log.
+
+Requests sent to Jira: 2. Every one was a GET with no body, which reads and cannot change anything.
+  GET (the made-up Jira) /rest/api/3/attachment/{id}  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}  x1
+------------------------------------------------------------------------------
+exit code: 2
+  ok   REFUSED WITH THE REASON (criterion 4): exit code 2, refused by the name, and the output gives the reason: "the name has a path in it"
+  ok   nothing was saved: DOWNLOADS holds the same files as before, with the same checksums, apart from one more line in the log
+  ok   the refusal is in the log, with the identifier, a time, the check that refused it and the reason
+  ok   the made-up Jira was NOT asked for the file's contents: what it stated was enough to refuse
+
+==============================================================================
+8. A FILE THAT IS NOT WHAT ITS NAME SAYS: attachment 41007, named as text, whose bytes begin as an archive does.
+$ python3 skills/jira-read-attachments/attachments.py download --source fake --issue DEMO-7 --id 41007 --downloads DOWNLOADS --state JIRA
+------------------------------------------------------------------------------
+Download asked for: attachment 41007 of DEMO-7. One attachment, named by its identifier.
+Asked of: the made-up Jira. No real Jira was contacted. Every file it serves is made up.
+The downloads folder is outside source control: no repository was found in it or in any folder above it.
+The download log was opened before anything was asked of Jira.
+
+1. THE NAME. Looked at, never used as a path.
+     passed: no path, no `..`, nothing that cannot be seen.
+2. THE TYPE. The name's last extension is .txt, and Jira states text/plain.
+     passed: the extension is on the allowed list, and the stated type goes with it.
+3. THE SIZE. Jira states 107 bytes. The limit is 5.0 MB.
+     passed: the stated size is within the limit.
+4. THE BYTES, counted as they arrive.
+     passed: 107 bytes arrived, which is what Jira stated.
+5. HOW THE BYTES BEGIN.
+     REFUSED BY THIS CHECK.
+
+REFUSED by what the bytes are: the file is named as text and has a zero byte in it, which text does not. It begins the way an archive (zip, or an office document) begins.
+Nothing was saved. The checks after this one were not made.
+
+THE LOG. One line was added to download-log.jsonl in the downloads folder:
+  {"attachment": "41007", "bytes": null, "check": "what the bytes are", "outcome": "refused", "reason": "the file is named as text and has a zero byte in it, which text does not. It begins the way an archive (zip, or an office document) begins", "saved_as": null, "sha256": null, "stated_size": 107, "stated_type": "text/plain", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+
+FILES IN THE DOWNLOADS FOLDER. Before: 3. After: 3.
+  41001-release-notes.txt                                              57 bytes
+  41012-quarterly-report-final-v2.pdf                                 142 bytes
+  download-log.jsonl                                                 2221 bytes
+
+RESULT: NOT SAVED. Refused, and the reason is above and in the log.
+
+Requests sent to Jira: 3. Every one was a GET with no body, which reads and cannot change anything.
+  GET (the made-up Jira) /rest/api/3/attachment/content/{id}  x1
+  GET (the made-up Jira) /rest/api/3/attachment/{id}  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}  x1
+------------------------------------------------------------------------------
+exit code: 2
+  ok   REFUSED WITH THE REASON (criterion 4): exit code 2, refused by what the bytes are, and the output gives the reason: "begins the way an archive"
+  ok   nothing was saved: DOWNLOADS holds the same files as before, with the same checksums, apart from one more line in the log
+  ok   the refusal is in the log, with the identifier, a time, the check that refused it and the reason
+  ok   the made-up Jira was asked for the file's contents
+
+==============================================================================
+9. A FILE THAT IS LARGER THAN IT SAID: attachment 41008, stated as 200 bytes, which sends over 6 MB.
+$ python3 skills/jira-read-attachments/attachments.py download --source fake --issue DEMO-7 --id 41008 --downloads DOWNLOADS --state JIRA
+------------------------------------------------------------------------------
+Download asked for: attachment 41008 of DEMO-7. One attachment, named by its identifier.
+Asked of: the made-up Jira. No real Jira was contacted. Every file it serves is made up.
+The downloads folder is outside source control: no repository was found in it or in any folder above it.
+The download log was opened before anything was asked of Jira.
+
+1. THE NAME. Looked at, never used as a path.
+     passed: no path, no `..`, nothing that cannot be seen.
+2. THE TYPE. The name's last extension is .txt, and Jira states text/plain.
+     passed: the extension is on the allowed list, and the stated type goes with it.
+3. THE SIZE. Jira states 200 bytes. The limit is 5.0 MB.
+     passed: the stated size is within the limit.
+4. THE BYTES, counted as they arrive.
+     REFUSED BY THIS CHECK.
+
+REFUSED by the size: more arrived than the 200 bytes Jira stated. The fetch was stopped and nothing was kept.
+Nothing was saved. The checks after this one were not made.
+
+THE LOG. One line was added to download-log.jsonl in the downloads folder:
+  {"attachment": "41008", "bytes": null, "check": "the size", "outcome": "refused", "reason": "more arrived than the 200 bytes Jira stated. The fetch was stopped and nothing was kept", "saved_as": null, "sha256": null, "stated_size": 200, "stated_type": "text/plain", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+
+FILES IN THE DOWNLOADS FOLDER. Before: 3. After: 3.
+  41001-release-notes.txt                                              57 bytes
+  41012-quarterly-report-final-v2.pdf                                 142 bytes
+  download-log.jsonl                                                 2538 bytes
+
+RESULT: NOT SAVED. Refused, and the reason is above and in the log.
+
+Requests sent to Jira: 3. Every one was a GET with no body, which reads and cannot change anything.
+  GET (the made-up Jira) /rest/api/3/attachment/content/{id}  x1
+  GET (the made-up Jira) /rest/api/3/attachment/{id}  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}  x1
+------------------------------------------------------------------------------
+exit code: 2
+  ok   REFUSED WITH THE REASON (criterion 4): exit code 2, refused by the size, and the output gives the reason: "more arrived than the 200 bytes Jira stated"
+  ok   nothing was saved: DOWNLOADS holds the same files as before, with the same checksums, apart from one more line in the log
+  ok   the refusal is in the log, with the identifier, a time, the check that refused it and the reason
+  ok   the made-up Jira was asked for the file's contents
+
+==============================================================================
+10. A FILE THE SCAN STOPS: attachment 41009, an honest PDF by name, type and first bytes, that runs a script when opened.
+$ python3 skills/jira-read-attachments/attachments.py download --source fake --issue DEMO-7 --id 41009 --downloads DOWNLOADS --state JIRA
+------------------------------------------------------------------------------
+Download asked for: attachment 41009 of DEMO-7. One attachment, named by its identifier.
+Asked of: the made-up Jira. No real Jira was contacted. Every file it serves is made up.
+The downloads folder is outside source control: no repository was found in it or in any folder above it.
+The download log was opened before anything was asked of Jira.
+
+1. THE NAME. Looked at, never used as a path.
+     passed: no path, no `..`, nothing that cannot be seen.
+2. THE TYPE. The name's last extension is .pdf, and Jira states application/pdf.
+     passed: the extension is on the allowed list, and the stated type goes with it.
+3. THE SIZE. Jira states 203 bytes. The limit is 5.0 MB.
+     passed: the stated size is within the limit.
+4. THE BYTES, counted as they arrive.
+     passed: 203 bytes arrived, which is what Jira stated.
+5. HOW THE BYTES BEGIN.
+     passed: the file BEGINS the way a .pdf file begins. Only its beginning was looked at: what follows is not examined by this check.
+6. THE SCAN, a short list of known patterns. Not antivirus.
+     REFUSED BY THIS CHECK.
+
+REFUSED by the scan: the PDF has a script in it.
+Nothing was saved. The checks after this one were not made.
+
+THE LOG. One line was added to download-log.jsonl in the downloads folder:
+  {"attachment": "41009", "bytes": null, "check": "the scan", "outcome": "refused", "reason": "the PDF has a script in it", "saved_as": null, "sha256": null, "stated_size": 203, "stated_type": "application/pdf", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+
+FILES IN THE DOWNLOADS FOLDER. Before: 3. After: 3.
+  41001-release-notes.txt                                              57 bytes
+  41012-quarterly-report-final-v2.pdf                                 142 bytes
+  download-log.jsonl                                                 2799 bytes
+
+RESULT: NOT SAVED. Refused, and the reason is above and in the log.
+
+Requests sent to Jira: 3. Every one was a GET with no body, which reads and cannot change anything.
+  GET (the made-up Jira) /rest/api/3/attachment/content/{id}  x1
+  GET (the made-up Jira) /rest/api/3/attachment/{id}  x1
+  GET (the made-up Jira) /rest/api/3/issue/{key}  x1
+------------------------------------------------------------------------------
+exit code: 2
+  ok   REFUSED WITH THE REASON (criterion 4): exit code 2, refused by the scan, and the output gives the reason: "the PDF has"
+  ok   nothing was saved: DOWNLOADS holds the same files as before, with the same checksums, apart from one more line in the log
+  ok   the refusal is in the log, with the identifier, a time, the check that refused it and the reason
+  ok   the made-up Jira was asked for the file's contents
+
+  ok   THE HOSTILE NAMES WROTE NOTHING (criterion 6): the folder JIRA, which "../JIRA/planted.txt" points at from DOWNLOADS and which is really there, holds its one own file and no `planted.txt`; and the temporary folder holds DOWNLOADS and JIRA and nothing else
+  note The other hostile name points two levels up at a folder that does not exist, so by itself it could not have shown much: a write there would have failed anyway.
+
+==============================================================================
+11. THERE IS NO WAY TO ASK FOR MORE THAN ONE. `--id all`, and no --id at all.
+$ python3 skills/jira-read-attachments/attachments.py download --source fake --issue DEMO-7 --id all --downloads DOWNLOADS --state JIRA
+------------------------------------------------------------------------------
+Download asked for: attachment all of DEMO-7. One attachment, named by its identifier.
+Asked of: the made-up Jira. No real Jira was contacted. Every file it serves is made up.
+The downloads folder is outside source control: no repository was found in it or in any folder above it.
+The download log was opened before anything was asked of Jira.
+
+
+REFUSED: --id is ONE attachment's identifier, a number, as the index gives it. There is no way to ask for more than one.
+Nothing was saved.
+
+THE LOG. One line was added to download-log.jsonl in the downloads folder:
+  {"attachment": "all", "bytes": null, "check": "before the checks", "outcome": "refused", "reason": "--id is ONE attachment's identifier, a number, as the index gives it. There is no way to ask for more than one", "saved_as": null, "sha256": null, "stated_size": null, "stated_type": null, "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+
+FILES IN THE DOWNLOADS FOLDER. Before: 3. After: 3.
+  41001-release-notes.txt                                              57 bytes
+  41012-quarterly-report-final-v2.pdf                                 142 bytes
+  download-log.jsonl                                                 3139 bytes
+
+RESULT: NOT SAVED. Refused, and the reason is above and in the log.
+
+Requests sent to Jira: 0. Every one was a GET with no body, which reads and cannot change anything.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   `--id all` is refused with exit code 1, no file's contents were asked for, and the attempt is in the log
+$ python3 skills/jira-read-attachments/attachments.py download --source fake --issue DEMO-7 --downloads DOWNLOADS --state JIRA
+------------------------------------------------------------------------------
+usage: attachments.py download [-h] --source {live,fake} --issue ISSUE --id ID
+                               --downloads DOWNLOADS [--state STATE]
+                               [--log LOG]
+attachments.py download: error: the following arguments are required: --id
+------------------------------------------------------------------------------
+exit code: 2
+  ok   with no --id the command does not run at all (the usage message), and nothing was asked for or saved (criterion 3)
+
+==============================================================================
+12. A DOWNLOADS FOLDER INSIDE THIS REPOSITORY, where Git would pick the file up: refused.
+$ python3 skills/jira-read-attachments/attachments.py download --source fake --issue DEMO-7 --id 41001 --downloads context/jira --state JIRA
+------------------------------------------------------------------------------
+REFUSED: --downloads is inside a Git repository and Git does not ignore that folder as a folder, so a file saved there could be committed. Choose a folder outside the repository, or one Git ignores whole.
+Nothing was changed in Jira: this tool can only read.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused with exit code 1; no file was added anywhere in `participant`; and the made-up Jira was asked nothing
+
+==============================================================================
+13. A FOLDER GIT IGNORES THE CONTENTS OF, WITH TEXT FILES TAKEN BACK. A reader got a file committed this way from the first version.
+A temporary Git repository, REPO, made by this script, with a .gitignore of two lines:  dl/*  and  !dl/*.txt
+$ git -C REPO check-ignore dl/probe      exit code 0: Git ignores a file called `probe` there, which is what the first version asked about
+$ python3 skills/jira-read-attachments/attachments.py download --source fake --issue DEMO-7 --id 41001 --downloads JIRA/../REPO/dl --state JIRA
+------------------------------------------------------------------------------
+REFUSED: --downloads is inside a Git repository and Git does not ignore that folder as a folder, so a file saved there could be committed. Choose a folder outside the repository, or one Git ignores whole.
+Nothing was changed in Jira: this tool can only read.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   Git does ignore `dl/probe`, and the tool still refuses the folder: it asks about the folder itself. Nothing was saved in it, and the made-up Jira was asked nothing
+
+==============================================================================
+14. A DOWNLOAD FROM A REAL JIRA: refused. No connection is made, so no credentials are needed to show it.
+$ python3 skills/jira-read-attachments/attachments.py download --source live --issue DEMO-7 --id 41001 --downloads DOWNLOADS
+------------------------------------------------------------------------------
+REFUSED: a download from a real Jira is not something this tool does. It has never fetched a real attachment, and the way a real Jira hands one over has not been tried. Nothing was asked of Jira.
+Nothing was changed in Jira: this tool can only read.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   refused with exit code 1, saying nothing was asked of Jira; DOWNLOADS is unchanged, the log included
+
+==============================================================================
+15. THE DOWNLOAD LOG, whole, as it stands in DOWNLOADS/download-log.jsonl
+{"attachment": "41001", "bytes": 57, "check": null, "outcome": "saved", "reason": null, "saved_as": "41001-release-notes.txt", "sha256": "abadd7985fa72c926619440a670c7039b974a4e079552a4139ed9301a26029a9", "stated_size": 57, "stated_type": "text/plain", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+{"attachment": "41012", "bytes": 142, "check": null, "outcome": "saved", "reason": null, "saved_as": "41012-quarterly-report-final-v2.pdf", "sha256": "554f5147984d75fe7e43c6f15d08e3d52097907a122299c06613e84b3b4c8749", "stated_size": 142, "stated_type": "application/pdf", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+{"attachment": "41004", "bytes": null, "check": "the type", "outcome": "refused", "reason": "the name ends in an extension that is not on the allowed list. Allowed: csv, jpeg, jpg, json, log, md, pdf, png, txt", "saved_as": null, "sha256": null, "stated_size": 1258291, "stated_type": "application/zip", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+{"attachment": "41005", "bytes": null, "check": "the size", "outcome": "refused", "reason": "Jira states a size of 9.0 MB, and the limit is 5.0 MB", "saved_as": null, "sha256": null, "stated_size": 9437184, "stated_type": "text/plain", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+{"attachment": "41006", "bytes": null, "check": "the name", "outcome": "refused", "reason": "the name has a path in it (a slash). A name is not a place", "saved_as": null, "sha256": null, "stated_size": 33, "stated_type": "text/plain", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+{"attachment": "41016", "bytes": null, "check": "the name", "outcome": "refused", "reason": "the name has a path in it (a slash). A name is not a place", "saved_as": null, "sha256": null, "stated_size": 61, "stated_type": "text/plain", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+{"attachment": "41007", "bytes": null, "check": "what the bytes are", "outcome": "refused", "reason": "the file is named as text and has a zero byte in it, which text does not. It begins the way an archive (zip, or an office document) begins", "saved_as": null, "sha256": null, "stated_size": 107, "stated_type": "text/plain", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+{"attachment": "41008", "bytes": null, "check": "the size", "outcome": "refused", "reason": "more arrived than the 200 bytes Jira stated. The fetch was stopped and nothing was kept", "saved_as": null, "sha256": null, "stated_size": 200, "stated_type": "text/plain", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+{"attachment": "41009", "bytes": null, "check": "the scan", "outcome": "refused", "reason": "the PDF has a script in it", "saved_as": null, "sha256": null, "stated_size": 203, "stated_type": "application/pdf", "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+{"attachment": "all", "bytes": null, "check": "before the checks", "outcome": "refused", "reason": "--id is ONE attachment's identifier, a number, as the index gives it. There is no way to ask for more than one", "saved_as": null, "sha256": null, "stated_size": null, "stated_type": null, "story": "DEMO-7", "time": "2026-11-27T22:31:46Z"}
+  ok   ten lines, in the order the ten attempts were made: two saved, eight refused. The refusals in parts 12, 13 and 14, and the command with no --id, came before there was a log to write to, and are not in it
+  ok   every line has an identifier and a time
+  ok   the log does not hold the names Jira gave the hostile or the awkward files. It does hold the names files were SAVED under, which carry letters taken from Jira's names
+
+  note The identifiers the made-up Jira wrote down being asked for the contents of, over the whole of this record: 41001, 41012, 41007, 41008, 41009
+  ok   five: the two that were saved, and the three whose fault is inside the file. For the other five attempts the contents were never asked for
+
+==============================================================================
+16. EVERY FILE IN DOWNLOADS, listed by this script
+  41001-release-notes.txt                        57 bytes   mode 600   sha256 abadd7985fa72c92
+  41012-quarterly-report-final-v2.pdf           142 bytes   mode 600   sha256 554f5147984d75fe
+  download-log.jsonl                           3139 bytes   mode 600   sha256 79e9953be59629db
+  ok   three files: the two that were saved, and the log. Nothing from the eight refused attempts, and no temporary file
+  ok   none is marked as a program
+
+WHAT THIS DOES NOT SHOW. A download from a real Jira: this tool refuses one. The scan is a short list of patterns and not antivirus.
+DOWNLOADS is deleted when this script ends, the two made-up files with it.
+
+RESULT: ALL CHECKS PASSED. 49 checks.

@@ -1,0 +1,111 @@
+A normal sync: every attachment's details recorded, and no file fetched or written
+jira-read-attachments, attempt jira-attempt-021. Recorded by scripts/record_runs.py.
+Read from the made-up Jira (skills/jira-read-attachments/fake_jira.py): one made-up story with 16 made-up attachments. No real Jira was contacted.
+Commands are run from the `participant` folder. JIRA and DOWNLOADS are temporary folders outside the repository, deleted afterwards.
+
+
+==============================================================================
+0. A FRESH MADE-UP STORY, AND AN EMPTY DOWNLOADS FOLDER. The index and its page were deleted first, so the sync below is a first sync.
+$ python3 skills/jira-read-attachments/fake_jira.py new --state JIRA
+------------------------------------------------------------------------------
+The made-up Jira has a fresh made-up story, DEMO-7, with 16 made-up attachments.
+------------------------------------------------------------------------------
+exit code: 0
+Files in DOWNLOADS: 0. Files in context/jira: 112.
+
+==============================================================================
+1. THE SYNC
+$ python3 skills/jira-read-attachments/attachments.py sync --source fake --issue DEMO-7 --out-dir context/jira --name attachments --state JIRA
+------------------------------------------------------------------------------
+Story: DEMO-7
+Read from: the made-up Jira. No real Jira was contacted
+
+ATTACHMENTS LISTED BY JIRA: 16. For each, the index now holds its identifier, name, stated type, stated size, who attached it and when.
+  attached by me: 2; by someone else: 14; unknown: 0
+  by name, stated type and stated size alone: 11 could be asked for, 5 would be refused. NONE WAS ASKED FOR.
+    41001  57 bytes     text/plain             someone else  could be asked for
+    41002  45 bytes     text/csv               me            could be asked for
+    41003  67 bytes     image/png              someone else  could be asked for
+    41004  1.2 MB       application/zip        someone else  would be refused by the type
+    41005  9.0 MB       text/plain             someone else  would be refused by the size
+    41006  33 bytes     text/plain             someone else  would be refused by the name
+    41007  107 bytes    text/plain             someone else  could be asked for
+    41008  200 bytes    text/plain             someone else  could be asked for
+    41009  203 bytes    application/pdf        someone else  could be asked for
+    41010  109 bytes    application/pdf        someone else  would be refused by the type
+    41011  87 bytes     text/plain             someone else  could be asked for
+    41012  142 bytes    application/pdf        me            could be asked for
+    41013  67 bytes     image/jpeg             someone else  could be asked for
+    41014  26 bytes     application/json       someone else  could be asked for
+    41015  500 bytes    text/plain             someone else  could be asked for
+    41016  61 bytes     text/plain             someone else  would be refused by the name
+  Names are in the index and are not printed here: a name is other people's text.
+
+NO FILE WAS DOWNLOADED.
+  Requests that ask for a file's contents: 0. This command has no code that makes one.
+  Files in the folder given with --out-dir, before: 112. After: 114. New: attachments.json, attachments.md.
+  The only files this command writes are the index and its page: attachments.json, attachments.md written.
+
+RESULT: INDEX WRITTEN. 16 attachments recorded. No attachment was fetched.
+
+Requests sent to Jira: 2. Every one was a GET with no body, which reads and cannot change anything.
+  GET (the made-up Jira) /rest/api/3/issue/{key}  x1
+  GET (the made-up Jira) /rest/api/3/myself  x1
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0, and the output says 16 attachments were recorded
+  ok   METADATA FOR EVERY ATTACHMENT (criterion 1): for each of the 16 identifiers the made-up Jira has, the index holds the name, type and size the made-up Jira states, compared one by one
+  ok   and for each, who attached it, as "me" or "someone else", worked out again here from the made-up Jira's accounts, and a date in UTC
+  ok   the page has one row for each of the 16, beginning with its identifier, the name the made-up Jira gives it, and the stated type
+  ok   no account, name or email address of a person is in the index, the page or the output: four words the made-up Jira sends were looked for
+  note What the made-up Jira counted being asked for: {"content": 0, "details": 0, "issue": 1, "myself": 1}
+  ok   NO FILE WAS ASKED FOR (criterion 2): the made-up Jira's own count of requests for a file's contents is 0, and for one attachment's details 0. The made-up Jira keeps that count; it is not a line the tool prints. It would not see bytes fetched some other way: the two checks below look for those on disk
+  ok   NO ATTACHMENT FILE WAS WRITTEN: in context/jira the only new files are the index and its page, and every file that was there has the checksum it had
+  ok   DOWNLOADS is still empty; in the whole `participant` folder the only new files are those two; and the temporary folder holds the made-up Jira's own file and nothing else. Those are the places this script can watch. It does not watch the rest of the disk
+  ok   the tool's own output says the same
+
+==============================================================================
+2. THE SAME SYNC AGAIN
+$ python3 skills/jira-read-attachments/attachments.py sync --source fake --issue DEMO-7 --out-dir context/jira --name attachments --state JIRA
+------------------------------------------------------------------------------
+Story: DEMO-7
+Read from: the made-up Jira. No real Jira was contacted
+
+ATTACHMENTS LISTED BY JIRA: 16. For each, the index now holds its identifier, name, stated type, stated size, who attached it and when.
+  attached by me: 2; by someone else: 14; unknown: 0
+  by name, stated type and stated size alone: 11 could be asked for, 5 would be refused. NONE WAS ASKED FOR.
+    41001  57 bytes     text/plain             someone else  could be asked for
+    41002  45 bytes     text/csv               me            could be asked for
+    41003  67 bytes     image/png              someone else  could be asked for
+    41004  1.2 MB       application/zip        someone else  would be refused by the type
+    41005  9.0 MB       text/plain             someone else  would be refused by the size
+    41006  33 bytes     text/plain             someone else  would be refused by the name
+    41007  107 bytes    text/plain             someone else  could be asked for
+    41008  200 bytes    text/plain             someone else  could be asked for
+    41009  203 bytes    application/pdf        someone else  could be asked for
+    41010  109 bytes    application/pdf        someone else  would be refused by the type
+    41011  87 bytes     text/plain             someone else  could be asked for
+    41012  142 bytes    application/pdf        me            could be asked for
+    41013  67 bytes     image/jpeg             someone else  could be asked for
+    41014  26 bytes     application/json       someone else  could be asked for
+    41015  500 bytes    text/plain             someone else  could be asked for
+    41016  61 bytes     text/plain             someone else  would be refused by the name
+  Names are in the index and are not printed here: a name is other people's text.
+
+NO FILE WAS DOWNLOADED.
+  Requests that ask for a file's contents: 0. This command has no code that makes one.
+  Files in the folder given with --out-dir, before: 114. After: 114. New: none.
+  The only files this command writes are the index and its page: both were already as they should be, and neither was written.
+
+RESULT: INDEX UNCHANGED. 16 attachments recorded. No attachment was fetched.
+
+Requests sent to Jira: 2. Every one was a GET with no body, which reads and cannot change anything.
+  GET (the made-up Jira) /rest/api/3/issue/{key}  x1
+  GET (the made-up Jira) /rest/api/3/myself  x1
+------------------------------------------------------------------------------
+exit code: 0
+  ok   nothing was written, every checksum in the folder is the same, and still no file's contents were asked for
+
+WHAT THIS DOES NOT SHOW. What a real Jira sends for a story's attachments. That is one real run, of this command only.
+
+RESULT: ALL CHECKS PASSED. 10 checks.
