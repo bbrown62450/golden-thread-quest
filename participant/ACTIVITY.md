@@ -471,6 +471,12 @@ Every change this application made to your files, newest last.
 - `2026-11-27T01:05:19Z` jira-link-work: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-27T01:05:19Z` Submitted jira-link-work for review as submission-20261127010519-cd9860.
 - `2026-11-27T01:16:45Z` Started jira-next-work as attempt jira-attempt-017.
+- `2026-11-27T03:41:17Z` Review of playwright-test-inventory: approved by Claude (automated reviewer).
+- `2026-11-27T03:52:50Z` Review of base-camp-interruption-recovery: approved by Claude (automated reviewer).
+- `2026-11-27T04:04:44Z` Review of base-camp-ownership-zones: needs_changes by Claude (automated reviewer).
+- `2026-11-27T04:16:23Z` Review of base-camp-secret-handling: approved by Claude (automated reviewer).
+- `2026-11-27T04:28:04Z` Review of jira-idempotent-create: approved by Claude (automated reviewer).
+- `2026-11-27T04:39:54Z` Review of jira-link-work: approved by Claude (automated reviewer).
 - `2026-11-27T14:52:27Z` jira-next-work: in_progress → evidence_ready (Assert that the required proof is assembled.)
 - `2026-11-27T14:53:05Z` jira-next-work: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
 - `2026-11-27T14:54:24Z` jira-next-work: locally_validated → submitted (Ask a reviewer to decide.)

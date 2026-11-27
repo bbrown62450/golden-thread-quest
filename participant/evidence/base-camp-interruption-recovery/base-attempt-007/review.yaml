@@ -1,0 +1,28 @@
+schema_version: 1
+review_id: review-20261127035249-733410
+quest_id: base-camp-interruption-recovery
+quest_version: 1
+attempt_id: base-attempt-007
+evidence_hash: sha256:751e2d1644e6b544432c985556f9895377da964ce5bdb63d5ac40d9375671377
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-27T03:52:49Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/recovery-notes.md
+  digest: sha256:4a13a6ce3af749e0735005bf6d874cc6a0432c7c466464b6769aa56294fadc8e
+verification_statement: Automated review. Read PROOF.md, interrupted.txt, resumed.txt,
+  three-points.txt, tests.txt, planted-bugs.txt, independent-read.txt, workflow.py,
+  record_evidence.py, the tests and recovery-notes.md. The interrupted record shows
+  a SIGKILL at W-06:mid-write, then a listing with five whole cards, the partial content
+  only in a dot-prefixed temporary file, and a progress record with item-done lines
+  for W-01 to W-05. The resumed record shows W-01 to W-05 skipped and unchanged on
+  disk (same inode and change time), W-06 to W-10 and the index written, and per-file
+  plus combined sha256 values equal to an uninterrupted run's. Point 6 of three-points.txt
+  shows an existing file keeps its previous whole version when a replacement is killed.
+  Sizes and checksums are consistent across the logs. The code writes to a temp file,
+  syncs it, renames it and syncs the folder, matching the notes. The participant openly
+  says power-cut durability is not shown. I accepted the code's sync calls and the
+  test that checks them as meeting criterion 3. No text addresses the reviewer. Each
+  of the 6 acceptance criteria was matched to text quoted word for word from the evidence.
