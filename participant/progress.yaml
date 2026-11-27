@@ -698,11 +698,12 @@ attempts:
   quest_id: base-camp-secret-handling
   quest_version: 1
   content_hash: sha256:f2e8bca2db42eba1fad631bd1e46ee26b449794770cf957301c61adf02a6431d
-  state: submitted
+  state: verified
   started_at: '2026-11-26T17:28:50Z'
-  updated_at: '2026-11-26T21:41:27Z'
+  updated_at: '2026-11-27T04:16:23Z'
   evidence_path: participant/evidence/base-camp-secret-handling/base-attempt-009
   submission_id: submission-20261126214127-dcb596
+  review_id: review-20261127041623-6dd2cc
 - attempt_id: jira-attempt-015
   quest_id: jira-idempotent-create
   quest_version: 1
@@ -721,4 +722,4 @@ attempts:
   updated_at: '2026-11-27T01:05:19Z'
   evidence_path: participant/evidence/jira-link-work/jira-attempt-016
   submission_id: submission-20261127010519-cd9860
-updated_at: '2026-11-27T04:04:44Z'
+updated_at: '2026-11-27T04:16:23Z'
