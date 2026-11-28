@@ -1,0 +1,30 @@
+schema_version: 1
+review_id: review-20261128000558-639bfd
+quest_id: jira-reconciliation-report
+quest_version: 1
+attempt_id: jira-attempt-022
+evidence_hash: sha256:47ab1c259c0d4a7b5495a4c26e735999990bd310d52a04eaa006377eac2c7267
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-28T00:05:58Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/jira/reconciliation/fixture.md
+  digest: sha256:7bfd58a6e39c5722c3ea44011c121845d0a725f06210d4180c6a5951c8a2df79
+- path: participant/context/jira/reconciliation/report.md
+  digest: sha256:877ac747a23d482d829376be466df97aab4727079bf73e3e95142cb236618d4a
+verification_statement: 'Automated review. I read the fixture, the report, the run
+  record (reconciliation-run.txt), PROOF.md and the supporting logs. The fixture holds
+  18 made-up items across seven states: the five the quest names plus two added ones,
+  and four items fit two states. The report places each item once, and its counts
+  sum to 18, equal to the 16 items in the copy plus the 2 only in Jira. The run script
+  added the counts up independently. Every exception has Reason, Error class, Next
+  and Log lines. Stale items give their age and the 24-hour limit. Failed items name
+  a class and nothing Jira said. The second run reported REPORT UNCHANGED with matching
+  sha256 hashes, and a third run into an empty folder matched byte for byte. PROOF.md
+  explains the tie-break order and cites the criteria by number. The run record and
+  PROOF.md sit under jira-attempt-022 rather than attempt-001; the participant says
+  copies are in attempt-001, and the pre-check found the required files. No text in
+  the evidence is addressed to the reviewer. Each of the 7 acceptance criteria was
+  matched to text quoted word for word from the evidence.'

@@ -778,9 +778,10 @@ attempts:
   quest_id: jira-reconciliation-report
   quest_version: 1
   content_hash: sha256:f190757d84d8be852bbec51593ed303395f040012ce5563b3aed58bb162443dc
-  state: submitted
+  state: verified
   started_at: '2026-11-27T22:56:23Z'
-  updated_at: '2026-11-27T23:57:08Z'
+  updated_at: '2026-11-28T00:05:58Z'
   evidence_path: participant/evidence/jira-reconciliation-report/jira-attempt-022
   submission_id: submission-20261127235708-9ea845
-updated_at: '2026-11-27T23:57:08Z'
+  review_id: review-20261128000558-639bfd
+updated_at: '2026-11-28T00:05:58Z'
