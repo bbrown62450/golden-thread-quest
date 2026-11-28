@@ -1,0 +1,30 @@
+schema_version: 1
+review_id: review-20261128012052-5030b5
+quest_id: jira-transition-status
+quest_version: 1
+attempt_id: jira-attempt-023
+evidence_hash: sha256:18b44dd7309d21de9ddba9b53f56b64fe236890a7d92059d721ff6e192bc7bd9
+reviewer:
+  display_name: Claude (automated reviewer)
+reviewed_at: '2026-11-28T01:20:52Z'
+decision: approved
+findings: []
+proof_files:
+- path: participant/context/jira/results/transition-status.md
+  digest: sha256:5d63ee46c288fb069b92fc5552ff674dfd43cbbe0080e80a3174e27ba9f4d44c
+- path: participant/context/jira/transition/rules.md
+  digest: sha256:efeb7134e7bfaf991999898133e7ffe9773b6a1fc60110af6fe71fbb9261df98
+verification_statement: 'Automated review. I read every evidence file under jira-attempt-023,
+  plus the result record and rules.md. PROOF.md says the four required records and
+  PROOF.md were also copied into attempt-001, and the automatic pre-check confirms
+  the required files are present. I compared the live sandbox logs with each other.
+  The preview fingerprint 1235fc14d5de appears in live-04, live-08, live-09, live-11
+  and the result record. The history count goes from 2 entries before the move to
+  3 after. History entry 10057 and transition id 21 match everywhere. The timestamps
+  (2026-11-28 00:54 UTC) fit an evening run on 2026-11-27 in a US timezone. The made-up
+  Jira records back up each criterion with state-file hashes taken before and after
+  each step. The participant is open about the limits: the real workflow forbids nothing,
+  the time limit is tested with a test clock, and the live allowlist refusal used
+  an empty list. None of these goes against a criterion, because each one is also
+  shown on the made-up Jira. I found no text addressed to the reviewer. Each of the
+  9 acceptance criteria was matched to text quoted word for word from the evidence.'
