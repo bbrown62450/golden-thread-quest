@@ -518,3 +518,8 @@ Every change this application made to your files, newest last.
 - `2026-11-27T23:57:08Z` jira-reconciliation-report: locally_validated → submitted (Ask a reviewer to decide.)
 - `2026-11-27T23:57:08Z` Submitted jira-reconciliation-report for review as submission-20261127235708-9ea845.
 - `2026-11-28T00:05:58Z` Review of jira-reconciliation-report: approved by Claude (automated reviewer).
+- `2026-11-28T00:12:34Z` Started jira-transition-status as attempt jira-attempt-023.
+- `2026-11-28T01:07:54Z` jira-transition-status: in_progress → evidence_ready (Assert that the required proof is assembled.)
+- `2026-11-28T01:08:34Z` jira-transition-status: evidence_ready → locally_validated (Record that every required validator returned a qualifying result.)
+- `2026-11-28T01:09:17Z` jira-transition-status: locally_validated → submitted (Ask a reviewer to decide.)
+- `2026-11-28T01:09:17Z` Submitted jira-transition-status for review as submission-20261128010917-d32ad4.

@@ -1,0 +1,17 @@
+STATUS CHECK for the write of preview 1235fc14d5de. Nothing is written by this command.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Item:       SCRUM-25 (issue id 10024).
+
+  the status of SCRUM-25 is "In Progress" (status id 3). Intended: "In Progress" (status id 3): yes
+  history entry 10057 is in the item's history and records that move: yes
+  Resolution now: none.
+
+Requests sent to Jira: 2. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/10024
+  GET /rest/api/3/issue/10024/changelog
+
+FOUND: the item has the status intended.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

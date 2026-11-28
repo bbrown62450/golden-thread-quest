@@ -1,0 +1,15 @@
+schema_version: 1
+submission_id: submission-20261128010917-d32ad4
+quest_id: jira-transition-status
+quest_version: 1
+attempt_id: jira-attempt-023
+content_hash: sha256:abd5f2c37bc1d3126f94114d9ff7356da6bed5fc7e462f32b516b6e6f4f168b9
+evidence_hash: sha256:18b44dd7309d21de9ddba9b53f56b64fe236890a7d92059d721ff6e192bc7bd9
+submitted_at: '2026-11-28T01:09:17Z'
+submitted_by: beaubrown
+secret_scan_clean: true
+proof_files:
+- path: participant/context/jira/results/transition-status.md
+  digest: sha256:5d63ee46c288fb069b92fc5552ff674dfd43cbbe0080e80a3174e27ba9f4d44c
+- path: participant/context/jira/transition/rules.md
+  digest: sha256:efeb7134e7bfaf991999898133e7ffe9773b6a1fc60110af6fe71fbb9261df98

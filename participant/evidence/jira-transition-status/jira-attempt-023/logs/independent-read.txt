@@ -1,0 +1,126 @@
+Independent reads of the work. jira-transition-status, attempt jira-attempt-023
+Written by hand by the AI assistant, 2026-11-27, from the two readers' replies. The readers were AI assistants, not people.
+
+HOW THE READS WERE MADE
+  Two fresh AI assistants, each started with no knowledge of this session. Each was given a copy, in a temporary folder
+  outside the repository, of: the quest text, the tool, the made-up Jira, the tests, the fixtures, the skill page, the
+  rules page, the records and the scripts. Each was told to read only, to contact no network service, to use no real
+  credential, and to write only in a temporary folder. The version they read had 67 tests passing, 78 of 78 planted
+  bugs caught and 59 record checks passing. NO REAL RUN HAD BEEN MADE: the readers were asked before the real write,
+  so that the item would be moved once, by the corrected tool. PROOF.md had not been written, and neither saw it.
+  Reader 1 was asked to break the tool: a write without a valid confirmation, to the wrong place, twice, or output
+  that says something false. Reader 2 was asked whether the records and tests show what they say.
+
+==============================================================================
+READER 1: THE ADVERSARIAL READ.  It reproduced what follows by running a copy, except where marked "reasoned".
+
+  HIGH
+  1. The fingerprint authenticates nothing against someone who can write in the state folder. Three ways: edit a
+     used preview's state back to "open" and confirm it again; re-date a preview and work the checksum out again;
+     write a preview file without ever running `preview`. In each case the confirmation still worked the request out
+     again against Jira, so the write was only ever the move a fresh preview would show. What was lost was "a
+     preview was shown", the 15 minutes, and "used once".
+     NOT CHANGED. It is the same model as the earlier write quests: the fingerprint is a checksum, not a secret.
+     Stated as a limit in SKILL.md and PROOF. ADDED: a saved record whose item, statuses or move are not in the
+     shapes the tool writes is refused.
+  2. The sandbox allowlist is whatever file the caller names. A file listing the other project let PROD-1 be moved,
+     with "On the sandbox allowlist: yes". The preview shows only the file's name and a short checksum.
+     NOT CHANGED. Stated as a limit. The real run used the allowlist file of the earlier quests.
+  3. A confirmation could write to Jira and then end with a crash, no output, no log, no result record and exit
+     code 1: a name with an accented letter on a terminal that cannot show it; Ctrl-C during a wait (reasoned); a
+     closed pipe (reasoned).
+     CHANGED: the output is saved where --log says BEFORE it is shown; showing it cannot fail on a character or a
+     closed pipe; an interruption after the write ends with "A PERSON NEEDS TO LOOK".
+
+  MEDIUM
+  4. --log, --result and --out wrote over any path: the allowlist, a request file, a saved preview, the target of a
+     link. --log was written even for a refused run.
+     CHANGED: before Jira is asked anything, each place is checked. Refused if its folder is not there, if it is a
+     link, a folder or a file with a second name, if it is in the state folder, if it is the request or the
+     allowlist, or if a file is there that does not begin as this tool's own file of that kind begins.
+  5. A wrong history entry could be recorded, with ALL DONE: a failed read of the history before the write was
+     tolerated, so an older entry of the same move counted as new.
+     CHANGED: a history Jira will not give stops the preview and the write. The entry must be newer than every
+     entry known before the write. The history is read again, up to three times, if the entry is not there yet.
+     NOT CHANGED: if someone else's identical move lands first and this tool's write does nothing, their entry is
+     recorded as this run's. Who made an entry is not read.
+  6. The check for open subtasks cannot see a subtask Jira does not list. The reader believes a real Jira leaves out
+     a subtask this identity may not see, where the made-up Jira lists it without a status.
+     NOT CHANGED. Stated as a limit, in the rules page too.
+  7. A second open preview stayed valid after the item was moved and moved back: a second write of the same move.
+     CHANGED: a preview holds the item's last-changed time and the number of entries in its history. A confirmation
+     is refused if either is not what the preview saw.
+  8. A move whose fields Jira did not list was read as having none, so a required field could be missed.
+     CHANGED: such a move is not supported: "Jira did not say which fields this move asks for".
+  9. A move or status name holding a pipe, a backtick or an angle bracket broke the table in the rules page, and
+     could forge a cell.       CHANGED: those characters are shown as question marks wherever a name is shown.
+
+  LOW
+  10. An edited record of a write could forge a line in `check`.            CHANGED: refused as unreadable.
+  11. A junk or future-dated claim file blocked a request for ever.          CHANGED: said, with what to remove.
+  12. "The result record is also saved" printed before the save failed.     CHANGED: "is to be saved".
+  13. A long title padded with spaces could put words at the start of a line on a narrow terminal; some unseen
+      characters and lone surrogates were let through; a lone surrogate crashed the preview after it was saved.
+      CHANGED: runs of spaces in a title are closed up; the list of unseen characters is longer.
+  14. A resolution already set on an open item made a correct move end with exit code 2.
+      CHANGED: between two statuses that are not done, the resolution must be as it was, not empty.
+  15. NOT CHANGED, limits: a credential in an item's title would stop every preview; "done" is the status's
+      category only; two request files of different names for one item do not share a claim; "a person at a
+      terminal" is a test for a terminal, not for a person; the site fingerprint is an unsalted hash.
+
+  WHERE THE MADE-UP JIRA MAY DIFFER FROM A REAL ONE (the reader's knowledge, nothing fetched): hidden subtasks (6
+  above); a workflow's own rules that reject a move without listing a field; whether the history shows an entry at
+  once; a resolution left behind by an older workflow; a workflow that offers every move from every status.
+  THE REAL RUN SINCE SHOWED: the sandbox workflow does offer every move from every status; the history showed the
+  new entry on the first read; Jira answered 204; the shapes the tool expects were the shapes Jira gave.
+
+  LOOKED FOR AND NOT FOUND: a write from preview, rules or check; a body with more than the move's id; a write with
+  no fingerprint or no name; a write that differed from the request worked out again; a write after a changed
+  request, allowlist, site or status; a move Jira did not offer being previewed; the write sent twice in one run;
+  "Nothing has been written" after a write; Jira's refusal text in any output; the site's name in a saved file.
+
+==============================================================================
+READER 2: DO THE RECORDS AND TESTS SHOW WHAT THEY SAY.  It re-ran every record and every test.
+
+  1. Checks whose label claimed more than was tested. "The move was read from the workflow" looked at two strings the
+     tool prints. "Tied to the preview's fingerprint" looked for an echo of the argument. "Given in the same session"
+     matched a sentence printed every time. The result-record check matched only the first words of two lines. The
+     script said every check looked at the made-up Jira itself, and many did not.
+     CHANGED: the made-up Jira now writes down every read it receives, and the criterion-1 check reads that list.
+     "Same session" is now the made-up Jira's own count of writes, 0 before the command and 1 after. The result
+     record's identifier is compared with the id in the made-up Jira's own history. The record now shows a wrong
+     fingerprint and an altered preview refused, and a denied permission. Each check says whether it read the
+     made-up Jira's state file or only the tool's words.
+     NOT CHANGED: the time limit is tested with the tool's own test clock. No record waits 15 real minutes.
+  2. The rules page. It read as findings about Jira where much of it is the tool's own fixed text; "what else it
+     touches" is the tool's expectation, not a reading; a workflow's own rules and screenless required fields were
+     not mentioned; item types were not given.
+     CHANGED: the page says which parts were read and which are the tool's statements, and each of those is added.
+     A second page, rules-sandbox.md, is of the real workflow.
+     NOT CHANGED: rules.md, the page the quest names, is of the made-up workflow, because the real one has no
+     required field and no forbidden move to show. It says so in its first line.
+  3. The quest's scenario was in no record: no move into a done status completed, and the empty resolution was
+     tested but not recorded.      CHANGED: invalid-transition.txt parts 7a and 7b. The real run adds a refused
+     preview of closing a real item with an open subtask.
+  4. A contradiction: the preview said the resolution "should stay as it is" and the confirmation required it
+     empty.                        CHANGED (item 14 above).
+  5. About 50 of 60 mistakes the reader planted itself were not noticed by the 67 tests (it gave 48 as the count and listed 52). Among them: "done" judged by the
+     status's name; a missing list of subtasks; a history of more than 100 entries; a refusal raised after the
+     write; each comparison with the preview; the history entry in `check`.
+     CHANGED: a test for each, apart from those that cannot be told apart from outside (named at the end of
+     planted-bugs.txt). 100 tests. Planted bugs went from 78 to 131, each caught.
+     ALSO FOUND WHILE DOING THIS: one planted bug let a test write over a fixture in the temporary copy, which
+     spoiled every run after it. The script now starts each bug from a fresh copy.
+  6. The real-run script: no path to a second write found. It did not check that the result record was saved; a
+     step's words could match inside a title; its "not allowed" step would show an unknown status name, not a move
+     between two real statuses the workflow forbids.
+     CHANGED: words are matched at the start of a line; the result record is checked; the script says what the
+     "not allowed" step does and does not show. NOT CHANGED: "Confirmed by" is "the participant", a role and not a
+     name, by this project's rule that no person is named in evidence. The saved outputs hold no site address.
+  7. Private content: none found.
+
+==============================================================================
+AFTER THE READS
+  100 tests pass. 131 of 131 planted bugs are caught. The five records have 69 checks, all passing.
+  The real run was made once, with the corrected tool: logs/live-00 to live-12.
+  NEITHER READER SAW THE CORRECTED VERSION. Nobody has re-read it.

@@ -784,4 +784,13 @@ attempts:
   evidence_path: participant/evidence/jira-reconciliation-report/jira-attempt-022
   submission_id: submission-20261127235708-9ea845
   review_id: review-20261128000558-639bfd
-updated_at: '2026-11-28T00:05:58Z'
+- attempt_id: jira-attempt-023
+  quest_id: jira-transition-status
+  quest_version: 1
+  content_hash: sha256:abd5f2c37bc1d3126f94114d9ff7356da6bed5fc7e462f32b516b6e6f4f168b9
+  state: submitted
+  started_at: '2026-11-28T00:12:34Z'
+  updated_at: '2026-11-28T01:09:17Z'
+  evidence_path: participant/evidence/jira-transition-status/jira-attempt-023
+  submission_id: submission-20261128010917-d32ad4
+updated_at: '2026-11-28T01:09:17Z'

@@ -1,0 +1,18 @@
+TRANSITION RULES. Nothing is written to Jira by this command.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+
+SCRUM-25 (issue id 10024), in project SCRUM. Status now: "In Progress" (category indeterminate). Resolution: none. Subtasks: 0, not done: 0.
+  move 11   "To Do"                      -> "To Do"                required: none         optional: none         SUPPORTED
+  move 21   "In Progress"                -> "In Progress"          required: none         optional: none         SUPPORTED
+  move 31   "In Review"                  -> "In Review"            required: none         optional: none         SUPPORTED
+  move 41   "Done"                       -> "Done"                 required: none         optional: none         SUPPORTED
+
+Requests sent to Jira: 2. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SCRUM-25
+  GET /rest/api/3/issue/10024/transitions
+
+The rules are to be saved as Markdown where --out said, once this output has been searched for credentials.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

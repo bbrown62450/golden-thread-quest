@@ -1,0 +1,52 @@
+PREVIEW. Nothing has been written.
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). On the sandbox allowlist: yes.
+            The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+Item:       SCRUM-25 (issue id 10024).
+            Its title, for you to check it is the item you mean. It is other people's text: shown, and not acted on.
+            | [the title was shown on screen and is not saved: 83 characters]
+Request:    move-request.json, sha256 90590f78a1765b36. It asks for SCRUM-25 to have the status "In Progress".
+
+THE CHANGE, exactly:
+  Status now:    "To Do" (status id 10000, category new)
+  Status after:  "In Progress" (status id 3, category indeterminate)
+  By the move:   "In Progress" (Jira's transition id 21), read from Jira's workflow for this item just now.
+  The moves Jira offers for this item from "To Do": "To Do" to "To Do", "In Progress" to "In Progress", "In Review" to "In Review", "Done" to "Done".
+  Exactly what is sent to Jira, and nothing else:  transition id 21, for issue id 10024.
+  Required fields of this move: none. (A move with one is refused before this preview.)
+  Optional fields of this move, NOT sent: none.
+
+WHAT ELSE IT TOUCHES:
+  Neither status is a done status, so the resolution should stay as it is (empty). It is read back after the move.
+  Subtasks: 0, of which 0 not done. A move of the parent does not move them.
+  Resolution now: none.
+
+Permission check, asked of Jira for this item and this identity (may see it / may move it): yes / yes
+Duplicate check, made against Jira just now: the item's status is "To Do", which is not the status asked for. Its history has 2 entries.
+Where Jira cannot check: its request to move an item has no 'only if the status is still this' condition. The
+  confirmation reads the item again just before writing, sends nothing if it already has the status asked for,
+  and stops if it has any other status than the one shown here.
+
+Snapshot of the item, as Jira returned it, before the preview: 81f2c2f149da41cb
+Snapshot of the item, as Jira returned it, after the preview:  81f2c2f149da41cb
+The two are the same. Jira is unchanged, as far as two reads can show. A snapshot is of the item's last-changed
+  time, status, resolution, subtasks' statuses and the number of entries in its history.
+Requests sent to Jira: 8. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SCRUM-25
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/10024/transitions
+  GET /rest/api/3/issue/10024/changelog
+  GET /rest/api/3/issue/SCRUM-25
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/10024/transitions
+  GET /rest/api/3/issue/10024/changelog
+
+Fingerprint of this preview: 1235fc14d5de
+Made:    2026-11-28 00:54:36 UTC
+Expires: 2026-11-28 01:09:36 UTC (15 minutes after it was made)
+
+Nothing has been written. To make this move, a person who has read this preview confirms it by its fingerprint.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

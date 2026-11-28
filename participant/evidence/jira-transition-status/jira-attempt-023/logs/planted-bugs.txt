@@ -1,0 +1,283 @@
+Planted bugs in a copy of participant/skills/jira-transition-status/transition.py. jira-transition-status, attempt jira-attempt-023
+Recorded by scripts/planted_bugs.py. One bug at a time is planted in a fresh copy of the tool's folder, in a temporary folder, and the tests are run
+against the copy. CAUGHT means at least one test failed. The real tool is not changed.
+
+First, with no bug planted, the tests against the copy: OK
+
+ 1. CAUGHT  a move Jira does not offer is previewed anyway, with a guessed id
+            FAILED (failures=4): test_a_move_the_workflow_does_not_offer, test_a_status_is_not_matched_by_the_name_of_a_move ...
+ 2. CAUGHT  a status name is matched without regard to capitals
+            FAILED (failures=1): test_a_status_that_does_not_exist_or_is_spelled_another_way
+ 3. CAUGHT  a move Jira marks as not available is offered
+            FAILED (failures=1): test_a_list_of_moves_that_cannot_be_read_is_not_guessed_at
+ 4. CAUGHT  two moves to one status: the first is taken
+            FAILED (failures=1): test_two_moves_to_one_status
+ 5. CAUGHT  a list that names one move twice is accepted
+            FAILED (failures=1): test_a_list_of_moves_that_cannot_be_read_is_not_guessed_at
+ 6. CAUGHT  a field that does not say whether it is required is taken as optional
+            FAILED (errors=1): test_a_list_of_moves_that_cannot_be_read_is_not_guessed_at
+ 7. CAUGHT  a move with a required field is previewed
+            FAILED (failures=2): test_a_move_with_a_required_field, test_the_rules_command_lists_every_move_jira_offers_and_whether_it_is_supported
+ 8. CAUGHT  closing an item with an open subtask is previewed: the quest's scenario
+            FAILED (failures=4): test_closing_an_item_with_an_open_subtask, test_done_is_the_statuss_category_and_not_its_name ...
+ 9. CAUGHT  a subtask whose status cannot be read counts as not open
+            FAILED (failures=3): test_an_item_whose_list_of_subtasks_jira_does_not_give_cannot_be_closed, test_closing_an_item_whose_subtasks_cannot_be_read ...
+10. CAUGHT  an open subtask stops every move, not only one to a done status
+            FAILED (failures=5, errors=1): test_an_item_whose_list_of_subtasks_jira_does_not_give_cannot_be_closed, test_an_open_subtask_does_not_stop_a_move_that_is_not_to_a_done_status ...
+11. CAUGHT  a subtask that is in progress counts as done
+            FAILED (failures=5): test_an_open_subtask_does_not_stop_a_move_that_is_not_to_a_done_status, test_closing_an_item_with_an_open_subtask ...
+12. CAUGHT  the tool's judgement of a move is not asked
+            FAILED (failures=7): test_a_move_whose_fields_jira_does_not_tell_is_not_taken_to_have_none, test_a_move_with_a_required_field ...
+13. CAUGHT  an item that already has the status is given a preview to confirm
+            FAILED (failures=2): test_a_used_fingerprint_is_refused_and_a_new_preview_finds_nothing_to_do, test_an_item_that_already_has_the_status_is_reported_and_nothing_is_offered
+14. CAUGHT  a refused preview is saved anyway
+            FAILED (failures=7): test_a_move_the_workflow_does_not_offer, test_a_move_with_a_required_field ...
+15. CAUGHT  a project that is not on the allowlist is written to
+            FAILED (failures=3): test_a_project_that_is_not_listed_is_refused_at_the_preview, test_an_item_that_moved_to_another_project_after_the_preview_is_not_written ...
+16. CAUGHT  the allowlist is matched by project only, on any site
+            FAILED (failures=1): test_a_project_that_is_not_listed_is_refused_at_the_preview
+17. CAUGHT  an allowlist entry that is not a fingerprint and a project id is accepted
+            FAILED (failures=1): test_an_allowlist_that_is_not_one
+18. CAUGHT  the permission check is not acted on
+            FAILED (failures=3): test_a_permission_jira_does_not_mention_is_not_taken_as_granted, test_an_item_that_is_not_there_and_one_this_identity_may_not_move ...
+19. CAUGHT  a permission Jira does not mention counts as granted
+            FAILED (failures=1): test_a_permission_jira_does_not_mention_is_not_taken_as_granted
+20. CAUGHT  the preview command is given a way to write
+            FAILED (failures=2): test_an_address_that_is_not_https_and_the_sites_name_only_and_missing_variables, test_the_preview_command_has_no_way_to_write
+21. CAUGHT  the preview is made from one look at Jira
+            FAILED (failures=1): test_an_item_that_changes_while_the_preview_is_made_gives_no_preview
+22. CAUGHT  the snapshot leaves out the item's status
+            FAILED (failures=1): test_the_snapshot_changes_when_anything_it_covers_changes
+23. CAUGHT  the snapshot leaves out the number of history entries
+            FAILED (failures=1): test_the_snapshot_changes_when_anything_it_covers_changes
+24. CAUGHT  the item's title is saved
+            FAILED (failures=1): test_the_title_is_shown_and_not_saved_and_not_acted_on
+25. CAUGHT  the site's address is left in the saved output
+            FAILED (failures=2): test_no_credential_or_site_address_is_in_the_saved_output_or_the_result, test_the_title_is_shown_and_not_saved_and_not_acted_on
+26. CAUGHT  optional fields are not named in the preview
+            FAILED (failures=1): test_optional_fields_are_named_as_not_sent
+27. CAUGHT  a write with no fingerprint: the newest preview is taken
+            FAILED (failures=1): test_a_missing_confirmation_is_refused
+28. CAUGHT  a confirmation with no name is accepted
+            FAILED (failures=1): test_a_missing_confirmation_is_refused
+29. CAUGHT  a used preview can be confirmed again
+            FAILED (failures=4): test_a_second_preview_confirmed_after_the_first_sends_nothing, test_a_used_fingerprint_cannot_be_replayed_after_the_item_is_moved_back ...
+30. CAUGHT  a preview never expires
+            FAILED (failures=2): test_a_preview_older_than_the_limit_is_refused, test_no_result_record_is_written_for_a_refusal_and_a_file_that_cannot_be_saved_is_said
+31. CAUGHT  a preview exactly at the limit is too old
+            FAILED (failures=1): test_a_preview_older_than_the_limit_is_refused
+32. CAUGHT  the limit is 60 minutes
+            FAILED (failures=2): test_a_preview_older_than_the_limit_is_refused, test_the_time_limit_is_in_the_preview_and_a_preview_from_the_future_is_refused
+33. CAUGHT  the test clock is not used
+            FAILED (failures=2): test_a_preview_older_than_the_limit_is_refused, test_no_result_record_is_written_for_a_refusal_and_a_file_that_cannot_be_saved_is_said
+34. CAUGHT  a preview dated in the future is accepted
+            FAILED (failures=1): test_the_time_limit_is_in_the_preview_and_a_preview_from_the_future_is_refused
+35. CAUGHT  an altered saved preview is confirmed
+            FAILED (failures=2): test_a_saved_preview_that_was_altered_is_refused, test_a_saved_preview_under_another_name_is_not_that_preview
+36. CAUGHT  the fingerprint does not cover the time the preview was made
+            FAILED (failures=3): test_a_saved_preview_that_was_altered_is_refused, test_a_second_open_preview_is_refused_once_the_item_has_changed_and_come_back ...
+37. CAUGHT  a preview made against another site is confirmed
+            FAILED (failures=1): test_a_preview_made_against_another_site_is_refused
+38. CAUGHT  a preview made for another request file is confirmed
+            FAILED (failures=1): test_a_change_that_differs_from_the_preview_is_refused
+39. CAUGHT  a request file changed since the preview is confirmed
+            FAILED (failures=1): test_a_change_that_differs_from_the_preview_is_refused
+40. CAUGHT  what Jira holds differing from the preview is not looked for
+            FAILED (failures=3): test_a_second_open_preview_is_refused_once_the_item_has_changed_and_come_back, test_and_at_the_confirmation_with_another_allowlist_than_the_preview_used ...
+41. CAUGHT  another allowlist than the preview used is accepted
+            FAILED (failures=2): test_and_at_the_confirmation_with_another_allowlist_than_the_preview_used, test_each_way_the_change_can_differ_from_the_preview_is_found
+42. CAUGHT  a move with other fields than the preview showed is sent
+            FAILED (failures=2): test_each_way_the_change_can_differ_from_the_preview_is_found, test_what_jira_holds_differing_from_the_preview_is_refused
+43. CAUGHT  two runs may confirm one request at once
+            FAILED (failures=1): test_two_runs_cannot_confirm_one_request_at_once
+44. CAUGHT  a run releases another run's claim
+            FAILED (failures=1): test_two_runs_cannot_confirm_one_request_at_once
+45. CAUGHT  an item that already has the status is moved again where Jira allows
+            FAILED (failures=1): test_a_second_preview_confirmed_after_the_first_sends_nothing
+46. CAUGHT  a preview found not needed is left open
+            FAILED (failures=1): test_a_second_preview_confirmed_after_the_first_sends_nothing
+47. CAUGHT  an item moved elsewhere since the preview is not noticed at the first look
+            FAILED (failures=1): test_an_item_someone_moved_elsewhere_since_the_preview_is_refused_as_a_conflict
+48. CAUGHT  the preview is not marked as used before the write
+            FAILED (failures=2): test_jira_refuses_the_write_and_the_item_is_read_to_be_sure, test_the_write_is_written_down_before_it_is_sent_and_what_became_of_it_after
+49. CAUGHT  the status read back is not compared with the one intended
+            FAILED (failures=4): test_a_move_jira_accepted_that_does_not_show_at_once_is_read_again_and_never_sent_again, test_a_status_read_back_under_the_right_name_and_the_wrong_id_is_not_the_one_intended ...
+50. CAUGHT  the status is not read back: the tool believes Jira's answer
+            FAILED (failures=8): test_a_move_jira_accepted_that_does_not_show_at_once_is_read_again_and_never_sent_again, test_a_move_out_of_done_reads_that_the_resolution_was_cleared ...
+51. CAUGHT  a write Jira accepted that does not show yet is sent again
+            FAILED (failures=1): test_a_move_jira_accepted_that_does_not_show_at_once_is_read_again_and_never_sent_again
+52. CAUGHT  the item is read only once after the write
+            FAILED (failures=1): test_a_move_jira_accepted_that_does_not_show_at_once_is_read_again_and_never_sent_again
+53. CAUGHT  a server error is taken as a refusal
+            FAILED (failures=1): test_an_answer_that_does_not_say_is_not_taken_as_a_refusal
+54. CAUGHT  a refusal is believed without looking at the item
+            FAILED (failures=1): test_a_refusal_is_not_believed_if_the_item_was_moved_all_the_same
+55. CAUGHT  what Jira said in refusing is repeated
+            FAILED (failures=1): test_jira_refuses_the_write_and_the_item_is_read_to_be_sure
+56. CAUGHT  the body sent holds more than the move's id
+            FAILED (failures=4): test_a_live_preview_sends_only_gets_and_a_live_confirm_sends_one_post_with_the_moves_id_only, test_no_credential_or_site_address_is_in_the_saved_output_or_the_result ...
+57. CAUGHT  an empty resolution after a move to done is not reported
+            FAILED (failures=1): test_a_done_status_with_no_resolution_is_something_a_person_must_look_at
+58. CAUGHT  a resolution still set after a move out of done is not reported
+            FAILED (failures=1): test_a_move_out_of_done_reads_that_the_resolution_was_cleared
+59. CAUGHT  the identifier is any new history entry, whatever it records
+            FAILED (failures=2): test_an_older_entry_of_the_same_move_that_was_not_seen_before_is_not_taken_for_this_one, test_the_identifier_is_the_entry_that_records_the_status_change_and_no_other_new_entry
+60. CAUGHT  the identifier may be an older entry of the same move
+            FAILED (failures=2): test_the_identifier_is_the_entry_that_records_the_status_change_and_no_other_new_entry, test_two_new_entries_for_the_move_are_not_one_and_none_is_said
+61. CAUGHT  a failed read back still ends with ALL DONE
+            FAILED (failures=3): test_a_done_status_with_no_resolution_is_something_a_person_must_look_at, test_a_move_out_of_done_reads_that_the_resolution_was_cleared ...
+62. CAUGHT  a read that fails after the write is called a refusal
+            FAILED (failures=1): test_a_read_that_fails_after_the_write_is_not_a_refusal
+63. CAUGHT  a failure after the write says nothing was written
+            FAILED (failures=1): test_something_unforeseen_before_the_write_is_a_refusal_and_after_it_is_not
+64. CAUGHT  the result record leaves out who confirmed
+            FAILED (failures=1): test_it_holds_the_key_what_changed_the_project_the_time_and_who_confirmed
+65. CAUGHT  the result record keeps the site's address
+            FAILED (failures=2): test_it_holds_the_key_what_changed_the_project_the_time_and_who_confirmed, test_no_credential_or_site_address_is_in_the_saved_output_or_the_result
+66. CAUGHT  a result record is written for a refused run
+            FAILED (failures=1): test_no_result_record_is_written_for_a_refusal_and_a_file_that_cannot_be_saved_is_said
+67. CAUGHT  the check command does not compare the status
+            FAILED (failures=1): test_the_check_command_reads_the_status_back_and_writes_nothing
+68. CAUGHT  a request may carry more than an item and a status
+            FAILED (failures=1): test_a_request_that_is_not_one_is_refused_before_jira_is_asked
+69. CAUGHT  a name given twice in a file is accepted
+            FAILED (failures=2): test_a_request_that_is_not_one_is_refused_before_jira_is_asked, test_an_allowlist_that_is_not_one
+70. CAUGHT  a real write does not need a terminal
+            FAILED (failures=1): test_a_real_write_needs_a_terminal
+71. CAUGHT  the live connection will post anything
+            FAILED (failures=1): test_the_live_connection_will_post_nothing_but_one_move
+72. CAUGHT  the live connection will post to an item named by its key
+            FAILED (failures=1): test_the_live_connection_will_post_nothing_but_one_move
+73. CAUGHT  the output is not searched for the credentials
+            FAILED (failures=1): test_a_credential_in_the_output_stops_the_output_and_says_if_a_write_was_sent
+74. CAUGHT  only the token is searched for
+            FAILED (failures=1): test_the_live_connection_will_post_nothing_but_one_move
+75. CAUGHT  redirects are followed
+            FAILED (failures=1): test_a_live_preview_sends_only_gets_and_a_live_confirm_sends_one_post_with_the_moves_id_only
+76. CAUGHT  an address with a path or a port, or without https, is accepted
+            FAILED (failures=1): test_an_address_that_is_not_https_and_the_sites_name_only_and_missing_variables
+77. CAUGHT  a request may wait for ever
+            FAILED (failures=1): test_a_live_preview_sends_only_gets_and_a_live_confirm_sends_one_post_with_the_moves_id_only
+78. CAUGHT  something unforeseen is a crash
+            FAILED (errors=1): test_something_unforeseen_before_the_write_is_a_refusal_and_after_it_is_not
+79. CAUGHT  done is judged by the status's name
+            FAILED (failures=1): test_done_is_the_statuss_category_and_not_its_name
+80. CAUGHT  a missing list of subtasks counts as no subtasks
+            FAILED (failures=1): test_an_item_whose_list_of_subtasks_jira_does_not_give_cannot_be_closed
+81. CAUGHT  a history of more than 100 entries is read at its start
+            FAILED (failures=1): test_a_history_of_more_than_a_hundred_entries_is_read_at_its_end
+82. CAUGHT  a refusal raised after the write says nothing was written
+            FAILED (failures=1): test_a_refusal_raised_after_the_write_is_not_reported_as_nothing_written
+83. CAUGHT  the write is not written down before it is sent
+            FAILED (failures=1): test_the_write_is_written_down_before_it_is_sent_and_what_became_of_it_after
+84. CAUGHT  the check command ignores the history entry
+            FAILED (failures=1): test_the_check_command_looks_at_the_history_entry_and_the_site
+85. CAUGHT  the check command reads any site
+            FAILED (failures=1): test_the_check_command_looks_at_the_history_entry_and_the_site
+86. CAUGHT  several new history entries count as one
+            FAILED (failures=1): test_two_new_entries_for_the_move_are_not_one_and_none_is_said
+87. CAUGHT  the last comparison with the preview, of everything, is not made
+            FAILED (failures=1): test_each_way_the_change_can_differ_from_the_preview_is_found
+88. CAUGHT  a change to the subtasks or the resolution since the preview is not looked for
+            FAILED (failures=1): test_each_way_the_change_can_differ_from_the_preview_is_found
+89. CAUGHT  another item behind the same reference is not looked for
+            FAILED (failures=1): test_each_way_the_change_can_differ_from_the_preview_is_found
+90. CAUGHT  another status than the preview showed is not looked for
+            FAILED (failures=1): test_each_way_the_change_can_differ_from_the_preview_is_found
+91. CAUGHT  an item that changed and came back since the preview is confirmed
+            FAILED (failures=2): test_a_second_open_preview_is_refused_once_the_item_has_changed_and_come_back, test_each_way_the_change_can_differ_from_the_preview_is_found
+92. CAUGHT  a status is also matched by a move's name
+            FAILED (failures=1): test_a_status_is_not_matched_by_the_name_of_a_move
+93. CAUGHT  the confirming name may be long or hold unseen characters
+            FAILED (failures=1): test_the_confirming_name_is_short_plain_text
+94. CAUGHT  a resolution that cannot be read counts as none
+            FAILED (failures=1): test_a_resolution_that_cannot_be_read_is_not_taken_as_none
+95. CAUGHT  unseen characters in a title are shown as they are
+            FAILED (failures=2): test_characters_that_cannot_be_seen_or_shown_are_not_let_through, test_small_things_each_of_which_a_reader_changed_unnoticed
+96. CAUGHT  runs of spaces in a title are kept
+            FAILED (failures=1): test_characters_that_cannot_be_seen_or_shown_are_not_let_through
+97. CAUGHT  only 204 counts as accepted
+            FAILED (failures=1): test_an_answer_of_200_to_the_write_counts_as_accepted_and_401_as_a_refusal
+98. CAUGHT  a 401 to the write is not taken as a refusal
+            FAILED (failures=1): test_an_answer_of_200_to_the_write_counts_as_accepted_and_401_as_a_refusal
+99. CAUGHT  a saved preview is not tied to its file's name
+            FAILED (failures=1): test_a_saved_preview_under_another_name_is_not_that_preview
+100. CAUGHT  the rules call one of two moves to a status supported
+            FAILED (failures=1): test_the_rules_say_what_they_were_read_from_and_do_not_call_twins_supported
+101. CAUGHT  the rules take any number of items
+            FAILED (failures=1): test_the_rules_say_what_they_were_read_from_and_do_not_call_twins_supported
+102. CAUGHT  the rules say they were read from a real Jira
+            FAILED (failures=1): test_the_rules_say_what_they_were_read_from_and_do_not_call_twins_supported
+103. CAUGHT  the site fingerprint depends on capitals
+            FAILED (failures=1): test_small_things_each_of_which_a_reader_changed_unnoticed
+104. CAUGHT  a killed run's claim is never cleared
+            FAILED (failures=1): test_small_things_each_of_which_a_reader_changed_unnoticed
+105. CAUGHT  only the permission to move is acted on
+            FAILED (failures=1): test_small_things_each_of_which_a_reader_changed_unnoticed
+106. CAUGHT  the item is read again though the write was not accepted
+            FAILED (failures=1): test_an_answer_of_200_to_the_write_counts_as_accepted_and_401_as_a_refusal
+107. CAUGHT  after Jira refuses, the record of the write still says sending
+            FAILED (failures=1): test_the_write_is_written_down_before_it_is_sent_and_what_became_of_it_after
+108. CAUGHT  the status read back is compared by name
+            FAILED (failures=1): test_a_status_read_back_under_the_right_name_and_the_wrong_id_is_not_the_one_intended
+109. CAUGHT  fields given as nothing count as no fields
+            FAILED (failures=1): test_a_list_of_moves_that_cannot_be_read_is_not_guessed_at
+110. CAUGHT  a status category that is not a plain word is accepted
+            FAILED (failures=1): test_a_list_of_moves_that_cannot_be_read_is_not_guessed_at
+111. CAUGHT  a write that fails in the network, other than by timing out, is a crash
+            FAILED (failures=2): test_a_preview_older_than_the_limit_is_refused, test_a_write_that_fails_in_the_network_is_read_back_like_one_that_timed_out
+112. CAUGHT  the time of the confirmation is the test clock's
+            FAILED (failures=1): test_small_things_each_of_which_a_reader_changed_unnoticed
+113. CAUGHT  a missing email address is accepted
+            FAILED (failures=1): test_an_address_that_is_not_https_and_the_sites_name_only_and_missing_variables
+114. CAUGHT  a move whose fields Jira does not tell is taken to have none
+            FAILED (failures=1): test_a_move_whose_fields_jira_does_not_tell_is_not_taken_to_have_none
+115. CAUGHT  a preview is made though Jira gave no history
+            FAILED (failures=1): test_a_history_jira_will_not_give_stops_the_preview_and_the_write
+116. CAUGHT  an entry older than the newest known may be taken for this move's
+            FAILED (failures=1): test_an_older_entry_of_the_same_move_that_was_not_seen_before_is_not_taken_for_this_one
+117. CAUGHT  the history is read once after the move
+            FAILED (failures=2): test_a_history_that_never_shows_the_entry_is_said_and_the_status_stands, test_two_new_entries_for_the_move_are_not_one_and_none_is_said
+118. CAUGHT  a stale resolution fails a move between two open statuses
+            FAILED (failures=1): test_a_resolution_that_was_already_set_on_an_open_item_does_not_fail_a_move_between_open_statuses
+119. CAUGHT  the places files are saved to are not looked at
+            FAILED (failures=3): test_a_place_that_is_not_the_tools_to_write_is_refused_before_jira_is_asked, test_no_result_record_is_written_for_a_refusal_and_a_file_that_cannot_be_saved_is_said ...
+120. CAUGHT  a file may be saved inside the state folder
+            FAILED (failures=1): test_a_place_that_is_not_the_tools_to_write_is_refused_before_jira_is_asked
+121. CAUGHT  a stranger's file is written over
+            FAILED (failures=2): test_a_place_that_is_not_the_tools_to_write_is_refused_before_jira_is_asked, test_the_result_and_the_rules_have_the_same_guard_and_two_options_cannot_name_one_file
+122. CAUGHT  a file is written through a link or a second name
+            FAILED (failures=1): test_a_place_that_is_not_the_tools_to_write_is_refused_before_jira_is_asked
+123. CAUGHT  the request or the allowlist may be written over
+            FAILED (failures=1): test_a_place_that_is_not_the_tools_to_write_is_refused_before_jira_is_asked
+124. CAUGHT  a refusal for the place of the log is saved in that place
+            FAILED (failures=3): test_a_place_that_is_not_the_tools_to_write_is_refused_before_jira_is_asked, test_the_result_and_the_rules_have_the_same_guard_and_two_options_cannot_name_one_file ...
+125. CAUGHT  output the terminal cannot show is a crash
+            FAILED (failures=1): test_output_the_terminal_cannot_show_is_shown_another_way_and_the_log_is_saved_first
+126. CAUGHT  a terminal that has gone away is a crash
+            FAILED (errors=1): test_a_terminal_that_has_gone_away_does_not_change_the_exit_code
+127. CAUGHT  an interruption is a crash with no output
+            KeyboardInterrupt
+128. CAUGHT  a saved preview that names things in another shape is used
+            FAILED (failures=1): test_a_saved_record_that_names_something_in_another_shape_is_not_used
+129. CAUGHT  a saved write that names things in another shape is used by the check
+            FAILED (failures=1): test_a_saved_record_that_names_something_in_another_shape_is_not_used
+130. CAUGHT  a claim dated in the future blocks the request for ever
+            FAILED (failures=1): test_a_claim_that_cannot_be_read_or_is_dated_in_the_future_is_said_and_not_waited_for
+131. CAUGHT  names keep the characters that mean something to a page
+            FAILED (failures=1): test_names_that_would_mean_something_to_a_page_are_shown_with_question_marks
+
+Last, with the copy put back as it was: OK
+The real tool is byte for byte what it was before: yes
+Git reports the same state of the whole repository as before the run: yes
+
+NOT PLANTED, AND WHY
+  A write sent though Jira gave no history just before it: the same run has already been refused for that when it worked the request out again.
+  The search for credentials not covering the result record or the rules page: both are made from the same text as the output, so a credential in one is in the other.
+  The first look at confirm reading the item by its key and not its id: a re-keyed item is refused either way.
+  The bare site name left in a saved log: the tool prints the name only after https://, so both replacements remove the same thing.
+  The second look at the item, just before the write, taken away: the first look and the comparison with the preview catch the same change, so no test can tell from outside which did.
+  The claim not checked just before the write (`holds`): a second run is already refused when it tries to make its own claim.
+  The gap between the last read and the write: it is a stated limit, not a check that could be removed.
+
+RESULT: 131 OF 131 PLANTED BUGS CAUGHT.

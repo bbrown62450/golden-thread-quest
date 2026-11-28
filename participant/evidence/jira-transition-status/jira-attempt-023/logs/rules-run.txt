@@ -1,0 +1,56 @@
+The moves read from the made-up workflow for five sample items
+jira-transition-status, attempt jira-attempt-023. Recorded by scripts/record_evidence.py.
+Against the made-up Jira (skills/jira-transition-status/fake_jira.py). Every item is made up. No real Jira was contacted.
+Commands are run from the `participant` folder. $STATE is a temporary folder outside the repository.
+
+
+==============================================================================
+The rules page is written from what the made-up Jira answers. Five items, in four statuses.
+$ python3 skills/jira-transition-status/transition.py rules --source fake --issue SAND-1 --issue SAND-4 --issue SAND-2 --issue SAND-5 --issue SAND-3 --out context/jira/transition/rules.md
+------------------------------------------------------------------------------
+TRANSITION RULES. Nothing is written to Jira by this command.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+
+SAND-1 (issue id 30001), in project SAND. Status now: "To Do" (category new). Resolution: none. Subtasks: 0, not done: 0.
+  move 11   "Start progress"             -> "In Progress"          required: none         optional: none         SUPPORTED
+
+SAND-4 (issue id 30004), in project SAND. Status now: "In Progress" (category indeterminate). Resolution: none. Subtasks: 0, not done: 0.
+  move 21   "Send for review"            -> "In Review"            required: none         optional: assignee     SUPPORTED
+  move 22   "Stop progress"              -> "To Do"                required: none         optional: none         SUPPORTED
+
+SAND-2 (issue id 30002), in project SAND. Status now: "In Review" (category indeterminate). Resolution: none. Subtasks: 2, not done: 1.
+  move 31   "Approve"                    -> "Done"                 required: none         optional: none         NOT SUPPORTED: it leads to a done status while 1 subtask is not done (SAND-4). Finish the subtasks first. There is no override
+  move 32   "Send back"                  -> "In Progress"          required: none         optional: none         SUPPORTED
+  move 33   "Close with reason"          -> "Closed"               required: resolution   optional: none         NOT SUPPORTED: it asks for 1 required field (resolution) and this workflow sends the move and nothing else. Make this move in Jira, where the form can be seen
+
+SAND-5 (issue id 30005), in project SAND. Status now: "In Review" (category indeterminate). Resolution: none. Subtasks: 1, not done: 0.
+  move 31   "Approve"                    -> "Done"                 required: none         optional: none         SUPPORTED
+  move 32   "Send back"                  -> "In Progress"          required: none         optional: none         SUPPORTED
+  move 33   "Close with reason"          -> "Closed"               required: resolution   optional: none         NOT SUPPORTED: it asks for 1 required field (resolution) and this workflow sends the move and nothing else. Make this move in Jira, where the form can be seen
+
+SAND-3 (issue id 30003), in project SAND. Status now: "Done" (category done). Resolution: "Done". Subtasks: 0, not done: 0.
+  move 41   "Reopen"                     -> "In Progress"          required: none         optional: none         SUPPORTED
+
+Requests sent to Jira: 10. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/issue/30001/transitions
+  GET /rest/api/3/issue/SAND-4
+  GET /rest/api/3/issue/30004/transitions
+  GET /rest/api/3/issue/SAND-2
+  GET /rest/api/3/issue/30002/transitions
+  GET /rest/api/3/issue/SAND-5
+  GET /rest/api/3/issue/30005/transitions
+  GET /rest/api/3/issue/SAND-3
+  GET /rest/api/3/issue/30003/transitions
+
+The rules are to be saved as Markdown where --out said, once this output has been searched for credentials.
+------------------------------------------------------------------------------
+exit code: 0
+  Rows in the page's tables: 10. Moves in the made-up workflow that start at the four statuses read: 10.
+  ok   THE MOVES WERE READ FROM THE WORKFLOW (criterion 1): the page lists, for each item, every move the made-up workflow has from that item's status, and no other. Compared with the workflow by this script
+  ok   of the ten, seven are supported and three are not: closing SAND-2 (an open subtask) and the move with a required field, on each of the two items it is offered for
+  ok   required and optional fields are named, and the open subtask is named
+  ok   the page holds no site address, and no write was sent
+
+RESULT: ALL CHECKS PASSED. 4 checks.

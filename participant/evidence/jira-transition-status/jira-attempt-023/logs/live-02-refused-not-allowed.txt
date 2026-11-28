@@ -1,0 +1,6 @@
+
+REFUSED: THE WORKFLOW DOES NOT ALLOW THIS MOVE. SCRUM-25 has the status "To Do", and Jira offers no move from there to "Shipped" for this identity. From "To Do" Jira offers: "To Do" (by the move "To Do"), "In Progress" (by the move "In Progress"), "In Review" (by the move "In Review"), "Done" (by the move "Done"). A status name is matched exactly. Nothing was previewed.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

@@ -1,0 +1,60 @@
+CONFIRMATION for preview 1235fc14d5de, given by: the participant (the name given with the confirmation).
+
+Jira site:  [site address removed]  (site fingerprint 4aabe3d08fbad6b1)
+Project:    SCRUM (project id 10000). On the sandbox allowlist: yes.
+            The allowlist is the file sandbox-allowlist.json, sha256 2fb627af92a1dcd4, which lists 1 project.
+Item:       SCRUM-25 (issue id 10024).
+Move:       "In Progress" (transition id 21): from "To Do" to "In Progress".
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  what the saved preview holds still matches its fingerprint, and it is marked as not used: ok
+  the request, worked out again against Jira, is exactly what the preview showed: ok
+  the item is in a project on the sandbox allowlist for this site: ok
+  Jira says this identity may move the item: ok
+  the item still has the status the preview showed, "To Do": ok
+
+The confirmation and the write happen in this one run of the command.
+
+WRITTEN to Jira. Jira answered 204.
+
+Read back from Jira after the write:
+  the status of SCRUM-25 is "In Progress" (status id 3). Intended: "In Progress" (status id 3): yes
+  the item's history has one new entry that records the status going from "To Do" to "In Progress": entry id 10057: yes
+  neither status is a done status, and the resolution is as it was (none): yes
+  Subtasks after the move: 0, of which 0 not done.
+
+RESULT RECORD
+  Issue key: SCRUM-25
+  Issue id: 10024 (this identifies the item; a key can change)
+  Target project: SCRUM (project id 10000), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 4aabe3d08fbad6b1
+  Request: move-request.json (file sha256 90590f78a1765b36505a9193e521f0d12f8c2462dd076d8a903c66e6153888dd)
+  What was changed: the status, from "To Do" (status id 10000) to "In Progress" (status id 3)
+  By the move: "In Progress" (Jira's transition id 21). Nothing else was sent
+  Identifier of what was changed: Jira history entry 10057
+  Read back from Jira after the write: the status of SCRUM-25 is "In Progress" (status id 3). Intended: "In Progress" (status id 3): yes; the item's history has one new entry that records the status going from "To Do" to "In Progress": entry id 10057: yes; neither status is a done status, and the resolution is as it was (none): yes
+  Resolution: before none; after none
+  Status of this record: written
+  Written at: 2026-11-28 00:54:45 UTC
+  Confirmed by: the participant, at 2026-11-28 00:54:42 UTC
+  Preview: fingerprint 1235fc14d5de, made 2026-11-28 00:54:36 UTC
+  To reverse: make a new preview that asks for the status "To Do". It will be made only if the workflow offers a move back
+
+The result record is to be saved as Markdown where --result said, once this output has been searched for credentials.
+
+Requests sent to Jira: 9. Kinds: GET, POST.
+  GET /rest/api/3/issue/10024
+  GET /rest/api/3/issue/SCRUM-25
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/10024/transitions
+  GET /rest/api/3/issue/10024/changelog
+  GET /rest/api/3/issue/10024/changelog
+  POST /rest/api/3/issue/10024/transitions
+  GET /rest/api/3/issue/10024
+  GET /rest/api/3/issue/10024/changelog
+
+ALL DONE: SCRUM-25 was moved from "To Do" to "In Progress", and reads back as intended.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.

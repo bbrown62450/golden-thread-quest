@@ -1,0 +1,466 @@
+Moves that are refused before any preview, and the status read back after an approved move
+jira-transition-status, attempt jira-attempt-023. Recorded by scripts/record_evidence.py.
+Against the made-up Jira (skills/jira-transition-status/fake_jira.py). Every item is made up. No real Jira was contacted.
+Commands are run from the `participant` folder. $STATE is a temporary folder outside the repository.
+
+
+==============================================================================
+0. What the made-up Jira holds at the start
+$ python3 skills/jira-transition-status/fake_jira.py show --state $STATE
+------------------------------------------------------------------------------
+The made-up Jira holds, at this moment. Writes (POSTs) it has received: 0. Reads (GETs): 0.
+  SAND-1  issue id 30001  status To Do        resolution none  history entries 0  last changed 2026-11-20T09:00:00.000+0000
+  SAND-2  issue id 30002  status In Review    resolution none  history entries 0  last changed 2026-11-20T09:00:00.000+0000
+  SAND-3  issue id 30003  status Done         resolution Done  history entries 0  last changed 2026-11-20T09:00:00.000+0000
+  SAND-4  issue id 30004  status In Progress  resolution none  history entries 0  last changed 2026-11-20T09:00:00.000+0000
+  SAND-5  issue id 30005  status In Review    resolution none  history entries 0  last changed 2026-11-20T09:00:00.000+0000
+  SAND-6  issue id 30006  status Done         resolution Done  history entries 0  last changed 2026-11-20T09:00:00.000+0000
+  SAND-7  issue id 30007  status In Review    resolution none  history entries 0  last changed 2026-11-20T09:00:00.000+0000
+  SAND-8  issue id 30008  status In Review    resolution none  history entries 0  last changed 2026-11-20T09:00:00.000+0000
+  SAND-9  issue id 30009  status To Do        resolution none  history entries 0  last changed 2026-11-20T09:00:00.000+0000
+  PROD-1  issue id 30011  status To Do        resolution none  history entries 0  last changed 2026-11-20T09:00:00.000+0000
+------------------------------------------------------------------------------
+exit code: 0
+
+==============================================================================
+1. A MOVE THE WORKFLOW DOES NOT ALLOW: SAND-1 is To Do, and the request asks for Done. The made-up workflow has no such move.
+$ python3 skills/jira-transition-status/transition.py preview --source fake --state $STATE --request skills/jira-transition-status/fixtures/skip-to-done.json --allowlist skills/jira-transition-status/fixtures/fake-allowlist.json
+------------------------------------------------------------------------------
+
+REFUSED: THE WORKFLOW DOES NOT ALLOW THIS MOVE. SAND-1 has the status "To Do", and Jira offers no move from there to "Done" for this identity. From "To Do" Jira offers: "In Progress" (by the move "Start progress"). A status name is matched exactly. Nothing was previewed.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1, and the reason is given: Jira offers no move from To Do to Done, and the moves it does offer are named
+  ok   REFUSED BEFORE THE PREVIEW (criterion 2): no preview was shown, no fingerprint issued, and no preview file saved, so there is nothing that could be confirmed
+  The made-up Jira's own state file (without its list of reads), sha256 before 985908dc51cb432a, after 985908dc51cb432a. POSTs it has received: 0.
+  ok   NOTHING WRITTEN: after the refusal, the made-up Jira's own state file holds exactly what it held
+
+==============================================================================
+2. A MOVE THE WORKFLOW ALLOWS AND THIS TOOL REFUSES: closing SAND-2, which has an open subtask (SAND-4)
+$ python3 skills/jira-transition-status/transition.py preview --source fake --state $STATE --request skills/jira-transition-status/fixtures/close-with-open-subtask.json --allowlist skills/jira-transition-status/fixtures/fake-allowlist.json
+------------------------------------------------------------------------------
+
+REFUSED: THIS WORKFLOW DOES NOT MAKE THIS MOVE. Jira offers the move "Approve" from "In Review" to "Done" for SAND-2, and it leads to a done status while 1 subtask is not done (SAND-4). Finish the subtasks first. There is no override. Nothing was previewed.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1, and the reason is given: a subtask is not done, and it is named
+  ok   REFUSED BEFORE THE PREVIEW (criterion 2): no preview was shown, no fingerprint issued, and no preview file saved, so there is nothing that could be confirmed
+  The made-up Jira's own state file (without its list of reads), sha256 before 985908dc51cb432a, after 985908dc51cb432a. POSTs it has received: 0.
+  ok   NOTHING WRITTEN: after the refusal, the made-up Jira's own state file holds exactly what it held
+
+Would the made-up Jira itself have accepted that move? In a second, throwaway copy of it, the move is made directly, without the tool:
+$ python3 skills/jira-transition-status/fake_jira.py move --issue SAND-2 --transition 31 --state $TEMP/throwaway
+------------------------------------------------------------------------------
+Someone else moved SAND-2 in the made-up Jira: Approve. History entry 50001.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   yes: the made-up Jira's workflow accepts closing SAND-2 with its subtask open. Only the tool stood in the way. (This is the quest's scenario.)
+
+==============================================================================
+3. Closing SAND-8, one of whose subtasks has a status that cannot be read
+$ python3 skills/jira-transition-status/transition.py preview --source fake --state $STATE --request skills/jira-transition-status/fixtures/close-unreadable-subtask.json --allowlist skills/jira-transition-status/fixtures/fake-allowlist.json
+------------------------------------------------------------------------------
+
+REFUSED: THIS WORKFLOW DOES NOT MAKE THIS MOVE. Jira offers the move "Approve" from "In Review" to "Done" for SAND-8, and it leads to a done status, and the status of 1 subtask could not be read. "Could not check" is not "none open". Nothing was previewed.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1, and the reason is given: the subtask's status could not be read
+  ok   REFUSED BEFORE THE PREVIEW (criterion 2): no preview was shown, no fingerprint issued, and no preview file saved, so there is nothing that could be confirmed
+  The made-up Jira's own state file (without its list of reads), sha256 before 985908dc51cb432a, after 985908dc51cb432a. POSTs it has received: 0.
+  ok   NOTHING WRITTEN: after the refusal, the made-up Jira's own state file holds exactly what it held
+
+==============================================================================
+4. A move with a required field: SAND-5 to Closed, which asks for a resolution
+$ python3 skills/jira-transition-status/transition.py preview --source fake --state $STATE --request skills/jira-transition-status/fixtures/close-needs-resolution.json --allowlist skills/jira-transition-status/fixtures/fake-allowlist.json
+------------------------------------------------------------------------------
+
+REFUSED: THIS WORKFLOW DOES NOT MAKE THIS MOVE. Jira offers the move "Close with reason" from "In Review" to "Closed" for SAND-5, and it asks for 1 required field (resolution) and this workflow sends the move and nothing else. Make this move in Jira, where the form can be seen. Nothing was previewed.
+Nothing has been written.
+------------------------------------------------------------------------------
+exit code: 1
+  ok   exit code 1, and the reason is given: the move has a required field, which is named
+  ok   REFUSED BEFORE THE PREVIEW (criterion 2): no preview was shown, no fingerprint issued, and no preview file saved, so there is nothing that could be confirmed
+  The made-up Jira's own state file (without its list of reads), sha256 before 985908dc51cb432a, after 985908dc51cb432a. POSTs it has received: 0.
+  ok   NOTHING WRITTEN: after the refusal, the made-up Jira's own state file holds exactly what it held
+
+==============================================================================
+5. AN APPROVED MOVE, AND THE STATUS READ BACK: SAND-1 from To Do to In Progress
+$ python3 skills/jira-transition-status/transition.py preview --source fake --state $STATE --request skills/jira-transition-status/fixtures/start-work.json --allowlist skills/jira-transition-status/fixtures/fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Item:       SAND-1 (issue id 30001).
+            Its title, for you to check it is the item you mean. It is other people's text: shown, and not acted on.
+            | Made-up item SAND-1
+Request:    start-work.json, sha256 7e6a2ebb6f4c0716. It asks for SAND-1 to have the status "In Progress".
+
+THE CHANGE, exactly:
+  Status now:    "To Do" (status id 10000, category new)
+  Status after:  "In Progress" (status id 10001, category indeterminate)
+  By the move:   "Start progress" (Jira's transition id 11), read from Jira's workflow for this item just now.
+  The moves Jira offers for this item from "To Do": "Start progress" to "In Progress".
+  Exactly what is sent to Jira, and nothing else:  transition id 11, for issue id 30001.
+  Required fields of this move: none. (A move with one is refused before this preview.)
+  Optional fields of this move, NOT sent: none.
+
+WHAT ELSE IT TOUCHES:
+  Neither status is a done status, so the resolution should stay as it is (empty). It is read back after the move.
+  Subtasks: 0, of which 0 not done. A move of the parent does not move them.
+  Resolution now: none.
+
+Permission check, asked of Jira for this item and this identity (may see it / may move it): yes / yes
+Duplicate check, made against Jira just now: the item's status is "To Do", which is not the status asked for. Its history has 0 entries.
+Where Jira cannot check: its request to move an item has no 'only if the status is still this' condition. The
+  confirmation reads the item again just before writing, sends nothing if it already has the status asked for,
+  and stops if it has any other status than the one shown here.
+
+Snapshot of the item, as Jira returned it, before the preview: 54a1bc3f0bc3097e
+Snapshot of the item, as Jira returned it, after the preview:  54a1bc3f0bc3097e
+The two are the same. Jira is unchanged, as far as two reads can show. A snapshot is of the item's last-changed
+  time, status, resolution, subtasks' statuses and the number of entries in its history.
+Requests sent to Jira: 8. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30001/transitions
+  GET /rest/api/3/issue/30001/changelog
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30001/transitions
+  GET /rest/api/3/issue/30001/changelog
+
+Fingerprint of this preview: 15606485a9d6
+Made:    2026-11-28 00:50:08 UTC
+Expires: 2026-11-28 01:05:08 UTC (15 minutes after it was made)
+
+Nothing has been written. To make this move, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the preview was made, with a fingerprint
+$ python3 skills/jira-transition-status/transition.py confirm --source fake --state $STATE --request skills/jira-transition-status/fixtures/start-work.json --allowlist skills/jira-transition-status/fixtures/fake-allowlist.json --fingerprint 15606485a9d6 --confirmed-by "the participant"
+------------------------------------------------------------------------------
+CONFIRMATION for preview 15606485a9d6, given by: the participant (the name given with the confirmation).
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Item:       SAND-1 (issue id 30001).
+Move:       "Start progress" (transition id 11): from "To Do" to "In Progress".
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  what the saved preview holds still matches its fingerprint, and it is marked as not used: ok
+  the request, worked out again against Jira, is exactly what the preview showed: ok
+  the item is in a project on the sandbox allowlist for this site: ok
+  Jira says this identity may move the item: ok
+  the item still has the status the preview showed, "To Do": ok
+
+The confirmation and the write happen in this one run of the command.
+
+WRITTEN to Jira. Jira answered 204.
+
+Read back from Jira after the write:
+  the status of SAND-1 is "In Progress" (status id 10001). Intended: "In Progress" (status id 10001): yes
+  the item's history has one new entry that records the status going from "To Do" to "In Progress": entry id 50001: yes
+  neither status is a done status, and the resolution is as it was (none): yes
+  Subtasks after the move: 0, of which 0 not done.
+
+RESULT RECORD
+  Issue key: SAND-1
+  Issue id: 30001 (this identifies the item; a key can change)
+  Target project: SAND (project id 20001), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 738169e667642f09
+  Request: start-work.json (file sha256 7e6a2ebb6f4c0716ea2428ac5ce9157c99e8e372fbcd4e76251efd837f2135b6)
+  What was changed: the status, from "To Do" (status id 10000) to "In Progress" (status id 10001)
+  By the move: "Start progress" (Jira's transition id 11). Nothing else was sent
+  Identifier of what was changed: Jira history entry 50001
+  Read back from Jira after the write: the status of SAND-1 is "In Progress" (status id 10001). Intended: "In Progress" (status id 10001): yes; the item's history has one new entry that records the status going from "To Do" to "In Progress": entry id 50001: yes; neither status is a done status, and the resolution is as it was (none): yes
+  Resolution: before none; after none
+  Status of this record: written
+  Written at: 2026-11-28 00:50:08 UTC
+  Confirmed by: the participant, at 2026-11-28 00:50:08 UTC
+  Preview: fingerprint 15606485a9d6, made 2026-11-28 00:50:08 UTC
+  To reverse: make a new preview that asks for the status "To Do". It will be made only if the workflow offers a move back
+
+Requests sent to Jira: 9. Kinds: GET, POST.
+  GET /rest/api/3/issue/30001
+  GET /rest/api/3/issue/SAND-1
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30001/transitions
+  GET /rest/api/3/issue/30001/changelog
+  GET /rest/api/3/issue/30001/changelog
+  POST /rest/api/3/issue/30001/transitions
+  GET /rest/api/3/issue/30001
+  GET /rest/api/3/issue/30001/changelog
+
+ALL DONE: SAND-1 was moved from "To Do" to "In Progress", and reads back as intended.
+------------------------------------------------------------------------------
+exit code: 0
+  The made-up Jira's own state file, read by this script: SAND-1 has the status In Progress, 1 history entry. POSTs received: 1.
+  ok   THE STATUS READ BACK MATCHES THE INTENDED ONE (criterion 3): the tool read SAND-1 back after the write and says In Progress, as intended
+  ok   and the made-up Jira's own state file agrees: SAND-1 is In Progress, after one POST
+
+==============================================================================
+6. The status read back again, by the command that only reads
+$ python3 skills/jira-transition-status/transition.py check --source fake --state $STATE --fingerprint 15606485a9d6
+------------------------------------------------------------------------------
+STATUS CHECK for the write of preview 15606485a9d6. Nothing is written by this command.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Item:       SAND-1 (issue id 30001).
+
+  the status of SAND-1 is "In Progress" (status id 10001). Intended: "In Progress" (status id 10001): yes
+  history entry 50001 is in the item's history and records that move: yes
+  Resolution now: none.
+
+Requests sent to Jira: 2. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/30001
+  GET /rest/api/3/issue/30001/changelog
+
+FOUND: the item has the status intended.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   the check command finds the status intended, and sent no write
+
+==============================================================================
+7. THE REST OF THE QUEST'S SCENARIO: closing an item, and reading the resolution back
+7a. SAND-5, whose one subtask is done. The made-up workflow sets a resolution when an item is approved.
+$ python3 skills/jira-transition-status/transition.py preview --source fake --state $STATE --request skills/jira-transition-status/fixtures/close-all-subtasks-done.json --allowlist skills/jira-transition-status/fixtures/fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Item:       SAND-5 (issue id 30005).
+            Its title, for you to check it is the item you mean. It is other people's text: shown, and not acted on.
+            | Made-up item SAND-5
+Request:    close-all-subtasks-done.json, sha256 728fa7446260049d. It asks for SAND-5 to have the status "Done".
+
+THE CHANGE, exactly:
+  Status now:    "In Review" (status id 10002, category indeterminate)
+  Status after:  "Done" (status id 10003, category done)
+  By the move:   "Approve" (Jira's transition id 31), read from Jira's workflow for this item just now.
+  The moves Jira offers for this item from "In Review": "Approve" to "Done", "Send back" to "In Progress", "Close with reason" to "Closed".
+  Exactly what is sent to Jira, and nothing else:  transition id 31, for issue id 30005.
+  Required fields of this move: none. (A move with one is refused before this preview.)
+  Optional fields of this move, NOT sent: none.
+
+WHAT ELSE IT TOUCHES:
+  It leads to a done status: reports will count the item as finished. Jira may set a resolution; whether it does is not known before the move, and is read back after it.
+  Subtasks: 1, of which 0 not done. A move of the parent does not move them.
+  Resolution now: none.
+
+Permission check, asked of Jira for this item and this identity (may see it / may move it): yes / yes
+Duplicate check, made against Jira just now: the item's status is "In Review", which is not the status asked for. Its history has 0 entries.
+Where Jira cannot check: its request to move an item has no 'only if the status is still this' condition. The
+  confirmation reads the item again just before writing, sends nothing if it already has the status asked for,
+  and stops if it has any other status than the one shown here.
+
+Snapshot of the item, as Jira returned it, before the preview: 66bcf6ede1454251
+Snapshot of the item, as Jira returned it, after the preview:  66bcf6ede1454251
+The two are the same. Jira is unchanged, as far as two reads can show. A snapshot is of the item's last-changed
+  time, status, resolution, subtasks' statuses and the number of entries in its history.
+Requests sent to Jira: 8. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SAND-5
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30005/transitions
+  GET /rest/api/3/issue/30005/changelog
+  GET /rest/api/3/issue/SAND-5
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30005/transitions
+  GET /rest/api/3/issue/30005/changelog
+
+Fingerprint of this preview: 7d0a01ac8a3e
+Made:    2026-11-28 00:50:09 UTC
+Expires: 2026-11-28 01:05:09 UTC (15 minutes after it was made)
+
+Nothing has been written. To make this move, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 skills/jira-transition-status/transition.py confirm --source fake --state $STATE --request skills/jira-transition-status/fixtures/close-all-subtasks-done.json --allowlist skills/jira-transition-status/fixtures/fake-allowlist.json --fingerprint 7d0a01ac8a3e --confirmed-by "the participant"
+------------------------------------------------------------------------------
+CONFIRMATION for preview 7d0a01ac8a3e, given by: the participant (the name given with the confirmation).
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Item:       SAND-5 (issue id 30005).
+Move:       "Approve" (transition id 31): from "In Review" to "Done".
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  what the saved preview holds still matches its fingerprint, and it is marked as not used: ok
+  the request, worked out again against Jira, is exactly what the preview showed: ok
+  the item is in a project on the sandbox allowlist for this site: ok
+  Jira says this identity may move the item: ok
+  the item still has the status the preview showed, "In Review": ok
+
+The confirmation and the write happen in this one run of the command.
+
+WRITTEN to Jira. Jira answered 204.
+
+Read back from Jira after the write:
+  the status of SAND-5 is "Done" (status id 10003). Intended: "Done" (status id 10003): yes
+  the item's history has one new entry that records the status going from "In Review" to "Done": entry id 50002: yes
+  the status is a done status, and the resolution is set: "Done": yes
+  Subtasks after the move: 1, of which 0 not done.
+
+RESULT RECORD
+  Issue key: SAND-5
+  Issue id: 30005 (this identifies the item; a key can change)
+  Target project: SAND (project id 20001), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 738169e667642f09
+  Request: close-all-subtasks-done.json (file sha256 728fa7446260049df0a48a1d3a0567fb26acf26663f32977be4ea37162b74131)
+  What was changed: the status, from "In Review" (status id 10002) to "Done" (status id 10003)
+  By the move: "Approve" (Jira's transition id 31). Nothing else was sent
+  Identifier of what was changed: Jira history entry 50002
+  Read back from Jira after the write: the status of SAND-5 is "Done" (status id 10003). Intended: "Done" (status id 10003): yes; the item's history has one new entry that records the status going from "In Review" to "Done": entry id 50002: yes; the status is a done status, and the resolution is set: "Done": yes
+  Resolution: before none; after "Done"
+  Status of this record: written
+  Written at: 2026-11-28 00:50:09 UTC
+  Confirmed by: the participant, at 2026-11-28 00:50:09 UTC
+  Preview: fingerprint 7d0a01ac8a3e, made 2026-11-28 00:50:09 UTC
+  To reverse: make a new preview that asks for the status "In Review". It will be made only if the workflow offers a move back
+
+Requests sent to Jira: 9. Kinds: GET, POST.
+  GET /rest/api/3/issue/30005
+  GET /rest/api/3/issue/SAND-5
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30005/transitions
+  GET /rest/api/3/issue/30005/changelog
+  GET /rest/api/3/issue/30005/changelog
+  POST /rest/api/3/issue/30005/transitions
+  GET /rest/api/3/issue/30005
+  GET /rest/api/3/issue/30005/changelog
+
+ALL DONE: SAND-5 was moved from "In Review" to "Done", and reads back as intended.
+------------------------------------------------------------------------------
+exit code: 0
+  ok   exit code 0. The made-up Jira's own state file: SAND-5 is Done with the resolution Done; and the tool says it read the resolution back as set
+
+7b. SAND-7, whose workflow sets NO resolution when it is approved. The move is legal, and it leaves the item done with no resolution.
+$ python3 skills/jira-transition-status/transition.py preview --source fake --state $STATE --request skills/jira-transition-status/fixtures/close-bare-workflow.json --allowlist skills/jira-transition-status/fixtures/fake-allowlist.json
+------------------------------------------------------------------------------
+PREVIEW. Nothing has been written.
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Item:       SAND-7 (issue id 30007).
+            Its title, for you to check it is the item you mean. It is other people's text: shown, and not acted on.
+            | Made-up item SAND-7
+Request:    close-bare-workflow.json, sha256 c958fdcb1415fa23. It asks for SAND-7 to have the status "Done".
+
+THE CHANGE, exactly:
+  Status now:    "In Review" (status id 10002, category indeterminate)
+  Status after:  "Done" (status id 10003, category done)
+  By the move:   "Approve" (Jira's transition id 31), read from Jira's workflow for this item just now.
+  The moves Jira offers for this item from "In Review": "Approve" to "Done", "Send back" to "In Progress", "Close with reason" to "Closed".
+  Exactly what is sent to Jira, and nothing else:  transition id 31, for issue id 30007.
+  Required fields of this move: none. (A move with one is refused before this preview.)
+  Optional fields of this move, NOT sent: none.
+
+WHAT ELSE IT TOUCHES:
+  It leads to a done status: reports will count the item as finished. Jira may set a resolution; whether it does is not known before the move, and is read back after it.
+  Subtasks: 0, of which 0 not done. A move of the parent does not move them.
+  Resolution now: none.
+
+Permission check, asked of Jira for this item and this identity (may see it / may move it): yes / yes
+Duplicate check, made against Jira just now: the item's status is "In Review", which is not the status asked for. Its history has 0 entries.
+Where Jira cannot check: its request to move an item has no 'only if the status is still this' condition. The
+  confirmation reads the item again just before writing, sends nothing if it already has the status asked for,
+  and stops if it has any other status than the one shown here.
+
+Snapshot of the item, as Jira returned it, before the preview: 285904d917cdc2ad
+Snapshot of the item, as Jira returned it, after the preview:  285904d917cdc2ad
+The two are the same. Jira is unchanged, as far as two reads can show. A snapshot is of the item's last-changed
+  time, status, resolution, subtasks' statuses and the number of entries in its history.
+Requests sent to Jira: 8. Every one was a GET, which reads and cannot change anything.
+  GET /rest/api/3/issue/SAND-7
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30007/transitions
+  GET /rest/api/3/issue/30007/changelog
+  GET /rest/api/3/issue/SAND-7
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30007/transitions
+  GET /rest/api/3/issue/30007/changelog
+
+Fingerprint of this preview: d770e469d96f
+Made:    2026-11-28 00:50:09 UTC
+Expires: 2026-11-28 01:05:09 UTC (15 minutes after it was made)
+
+Nothing has been written. To make this move, a person who has read this preview confirms it by its fingerprint.
+------------------------------------------------------------------------------
+exit code: 0
+$ python3 skills/jira-transition-status/transition.py confirm --source fake --state $STATE --request skills/jira-transition-status/fixtures/close-bare-workflow.json --allowlist skills/jira-transition-status/fixtures/fake-allowlist.json --fingerprint d770e469d96f --confirmed-by "the participant"
+------------------------------------------------------------------------------
+CONFIRMATION for preview d770e469d96f, given by: the participant (the name given with the confirmation).
+
+Jira site:  https://fixture-site.example.invalid  (site fingerprint 738169e667642f09)
+Project:    SAND (project id 20001). On the sandbox allowlist: yes.
+            The allowlist is the file fake-allowlist.json, sha256 61e71310b636da51, which lists 1 project.
+Item:       SAND-7 (issue id 30007).
+Move:       "Approve" (transition id 31): from "In Review" to "Done".
+
+Checked in this run, before writing:
+  the preview is 0 minutes old, and the limit is 15: ok
+  what the saved preview holds still matches its fingerprint, and it is marked as not used: ok
+  the request, worked out again against Jira, is exactly what the preview showed: ok
+  the item is in a project on the sandbox allowlist for this site: ok
+  Jira says this identity may move the item: ok
+  the item still has the status the preview showed, "In Review": ok
+
+The confirmation and the write happen in this one run of the command.
+
+WRITTEN to Jira. Jira answered 204.
+
+Read back from Jira after the write:
+  the status of SAND-7 is "Done" (status id 10003). Intended: "Done" (status id 10003): yes
+  the item's history has one new entry that records the status going from "In Review" to "Done": entry id 50003: yes
+  the status is a done status, and the resolution is set: NO. THE RESOLUTION IS EMPTY: NO
+  Subtasks after the move: 0, of which 0 not done.
+
+RESULT RECORD
+  Issue key: SAND-7
+  Issue id: 30007 (this identifies the item; a key can change)
+  Target project: SAND (project id 20001), on the sandbox allowlist
+  Jira site: [site address removed], site fingerprint 738169e667642f09
+  Request: close-bare-workflow.json (file sha256 c958fdcb1415fa231b642d1bd86d777317a492ea5c21fc7c51e3ba5557a35bb7)
+  What was changed: the status, from "In Review" (status id 10002) to "Done" (status id 10003)
+  By the move: "Approve" (Jira's transition id 31). Nothing else was sent
+  Identifier of what was changed: Jira history entry 50003
+  Read back from Jira after the write: the status of SAND-7 is "Done" (status id 10003). Intended: "Done" (status id 10003): yes; the item's history has one new entry that records the status going from "In Review" to "Done": entry id 50003: yes; the status is a done status, and the resolution is set: NO. THE RESOLUTION IS EMPTY: NO
+  Resolution: before none; after none
+  Status of this record: written
+  Written at: 2026-11-28 00:50:09 UTC
+  Confirmed by: the participant, at 2026-11-28 00:50:09 UTC
+  Preview: fingerprint d770e469d96f, made 2026-11-28 00:50:09 UTC
+  To reverse: make a new preview that asks for the status "In Review". It will be made only if the workflow offers a move back
+
+Requests sent to Jira: 9. Kinds: GET, POST.
+  GET /rest/api/3/issue/30007
+  GET /rest/api/3/issue/SAND-7
+  GET /rest/api/3/mypermissions
+  GET /rest/api/3/issue/30007/transitions
+  GET /rest/api/3/issue/30007/changelog
+  GET /rest/api/3/issue/30007/changelog
+  POST /rest/api/3/issue/30007/transitions
+  GET /rest/api/3/issue/30007
+  GET /rest/api/3/issue/30007/changelog
+
+A PERSON NEEDS TO LOOK: SAND-7 was moved to "Done", and: THE ITEM IS IN A DONE STATUS WITH NO RESOLUTION. Reports that count resolved work will not agree with its status. Set a resolution in Jira, or move it back.
+Do not confirm again with this fingerprint. Preview again: it reads the item and says what status it has.
+------------------------------------------------------------------------------
+exit code: 2
+  ok   the made-up Jira's own state file: SAND-7 is Done and its resolution is empty
+  ok   exit code 2, not 0: the tool read the resolution back, found none, said so in capitals, and did not say ALL DONE. The move itself cannot be known to do this before it is made
+
+WHAT THIS DOES NOT SHOW. A real Jira. The made-up workflow is a model: the real one is read in the real run.
+
+RESULT: ALL CHECKS PASSED. 20 checks.

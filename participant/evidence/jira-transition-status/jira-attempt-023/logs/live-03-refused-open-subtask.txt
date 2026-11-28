@@ -1,0 +1,6 @@
+
+REFUSED: THIS WORKFLOW DOES NOT MAKE THIS MOVE. Jira offers the move "Done" from "To Do" to "Done" for SCRUM-1, and it leads to a done status while 1 subtask is not done (SCRUM-24). Finish the subtasks first. There is no override. Nothing was previewed.
+Nothing has been written.
+
+The output above was searched for the API token, the account's email address and their encoded
+form: none found.
